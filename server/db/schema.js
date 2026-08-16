@@ -180,6 +180,8 @@ export function initSchema(db) {
     CREATE TABLE IF NOT EXISTS "User" (
       id TEXT PRIMARY KEY,
       created_date TEXT,
+      name TEXT,
+      email TEXT,
       role TEXT,
       workspace_name TEXT,
       onboarded INTEGER,

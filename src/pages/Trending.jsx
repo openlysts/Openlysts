@@ -25,7 +25,7 @@ export default function Trending() {
   const { data, isLoading } = useQuery({
     queryKey: ['trending', filters],
     queryFn: () => queryRepos(filters),
-    refetchInterval: 30000,
+    refetchInterval: 60000,
   });
 
   const updateFilters = (newFilters) => {

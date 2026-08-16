@@ -35,7 +35,7 @@ export default function CategoryPage() {
   const { data, isLoading } = useQuery({
     queryKey: ['category', filters],
     queryFn: () => queryRepos(filters),
-    refetchInterval: 30000,
+    refetchInterval: 60000,
   });
 
   const updateFilters = (newFilters) => {

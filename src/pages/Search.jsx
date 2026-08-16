@@ -40,7 +40,7 @@ export default function Search() {
   const { data, isLoading } = useQuery({
     queryKey: ['search', filters],
     queryFn: () => queryRepos(filters),
-    refetchInterval: 30000,
+    refetchInterval: 60000,
   });
 
   const updateFilters = (newFilters) => {
