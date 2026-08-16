@@ -30,13 +30,13 @@ export default function Contact() {
             <p className="text-text-muted text-sm">reviewzxone@gmail.com</p>
           </div>
         </a>
-        <a href="https://github.com/openlyst" target="_blank" rel="noopener noreferrer" className="card flex items-center gap-3 card-hover text-sm px-1 py-1">
+        <a href="https://github.com/Adilrafiq001/Openlyst" target="_blank" rel="noopener noreferrer" className="card p-5 flex items-center gap-3 card-hover overflow-hidden">
           <div className="w-10 h-10 rounded-lg bg-accent-soft flex items-center justify-center flex-shrink-0">
             <Github className="w-5 h-5 text-accent" />
           </div>
-          <div>
+          <div className="min-w-0">
             <h3 className="font-semibold text-text text-sm">GitHub</h3>
-            <p className="text-text-muted text-sm no-underline not-italic normal-case text-left">https://github.com/Adilrafiq001/Openlyst.git</p>
+            <p className="text-text-muted text-sm truncate">Adilrafiq001/Openlyst</p>
           </div>
         </a>
         <a href="https://twitter.com/openlyst" target="_blank" rel="noopener noreferrer" className="card p-5 flex items-center gap-3 card-hover">
