@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500;600;700&family=Architects+Daughter:wght@400&family=Bebas+Neue:wght@400&family=Bungee:wght@400&family=Abril+Fatface:wght@400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root, [data-theme="light"] {
+    --bg: 0 0% 99%;
+    --bg-card: 0 0% 100%;
+    --bg-subtle: 210 20% 96%;
+    --bg-hover: 210 20% 94%;
+    --text: 222 47% 11%;
+    --text-secondary: 215 16% 47%;
+    --text-muted: 215 14% 60%;
+    --border: 214 20% 90%;
+    --border-strong: 214 20% 84%;
+    --accent: 142 71% 45%;
+    --accent-fg: 0 0% 100%;
+    --accent-soft: 142 71% 96%;
+    --trending: 25 95% 53%;
+    --trending-soft: 25 95% 95%;
+    --oss: 142 71% 45%;
+    --oss-soft: 142 71% 94%;
+    --unknown: 215 14% 60%;
+    --unknown-soft: 210 20% 94%;
+    --nonoss: 0 72% 51%;
+    --nonoss-soft: 0 72% 96%;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.04);
+    --shadow-lg: 0 12px 32px rgba(0,0,0,0.08), 0 4px 8px rgba(0,0,0,0.04);
+    --shadow-hover: 0 16px 40px rgba(0,0,0,0.10), 0 6px 12px rgba(0,0,0,0.05);
+  }
+
+  [data-theme="dark"] {
+    --bg: 222 47% 7%;
+    --bg-card: 222 44% 10%;
+    --bg-subtle: 222 40% 13%;
+    --bg-hover: 222 40% 16%;
+    --text: 210 20% 92%;
+    --text-secondary: 215 16% 65%;
+    --text-muted: 215 14% 50%;
+    --border: 217 19% 20%;
+    --border-strong: 217 19% 28%;
+    --accent: 142 71% 52%;
+    --accent-fg: 222 47% 9%;
+    --accent-soft: 142 40% 14%;
+    --trending: 25 95% 58%;
+    --trending-soft: 25 50% 16%;
+    --oss: 142 71% 52%;
+    --oss-soft: 142 40% 14%;
+    --unknown: 215 16% 55%;
+    --unknown-soft: 215 20% 16%;
+    --nonoss: 0 72% 58%;
+    --nonoss-soft: 0 40% 16%;
+    --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.35), 0 2px 4px rgba(0,0,0,0.2);
+    --shadow-lg: 0 12px 32px rgba(0,0,0,0.4), 0 4px 8px rgba(0,0,0,0.25);
+    --shadow-hover: 0 16px 40px rgba(0,0,0,0.5), 0 6px 12px rgba(0,0,0,0.3);
+  }
+
+  [data-theme="slate"] {
+    --bg: 210 30% 14%;
+    --bg-card: 210 32% 18%;
+    --bg-subtle: 210 28% 22%;
+    --bg-hover: 210 28% 26%;
+    --text: 200 30% 92%;
+    --text-secondary: 200 18% 68%;
+    --text-muted: 200 14% 52%;
+    --border: 210 20% 28%;
+    --border-strong: 210 20% 36%;
+    --accent: 199 89% 48%;
+    --accent-fg: 210 40% 10%;
+    --accent-soft: 199 50% 20%;
+    --trending: 25 95% 58%;
+    --trending-soft: 25 50% 18%;
+    --oss: 142 71% 52%;
+    --oss-soft: 142 40% 16%;
+    --unknown: 200 14% 55%;
+    --unknown-soft: 200 20% 20%;
+    --nonoss: 0 72% 58%;
+    --nonoss-soft: 0 40% 18%;
+    --shadow: 0 1px 3px rgba(0,0,0,0.25), 0 1px 2px rgba(0,0,0,0.15);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.3), 0 2px 4px rgba(0,0,0,0.18);
+    --shadow-lg: 0 12px 32px rgba(0,0,0,0.35), 0 4px 8px rgba(0,0,0,0.22);
+    --shadow-hover: 0 16px 40px rgba(0,0,0,0.42), 0 6px 12px rgba(0,0,0,0.28);
+  }
+
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: hsl(var(--bg));
+    color: hsl(var(--text));
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  h1, h2, h3, h4 {
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: hsl(var(--border-strong)); border-radius: 9999px; border: 2px solid hsl(var(--bg)); }
+::-webkit-scrollbar-thumb:hover { background: hsl(var(--text-muted)); }
+
+/* Hide scrollbar for horizontal pill rows */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Card */
+.card {
+  background: hsl(var(--bg-card));
+  border: 1px solid hsl(var(--border));
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.card-hover:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+  border-color: hsl(var(--border-strong));
+}
+
+/* Smooth theme transition for colored elements */
+.theme-transition,
+.theme-transition * {
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

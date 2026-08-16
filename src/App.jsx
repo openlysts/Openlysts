@@ -1,0 +1,70 @@
+import { Toaster } from "@/components/ui/toaster"
+import { QueryClientProvider } from '@tanstack/react-query'
+import { queryClientInstance } from '@/lib/query-client'
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import PageNotFound from './lib/PageNotFound';
+import { AuthProvider, useAuth } from '@/lib/AuthContext';
+import UserNotRegisteredError from '@/components/UserNotRegisteredError';
+import { ThemeProvider } from '@/lib/theme';
+
+import OpenlystLayout from './components/openlyst/OpenlystLayout';
+import AdminRoute from './components/openlyst/AdminRoute';
+import Home from './pages/Home';
+import Search from './pages/Search';
+import RepoDetail from './pages/RepoDetail';
+import CategoryPage from './pages/CategoryPage';
+import Categories from './pages/Categories';
+import Trending from './pages/Trending';
+import Bookmarks from './pages/Bookmarks';
+import About from './pages/About';
+import Contact from './pages/Contact';
+import Admin from './pages/Admin';
+
+function AuthGate({ children }) {
+  const { isLoadingPublicSettings, isLoadingAuth, authError, navigateToLogin } = useAuth();
+  if (isLoadingPublicSettings || isLoadingAuth) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-bg">
+        <div className="w-8 h-8 border-4 border-accent/30 border-t-accent rounded-full animate-spin" />
+      </div>
+    );
+  }
+  if (authError) {
+    if (authError.type === 'user_not_registered') return <UserNotRegisteredError />;
+    if (authError.type === 'auth_required') { navigateToLogin(); return null; }
+  }
+  return children;
+}
+
+function App() {
+  return (
+    <AuthProvider>
+      <ThemeProvider>
+        <QueryClientProvider client={queryClientInstance}>
+          <Router>
+            <AuthGate>
+            <Routes>
+              <Route element={<OpenlystLayout />}>
+                <Route path="/" element={<Home />} />
+                <Route path="/search" element={<Search />} />
+                <Route path="/repo/:owner/:name" element={<RepoDetail />} />
+                <Route path="/category/:slug" element={<CategoryPage />} />
+                <Route path="/categories" element={<Categories />} />
+                <Route path="/trending" element={<Trending />} />
+                <Route path="/bookmarks" element={<Bookmarks />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/admin" element={<AdminRoute><Admin /></AdminRoute>} />
+              </Route>
+              <Route path="*" element={<PageNotFound />} />
+            </Routes>
+            </AuthGate>
+          </Router>
+          <Toaster />
+        </QueryClientProvider>
+      </ThemeProvider>
+    </AuthProvider>
+  )
+}
+
+export default App
