@@ -3,15 +3,40 @@ import { Mail, Github, Send, MessageCircle } from 'lucide-react';
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const [status, setStatus] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const getMessageBody = () => {
     return `${form.message}\n\n— ${form.name}${form.email ? ` (${form.email})` : ''}`;
   };
 
-  const handleEmail = () => {
-    const subject = encodeURIComponent(`Openlyst contact from ${form.name || 'a visitor'}`);
-    const body = encodeURIComponent(getMessageBody());
-    window.location.href = `mailto:reviewzxone@gmail.com?subject=${subject}&body=${body}`;
+  const handleEmail = async () => {
+    if (!form.name || !form.email || !form.message) {
+      setStatus({ type: 'error', message: 'Please fill in all fields.' });
+      return;
+    }
+    
+    setLoading(true);
+    setStatus(null);
+    try {
+      const response = await fetch('/api/contact/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form)
+      });
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to send email');
+      }
+      
+      setStatus({ type: 'success', message: 'Email sent successfully!' });
+      setForm({ name: '', email: '', message: '' });
+    } catch (err) {
+      setStatus({ type: 'error', message: err.message });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleTelegram = () => {
@@ -85,9 +110,10 @@ export default function Contact() {
           <button
             type="button"
             onClick={handleEmail}
-            className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-accent text-accent-fg font-medium text-sm hover:opacity-90 transition-opacity">
+            disabled={loading}
+            className={`flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-accent text-accent-fg font-medium text-sm transition-opacity ${loading ? 'opacity-50 cursor-not-allowed' : 'hover:opacity-90'}`}>
             <Mail className="w-4 h-4" />
-            Send via Email
+            {loading ? 'Sending...' : 'Send via Email'}
           </button>
           
           <button
@@ -98,6 +124,12 @@ export default function Contact() {
             Send via Telegram
           </button>
         </div>
+        
+        {status && (
+          <div className={`p-3 rounded-lg text-sm font-medium text-center ${status.type === 'success' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'}`}>
+            {status.message}
+          </div>
+        )}
       </div>
     </div>
   );

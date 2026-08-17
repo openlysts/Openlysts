@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import { db } from './db/index.js';
 import entitiesRouter from './api/entities.js';
 import functionsRouter from './api/functions.js';
+import contactRouter from './api/contact.js';
 import { executeIngestion } from './functions/runIngestion.js';
 
 dotenv.config({ path: '.env.local' });
@@ -30,6 +31,7 @@ app.get('/api/health', (req, res) => {
 
 app.use('/api/entities', entitiesRouter);
 app.use('/api/functions', functionsRouter);
+app.use('/api/contact', contactRouter);
 
 // Centralized JSON error handling
 app.use((err, req, res, next) => {
