@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Mail, Github, Twitter, Send } from 'lucide-react';
+import { Mail, Github, Send } from 'lucide-react';
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
@@ -8,7 +8,7 @@ export default function Contact() {
     e.preventDefault();
     const subject = encodeURIComponent(`Openlyst contact from ${form.name || 'a visitor'}`);
     const body = encodeURIComponent(`${form.message}\n\n— ${form.name}${form.email ? ` (${form.email})` : ''}`);
-    window.location.href = `mailto:hello@openlyst.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:reviewzxone@gmail.com?subject=${subject}&body=${body}`;
   };
 
   return (
@@ -21,7 +21,7 @@ export default function Contact() {
       </div>
 
       <div className="grid sm:grid-cols-2 gap-4 mb-10">
-        <a href="mailto:hello@openlyst.com" className="card p-5 flex items-center gap-3 card-hover">
+        <a href="mailto:reviewzxone@gmail.com" className="card p-5 flex items-center gap-3 card-hover">
           <div className="w-10 h-10 rounded-lg bg-accent-soft flex items-center justify-center flex-shrink-0">
             <Mail className="w-5 h-5 text-accent" />
           </div>
@@ -37,15 +37,6 @@ export default function Contact() {
           <div className="min-w-0">
             <h3 className="font-semibold text-text text-sm">GitHub</h3>
             <p className="text-text-muted text-sm truncate">Adilrafiq001/Openlyst</p>
-          </div>
-        </a>
-        <a href="https://twitter.com/openlyst" target="_blank" rel="noopener noreferrer" className="card p-5 flex items-center gap-3 card-hover">
-          <div className="w-10 h-10 rounded-lg bg-accent-soft flex items-center justify-center flex-shrink-0">
-            <Twitter className="w-5 h-5 text-accent" />
-          </div>
-          <div>
-            <h3 className="font-semibold text-text text-sm">Twitter</h3>
-            <p className="text-text-muted text-sm">@openlyst</p>
           </div>
         </a>
       </div>
