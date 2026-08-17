@@ -10,6 +10,9 @@ export const THEMES = [
   { id: 'dracula', label: 'Dracula', icon: 'Ghost' },
   { id: 'ocean', label: 'Ocean', icon: 'Waves' },
   { id: 'forest', label: 'Forest', icon: 'Trees' },
+  { id: 'royal', label: 'Royal', icon: 'Crown' },
+  { id: 'sand', label: 'Sand', icon: 'Sunset' },
+  { id: 'mint', label: 'Mint', icon: 'Leaf' },
 ];
 
 export function ThemeProvider({ children }) {
@@ -20,6 +23,8 @@ export function ThemeProvider({ children }) {
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
+    const isDark = ['dark', 'slate', 'dracula', 'ocean', 'forest'].includes(theme);
+    document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
     localStorage.setItem('openlyst_theme', theme);
   }, [theme]);
 

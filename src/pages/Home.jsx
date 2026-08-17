@@ -56,7 +56,7 @@ export default function Home() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.1 }}
-          className="max-w-xl mx-auto z-50 relative">
+          className="max-w-xl mx-auto z-30 relative">
           
           <AnimatedSearch size="lg" />
         </motion.div>

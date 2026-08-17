@@ -82,7 +82,7 @@ export default function Header() {
             </Link>
             <button
               onClick={toggleMobileLayout}
-              className="p-2 rounded-lg text-text-secondary hover:bg-bg-hover transition-colors hidden md:block"
+              className="p-2 rounded-lg text-text-secondary hover:bg-bg-hover transition-colors"
               title={isMobileLayout ? "Switch to Desktop Layout" : "Switch to Mobile Layout"}
             >
               {isMobileLayout ? <Monitor className="w-4 h-4" /> : <Smartphone className="w-4 h-4" />}

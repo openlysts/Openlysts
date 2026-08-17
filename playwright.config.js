@@ -31,6 +31,10 @@ export default defineConfig({
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
+    {
+      name: 'Mobile Chrome',
+      use: { ...devices['Pixel 5'] },
+    },
     // For this massive exhaustive test, we will stick to chromium primarily to speed up the loop unless specific cross-browser bugs arise.
     /*
     {
