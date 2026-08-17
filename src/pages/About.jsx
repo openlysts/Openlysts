@@ -1,55 +1,119 @@
-import { Github, Search, ShieldCheck, TrendingUp, Database, Sparkles } from 'lucide-react';
+import { Search, ShieldCheck, TrendingUp, Database, Sparkles, Heart, Code2, Cpu, Briefcase, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 export default function About() {
   return (
-    <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12">
-      <div className="text-center mb-10">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent-soft text-accent text-xs font-medium mb-4">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12 lg:py-20">
+      
+      {/* Header Section */}
+      <div className="text-center mb-16">
+        <motion.div 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent-soft text-accent text-xs font-medium mb-6">
           <Sparkles className="w-3 h-3" />
-          Discover. Filter. Build.
-        </div>
-        <h1 className="text-3xl font-bold text-text mb-4">About Openlyst</h1>
-        <div className="text-text-secondary text-lg leading-relaxed space-y-4 text-left">
+          The Discovery Engine
+        </motion.div>
+        <h1 className="text-4xl md:text-5xl font-extrabold text-text mb-6 tracking-tight">About Openlyst</h1>
+        <div className="text-text-secondary text-lg md:text-xl leading-relaxed max-w-2xl mx-auto space-y-6">
           <p>
             Openlyst is a discovery engine for open-source software. It continuously scans GitHub, indexes high-quality repositories, verifies their licenses against OSI-recognized standards, and organizes them into intuitive categories — so you can find the right project in seconds instead of scrolling endlessly through search results.
           </p>
           <p>
             Built for developers, technical leads, and open-source enthusiasts, Openlyst helps you cut through the noise of GitHub's massive catalog. Whether you are looking for a local LLM to run privately, a self-hosted alternative to a SaaS tool, a developer productivity booster, or a framework for your next project, Openlyst surfaces repositories that are actively maintained, genuinely useful, and properly licensed.
           </p>
-          <p>The platform is built and maintained by the Openlyst team, with data ingested and refreshed from GitHub every few hours. Trending scores highlight projects gaining momentum right now, while quality scores factor in documentation, community engagement, and maintenance activity — so you can trust that what you find is worth your time. Created with ❤ by ARD
-
+          <p>
+            The platform is built and maintained by the Openlyst team, with data ingested and refreshed from GitHub every few hours. Trending scores highlight projects gaining momentum right now, while quality scores factor in documentation, community engagement, and maintenance activity — so you can trust that what you find is worth your time.
           </p>
         </div>
       </div>
 
-      <div className="space-y-4 mb-10">
+      {/* Features Grid */}
+      <div className="grid md:grid-cols-2 gap-6 mb-20">
         {[
-        { icon: Search, title: 'Search Less, Find More', desc: 'Stop scrolling through GitHub. Search and filter across curated, categorized repositories in seconds.' },
-        { icon: ShieldCheck, title: 'Verified Open Source', desc: 'Every repository is checked against OSI-recognized licenses. No more guessing if a project is truly open source.' },
-        { icon: TrendingUp, title: 'Trending, Not Just Popular', desc: 'Discover projects gaining momentum right now — not just the ones with the most total stars.' },
-        { icon: Database, title: 'Automatically Updated', desc: 'Data is ingested from GitHub every few hours, so you always see fresh, accurate repository information.' }].
-        map(({ icon: Icon, title, desc }) =>
-        <div key={title} className="card p-5 flex gap-4">
-            <div className="w-10 h-10 rounded-lg bg-accent-soft flex items-center justify-center flex-shrink-0">
-              <Icon className="w-5 h-5 text-accent" />
+          { icon: Search, title: 'Search Less, Find More', desc: 'Stop scrolling through GitHub. Search and filter across curated, categorized repositories in seconds.' },
+          { icon: ShieldCheck, title: 'Verified Open Source', desc: 'Every repository is checked against OSI-recognized licenses. No more guessing if a project is truly open source.' },
+          { icon: TrendingUp, title: 'Trending, Not Just Popular', desc: 'Discover projects gaining momentum right now — not just the ones with the most total stars.' },
+          { icon: Database, title: 'Automatically Updated', desc: 'Data is ingested from GitHub every few hours, so you always see fresh, accurate repository information.' }
+        ].map(({ icon: Icon, title, desc }, i) => (
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: i * 0.1 }}
+            key={title} 
+            className="p-6 rounded-2xl bg-bg-card border border-border shadow-sm hover:shadow-md transition-shadow flex gap-5">
+            <div className="w-12 h-12 rounded-xl bg-accent-soft flex items-center justify-center flex-shrink-0">
+              <Icon className="w-6 h-6 text-accent" />
             </div>
             <div>
-              <h3 className="font-semibold text-text mb-1">{title}</h3>
-              <p className="text-text-secondary text-sm leading-relaxed">{desc}</p>
+              <h3 className="font-bold text-text text-lg mb-2">{title}</h3>
+              <p className="text-text-secondary leading-relaxed">{desc}</p>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* About the Creator Section */}
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.4 }}
+        className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-bg-card to-bg border border-border shadow-lg p-8 md:p-12 mb-16">
+        
+        {/* Decorative background blur */}
+        <div className="absolute -top-24 -right-24 w-64 h-64 bg-accent/10 rounded-full blur-3xl pointer-events-none" />
+        
+        <div className="relative z-10">
+          <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
+            
+            {/* Avatar / Initials */}
+            <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-accent to-accent-hover text-accent-fg flex items-center justify-center text-4xl font-black shadow-xl flex-shrink-0 rotate-3">
+              ARD
+            </div>
+            
+            <div className="text-center md:text-left flex-1">
+              <h2 className="text-3xl font-extrabold text-text mb-3">Adil Rafiq Dar</h2>
+              <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 mb-5">
+                <span className="inline-flex items-center gap-1.5 text-sm font-medium text-text-secondary bg-bg-hover px-3 py-1.5 rounded-lg border border-border/50">
+                  <Code2 className="w-4 h-4 text-accent" />
+                  Technologist
+                </span>
+                <span className="inline-flex items-center gap-1.5 text-sm font-medium text-text-secondary bg-bg-hover px-3 py-1.5 rounded-lg border border-border/50">
+                  <Cpu className="w-4 h-4 text-accent" />
+                  AI Enthusiast
+                </span>
+                <span className="inline-flex items-center gap-1.5 text-sm font-medium text-text-secondary bg-bg-hover px-3 py-1.5 rounded-lg border border-border/50">
+                  <Briefcase className="w-4 h-4 text-accent" />
+                  Working Professional
+                </span>
+              </div>
+              <p className="text-text-secondary leading-relaxed mb-6 max-w-2xl text-lg">
+                I am a passionate technologist and AI enthusiast dedicated to building tools that empower the developer community. Balancing a full-time professional career with an unrelenting drive to innovate, I pour my hard work and late nights into projects like Openlyst. My goal is to make discovering and leveraging open-source software and AI models easier and more accessible for everyone.
+              </p>
+              
+              <div className="inline-flex items-center gap-2 text-text font-medium bg-bg-hover/50 px-5 py-2.5 rounded-xl border border-border/50">
+                Created with 
+                <motion.div
+                  animate={{ scale: [1, 1.25, 1] }}
+                  transition={{ repeat: Infinity, duration: 1.2, ease: "easeInOut" }}
+                >
+                  <Heart className="w-5 h-5 text-red-500 fill-red-500" />
+                </motion.div>
+                by ARD
+              </div>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      </motion.div>
 
-      <div className="card p-6 text-center">
-        <Github className="w-8 h-8 text-accent mx-auto mb-3" />
-        <h3 className="font-semibold text-text mb-1">Ready to explore?</h3>
-        <p className="text-text-muted text-sm mb-4">Start discovering open-source projects worth knowing.</p>
-        <Link to="/" className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-accent text-accent-fg font-medium text-sm hover:opacity-90">
-          Browse Repositories
+      {/* CTA */}
+      <div className="text-center">
+        <Link to="/" className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-text text-bg font-bold text-lg hover:bg-text/90 transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5">
+          <Zap className="w-5 h-5" />
+          Start Exploring
         </Link>
       </div>
-    </div>);
-
+    </div>
+  );
 }
