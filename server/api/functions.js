@@ -10,6 +10,7 @@ import getRepoReadme from '../functions/getRepoReadme.js';
 import getSimilarRepos from '../functions/getSimilarRepos.js';
 import getRepoHistory from '../functions/getRepoHistory.js';
 import translateText from '../functions/translateText.js';
+import updateConfig from '../functions/updateConfig.js';
 
 const router = express.Router();
 
@@ -24,7 +25,8 @@ const fns = {
   getRepoReadme,
   getSimilarRepos,
   getRepoHistory,
-  translateText
+  translateText,
+  updateConfig
 };
 
 router.post('/:name', async (req, res, next) => {

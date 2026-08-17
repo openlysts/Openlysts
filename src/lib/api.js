@@ -44,3 +44,8 @@ export async function translateText(text, targetLang = 'en') {
   const res = await localClient.functions.invoke('translateText', { text, targetLang });
   return res;
 }
+
+export async function updateConfig(githubToken) {
+  const res = await localClient.functions.invoke('updateConfig', { githubToken });
+  return res;
+}

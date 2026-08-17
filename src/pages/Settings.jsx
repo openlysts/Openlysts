@@ -4,6 +4,7 @@ import {
   Check, BookmarkX, RotateCcw, SlidersHorizontal, KeyRound, Info,
 } from 'lucide-react';
 import { getSettings, saveSettings, clearSettings } from '@/lib/settings';
+import { updateConfig } from '@/lib/api';
 import { getBookmarks, clearBookmarks } from '@/lib/bookmarks';
 import { useToast } from '@/components/ui/use-toast';
 
@@ -16,18 +17,29 @@ export default function Settings() {
 
   useEffect(() => { document.title = 'Settings — Openlysts'; }, []);
 
-  const handleSaveToken = () => {
+  const handleSaveToken = async () => {
     const updated = saveSettings({ githubToken: tokenInput.trim() });
     setSettings(updated);
+    try {
+      await updateConfig(tokenInput.trim());
+    } catch (e) {
+      toast({ title: 'Error', description: 'Failed to sync with backend', variant: 'destructive' });
+      return;
+    }
     setSavedFlag(true);
-    toast({ title: 'GitHub token saved', description: 'Stored locally in your browser.' });
+    toast({ title: 'GitHub token saved', description: 'Stored locally and synced with backend.' });
     setTimeout(() => setSavedFlag(false), 2000);
   };
 
-  const handleClearToken = () => {
+  const handleClearToken = async () => {
     setTokenInput('');
     const updated = saveSettings({ githubToken: '' });
     setSettings(updated);
+    try {
+      await updateConfig('');
+    } catch (e) {
+      // ignore
+    }
     toast({ title: 'GitHub token cleared' });
   };
 
@@ -40,10 +52,13 @@ export default function Settings() {
     toast({ title: 'All bookmarks cleared' });
   };
 
-  const handleResetSettings = () => {
+  const handleResetSettings = async () => {
     clearSettings();
     setSettings(getSettings());
     setTokenInput('');
+    try {
+      await updateConfig('');
+    } catch (e) {}
     toast({ title: 'Settings reset to defaults' });
   };
 
@@ -117,7 +132,7 @@ export default function Settings() {
               </button>
             )}
           </div>
-          <p className="text-[11px] text-text-muted mt-1.5">Stored locally in your browser. Used when an admin runs ingestion.</p>
+          <p className="text-[11px] text-text-muted mt-1.5">Stored locally and synced to backend. Used when an admin runs ingestion.</p>
         </div>
       </section>
 
