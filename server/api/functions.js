@@ -5,6 +5,7 @@ import recalculateScores from '../functions/recalculateScores.js';
 import reclassifyRepos from '../functions/reclassifyRepos.js';
 import getMyTasks from '../functions/getMyTasks.js';
 import inviteUser from '../functions/inviteUser.js';
+import getRepoVideos from '../functions/getRepoVideos.js';
 
 const router = express.Router();
 
@@ -14,7 +15,8 @@ const fns = {
   recalculateScores,
   reclassifyRepos,
   getMyTasks,
-  inviteUser
+  inviteUser,
+  getRepoVideos
 };
 
 router.post('/:name', async (req, res, next) => {

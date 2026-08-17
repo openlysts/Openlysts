@@ -5,6 +5,7 @@ const DEFAULT_SETTINGS = {
   resultsPerPage: 24,
   defaultSort: 'trending',
   autoExpandVideos: false,
+  backgroundType: 'particles',
 };
 
 export function getSettings() {

@@ -174,6 +174,30 @@ export default function Settings() {
               <span className={`absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white transition-transform ${settings.autoExpandVideos ? 'translate-x-5' : ''}`} />
             </button>
           </div>
+
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-text">3D Background Style</p>
+              <p className="text-xs text-text-muted">Choose your preferred background animation.</p>
+            </div>
+            <select
+              value={settings.backgroundType}
+              onChange={(e) => handlePrefChange('backgroundType', e.target.value)}
+              className="px-3 py-1.5 rounded-lg border border-border bg-bg-card text-sm text-text focus:outline-none focus:border-accent"
+            >
+              <option value="particles">1. Particles</option>
+              <option value="network">2. Network Mesh</option>
+              <option value="topography">3. Digital Topography</option>
+              <option value="matrix">4. Matrix Rain</option>
+              <option value="galaxy">5. Galaxy Spiral</option>
+              <option value="cubes">6. Floating Cubes</option>
+              <option value="rings">7. Concentric Rings</option>
+              <option value="waves">8. Particle Waves</option>
+              <option value="dna">9. DNA Helix</option>
+              <option value="vortex">10. Vortex Tunnel</option>
+              <option value="none">None (Disabled)</option>
+            </select>
+          </div>
         </div>
       </section>
 
