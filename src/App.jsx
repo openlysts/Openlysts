@@ -6,6 +6,7 @@ import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import { ThemeProvider } from '@/lib/theme';
+import { MobileLayoutProvider } from '@/lib/MobileLayoutContext';
 
 import OpenlystLayout from './components/openlyst/OpenlystLayout';
 import AdminRoute from './components/openlyst/AdminRoute';
@@ -20,6 +21,7 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import Admin from './pages/Admin';
 import Settings from './pages/Settings';
+import Compare from './pages/Compare';
 
 function AuthGate({ children }) {
   const { isLoadingPublicSettings, isLoadingAuth, authError, navigateToLogin } = useAuth();
@@ -41,7 +43,8 @@ function App() {
   return (
     <AuthProvider>
       <ThemeProvider>
-        <QueryClientProvider client={queryClientInstance}>
+        <MobileLayoutProvider>
+          <QueryClientProvider client={queryClientInstance}>
           <Router>
             <AuthGate>
             <Routes>
@@ -56,6 +59,7 @@ function App() {
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/settings" element={<Settings />} />
+                <Route path="/compare" element={<Compare />} />
                 <Route path="/admin" element={<AdminRoute><Admin /></AdminRoute>} />
               </Route>
               <Route path="*" element={<PageNotFound />} />
@@ -64,6 +68,7 @@ function App() {
           </Router>
           <Toaster />
         </QueryClientProvider>
+        </MobileLayoutProvider>
       </ThemeProvider>
     </AuthProvider>
   )

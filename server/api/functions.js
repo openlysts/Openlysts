@@ -6,6 +6,10 @@ import reclassifyRepos from '../functions/reclassifyRepos.js';
 import getMyTasks from '../functions/getMyTasks.js';
 import inviteUser from '../functions/inviteUser.js';
 import getRepoVideos from '../functions/getRepoVideos.js';
+import getRepoReadme from '../functions/getRepoReadme.js';
+import getSimilarRepos from '../functions/getSimilarRepos.js';
+import getRepoHistory from '../functions/getRepoHistory.js';
+import translateText from '../functions/translateText.js';
 
 const router = express.Router();
 
@@ -16,7 +20,11 @@ const fns = {
   reclassifyRepos,
   getMyTasks,
   inviteUser,
-  getRepoVideos
+  getRepoVideos,
+  getRepoReadme,
+  getSimilarRepos,
+  getRepoHistory,
+  translateText
 };
 
 router.post('/:name', async (req, res, next) => {

@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
-import { Sun, Moon, Cloud, Check } from 'lucide-react';
+import { Sun, Moon, Cloud, Check, Coffee, Ghost, Waves, Trees } from 'lucide-react';
 import { useTheme, THEMES } from '@/lib/theme';
 
-const ICONS = { Sun, Moon, Cloud };
+const ICONS = { Sun, Moon, Cloud, Coffee, Ghost, Waves, Trees };
 
 export default function ThemeToggle() {
   const { theme, setTheme } = useTheme();

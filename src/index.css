@@ -86,6 +86,114 @@
     --shadow-hover: 0 16px 40px rgba(0,0,0,0.42), 0 6px 12px rgba(0,0,0,0.28);
   }
 
+  [data-theme="creme"] {
+    --bg: 40 33% 96%;
+    --bg-card: 40 33% 98%;
+    --bg-subtle: 40 25% 90%;
+    --bg-hover: 40 25% 88%;
+    --text: 30 20% 25%;
+    --text-secondary: 30 15% 45%;
+    --text-muted: 30 15% 55%;
+    --border: 40 25% 85%;
+    --border-strong: 40 25% 75%;
+    --accent: 20 80% 60%;
+    --accent-fg: 0 0% 100%;
+    --accent-soft: 20 80% 92%;
+    --trending: 15 90% 55%;
+    --trending-soft: 15 90% 92%;
+    --oss: 120 40% 50%;
+    --oss-soft: 120 40% 92%;
+    --unknown: 30 15% 55%;
+    --unknown-soft: 40 25% 88%;
+    --nonoss: 0 60% 55%;
+    --nonoss-soft: 0 60% 92%;
+    --shadow: 0 1px 3px rgba(100, 80, 60, 0.06), 0 1px 2px rgba(100, 80, 60, 0.04);
+    --shadow-md: 0 4px 12px rgba(100, 80, 60, 0.07), 0 2px 4px rgba(100, 80, 60, 0.04);
+    --shadow-lg: 0 12px 32px rgba(100, 80, 60, 0.08), 0 4px 8px rgba(100, 80, 60, 0.04);
+    --shadow-hover: 0 16px 40px rgba(100, 80, 60, 0.10), 0 6px 12px rgba(100, 80, 60, 0.05);
+  }
+
+  [data-theme="dracula"] {
+    --bg: 231 15% 18%;
+    --bg-card: 231 15% 21%;
+    --bg-subtle: 231 15% 25%;
+    --bg-hover: 231 15% 28%;
+    --text: 60 30% 96%;
+    --text-secondary: 231 15% 75%;
+    --text-muted: 231 15% 60%;
+    --border: 231 15% 30%;
+    --border-strong: 231 15% 40%;
+    --accent: 326 100% 74%;
+    --accent-fg: 231 15% 18%;
+    --accent-soft: 326 50% 25%;
+    --trending: 41 100% 69%;
+    --trending-soft: 41 50% 25%;
+    --oss: 135 94% 65%;
+    --oss-soft: 135 50% 25%;
+    --unknown: 231 15% 60%;
+    --unknown-soft: 231 15% 25%;
+    --nonoss: 0 100% 67%;
+    --nonoss-soft: 0 50% 25%;
+    --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.35), 0 2px 4px rgba(0,0,0,0.2);
+    --shadow-lg: 0 12px 32px rgba(0,0,0,0.4), 0 4px 8px rgba(0,0,0,0.25);
+    --shadow-hover: 0 16px 40px rgba(0,0,0,0.5), 0 6px 12px rgba(0,0,0,0.3);
+  }
+
+  [data-theme="ocean"] {
+    --bg: 220 50% 12%;
+    --bg-card: 220 50% 16%;
+    --bg-subtle: 220 50% 20%;
+    --bg-hover: 220 50% 24%;
+    --text: 210 30% 92%;
+    --text-secondary: 210 20% 70%;
+    --text-muted: 210 20% 55%;
+    --border: 220 40% 26%;
+    --border-strong: 220 40% 36%;
+    --accent: 190 80% 60%;
+    --accent-fg: 220 50% 10%;
+    --accent-soft: 190 80% 20%;
+    --trending: 30 90% 60%;
+    --trending-soft: 30 50% 20%;
+    --oss: 150 70% 50%;
+    --oss-soft: 150 50% 20%;
+    --unknown: 210 20% 55%;
+    --unknown-soft: 220 50% 20%;
+    --nonoss: 350 70% 60%;
+    --nonoss-soft: 350 50% 20%;
+    --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.35), 0 2px 4px rgba(0,0,0,0.2);
+    --shadow-lg: 0 12px 32px rgba(0,0,0,0.4), 0 4px 8px rgba(0,0,0,0.25);
+    --shadow-hover: 0 16px 40px rgba(0,0,0,0.5), 0 6px 12px rgba(0,0,0,0.3);
+  }
+
+  [data-theme="forest"] {
+    --bg: 140 30% 12%;
+    --bg-card: 140 30% 16%;
+    --bg-subtle: 140 30% 20%;
+    --bg-hover: 140 30% 24%;
+    --text: 120 20% 92%;
+    --text-secondary: 120 15% 70%;
+    --text-muted: 120 15% 55%;
+    --border: 140 25% 26%;
+    --border-strong: 140 25% 36%;
+    --accent: 90 60% 50%;
+    --accent-fg: 140 30% 10%;
+    --accent-soft: 90 60% 20%;
+    --trending: 30 80% 60%;
+    --trending-soft: 30 50% 20%;
+    --oss: 140 50% 60%;
+    --oss-soft: 140 50% 20%;
+    --unknown: 120 15% 55%;
+    --unknown-soft: 140 30% 20%;
+    --nonoss: 350 60% 60%;
+    --nonoss-soft: 350 50% 20%;
+    --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.35), 0 2px 4px rgba(0,0,0,0.2);
+    --shadow-lg: 0 12px 32px rgba(0,0,0,0.4), 0 4px 8px rgba(0,0,0,0.25);
+    --shadow-hover: 0 16px 40px rgba(0,0,0,0.5), 0 6px 12px rgba(0,0,0,0.3);
+  }
+
   * {
     border-color: hsl(var(--border));
   }
@@ -143,4 +251,39 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* Typography theme overrides for Markdown */
+.prose {
+  color: hsl(var(--text-secondary)) !important;
+}
+.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+  color: hsl(var(--text)) !important;
+}
+.prose a {
+  color: hsl(var(--accent)) !important;
+}
+.prose strong {
+  color: hsl(var(--text)) !important;
+}
+.prose code {
+  color: hsl(var(--text)) !important;
+}
+.prose pre {
+  background-color: hsl(var(--bg-subtle)) !important;
+  color: hsl(var(--text)) !important;
+}
+.prose blockquote {
+  border-left-color: hsl(var(--border-strong)) !important;
+  color: hsl(var(--text-muted)) !important;
+}
+.prose hr {
+  border-color: hsl(var(--border)) !important;
+}
+.prose thead {
+  color: hsl(var(--text)) !important;
+  border-bottom-color: hsl(var(--border-strong)) !important;
+}
+.prose tbody tr {
+  border-bottom-color: hsl(var(--border)) !important;
 }

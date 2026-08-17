@@ -7,6 +7,7 @@ export default function ThreeBackground() {
   const mountRef = useRef(null);
   const { theme } = useTheme();
   const [bgType, setBgType] = useState(getSettings().backgroundType || 'particles');
+  const isLight = theme === 'light' || theme === 'creme';
 
   useEffect(() => {
     const handleSettingsChange = (e) => {
@@ -39,7 +40,14 @@ export default function ThreeBackground() {
     mount.appendChild(renderer.domElement);
 
     const accentHsl = window.getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
-    const color = new THREE.Color(accentHsl ? `hsl(${accentHsl})` : '#4ade80');
+    let formattedHsl = accentHsl;
+    if (formattedHsl && !formattedHsl.includes(',')) {
+      formattedHsl = formattedHsl.split(/\s+/).join(', ');
+    }
+    const color = new THREE.Color(formattedHsl ? `hsl(${formattedHsl})` : '#4ade80');
+    
+    const oMult = isLight ? 3 : 1;
+    if (isLight) color.lerp(new THREE.Color('#000000'), 0.15); // slightly darken
     
     let updateFn = () => {};
     const geometries = [];
@@ -56,7 +64,13 @@ export default function ThreeBackground() {
         positions[i * 3 + 2] = z;
       }
       geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-      const material = new THREE.PointsMaterial({ color, size, transparent: true, opacity, depthWrite: false });
+      const material = new THREE.PointsMaterial({ 
+        color, 
+        size: size * (isLight ? 1.5 : 1), 
+        transparent: true, 
+        opacity: Math.min(1.0, opacity * oMult), 
+        depthWrite: false 
+      });
       geometries.push(geometry);
       materials.push(material);
       const points = new THREE.Points(geometry, material);
@@ -83,7 +97,7 @@ export default function ThreeBackground() {
         (Math.random() - 0.5) * 140, (Math.random() - 0.5) * 100, (Math.random() - 0.5) * 60
       ], 1.0, 0.8);
       
-      const lineMaterial = new THREE.LineBasicMaterial({ color, transparent: true, opacity: 0.15 });
+      const lineMaterial = new THREE.LineBasicMaterial({ color, transparent: true, opacity: Math.min(1.0, 0.15 * oMult) });
       materials.push(lineMaterial);
       const linesMesh = new THREE.LineSegments(new THREE.BufferGeometry(), lineMaterial);
       geometries.push(linesMesh.geometry);
@@ -122,7 +136,7 @@ export default function ThreeBackground() {
     }
     else if (bgType === 'topography') {
       const geometry = new THREE.PlaneGeometry(200, 100, 40, 20);
-      const material = new THREE.MeshBasicMaterial({ color, wireframe: true, transparent: true, opacity: 0.15 });
+      const material = new THREE.MeshBasicMaterial({ color, wireframe: true, transparent: true, opacity: Math.min(1.0, 0.15 * oMult) });
       geometries.push(geometry);
       materials.push(material);
       const plane = new THREE.Mesh(geometry, material);
@@ -190,7 +204,7 @@ export default function ThreeBackground() {
     else if (bgType === 'cubes') {
       const count = 20;
       const geometry = new THREE.BoxGeometry(4, 4, 4);
-      const material = new THREE.MeshBasicMaterial({ color, wireframe: true, transparent: true, opacity: 0.3 });
+      const material = new THREE.MeshBasicMaterial({ color, wireframe: true, transparent: true, opacity: Math.min(1.0, 0.3 * oMult) });
       geometries.push(geometry);
       materials.push(material);
       
@@ -216,7 +230,7 @@ export default function ThreeBackground() {
       const group = new THREE.Group();
       for(let i=0; i<5; i++) {
         const geometry = new THREE.TorusGeometry(10 + i*8, 0.2, 16, 100);
-        const material = new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0.4 - i*0.05 });
+        const material = new THREE.MeshBasicMaterial({ color, transparent: true, opacity: Math.min(1.0, (0.4 - i*0.05) * oMult) });
         geometries.push(geometry);
         materials.push(material);
         const mesh = new THREE.Mesh(geometry, material);
@@ -326,5 +340,5 @@ export default function ThreeBackground() {
 
   if (bgType === 'none') return null;
 
-  return <div ref={mountRef} className="fixed inset-0 pointer-events-none z-0 opacity-70" />;
+  return <div ref={mountRef} className={`fixed inset-0 pointer-events-none z-0 transition-opacity duration-1000 ${isLight ? 'opacity-100' : 'opacity-70'}`} />;
 }

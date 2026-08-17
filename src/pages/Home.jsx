@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
@@ -6,11 +5,11 @@ import { Search, Sparkles, Clock, TrendingUp, ArrowRight, Database } from 'lucid
 import { queryRepos } from '@/lib/api';
 import CategoryPills from '@/components/openlyst/CategoryPills';
 import RepositoryGrid from '@/components/openlyst/RepositoryGrid';
+import AnimatedSearch from '@/components/openlyst/AnimatedSearch';
 import { Link } from 'react-router-dom';
 
 export default function Home() {
   const navigate = useNavigate();
-  const [searchVal, setSearchVal] = useState('');
 
   const { data: trending, isLoading: tLoading } = useQuery({
     queryKey: ['home-trending'],
@@ -28,10 +27,6 @@ export default function Home() {
     refetchInterval: 60000
   });
 
-  const submitSearch = (e) => {
-    e.preventDefault();
-    if (searchVal.trim()) navigate(`/search?q=${encodeURIComponent(searchVal.trim())}`);
-  };
 
   const hasData = (trending?.results?.length || 0) > 0 || (recent?.results?.length || 0) > 0;
 
@@ -57,24 +52,14 @@ export default function Home() {
         </motion.div>
 
         {/* Search */}
-        <motion.form
-          onSubmit={submitSearch}
+        <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.1 }}
-          className="max-w-xl mx-auto">
+          className="max-w-xl mx-auto z-50 relative">
           
-          <div className="relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted" />
-            <input
-              type="text"
-              value={searchVal}
-              onChange={(e) => setSearchVal(e.target.value)}
-              placeholder="Search open-source projects..."
-              className="w-full bg-bg-card border border-border rounded-xl pl-12 pr-4 py-3.5 text-base text-text placeholder:text-text-muted focus:border-accent focus:outline-none shadow-md transition-colors" />
-            
-          </div>
-        </motion.form>
+          <AnimatedSearch size="lg" />
+        </motion.div>
       </section>
 
       {/* Category pills */}

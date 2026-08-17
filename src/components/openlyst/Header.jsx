@@ -1,9 +1,10 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { Bookmark, Github, Menu, X, Settings as SettingsIcon } from 'lucide-react';
+import { Bookmark, Github, Menu, X, Settings as SettingsIcon, Smartphone, Monitor } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 import AnimatedSearch from './AnimatedSearch';
 import { getBookmarks } from '@/lib/bookmarks';
+import { useMobileLayout } from '@/lib/MobileLayoutContext';
 
 const NAV = [
 { to: '/', label: 'Discover' },
@@ -18,6 +19,7 @@ export default function Header() {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [bookmarkCount, setBookmarkCount] = useState(0);
+  const { isMobileLayout, toggleMobileLayout } = useMobileLayout();
 
   useEffect(() => {
     setBookmarkCount(getBookmarks().length);
@@ -60,8 +62,10 @@ export default function Header() {
             })}
           </nav>
 
-          {/* Search (desktop) */}
-          <AnimatedSearch className="hidden lg:flex flex-1 max-w-xs" />
+          {/* Search (desktop) - Hidden on Home page */}
+          {location.pathname !== '/' && (
+            <AnimatedSearch className="hidden lg:flex flex-1 max-w-xs ml-4" />
+          )}
 
           {/* Right actions */}
           <div className="flex items-center gap-2 flex-shrink-0">
@@ -76,6 +80,13 @@ export default function Header() {
             <Link to="/settings" className="p-2 rounded-lg text-text-secondary hover:bg-bg-hover transition-colors" aria-label="Settings">
               <SettingsIcon className="w-4 h-4" />
             </Link>
+            <button
+              onClick={toggleMobileLayout}
+              className="p-2 rounded-lg text-text-secondary hover:bg-bg-hover transition-colors hidden md:block"
+              title={isMobileLayout ? "Switch to Desktop Layout" : "Switch to Mobile Layout"}
+            >
+              {isMobileLayout ? <Monitor className="w-4 h-4" /> : <Smartphone className="w-4 h-4" />}
+            </button>
             <ThemeToggle />
             <button
               onClick={() => setMobileOpen((v) => !v)}
@@ -90,7 +101,7 @@ export default function Header() {
         {/* Mobile menu */}
         {mobileOpen &&
         <div className="md:hidden pb-4 space-y-3">
-            <AnimatedSearch />
+            {location.pathname !== '/' && <AnimatedSearch />}
             <nav className="flex flex-col gap-1">
               {NAV.map((item) => {
               const active = location.pathname === item.to;

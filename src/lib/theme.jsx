@@ -6,6 +6,10 @@ export const THEMES = [
   { id: 'light', label: 'Light', icon: 'Sun' },
   { id: 'dark', label: 'Dark', icon: 'Moon' },
   { id: 'slate', label: 'Slate', icon: 'Cloud' },
+  { id: 'creme', label: 'Creme', icon: 'Coffee' },
+  { id: 'dracula', label: 'Dracula', icon: 'Ghost' },
+  { id: 'ocean', label: 'Ocean', icon: 'Waves' },
+  { id: 'forest', label: 'Forest', icon: 'Trees' },
 ];
 
 export function ThemeProvider({ children }) {

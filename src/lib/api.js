@@ -24,3 +24,23 @@ export async function getRepoVideos(repoName) {
   const res = await localClient.functions.invoke('getRepoVideos', { repoName });
   return res;
 }
+
+export async function getRepoReadme(fullName, defaultBranch = 'main') {
+  const res = await localClient.functions.invoke('getRepoReadme', { fullName, defaultBranch });
+  return res;
+}
+
+export async function getSimilarRepos(fullName) {
+  const res = await localClient.functions.invoke('getSimilarRepos', { fullName });
+  return res;
+}
+
+export async function getRepoHistory(id) {
+  const res = await localClient.functions.invoke('getRepoHistory', { id });
+  return res;
+}
+
+export async function translateText(text, targetLang = 'en') {
+  const res = await localClient.functions.invoke('translateText', { text, targetLang });
+  return res;
+}

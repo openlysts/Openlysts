@@ -3,10 +3,16 @@ import { useQuery } from '@tanstack/react-query';
 import { localClient } from '@/api/localClient';
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import { Star, GitFork, AlertCircle, Calendar, Clock, ExternalLink, ArrowLeft, Bookmark, Flame, TrendingUp, Activity, ShieldCheck, HelpCircle, XCircle } from 'lucide-react';
+import { Star, GitFork, AlertCircle, Calendar, Clock, ExternalLink, ArrowLeft, Bookmark, Flame, TrendingUp, Activity, ShieldCheck, HelpCircle, XCircle, CopyPlus } from 'lucide-react';
 import { getLanguageColor } from '@/lib/languageColors';
 import { isBookmarked, toggleBookmark } from '@/lib/bookmarks';
+import { getRepoReadme, getSimilarRepos, getRepoHistory } from '@/lib/api';
+import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 import LicenseBadge from '@/components/openlyst/LicenseBadge';
+import RepoVideoLinks from '@/components/openlyst/RepoVideoLinks';
+import RepositoryCard from '@/components/openlyst/RepositoryCard';
 
 function formatNum(n) {
   if (!n) return '0';
@@ -46,6 +52,40 @@ export default function RepoDetail() {
     onSuccess: (data) => {
       if (data) setBookmarked(isBookmarked(data.id));
     },
+  });
+
+  const { data: readme, isLoading: isReadmeLoading } = useQuery({
+    queryKey: ['readme', owner, name],
+    queryFn: async () => {
+      try {
+        const data = await getRepoReadme(`${owner}/${name}`, repo?.default_branch);
+        return data.readme || '';
+      } catch (err) {
+        return '';
+      }
+    },
+    enabled: !!repo
+  });
+
+  const { data: similarRepos } = useQuery({
+    queryKey: ['similarRepos', owner, name],
+    queryFn: async () => {
+      const data = await getSimilarRepos(`${owner}/${name}`);
+      return data.similarRepos || [];
+    },
+    enabled: !!repo
+  });
+
+  const { data: historyData } = useQuery({
+    queryKey: ['repoHistory', repo?.id],
+    queryFn: async () => {
+      const data = await getRepoHistory(repo.id);
+      return (data.history || []).map(h => ({
+        date: new Date(h.snapshot_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+        stars: h.stars
+      }));
+    },
+    enabled: !!repo?.id
   });
 
   useEffect(() => {
@@ -140,16 +180,21 @@ export default function RepoDetail() {
             ))}
           </div>
 
-          <a href={repo.html_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-accent text-accent-fg font-medium text-sm hover:opacity-90 transition-opacity">
-            <ExternalLink className="w-4 h-4" />
-            Open on GitHub
-          </a>
-          {repo.homepage_url && (
-            <a href={repo.homepage_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-border text-text-secondary font-medium text-sm hover:bg-bg-hover ml-2 transition-colors">
+          <div className="flex items-center gap-2">
+            <Link to={`/compare?repos=${repo.full_name}`} className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-border text-text-secondary font-medium text-sm hover:bg-bg-hover transition-colors">
+              <CopyPlus className="w-4 h-4" /> Compare
+            </Link>
+            <a href={repo.html_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-accent text-accent-fg font-medium text-sm hover:opacity-90 transition-opacity">
               <ExternalLink className="w-4 h-4" />
-              Homepage
+              Open on GitHub
             </a>
-          )}
+            {repo.homepage_url && (
+              <a href={repo.homepage_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-border text-text-secondary font-medium text-sm hover:bg-bg-hover transition-colors">
+                <ExternalLink className="w-4 h-4" />
+                Homepage
+              </a>
+            )}
+          </div>
         </div>
 
         {/* Stats grid */}
@@ -203,7 +248,70 @@ export default function RepoDetail() {
             <span className="text-text text-sm font-medium">{repo.trending_score?.toFixed(1) || '0'}</span>
           </div>
         </div>
+
+        {/* Chart Section */}
+        {historyData && historyData.length > 0 && (
+          <div className="card p-6 mt-5 h-64">
+            <h2 className="text-sm font-bold text-text mb-4">Star Growth (Last 30 Days)</h2>
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={historyData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
+                <XAxis dataKey="date" stroke="var(--text-muted)" fontSize={11} tickLine={false} axisLine={false} />
+                <YAxis stroke="var(--text-muted)" fontSize={11} tickLine={false} axisLine={false} width={40} tickFormatter={(val) => val >= 1000 ? `${(val/1000).toFixed(0)}k` : val} />
+                <Tooltip 
+                  contentStyle={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '8px', fontSize: '12px', color: 'var(--text)' }}
+                  itemStyle={{ color: 'var(--accent)' }}
+                />
+                <Line type="monotone" dataKey="stars" stroke="var(--accent)" strokeWidth={2} dot={{ r: 3, fill: 'var(--accent)' }} activeDot={{ r: 5 }} />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        )}
       </motion.div>
+
+      {/* Videos Section */}
+      {repo && (
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: 0.1 }}>
+          <div className="mt-5 card p-6">
+            <h2 className="text-lg font-bold text-text mb-4">Tutorials & Explanations</h2>
+            <RepoVideoLinks repo={repo} />
+          </div>
+        </motion.div>
+      )}
+
+      {/* README Section */}
+      <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: 0.2 }}>
+        <div className="mt-5 card p-6">
+          <h2 className="text-lg font-bold text-text mb-4">README</h2>
+          <div className="prose prose-sm sm:prose-base dark:prose-invert max-w-none break-words text-text-secondary overflow-hidden">
+            {isReadmeLoading ? (
+              <div className="animate-pulse space-y-3">
+                <div className="h-4 bg-bg-subtle rounded w-3/4"></div>
+                <div className="h-4 bg-bg-subtle rounded w-full"></div>
+                <div className="h-4 bg-bg-subtle rounded w-5/6"></div>
+              </div>
+            ) : readme ? (
+              <ReactMarkdown rehypePlugins={[rehypeRaw]}>{readme}</ReactMarkdown>
+            ) : (
+              <p className="text-text-muted italic text-sm">No README found for this repository.</p>
+            )}
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Similar Repositories Section */}
+      {similarRepos && similarRepos.length > 0 && (
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: 0.3 }}>
+          <div className="mt-8 mb-4">
+            <h2 className="text-xl font-bold text-text mb-4 px-1">You might also like...</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {similarRepos.map((r, i) => (
+                <RepositoryCard key={r.id} repo={r} index={i} />
+              ))}
+            </div>
+          </div>
+        </motion.div>
+      )}
     </div>
   );
 }

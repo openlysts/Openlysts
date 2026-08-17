@@ -13,7 +13,7 @@ const SUGGESTIONS = [
   'open source', 'CLI', 'terminal', 'IDE', 'editor', 'git',
 ];
 
-export default function AnimatedSearch({ className = '' }) {
+export default function AnimatedSearch({ className = '', size = 'default' }) {
   const navigate = useNavigate();
   const [value, setValue] = useState('');
   const [focused, setFocused] = useState(false);
@@ -75,7 +75,7 @@ export default function AnimatedSearch({ className = '' }) {
         transition={{ type: 'spring', stiffness: 400, damping: 25 }}
         className="relative"
       >
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted pointer-events-none" />
+        <Search className={`absolute ${size === 'lg' ? 'left-4 w-5 h-5' : 'left-3 w-4 h-4'} top-1/2 -translate-y-1/2 text-text-muted pointer-events-none`} />
         <input
           type="text"
           value={value}
@@ -83,7 +83,11 @@ export default function AnimatedSearch({ className = '' }) {
           onFocus={() => setFocused(true)}
           onKeyDown={onKeyDown}
           placeholder="Search open-source projects..."
-          className="w-full bg-bg-card border border-border rounded-lg pl-9 pr-3 py-2 text-sm text-text placeholder:text-text-muted focus:border-accent focus:outline-none transition-all"
+          className={`w-full bg-bg-card border border-border focus:border-accent focus:outline-none transition-all ${
+            size === 'lg' 
+              ? 'rounded-xl pl-12 pr-4 py-3.5 text-base shadow-md' 
+              : 'rounded-lg pl-9 pr-3 py-2 text-sm'
+          } text-text placeholder:text-text-muted`}
           style={{ boxShadow: focused ? '0 0 0 3px hsl(var(--accent-soft))' : 'none' }}
         />
       </motion.div>
