@@ -1,14 +1,22 @@
 import { useState } from 'react';
-import { Mail, Github, Send } from 'lucide-react';
+import { Mail, Github, Send, MessageCircle } from 'lucide-react';
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const getMessageBody = () => {
+    return `${form.message}\n\n— ${form.name}${form.email ? ` (${form.email})` : ''}`;
+  };
+
+  const handleEmail = () => {
     const subject = encodeURIComponent(`Openlyst contact from ${form.name || 'a visitor'}`);
-    const body = encodeURIComponent(`${form.message}\n\n— ${form.name}${form.email ? ` (${form.email})` : ''}`);
+    const body = encodeURIComponent(getMessageBody());
     window.location.href = `mailto:reviewzxone@gmail.com?subject=${subject}&body=${body}`;
+  };
+
+  const handleTelegram = () => {
+    const body = encodeURIComponent(getMessageBody());
+    window.open(`https://t.me/Contactm3here?text=${body}`, '_blank');
   };
 
   return (
@@ -41,7 +49,7 @@ export default function Contact() {
         </a>
       </div>
 
-      <form onSubmit={handleSubmit} className="card p-6 space-y-4">
+      <div className="card p-6 space-y-4">
         <div>
           <label className="block text-sm font-medium text-text mb-1.5">Name</label>
           <input
@@ -72,14 +80,25 @@ export default function Contact() {
             className="w-full bg-bg-card border border-border rounded-lg px-3 py-2.5 text-sm text-text placeholder:text-text-muted focus:border-accent focus:outline-none resize-none" />
           
         </div>
-        <button
-          type="submit"
-          className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-accent text-accent-fg font-medium text-sm hover:opacity-90 transition-opacity">
+        
+        <div className="flex gap-4 pt-2">
+          <button
+            type="button"
+            onClick={handleEmail}
+            className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-accent text-accent-fg font-medium text-sm hover:opacity-90 transition-opacity">
+            <Mail className="w-4 h-4" />
+            Send via Email
+          </button>
           
-          <Send className="w-4 h-4" />
-          Send Message
-        </button>
-      </form>
-    </div>);
-
+          <button
+            type="button"
+            onClick={handleTelegram}
+            className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-[#229ED9] text-white font-medium text-sm hover:opacity-90 transition-opacity">
+            <MessageCircle className="w-4 h-4" />
+            Send via Telegram
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 }
