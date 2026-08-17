@@ -94,8 +94,8 @@ import path from 'path';
     await page.fill('input[placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"]', 'ghp_playwright_test_token');
     await page.click('button:has-text("Save")');
     await page.waitForSelector('div:has-text("Saved")');
-    log('Settings updated successfully.');
     
+    // 8. Testing Static Pages (About, Contact)
     log('8. Testing Static Pages (About, Contact)');
     await page.click('nav a:has-text("About")');
     await page.waitForURL('**/about');
@@ -104,6 +104,8 @@ import path from 'path';
     await page.click('nav a:has-text("Contact")');
     await page.waitForURL('**/contact');
     await page.waitForSelector('h1:has-text("Contact Us")');
+    await page.waitForSelector('button:has-text("Send via Email")');
+    await page.waitForSelector('button:has-text("Send via Telegram")');
     
     log('9. Testing Theme Toggle');
     // Click Theme toggle in header
