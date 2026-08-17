@@ -15,6 +15,13 @@ Requires the Playwright test runner and the `tests/e2e.spec.js` test file to be 
 ## Quick Start
 Run the test suite using `npx playwright test`. Ensure that a dev server is either running or `playwright.config.js` is configured to start it.
 
+**Note on Real Browser Automation:**
+Playwright performs *real* browser automation. It spins up an actual browser instance (Chromium/Webkit/Firefox) and simulates genuine user interactions like clicks, typing, and navigation at exact pixel coordinates. 
+
+By default, tests run in **headless mode** (invisible background process) for speed. 
+- To watch the test execute visually in a real browser window, run: `npx playwright test --headed`
+- To run with an interactive UI dashboard (great for debugging), run: `npx playwright test --ui`
+
 ## Workflow
 
 ### 1. Preparation
