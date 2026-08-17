@@ -32,7 +32,8 @@ openlyst/
 ├── server/                     # Express Backend
 │   ├── api/                    # Express route definitions
 │   │   ├── entities.js         # Generic CRUD routes for all tables
-│   │   └── functions.js        # Custom RPC routes (querying, ingestion)
+│   │   ├── functions.js        # Custom RPC routes (querying, ingestion)
+│   │   └── contact.js          # SMTP Email dispatch via nodemailer
 │   ├── db/                     # Database connection and schema
 │   │   ├── index.js            # better-sqlite3 connection singleton
 │   │   └── schema.js           # CREATE TABLE statements
@@ -81,7 +82,12 @@ To avoid rewriting hundreds of React components that originally relied on a clou
 2. It executes `executeIngestion()` (`server/functions/runIngestion.js`).
 3. This function fetches standard queries from the GitHub API, calculates a `trending_score` and `quality_score` for each repository based on activity and completeness, and runs `INSERT OR REPLACE` into the local SQLite database.
 
-### C. Real-Time UI Syncing (Frontend)
+### C. Backend Email Dispatch (Contact Form)
+1. A user submits the contact form (`Contact.jsx`) on the frontend.
+2. The frontend sends a POST request to `/api/contact/send` with the form data.
+3. The Express server uses `nodemailer` configured with the SMTP credentials in `.env.local` to securely dispatch the email to the platform owner without exposing email addresses or relying on local OS clients.
+
+### D. Real-Time UI Syncing (Frontend)
 1. Pages like `Home.jsx` and `Trending.jsx` use `@tanstack/react-query`.
 2. The queries are configured with `refetchInterval: 60000` (1 minute).
 3. If the user leaves the page open, React Query quietly polls the backend every minute. When the background ingestion worker finishes a batch, the frontend instantly reflects the new database state without requiring a page refresh.

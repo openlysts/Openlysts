@@ -31,6 +31,12 @@ Create an `.env.local` file in the root directory based on the `.env.example` te
 ```env
 # Create a GitHub Personal Access Token and add it here for API access
 GITHUB_TOKEN=your_github_personal_access_token
+
+# (Optional) SMTP Credentials for the Contact form email dispatch
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=reviewzxone@gmail.com
+SMTP_PASS=your_16_letter_app_password
 ```
 
 ### Running the App
