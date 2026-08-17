@@ -5,6 +5,7 @@ import { getLanguageColor } from '@/lib/languageColors';
 import { isBookmarked, toggleBookmark } from '@/lib/bookmarks';
 import { useState } from 'react';
 import LicenseBadge from './LicenseBadge';
+import RepoVideoLinks from './RepoVideoLinks';
 
 function formatStars(n) {
   if (!n) return '0';
@@ -111,6 +112,9 @@ export default function RepositoryCard({ repo, index = 0 }) {
               {timeAgo(repo.github_updated_at)}
             </span>
           </div>
+
+          {/* Video explanation links */}
+          <RepoVideoLinks repo={repo} />
         </div>
       </Link>
     </motion.div>);

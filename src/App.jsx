@@ -19,6 +19,7 @@ import Bookmarks from './pages/Bookmarks';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Admin from './pages/Admin';
+import Settings from './pages/Settings';
 
 function AuthGate({ children }) {
   const { isLoadingPublicSettings, isLoadingAuth, authError, navigateToLogin } = useAuth();
@@ -54,6 +55,7 @@ function App() {
                 <Route path="/bookmarks" element={<Bookmarks />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/settings" element={<Settings />} />
                 <Route path="/admin" element={<AdminRoute><Admin /></AdminRoute>} />
               </Route>
               <Route path="*" element={<PageNotFound />} />

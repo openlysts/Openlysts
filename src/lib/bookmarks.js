@@ -28,6 +28,11 @@ export function removeBookmark(id) {
   window.dispatchEvent(new CustomEvent('bookmarks-changed'));
 }
 
+export function clearBookmarks() {
+  localStorage.setItem(KEY, '[]');
+  window.dispatchEvent(new CustomEvent('bookmarks-changed'));
+}
+
 export function useBookmarkCount() {
   // Re-render hook helper — components subscribe to the custom event
   return getBookmarks().length;
