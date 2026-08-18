@@ -14,6 +14,7 @@ export default async function queryRepositories(req, res) {
       categories = [],
       languages = [],
       licenses = [],
+      topics = [],
       difficulties = [],
       minStars = 0,
       updatedWithin = '',
@@ -64,8 +65,16 @@ export default async function queryRepositories(req, res) {
       );
     }
 
+    if (topics && topics.length > 0) {
+      repos = repos.filter((r) =>
+        topics.every((topic) => (r.topics || []).includes(topic))
+      );
+    }
+
     if (languages && languages.length > 0) {
-      repos = repos.filter((r) => languages.includes(r.language));
+      // Allow case-insensitive language matching
+      const lowerLangs = languages.map(l => l.toLowerCase());
+      repos = repos.filter((r) => r.language && lowerLangs.includes(r.language.toLowerCase()));
     }
 
     if (licenses && licenses.length > 0) {

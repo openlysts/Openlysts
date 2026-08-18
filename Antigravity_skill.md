@@ -1,11 +1,11 @@
 ---
 name: openlyst-migration-guide
-description: Complete guide and skill for migrating Openlyst from a Base44 backend to an independent local SQLite + Express backend. Includes architecture, gotchas, what worked, and what failed.
+description: Complete guide and skill for migrating Openlysts from a Base44 backend to an independent local SQLite + Express backend. Includes architecture, gotchas, what worked, and what failed.
 ---
 
-# Openlyst Migration Skill & Guide
+# Openlysts Migration Skill & Guide
 
-This document serves as a historical record, guide, and agent skill for understanding how Openlyst was migrated from a proprietary cloud backend (Base44) to a completely independent, local-first architecture (Express + SQLite).
+This document serves as a historical record, guide, and agent skill for understanding how Openlysts was migrated from a proprietary cloud backend (Base44) to a completely independent, local-first architecture (Express + SQLite).
 
 If you are tasked with rebuilding this project from scratch, debugging it, or extending it, this document outlines the exact path to success and the pitfalls to avoid.
 
@@ -48,7 +48,7 @@ Convert a React/Vite application heavily dependent on a proprietary backend SDK 
    - **The Fix**: Always use `setTimeout(() => execute(), 2000)` alongside `setInterval` to guarantee immediate execution upon boot.
 
 4. **Port Hijacking Confusion (Vite)**
-   - **The Mistake**: The user had an old `npm run dev` terminal session running in a different folder (`openlyst_main`), which occupied port `5173`. When we started the updated dev server in our working directory (`openlyst`), Vite silently fell back to port `5174`.
+   - **The Mistake**: The user had an old `npm run dev` terminal session running in a different folder (`openlysts_main`), which occupied port `5173`. When we started the updated dev server in our working directory (`openlyst`), Vite silently fell back to port `5174`.
    - **The Consequence**: The user refreshed `localhost:5173` and repeatedly saw the old, unmodified code, leading to immense confusion.
    - **The Fix**: Always kill stale Node processes (`Stop-Process -Id ...`) or instruct the user to completely close their old terminals before testing new backend changes.
 
@@ -65,4 +65,4 @@ If you must rebuild this from 0, follow this exact order of operations:
 7. **Hook up the Frontend**: Drop in the existing React components. Ensure React Query uses `refetchInterval`.
 
 ---
-*Created by Antigravity IDE during the Openlyst Migration.*
+*Created by Antigravity IDE during the Openlysts Migration.*

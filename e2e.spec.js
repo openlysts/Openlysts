@@ -1,11 +1,11 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('Openlyst QA Playbook E2E', () => {
+test.describe('Openlysts QA Playbook E2E', () => {
   test.use({ viewport: { width: 1920, height: 1080 } });
 
   test('Step 1: Initial Load', async ({ page }) => {
     await page.goto('http://localhost:5173');
-    await expect(page).toHaveTitle(/Openlyst/i);
+    await expect(page).toHaveTitle(/Openlysts/i);
     // Ensure no horizontal scroll
     const scrollWidth = await page.evaluate(() => document.documentElement.scrollWidth);
     const clientWidth = await page.evaluate(() => document.documentElement.clientWidth);

@@ -4,7 +4,7 @@ test.describe('Openlysts QA Regression Suite', () => {
   // Scenario 1: Initial Load & Shell
   test('Scenario 1: Initial Load & App Shell', async ({ page }) => {
     await page.goto('http://localhost:5173/');
-    await expect(page).toHaveTitle(/Openlyst/i);
+    await expect(page).toHaveTitle(/Openlysts/i);
     // Check layout shifts
     const scrollWidth = await page.evaluate(() => document.documentElement.scrollWidth);
     const clientWidth = await page.evaluate(() => document.documentElement.clientWidth);

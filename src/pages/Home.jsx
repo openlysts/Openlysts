@@ -8,11 +8,24 @@ import RepositoryGrid from '@/components/openlyst/RepositoryGrid';
 import AnimatedSearch from '@/components/openlyst/AnimatedSearch';
 import FilterBar from '@/components/openlyst/FilterBar';
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 const LANGUAGES = ['Python', 'JavaScript', 'TypeScript', 'Go', 'Rust', 'Java', 'C++', 'C', 'Ruby', 'PHP', 'Swift', 'Kotlin', 'Shell', 'Vue', 'HTML', 'Dart'];
 
 export default function Home() {
   const navigate = useNavigate();
+  const [viewHistory, setViewHistory] = useState([]);
+
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem('openlyst_history');
+      if (stored) {
+        setViewHistory(JSON.parse(stored));
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }, []);
 
   const { data: trending, isLoading: tLoading, refetch: refetchTrending, isRefetching: tRefetching } = useQuery({
     queryKey: ['home-trending'],
@@ -144,6 +157,28 @@ export default function Home() {
             </div>
             <RepositoryGrid repos={recent?.results?.slice(0, 8) || []} loading={rLoading} />
           </section>
+
+          {/* Recently Viewed History */}
+          {viewHistory.length > 0 && (
+            <section>
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="flex items-center gap-2 text-xl font-bold text-text">
+                  <Clock className="w-5 h-5 text-accent" />
+                  Your Viewing History
+                </h2>
+                <button
+                  onClick={() => {
+                    localStorage.removeItem('openlyst_history');
+                    setViewHistory([]);
+                  }}
+                  className="text-sm text-text-muted hover:text-red-400 flex items-center gap-1 transition-colors"
+                >
+                  Clear History
+                </button>
+              </div>
+              <RepositoryGrid repos={viewHistory.slice(0, 4)} loading={false} />
+            </section>
+          )}
 
           {/* Popular in AI */}
           <section>

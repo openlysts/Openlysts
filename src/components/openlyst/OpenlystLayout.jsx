@@ -3,6 +3,8 @@ import { Outlet } from 'react-router-dom';
 import { ArrowUp } from 'lucide-react';
 import Header from './Header';
 import Footer from './Footer';
+import CommandPalette from './CommandPalette';
+import CompareDock from './CompareDock';
 import ThreeBackground from './ThreeBackground';
 import { useMobileLayout } from '@/lib/MobileLayoutContext';
 
@@ -42,6 +44,9 @@ export default function OpenlystLayout() {
           <Footer />
         </footer>
       </div>
+
+      <CommandPalette />
+      <CompareDock />
 
       {/* Floating Scroll to Top */}
       <button

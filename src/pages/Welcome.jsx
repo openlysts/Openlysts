@@ -68,7 +68,7 @@ export default function Welcome() {
               className="w-full h-[200px] md:h-[300px] lg:h-[400px] flex items-center justify-center -my-4 md:-my-8"
             >
               <ParticleText
-                text="Welcome to Openlyst"
+                text="Welcome to Openlysts"
                 particleSize={1.4}
                 density={3}
                 color="#f8fafc"

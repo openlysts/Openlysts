@@ -90,6 +90,35 @@ export default function RepoDetail() {
     if (repo) {
       setBookmarked(isBookmarked(repo.id));
       document.title = `Openlysts — ${repo.name} | Open-Source Discovery`;
+      
+      // Update recently viewed history
+      try {
+        const stored = localStorage.getItem('openlyst_history');
+        let history = stored ? JSON.parse(stored) : [];
+        // Remove if already exists to push to front
+        history = history.filter(r => r.id !== repo.id);
+        history.unshift({
+          id: repo.id,
+          name: repo.name,
+          full_name: repo.full_name,
+          owner: repo.owner,
+          description: repo.description,
+          stars: repo.stars,
+          forks: repo.forks,
+          language: repo.language,
+          difficulty: repo.difficulty,
+          categories: repo.categories,
+          topics: repo.topics,
+          archived: repo.archived,
+          github_updated_at: repo.github_updated_at,
+          trending_score: repo.trending_score
+        });
+        // Keep only last 10
+        if (history.length > 10) history = history.slice(0, 10);
+        localStorage.setItem('openlyst_history', JSON.stringify(history));
+      } catch (e) {
+        console.error('Failed to update history', e);
+      }
     }
   }, [repo]);
 

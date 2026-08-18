@@ -33,7 +33,7 @@ export async function githubFetch(url, token, retries = 3) {
       const headers = {
         'Accept': 'application/vnd.github+json',
         'X-GitHub-Api-Version': '2022-11-28',
-        'User-Agent': 'Openlyst-Discovery-Engine',
+        'User-Agent': 'Openlysts-Discovery-Engine',
       };
       if (token) {
         headers['Authorization'] = `Bearer ${token}`;

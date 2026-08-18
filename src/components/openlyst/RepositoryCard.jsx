@@ -1,10 +1,11 @@
 import { useNavigate } from 'react-router-dom';
-import { Star, GitFork, Bookmark, Flame, AlertCircle } from 'lucide-react';
+import { Star, GitFork, Bookmark, Flame, AlertCircle, GitCompare } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { getLanguageColor } from '@/lib/languageColors';
 import { getDifficultyColor } from '@/lib/difficultyColors';
 import { isBookmarked, toggleBookmark } from '@/lib/bookmarks';
 import { useState } from 'react';
+import { useCompare } from '@/lib/CompareContext';
 import LicenseBadge from './LicenseBadge';
 import RepoVideoLinks from './RepoVideoLinks';
 import { CATEGORIES } from '@/lib/categories';
@@ -34,6 +35,9 @@ export default function RepositoryCard({ repo, index = 0 }) {
   const langColor = getLanguageColor(repo.language);
   const navigate = useNavigate();
 
+  const { selectedForCompare, toggleCompare } = useCompare();
+  const isCompared = selectedForCompare.some(r => r.id === repo.id);
+
   const handleBookmark = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -42,6 +46,12 @@ export default function RepositoryCard({ repo, index = 0 }) {
 
   const handleCardClick = () => {
     navigate(`/repo/${repo.owner}/${repo.name}`);
+  };
+
+  const handleCompareClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleCompare(repo);
   };
 
   return (
@@ -53,15 +63,24 @@ export default function RepositoryCard({ repo, index = 0 }) {
       <div onClick={handleCardClick} className="block h-full cursor-pointer">
         <div className="card card-hover h-full flex flex-col p-4 relative rounded-lg">
           {/* Bookmark */}
-          <button
-            onClick={handleBookmark}
-            className={`absolute top-3 right-3 p-1.5 rounded-lg transition-colors ${
-            bookmarked ? 'text-accent bg-accent-soft' : 'text-text-muted hover:text-text hover:bg-bg-hover'}`
-            }
-            aria-label="Bookmark">
-            
-            <Bookmark className="w-4 h-4" fill={bookmarked ? 'currentColor' : 'none'} />
-          </button>
+          <div className="absolute top-3 right-3 flex items-center gap-1">
+            <button
+              onClick={handleCompareClick}
+              className={`p-1.5 rounded-lg transition-colors ${
+              isCompared ? 'text-accent bg-accent-soft' : 'text-text-muted hover:text-text hover:bg-bg-hover'}`
+              }
+              aria-label="Add to compare">
+              <GitCompare className="w-4 h-4" />
+            </button>
+            <button
+              onClick={handleBookmark}
+              className={`p-1.5 rounded-lg transition-colors ${
+              bookmarked ? 'text-accent bg-accent-soft' : 'text-text-muted hover:text-text hover:bg-bg-hover'}`
+              }
+              aria-label="Bookmark">
+              <Bookmark className="w-4 h-4" fill={bookmarked ? 'currentColor' : 'none'} />
+            </button>
+          </div>
 
           {/* Trending badge */}
           {isTrending &&

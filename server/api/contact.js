@@ -31,7 +31,7 @@ router.post('/send', async (req, res) => {
       from: `"${name}" <${email}>`, // sender address
       to: process.env.CONTACT_EMAIL || process.env.SMTP_USER || 'reviewzxone@gmail.com', // list of receivers
       replyTo: email,
-      subject: `Openlyst Contact Form: Message from ${name}`, // Subject line
+      subject: `Openlysts Contact Form: Message from ${name}`, // Subject line
       text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`, // plain text body
     });
 

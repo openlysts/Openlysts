@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { Bookmark, Menu, X, Settings as SettingsIcon, Smartphone, Monitor, Search } from 'lucide-react';
+import { Bookmark, Menu, X, Settings as SettingsIcon, Smartphone, Monitor, Search, Sparkles } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 import { getBookmarks } from '@/lib/bookmarks';
 import { useMobileLayout } from '@/lib/MobileLayoutContext';
@@ -82,6 +82,17 @@ export default function Header() {
 
           {/* Right actions */}
           <div className="flex items-center gap-2 flex-shrink-0">
+            {/* Innovative Welcome Button */}
+            <Link 
+              to="/" 
+              className="relative group flex items-center justify-center p-2 rounded-lg bg-gradient-to-br from-bg-subtle to-bg border border-border hover:border-accent/50 overflow-hidden transition-all duration-500 hover:shadow-[0_0_15px_rgba(var(--accent-rgb),0.3)]"
+              aria-label="Warp to Welcome Screen"
+              title="Welcome Screen"
+            >
+              <div className="absolute inset-0 bg-accent/10 translate-y-[100%] group-hover:translate-y-0 transition-transform duration-300 ease-out" />
+              <Sparkles className="w-4 h-4 text-text-secondary group-hover:text-accent transition-colors relative z-10" />
+            </Link>
+
             <Link to="/bookmarks" className="relative p-2 rounded-lg text-text-secondary hover:bg-bg-hover transition-colors" aria-label="View Bookmarks">
               <Bookmark className="w-4 h-4" />
               {bookmarkCount > 0 &&

@@ -1,0 +1,65 @@
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { useToast } from '@/components/ui/use-toast';
+
+const CompareContext = createContext();
+
+export function CompareProvider({ children }) {
+  const [selectedForCompare, setSelectedForCompare] = useState(() => {
+    try {
+      const stored = localStorage.getItem('openlyst_compare');
+      return stored ? JSON.parse(stored) : [];
+    } catch (e) {
+      return [];
+    }
+  });
+  const { toast } = useToast();
+
+  useEffect(() => {
+    localStorage.setItem('openlyst_compare', JSON.stringify(selectedForCompare));
+  }, [selectedForCompare]);
+
+  const toggleCompare = (repo) => {
+    setSelectedForCompare(prev => {
+      const exists = prev.find(r => r.id === repo.id);
+      if (exists) {
+        return prev.filter(r => r.id !== repo.id);
+      } else {
+        if (prev.length >= 3) {
+          toast({
+            title: "Limit Reached",
+            description: "You can only compare up to 3 repositories at a time.",
+            variant: "destructive"
+          });
+          return prev;
+        }
+        toast({
+          title: "Added to Compare",
+          description: `${repo.name} added to comparison.`,
+        });
+        return [...prev, { id: repo.id, name: repo.name, full_name: repo.full_name, stars: repo.stars }];
+      }
+    });
+  };
+
+  const clearCompare = () => {
+    setSelectedForCompare([]);
+  };
+
+  const removeFromCompare = (repoId) => {
+    setSelectedForCompare(prev => prev.filter(r => r.id !== repoId));
+  };
+
+  return (
+    <CompareContext.Provider value={{ selectedForCompare, toggleCompare, clearCompare, removeFromCompare }}>
+      {children}
+    </CompareContext.Provider>
+  );
+}
+
+export function useCompare() {
+  const context = useContext(CompareContext);
+  if (context === undefined) {
+    throw new Error('useCompare must be used within a CompareProvider');
+  }
+  return context;
+}

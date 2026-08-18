@@ -9,7 +9,7 @@ export default async function getRepoReadme(req, res) {
     const response = await fetch(url, {
       headers: {
         'Accept': 'application/vnd.github.v3.raw',
-        'User-Agent': 'Openlyst-App'
+        'User-Agent': 'Openlysts-App'
       }
     });
 

@@ -1,6 +1,6 @@
 # Local Runtime Architecture
 
-This document describes the new standalone local backend for Openlyst.
+This document describes the new standalone local backend for Openlysts.
 
 ## Architecture
 

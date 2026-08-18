@@ -1,12 +1,12 @@
 export function getDifficultyColor(difficulty) {
   switch (difficulty) {
     case 'Beginner':
-      return 'text-green-600 border-green-200 bg-green-50/50 dark:text-green-400 dark:border-green-900/50 dark:bg-green-900/20';
+      return 'text-green-500 border-green-500/20 bg-green-500/10';
     case 'Intermediate':
-      return 'text-yellow-600 border-yellow-200 bg-yellow-50/50 dark:text-yellow-400 dark:border-yellow-900/50 dark:bg-yellow-900/20';
+      return 'text-orange-500 border-orange-500/20 bg-orange-500/10';
     case 'Pro':
-      return 'text-red-600 border-red-200 bg-red-50/50 dark:text-red-400 dark:border-red-900/50 dark:bg-red-900/20';
+      return 'text-red-500 border-red-500/20 bg-red-500/10';
     default:
-      return 'text-gray-600 border-gray-200 bg-gray-50/50 dark:text-gray-400 dark:border-gray-800/50 dark:bg-gray-800/20';
+      return 'text-slate-500 border-slate-500/20 bg-slate-500/10';
   }
 }
