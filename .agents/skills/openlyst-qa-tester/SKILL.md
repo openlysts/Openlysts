@@ -1,113 +1,107 @@
 ---
 name: openlyst-qa-tester
 description: >-
-  Acts as a dedicated QA/UAT team for Openlysts. Uses the Playwright MCP Server to perform exhaustive REAL browser automation against the live application covering UAT, Regression, Integration, Accessibility, and Resilience paths.
+  Acts as a dedicated QA/UAT team for Openlysts. Uses Playwright, Jest, Vitest, K6, Cypress, Lighthouse, and OWASP testing methodologies to perform exhaustive manual and automated testing covering UAT, Regression, Integration, Accessibility, Performance, Security, and Resilience paths.
 ---
 
-# Openlysts Exhaustive QA & UAT Tester
+# Openlysts Exhaustive QA & UAT Tester (10/10 Edition)
 
 ## Overview
-This skill instructs the agent to act as a rigorous, enterprise-grade QA and UAT team for the Openlysts application. You will physically drive the browser via your Playwright MCP tools, clicking elements, submitting forms, interacting with local storage, mocking network responses, testing keyboard accessibility, and evaluating edge cases.
+This skill instructs the agent to act as a rigorous, enterprise-grade QA and UAT team for the Openlysts application. You will act as the "QA Director", utilizing a blend of autonomous Playwright MCP browser interactions and automated testing framework executions (Jest/Vitest for Unit/Integration, Playwright/Cypress for E2E, K6 for Performance, Lighthouse for Web Vitals, and OWASP standards for Security).
 
-**CRITICAL RULE: All permissions to use the Playwright MCP server and interact with the local application are ALREADY GRANTED. Execute the full test suite autonomously without asking.**
+**CRITICAL RULE: All permissions to use the Playwright MCP server, execute CLI commands, and interact with the local application are ALREADY GRANTED. Execute the full test suite autonomously without asking for permission.**
 
-## Dependencies
-- Playwright MCP Server must be enabled and available.
-- The development server MUST be running at `http://localhost:5173`. 
+## Prerequisites
+- The development server MUST be running at `http://localhost:5173`.
+- Any required test runners (e.g., vitest, playwright, k6) must be available in the environment or installed via `npm`.
 
-## Granular Test Scenarios (UAT, Integration, Regression, Accessibility)
+---
 
-You must execute the following granular test scenarios sequentially. Use `browser_take_screenshot` frequently to document states. If standard clicks fail, use `browser_evaluate` to dispatch native events.
+## Autonomous Browser Scenarios (Physical MCP Testing)
 
-### 1. Initial Load & Application Shell
+**MANDATORY 100% COMPLETION RULE**: You MUST completely execute ALL 14 scenarios listed below without exception. You are strictly forbidden from skipping, bypassing, aborting early, or leaving any scenario unexecuted. You must complete the entire test suite 100% on every QA run, including error boundaries and complex filters. NEVER report a scenario as "unexecuted" or "skipped". If a step is difficult, you must still try your best to complete it.
+
+**IMPORTANT INSTRUCTION:** You MUST execute the following 14 granular test scenarios physically using your raw Playwright MCP capabilities (e.g., `call_mcp_tool` with `browser_click`, `browser_fill_form`, `browser_navigate`, `browser_take_screenshot`).
+- Do NOT use terminal scripts (`npx playwright test`).
+- Do NOT use the isolated `browser_subagent` container.
+- Act as a real human. Take screenshots for every major state change and interaction, and save them to the artifacts directory. Verify visual layout, dropdowns, active states, and focus outlines physically.
+
+**The 14 Granular Scenarios to execute physically:**
+
+### 2.1 Initial Load & Application Shell
 - **Action**: Load `http://localhost:5173`.
-- **Validation**: Verify the document title is "Openlysts".
-- **Validation**: Verify the logo is present and branded "Openlysts". The 3D logo animation should play.
+- **Validation**: Verify the document title is "Openlysts". Verify the 3D logo animation plays without WebGL errors.
 - **Validation**: Ensure no unexpected horizontal scrollbars exist on desktop (`1920x1080`).
 
-### 2. Global Navigation & Active States
+### 2.2 Global Navigation & Active States
 - **Action**: Navigate to `/alternatives`, `/trending`, `/bookmarks`, `/about`, and `/contact` by clicking the header links.
-- **Validation**: Ensure the clicked link visually indicates an "active" state (e.g., text color changes, underline).
-- **Action**: Attempt to navigate to an invalid path (`/random-gibberish-path`).
-- **Validation**: Confirm the 404 Page Not Found component renders gracefully and contains a "Back to Home" button. Click it to return home.
+- **Validation**: Ensure the clicked link visually indicates an "active" state.
+- **Action**: Attempt to navigate to an invalid path (`/random-gibberish-path`). Verify a 404 component renders.
 
-### 3. Search Bar Integration & Debounce
-- **Action**: On the home page (`/`), type "react" slowly.
-- **Validation**: Verify network requests are debounced (not firing on every single keystroke).
-- **Validation**: Verify search results instantly filter the visible grid.
+### 2.3 Search Bar Integration & Debounce
+- **Action**: On the home page (`/`), type "react" slowly into the search input.
+- **Validation**: Verify network requests are debounced via `browser_network_requests`. Verify UI instantly filters.
 
-### 4. Search Edge Cases & Security
-- **Action**: Search for a string known to be empty (`"xxyyzz123"`).
-- **Validation**: Ensure an empty state UI ("No results found") is displayed, rather than an empty grid.
-- **Action**: Search for special characters (`"<script>alert(1)</script>"` or `"%20"`).
-- **Validation**: Verify the application handles it safely without breaking the UI or throwing unhandled React exceptions.
+### 2.4 Security & OWASP Edge Cases
+- **Action**: Search for XSS payloads: `"<script>alert(1)</script>"` and `<img src=x onerror=alert(1)>`.
+- **Validation**: Verify the UI escapes it.
+- **Action**: Search for SQLi payloads: `' OR 1=1 --`.
+- **Validation**: Verify the backend responds safely (e.g., 400 Bad Request or empty array) and does not crash or expose database errors.
 
-### 5. Complex Filtering Combinations
-- **Action**: Clear the search bar. Open the filters menu.
-- **Action**: Select a Category (e.g., "Web"), a Difficulty (e.g., "Advanced"), and a specific license.
-- **Validation**: Verify the URL search params correctly reflect the selected filters (e.g., `?categories=Web&difficulties=Advanced`).
-- **Action**: Reload the page (`await page.reload()`).
-- **Validation**: Verify the filters are preserved from the URL on reload.
-- **Action**: Click "Clear Filters". Ensure the URL resets and the grid repopulates.
+### 2.5 Complex Filtering Combinations
+- **Action**: Select a Category ("Web"), a Difficulty ("Advanced"), and a specific license from filters.
+- **Validation**: Verify URL search params update. Reload page, verify filters persist from URL. Click "Clear Filters", verify URL resets.
 
-### 6. Alternatives Database E2E
+### 2.6 Alternatives UI: Masonry Grid & Learning Hub
 - **Action**: Navigate to `/alternatives`.
-- **Validation**: Confirm that tabular data representing "Paid vs Free" is rendered.
-- **Validation**: Check that the table supports scrolling if there are many rows, and that columns are aligned.
-- **Validation**: Click an external link inside the alternatives list (if available) and ensure it opens correctly (or has `target="_blank"`).
+- **Validation**: Confirm the ultra-dense Masonry Grid renders. Verify that Category filters on the left sidebar are sticky on desktop.
+- **Action**: Click a Category filter (e.g., "API Gateway"). Verify the grid updates immediately without a full page reload.
+- **Action**: Click an Alternative Card. Verify the "Learning Hub" Modal opens.
+- **Validation**: Inside the Modal, verify Pros & Cons render correctly. Verify the YouTube Crash Course button opens a new tab safely (`target="_blank"`). Verify Migration Difficulty and Feature Parity bars render correctly.
+- **Action**: Click the close button or background. Verify the Modal closes.
 
-### 7. Repository Details (Deep Links & UI)
+### 2.7 Repository Details (Deep Links & UI)
 - **Action**: Navigate to `/` and click a repository card.
-- **Validation**: Ensure the URL updates to `/repo/:owner/:name`.
-- **Validation**: Verify the repository header, star count, forks, and badges load properly.
-- **Validation**: Check that the README markdown is rendered correctly (headers, code blocks, lists).
-- **Action**: Click the browser "Back" button.
-- **Validation**: Ensure you return to the exact scroll position and filter state on the home page.
+- **Validation**: URL updates to `/repo/:owner/:name`. Headers, stars, forks load. README markdown renders code blocks correctly.
+- **Action**: Click "Back". Verify you return to exact scroll position.
 
-### 8. Bookmarks Lifecycle (Local Storage & State)
-- **Action**: Bookmark 3 separate repositories from the grid.
-- **Action**: Navigate to `/bookmarks`. Verify exactly 3 cards exist.
-- **Action**: Reload the page to test `localStorage` persistence.
-- **Validation**: Verify the 3 cards still exist.
-- **Action**: Un-bookmark one card from the `/bookmarks` page.
-- **Validation**: Ensure the card is immediately removed from the DOM.
+### 2.8 Bookmarks Lifecycle (Local Storage)
+- **Action**: Bookmark 3 repositories. Go to `/bookmarks`, verify exactly 3 exist.
+- **Action**: Reload page. Verify 3 cards still exist (LocalStorage persists).
+- **Action**: Un-bookmark one. Verify it is immediately removed from the DOM.
 
-### 9. Forms & Validation (Boundary Testing)
-- **Action**: Navigate to `/contact`.
-- **Action**: Click "Submit" with an empty form.
-- **Validation**: Verify inline validation errors appear for required fields.
-- **Action**: Enter an invalid email (`"test@com"`) and submit.
-- **Validation**: Verify email formatting validation fires.
-- **Action**: Fill the form perfectly and submit.
-- **Validation**: Verify a success toast/notification or confirmation message appears.
+### 2.9 Forms & Boundary Testing
+- **Action**: Navigate to `/contact`. Submit empty. Verify inline errors.
+- **Action**: Submit invalid email (`test@com`). Verify formatting error.
+- **Action**: Submit a massive string (10,000 characters) in the message body. Verify the form truncates it or handles it gracefully without a 500 error.
 
-### 10. Theming & CSS Variables
-- **Action**: Toggle the theme using the header button to "Dark".
-- **Validation**: Verify the `<html>` or `<body>` tag receives a `dark` class or data-attribute. Check that background colors change visually via a screenshot.
-- **Action**: Reload the page.
-- **Validation**: Ensure "Dark" theme persists across reloads via localStorage.
+### 2.10 Theming & CSS Variables
+- **Action**: Toggle theme to "Dark". Verify `<html>` receives `dark` class.
+- **Action**: Reload page. Verify Dark theme persists.
 
-### 11. Mobile Responsiveness & Touch Targets
-- **Action**: Resize browser to `375x812` (iPhone X).
-- **Validation**: Verify the top navigation collapses into a hamburger menu.
-- **Action**: Click the hamburger menu.
-- **Validation**: Verify the mobile drawer/menu opens properly and links are clickable.
-- **Validation**: Verify that repository cards stack in a single column instead of a multi-column grid.
+### 2.11 Mobile Responsiveness (Viewport Testing)
+- **Action**: Resize browser to `375x812` (iPhone X) using `browser_resize`.
+- **Validation**: Verify hamburger menu appears. Click it, verify drawer opens. Verify grid collapses to single-column.
 
-### 12. Keyboard Accessibility (a11y)
+### 2.12 Keyboard Accessibility (a11y)
 - **Action**: Go to `/` and press the `Tab` key multiple times.
-- **Validation**: Verify that focus indicators (outlines) are visible on interactive elements (links, inputs, buttons).
-- **Action**: Focus the search bar via `Tab`, type "test", and press `Enter`.
-- **Validation**: Verify the form submits or filters correctly without mouse interaction.
+- **Validation**: Verify focus indicators are visible on links/inputs.
 
-### 13. API Failure Resilience (Mocking)
-- **Action**: Use Playwright's network interception (`browser_evaluate` or via standard routing if supported) to block or mock a 500 error on the main `/api/functions/queryRepositories` endpoint.
-- **Action**: Reload the homepage.
-- **Validation**: Verify the application does not crash to a blank white screen, but instead shows a graceful error boundary or "Failed to load data" message.
+### 2.13 API Failure Resilience & Error Boundaries
+- **Action**: Use Playwright's network interception (`browser_evaluate` or standard routing) to block or mock a 500 error on the main backend endpoint.
+- **Action**: Reload homepage.
+- **Validation**: Verify app shows a graceful error boundary ("Failed to load data") instead of a blank screen.
 
-## Execution Workflow
+### 2.14 Offline Mode Resilience (NEW)
+- **Action**: Use `browser_evaluate` to simulate offline mode or disable network via MCP.
+- **Action**: Attempt to navigate to a previously visited page (like `/bookmarks`).
+- **Validation**: Verify if the app caches the UI shell or shows a friendly "You are offline" message instead of a browser dinosaur page.
 
-1. Execute all 13 granular test scenarios sequentially.
-2. If an element cannot be clicked via `browser_click`, use `browser_evaluate` as a fallback to trigger DOM events manually.
+---
+
+## Execution Workflow & Reporting
+
+1. Ensure dev server runs.
+2. Execute ALL 14 granular scenarios sequentially. Do not skip any.
 3. Record all visual discrepancies, layout shifts, or console errors.
-4. **Reporting**: After completing all scenarios, compile all findings, successes, failures, and captured screenshots into a comprehensive artifact named `qa_report_exhaustive_v2.md`. DO NOT stop or ask for permission during the execution; run the entire test autonomously.
+4. **Reporting**: Compile findings into `qa_report_comprehensive.md`. Include Pass/Fail, specific LCP/Web Vitals metrics, OWASP findings, and actionable remediation steps. DO NOT stop or ask for permission; run it autonomously.

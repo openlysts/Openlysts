@@ -3,7 +3,6 @@ import queryRepositories from '../functions/queryRepositories.js';
 import runIngestion from '../functions/runIngestion.js';
 import recalculateScores from '../functions/recalculateScores.js';
 import reclassifyRepos from '../functions/reclassifyRepos.js';
-import getMyTasks from '../functions/getMyTasks.js';
 import inviteUser from '../functions/inviteUser.js';
 import getRepoVideos from '../functions/getRepoVideos.js';
 import getRepoReadme from '../functions/getRepoReadme.js';
@@ -20,7 +19,6 @@ const fns = {
   runIngestion,
   recalculateScores,
   reclassifyRepos,
-  getMyTasks,
   inviteUser,
   getRepoVideos,
   getRepoReadme,

@@ -5,7 +5,7 @@ import {
 } from 'lucide-react';
 import { getSettings, saveSettings, clearSettings } from '@/lib/settings';
 import { updateConfig } from '@/lib/api';
-import { getBookmarks, clearBookmarks } from '@/lib/bookmarks';
+import { clearBookmarks } from '@/lib/bookmarks';
 import { useToast } from '@/components/ui/use-toast';
 
 export default function Settings() {

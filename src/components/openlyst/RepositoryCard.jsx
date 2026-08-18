@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Star, GitFork, Bookmark, Flame, AlertCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { getLanguageColor } from '@/lib/languageColors';
@@ -72,9 +72,12 @@ export default function RepositoryCard({ repo, index = 0 }) {
           }
 
           {/* Name + owner */}
-          <div className="mb-1.5 pr-8">
-            <h3 className="font-semibold text-text text-[15px] leading-snug truncate">{repo.name}</h3>
-            <p className="text-text-muted text-xs mt-0.5 truncate">{repo.owner}</p>
+          <div className="flex justify-between items-start mb-1.5 pr-8">
+            <div className="min-w-0">
+              <h3 className="font-semibold text-text text-[15px] leading-snug truncate">{repo.name}</h3>
+              <p className="text-text-muted text-xs mt-0.5 truncate">{repo.owner}</p>
+            </div>
+            <LicenseBadge repo={repo} />
           </div>
 
           {/* Description */}
@@ -141,9 +144,8 @@ export default function RepositoryCard({ repo, index = 0 }) {
             }
           </div>
 
-          {/* Footer: license + updated */}
-          <div className="flex items-center justify-between gap-2 pt-2.5 border-t border-border">
-            <LicenseBadge repo={repo} />
+          {/* Footer: updated */}
+          <div className="flex items-center justify-end gap-2 pt-2.5 border-t border-border">
             <span className="text-[11px] text-text-muted">
               {repo.archived && <AlertCircle className="w-3 h-3 inline mr-1 text-nonoss" />}
               {timeAgo(repo.github_updated_at)}

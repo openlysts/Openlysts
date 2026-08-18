@@ -8,7 +8,7 @@ const LANGUAGE_COLORS = {
   Svelte: '#ff3e00', Jupyter: '#DA5B0B', Lua: '#000080', R: '#198CE7',
   Elixir: '#6e4a7e', Haskell: '#5e5086', Clojure: '#db5855', Zig: '#ec915c',
   Nim: '#ffc200', Crystal: '#000100', OCaml: '#3be133', 'Objective-C': '#438eff',
-  Perl: '#0298c3', Julia: '#a270ba', D: '#ba595e', Nim: '#ffc200',
+  Perl: '#0298c3', Julia: '#a270ba', D: '#ba595e',
   PowerShell: '#012456', Makefile: '#427819', Dockerfile: '#384d54',
   'Jupyter Notebook': '#DA5B0B', Astro: '#ff5a03', Solidity: '#AA6746',
 };

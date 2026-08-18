@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { localClient } from '@/api/localClient';
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import { Star, GitFork, AlertCircle, Calendar, Clock, ExternalLink, ArrowLeft, Bookmark, Flame, TrendingUp, Activity, ShieldCheck, HelpCircle, XCircle, CopyPlus, Sparkles } from 'lucide-react';
+import { Star, GitFork, AlertCircle, Calendar, Clock, ExternalLink, ArrowLeft, Bookmark, Flame, TrendingUp, Activity, ShieldCheck, CopyPlus, Sparkles } from 'lucide-react';
 import { getLanguageColor } from '@/lib/languageColors';
 import { isBookmarked, toggleBookmark } from '@/lib/bookmarks';
 import { getRepoReadme, getSimilarRepos, getRepoHistory } from '@/lib/api';
@@ -45,13 +45,11 @@ export default function RepoDetail() {
 
   const { data: repo, isLoading } = useQuery({
     queryKey: ['repo', owner, name],
+    /** @returns {Promise<any>} */
     queryFn: async () => {
       const results = await localClient.entities.Repository.filter({ full_name: `${owner}/${name}` }, '-stars', 5);
       return results[0] || null;
-    },
-    onSuccess: (data) => {
-      if (data) setBookmarked(isBookmarked(data.id));
-    },
+    }
   });
 
   const { data: readme, isLoading: isReadmeLoading } = useQuery({
@@ -90,6 +88,7 @@ export default function RepoDetail() {
 
   useEffect(() => {
     if (repo) {
+      setBookmarked(isBookmarked(repo.id));
       document.title = `Openlysts — ${repo.name} | Open-Source Discovery`;
     }
   }, [repo]);

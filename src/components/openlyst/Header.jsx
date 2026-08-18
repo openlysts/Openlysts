@@ -1,10 +1,10 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { Bookmark, Github, Menu, X, Settings as SettingsIcon, Smartphone, Monitor } from 'lucide-react';
+import { Bookmark, Menu, X, Settings as SettingsIcon, Smartphone, Monitor, Search } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
-import AnimatedSearch from './AnimatedSearch';
 import { getBookmarks } from '@/lib/bookmarks';
 import { useMobileLayout } from '@/lib/MobileLayoutContext';
+import CommandPalette from './CommandPalette';
 
 const NAV = [
 { to: '/', label: 'Discover' },
@@ -62,9 +62,23 @@ export default function Header() {
             })}
           </nav>
 
-          {/* Search (desktop) - Hidden on Home page */}
+          {/* Search (desktop) */}
           {location.pathname !== '/' && (
-            <AnimatedSearch className="hidden lg:flex flex-1 max-w-xs ml-4" />
+            <div 
+              className="relative hidden md:block w-64 group cursor-text"
+              onClick={() => {
+                const event = new KeyboardEvent('keydown', { key: 'k', metaKey: true });
+                window.dispatchEvent(event);
+              }}
+            >
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted group-hover:text-accent transition-colors" />
+              <div className="w-full bg-bg-subtle border border-border rounded-xl pl-10 pr-4 py-2 text-sm text-text-muted flex items-center justify-between transition-colors group-hover:border-accent/50 group-hover:bg-bg-hover">
+                <span>Search openlysts...</span>
+                <kbd className="hidden lg:inline-flex items-center gap-1 font-mono text-[10px] bg-bg border border-border px-1.5 py-0.5 rounded text-text-muted font-medium">
+                  <span className="text-xs">⌘</span>K
+                </kbd>
+              </div>
+            </div>
           )}
 
           {/* Right actions */}
@@ -101,7 +115,6 @@ export default function Header() {
         {/* Mobile menu */}
         {mobileOpen &&
         <div className="md:hidden pb-4 space-y-3">
-            {location.pathname !== '/' && <AnimatedSearch />}
             <nav className="flex flex-col gap-1">
               {NAV.map((item) => {
               const active = location.pathname === item.to;
@@ -121,6 +134,7 @@ export default function Header() {
           </div>
         }
       </div>
+      <CommandPalette />
     </header>);
 
 }

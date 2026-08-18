@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { Search, Sparkles, Clock, TrendingUp, ArrowRight, Database, RefreshCw } from 'lucide-react';
+import { Sparkles, Clock, TrendingUp, ArrowRight, Database, RefreshCw } from 'lucide-react';
 import { queryRepos } from '@/lib/api';
 
 import RepositoryGrid from '@/components/openlyst/RepositoryGrid';
@@ -54,7 +54,7 @@ export default function Home() {
     if (newFilters.activity) params.set('activity', newFilters.activity);
     
     // Only navigate if a filter was actually selected
-    if (Array.from(params.keys()).length > 0) {
+    if (params.toString().length > 0) {
       navigate(`/search?${params.toString()}`);
     }
   };
