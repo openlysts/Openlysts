@@ -3,6 +3,8 @@ import { slugToLabel } from '../shared/openlyst.js';
 
 const PER_PAGE = 24;
 
+import { githubFetch, ingestRepoItem } from './runIngestion.js';
+
 export default async function queryRepositories(req, res) {
   try {
     const body = req.body || {};
@@ -12,12 +14,33 @@ export default async function queryRepositories(req, res) {
       categories = [],
       languages = [],
       licenses = [],
+      difficulties = [],
       minStars = 0,
       updatedWithin = '',
       activity = '',
       sort = 'trending',
       page = 1,
     } = body;
+
+    const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+
+    // Fallback: If page 1, search is active, and we have a token, do an async fetch to github 
+    // to populate the database for this search.
+    if (page === 1 && q.trim() && GITHUB_TOKEN) {
+      try {
+        const queryStr = q.trim();
+        // Fire and wait for the top 30 results
+        const url = `https://api.github.com/search/repositories?q=${encodeURIComponent(queryStr)}&sort=stars&order=desc&per_page=30`;
+        const data = await githubFetch(url, GITHUB_TOKEN, 1);
+        if (data && data.items) {
+          for (const item of data.items) {
+            await ingestRepoItem(item);
+          }
+        }
+      } catch (err) {
+        console.error('GitHub fallback search failed:', err.message);
+      }
+    }
 
     const allRepos = await entities.Repository.list('-created_date', 3000);
     let repos = allRepos.filter((r) => !r.hidden);
@@ -47,6 +70,10 @@ export default async function queryRepositories(req, res) {
     if (licenses && licenses.length > 0) {
       repos = repos.filter((r) => licenses.includes(r.license_status));
     }
+    
+    if (difficulties && difficulties.length > 0) {
+      repos = repos.filter((r) => difficulties.includes(r.difficulty));
+    }
 
     if (minStars && minStars > 0) {
       repos = repos.filter((r) => (r.stars || 0) >= minStars);
@@ -71,10 +98,10 @@ export default async function queryRepositories(req, res) {
     }
 
     const sortFns = {
-      trending: (a, b) => (b.trending_score || 0) - (a.trending_score || 0),
-      stars: (a, b) => (b.stars || 0) - (a.stars || 0),
-      updated: (a, b) => new Date(b.github_updated_at || 0).getTime() - new Date(a.github_updated_at || 0).getTime(),
-      recent: (a, b) => new Date(b.last_ingested_at || 0).getTime() - new Date(a.last_ingested_at || 0).getTime(),
+      trending: (a, b) => (b.trending_score || 0) - (a.trending_score || 0) || a.id.localeCompare(b.id),
+      stars: (a, b) => (b.stars || 0) - (a.stars || 0) || a.id.localeCompare(b.id),
+      updated: (a, b) => new Date(b.github_updated_at || 0).getTime() - new Date(a.github_updated_at || 0).getTime() || a.id.localeCompare(b.id),
+      recent: (a, b) => new Date(b.last_ingested_at || 0).getTime() - new Date(a.last_ingested_at || 0).getTime() || a.id.localeCompare(b.id),
     };
     repos.sort(sortFns[sort] || sortFns.trending);
 

@@ -13,8 +13,7 @@ import AdminRoute from './components/openlyst/AdminRoute';
 import Home from './pages/Home';
 import Search from './pages/Search';
 import RepoDetail from './pages/RepoDetail';
-import CategoryPage from './pages/CategoryPage';
-import Categories from './pages/Categories';
+import Alternatives from './pages/Alternatives';
 import Trending from './pages/Trending';
 import Bookmarks from './pages/Bookmarks';
 import About from './pages/About';
@@ -52,8 +51,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/search" element={<Search />} />
                 <Route path="/repo/:owner/:name" element={<RepoDetail />} />
-                <Route path="/category/:slug" element={<CategoryPage />} />
-                <Route path="/categories" element={<Categories />} />
+                <Route path="/alternatives" element={<Alternatives />} />
                 <Route path="/trending" element={<Trending />} />
                 <Route path="/bookmarks" element={<Bookmarks />} />
                 <Route path="/about" element={<About />} />

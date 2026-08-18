@@ -143,3 +143,27 @@ export function labelToSlug(label) {
   const cat = CATEGORIES.find((c) => c.label === label);
   return cat ? cat.slug : label.toLowerCase().replace(/\s+/g, "-");
 }
+
+export function autoClassifyDifficulty(repo) {
+  const topics = (repo.topics || []).map((t) => t.toLowerCase());
+  const desc = (repo.description || "").toLowerCase();
+  
+  if (topics.includes('good-first-issue') || topics.includes('beginner-friendly') || topics.includes('education') || topics.includes('tutorial') || topics.includes('learning')) {
+    return 'Beginner';
+  }
+  if (desc.includes('beginner friendly') || desc.includes('good first issue')) {
+    return 'Beginner';
+  }
+  
+  if (topics.includes('kernel') || topics.includes('operating-system') || topics.includes('compiler') || topics.includes('distributed-systems') || repo.language === 'C' || repo.language === 'Rust' || repo.language === 'C++') {
+    if (repo.stars > 5000) {
+      return 'Pro';
+    }
+  }
+  
+  if (repo.open_issues > 1000) {
+    return 'Pro';
+  }
+  
+  return 'Intermediate';
+}

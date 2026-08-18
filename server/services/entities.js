@@ -165,5 +165,6 @@ export const entities = {
   DiscoveryQuery: new EntityService('DiscoveryQuery'),
   Ping: new EntityService('Ping'),
   Update: new EntityService('Update'),
-  Invitation: new EntityService('Invitation')
+  Invitation: new EntityService('Invitation'),
+  Alternative: new EntityService('Alternative')
 };

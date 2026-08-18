@@ -128,7 +128,8 @@ export function initSchema(db) {
       trending_score REAL,
       stars_gained_24h INTEGER,
       stars_gained_7d INTEGER,
-      stars_gained_30d INTEGER
+      stars_gained_30d INTEGER,
+      difficulty TEXT
     );
   `);
 

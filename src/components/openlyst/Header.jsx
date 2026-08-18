@@ -8,7 +8,7 @@ import { useMobileLayout } from '@/lib/MobileLayoutContext';
 
 const NAV = [
 { to: '/', label: 'Discover' },
-{ to: '/categories', label: 'Categories' },
+{ to: '/alternatives', label: 'Alternatives' },
 { to: '/trending', label: 'Trending' },
 { to: '/bookmarks', label: 'Bookmarks' },
 { to: '/about', label: 'About' },

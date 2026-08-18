@@ -18,10 +18,10 @@ export default function About() {
         <h1 className="text-4xl md:text-5xl font-extrabold text-text mb-6 tracking-tight">About Openlyst</h1>
         <div className="text-text-secondary text-lg md:text-xl leading-relaxed max-w-2xl mx-auto space-y-6">
           <p>
-            Openlyst is a discovery engine for open-source software. It continuously scans GitHub, indexes high-quality repositories, verifies their licenses against OSI-recognized standards, and organizes them into intuitive categories — so you can find the right project in seconds instead of scrolling endlessly through search results.
+            Openlyst is a discovery engine for open-source software. It continuously scans GitHub, surfacing everything on Git — from high-quality curated repositories to vast unmapped projects — verifying licenses when applicable, and organizing them into intuitive categories so you can find the right project in seconds instead of scrolling endlessly through search results.
           </p>
           <p>
-            Built for developers, technical leads, and open-source enthusiasts, Openlyst helps you cut through the noise of GitHub's massive catalog. Whether you are looking for a local LLM to run privately, a self-hosted alternative to a SaaS tool, a developer productivity booster, or a framework for your next project, Openlyst surfaces repositories that are actively maintained, genuinely useful, and properly licensed.
+            Built for developers, technical leads, and open-source enthusiasts, Openlyst helps you cut through the noise of GitHub's massive catalog. Whether you are looking for a local LLM to run privately, a self-hosted alternative to a SaaS tool, a developer productivity booster, or a framework for your next project, Openlyst surfaces repositories that are actively maintained and genuinely useful.
           </p>
           <p>
             The platform is built and maintained by the Openlyst team, with data ingested and refreshed from GitHub every few hours. Trending scores highlight projects gaining momentum right now, while quality scores factor in documentation, community engagement, and maintenance activity — so you can trust that what you find is worth your time.

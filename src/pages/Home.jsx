@@ -1,9 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { Search, Sparkles, Clock, TrendingUp, ArrowRight, Database } from 'lucide-react';
+import { Search, Sparkles, Clock, TrendingUp, ArrowRight, Database, RefreshCw } from 'lucide-react';
 import { queryRepos } from '@/lib/api';
-import CategoryPills from '@/components/openlyst/CategoryPills';
+
 import RepositoryGrid from '@/components/openlyst/RepositoryGrid';
 import AnimatedSearch from '@/components/openlyst/AnimatedSearch';
 import { Link } from 'react-router-dom';
@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 export default function Home() {
   const navigate = useNavigate();
 
-  const { data: trending, isLoading: tLoading } = useQuery({
+  const { data: trending, isLoading: tLoading, refetch: refetchTrending, isRefetching: tRefetching } = useQuery({
     queryKey: ['home-trending'],
     queryFn: () => queryRepos({ sort: 'trending', page: 1 }),
     refetchInterval: 60000
@@ -44,10 +44,10 @@ export default function Home() {
             Discover. Filter. Build.
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-text leading-tight mb-4 [font-family:'Bungee',_system-ui]">
-            Discover the open-source projects worth knowing.
+            Discover everything on GitHub.
           </h1>
           <p className="text-text-secondary text-base sm:text-lg leading-relaxed mb-8 max-w-2xl mx-auto">
-            Explore high-quality open-source software across AI, local models, developer tools, self-hosting, web applications, and more.
+            Explore and search high-quality open-source software across AI, developer tools, self-hosting, and the vast expanse of GitHub.
           </p>
         </motion.div>
 
@@ -62,10 +62,7 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* Category pills */}
-      <section className="py-4">
-        <CategoryPills />
-      </section>
+
 
       {!hasData && !tLoading && !rLoading ?
       <div className="flex flex-col items-center justify-center py-20 text-center animate-pulse">
@@ -81,6 +78,14 @@ export default function Home() {
               <h2 className="flex items-center gap-2 text-xl font-bold text-text">
                 <TrendingUp className="w-5 h-5 text-trending" />
                 Trending This Week
+                <button 
+                  onClick={() => refetchTrending()} 
+                  disabled={tRefetching}
+                  className="ml-2 p-1 text-text-muted hover:text-text rounded-md hover:bg-bg-subtle transition-colors"
+                  title="Refresh Trending"
+                >
+                  <RefreshCw className={`w-4 h-4 ${tRefetching ? 'animate-spin' : ''}`} />
+                </button>
               </h2>
               <Link to="/trending" className="text-sm text-text-muted hover:text-text flex items-center gap-1">
                 View all <ArrowRight className="w-3.5 h-3.5" />

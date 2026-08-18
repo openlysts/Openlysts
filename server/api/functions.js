@@ -11,6 +11,7 @@ import getSimilarRepos from '../functions/getSimilarRepos.js';
 import getRepoHistory from '../functions/getRepoHistory.js';
 import translateText from '../functions/translateText.js';
 import updateConfig from '../functions/updateConfig.js';
+import queryAlternatives from '../functions/queryAlternatives.js';
 
 const router = express.Router();
 
@@ -26,7 +27,8 @@ const fns = {
   getSimilarRepos,
   getRepoHistory,
   translateText,
-  updateConfig
+  updateConfig,
+  queryAlternatives
 };
 
 router.post('/:name', async (req, res, next) => {
