@@ -1,0 +1,71 @@
+- generic [ref=f8e4]:
+  - banner [ref=f8e5]:
+    - generic [ref=f8e7]:
+      - link "Openlysts Openlysts" [ref=f8e8] [cursor=pointer]:
+        - /url: /
+        - img "Openlysts" [ref=f8e10]
+        - generic [ref=f8e11]: Openlysts
+      - navigation [ref=f8e12]:
+        - link "Discover" [ref=f8e13] [cursor=pointer]:
+          - /url: /
+        - link "Alternatives" [ref=f8e14] [cursor=pointer]:
+          - /url: /alternatives
+        - link "Trending" [ref=f8e15] [cursor=pointer]:
+          - /url: /trending
+        - link "Bookmarks" [ref=f8e16] [cursor=pointer]:
+          - /url: /bookmarks
+        - link "About" [ref=f8e17] [cursor=pointer]:
+          - /url: /about
+        - link "Contact" [ref=f8e18] [cursor=pointer]:
+          - /url: /contact
+      - generic [ref=f8e19]:
+        - link "Bookmarks" [ref=f8e20] [cursor=pointer]:
+          - /url: /bookmarks
+        - link "Settings" [ref=f8e23] [cursor=pointer]:
+          - /url: /settings
+        - button "Switch to Mobile Layout" [ref=f8e27] [cursor=pointer]
+        - button "Toggle theme" [ref=f8e31] [cursor=pointer]
+  - main [ref=f8e38]:
+    - generic [ref=f8e39]:
+      - generic [ref=f8e40]:
+        - generic [ref=f8e41]:
+          - generic [ref=f8e42]: Discover. Filter. Build.
+          - heading "Discover everything on GitHub." [level=1] [ref=f8e45]
+          - paragraph [ref=f8e46]: Explore and search high-quality open-source software across AI, developer tools, self-hosting, and the vast expanse of GitHub.
+        - textbox "Search open-source projects..." [ref=f8e50]
+        - generic [ref=f8e53]:
+          - generic [ref=f8e54]:
+            - generic [ref=f8e55]: "Sort:"
+            - combobox [ref=f8e56] [cursor=pointer]:
+              - option "Trending" [selected]
+              - option "Most Stars"
+              - option "Recently Updated"
+              - option "Recently Added"
+          - button "Categories" [ref=f8e58] [cursor=pointer]
+          - button "Filters" [ref=f8e61] [cursor=pointer]
+      - generic [ref=f8e65]:
+        - generic [ref=f8e67]:
+          - heading [level=2] [ref=f8e68]:
+            - text: Trending This Week
+            - button "Refresh Trending" [ref=f8e72] [cursor=pointer]
+          - link "View all" [ref=f8e78] [cursor=pointer]:
+            - /url: /trending
+        - heading "Recently Discovered" [level=2] [ref=f8e132]
+        - generic [ref=f8e186]:
+          - heading "Popular in AI" [level=2] [ref=f8e187]
+          - link "View all" [ref=f8e190] [cursor=pointer]:
+            - /url: /search?categories=ai
+  - contentinfo [ref=f8e243]:
+    - generic [ref=f8e245]:
+      - generic [ref=f8e246]:
+        - img "Openlysts" [ref=f8e247]
+        - generic [ref=f8e248]: Openlysts
+        - generic [ref=f8e249]: — Discover. Filter. Build.
+      - generic [ref=f8e250]:
+        - link "About" [ref=f8e251] [cursor=pointer]:
+          - /url: /about
+        - link "Contact" [ref=f8e252] [cursor=pointer]:
+          - /url: /contact
+        - link "Trending" [ref=f8e253] [cursor=pointer]:
+          - /url: /trending
+      - paragraph [ref=f8e254]: Built with for open source

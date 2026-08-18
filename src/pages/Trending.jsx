@@ -15,6 +15,7 @@ export default function Trending() {
     categories: searchParams.get('categories')?.split(',').filter(Boolean) || [],
     languages: searchParams.get('languages')?.split(',').filter(Boolean) || [],
     licenses: searchParams.get('licenses')?.split(',').filter(Boolean) || [],
+    difficulties: searchParams.get('difficulties')?.split(',').filter(Boolean) || [],
     minStars: parseInt(searchParams.get('minStars') || '0') || 0,
     updatedWithin: searchParams.get('updatedWithin') || '7d',
     activity: searchParams.get('activity') || '',
@@ -33,6 +34,7 @@ export default function Trending() {
     if (newFilters.categories?.length) params.set('categories', newFilters.categories.join(','));
     if (newFilters.languages?.length) params.set('languages', newFilters.languages.join(','));
     if (newFilters.licenses?.length) params.set('licenses', newFilters.licenses.join(','));
+    if (newFilters.difficulties?.length) params.set('difficulties', newFilters.difficulties.join(','));
     if (newFilters.minStars > 0) params.set('minStars', String(newFilters.minStars));
     if (newFilters.updatedWithin && newFilters.updatedWithin !== '7d') params.set('updatedWithin', newFilters.updatedWithin);
     if (newFilters.activity) params.set('activity', newFilters.activity);

@@ -27,19 +27,20 @@ export default async function queryRepositories(req, res) {
     // Fallback: If page 1, search is active, and we have a token, do an async fetch to github 
     // to populate the database for this search.
     if (page === 1 && q.trim() && GITHUB_TOKEN) {
-      try {
-        const queryStr = q.trim();
-        // Fire and wait for the top 30 results
-        const url = `https://api.github.com/search/repositories?q=${encodeURIComponent(queryStr)}&sort=stars&order=desc&per_page=30`;
-        const data = await githubFetch(url, GITHUB_TOKEN, 1);
+      const queryStr = q.trim();
+      const url = `https://api.github.com/search/repositories?q=${encodeURIComponent(queryStr)}&sort=stars&order=desc&per_page=30`;
+      
+      // Fire-and-forget background ingestion so we don't block the API response
+      // if GitHub rate limits us.
+      githubFetch(url, GITHUB_TOKEN, 1).then(async (data) => {
         if (data && data.items) {
           for (const item of data.items) {
             await ingestRepoItem(item);
           }
         }
-      } catch (err) {
-        console.error('GitHub fallback search failed:', err.message);
-      }
+      }).catch(err => {
+        console.error('GitHub fallback search failed in background:', err.message);
+      });
     }
 
     const allRepos = await entities.Repository.list('-created_date', 3000);

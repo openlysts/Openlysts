@@ -7,16 +7,13 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-accent flex items-center justify-center">
-              <Github className="w-4 h-4 text-accent-fg" />
-            </div>
-            <span className="font-bold text-text">Openlyst</span>
+            <img src="/logo.png" alt="Openlysts" className="w-7 h-7 rounded-lg object-contain bg-white" />
+            <span className="font-bold text-text">Openlysts</span>
             <span className="text-text-muted text-sm ml-1">— Discover. Filter. Build.</span>
           </div>
           <div className="flex items-center gap-5 text-sm text-text-muted">
             <Link to="/about" className="hover:text-text">About</Link>
             <Link to="/contact" className="hover:text-text">Contact</Link>
-            <Link to="/categories" className="hover:text-text">Categories</Link>
             <Link to="/trending" className="hover:text-text">Trending</Link>
           </div>
           <p className="text-xs text-text-muted flex items-center gap-1.5">

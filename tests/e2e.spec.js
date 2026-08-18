@@ -6,7 +6,7 @@ test.describe('Openlyst Golden Path E2E', () => {
   test('Full UI and State Flow', async ({ page, request }) => {
     // 1. Discovery & Navigation
     await page.goto('/');
-    await expect(page).toHaveTitle(/Openlyst/i);
+    await expect(page).toHaveTitle(/Openlysts/i);
     
     // Check main nav links
     await expect(page.locator('nav a', { hasText: 'Categories' })).toBeVisible();

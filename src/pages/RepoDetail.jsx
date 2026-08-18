@@ -90,7 +90,7 @@ export default function RepoDetail() {
 
   useEffect(() => {
     if (repo) {
-      document.title = `Openlyst — ${repo.name} | Open-Source Discovery`;
+      document.title = `Openlysts — ${repo.name} | Open-Source Discovery`;
     }
   }, [repo]);
 

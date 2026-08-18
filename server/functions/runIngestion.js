@@ -62,7 +62,6 @@ export async function githubFetch(url, token, retries = 3) {
       if (attempt === retries - 1) throw err;
       await new Promise((r) => setTimeout(r, Math.pow(2, attempt) * 1000));
     }
-    }
   }
   throw new Error('GitHub API request failed after retries');
 }

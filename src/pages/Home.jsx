@@ -6,7 +6,10 @@ import { queryRepos } from '@/lib/api';
 
 import RepositoryGrid from '@/components/openlyst/RepositoryGrid';
 import AnimatedSearch from '@/components/openlyst/AnimatedSearch';
+import FilterBar from '@/components/openlyst/FilterBar';
 import { Link } from 'react-router-dom';
+
+const LANGUAGES = ['Python', 'JavaScript', 'TypeScript', 'Go', 'Rust', 'Java', 'C++', 'C', 'Ruby', 'PHP', 'Swift', 'Kotlin', 'Shell', 'Vue', 'HTML', 'Dart'];
 
 export default function Home() {
   const navigate = useNavigate();
@@ -29,6 +32,32 @@ export default function Home() {
 
 
   const hasData = (trending?.results?.length || 0) > 0 || (recent?.results?.length || 0) > 0;
+
+  const emptyFilters = {
+    categories: [],
+    languages: [],
+    licenses: [],
+    difficulties: [],
+    minStars: 0,
+    updatedWithin: '',
+    activity: '',
+  };
+
+  const updateFilters = (newFilters) => {
+    const params = new URLSearchParams();
+    if (newFilters.categories?.length) params.set('categories', newFilters.categories.join(','));
+    if (newFilters.languages?.length) params.set('languages', newFilters.languages.join(','));
+    if (newFilters.licenses?.length) params.set('licenses', newFilters.licenses.join(','));
+    if (newFilters.difficulties?.length) params.set('difficulties', newFilters.difficulties.join(','));
+    if (newFilters.minStars > 0) params.set('minStars', String(newFilters.minStars));
+    if (newFilters.updatedWithin) params.set('updatedWithin', newFilters.updatedWithin);
+    if (newFilters.activity) params.set('activity', newFilters.activity);
+    
+    // Only navigate if a filter was actually selected
+    if (Array.from(params.keys()).length > 0) {
+      navigate(`/search?${params.toString()}`);
+    }
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 rounded-lg">
@@ -56,9 +85,19 @@ export default function Home() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.1 }}
-          className="max-w-xl mx-auto z-30 relative">
+          className="max-w-xl mx-auto z-30 relative mb-8">
           
           <AnimatedSearch size="lg" />
+        </motion.div>
+
+        {/* Global Filter Bar */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.2 }}
+          className="max-w-4xl mx-auto text-left"
+        >
+          <FilterBar filters={emptyFilters} onChange={updateFilters} languages={LANGUAGES} />
         </motion.div>
       </section>
 
@@ -112,7 +151,7 @@ export default function Home() {
                 <Sparkles className="w-5 h-5 text-accent" />
                 Popular in AI
               </h2>
-              <Link to="/category/ai" className="text-sm text-text-muted hover:text-text flex items-center gap-1">
+              <Link to="/search?categories=ai" className="text-sm text-text-muted hover:text-text flex items-center gap-1">
                 View all <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>

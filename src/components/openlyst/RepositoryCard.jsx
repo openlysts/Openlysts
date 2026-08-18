@@ -1,11 +1,13 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Star, GitFork, Bookmark, Flame, AlertCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { getLanguageColor } from '@/lib/languageColors';
+import { getDifficultyColor } from '@/lib/difficultyColors';
 import { isBookmarked, toggleBookmark } from '@/lib/bookmarks';
 import { useState } from 'react';
 import LicenseBadge from './LicenseBadge';
 import RepoVideoLinks from './RepoVideoLinks';
+import { CATEGORIES } from '@/lib/categories';
 
 function formatStars(n) {
   if (!n) return '0';
@@ -30,11 +32,16 @@ export default function RepositoryCard({ repo, index = 0 }) {
   const [bookmarked, setBookmarked] = useState(() => isBookmarked(repo.id));
   const isTrending = (repo.trending_score || 0) > 10;
   const langColor = getLanguageColor(repo.language);
+  const navigate = useNavigate();
 
   const handleBookmark = (e) => {
     e.preventDefault();
     e.stopPropagation();
     setBookmarked(toggleBookmark(repo.id));
+  };
+
+  const handleCardClick = () => {
+    navigate(`/repo/${repo.owner}/${repo.name}`);
   };
 
   return (
@@ -43,8 +50,8 @@ export default function RepositoryCard({ repo, index = 0 }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: Math.min(index * 0.04, 0.4) }}>
       
-      <Link to={`/repo/${repo.owner}/${repo.name}`} className="block h-full">
-        <div className="card card-hover h-full flex flex-col p-4 cursor-pointer relative rounded-lg">
+      <div onClick={handleCardClick} className="block h-full cursor-pointer">
+        <div className="card card-hover h-full flex flex-col p-4 relative rounded-lg">
           {/* Bookmark */}
           <button
             onClick={handleBookmark}
@@ -74,6 +81,36 @@ export default function RepositoryCard({ repo, index = 0 }) {
           <p className="text-text-secondary text-sm leading-relaxed line-clamp-2 mb-3 flex-1">
             {repo.description || 'No description available.'}
           </p>
+
+          {/* Difficulty and Categories */}
+          <div className="flex flex-wrap gap-1.5 mb-2.5">
+            {repo.difficulty && (
+              <span
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigate(`/search?difficulties=${repo.difficulty}`);
+                }}
+                className={`px-2 py-0.5 rounded text-[11px] font-semibold uppercase tracking-wider bg-bg-card border hover:opacity-80 transition-opacity ${getDifficultyColor(repo.difficulty)}`}
+              >
+                {repo.difficulty}
+              </span>
+            )}
+            {(repo.categories || []).slice(0, 2).map((cat) => {
+              const slug = CATEGORIES.find(c => c.label === cat)?.slug || cat.toLowerCase().replace(/\s+/g, '-');
+              return (
+                <span
+                  key={cat}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate(`/search?categories=${slug}`);
+                  }}
+                  className="px-2 py-0.5 rounded text-[11px] font-semibold bg-bg-subtle text-text-secondary border border-border hover:bg-bg-hover transition-colors"
+                >
+                  {cat}
+                </span>
+              );
+            })}
+          </div>
 
           {/* Topics */}
           {(repo.topics || []).length > 0 &&
@@ -116,7 +153,7 @@ export default function RepositoryCard({ repo, index = 0 }) {
           {/* Video explanation links */}
           <RepoVideoLinks repo={repo} />
         </div>
-      </Link>
+      </div>
     </motion.div>);
 
 }

@@ -246,9 +246,11 @@ export default function Settings() {
           <Info className="w-4 h-4 text-text-secondary" />
           <h2 className="font-semibold text-text">About</h2>
         </div>
-        <p className="text-sm text-text-secondary leading-relaxed">
-          Openlysts is an open-source discovery engine for GitHub repositories. All settings are stored locally in your browser — no data is sent to any server except when you explicitly trigger an action (like running ingestion).
-        </p>
+        <div className="mt-12 text-center text-text-muted text-sm space-y-4 max-w-xl mx-auto border-t border-border pt-8">
+          <p>
+            Openlysts is an open-source discovery engine for GitHub repositories. All settings are stored locally in your browser — no data is sent to any server except when you explicitly trigger an action (like running ingestion).
+          </p>
+        </div>
       </section>
     </div>
   );

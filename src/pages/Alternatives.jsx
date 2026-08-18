@@ -5,7 +5,7 @@ import RepositoryCard from '@/components/openlyst/RepositoryCard';
 import { Loader2 } from 'lucide-react';
 
 async function fetchAlternatives() {
-  const res = await fetch(import.meta.env.VITE_API_URL + '/api/functions/queryAlternatives', {
+  const res = await fetch('/api/functions/queryAlternatives', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({})

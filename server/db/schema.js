@@ -190,6 +190,15 @@ export function initSchema(db) {
     );
   `);
 
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS Alternative (
+      id TEXT PRIMARY KEY,
+      created_date TEXT,
+      paid_tool_name TEXT,
+      free_tool_repo TEXT
+    );
+  `);
+
   db.exec(`CREATE INDEX IF NOT EXISTS idx_repo_stars ON Repository(stars DESC);`);
   db.exec(`CREATE INDEX IF NOT EXISTS idx_repo_created ON Repository(created_date DESC);`);
   db.exec(`CREATE INDEX IF NOT EXISTS idx_repo_trending ON Repository(trending_score DESC);`);

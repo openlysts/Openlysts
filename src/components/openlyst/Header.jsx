@@ -37,9 +37,11 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-16 gap-4">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 flex-shrink-0">
-            <img src="/logo.png" alt="Openlyst" className="w-8 h-8 rounded-lg object-contain bg-white" />
-            <span className="text-lg font-bold tracking-tight text-text hidden sm:block">Openlyst</span>
+          <Link to="/" className="flex items-center gap-2.5 flex-shrink-0 group">
+            <div className="relative w-11 h-11 rounded-lg bg-white shadow-sm overflow-hidden flex items-center justify-center [perspective:1000px]">
+              <img src="/logo.png" alt="Openlysts" className="w-10 h-10 object-contain animate-logo-enter" />
+            </div>
+            <span className="text-xl font-extrabold tracking-tight text-text hidden sm:block bg-gradient-to-r from-text to-text-secondary bg-clip-text">Openlysts</span>
           </Link>
 
           {/* Desktop nav */}

@@ -1,0 +1,60 @@
+- generic [ref=f10e4]:
+  - banner [ref=f10e5]:
+    - generic [ref=f10e7]:
+      - link "Openlysts Openlysts" [ref=f10e8] [cursor=pointer]:
+        - /url: /
+        - img "Openlysts" [ref=f10e10]
+        - generic [ref=f10e11]: Openlysts
+      - navigation [ref=f10e12]:
+        - link "Discover" [ref=f10e13] [cursor=pointer]:
+          - /url: /
+        - link "Alternatives" [ref=f10e14] [cursor=pointer]:
+          - /url: /alternatives
+        - link "Trending" [ref=f10e15] [cursor=pointer]:
+          - /url: /trending
+        - link "Bookmarks" [ref=f10e16] [cursor=pointer]:
+          - /url: /bookmarks
+        - link "About" [ref=f10e17] [cursor=pointer]:
+          - /url: /about
+        - link "Contact" [ref=f10e18] [cursor=pointer]:
+          - /url: /contact
+      - generic [ref=f10e19]:
+        - link "Bookmarks" [ref=f10e20] [cursor=pointer]:
+          - /url: /bookmarks
+        - link "Settings" [ref=f10e23] [cursor=pointer]:
+          - /url: /settings
+        - button "Switch to Mobile Layout" [ref=f10e27] [cursor=pointer]
+        - button "Toggle theme" [ref=f10e31] [cursor=pointer]
+  - main [ref=f10e38]:
+    - generic [ref=f10e39]:
+      - textbox "Search open-source projects..." [ref=f10e44]: agent
+      - paragraph [ref=f10e45]:
+        - text: Searching for
+        - generic [ref=f10e46]: "\"agent\""
+      - generic [ref=f10e48]:
+        - generic [ref=f10e49]:
+          - generic [ref=f10e50]: "Sort:"
+          - combobox [ref=f10e51] [cursor=pointer]:
+            - option "Trending" [selected]
+            - option "Most Stars"
+            - option "Recently Updated"
+            - option "Recently Added"
+        - button "Categories" [ref=f10e53] [cursor=pointer]
+        - button "Filters 1" [ref=f10e56] [cursor=pointer]:
+          - text: Filters
+          - generic [ref=f10e58]: "1"
+        - button "Clear" [ref=f10e61] [cursor=pointer]
+  - contentinfo [ref=f10e115]:
+    - generic [ref=f10e117]:
+      - generic [ref=f10e118]:
+        - img "Openlysts" [ref=f10e119]
+        - generic [ref=f10e120]: Openlysts
+        - generic [ref=f10e121]: — Discover. Filter. Build.
+      - generic [ref=f10e122]:
+        - link "About" [ref=f10e123] [cursor=pointer]:
+          - /url: /about
+        - link "Contact" [ref=f10e124] [cursor=pointer]:
+          - /url: /contact
+        - link "Trending" [ref=f10e125] [cursor=pointer]:
+          - /url: /trending
+      - paragraph [ref=f10e126]: Built with for open source
