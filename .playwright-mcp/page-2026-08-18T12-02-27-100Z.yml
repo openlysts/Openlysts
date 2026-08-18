@@ -1,0 +1,609 @@
+- generic [ref=f2e8]:
+  - banner [ref=f2e9]:
+    - generic [ref=f2e11]:
+      - link "Openlysts Openlysts" [ref=f2e12] [cursor=pointer]:
+        - /url: /
+        - img "Openlysts" [ref=f2e14]
+        - generic [ref=f2e15]: Openlysts
+      - navigation [ref=f2e16]:
+        - link "Discover" [ref=f2e17] [cursor=pointer]:
+          - /url: /
+        - link "Alternatives" [ref=f2e18] [cursor=pointer]:
+          - /url: /alternatives
+        - link "Trending" [active] [ref=f2e19] [cursor=pointer]:
+          - /url: /trending
+        - link "Bookmarks" [ref=f2e20] [cursor=pointer]:
+          - /url: /bookmarks
+        - link "About" [ref=f2e21] [cursor=pointer]:
+          - /url: /about
+        - link "Contact" [ref=f2e22] [cursor=pointer]:
+          - /url: /contact
+      - generic [ref=f2e27]:
+        - generic [ref=f2e28]: Search openlysts...
+        - generic [ref=f2e29]:
+          - generic [ref=f2e30]: ⌘
+          - text: K
+      - generic [ref=f2e31]:
+        - link "Bookmarks" [ref=f2e32] [cursor=pointer]:
+          - /url: /bookmarks
+          - generic [ref=f2e35]: "1"
+        - link "Settings" [ref=f2e36] [cursor=pointer]:
+          - /url: /settings
+        - button "Switch to Mobile Layout" [ref=f2e40] [cursor=pointer]
+        - button "Toggle theme" [ref=f2e44] [cursor=pointer]
+  - main [ref=f2e51]:
+    - generic [ref=f2e52]:
+      - heading "Trending Repositories" [level=1] [ref=f2e53]
+      - paragraph [ref=f2e56]: Repositories gaining the most stars recently.
+      - generic [ref=f2e58]:
+        - generic [ref=f2e59]:
+          - generic [ref=f2e60]: "Sort:"
+          - combobox [ref=f2e61] [cursor=pointer]:
+            - option "Trending" [selected]
+            - option "Most Stars"
+            - option "Recently Updated"
+            - option "Recently Added"
+        - button "Categories" [ref=f2e63] [cursor=pointer]
+        - button "Filters 1" [ref=f2e66] [cursor=pointer]:
+          - text: Filters
+          - generic [ref=f2e68]: "1"
+        - button "Clear" [ref=f2e71] [cursor=pointer]
+      - generic [ref=f2e75]:
+        - generic [ref=f2e78] [cursor=pointer]:
+          - button "Bookmark" [ref=f2e79]
+          - generic [ref=f2e82]: Trending
+          - generic [ref=f2e85]:
+            - generic [ref=f2e86]:
+              - heading "pi" [level=3] [ref=f2e87]
+              - paragraph [ref=f2e88]: earendil-works
+            - generic [ref=f2e89]: MIT
+          - paragraph [ref=f2e93]: "AI agent toolkit: unified LLM API, agent loop, TUI, coding agent CLI"
+          - generic [ref=f2e94]:
+            - generic [ref=f2e95]: Intermediate
+            - generic [ref=f2e96]: AI
+            - generic [ref=f2e97]: LLMs
+          - generic [ref=f2e98]:
+            - generic [ref=f2e99]: 92k
+            - generic [ref=f2e102]: 11.4k
+            - generic [ref=f2e108]: TypeScript
+          - generic [ref=f2e110]: 1d ago
+          - button "Watch video explanations" [ref=f2e113]
+        - generic [ref=f2e119] [cursor=pointer]:
+          - button "Bookmark" [ref=f2e120]
+          - generic [ref=f2e123]: Trending
+          - generic [ref=f2e126]:
+            - generic [ref=f2e127]:
+              - heading "ai-agent-book" [level=3] [ref=f2e128]
+              - paragraph [ref=f2e129]: bojieli
+            - generic [ref=f2e130]: APACHE-2.0
+          - paragraph [ref=f2e134]: 《深入理解 AI Agent：设计原理与工程实践》（李博杰 著）开源主仓库：全书正文、编译版 PDF 与按章配套代码
+          - generic [ref=f2e135]:
+            - generic [ref=f2e136]: Intermediate
+            - generic [ref=f2e137]: AI
+            - generic [ref=f2e138]: LLMs
+          - generic [ref=f2e139]:
+            - generic [ref=f2e140]: agent
+            - generic [ref=f2e141]: agent-memory
+            - generic [ref=f2e142]: ai-agent
+          - generic [ref=f2e143]:
+            - generic [ref=f2e144]: 38.3k
+            - generic [ref=f2e147]: 4.2k
+            - generic [ref=f2e153]: Python
+          - generic [ref=f2e155]: 1d ago
+          - button "Watch video explanations" [ref=f2e158]
+        - generic [ref=f2e164] [cursor=pointer]:
+          - button "Bookmark" [ref=f2e165]
+          - generic [ref=f2e168]: Trending
+          - generic [ref=f2e171]:
+            - generic [ref=f2e172]:
+              - heading "MoneyPrinterTurbo" [level=3] [ref=f2e173]
+              - paragraph [ref=f2e174]: harry0703
+            - generic [ref=f2e175]: MIT
+          - paragraph [ref=f2e179]: 利用 AI 大模型和自动化工作流，根据主题或关键词一键生成高清短视频。Generate HD short videos from a topic or keyword with an automated AI workflow.
+          - generic [ref=f2e180]:
+            - generic [ref=f2e181]: Intermediate
+            - generic [ref=f2e182]: AI
+            - generic [ref=f2e183]: LLMs
+          - generic [ref=f2e184]:
+            - generic [ref=f2e185]: ai-video-generator
+            - generic [ref=f2e186]: content-creation
+            - generic [ref=f2e187]: ffmpeg
+          - generic [ref=f2e188]:
+            - generic [ref=f2e189]: 105.1k
+            - generic [ref=f2e192]: 16k
+            - generic [ref=f2e198]: Python
+          - generic [ref=f2e200]: 1d ago
+          - button "Watch video explanations" [ref=f2e203]
+        - generic [ref=f2e209] [cursor=pointer]:
+          - button "Bookmark" [ref=f2e210]
+          - generic [ref=f2e213]: Trending
+          - generic [ref=f2e216]:
+            - generic [ref=f2e217]:
+              - heading "unsloth" [level=3] [ref=f2e218]
+              - paragraph [ref=f2e219]: unslothai
+            - generic [ref=f2e220]: APACHE-2.0
+          - paragraph [ref=f2e224]: Local UI to run and train LLMs and diffusion models, including Qwen3.8, Kimi K3, MiniMax-H3, Gemma 4, DeepSeek-V4, FLUX and more.
+          - generic [ref=f2e225]:
+            - generic [ref=f2e226]: Pro
+            - generic [ref=f2e227]: AI
+            - generic [ref=f2e228]: LLMs
+          - generic [ref=f2e229]:
+            - generic [ref=f2e230]: agent
+            - generic [ref=f2e231]: ai
+            - generic [ref=f2e232]: chatgpt
+          - generic [ref=f2e233]:
+            - generic [ref=f2e234]: 72.9k
+            - generic [ref=f2e237]: 6.6k
+            - generic [ref=f2e243]: Python
+          - generic [ref=f2e245]: 1d ago
+          - button "Watch video explanations" [ref=f2e248]
+        - generic [ref=f2e254] [cursor=pointer]:
+          - button "Bookmark" [ref=f2e255]
+          - generic [ref=f2e258]: Trending
+          - generic [ref=f2e261]:
+            - generic [ref=f2e262]:
+              - heading "ponytail" [level=3] [ref=f2e263]
+              - paragraph [ref=f2e264]: DietrichGebert
+            - generic [ref=f2e265]: MIT
+          - paragraph [ref=f2e269]: Makes your AI agent think like the laziest senior dev in the room. The best code is the code you never wrote.
+          - generic [ref=f2e270]:
+            - generic [ref=f2e271]: Intermediate
+            - generic [ref=f2e272]: AI
+            - generic [ref=f2e273]: LLMs
+          - generic [ref=f2e274]:
+            - generic [ref=f2e275]: agent-skills
+            - generic [ref=f2e276]: ai-agents
+            - generic [ref=f2e277]: claude
+          - generic [ref=f2e278]:
+            - generic [ref=f2e279]: 104.4k
+            - generic [ref=f2e282]: 5.8k
+            - generic [ref=f2e288]: JavaScript
+          - generic [ref=f2e290]: 1d ago
+          - button "Watch video explanations" [ref=f2e293]
+        - generic [ref=f2e299] [cursor=pointer]:
+          - button "Bookmark" [ref=f2e300]
+          - generic [ref=f2e303]: Trending
+          - generic [ref=f2e306]:
+            - generic [ref=f2e307]:
+              - heading "TencentDB-Agent-Memory" [level=3] [ref=f2e308]
+              - paragraph [ref=f2e309]: TencentCloud
+            - generic [ref=f2e310]: Unknown
+          - paragraph [ref=f2e314]: TencentDB Agent Memory is a team-level memory hub for AI Agents — turning conversations, docs, and code into four reusable memory assets (Chat Memory, Skill, LLM-Wiki, Code-Graph) that are governed, shared, and equipped across agents and frameworks.
+          - generic [ref=f2e315]:
+            - generic [ref=f2e316]: Intermediate
+            - generic [ref=f2e317]: AI
+            - generic [ref=f2e318]: LLMs
+          - generic [ref=f2e319]:
+            - generic [ref=f2e320]: agent
+            - generic [ref=f2e321]: ai-agent
+            - generic [ref=f2e322]: embedding
+          - generic [ref=f2e323]:
+            - generic [ref=f2e324]: 22.5k
+            - generic [ref=f2e327]: 2k
+            - generic [ref=f2e333]: TypeScript
+          - generic [ref=f2e335]: 1d ago
+          - button "Watch video explanations" [ref=f2e338]
+        - generic [ref=f2e344] [cursor=pointer]:
+          - button "Bookmark" [ref=f2e345]
+          - generic [ref=f2e348]: Trending
+          - generic [ref=f2e351]:
+            - generic [ref=f2e352]:
+              - heading "hermes-agent" [level=3] [ref=f2e353]
+              - paragraph [ref=f2e354]: NousResearch
+            - generic [ref=f2e355]: MIT
+          - paragraph [ref=f2e359]: The agent that grows with you
+          - generic [ref=f2e360]:
+            - generic [ref=f2e361]: Pro
+            - generic [ref=f2e362]: AI
+            - generic [ref=f2e363]: LLMs
+          - generic [ref=f2e364]:
+            - generic [ref=f2e365]: ai
+            - generic [ref=f2e366]: ai-agent
+            - generic [ref=f2e367]: ai-agents
+          - generic [ref=f2e368]:
+            - generic [ref=f2e369]: 231.7k
+            - generic [ref=f2e372]: 46.1k
+            - generic [ref=f2e378]: Python
+          - generic [ref=f2e380]: 1d ago
+          - button "Watch video explanations" [ref=f2e383]
+        - generic [ref=f2e389] [cursor=pointer]:
+          - button "Bookmark" [ref=f2e390]
+          - generic [ref=f2e393]: Trending
+          - generic [ref=f2e396]:
+            - generic [ref=f2e397]:
+              - heading "graphify" [level=3] [ref=f2e398]
+              - paragraph [ref=f2e399]: Graphify-Labs
+            - generic [ref=f2e400]: APACHE-2.0
+          - paragraph [ref=f2e404]: "Turn any codebase, with its docs, SQL schemas, configs, and PDFs, into a queryable knowledge graph. A /graphify skill for Claude Code, Cursor, Codex, and Gemini CLI: local deterministic AST parsing, every edge explained, no vector store."
+          - generic [ref=f2e405]:
+            - generic [ref=f2e406]: Intermediate
+            - generic [ref=f2e407]: LLMs
+            - generic [ref=f2e408]: AI Agents
+          - generic [ref=f2e409]:
+            - generic [ref=f2e410]: ai-agents
+            - generic [ref=f2e411]: antigravity
+            - generic [ref=f2e412]: ast
+          - generic [ref=f2e413]:
+            - generic [ref=f2e414]: 107.3k
+            - generic [ref=f2e417]: 10.4k
+            - generic [ref=f2e423]: Python
+          - generic [ref=f2e425]: 1d ago
+          - button "Watch video explanations" [ref=f2e428]
+        - generic [ref=f2e434] [cursor=pointer]:
+          - button "Bookmark" [ref=f2e435]
+          - generic [ref=f2e438]: Trending
+          - generic [ref=f2e441]:
+            - generic [ref=f2e442]:
+              - heading "superpowers" [level=3] [ref=f2e443]
+              - paragraph [ref=f2e444]: obra
+            - generic [ref=f2e445]: MIT
+          - paragraph [ref=f2e449]: An agentic skills framework & software development methodology that works.
+          - generic [ref=f2e450]:
+            - generic [ref=f2e451]: Intermediate
+            - generic [ref=f2e452]: AI
+            - generic [ref=f2e453]: AI Agents
+          - generic [ref=f2e454]:
+            - generic [ref=f2e455]: ai
+            - generic [ref=f2e456]: brainstorming
+            - generic [ref=f2e457]: coding
+          - generic [ref=f2e458]:
+            - generic [ref=f2e459]: 273k
+            - generic [ref=f2e462]: 24.4k
+            - generic [ref=f2e468]: Shell
+          - generic [ref=f2e470]: 1d ago
+          - button "Watch video explanations" [ref=f2e473]
+        - generic [ref=f2e479] [cursor=pointer]:
+          - button "Bookmark" [ref=f2e480]
+          - generic [ref=f2e483]: Trending
+          - generic [ref=f2e486]:
+            - generic [ref=f2e487]:
+              - heading "reactive-resume" [level=3] [ref=f2e488]
+              - paragraph [ref=f2e489]: amruthpillai
+            - generic [ref=f2e490]: MIT
+          - paragraph [ref=f2e494]: A one-of-a-kind resume builder that keeps your privacy in mind. Completely secure, customizable, portable, open-source and free forever. Try it out today!
+          - generic [ref=f2e495]:
+            - generic [ref=f2e496]: Intermediate
+            - generic [ref=f2e497]: AI
+            - generic [ref=f2e498]: Web Applications
+          - generic [ref=f2e499]:
+            - generic [ref=f2e500]: ai
+            - generic [ref=f2e501]: better-auth
+            - generic [ref=f2e502]: dsh-plugin
+          - generic [ref=f2e503]:
+            - generic [ref=f2e504]: 40.7k
+            - generic [ref=f2e507]: 4.6k
+            - generic [ref=f2e513]: TypeScript
+          - generic [ref=f2e515]: 1d ago
+          - button "Watch video explanations" [ref=f2e518]
+        - generic [ref=f2e524] [cursor=pointer]:
+          - button "Bookmark" [ref=f2e525]
+          - generic [ref=f2e528]: Trending
+          - generic [ref=f2e531]:
+            - generic [ref=f2e532]:
+              - heading "agent-skills" [level=3] [ref=f2e533]
+              - paragraph [ref=f2e534]: addyosmani
+            - generic [ref=f2e535]: MIT
+          - paragraph [ref=f2e539]: Production-grade engineering skills for AI coding agents.
+          - generic [ref=f2e540]:
+            - generic [ref=f2e541]: Intermediate
+            - generic [ref=f2e542]: AI
+          - generic [ref=f2e543]:
+            - generic [ref=f2e544]: agent-skills
+            - generic [ref=f2e545]: antigravity
+            - generic [ref=f2e546]: claude-code
+          - generic [ref=f2e547]:
+            - generic [ref=f2e548]: 87.9k
+            - generic [ref=f2e551]: 9.4k
+            - generic [ref=f2e557]: JavaScript
+          - generic [ref=f2e559]: 1d ago
+          - button "Watch video explanations" [ref=f2e562]
+        - generic [ref=f2e568] [cursor=pointer]:
+          - button "Bookmark" [ref=f2e569]
+          - generic [ref=f2e572]: Trending
+          - generic [ref=f2e575]:
+            - generic [ref=f2e576]:
+              - heading "hyperframes" [level=3] [ref=f2e577]
+              - paragraph [ref=f2e578]: heygen-com
+            - generic [ref=f2e579]: APACHE-2.0
+          - paragraph [ref=f2e583]: Write HTML. Render video. Built for agents.
+          - generic [ref=f2e584]:
+            - generic [ref=f2e585]: Intermediate
+            - generic [ref=f2e586]: AI
+            - generic [ref=f2e587]: Developer Tools
+          - generic [ref=f2e588]:
+            - generic [ref=f2e589]: ai
+            - generic [ref=f2e590]: animation
+            - generic [ref=f2e591]: ffmpeg
+          - generic [ref=f2e592]:
+            - generic [ref=f2e593]: 41.3k
+            - generic [ref=f2e596]: 3.9k
+            - generic [ref=f2e602]: TypeScript
+          - generic [ref=f2e604]: 1d ago
+          - button "Watch video explanations" [ref=f2e607]
+        - generic [ref=f2e613] [cursor=pointer]:
+          - button "Bookmark" [ref=f2e614]
+          - generic [ref=f2e617]: Trending
+          - generic [ref=f2e620]:
+            - generic [ref=f2e621]:
+              - heading "OpenViking" [level=3] [ref=f2e622]
+              - paragraph [ref=f2e623]: volcengine
+            - generic [ref=f2e624]: AGPL-3.0
+          - paragraph [ref=f2e628]: Self-evolving Context Database for AI Agents. Unify Agent Memory, Knowledge RAG and Skills.
+          - generic [ref=f2e629]:
+            - generic [ref=f2e630]: Intermediate
+            - generic [ref=f2e631]: AI
+            - generic [ref=f2e632]: AI Agents
+          - generic [ref=f2e633]:
+            - generic [ref=f2e634]: agent-memory
+            - generic [ref=f2e635]: agent-plugins
+            - generic [ref=f2e636]: agentic-rag
+          - generic [ref=f2e637]:
+            - generic [ref=f2e638]: 28.8k
+            - generic [ref=f2e641]: 2.3k
+            - generic [ref=f2e647]: Python
+          - generic [ref=f2e649]: 1d ago
+          - button "Watch video explanations" [ref=f2e652]
+        - generic [ref=f2e658] [cursor=pointer]:
+          - button "Bookmark" [ref=f2e659]
+          - generic [ref=f2e662]: Trending
+          - generic [ref=f2e665]:
+            - generic [ref=f2e666]:
+              - heading "spec-kit" [level=3] [ref=f2e667]
+              - paragraph [ref=f2e668]: github
+            - generic [ref=f2e669]: MIT
+          - paragraph [ref=f2e673]: 💫 Toolkit to help you get started with Spec-Driven Development
+          - generic [ref=f2e674]:
+            - generic [ref=f2e675]: Intermediate
+            - generic [ref=f2e676]: AI
+            - generic [ref=f2e677]: Libraries & Frameworks
+          - generic [ref=f2e678]:
+            - generic [ref=f2e679]: ai
+            - generic [ref=f2e680]: copilot
+            - generic [ref=f2e681]: development
+          - generic [ref=f2e682]:
+            - generic [ref=f2e683]: 129.7k
+            - generic [ref=f2e686]: 11.6k
+            - generic [ref=f2e692]: Python
+          - generic [ref=f2e694]: 1d ago
+          - button "Watch video explanations" [ref=f2e697]
+        - generic [ref=f2e703] [cursor=pointer]:
+          - button "Bookmark" [ref=f2e704]
+          - generic [ref=f2e707]: Trending
+          - generic [ref=f2e710]:
+            - generic [ref=f2e711]:
+              - heading "hello-agents" [level=3] [ref=f2e712]
+              - paragraph [ref=f2e713]: datawhalechina
+            - generic [ref=f2e714]: Unknown
+          - paragraph [ref=f2e718]: 📚 《从零开始构建智能体》——从零开始的智能体原理与实践教程
+          - generic [ref=f2e719]:
+            - generic [ref=f2e720]: Beginner
+            - generic [ref=f2e721]: LLMs
+            - generic [ref=f2e722]: RAG
+          - generic [ref=f2e723]:
+            - generic [ref=f2e724]: agent
+            - generic [ref=f2e725]: llm
+            - generic [ref=f2e726]: rag
+          - generic [ref=f2e727]:
+            - generic [ref=f2e728]: 73.3k
+            - generic [ref=f2e731]: 9.1k
+            - generic [ref=f2e737]: Python
+          - generic [ref=f2e739]: 1d ago
+          - button "Watch video explanations" [ref=f2e742]
+        - generic [ref=f2e748] [cursor=pointer]:
+          - button "Bookmark" [ref=f2e749]
+          - generic [ref=f2e752]: Trending
+          - generic [ref=f2e755]:
+            - generic [ref=f2e756]:
+              - heading "andrej-karpathy-skills" [level=3] [ref=f2e757]
+              - paragraph [ref=f2e758]: multica-ai
+            - generic [ref=f2e759]: Unknown
+          - paragraph [ref=f2e763]: A single CLAUDE.md file to improve Claude Code behavior, derived from Andrej Karpathy's observations on LLM coding pitfalls.
+          - generic [ref=f2e764]:
+            - generic [ref=f2e765]: Intermediate
+            - generic [ref=f2e766]: LLMs
+          - generic [ref=f2e767]:
+            - generic [ref=f2e768]: 203.2k
+            - generic [ref=f2e771]: 20.8k
+          - generic [ref=f2e777]: 1d ago
+          - button "Watch video explanations" [ref=f2e780]
+        - generic [ref=f2e786] [cursor=pointer]:
+          - button "Bookmark" [ref=f2e787]
+          - generic [ref=f2e790]: Trending
+          - generic [ref=f2e793]:
+            - generic [ref=f2e794]:
+              - heading "opencodex" [level=3] [ref=f2e795]
+              - paragraph [ref=f2e796]: lidge-jun
+            - generic [ref=f2e797]: MIT
+          - paragraph [ref=f2e801]: Universal provider proxy for OpenAI Codex & Claude Code — use any LLM (Claude, Gemini, Grok, DeepSeek, Ollama…) with Codex CLI, App, SDK, and Claude Code
+          - generic [ref=f2e802]:
+            - generic [ref=f2e803]: Intermediate
+            - generic [ref=f2e804]: LLMs
+            - generic [ref=f2e805]: Local AI
+          - generic [ref=f2e806]:
+            - generic [ref=f2e807]: ai-gateway
+            - generic [ref=f2e808]: ai-tools
+            - generic [ref=f2e809]: anthropic
+          - generic [ref=f2e810]:
+            - generic [ref=f2e811]: 10.6k
+            - generic [ref=f2e814]: "776"
+            - generic [ref=f2e820]: TypeScript
+          - generic [ref=f2e822]: 1d ago
+          - button "Watch video explanations" [ref=f2e825]
+        - generic [ref=f2e831] [cursor=pointer]:
+          - button "Bookmark" [ref=f2e832]
+          - generic [ref=f2e835]: Trending
+          - generic [ref=f2e838]:
+            - generic [ref=f2e839]:
+              - heading "ui-ux-pro-max-skill" [level=3] [ref=f2e840]
+              - paragraph [ref=f2e841]: nextlevelbuilder
+            - generic [ref=f2e842]: MIT
+          - paragraph [ref=f2e846]: An AI skill that provides design intelligence for building professional UI/UX across multiple platforms.
+          - generic [ref=f2e847]:
+            - generic [ref=f2e848]: Intermediate
+            - generic [ref=f2e849]: AI
+            - generic [ref=f2e850]: Developer Tools
+          - generic [ref=f2e851]:
+            - generic [ref=f2e852]: ai-skills
+            - generic [ref=f2e853]: antigravity
+            - generic [ref=f2e854]: claude
+          - generic [ref=f2e855]:
+            - generic [ref=f2e856]: 117.4k
+            - generic [ref=f2e859]: 12.6k
+            - generic [ref=f2e865]: Python
+          - generic [ref=f2e867]: 1d ago
+          - button "Watch video explanations" [ref=f2e870]
+        - generic [ref=f2e876] [cursor=pointer]:
+          - button "Bookmark" [ref=f2e877]
+          - generic [ref=f2e880]: Trending
+          - generic [ref=f2e883]:
+            - generic [ref=f2e884]:
+              - heading "caveman" [level=3] [ref=f2e885]
+              - paragraph [ref=f2e886]: JuliusBrussee
+            - generic [ref=f2e887]: Unknown
+          - paragraph [ref=f2e891]: 🪨 why use many token when few token do trick — Claude Code skill that cuts 65% of tokens by talking like caveman
+          - generic [ref=f2e892]:
+            - generic [ref=f2e893]: Intermediate
+            - generic [ref=f2e894]: AI
+            - generic [ref=f2e895]: LLMs
+          - generic [ref=f2e896]:
+            - generic [ref=f2e897]: ai
+            - generic [ref=f2e898]: anthropic
+            - generic [ref=f2e899]: caveman
+          - generic [ref=f2e900]:
+            - generic [ref=f2e901]: 98.6k
+            - generic [ref=f2e904]: 5.7k
+            - generic [ref=f2e910]: Go
+          - generic [ref=f2e912]: 1d ago
+          - button "Watch video explanations" [ref=f2e915]
+        - generic [ref=f2e921] [cursor=pointer]:
+          - button "Bookmark" [ref=f2e922]
+          - generic [ref=f2e925]: Trending
+          - generic [ref=f2e928]:
+            - generic [ref=f2e929]:
+              - heading "firecrawl" [level=3] [ref=f2e930]
+              - paragraph [ref=f2e931]: firecrawl
+            - generic [ref=f2e932]: AGPL-3.0
+          - paragraph [ref=f2e936]: The context API to search, scrape, and interact with the web at scale. 🔥
+          - generic [ref=f2e937]:
+            - generic [ref=f2e938]: Intermediate
+            - generic [ref=f2e939]: AI
+            - generic [ref=f2e940]: LLMs
+          - generic [ref=f2e941]:
+            - generic [ref=f2e942]: ai
+            - generic [ref=f2e943]: ai-agents
+            - generic [ref=f2e944]: ai-crawler
+          - generic [ref=f2e945]:
+            - generic [ref=f2e946]: 168.3k
+            - generic [ref=f2e949]: 9.4k
+            - generic [ref=f2e955]: TypeScript
+          - generic [ref=f2e957]: 1d ago
+          - button "Watch video explanations" [ref=f2e960]
+        - generic [ref=f2e966] [cursor=pointer]:
+          - button "Bookmark" [ref=f2e967]
+          - generic [ref=f2e970]: Trending
+          - generic [ref=f2e973]:
+            - generic [ref=f2e974]:
+              - heading "multica" [level=3] [ref=f2e975]
+              - paragraph [ref=f2e976]: multica-ai
+            - generic [ref=f2e977]: Unknown
+          - paragraph [ref=f2e981]: Assign issues to Claude Code, Codex, Cursor, and 17 more coding agents like teammates — open-source and self-hostable.
+          - generic [ref=f2e982]: Pro
+          - generic [ref=f2e984]:
+            - generic [ref=f2e985]: 46.3k
+            - generic [ref=f2e988]: 5.9k
+            - generic [ref=f2e994]: Go
+          - generic [ref=f2e996]: 1d ago
+          - button "Watch video explanations" [ref=f2e999]
+        - generic [ref=f2e1005] [cursor=pointer]:
+          - button "Bookmark" [ref=f2e1006]
+          - generic [ref=f2e1009]: Trending
+          - generic [ref=f2e1012]:
+            - generic [ref=f2e1013]:
+              - heading "Agent-Reach" [level=3] [ref=f2e1014]
+              - paragraph [ref=f2e1015]: Panniantong
+            - generic [ref=f2e1016]: MIT
+          - paragraph [ref=f2e1020]: Give your AI agent eyes to see the entire internet. Read & search Twitter, Reddit, YouTube, GitHub, Bilibili, XiaoHongShu — one CLI, zero API fees.
+          - generic [ref=f2e1021]:
+            - generic [ref=f2e1022]: Intermediate
+            - generic [ref=f2e1023]: AI
+            - generic [ref=f2e1024]: LLMs
+          - generic [ref=f2e1025]:
+            - generic [ref=f2e1026]: agent-infrastructure
+            - generic [ref=f2e1027]: ai-agent
+            - generic [ref=f2e1028]: ai-search
+          - generic [ref=f2e1029]:
+            - generic [ref=f2e1030]: 72.4k
+            - generic [ref=f2e1033]: 6.2k
+            - generic [ref=f2e1039]: Python
+          - generic [ref=f2e1041]: 1d ago
+          - button "Watch video explanations" [ref=f2e1044]
+        - generic [ref=f2e1050] [cursor=pointer]:
+          - button "Bookmark" [ref=f2e1051]
+          - generic [ref=f2e1054]: Trending
+          - generic [ref=f2e1057]:
+            - generic [ref=f2e1058]:
+              - heading "TradingAgents" [level=3] [ref=f2e1059]
+              - paragraph [ref=f2e1060]: TauricResearch
+            - generic [ref=f2e1061]: APACHE-2.0
+          - paragraph [ref=f2e1065]: "TradingAgents: Multi-Agents LLM Financial Trading Framework"
+          - generic [ref=f2e1066]:
+            - generic [ref=f2e1067]: Intermediate
+            - generic [ref=f2e1068]: LLMs
+            - generic [ref=f2e1069]: AI Agents
+          - generic [ref=f2e1070]:
+            - generic [ref=f2e1071]: agent
+            - generic [ref=f2e1072]: finance
+            - generic [ref=f2e1073]: llm
+          - generic [ref=f2e1074]:
+            - generic [ref=f2e1075]: 98.6k
+            - generic [ref=f2e1078]: 19k
+            - generic [ref=f2e1084]: Python
+          - generic [ref=f2e1086]: 1d ago
+          - button "Watch video explanations" [ref=f2e1089]
+        - generic [ref=f2e1095] [cursor=pointer]:
+          - button "Bookmark" [ref=f2e1096]
+          - generic [ref=f2e1099]: Trending
+          - generic [ref=f2e1102]:
+            - generic [ref=f2e1103]:
+              - heading "ECC" [level=3] [ref=f2e1104]
+              - paragraph [ref=f2e1105]: affaan-m
+            - generic [ref=f2e1106]: MIT
+          - paragraph [ref=f2e1110]: The agent harness performance optimization system. Skills, instincts, memory, security, and research-first development for Claude Code, Codex, Opencode, Cursor and beyond.
+          - generic [ref=f2e1111]:
+            - generic [ref=f2e1112]: Intermediate
+            - generic [ref=f2e1113]: LLMs
+            - generic [ref=f2e1114]: AI Agents
+          - generic [ref=f2e1115]:
+            - generic [ref=f2e1116]: ai-agents
+            - generic [ref=f2e1117]: anthropic
+            - generic [ref=f2e1118]: claude
+          - generic [ref=f2e1119]:
+            - generic [ref=f2e1120]: 240.6k
+            - generic [ref=f2e1123]: 36.5k
+            - generic [ref=f2e1129]: JavaScript
+          - generic [ref=f2e1131]: 1d ago
+          - button "Watch video explanations" [ref=f2e1134]
+      - generic [ref=f2e1138]:
+        - button [disabled] [ref=f2e1139]
+        - button "1" [ref=f2e1142] [cursor=pointer]
+        - button "2" [ref=f2e1143] [cursor=pointer]
+        - button "3" [ref=f2e1144] [cursor=pointer]
+        - button "4" [ref=f2e1145] [cursor=pointer]
+        - button "5" [ref=f2e1146] [cursor=pointer]
+        - generic [ref=f2e1147]: …
+        - button "17" [ref=f2e1148] [cursor=pointer]
+        - button [ref=f2e1149] [cursor=pointer]
+  - contentinfo [ref=f2e1153]:
+    - generic [ref=f2e1155]:
+      - generic [ref=f2e1156]:
+        - img "Openlysts" [ref=f2e1157]
+        - generic [ref=f2e1158]: Openlysts
+        - generic [ref=f2e1159]: — Discover. Filter. Build.
+      - generic [ref=f2e1160]:
+        - link "About" [ref=f2e1161] [cursor=pointer]:
+          - /url: /about
+        - link "Contact" [ref=f2e1162] [cursor=pointer]:
+          - /url: /contact
+        - link "Trending" [ref=f2e1163] [cursor=pointer]:
+          - /url: /trending
+      - paragraph [ref=f2e1164]: Built with for open source

@@ -1,0 +1,124 @@
+- generic [ref=f7e4]:
+  - banner [ref=f7e5]:
+    - generic [ref=f7e7]:
+      - link "Openlysts Openlysts" [ref=f7e8] [cursor=pointer]:
+        - /url: /
+        - img "Openlysts" [ref=f7e10]
+        - generic [ref=f7e11]: Openlysts
+      - navigation [ref=f7e12]:
+        - link "Discover" [ref=f7e13] [cursor=pointer]:
+          - /url: /
+        - link "Alternatives" [ref=f7e14] [cursor=pointer]:
+          - /url: /alternatives
+        - link "Trending" [ref=f7e15] [cursor=pointer]:
+          - /url: /trending
+        - link "Bookmarks" [ref=f7e16] [cursor=pointer]:
+          - /url: /bookmarks
+        - link "About" [ref=f7e17] [cursor=pointer]:
+          - /url: /about
+        - link "Contact" [ref=f7e18] [cursor=pointer]:
+          - /url: /contact
+      - generic [ref=f7e23]:
+        - generic [ref=f7e24]: Search openlysts...
+        - generic [ref=f7e25]:
+          - generic [ref=f7e26]: ⌘
+          - text: K
+      - generic [ref=f7e27]:
+        - link "Bookmarks" [ref=f7e28] [cursor=pointer]:
+          - /url: /bookmarks
+          - generic [ref=f7e139]: "1"
+        - link "Settings" [ref=f7e31] [cursor=pointer]:
+          - /url: /settings
+        - button "Switch to Mobile Layout" [ref=f7e35] [cursor=pointer]
+        - button "Toggle theme" [ref=f7e39] [cursor=pointer]
+  - main [ref=f7e46]:
+    - generic [ref=f7e47]:
+      - textbox "Search open-source projects..." [ref=f7e52]: "' OR 1=1 --"
+      - paragraph [ref=f7e53]:
+        - text: 0 results for
+        - generic [ref=f7e54]: "\"' OR 1=1 --\""
+      - generic [ref=f7e55]:
+        - generic [ref=f7e56]:
+          - generic [ref=f7e57]:
+            - generic [ref=f7e58]: "Sort:"
+            - combobox [ref=f7e59] [cursor=pointer]:
+              - option "Trending" [selected]
+              - option "Most Stars"
+              - option "Recently Updated"
+              - option "Recently Added"
+          - button "Categories" [ref=f7e61] [cursor=pointer]
+          - button "Filters 2" [active] [ref=f7e64] [cursor=pointer]:
+            - text: Filters
+            - generic [ref=f7e66]: "2"
+          - button "Clear" [ref=f7e69] [cursor=pointer]
+        - generic [ref=f7e140]:
+          - generic [ref=f7e141]:
+            - paragraph [ref=f7e142]: Language
+            - generic [ref=f7e143]:
+              - button "Python" [ref=f7e144] [cursor=pointer]
+              - button "JavaScript" [ref=f7e145] [cursor=pointer]
+              - button "TypeScript" [ref=f7e146] [cursor=pointer]
+              - button "Go" [ref=f7e147] [cursor=pointer]
+              - button "Rust" [ref=f7e148] [cursor=pointer]
+              - button "Java" [ref=f7e149] [cursor=pointer]
+              - button "C++" [ref=f7e150] [cursor=pointer]
+              - button "C" [ref=f7e151] [cursor=pointer]
+              - button "Ruby" [ref=f7e152] [cursor=pointer]
+              - button "PHP" [ref=f7e153] [cursor=pointer]
+              - button "Swift" [ref=f7e154] [cursor=pointer]
+              - button "Kotlin" [ref=f7e155] [cursor=pointer]
+              - button "Shell" [ref=f7e156] [cursor=pointer]
+              - button "Vue" [ref=f7e157] [cursor=pointer]
+              - button "HTML" [ref=f7e158] [cursor=pointer]
+              - button "Dart" [ref=f7e159] [cursor=pointer]
+          - generic [ref=f7e160]:
+            - generic [ref=f7e161]:
+              - generic [ref=f7e162]:
+                - paragraph [ref=f7e163]: License
+                - generic [ref=f7e164]:
+                  - button "Verified OSS" [ref=f7e165] [cursor=pointer]
+                  - button "Unknown" [ref=f7e166] [cursor=pointer]
+                  - button "Non-OSS" [ref=f7e167] [cursor=pointer]
+              - generic [ref=f7e168]:
+                - paragraph [ref=f7e169]: Difficulty
+                - generic [ref=f7e170]:
+                  - button "Beginner Friendly" [ref=f7e171] [cursor=pointer]
+                  - button "Intermediate" [ref=f7e172] [cursor=pointer]
+                  - button "Pro / Advanced" [ref=f7e173] [cursor=pointer]
+            - generic [ref=f7e174]:
+              - paragraph [ref=f7e175]: Min Stars
+              - spinbutton "0" [ref=f7e176]
+            - generic [ref=f7e177]:
+              - generic [ref=f7e178]:
+                - paragraph [ref=f7e179]: Updated Within
+                - combobox [ref=f7e180] [cursor=pointer]:
+                  - option "Any time" [selected]
+                  - option "24 hours"
+                  - option "7 days"
+                  - option "30 days"
+                  - option "6 months"
+                  - option "1 year"
+              - generic [ref=f7e181]:
+                - paragraph [ref=f7e182]: Activity
+                - combobox [ref=f7e183] [cursor=pointer]:
+                  - option "All" [selected]
+                  - option "Active"
+                  - option "Recently Active"
+                  - option "Archived"
+      - generic [ref=f7e73]:
+        - paragraph [ref=f7e184]: No repositories found for "' OR 1=1 --"
+        - paragraph [ref=f7e185]: Try adjusting your filters or search query.
+  - contentinfo [ref=f7e123]:
+    - generic [ref=f7e125]:
+      - generic [ref=f7e126]:
+        - img "Openlysts" [ref=f7e127]
+        - generic [ref=f7e128]: Openlysts
+        - generic [ref=f7e129]: — Discover. Filter. Build.
+      - generic [ref=f7e130]:
+        - link "About" [ref=f7e131] [cursor=pointer]:
+          - /url: /about
+        - link "Contact" [ref=f7e132] [cursor=pointer]:
+          - /url: /contact
+        - link "Trending" [ref=f7e133] [cursor=pointer]:
+          - /url: /trending
+      - paragraph [ref=f7e134]: Built with for open source

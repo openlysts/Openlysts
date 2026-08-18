@@ -1,0 +1,335 @@
+- generic [ref=f1e8]:
+  - banner [ref=f1e9]:
+    - generic [ref=f1e11]:
+      - link "Openlysts Openlysts" [ref=f1e12] [cursor=pointer]:
+        - /url: /
+        - img "Openlysts" [ref=f1e14]
+        - generic [ref=f1e15]: Openlysts
+      - navigation [ref=f1e16]:
+        - link "Discover" [ref=f1e17] [cursor=pointer]:
+          - /url: /
+        - link "Alternatives" [active] [ref=f1e18] [cursor=pointer]:
+          - /url: /alternatives
+        - link "Trending" [ref=f1e19] [cursor=pointer]:
+          - /url: /trending
+        - link "Bookmarks" [ref=f1e20] [cursor=pointer]:
+          - /url: /bookmarks
+        - link "About" [ref=f1e21] [cursor=pointer]:
+          - /url: /about
+        - link "Contact" [ref=f1e22] [cursor=pointer]:
+          - /url: /contact
+      - textbox "Search open-source projects..." [ref=f1e25]
+      - generic [ref=f1e26]:
+        - link "Bookmarks" [ref=f1e27] [cursor=pointer]:
+          - /url: /bookmarks
+        - link "Settings" [ref=f1e30] [cursor=pointer]:
+          - /url: /settings
+        - button "Switch to Mobile Layout" [ref=f1e34] [cursor=pointer]
+        - button "Toggle theme" [ref=f1e38] [cursor=pointer]
+  - main [ref=f1e41]:
+    - generic [ref=f1e42]:
+      - generic [ref=f1e43]:
+        - heading "Paid vs Free Alternatives" [level=1] [ref=f1e44]
+        - paragraph [ref=f1e45]: Discover high-quality open-source alternatives to popular proprietary and paid tools.
+      - generic [ref=f1e46]:
+        - generic [ref=f1e47]:
+          - generic [ref=f1e48]:
+            - heading "Alternatives to Airtable" [level=2] [ref=f1e49]
+            - generic [ref=f1e50]: 1 Alternative
+          - generic [ref=f1e54] [cursor=pointer]:
+            - button "Bookmark" [ref=f1e55]
+            - generic [ref=f1e58]:
+              - heading "nocodb" [level=3] [ref=f1e59]
+              - paragraph [ref=f1e60]: nocodb
+            - paragraph [ref=f1e61]: 🔥 🔥 🔥 A Free & Self-hostable Airtable Alternative
+            - generic [ref=f1e62]:
+              - generic [ref=f1e63]: Intermediate
+              - generic [ref=f1e64]: Databases
+            - generic [ref=f1e65]:
+              - generic [ref=f1e66]: airtable
+              - generic [ref=f1e67]: airtable-alternative
+              - generic [ref=f1e68]: automatic-api
+            - generic [ref=f1e69]:
+              - generic [ref=f1e70]: 64.6k
+              - generic [ref=f1e73]: 5k
+              - generic [ref=f1e79]: TypeScript
+            - generic [ref=f1e81]:
+              - generic [ref=f1e82]: Unknown
+              - generic [ref=f1e86]: 1d ago
+            - button "Watch video explanations" [ref=f1e88]
+        - generic [ref=f1e92]:
+          - generic [ref=f1e93]:
+            - heading "Alternatives to Crewai" [level=2] [ref=f1e94]
+            - generic [ref=f1e95]: 1 Alternative
+          - generic [ref=f1e99] [cursor=pointer]:
+            - button "Bookmark" [ref=f1e100]
+            - generic [ref=f1e103]:
+              - heading "open-multi-agent" [level=3] [ref=f1e104]
+              - paragraph [ref=f1e105]: open-multi-agent
+            - paragraph [ref=f1e106]: "TypeScript AI agent orchestration framework with dynamic workflows. Describe the goal, not the graph: a coordinator plans the task DAG at runtime and runs it on any LLM (Claude, ChatGPT, Gemini, DeepSeek, or local models)."
+            - generic [ref=f1e107]:
+              - generic [ref=f1e108]: Intermediate
+              - generic [ref=f1e109]: AI
+              - generic [ref=f1e110]: LLMs
+            - generic [ref=f1e111]:
+              - generic [ref=f1e112]: agent-framework
+              - generic [ref=f1e113]: agent-orchestration
+              - generic [ref=f1e114]: agentic-ai
+            - generic [ref=f1e115]:
+              - generic [ref=f1e116]: 6.8k
+              - generic [ref=f1e119]: 2.4k
+              - generic [ref=f1e125]: TypeScript
+            - generic [ref=f1e127]:
+              - generic [ref=f1e128]: MIT
+              - generic [ref=f1e132]: 1d ago
+            - button "Watch video explanations" [ref=f1e134]
+        - generic [ref=f1e138]:
+          - generic [ref=f1e139]:
+            - heading "Alternatives to Elevenlabs" [level=2] [ref=f1e140]
+            - generic [ref=f1e141]: 1 Alternative
+          - generic [ref=f1e145] [cursor=pointer]:
+            - button "Bookmark" [ref=f1e146]
+            - generic [ref=f1e149]:
+              - heading "VoiceStudio" [level=3] [ref=f1e150]
+              - paragraph [ref=f1e151]: debpalash
+            - paragraph [ref=f1e152]: VoiceStudio is the open-source, fully-local ElevenLabs alternative — voice cloning, voice design, video dubbing, dictation, transcription & audiobook creation in 646 languages. No accounts, no API keys, no cloud.
+            - generic [ref=f1e153]:
+              - generic [ref=f1e154]: Intermediate
+              - generic [ref=f1e155]: AI
+              - generic [ref=f1e156]: Developer Tools
+            - generic [ref=f1e157]:
+              - generic [ref=f1e158]: ai
+              - generic [ref=f1e159]: audiobook
+              - generic [ref=f1e160]: cuda
+            - generic [ref=f1e161]:
+              - generic [ref=f1e162]: 10k
+              - generic [ref=f1e165]: 1.7k
+              - generic [ref=f1e171]: Python
+            - generic [ref=f1e173]:
+              - generic [ref=f1e174]: AGPL-3.0
+              - generic [ref=f1e178]: 23h ago
+            - button "Watch video explanations" [ref=f1e180]
+        - generic [ref=f1e184]:
+          - generic [ref=f1e185]:
+            - heading "Alternatives to Fal Ai" [level=2] [ref=f1e186]
+            - generic [ref=f1e187]: 1 Alternative
+          - generic [ref=f1e191] [cursor=pointer]:
+            - button "Bookmark" [ref=f1e192]
+            - generic [ref=f1e195]: Trending
+            - generic [ref=f1e198]:
+              - heading "Open-Generative-AI" [level=3] [ref=f1e199]
+              - paragraph [ref=f1e200]: Anil-matcha
+            - paragraph [ref=f1e201]: Unrestricted Open-source alternative to AI video platforms — Free AI image & video generation studio with 500+ models (Flux, Midjourney, Kling, Sora, Veo). No content filters. Self-hosted, MIT licensed.
+            - generic [ref=f1e202]:
+              - generic [ref=f1e203]: Intermediate
+              - generic [ref=f1e204]: AI
+              - generic [ref=f1e205]: Developer Tools
+            - generic [ref=f1e206]:
+              - generic [ref=f1e207]: ai-art-generator
+              - generic [ref=f1e208]: ai-image-generation
+              - generic [ref=f1e209]: ai-video-generation
+            - generic [ref=f1e210]:
+              - generic [ref=f1e211]: 26.5k
+              - generic [ref=f1e214]: 4.7k
+              - generic [ref=f1e220]: JavaScript
+            - generic [ref=f1e222]:
+              - generic [ref=f1e223]: MIT
+              - generic [ref=f1e227]: 1d ago
+            - button "Watch video explanations" [ref=f1e229]
+        - generic [ref=f1e233]:
+          - generic [ref=f1e234]:
+            - heading "Alternatives to Google Photos" [level=2] [ref=f1e235]
+            - generic [ref=f1e236]: 1 Alternative
+          - generic [ref=f1e240] [cursor=pointer]:
+            - button "Bookmark" [ref=f1e241]
+            - generic [ref=f1e244]: Trending
+            - generic [ref=f1e247]:
+              - heading "immich" [level=3] [ref=f1e248]
+              - paragraph [ref=f1e249]: immich-app
+            - paragraph [ref=f1e250]: High performance self-hosted photo and video management solution.
+            - generic [ref=f1e251]:
+              - generic [ref=f1e252]: Intermediate
+              - generic [ref=f1e253]: Web Applications
+              - generic [ref=f1e254]: Developer Tools
+            - generic [ref=f1e255]:
+              - generic [ref=f1e256]: backup-tool
+              - generic [ref=f1e257]: flutter
+              - generic [ref=f1e258]: google-photos
+            - generic [ref=f1e259]:
+              - generic [ref=f1e260]: 110.8k
+              - generic [ref=f1e263]: 6.6k
+              - generic [ref=f1e269]: TypeScript
+            - generic [ref=f1e271]:
+              - generic [ref=f1e272]: AGPL-3.0
+              - generic [ref=f1e276]: 23h ago
+            - button "Watch video explanations" [ref=f1e278]
+        - generic [ref=f1e282]:
+          - generic [ref=f1e283]:
+            - heading "Alternatives to Langgraph" [level=2] [ref=f1e284]
+            - generic [ref=f1e285]: 1 Alternative
+          - generic [ref=f1e289] [cursor=pointer]:
+            - button "Bookmark" [ref=f1e290]
+            - generic [ref=f1e293]:
+              - heading "open-multi-agent" [level=3] [ref=f1e294]
+              - paragraph [ref=f1e295]: open-multi-agent
+            - paragraph [ref=f1e296]: "TypeScript AI agent orchestration framework with dynamic workflows. Describe the goal, not the graph: a coordinator plans the task DAG at runtime and runs it on any LLM (Claude, ChatGPT, Gemini, DeepSeek, or local models)."
+            - generic [ref=f1e297]:
+              - generic [ref=f1e298]: Intermediate
+              - generic [ref=f1e299]: AI
+              - generic [ref=f1e300]: LLMs
+            - generic [ref=f1e301]:
+              - generic [ref=f1e302]: agent-framework
+              - generic [ref=f1e303]: agent-orchestration
+              - generic [ref=f1e304]: agentic-ai
+            - generic [ref=f1e305]:
+              - generic [ref=f1e306]: 6.8k
+              - generic [ref=f1e309]: 2.4k
+              - generic [ref=f1e315]: TypeScript
+            - generic [ref=f1e317]:
+              - generic [ref=f1e318]: MIT
+              - generic [ref=f1e322]: 1d ago
+            - button "Watch video explanations" [ref=f1e324]
+        - generic [ref=f1e328]:
+          - generic [ref=f1e329]:
+            - heading "Alternatives to Midjourney" [level=2] [ref=f1e330]
+            - generic [ref=f1e331]: 1 Alternative
+          - generic [ref=f1e335] [cursor=pointer]:
+            - button "Bookmark" [ref=f1e336]
+            - generic [ref=f1e339]: Trending
+            - generic [ref=f1e342]:
+              - heading "Open-Generative-AI" [level=3] [ref=f1e343]
+              - paragraph [ref=f1e344]: Anil-matcha
+            - paragraph [ref=f1e345]: Unrestricted Open-source alternative to AI video platforms — Free AI image & video generation studio with 500+ models (Flux, Midjourney, Kling, Sora, Veo). No content filters. Self-hosted, MIT licensed.
+            - generic [ref=f1e346]:
+              - generic [ref=f1e347]: Intermediate
+              - generic [ref=f1e348]: AI
+              - generic [ref=f1e349]: Developer Tools
+            - generic [ref=f1e350]:
+              - generic [ref=f1e351]: ai-art-generator
+              - generic [ref=f1e352]: ai-image-generation
+              - generic [ref=f1e353]: ai-video-generation
+            - generic [ref=f1e354]:
+              - generic [ref=f1e355]: 26.5k
+              - generic [ref=f1e358]: 4.7k
+              - generic [ref=f1e364]: JavaScript
+            - generic [ref=f1e366]:
+              - generic [ref=f1e367]: MIT
+              - generic [ref=f1e371]: 1d ago
+            - button "Watch video explanations" [ref=f1e373]
+        - generic [ref=f1e377]:
+          - generic [ref=f1e378]:
+            - heading "Alternatives to Notebooklm" [level=2] [ref=f1e379]
+            - generic [ref=f1e380]: 1 Alternative
+          - generic [ref=f1e384] [cursor=pointer]:
+            - button "Bookmark" [ref=f1e385]
+            - generic [ref=f1e388]: Trending
+            - generic [ref=f1e391]:
+              - heading "SurfSense" [level=3] [ref=f1e392]
+              - paragraph [ref=f1e393]: MODSetter
+            - paragraph [ref=f1e394]: "Open-source NotebookLM alternative. Research the open web with live data(Reddit, YT, IG, TikTok, Indeed, Google Search, Maps etc) through one platform, API or MCP server. Join our Discord: https://discord.gg/ejRNvftDp9"
+            - generic [ref=f1e395]:
+              - generic [ref=f1e396]: Intermediate
+              - generic [ref=f1e397]: AI
+              - generic [ref=f1e398]: Local AI
+            - generic [ref=f1e399]:
+              - generic [ref=f1e400]: agent
+              - generic [ref=f1e401]: agents
+              - generic [ref=f1e402]: ai
+            - generic [ref=f1e403]:
+              - generic [ref=f1e404]: 15.9k
+              - generic [ref=f1e407]: 1.5k
+              - generic [ref=f1e413]: Python
+            - generic [ref=f1e415]:
+              - generic [ref=f1e416]: Unknown
+              - generic [ref=f1e420]: 23h ago
+            - button "Watch video explanations" [ref=f1e422]
+        - generic [ref=f1e426]:
+          - generic [ref=f1e427]:
+            - heading "Alternatives to Sora" [level=2] [ref=f1e428]
+            - generic [ref=f1e429]: 1 Alternative
+          - generic [ref=f1e433] [cursor=pointer]:
+            - button "Bookmark" [ref=f1e434]
+            - generic [ref=f1e437]: Trending
+            - generic [ref=f1e440]:
+              - heading "Open-Generative-AI" [level=3] [ref=f1e441]
+              - paragraph [ref=f1e442]: Anil-matcha
+            - paragraph [ref=f1e443]: Unrestricted Open-source alternative to AI video platforms — Free AI image & video generation studio with 500+ models (Flux, Midjourney, Kling, Sora, Veo). No content filters. Self-hosted, MIT licensed.
+            - generic [ref=f1e444]:
+              - generic [ref=f1e445]: Intermediate
+              - generic [ref=f1e446]: AI
+              - generic [ref=f1e447]: Developer Tools
+            - generic [ref=f1e448]:
+              - generic [ref=f1e449]: ai-art-generator
+              - generic [ref=f1e450]: ai-image-generation
+              - generic [ref=f1e451]: ai-video-generation
+            - generic [ref=f1e452]:
+              - generic [ref=f1e453]: 26.5k
+              - generic [ref=f1e456]: 4.7k
+              - generic [ref=f1e462]: JavaScript
+            - generic [ref=f1e464]:
+              - generic [ref=f1e465]: MIT
+              - generic [ref=f1e469]: 1d ago
+            - button "Watch video explanations" [ref=f1e471]
+        - generic [ref=f1e475]:
+          - generic [ref=f1e476]:
+            - heading "Alternatives to Whisper" [level=2] [ref=f1e477]
+            - generic [ref=f1e478]: 2 Alternatives
+          - generic [ref=f1e479]:
+            - generic [ref=f1e482] [cursor=pointer]:
+              - button "Bookmark" [ref=f1e483]
+              - generic [ref=f1e486]:
+                - heading "FunClip" [level=3] [ref=f1e487]
+                - paragraph [ref=f1e488]: modelscope
+              - paragraph [ref=f1e489]: FunASR-powered video transcription, subtitle generation, and LLM-assisted clipping tool with a local Gradio UI.
+              - generic [ref=f1e490]:
+                - generic [ref=f1e491]: Intermediate
+                - generic [ref=f1e492]: LLMs
+                - generic [ref=f1e493]: Developer Tools
+              - generic [ref=f1e494]:
+                - generic [ref=f1e495]: ai-tools
+                - generic [ref=f1e496]: ai-video-editing
+                - generic [ref=f1e497]: asr
+              - generic [ref=f1e498]:
+                - generic [ref=f1e499]: 6.2k
+                - generic [ref=f1e502]: "736"
+                - generic [ref=f1e508]: Python
+              - generic [ref=f1e510]:
+                - generic [ref=f1e511]: MIT
+                - generic [ref=f1e515]: 23h ago
+              - button "Watch video explanations" [ref=f1e517]
+            - generic [ref=f1e523] [cursor=pointer]:
+              - button "Bookmark" [ref=f1e524]
+              - generic [ref=f1e527]:
+                - heading "Fun-ASR" [level=3] [ref=f1e528]
+                - paragraph [ref=f1e529]: QwenAudio
+              - paragraph [ref=f1e530]: Open-source LLM-based ASR model family for Chinese, dialect, accent, and multilingual speech, with FunASR, vLLM, streaming, and llama.cpp runtimes.
+              - generic [ref=f1e531]:
+                - generic [ref=f1e532]: Intermediate
+                - generic [ref=f1e533]: LLMs
+                - generic [ref=f1e534]: Local AI
+              - generic [ref=f1e535]:
+                - generic [ref=f1e536]: 31-languages
+                - generic [ref=f1e537]: asr
+                - generic [ref=f1e538]: audio
+              - generic [ref=f1e539]:
+                - generic [ref=f1e540]: 1.5k
+                - generic [ref=f1e543]: "146"
+                - generic [ref=f1e549]: C
+              - generic [ref=f1e551]:
+                - generic [ref=f1e552]: APACHE-2.0
+                - generic [ref=f1e556]: 1d ago
+              - button "Watch video explanations" [ref=f1e558]
+  - contentinfo [ref=f1e563]:
+    - generic [ref=f1e565]:
+      - generic [ref=f1e566]:
+        - img "Openlysts" [ref=f1e567]
+        - generic [ref=f1e568]: Openlysts
+        - generic [ref=f1e569]: — Discover. Filter. Build.
+      - generic [ref=f1e570]:
+        - link "About" [ref=f1e571] [cursor=pointer]:
+          - /url: /about
+        - link "Contact" [ref=f1e572] [cursor=pointer]:
+          - /url: /contact
+        - link "Trending" [ref=f1e573] [cursor=pointer]:
+          - /url: /trending
+      - paragraph [ref=f1e574]: Built with for open source

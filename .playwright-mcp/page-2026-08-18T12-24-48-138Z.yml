@@ -1,0 +1,130 @@
+- generic [ref=f19e8]:
+  - banner [ref=f19e9]:
+    - generic [ref=f19e11]:
+      - link "Openlysts Openlysts" [ref=f19e12] [cursor=pointer]:
+        - /url: /
+        - img "Openlysts" [ref=f19e14]
+        - generic [ref=f19e15]: Openlysts
+      - navigation [ref=f19e16]:
+        - link "Discover" [ref=f19e17] [cursor=pointer]:
+          - /url: /
+        - link "Alternatives" [ref=f19e18] [cursor=pointer]:
+          - /url: /alternatives
+        - link "Trending" [ref=f19e19] [cursor=pointer]:
+          - /url: /trending
+        - link "Bookmarks" [ref=f19e20] [cursor=pointer]:
+          - /url: /bookmarks
+        - link "About" [ref=f19e21] [cursor=pointer]:
+          - /url: /about
+        - link "Contact" [ref=f19e22] [cursor=pointer]:
+          - /url: /contact
+      - generic [ref=f19e27]:
+        - generic [ref=f19e28]: Search openlysts...
+        - generic [ref=f19e29]:
+          - generic [ref=f19e30]: ⌘
+          - text: K
+      - generic [ref=f19e31]:
+        - link "Bookmarks" [ref=f19e32] [cursor=pointer]:
+          - /url: /bookmarks
+          - generic [ref=f19e35]: "1"
+        - link "Settings" [ref=f19e36] [cursor=pointer]:
+          - /url: /settings
+        - button "Switch to Mobile Layout" [ref=f19e40] [cursor=pointer]
+        - generic [ref=f19e43]:
+          - button "Toggle theme" [active] [ref=f19e44] [cursor=pointer]
+          - generic [ref=f19e47]:
+            - button "Light" [ref=f19e48] [cursor=pointer]
+            - button "Dark" [ref=f19e55] [cursor=pointer]
+            - button "Slate" [ref=f19e60] [cursor=pointer]
+            - button "Creme" [ref=f19e63] [cursor=pointer]
+            - button "Dracula" [ref=f19e66] [cursor=pointer]
+            - button "Ocean" [ref=f19e69] [cursor=pointer]
+            - button "Forest" [ref=f19e74] [cursor=pointer]
+            - button "Royal" [ref=f19e78] [cursor=pointer]
+            - button "Sand" [ref=f19e81] [cursor=pointer]
+            - button "Mint" [ref=f19e87] [cursor=pointer]
+  - main [ref=f19e91]:
+    - generic [ref=f19e92]:
+      - generic [ref=f19e98]:
+        - heading "Settings" [level=1] [ref=f19e99]
+        - paragraph [ref=f19e100]: Manage API keys, tokens, and preferences.
+      - generic [ref=f19e101]:
+        - heading "API Keys & Tokens" [level=2] [ref=f19e106]
+        - generic [ref=f19e107]:
+          - generic [ref=f19e108]:
+            - generic [ref=f19e112]: GitHub Personal Access Token
+            - generic [ref=f19e113]: Not set
+          - generic [ref=f19e114]:
+            - generic [ref=f19e115]:
+              - textbox "ghp_xxxxxxxxxxxxxxxxxxxx" [ref=f19e116]
+              - button [ref=f19e117] [cursor=pointer]
+            - button "Save" [ref=f19e121] [cursor=pointer]
+          - paragraph [ref=f19e127]:
+            - text: Create a free token at
+            - link "github.com/settings/tokens" [ref=f19e128] [cursor=pointer]:
+              - /url: https://github.com/settings/tokens
+            - text: . No scopes needed — it only raises your rate limit for the ingestion pipeline.
+          - paragraph [ref=f19e129]: Stored locally and synced to backend. Used when an admin runs ingestion.
+      - generic [ref=f19e130]:
+        - heading "Display Preferences" [level=2] [ref=f19e133]
+        - generic [ref=f19e134]:
+          - generic [ref=f19e135]:
+            - generic [ref=f19e136]:
+              - paragraph [ref=f19e137]: Results per page
+              - paragraph [ref=f19e138]: Number of repositories shown per page in search results.
+            - combobox [ref=f19e139]:
+              - option "12" [selected]
+              - option "24"
+              - option "48"
+          - generic [ref=f19e140]:
+            - generic [ref=f19e141]:
+              - paragraph [ref=f19e142]: Default sort
+              - paragraph [ref=f19e143]: How repositories are sorted by default on the home page.
+            - combobox [ref=f19e144]:
+              - option "Trending" [selected]
+              - option "Most stars"
+              - option "Recently updated"
+              - option "Recently added"
+          - generic [ref=f19e145]:
+            - generic [ref=f19e146]:
+              - paragraph [ref=f19e147]: Auto-expand video links
+              - paragraph [ref=f19e148]: Automatically fetch video explanations on repository cards (slower).
+            - button [ref=f19e149] [cursor=pointer]
+          - generic [ref=f19e151]:
+            - generic [ref=f19e152]:
+              - paragraph [ref=f19e153]: 3D Background Style
+              - paragraph [ref=f19e154]: Choose your preferred background animation.
+            - combobox [ref=f19e155]:
+              - option "1. Particles" [selected]
+              - option "2. Network Mesh"
+              - option "3. Digital Topography"
+              - option "4. Matrix Rain"
+              - option "5. Galaxy Spiral"
+              - option "6. Floating Cubes"
+              - option "7. Concentric Rings"
+              - option "8. Particle Waves"
+              - option "9. DNA Helix"
+              - option "10. Vortex Tunnel"
+              - option "None (Disabled)"
+      - generic [ref=f19e156]:
+        - heading "Data Management" [level=2] [ref=f19e161]
+        - generic [ref=f19e162]:
+          - button "Clear all bookmarks" [ref=f19e163] [cursor=pointer]
+          - button "Reset all settings to defaults" [ref=f19e168] [cursor=pointer]
+      - generic [ref=f19e172]:
+        - heading "About" [level=2] [ref=f19e176]
+        - paragraph [ref=f19e178]: Openlysts is an open-source discovery engine for GitHub repositories. All settings are stored locally in your browser — no data is sent to any server except when you explicitly trigger an action (like running ingestion).
+  - contentinfo [ref=f19e180]:
+    - generic [ref=f19e182]:
+      - generic [ref=f19e183]:
+        - img "Openlysts" [ref=f19e184]
+        - generic [ref=f19e185]: Openlysts
+        - generic [ref=f19e186]: — Discover. Filter. Build.
+      - generic [ref=f19e187]:
+        - link "About" [ref=f19e188] [cursor=pointer]:
+          - /url: /about
+        - link "Contact" [ref=f19e189] [cursor=pointer]:
+          - /url: /contact
+        - link "Trending" [ref=f19e190] [cursor=pointer]:
+          - /url: /trending
+      - paragraph [ref=f19e191]: Built with for open source

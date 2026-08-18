@@ -119,6 +119,7 @@ export default function Contact() {
             }}
             placeholder="Tell us what's on your mind..."
             rows={5}
+            maxLength={2000}
             className={`w-full bg-bg-card border rounded-lg px-3 py-2.5 text-sm text-text placeholder:text-text-muted focus:outline-none resize-none ${errors.message ? 'border-red-500 focus:border-red-500' : 'border-border focus:border-accent'}`} />
           {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message}</p>}
         </div>

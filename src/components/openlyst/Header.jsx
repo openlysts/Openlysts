@@ -7,13 +7,12 @@ import { useMobileLayout } from '@/lib/MobileLayoutContext';
 import CommandPalette from './CommandPalette';
 
 const NAV = [
-{ to: '/', label: 'Discover' },
+{ to: '/discover', label: 'Discover' },
 { to: '/alternatives', label: 'Alternatives' },
 { to: '/trending', label: 'Trending' },
 { to: '/bookmarks', label: 'Bookmarks' },
 { to: '/about', label: 'About' },
 { to: '/contact', label: 'Contact' }];
-
 
 export default function Header() {
   const location = useLocation();
@@ -33,13 +32,13 @@ export default function Header() {
   }, [location.pathname]);
 
   return (
-    <header className="sticky top-0 z-40 backdrop-blur-xl bg-bg/80 border-b border-border">
+    <header role="banner" className="sticky top-0 z-40 backdrop-blur-xl bg-bg/80 border-b border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-16 gap-4">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2.5 flex-shrink-0 group">
+          <Link to="/discover" className="flex items-center gap-2.5 flex-shrink-0 group" aria-label="Openlysts Home">
             <div className="relative w-11 h-11 rounded-lg bg-white shadow-sm overflow-hidden flex items-center justify-center [perspective:1000px]">
-              <img src="/logo.png" alt="Openlysts" className="w-10 h-10 object-contain animate-logo-enter" />
+              <img src="/logo.png" alt="" className="w-10 h-10 object-contain animate-logo-enter" />
             </div>
             <span className="text-xl font-extrabold tracking-tight text-text hidden sm:block bg-gradient-to-r from-text to-text-secondary bg-clip-text">Openlysts</span>
           </Link>
@@ -63,7 +62,7 @@ export default function Header() {
           </nav>
 
           {/* Search (desktop) */}
-          {location.pathname !== '/' && (
+          {location.pathname !== '/discover' && (
             <div 
               className="relative hidden md:block w-64 group cursor-text"
               onClick={() => {
@@ -83,7 +82,7 @@ export default function Header() {
 
           {/* Right actions */}
           <div className="flex items-center gap-2 flex-shrink-0">
-            <Link to="/bookmarks" className="relative p-2 rounded-lg text-text-secondary hover:bg-bg-hover transition-colors" aria-label="Bookmarks">
+            <Link to="/bookmarks" className="relative p-2 rounded-lg text-text-secondary hover:bg-bg-hover transition-colors" aria-label="View Bookmarks">
               <Bookmark className="w-4 h-4" />
               {bookmarkCount > 0 &&
               <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-accent text-accent-fg text-[10px] font-semibold flex items-center justify-center">
@@ -98,6 +97,7 @@ export default function Header() {
               onClick={toggleMobileLayout}
               className="p-2 rounded-lg text-text-secondary hover:bg-bg-hover transition-colors"
               title={isMobileLayout ? "Switch to Desktop Layout" : "Switch to Mobile Layout"}
+              aria-label={isMobileLayout ? "Switch to Desktop Layout" : "Switch to Mobile Layout"}
             >
               {isMobileLayout ? <Monitor className="w-4 h-4" /> : <Smartphone className="w-4 h-4" />}
             </button>
@@ -105,7 +105,8 @@ export default function Header() {
             <button
               onClick={() => setMobileOpen((v) => !v)}
               className="md:hidden p-2 rounded-lg text-text-secondary hover:bg-bg-hover"
-              aria-label="Menu">
+              aria-expanded={mobileOpen}
+              aria-label="Toggle Navigation Menu">
               
               {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>

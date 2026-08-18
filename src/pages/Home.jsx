@@ -122,6 +122,7 @@ export default function Home() {
                   disabled={tRefetching}
                   className="ml-2 p-1 text-text-muted hover:text-text rounded-md hover:bg-bg-subtle transition-colors"
                   title="Refresh Trending"
+                  aria-label="Refresh trending repositories"
                 >
                   <RefreshCw className={`w-4 h-4 ${tRefetching ? 'animate-spin' : ''}`} />
                 </button>

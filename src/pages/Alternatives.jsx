@@ -37,7 +37,7 @@ export default function Alternatives() {
   });
 
   const categories = useMemo(() => {
-    if (data?.categories) {
+    if (Array.isArray(data?.categories)) {
       return ['All', ...data.categories];
     }
     return ['All'];

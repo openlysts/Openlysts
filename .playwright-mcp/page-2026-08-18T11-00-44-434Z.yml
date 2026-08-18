@@ -1,0 +1,479 @@
+- generic [active] [ref=f1e1]:
+  - generic [ref=f1e4]:
+    - banner [ref=f1e5]:
+      - generic [ref=f1e7]:
+        - link "Openlysts Openlysts" [ref=f1e8] [cursor=pointer]:
+          - /url: /
+          - img "Openlysts" [ref=f1e10]
+          - generic [ref=f1e11]: Openlysts
+        - navigation [ref=f1e12]:
+          - link "Discover" [ref=f1e13] [cursor=pointer]:
+            - /url: /
+          - link "Alternatives" [ref=f1e14] [cursor=pointer]:
+            - /url: /alternatives
+          - link "Trending" [ref=f1e15] [cursor=pointer]:
+            - /url: /trending
+          - link "Bookmarks" [ref=f1e16] [cursor=pointer]:
+            - /url: /bookmarks
+          - link "About" [ref=f1e17] [cursor=pointer]:
+            - /url: /about
+          - link "Contact" [ref=f1e18] [cursor=pointer]:
+            - /url: /contact
+        - generic [ref=f1e19]:
+          - link "Bookmarks" [ref=f1e20] [cursor=pointer]:
+            - /url: /bookmarks
+            - generic [ref=f1e23]: "1"
+          - link "Settings" [ref=f1e24] [cursor=pointer]:
+            - /url: /settings
+          - button "Switch to Mobile Layout" [ref=f1e28] [cursor=pointer]
+          - button "Toggle theme" [ref=f1e32] [cursor=pointer]
+    - main [ref=f1e39]:
+      - generic [ref=f1e1583]:
+        - button "Back" [ref=f1e1584] [cursor=pointer]
+        - generic [ref=f1e1587]:
+          - generic [ref=f1e1588]:
+            - generic [ref=f1e1590]:
+              - generic [ref=f1e1591]:
+                - generic [ref=f1e1592]:
+                  - heading "reactive-resume" [level=1] [ref=f1e1593]
+                  - paragraph [ref=f1e1594]: amruthpillai
+                - button "Save" [ref=f1e1595] [cursor=pointer]
+              - paragraph [ref=f1e1598]: A one-of-a-kind resume builder that keeps your privacy in mind. Completely secure, customizable, portable, open-source and free forever. Try it out today!
+              - generic [ref=f1e1599]:
+                - link "AI" [ref=f1e1600] [cursor=pointer]:
+                  - /url: /category/ai
+                - link "Web Applications" [ref=f1e1601] [cursor=pointer]:
+                  - /url: /category/web-applications
+                - link "Self-Hosted" [ref=f1e1602] [cursor=pointer]:
+                  - /url: /category/self-hosted
+              - generic [ref=f1e1603]:
+                - generic [ref=f1e1604]: ai
+                - generic [ref=f1e1605]: better-auth
+                - generic [ref=f1e1606]: dsh-plugin
+                - generic [ref=f1e1607]: hacktoberfest
+                - generic [ref=f1e1608]: javascript
+                - generic [ref=f1e1609]: react
+                - generic [ref=f1e1610]: resume-builder
+                - generic [ref=f1e1611]: self-hosted
+                - generic [ref=f1e1612]: tailwindcss
+                - generic [ref=f1e1613]: tanstack-start
+                - generic [ref=f1e1614]: typescript
+              - generic [ref=f1e1615]:
+                - link "Compare" [ref=f1e1616] [cursor=pointer]:
+                  - /url: /compare?repos=amruthpillai/reactive-resume
+                - link "Open on GitHub" [ref=f1e1620] [cursor=pointer]:
+                  - /url: https://github.com/amruthpillai/reactive-resume
+                - link "Homepage" [ref=f1e1625] [cursor=pointer]:
+                  - /url: https://rxresu.me
+            - generic [ref=f1e1631]:
+              - heading "Tutorials & Explanations" [level=2] [ref=f1e1632]
+              - button "Watch video explanations" [ref=f1e1634] [cursor=pointer]
+            - generic [ref=f1e1639]:
+              - heading "README" [level=2] [ref=f1e1640]
+              - generic [ref=f1e1641]:
+                - generic [ref=f1e1642]:
+                  - link [ref=f1e1643] [cursor=pointer]:
+                    - /url: https://rxresu.me
+                    - img "Reactive Resume" [ref=f1e1644]
+                  - heading "Reactive Resume" [level=1] [ref=f1e1645]
+                  - paragraph [ref=f1e1646]: Reactive Resume is a free and open-source resume builder that simplifies the process of creating, updating, and sharing your resume.
+                  - paragraph [ref=f1e1647]:
+                    - link [ref=f1e1648] [cursor=pointer]:
+                      - /url: https://rxresu.me
+                      - strong [ref=f1e1649]: Get Started
+                    - text: ·
+                    - link [ref=f1e1650] [cursor=pointer]:
+                      - /url: https://docs.rxresu.me
+                      - strong [ref=f1e1651]: Learn More
+                  - paragraph [ref=f1e1652]:
+                    - img "Reactive Resume Version"
+                    - img "GitHub Stars"
+                    - img "License"
+                    - img "Docker Pulls" [ref=f1e1653]
+                    - link "Discord":
+                      - /url: https://discord.gg/aSyA5ZSxpb
+                      - img "Discord"
+                    - link "Crowdin":
+                      - /url: https://crowdin.com/project/reactive-resume
+                      - img "Crowdin"
+                    - link "Sponsors":
+                      - /url: https://github.com/sponsors/AmruthPillai
+                      - img "Sponsors"
+                    - link "Donations":
+                      - /url: https://opencollective.com/reactive-resume/donate
+                      - img "Donations"
+                - separator [ref=f1e1654]
+                - paragraph [ref=f1e1655]: Reactive Resume makes building resumes straightforward. Pick a template, fill in your details, and export to PDF—no account required for basic use. For those who want more control, the entire application can be self-hosted on your own infrastructure.
+                - paragraph [ref=f1e1656]: Built with privacy as a core principle, Reactive Resume gives you complete ownership of your data. The codebase is fully open-source under the MIT license, with no tracking, no ads, and no hidden costs.
+                - heading "Sponsors" [level=2] [ref=f1e1657]
+                - paragraph [ref=f1e1658]: Reactive Resume stays free, open-source, and independent because companies choose to support the work behind it. Thank you to every sponsor who helps fund hosting, maintenance, and continued development for the community.
+                - paragraph [ref=f1e1659]:
+                  - link [ref=f1e1660] [cursor=pointer]:
+                    - /url: https://www.atlascloud.ai/?utm_source=github&utm_medium=link&utm_campaign=reactive-resume
+                    - img "Atlas Cloud" [ref=f1e1661]
+                - paragraph [ref=f1e1662]:
+                  - link "Atlas Cloud" [ref=f1e1663] [cursor=pointer]:
+                    - /url: https://www.atlascloud.ai/?utm_source=github&utm_medium=link&utm_campaign=reactive-resume
+                  - text: supports Reactive Resume as a project sponsor. Atlas Cloud provides a unified AI platform for developers, with access to hundreds of models for chat, image generation, video generation, media processing, and GPU cloud workloads through one API key, one endpoint, and one billing account.
+                - paragraph [ref=f1e1664]:
+                  - text: If your company would like to sponsor Reactive Resume, email
+                  - link "hello@amruthpillai.com" [ref=f1e1665] [cursor=pointer]:
+                    - /url: mailto:hello@amruthpillai.com
+                  - text: .
+                - heading "Features" [level=2] [ref=f1e1666]
+                - paragraph [ref=f1e1667]:
+                  - strong [ref=f1e1668]: Resume Building
+                - list [ref=f1e1669]:
+                  - listitem [ref=f1e1670]: Real-time preview as you type
+                  - listitem [ref=f1e1671]: Multiple export formats (PDF, JSON, DOCX)
+                  - listitem [ref=f1e1672]: Drag-and-drop section ordering
+                  - listitem [ref=f1e1673]: Custom sections for any content type
+                  - listitem [ref=f1e1674]: Rich text editor with formatting support
+                - paragraph [ref=f1e1675]:
+                  - strong [ref=f1e1676]: Templates
+                - list [ref=f1e1677]:
+                  - listitem [ref=f1e1678]: Professionally designed templates
+                  - listitem [ref=f1e1679]: A4 and Letter size support
+                  - listitem [ref=f1e1680]: Customizable colors, fonts, and spacing
+                  - listitem [ref=f1e1681]: Structured Style Rules for section and text styling
+                - paragraph [ref=f1e1682]:
+                  - strong [ref=f1e1683]: Privacy & Control
+                - list [ref=f1e1684]:
+                  - listitem [ref=f1e1685]: Self-host on your own infrastructure
+                  - listitem [ref=f1e1686]: No tracking or analytics by default
+                  - listitem [ref=f1e1687]: Full data export at any time
+                  - listitem [ref=f1e1688]: Delete your data permanently with one click
+                - paragraph [ref=f1e1689]:
+                  - strong [ref=f1e1690]: Extras
+                - list [ref=f1e1691]:
+                  - listitem [ref=f1e1692]: AI integration (OpenAI, Google Gemini, Anthropic Claude)
+                  - listitem [ref=f1e1693]: Multi-language support
+                  - listitem [ref=f1e1694]: Share resumes via unique links
+                  - listitem [ref=f1e1695]: Import from JSON Resume format
+                  - listitem [ref=f1e1696]: Dark mode support
+                  - listitem [ref=f1e1697]: Passkey and two-factor authentication
+                - heading "Templates" [level=2] [ref=f1e1698]
+                - table [ref=f1e1699]:
+                  - rowgroup [ref=f1e1700]:
+                    - row [ref=f1e1701]:
+                      - cell [ref=f1e1702]:
+                        - img "Azurill" [ref=f1e1703]
+                        - subscript [ref=f1e1704]: Azurill
+                      - cell [ref=f1e1705]:
+                        - img "Bronzor" [ref=f1e1706]
+                        - subscript [ref=f1e1707]: Bronzor
+                      - cell [ref=f1e1708]:
+                        - img "Chikorita" [ref=f1e1709]
+                        - subscript [ref=f1e1710]: Chikorita
+                      - cell [ref=f1e1711]:
+                        - img "Ditto" [ref=f1e1712]
+                        - subscript [ref=f1e1713]: Ditto
+                    - row [ref=f1e1714]:
+                      - cell [ref=f1e1715]:
+                        - img "Gengar" [ref=f1e1716]
+                        - subscript [ref=f1e1717]: Gengar
+                      - cell [ref=f1e1718]:
+                        - img "Glalie" [ref=f1e1719]
+                        - subscript [ref=f1e1720]: Glalie
+                      - cell [ref=f1e1721]:
+                        - img "Kakuna" [ref=f1e1722]
+                        - subscript [ref=f1e1723]: Kakuna
+                      - cell [ref=f1e1724]:
+                        - img "Lapras" [ref=f1e1725]
+                        - subscript [ref=f1e1726]: Lapras
+                    - row [ref=f1e1727]:
+                      - cell [ref=f1e1728]:
+                        - img "Leafish" [ref=f1e1729]
+                        - subscript [ref=f1e1730]: Leafish
+                      - cell [ref=f1e1731]:
+                        - img "Onyx" [ref=f1e1732]
+                        - subscript [ref=f1e1733]: Onyx
+                      - cell [ref=f1e1734]:
+                        - img "Pikachu" [ref=f1e1735]
+                        - subscript [ref=f1e1736]: Pikachu
+                      - cell [ref=f1e1737]:
+                        - img "Rhyhorn" [ref=f1e1738]
+                        - subscript [ref=f1e1739]: Rhyhorn
+                    - row [ref=f1e1740]:
+                      - cell [ref=f1e1741]:
+                        - img "Ditgar" [ref=f1e1742]
+                        - subscript [ref=f1e1743]: Ditgar
+                      - cell [ref=f1e1744]:
+                        - img "Meowth" [ref=f1e1745]
+                        - subscript [ref=f1e1746]: Meowth
+                      - cell [ref=f1e1747]:
+                        - img "Scizor" [ref=f1e1748]
+                        - subscript [ref=f1e1749]: Scizor
+                - heading "Quick Start" [level=2] [ref=f1e1750]
+                - paragraph [ref=f1e1751]: "The quickest way to run Reactive Resume locally:"
+                - code [ref=f1e1753]: "# Clone the repository git clone --depth=1 https://github.com/amruthpillai/reactive-resume.git cd reactive-resume # Start all services docker compose up -d # Access the app open http://localhost:3000"
+                - paragraph:
+                  - link "Build with Ona":
+                    - /url: https://app.ona.com/#https://github.com/amruthpillai/reactive-resume
+                    - img "Build with Ona"
+                - paragraph [ref=f1e1754]:
+                  - text: For detailed setup instructions, environment configuration, and self-hosting guides, see the
+                  - link "documentation" [ref=f1e1755] [cursor=pointer]:
+                    - /url: https://docs.rxresu.me
+                  - text: .
+                - heading "Tech Stack" [level=2] [ref=f1e1756]
+                - paragraph [ref=f1e1757]: "| Category | Technology | | ---------------- | ------------------------------- | | Framework | TanStack Start (React 19, Vite) | | Runtime | Node.js | | Language | TypeScript | | Database | PostgreSQL with Drizzle ORM | | API | ORPC (Type-safe RPC) | | Auth | Better Auth | | Styling | Tailwind CSS | | UI Components | Base UI + shadcn-style package | | State Management | Zustand + TanStack Query |"
+                - heading "Documentation" [level=2] [ref=f1e1758]
+                - paragraph [ref=f1e1759]:
+                  - text: Comprehensive guides are available at
+                  - link "docs.rxresu.me" [ref=f1e1760] [cursor=pointer]:
+                    - /url: https://docs.rxresu.me
+                  - text: ":"
+                - paragraph [ref=f1e1761]:
+                  - text: "| Guide | Description | | ---------------------------------------------------------------------------- | -------------------------------- | |"
+                  - link "Getting Started" [ref=f1e1762] [cursor=pointer]:
+                    - /url: https://docs.rxresu.me/getting-started
+                  - text: "| First-time setup and basic usage | |"
+                  - link "Self-Hosting" [ref=f1e1763] [cursor=pointer]:
+                    - /url: https://docs.rxresu.me/self-hosting/docker
+                  - text: "| Deploy on your own server | |"
+                  - link "Development Setup" [ref=f1e1764] [cursor=pointer]:
+                    - /url: https://docs.rxresu.me/contributing/development
+                  - text: "| Local development environment | |"
+                  - link "Project Architecture" [ref=f1e1765] [cursor=pointer]:
+                    - /url: https://docs.rxresu.me/contributing/architecture
+                  - text: "| Codebase structure and patterns | |"
+                  - link "Exporting Your Resume" [ref=f1e1766] [cursor=pointer]:
+                    - /url: https://docs.rxresu.me/guides/exporting-your-resume
+                  - text: "| PDF and JSON export options |"
+                - heading "Self-Hosting" [level=2] [ref=f1e1767]
+                - paragraph [ref=f1e1768]: "Reactive Resume can be self-hosted using Docker. The stack includes:"
+                - list [ref=f1e1769]:
+                  - listitem [ref=f1e1770]:
+                    - strong [ref=f1e1771]: PostgreSQL
+                    - text: — Database for storing user data and resumes
+                  - listitem [ref=f1e1772]:
+                    - strong [ref=f1e1773]: SeaweedFS
+                    - text: (optional) — S3-compatible storage for file uploads
+                - blockquote [ref=f1e1774]:
+                  - paragraph [ref=f1e1775]:
+                    - strong [ref=f1e1776]: From v5.1.0 onwards
+                    - text: — PDF generation now runs entirely client-side via
+                    - code [ref=f1e1777]: "`@react-pdf/renderer`"
+                    - text: . New deployments no longer require Browserless, Chromium, or any external print service as a dependency. The
+                    - code [ref=f1e1778]: "`PRINTER_*`"
+                    - text: and
+                    - code [ref=f1e1779]: "`BROWSERLESS_*`"
+                    - text: environment variables are no longer read and can be removed from your
+                    - code [ref=f1e1780]: "`.env`"
+                    - text: .
+                - paragraph [ref=f1e1781]: "Pull the latest image from Docker Hub or GitHub Container Registry:"
+                - code [ref=f1e1783]: "# Docker Hub docker pull amruthpillai/reactive-resume:latest # GitHub Container Registry docker pull ghcr.io/amruthpillai/reactive-resume:latest"
+                - paragraph [ref=f1e1784]:
+                  - text: See the
+                  - link "self-hosting guide" [ref=f1e1785] [cursor=pointer]:
+                    - /url: https://docs.rxresu.me/self-hosting/docker
+                  - text: for complete instructions.
+                - heading "Support" [level=2] [ref=f1e1786]
+                - paragraph [ref=f1e1787]: "Reactive Resume is and always will be free and open-source. If it has helped you land a job or saved you time, please consider supporting continued development:"
+                - paragraph [ref=f1e1788]:
+                  - link "GitHub Sponsors":
+                    - /url: https://github.com/sponsors/AmruthPillai
+                    - img "GitHub Sponsors"
+                  - link "Open Collective":
+                    - /url: https://opencollective.com/reactive-resume/donate
+                    - img "Open Collective"
+                - paragraph [ref=f1e1789]: "Other ways to support:"
+                - list [ref=f1e1790]:
+                  - listitem [ref=f1e1791]: Star this repository
+                  - listitem [ref=f1e1792]: Report reproducible bugs and suggest actionable features
+                  - listitem [ref=f1e1793]:
+                    - text: Help other users in
+                    - link "GitHub Discussions" [ref=f1e1794] [cursor=pointer]:
+                      - /url: https://github.com/amruthpillai/reactive-resume/discussions/categories/q-a
+                  - listitem [ref=f1e1795]: Improve documentation
+                  - listitem [ref=f1e1796]: Help with translations
+                - heading "Star History" [level=2] [ref=f1e1797]
+                - link "Star History Chart":
+                  - /url: https://www.star-history.com/?repos=amruthpillai%2Freactive-resume&type=date&legend=top-left
+                  - generic:
+                    - img "Star History Chart"
+                - heading "Contributing" [level=2] [ref=f1e1798]
+                - paragraph [ref=f1e1799]: Contributions make open-source thrive. Whether fixing a typo or adding a feature, all contributions are welcome.
+                - list [ref=f1e1800]:
+                  - listitem [ref=f1e1801]: Fork the repository
+                  - listitem [ref=f1e1802]:
+                    - text: Create a feature branch (
+                    - code [ref=f1e1803]: "`git checkout -b feature/amazing-feature`"
+                    - text: )
+                  - listitem [ref=f1e1804]:
+                    - text: Commit your changes (
+                    - code [ref=f1e1805]: "`git commit -m 'Add amazing feature'`"
+                    - text: )
+                  - listitem [ref=f1e1806]:
+                    - text: Push to the branch (
+                    - code [ref=f1e1807]: "`git push origin feature/amazing-feature`"
+                    - text: )
+                  - listitem [ref=f1e1808]: Open a Pull Request
+                - paragraph [ref=f1e1809]:
+                  - text: See the
+                  - link "development setup guide" [ref=f1e1810] [cursor=pointer]:
+                    - /url: https://docs.rxresu.me/contributing/development
+                  - text: for detailed instructions on how to set up the project locally.
+                - paragraph [ref=f1e1811]:
+                  - text: Maintainers review the
+                  - link [ref=f1e1812] [cursor=pointer]:
+                    - /url: https://github.com/amruthpillai/reactive-resume/issues?q=is%3Aissue+is%3Aopen+label%3A%22status%3A+needs+triage%22
+                    - code [ref=f1e1813]: "`status: needs triage`"
+                    - text: queue
+                  - text: weekly. Triaged bugs become
+                  - code [ref=f1e1814]: "`status: confirmed`"
+                  - text: ; feature proposals become
+                  - code [ref=f1e1815]: "`status: accepted`"
+                  - text: ; reports that need details become
+                  - code [ref=f1e1816]: "`status: needs info`"
+                  - text: .
+                - heading "License" [level=2] [ref=f1e1817]
+                - paragraph [ref=f1e1818]:
+                  - link "MIT" [ref=f1e1819] [cursor=pointer]:
+                    - /url: ./LICENSE
+                  - text: — do whatever you want with it.
+          - generic [ref=f1e1821]:
+            - generic [ref=f1e1822]:
+              - generic [ref=f1e1823]:
+                - generic [ref=f1e1824]: Stars
+                - paragraph [ref=f1e1827]: 40.7k
+              - generic [ref=f1e1828]:
+                - generic [ref=f1e1829]: Forks
+                - paragraph [ref=f1e1835]: 4.6k
+              - generic [ref=f1e1836]:
+                - generic [ref=f1e1837]: Issues
+                - paragraph [ref=f1e1840]: "90"
+              - generic [ref=f1e1841]:
+                - generic [ref=f1e1842]: Quality
+                - paragraph [ref=f1e1845]: "100.0"
+            - generic [ref=f1e1846]:
+              - generic [ref=f1e1847]:
+                - generic [ref=f1e1848]: License
+                - generic [ref=f1e1852]: MIT
+              - generic [ref=f1e1856]:
+                - generic [ref=f1e1857]: Language
+                - generic [ref=f1e1859]: TypeScript
+              - generic [ref=f1e1860]:
+                - generic [ref=f1e1861]: Created
+                - generic [ref=f1e1864]: Mar 25, 2020
+              - generic [ref=f1e1865]:
+                - generic [ref=f1e1866]: Updated
+                - generic [ref=f1e1870]: 1d ago
+              - generic [ref=f1e1871]:
+                - generic [ref=f1e1872]: Stars (7d)
+                - generic [ref=f1e1875]: "+60"
+              - generic [ref=f1e1876]:
+                - generic [ref=f1e1877]: Trending Score
+                - generic [ref=f1e1881]: "360.0"
+            - generic [ref=f1e1882]:
+              - heading "Star Growth (30d)" [level=2] [ref=f1e1883]
+              - img [ref=f1e1886]:
+                - generic [ref=f1e1890]:
+                  - generic [ref=f1e1891]: Aug 16
+                  - generic [ref=f1e1893]: Aug 16
+                  - generic [ref=f1e1895]: Aug 16
+                  - generic [ref=f1e1897]: Aug 17
+                  - generic [ref=f1e1899]: Aug 17
+                  - generic [ref=f1e1901]: Aug 17
+                  - generic [ref=f1e1903]: Aug 17
+                  - generic [ref=f1e1905]: Aug 17
+                  - generic [ref=f1e1907]: Aug 17
+                  - generic [ref=f1e1909]: Aug 17
+                  - generic [ref=f1e1911]: Aug 17
+                  - generic [ref=f1e1913]: Aug 17
+                  - generic [ref=f1e1915]: Aug 17
+                  - generic [ref=f1e1917]: Aug 17
+                  - generic [ref=f1e1919]: Aug 17
+                  - generic [ref=f1e1921]: Aug 17
+                - generic [ref=f1e1924]:
+                  - generic [ref=f1e1925]: "0"
+                  - generic [ref=f1e1927]: 15k
+                  - generic [ref=f1e1929]: 30k
+                  - generic [ref=f1e1931]: 45k
+                  - generic [ref=f1e1933]: 60k
+            - generic [ref=f1e1937]:
+              - heading "You might also like" [level=2] [ref=f1e1938]
+              - generic [ref=f1e1941]:
+                - generic [ref=f1e1944] [cursor=pointer]:
+                  - button "Bookmark" [ref=f1e1945]
+                  - generic [ref=f1e1948]: Trending
+                  - generic [ref=f1e1951]:
+                    - heading "n8n" [level=3] [ref=f1e1952]
+                    - paragraph [ref=f1e1953]: n8n-io
+                  - paragraph [ref=f1e1954]: Fair-code workflow automation platform with native AI capabilities. Combine visual building with custom code, self-host or cloud, 400+ integrations.
+                  - generic [ref=f1e1955]:
+                    - generic [ref=f1e1956]: Pro
+                    - generic [ref=f1e1957]: AI
+                    - generic [ref=f1e1958]: Web Applications
+                  - generic [ref=f1e1959]:
+                    - generic [ref=f1e1960]: ai
+                    - generic [ref=f1e1961]: apis
+                    - generic [ref=f1e1962]: automation
+                  - generic [ref=f1e1963]:
+                    - generic [ref=f1e1964]: 200.9k
+                    - generic [ref=f1e1967]: 60.2k
+                    - generic [ref=f1e1973]: TypeScript
+                  - generic [ref=f1e1975]:
+                    - generic [ref=f1e1976]: Unknown
+                    - generic [ref=f1e1980]: 1d ago
+                  - button "Watch video explanations" [ref=f1e1982]
+                - generic [ref=f1e1988] [cursor=pointer]:
+                  - button "Bookmark" [ref=f1e1989]
+                  - generic [ref=f1e1992]:
+                    - heading "appwrite" [level=3] [ref=f1e1993]
+                    - paragraph [ref=f1e1994]: appwrite
+                  - paragraph [ref=f1e1995]: Appwrite® - complete cloud infrastructure for your web, mobile and AI apps. Including Auth, Databases, Storage, Functions, Messaging, Hosting, Realtime and more
+                  - generic [ref=f1e1996]:
+                    - generic [ref=f1e1997]: Intermediate
+                    - generic [ref=f1e1998]: AI
+                    - generic [ref=f1e1999]: RAG
+                  - generic [ref=f1e2000]:
+                    - generic [ref=f1e2001]: android
+                    - generic [ref=f1e2002]: appwrite
+                    - generic [ref=f1e2003]: backend
+                  - generic [ref=f1e2004]:
+                    - generic [ref=f1e2005]: 57k
+                    - generic [ref=f1e2008]: 5.6k
+                    - generic [ref=f1e2014]: TypeScript
+                  - generic [ref=f1e2016]:
+                    - generic [ref=f1e2017]: BSD-3-CLAUSE
+                    - generic [ref=f1e2021]: 1d ago
+                  - button "Watch video explanations" [ref=f1e2023]
+                - generic [ref=f1e2029] [cursor=pointer]:
+                  - button "Bookmark" [ref=f1e2030]
+                  - generic [ref=f1e2033]:
+                    - heading "ClickHouse" [level=3] [ref=f1e2034]
+                    - paragraph [ref=f1e2035]: ClickHouse
+                  - paragraph [ref=f1e2036]: ClickHouse® is a real-time analytics database management system
+                  - generic [ref=f1e2037]:
+                    - generic [ref=f1e2038]: Pro
+                    - generic [ref=f1e2039]: AI
+                    - generic [ref=f1e2040]: Web Applications
+                  - generic [ref=f1e2041]:
+                    - generic [ref=f1e2042]: ai
+                    - generic [ref=f1e2043]: analytics
+                    - generic [ref=f1e2044]: big-data
+                  - generic [ref=f1e2045]:
+                    - generic [ref=f1e2046]: 49.3k
+                    - generic [ref=f1e2049]: 8.8k
+                    - generic [ref=f1e2055]: C++
+                  - generic [ref=f1e2057]:
+                    - generic [ref=f1e2058]: APACHE-2.0
+                    - generic [ref=f1e2062]: 1d ago
+                  - button "Watch video explanations" [ref=f1e2064]
+    - contentinfo [ref=f1e544]:
+      - generic [ref=f1e546]:
+        - generic [ref=f1e547]:
+          - img "Openlysts" [ref=f1e548]
+          - generic [ref=f1e549]: Openlysts
+          - generic [ref=f1e550]: — Discover. Filter. Build.
+        - generic [ref=f1e551]:
+          - link "About" [ref=f1e552] [cursor=pointer]:
+            - /url: /about
+          - link "Contact" [ref=f1e553] [cursor=pointer]:
+            - /url: /contact
+          - link "Trending" [ref=f1e554] [cursor=pointer]:
+            - /url: /trending
+        - paragraph [ref=f1e555]: Built with for open source
+  - generic [ref=f1e2068]: "0"

@@ -1,0 +1,416 @@
+- generic [ref=f9e4]:
+  - banner [ref=f9e5]:
+    - generic [ref=f9e7]:
+      - link "Openlysts Openlysts" [ref=f9e8] [cursor=pointer]:
+        - /url: /
+        - img "Openlysts" [ref=f9e10]
+        - generic [ref=f9e11]: Openlysts
+      - navigation [ref=f9e12]:
+        - link "Discover" [ref=f9e13] [cursor=pointer]:
+          - /url: /
+        - link "Alternatives" [ref=f9e14] [cursor=pointer]:
+          - /url: /alternatives
+        - link "Trending" [ref=f9e15] [cursor=pointer]:
+          - /url: /trending
+        - link "Bookmarks" [ref=f9e16] [cursor=pointer]:
+          - /url: /bookmarks
+        - link "About" [ref=f9e17] [cursor=pointer]:
+          - /url: /about
+        - link "Contact" [ref=f9e18] [cursor=pointer]:
+          - /url: /contact
+      - generic [ref=f9e19]:
+        - link "Bookmarks" [ref=f9e20] [cursor=pointer]:
+          - /url: /bookmarks
+          - generic [ref=f9e23]: "1"
+        - link "Settings" [ref=f9e24] [cursor=pointer]:
+          - /url: /settings
+        - button "Switch to Mobile Layout" [ref=f9e28] [cursor=pointer]
+        - button "Toggle theme" [ref=f9e32] [cursor=pointer]
+  - main [ref=f9e39]:
+    - generic [ref=f9e40]:
+      - generic [ref=f9e41]:
+        - generic [ref=f9e42]:
+          - generic [ref=f9e43]: Discover. Filter. Build.
+          - heading "Discover everything on GitHub." [level=1] [ref=f9e46]
+          - paragraph [ref=f9e47]: Explore and search high-quality open-source software across AI, developer tools, self-hosting, and the vast expanse of GitHub.
+        - generic [ref=f9e50]:
+          - textbox "Search open-source projects..." [ref=f9e51]
+          - generic:
+            - generic:
+              - generic: ⌘
+              - text: K
+        - generic [ref=f9e54]:
+          - generic [ref=f9e55]:
+            - generic [ref=f9e56]: "Sort:"
+            - combobox [ref=f9e57] [cursor=pointer]:
+              - option "Trending" [selected]
+              - option "Most Stars"
+              - option "Recently Updated"
+              - option "Recently Added"
+          - button "Categories" [ref=f9e59] [cursor=pointer]
+          - button "Filters" [ref=f9e62] [cursor=pointer]
+      - generic [ref=f9e66]:
+        - generic [ref=f9e67]:
+          - generic [ref=f9e68]:
+            - heading [level=2] [ref=f9e69]:
+              - text: Trending This Week
+              - button "Refresh Trending" [ref=f9e73] [cursor=pointer]
+            - link "View all" [ref=f9e79] [cursor=pointer]:
+              - /url: /trending
+          - generic [ref=f9e82]:
+            - generic [ref=f9e85] [cursor=pointer]:
+              - button "Bookmark" [ref=f9e86]
+              - generic [ref=f9e89]: Trending
+              - generic [ref=f9e92]:
+                - generic [ref=f9e93]:
+                  - heading "pi" [level=3] [ref=f9e94]
+                  - paragraph [ref=f9e95]: earendil-works
+                - generic [ref=f9e96]: MIT
+              - paragraph [ref=f9e100]: "AI agent toolkit: unified LLM API, agent loop, TUI, coding agent CLI"
+              - generic [ref=f9e101]:
+                - generic [ref=f9e102]: Intermediate
+                - generic [ref=f9e103]: AI
+                - generic [ref=f9e104]: LLMs
+              - generic [ref=f9e105]:
+                - generic [ref=f9e106]: 92k
+                - generic [ref=f9e109]: 11.4k
+                - generic [ref=f9e115]: TypeScript
+              - generic [ref=f9e117]: 1d ago
+              - button "Watch video explanations" [ref=f9e120]
+            - generic [ref=f9e126] [cursor=pointer]:
+              - button "Bookmark" [ref=f9e127]
+              - generic [ref=f9e130]: Trending
+              - generic [ref=f9e133]:
+                - generic [ref=f9e134]:
+                  - heading "ai-agent-book" [level=3] [ref=f9e135]
+                  - paragraph [ref=f9e136]: bojieli
+                - generic [ref=f9e137]: APACHE-2.0
+              - paragraph [ref=f9e141]: 《深入理解 AI Agent：设计原理与工程实践》（李博杰 著）开源主仓库：全书正文、编译版 PDF 与按章配套代码
+              - generic [ref=f9e142]:
+                - generic [ref=f9e143]: Intermediate
+                - generic [ref=f9e144]: AI
+                - generic [ref=f9e145]: LLMs
+              - generic [ref=f9e146]:
+                - generic [ref=f9e147]: agent
+                - generic [ref=f9e148]: agent-memory
+                - generic [ref=f9e149]: ai-agent
+              - generic [ref=f9e150]:
+                - generic [ref=f9e151]: 38.3k
+                - generic [ref=f9e154]: 4.2k
+                - generic [ref=f9e160]: Python
+              - generic [ref=f9e162]: 1d ago
+              - button "Watch video explanations" [ref=f9e165]
+            - generic [ref=f9e171] [cursor=pointer]:
+              - button "Bookmark" [ref=f9e172]
+              - generic [ref=f9e175]: Trending
+              - generic [ref=f9e178]:
+                - generic [ref=f9e179]:
+                  - heading "MoneyPrinterTurbo" [level=3] [ref=f9e180]
+                  - paragraph [ref=f9e181]: harry0703
+                - generic [ref=f9e182]: MIT
+              - paragraph [ref=f9e186]: 利用 AI 大模型和自动化工作流，根据主题或关键词一键生成高清短视频。Generate HD short videos from a topic or keyword with an automated AI workflow.
+              - generic [ref=f9e187]:
+                - generic [ref=f9e188]: Intermediate
+                - generic [ref=f9e189]: AI
+                - generic [ref=f9e190]: LLMs
+              - generic [ref=f9e191]:
+                - generic [ref=f9e192]: ai-video-generator
+                - generic [ref=f9e193]: content-creation
+                - generic [ref=f9e194]: ffmpeg
+              - generic [ref=f9e195]:
+                - generic [ref=f9e196]: 105.1k
+                - generic [ref=f9e199]: 16k
+                - generic [ref=f9e205]: Python
+              - generic [ref=f9e207]: 1d ago
+              - button "Watch video explanations" [ref=f9e210]
+            - generic [ref=f9e216] [cursor=pointer]:
+              - button "Bookmark" [ref=f9e217]
+              - generic [ref=f9e220]: Trending
+              - generic [ref=f9e223]:
+                - generic [ref=f9e224]:
+                  - heading "unsloth" [level=3] [ref=f9e225]
+                  - paragraph [ref=f9e226]: unslothai
+                - generic [ref=f9e227]: APACHE-2.0
+              - paragraph [ref=f9e231]: Local UI to run and train LLMs and diffusion models, including Qwen3.8, Kimi K3, MiniMax-H3, Gemma 4, DeepSeek-V4, FLUX and more.
+              - generic [ref=f9e232]:
+                - generic [ref=f9e233]: Pro
+                - generic [ref=f9e234]: AI
+                - generic [ref=f9e235]: LLMs
+              - generic [ref=f9e236]:
+                - generic [ref=f9e237]: agent
+                - generic [ref=f9e238]: ai
+                - generic [ref=f9e239]: chatgpt
+              - generic [ref=f9e240]:
+                - generic [ref=f9e241]: 72.9k
+                - generic [ref=f9e244]: 6.6k
+                - generic [ref=f9e250]: Python
+              - generic [ref=f9e252]: 1d ago
+              - button "Watch video explanations" [ref=f9e255]
+            - generic [ref=f9e261] [cursor=pointer]:
+              - button "Bookmark" [ref=f9e262]
+              - generic [ref=f9e265]: Trending
+              - generic [ref=f9e268]:
+                - generic [ref=f9e269]:
+                  - heading "ponytail" [level=3] [ref=f9e270]
+                  - paragraph [ref=f9e271]: DietrichGebert
+                - generic [ref=f9e272]: MIT
+              - paragraph [ref=f9e276]: Makes your AI agent think like the laziest senior dev in the room. The best code is the code you never wrote.
+              - generic [ref=f9e277]:
+                - generic [ref=f9e278]: Intermediate
+                - generic [ref=f9e279]: AI
+                - generic [ref=f9e280]: LLMs
+              - generic [ref=f9e281]:
+                - generic [ref=f9e282]: agent-skills
+                - generic [ref=f9e283]: ai-agents
+                - generic [ref=f9e284]: claude
+              - generic [ref=f9e285]:
+                - generic [ref=f9e286]: 104.4k
+                - generic [ref=f9e289]: 5.8k
+                - generic [ref=f9e295]: JavaScript
+              - generic [ref=f9e297]: 1d ago
+              - button "Watch video explanations" [ref=f9e300]
+            - generic [ref=f9e306] [cursor=pointer]:
+              - button "Bookmark" [ref=f9e307]
+              - generic [ref=f9e310]: Trending
+              - generic [ref=f9e313]:
+                - generic [ref=f9e314]:
+                  - heading "TencentDB-Agent-Memory" [level=3] [ref=f9e315]
+                  - paragraph [ref=f9e316]: TencentCloud
+                - generic [ref=f9e317]: Unknown
+              - paragraph [ref=f9e321]: TencentDB Agent Memory is a team-level memory hub for AI Agents — turning conversations, docs, and code into four reusable memory assets (Chat Memory, Skill, LLM-Wiki, Code-Graph) that are governed, shared, and equipped across agents and frameworks.
+              - generic [ref=f9e322]:
+                - generic [ref=f9e323]: Intermediate
+                - generic [ref=f9e324]: AI
+                - generic [ref=f9e325]: LLMs
+              - generic [ref=f9e326]:
+                - generic [ref=f9e327]: agent
+                - generic [ref=f9e328]: ai-agent
+                - generic [ref=f9e329]: embedding
+              - generic [ref=f9e330]:
+                - generic [ref=f9e331]: 22.5k
+                - generic [ref=f9e334]: 2k
+                - generic [ref=f9e340]: TypeScript
+              - generic [ref=f9e342]: 1d ago
+              - button "Watch video explanations" [ref=f9e345]
+            - generic [ref=f9e351] [cursor=pointer]:
+              - button "Bookmark" [ref=f9e352]
+              - generic [ref=f9e355]: Trending
+              - generic [ref=f9e358]:
+                - generic [ref=f9e359]:
+                  - heading "hermes-agent" [level=3] [ref=f9e360]
+                  - paragraph [ref=f9e361]: NousResearch
+                - generic [ref=f9e362]: MIT
+              - paragraph [ref=f9e366]: The agent that grows with you
+              - generic [ref=f9e367]:
+                - generic [ref=f9e368]: Pro
+                - generic [ref=f9e369]: AI
+                - generic [ref=f9e370]: LLMs
+              - generic [ref=f9e371]:
+                - generic [ref=f9e372]: ai
+                - generic [ref=f9e373]: ai-agent
+                - generic [ref=f9e374]: ai-agents
+              - generic [ref=f9e375]:
+                - generic [ref=f9e376]: 231.7k
+                - generic [ref=f9e379]: 46.1k
+                - generic [ref=f9e385]: Python
+              - generic [ref=f9e387]: 1d ago
+              - button "Watch video explanations" [ref=f9e390]
+            - generic [ref=f9e396] [cursor=pointer]:
+              - button "Bookmark" [ref=f9e397]
+              - generic [ref=f9e400]: Trending
+              - generic [ref=f9e403]:
+                - generic [ref=f9e404]:
+                  - heading "graphify" [level=3] [ref=f9e405]
+                  - paragraph [ref=f9e406]: Graphify-Labs
+                - generic [ref=f9e407]: APACHE-2.0
+              - paragraph [ref=f9e411]: "Turn any codebase, with its docs, SQL schemas, configs, and PDFs, into a queryable knowledge graph. A /graphify skill for Claude Code, Cursor, Codex, and Gemini CLI: local deterministic AST parsing, every edge explained, no vector store."
+              - generic [ref=f9e412]:
+                - generic [ref=f9e413]: Intermediate
+                - generic [ref=f9e414]: LLMs
+                - generic [ref=f9e415]: AI Agents
+              - generic [ref=f9e416]:
+                - generic [ref=f9e417]: ai-agents
+                - generic [ref=f9e418]: antigravity
+                - generic [ref=f9e419]: ast
+              - generic [ref=f9e420]:
+                - generic [ref=f9e421]: 107.3k
+                - generic [ref=f9e424]: 10.4k
+                - generic [ref=f9e430]: Python
+              - generic [ref=f9e432]: 1d ago
+              - button "Watch video explanations" [ref=f9e435]
+        - generic [ref=f9e439]:
+          - heading "Recently Discovered" [level=2] [ref=f9e441]
+          - generic [ref=f9e445]:
+            - generic [ref=f9e448] [cursor=pointer]:
+              - button "Bookmark" [ref=f9e449]
+              - generic [ref=f9e452]:
+                - generic [ref=f9e453]:
+                  - heading "fusio" [level=3] [ref=f9e454]
+                  - paragraph [ref=f9e455]: apioo
+                - generic [ref=f9e456]: APACHE-2.0
+              - paragraph [ref=f9e460]: Self-Hosted API Management for Builders
+              - generic [ref=f9e461]:
+                - generic [ref=f9e462]: Intermediate
+                - generic [ref=f9e463]: AI
+                - generic [ref=f9e464]: AI Agents
+              - generic [ref=f9e465]:
+                - generic [ref=f9e466]: ai
+                - generic [ref=f9e467]: ai-agents
+                - generic [ref=f9e468]: api
+              - generic [ref=f9e469]:
+                - generic [ref=f9e470]: 2.1k
+                - generic [ref=f9e473]: "242"
+                - generic [ref=f9e479]: PHP
+              - generic [ref=f9e481]: 1d ago
+              - button "Watch video explanations" [ref=f9e484]
+            - generic [ref=f9e490] [cursor=pointer]:
+              - button "Bookmark" [ref=f9e491]
+              - generic [ref=f9e494]:
+                - generic [ref=f9e495]:
+                  - heading "apisix" [level=3] [ref=f9e496]
+                  - paragraph [ref=f9e497]: apache
+                - generic [ref=f9e498]: APACHE-2.0
+              - paragraph [ref=f9e502]: The Cloud-Native API Gateway and AI Gateway
+              - generic [ref=f9e503]:
+                - generic [ref=f9e504]: Intermediate
+                - generic [ref=f9e505]: AI
+              - generic [ref=f9e506]:
+                - generic [ref=f9e507]: ai-gateway
+                - generic [ref=f9e508]: api
+                - generic [ref=f9e509]: api-gateway
+              - generic [ref=f9e510]:
+                - generic [ref=f9e511]: 17k
+                - generic [ref=f9e514]: 2.9k
+                - generic [ref=f9e520]: Lua
+              - generic [ref=f9e522]: 5h ago
+              - button "Watch video explanations" [ref=f9e525]
+            - generic [ref=f9e531] [cursor=pointer]:
+              - button "Bookmark" [ref=f9e532]
+              - generic [ref=f9e535]:
+                - generic [ref=f9e536]:
+                  - heading "Synthetic-AI-Developer-Productivity-Dataset" [level=3] [ref=f9e537]
+                  - paragraph [ref=f9e538]: syncora-ai
+                - generic [ref=f9e539]: Unknown
+              - paragraph [ref=f9e543]: High-fidelity synthetic dataset capturing AI developer productivity metrics — including focus hours, task completion rates, and burnout indicators. Privacy-safe, ideal for ML and workflow analytics.
+              - generic [ref=f9e544]:
+                - generic [ref=f9e545]: Intermediate
+                - generic [ref=f9e546]: AI
+                - generic [ref=f9e547]: Developer Tools
+              - generic [ref=f9e548]:
+                - generic [ref=f9e549]: "658"
+                - generic [ref=f9e552]: "0"
+                - generic [ref=f9e558]: Jupyter Notebook
+              - generic [ref=f9e560]: 5d ago
+              - button "Watch video explanations" [ref=f9e563]
+            - generic [ref=f9e569] [cursor=pointer]:
+              - button "Bookmark" [ref=f9e570]
+              - generic [ref=f9e573]:
+                - generic [ref=f9e574]:
+                  - heading "awesome-devtools" [level=3] [ref=f9e575]
+                  - paragraph [ref=f9e576]: devtoolsd
+                - generic [ref=f9e577]: Unknown
+              - paragraph [ref=f9e581]: A curated list of awesome developer tools and services — from cloud platforms and IDEs to AI-powered coding assistants and productivity utilities.
+              - generic [ref=f9e582]:
+                - generic [ref=f9e583]: Intermediate
+                - generic [ref=f9e584]: AI
+                - generic [ref=f9e585]: Developer Tools
+              - generic [ref=f9e586]:
+                - generic [ref=f9e587]: alternatives
+                - generic [ref=f9e588]: antigravity
+                - generic [ref=f9e589]: awesome
+              - generic [ref=f9e590]:
+                - generic [ref=f9e591]: "675"
+                - generic [ref=f9e594]: "308"
+              - generic [ref=f9e600]: 6d ago
+              - button "Watch video explanations" [ref=f9e603]
+            - generic [ref=f9e609] [cursor=pointer]:
+              - button "Bookmark" [ref=f9e610]
+              - generic [ref=f9e613]:
+                - generic [ref=f9e614]:
+                  - heading "quinn" [level=3] [ref=f9e615]
+                  - paragraph [ref=f9e616]: mrpowers-io
+                - generic [ref=f9e617]: APACHE-2.0
+              - paragraph [ref=f9e621]: pyspark methods to enhance developer productivity 📣 👯 🎉
+              - generic [ref=f9e622]:
+                - generic [ref=f9e623]: Intermediate
+                - generic [ref=f9e624]: Developer Tools
+              - generic [ref=f9e625]:
+                - generic [ref=f9e626]: apache-spark
+                - generic [ref=f9e627]: pyspark
+              - generic [ref=f9e628]:
+                - generic [ref=f9e629]: "687"
+                - generic [ref=f9e632]: "95"
+                - generic [ref=f9e638]: Python
+              - generic [ref=f9e640]: 1mo ago
+              - button "Watch video explanations" [ref=f9e643]
+            - generic [ref=f9e649] [cursor=pointer]:
+              - button "Bookmark" [ref=f9e650]
+              - generic [ref=f9e653]:
+                - generic [ref=f9e654]:
+                  - heading "spring-roo" [level=3] [ref=f9e655]
+                  - paragraph [ref=f9e656]: spring-attic
+                - generic [ref=f9e657]: Unknown
+              - paragraph [ref=f9e661]: Spring Roo is a next-generation rapid application development tool for Java developers. It focuses on higher productivity, stock-standard Java APIs, high usability, avoiding engineering trade-offs and facilitating easy Roo removal.
+              - generic [ref=f9e662]: Intermediate
+              - generic [ref=f9e664]:
+                - generic [ref=f9e665]: "689"
+                - generic [ref=f9e668]: "316"
+                - generic [ref=f9e674]: Java
+              - generic [ref=f9e676]: 24d ago
+              - button "Watch video explanations" [ref=f9e681]
+            - generic [ref=f9e687] [cursor=pointer]:
+              - button "Bookmark" [ref=f9e688]
+              - generic [ref=f9e691]:
+                - generic [ref=f9e692]:
+                  - heading "aws-devops-essential" [level=3] [ref=f9e693]
+                  - paragraph [ref=f9e694]: awslabs
+                - generic [ref=f9e695]: APACHE-2.0
+              - paragraph [ref=f9e699]: In few hours, quickly learn how to effectively leverage various AWS services to improve developer productivity and reduce the overall time to market for new product capabilities.
+              - generic [ref=f9e700]:
+                - generic [ref=f9e701]: Intermediate
+                - generic [ref=f9e702]: RAG
+                - generic [ref=f9e703]: Developer Tools
+              - generic [ref=f9e704]:
+                - generic [ref=f9e705]: "717"
+                - generic [ref=f9e708]: "495"
+              - generic [ref=f9e714]: 1mo ago
+              - button "Watch video explanations" [ref=f9e719]
+            - generic [ref=f9e725] [cursor=pointer]:
+              - button "Bookmark" [ref=f9e726]
+              - generic [ref=f9e729]:
+                - generic [ref=f9e730]:
+                  - heading "spring-data-r2dbc" [level=3] [ref=f9e731]
+                  - paragraph [ref=f9e732]: spring-projects
+                - generic [ref=f9e733]: APACHE-2.0
+              - paragraph [ref=f9e737]: Provide support to increase developer productivity in Java when using Reactive Relational Database Connectivity. Uses familiar Spring concepts such as a DatabaseClient for core API usage and lightweight repository style data access.
+              - generic [ref=f9e738]:
+                - generic [ref=f9e739]: Intermediate
+                - generic [ref=f9e740]: Developer Tools
+                - generic [ref=f9e741]: Databases
+              - generic [ref=f9e742]:
+                - generic [ref=f9e743]: ddd
+                - generic [ref=f9e744]: framework
+                - generic [ref=f9e745]: r2dbc
+              - generic [ref=f9e746]:
+                - generic [ref=f9e747]: "697"
+                - generic [ref=f9e750]: "126"
+              - generic [ref=f9e756]: 4d ago
+              - button "Watch video explanations" [ref=f9e759]
+        - generic [ref=f9e764]:
+          - heading "Popular in AI" [level=2] [ref=f9e765]
+          - link "View all" [ref=f9e768] [cursor=pointer]:
+            - /url: /search?categories=ai
+  - contentinfo [ref=f9e821]:
+    - generic [ref=f9e823]:
+      - generic [ref=f9e824]:
+        - img "Openlysts" [ref=f9e825]
+        - generic [ref=f9e826]: Openlysts
+        - generic [ref=f9e827]: — Discover. Filter. Build.
+      - generic [ref=f9e828]:
+        - link "About" [ref=f9e829] [cursor=pointer]:
+          - /url: /about
+        - link "Contact" [ref=f9e830] [cursor=pointer]:
+          - /url: /contact
+        - link "Trending" [ref=f9e831] [cursor=pointer]:
+          - /url: /trending
+      - paragraph [ref=f9e832]: Built with for open source

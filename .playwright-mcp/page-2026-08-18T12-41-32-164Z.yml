@@ -1,0 +1,9 @@
+- generic [ref=f29e5]:
+  - heading "404" [level=1] [ref=f29e7]
+  - generic [ref=f29e9]:
+    - heading "Page Not Found" [level=2] [ref=f29e10]
+    - paragraph [ref=f29e11]:
+      - text: The page
+      - generic [ref=f29e12]: "\"etc/passwd\""
+      - text: could not be found in this application.
+  - button "Go Home" [ref=f29e14] [cursor=pointer]

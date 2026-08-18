@@ -1,0 +1,4060 @@
+- generic [ref=f23e4]:
+  - banner [ref=f23e5]:
+    - generic [ref=f23e7]:
+      - link "Openlysts Openlysts" [ref=f23e8] [cursor=pointer]:
+        - /url: /
+        - img "Openlysts" [ref=f23e10]
+        - generic [ref=f23e11]: Openlysts
+      - navigation [ref=f23e12]:
+        - link "Discover" [ref=f23e13] [cursor=pointer]:
+          - /url: /
+        - link "Alternatives" [ref=f23e14] [cursor=pointer]:
+          - /url: /alternatives
+        - link "Trending" [ref=f23e15] [cursor=pointer]:
+          - /url: /trending
+        - link "Bookmarks" [ref=f23e16] [cursor=pointer]:
+          - /url: /bookmarks
+        - link "About" [ref=f23e17] [cursor=pointer]:
+          - /url: /about
+        - link "Contact" [ref=f23e18] [cursor=pointer]:
+          - /url: /contact
+      - generic [ref=f23e23]:
+        - generic [ref=f23e24]: Search openlysts...
+        - generic [ref=f23e25]:
+          - generic [ref=f23e26]: ⌘
+          - text: K
+      - generic [ref=f23e27]:
+        - link "Bookmarks" [ref=f23e28] [cursor=pointer]:
+          - /url: /bookmarks
+          - generic [ref=f23e79]: "1"
+        - link "Settings" [ref=f23e31] [cursor=pointer]:
+          - /url: /settings
+        - button "Switch to Mobile Layout" [ref=f23e35] [cursor=pointer]
+        - button "Toggle theme" [ref=f23e39] [cursor=pointer]
+    - generic [ref=f23e4477]:
+      - generic [ref=f23e4478]:
+        - textbox "Type a command or search..." [active] [ref=f23e4482]: nextcloud
+        - generic [ref=f23e4483]: ESC
+      - button "Search for \"nextcloud\"..." [ref=f23e4485] [cursor=pointer]
+      - generic [ref=f23e4494]:
+        - generic [ref=f23e4495]:
+          - generic [ref=f23e4496]: ↑
+          - generic [ref=f23e4497]: ↓
+          - text: to navigate
+        - generic [ref=f23e4498]:
+          - generic [ref=f23e4499]: ↵
+          - text: to select
+  - main [ref=f23e42]:
+    - generic [ref=f23e43]:
+      - generic [ref=f23e44]:
+        - generic [ref=f23e45]:
+          - heading "All Open Source Alternatives" [level=1] [ref=f23e46]
+          - paragraph [ref=f23e47]: Found 359 tools giving you data ownership without the price tag.
+        - generic [ref=f23e48]:
+          - textbox "Search tools..." [ref=f23e53]
+          - generic [ref=f23e54]:
+            - button "Categories" [ref=f23e55] [cursor=pointer]
+            - button "All" [ref=f23e82] [cursor=pointer]
+      - main [ref=f23e58]:
+        - generic [ref=f23e83]:
+          - generic [ref=f23e84] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e85]:
+              - generic [ref=f23e86]:
+                - heading "apisix" [level=3] [ref=f23e87]
+                - paragraph [ref=f23e88]:
+                  - text: vs
+                  - generic [ref=f23e89]: apigee
+              - generic [ref=f23e90]:
+                - generic [ref=f23e91]: ★ 17.0k
+                - 'generic "Editor''s Choice: High feature parity and extremely popular" [ref=f23e92]': Editor's Choice
+            - paragraph [ref=f23e96]: Cloud Native API Gateway under the Apache Software Foundation
+            - generic [ref=f23e98]:
+              - generic [ref=f23e99]: Easy
+              - generic [ref=f23e100]: 98% Parity
+          - generic [ref=f23e103] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e105]:
+              - heading [level=3]
+              - paragraph [ref=f23e106]:
+                - text: vs
+                - generic [ref=f23e107]: Postman
+            - paragraph [ref=f23e108]: DX first open-source API devtool
+            - generic [ref=f23e110]:
+              - generic [ref=f23e111]: Medium
+              - generic [ref=f23e112]: 96% Parity
+          - generic [ref=f23e115] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e116]:
+              - generic [ref=f23e117]:
+                - heading "fusio" [level=3] [ref=f23e118]
+                - paragraph [ref=f23e119]:
+                  - text: vs
+                  - generic [ref=f23e120]: Postman
+              - generic [ref=f23e121]: ★ 2.1k
+            - paragraph [ref=f23e123]: API management platform
+            - generic [ref=f23e125]:
+              - generic [ref=f23e126]: Medium
+              - generic [ref=f23e127]: 80% Parity
+          - generic [ref=f23e130] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e132]:
+              - heading [level=3]
+              - paragraph [ref=f23e133]:
+                - text: vs
+                - generic [ref=f23e134]: Postman
+            - paragraph [ref=f23e135]: API development ecosystem
+            - generic [ref=f23e137]:
+              - generic [ref=f23e138]: Hard
+              - generic [ref=f23e139]: 80% Parity
+          - generic [ref=f23e142] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e144]:
+              - heading [level=3]
+              - paragraph [ref=f23e145]:
+                - text: vs
+                - generic [ref=f23e146]: Smartbear
+            - paragraph [ref=f23e147]: e2e Testing and Data Mocking
+            - generic [ref=f23e149]:
+              - generic [ref=f23e150]: Medium
+              - generic [ref=f23e151]: 74% Parity
+          - generic [ref=f23e154] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e156]:
+              - heading [level=3]
+              - paragraph [ref=f23e157]:
+                - text: vs
+                - generic [ref=f23e158]: Checkly
+            - paragraph [ref=f23e159]: API Testing and Monitoring
+            - generic [ref=f23e161]:
+              - generic [ref=f23e162]: Hard
+              - generic [ref=f23e163]: 71% Parity
+          - generic [ref=f23e166] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e168]:
+              - heading "boxyhq.com" [level=3] [ref=f23e169]
+              - paragraph [ref=f23e170]:
+                - text: vs
+                - generic [ref=f23e171]: Auth0
+            - paragraph [ref=f23e172]: Enterprise Readiness made simple
+            - generic [ref=f23e174]:
+              - generic [ref=f23e175]: Hard
+              - generic [ref=f23e176]: 96% Parity
+          - generic [ref=f23e179] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e181]:
+              - heading [level=3]
+              - paragraph [ref=f23e182]:
+                - text: vs
+                - generic [ref=f23e183]: Okta
+            - paragraph [ref=f23e184]: Granular access control
+            - generic [ref=f23e186]:
+              - generic [ref=f23e187]: Hard
+              - generic [ref=f23e188]: 83% Parity
+          - generic [ref=f23e191] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e193]:
+              - heading [level=3]
+              - paragraph [ref=f23e194]:
+                - text: vs
+                - generic [ref=f23e195]: Okta
+            - paragraph [ref=f23e196]: User authentication and session management framework
+            - generic [ref=f23e198]:
+              - generic [ref=f23e199]: Medium
+              - generic [ref=f23e200]: 85% Parity
+          - generic [ref=f23e203] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e205]:
+              - heading "www.hanko.io" [level=3] [ref=f23e206]
+              - paragraph [ref=f23e207]:
+                - text: vs
+                - generic [ref=f23e208]: Okta
+            - paragraph [ref=f23e209]: Passkey-first authentication framework
+            - generic [ref=f23e211]:
+              - generic [ref=f23e212]: Easy
+              - generic [ref=f23e213]: 98% Parity
+          - generic [ref=f23e216] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e218]:
+              - heading [level=3]
+              - paragraph [ref=f23e219]:
+                - text: vs
+                - generic [ref=f23e220]: Okta
+            - paragraph [ref=f23e221]: User authentication and session management framework
+            - generic [ref=f23e223]:
+              - generic [ref=f23e224]: Medium
+              - generic [ref=f23e225]: 83% Parity
+          - generic [ref=f23e228] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e230]:
+              - heading [level=3]
+              - paragraph [ref=f23e231]:
+                - text: vs
+                - generic [ref=f23e232]: Okta
+            - paragraph [ref=f23e233]: Authorization administration framework (Open Policy)
+            - generic [ref=f23e235]:
+              - generic [ref=f23e236]: Medium
+              - generic [ref=f23e237]: 76% Parity
+          - generic [ref=f23e240] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e242]:
+              - heading [level=3]
+              - paragraph [ref=f23e243]:
+                - text: vs
+                - generic [ref=f23e244]: Okta
+            - paragraph [ref=f23e245]: Identity platform
+            - generic [ref=f23e247]:
+              - generic [ref=f23e248]: Hard
+              - generic [ref=f23e249]: 88% Parity
+          - generic [ref=f23e252] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e254]:
+              - heading [level=3]
+              - paragraph [ref=f23e255]:
+                - text: vs
+                - generic [ref=f23e256]: Okta
+            - paragraph [ref=f23e257]: Authorization building framework
+            - generic [ref=f23e259]:
+              - generic [ref=f23e260]: Easy
+              - generic [ref=f23e261]: 70% Parity
+          - generic [ref=f23e264] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e266]:
+              - heading [level=3]
+              - paragraph [ref=f23e267]:
+                - text: vs
+                - generic [ref=f23e268]: Okta
+            - paragraph [ref=f23e269]: User authentication and session management framework
+            - generic [ref=f23e271]:
+              - generic [ref=f23e272]: Hard
+              - generic [ref=f23e273]: 72% Parity
+          - generic [ref=f23e276] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e278]:
+              - heading [level=3]
+              - paragraph [ref=f23e279]:
+                - text: vs
+                - generic [ref=f23e280]: Okta
+            - paragraph [ref=f23e281]: Authorization and access control as a service
+            - generic [ref=f23e283]:
+              - generic [ref=f23e284]: Hard
+              - generic [ref=f23e285]: 71% Parity
+          - generic [ref=f23e288] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e290]:
+              - heading [level=3]
+              - paragraph [ref=f23e291]:
+                - text: vs
+                - generic [ref=f23e292]: Okta
+            - paragraph [ref=f23e293]: User authentication and session management framework
+            - generic [ref=f23e295]:
+              - generic [ref=f23e296]: Medium
+              - generic [ref=f23e297]: 78% Parity
+          - generic [ref=f23e300] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e302]:
+              - heading [level=3]
+              - paragraph [ref=f23e303]:
+                - text: vs
+                - generic [ref=f23e304]: Firebase
+            - paragraph [ref=f23e305]: Backend server with REST APIs to manage core backend needs
+            - generic [ref=f23e307]:
+              - generic [ref=f23e308]: Easy
+              - generic [ref=f23e309]: 87% Parity
+          - generic [ref=f23e312] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e314]:
+              - heading [level=3]
+              - paragraph [ref=f23e315]:
+                - text: vs
+                - generic [ref=f23e316]: Firebase
+            - paragraph [ref=f23e317]: Backend server with REST and GraphQL APIs to manage core backend needs
+            - generic [ref=f23e319]:
+              - generic [ref=f23e320]: Easy
+              - generic [ref=f23e321]: 93% Parity
+          - generic [ref=f23e324] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e326]:
+              - heading [level=3]
+              - paragraph [ref=f23e327]:
+                - text: vs
+                - generic [ref=f23e328]: Firebase
+            - paragraph [ref=f23e329]: Backend server with REST APIs to manage core backend needs
+            - generic [ref=f23e331]:
+              - generic [ref=f23e332]: Medium
+              - generic [ref=f23e333]: 73% Parity
+          - generic [ref=f23e336] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e338]:
+              - heading "case.app" [level=3] [ref=f23e339]
+              - paragraph [ref=f23e340]:
+                - text: vs
+                - generic [ref=f23e341]: Firebase
+            - paragraph [ref=f23e342]: Lightweight Backend-as-a-Service with essential features
+            - generic [ref=f23e344]:
+              - generic [ref=f23e345]: Easy
+              - generic [ref=f23e346]: 70% Parity
+          - generic [ref=f23e349] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e351]:
+              - heading [level=3]
+              - paragraph [ref=f23e352]:
+                - text: vs
+                - generic [ref=f23e353]: Firebase
+            - paragraph [ref=f23e354]: Backend Development Engine for cloud-based apps, APIs, and distributed systems
+            - generic [ref=f23e356]:
+              - generic [ref=f23e357]: Hard
+              - generic [ref=f23e358]: 81% Parity
+          - generic [ref=f23e361] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e363]:
+              - heading [level=3]
+              - paragraph [ref=f23e364]:
+                - text: vs
+                - generic [ref=f23e365]: Firebase
+            - paragraph [ref=f23e366]: Backend server with REST APIs to manage core backend needs
+            - generic [ref=f23e368]:
+              - generic [ref=f23e369]: Hard
+              - generic [ref=f23e370]: 72% Parity
+          - generic [ref=f23e373] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e375]:
+              - heading [level=3]
+              - paragraph [ref=f23e376]:
+                - text: vs
+                - generic [ref=f23e377]: Firebase
+            - paragraph [ref=f23e378]: Backend server with GraphQL
+            - generic [ref=f23e380]:
+              - generic [ref=f23e381]: Hard
+              - generic [ref=f23e382]: 99% Parity
+          - generic [ref=f23e385] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e387]:
+              - heading [level=3]
+              - paragraph [ref=f23e388]:
+                - text: vs
+                - generic [ref=f23e389]: Firebase
+            - paragraph [ref=f23e390]: Backend server with REST APIs to manage core backend needs
+            - generic [ref=f23e392]:
+              - generic [ref=f23e393]: Medium
+              - generic [ref=f23e394]: 88% Parity
+          - generic [ref=f23e397] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e399]:
+              - heading [level=3]
+              - paragraph [ref=f23e400]:
+                - text: vs
+                - generic [ref=f23e401]: Firebase
+            - paragraph [ref=f23e402]: Backend server with REST APIs to manage core backend needs
+            - generic [ref=f23e404]:
+              - generic [ref=f23e405]: Medium
+              - generic [ref=f23e406]: 74% Parity
+          - generic [ref=f23e409] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e411]:
+              - heading [level=3]
+              - paragraph [ref=f23e412]:
+                - text: vs
+                - generic [ref=f23e413]: Tableau
+            - paragraph [ref=f23e414]: Business intelligence software
+            - generic [ref=f23e416]:
+              - generic [ref=f23e417]: Easy
+              - generic [ref=f23e418]: 93% Parity
+          - generic [ref=f23e421] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e423]:
+              - heading "www.preset.io" [level=3] [ref=f23e424]
+              - paragraph [ref=f23e425]:
+                - text: vs
+                - generic [ref=f23e426]: PowerBI
+            - paragraph [ref=f23e427]: Modern BI platform powered by Apache Superset
+            - generic [ref=f23e429]:
+              - generic [ref=f23e430]: Easy
+              - generic [ref=f23e431]: 90% Parity
+          - generic [ref=f23e434] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e436]:
+              - heading [level=3]
+              - paragraph [ref=f23e437]:
+                - text: vs
+                - generic [ref=f23e438]: Contentful
+            - paragraph [ref=f23e439]: Drag and drop page builder and CMS
+            - generic [ref=f23e441]:
+              - generic [ref=f23e442]: Medium
+              - generic [ref=f23e443]: 97% Parity
+          - generic [ref=f23e446] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e448]:
+              - heading [level=3]
+              - paragraph [ref=f23e449]:
+                - text: vs
+                - generic [ref=f23e450]: Contentful
+            - paragraph [ref=f23e451]: CMS for teams
+            - generic [ref=f23e453]:
+              - generic [ref=f23e454]: Hard
+              - generic [ref=f23e455]: 80% Parity
+          - generic [ref=f23e458] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e460]:
+              - heading [level=3]
+              - paragraph [ref=f23e461]:
+                - text: vs
+                - generic [ref=f23e462]: Contentful
+            - paragraph [ref=f23e463]: Git-based CMS for static site generators
+            - generic [ref=f23e465]:
+              - generic [ref=f23e466]: Easy
+              - generic [ref=f23e467]: 80% Parity
+          - generic [ref=f23e470] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e472]:
+              - heading [level=3]
+              - paragraph [ref=f23e473]:
+                - text: vs
+                - generic [ref=f23e474]: Contentful
+            - paragraph [ref=f23e475]: Data platform which wraps any database with an intuitive app
+            - generic [ref=f23e477]:
+              - generic [ref=f23e478]: Easy
+              - generic [ref=f23e479]: 94% Parity
+          - generic [ref=f23e482] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e484]:
+              - heading [level=3]
+              - paragraph [ref=f23e485]:
+                - text: vs
+                - generic [ref=f23e486]: Medium
+            - paragraph [ref=f23e487]: Headless Node.js publishing platform
+            - generic [ref=f23e489]:
+              - generic [ref=f23e490]: Medium
+              - generic [ref=f23e491]: 72% Parity
+          - generic [ref=f23e494] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e496]:
+              - heading [level=3]
+              - paragraph [ref=f23e497]:
+                - text: vs
+                - generic [ref=f23e498]: Contentful
+            - paragraph [ref=f23e499]: The headless page builder for singe-page frameworks
+            - generic [ref=f23e501]:
+              - generic [ref=f23e502]: Hard
+              - generic [ref=f23e503]: 78% Parity
+          - generic [ref=f23e506] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e508]:
+              - heading [level=3]
+              - paragraph [ref=f23e509]:
+                - text: vs
+                - generic [ref=f23e510]: Contentful
+            - paragraph [ref=f23e511]: Node.js Headless CMS to build customisable APIs
+            - generic [ref=f23e513]:
+              - generic [ref=f23e514]: Hard
+              - generic [ref=f23e515]: 86% Parity
+          - generic [ref=f23e518] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e520]:
+              - heading [level=3]
+              - paragraph [ref=f23e521]:
+                - text: vs
+                - generic [ref=f23e522]: Contentful
+            - paragraph [ref=f23e523]: Modern Symfony based CMS
+            - generic [ref=f23e525]:
+              - generic [ref=f23e526]: Easy
+              - generic [ref=f23e527]: 70% Parity
+          - generic [ref=f23e530] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e532]:
+              - heading [level=3]
+              - paragraph [ref=f23e533]:
+                - text: vs
+                - generic [ref=f23e534]: Contentful
+            - paragraph [ref=f23e535]: Visual editor for React websites
+            - generic [ref=f23e537]:
+              - generic [ref=f23e538]: Hard
+              - generic [ref=f23e539]: 84% Parity
+          - generic [ref=f23e542] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e544]:
+              - heading [level=3]
+              - paragraph [ref=f23e545]:
+                - text: vs
+                - generic [ref=f23e546]: Contentful
+            - paragraph [ref=f23e547]: Enterprise serverless CMS
+            - generic [ref=f23e549]:
+              - generic [ref=f23e550]: Medium
+              - generic [ref=f23e551]: 82% Parity
+          - generic [ref=f23e554] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e556]:
+              - heading "databend.rs" [level=3] [ref=f23e557]
+              - paragraph [ref=f23e558]:
+                - text: vs
+                - generic [ref=f23e559]: Snowflake
+            - paragraph [ref=f23e560]: Elastic and Workload-Aware Modern Cloud Data Warehouse
+            - generic [ref=f23e562]:
+              - generic [ref=f23e563]: Hard
+              - generic [ref=f23e564]: 77% Parity
+          - generic [ref=f23e567] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e569]:
+              - heading "gitpod.io" [level=3] [ref=f23e570]
+              - paragraph [ref=f23e571]:
+                - text: vs
+                - generic [ref=f23e572]: Codespaces
+            - paragraph [ref=f23e573]: Automated provisioning of cloud development environments with multiple git providers & IDEs
+            - generic [ref=f23e575]:
+              - generic [ref=f23e576]: Medium
+              - generic [ref=f23e577]: 71% Parity
+          - generic [ref=f23e580] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e582]:
+              - heading [level=3]
+              - paragraph [ref=f23e583]:
+                - text: vs
+                - generic [ref=f23e584]: Amazon S3
+            - paragraph [ref=f23e585]: S3 compatible object storage
+            - generic [ref=f23e587]:
+              - generic [ref=f23e588]: Hard
+              - generic [ref=f23e589]: 89% Parity
+          - generic [ref=f23e592] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e594]:
+              - heading [level=3]
+              - paragraph [ref=f23e595]:
+                - text: vs
+                - generic [ref=f23e596]: Amazon S3
+            - paragraph [ref=f23e597]: Decentralized cloud storage
+            - generic [ref=f23e599]:
+              - generic [ref=f23e600]: Medium
+              - generic [ref=f23e601]: 86% Parity
+          - generic [ref=f23e604] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e606]:
+              - heading "ThreatMapper" [level=3] [ref=f23e607]
+              - paragraph [ref=f23e608]:
+                - text: vs
+                - generic [ref=f23e609]: Palo Alto Prisma
+            - paragraph [ref=f23e610]: Apache v2, powerful runtime vulnerability and compliance scanner for kubernetes, virtual machines, cloud and serverless.
+            - generic [ref=f23e612]:
+              - generic [ref=f23e613]: Easy
+              - generic [ref=f23e614]: 95% Parity
+          - generic [ref=f23e617] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e619]:
+              - heading [level=3]
+              - paragraph [ref=f23e620]:
+                - text: vs
+                - generic [ref=f23e621]: Twilio
+            - paragraph [ref=f23e622]: APIs for SMS, voice and video
+            - generic [ref=f23e624]:
+              - generic [ref=f23e625]: Medium
+              - generic [ref=f23e626]: 92% Parity
+          - generic [ref=f23e629] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e631]:
+              - heading [level=3]
+              - paragraph [ref=f23e632]:
+                - text: vs
+                - generic [ref=f23e633]: Courier
+            - paragraph [ref=f23e634]: Components and APIs for email, sms, direct and push
+            - generic [ref=f23e636]:
+              - generic [ref=f23e637]: Easy
+              - generic [ref=f23e638]: 79% Parity
+          - generic [ref=f23e641] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e643]:
+              - heading [level=3]
+              - paragraph [ref=f23e644]:
+                - text: vs
+                - generic [ref=f23e645]: Orbit
+            - paragraph [ref=f23e646]: Suite of community and data tools built to unlock community-led growth for your organization
+            - generic [ref=f23e648]:
+              - generic [ref=f23e649]: Easy
+              - generic [ref=f23e650]: 85% Parity
+          - generic [ref=f23e653] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e655]:
+              - heading [level=3]
+              - paragraph [ref=f23e656]:
+                - text: vs
+                - generic [ref=f23e657]: Segment
+            - paragraph [ref=f23e658]: Fully-scriptable data ingestion engine for modern data teams
+            - generic [ref=f23e660]:
+              - generic [ref=f23e661]: Easy
+              - generic [ref=f23e662]: 72% Parity
+          - generic [ref=f23e665] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e667]:
+              - heading [level=3]
+              - paragraph [ref=f23e668]:
+                - text: vs
+                - generic [ref=f23e669]: Segment
+            - paragraph [ref=f23e670]: Customer data platform for developers
+            - generic [ref=f23e672]:
+              - generic [ref=f23e673]: Easy
+              - generic [ref=f23e674]: 86% Parity
+          - generic [ref=f23e677] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e679]:
+              - heading [level=3]
+              - paragraph [ref=f23e680]:
+                - text: vs
+                - generic [ref=f23e681]: Segment
+            - paragraph [ref=f23e682]: Customer Data Platform with Consumer Journey automation engine
+            - generic [ref=f23e684]:
+              - generic [ref=f23e685]: Easy
+              - generic [ref=f23e686]: 74% Parity
+          - generic [ref=f23e689] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e691]:
+              - heading [level=3]
+              - paragraph [ref=f23e692]:
+                - text: vs
+                - generic [ref=f23e693]: Intercom
+            - paragraph [ref=f23e694]: Live chat widget
+            - generic [ref=f23e696]:
+              - generic [ref=f23e697]: Easy
+              - generic [ref=f23e698]: 71% Parity
+          - generic [ref=f23e701] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e703]:
+              - heading [level=3]
+              - paragraph [ref=f23e704]:
+                - text: vs
+                - generic [ref=f23e705]: Intercom
+            - paragraph [ref=f23e706]: Live chat widget
+            - generic [ref=f23e708]:
+              - generic [ref=f23e709]: Hard
+              - generic [ref=f23e710]: 82% Parity
+          - generic [ref=f23e713] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e715]:
+              - heading [level=3]
+              - paragraph [ref=f23e716]:
+                - text: vs
+                - generic [ref=f23e717]: Intercom
+            - paragraph [ref=f23e718]: Live chat widget
+            - generic [ref=f23e720]:
+              - generic [ref=f23e721]: Easy
+              - generic [ref=f23e722]: 93% Parity
+          - generic [ref=f23e725] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e727]:
+              - heading [level=3]
+              - paragraph [ref=f23e728]:
+                - text: vs
+                - generic [ref=f23e729]: AWS Config
+            - paragraph [ref=f23e730]: Assess, audit, and evaluate the configurations of your cloud assets.
+            - generic [ref=f23e732]:
+              - generic [ref=f23e733]: Medium
+              - generic [ref=f23e734]: 86% Parity
+          - generic [ref=f23e737] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e739]:
+              - heading [level=3]
+              - paragraph [ref=f23e740]:
+                - text: vs
+                - generic [ref=f23e741]: GreyNoise
+            - paragraph [ref=f23e742]: Collaborative IPS able to analyze visitor behavior and to provide an adapted response to all kinds of attacks.
+            - generic [ref=f23e744]:
+              - generic [ref=f23e745]: Hard
+              - generic [ref=f23e746]: 93% Parity
+          - generic [ref=f23e749] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e751]:
+              - heading "faradaysec.com" [level=3] [ref=f23e752]
+              - paragraph [ref=f23e753]:
+                - text: vs
+                - generic [ref=f23e754]: Plextrac
+            - paragraph [ref=f23e755]: Open Source Vulnerability Management and Orchestration Platform
+            - generic [ref=f23e757]:
+              - generic [ref=f23e758]: Medium
+              - generic [ref=f23e759]: 98% Parity
+          - generic [ref=f23e762] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e764]:
+              - heading [level=3]
+              - paragraph [ref=f23e765]:
+                - text: vs
+                - generic [ref=f23e766]: OpenVPN Access Server
+            - paragraph [ref=f23e767]: VPN Server & Firewall for teams
+            - generic [ref=f23e769]:
+              - generic [ref=f23e770]: Medium
+              - generic [ref=f23e771]: 80% Parity
+          - generic [ref=f23e774] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e776]:
+              - heading "gravitl.com" [level=3] [ref=f23e777]
+              - paragraph [ref=f23e778]:
+                - text: vs
+                - generic [ref=f23e779]: Tailscale
+            - paragraph [ref=f23e780]: WireGuard virtual networking platform (VPN)
+            - generic [ref=f23e782]:
+              - generic [ref=f23e783]: Hard
+              - generic [ref=f23e784]: 99% Parity
+          - generic [ref=f23e787] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e789]:
+              - heading [level=3]
+              - paragraph [ref=f23e790]:
+                - text: vs
+                - generic [ref=f23e791]: GitHub Dependabot
+            - paragraph [ref=f23e792]: Dependency Vulnerability Scanner and SBOM Inventory
+            - generic [ref=f23e794]:
+              - generic [ref=f23e795]: Medium
+              - generic [ref=f23e796]: 87% Parity
+          - generic [ref=f23e799] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e801]:
+              - heading "www.matano.dev" [level=3] [ref=f23e802]
+              - paragraph [ref=f23e803]:
+                - text: vs
+                - generic [ref=f23e804]: Splunk
+            - paragraph [ref=f23e805]: Open source cloud-native security lake platform (SIEM alternative) for threat hunting, detection & response, and cybersecurity analytics at petabyte scale on AWS
+            - generic [ref=f23e807]:
+              - generic [ref=f23e808]: Hard
+              - generic [ref=f23e809]: 97% Parity
+          - generic [ref=f23e812] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e814]:
+              - heading "netbird.io" [level=3] [ref=f23e815]
+              - paragraph [ref=f23e816]:
+                - text: vs
+                - generic [ref=f23e817]: Tailscale
+            - paragraph [ref=f23e818]: Zero Configuration Mesh VPN for Business
+            - generic [ref=f23e820]:
+              - generic [ref=f23e821]: Medium
+              - generic [ref=f23e822]: 86% Parity
+          - generic [ref=f23e825] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e827]:
+              - heading [level=3]
+              - paragraph [ref=f23e828]:
+                - text: vs
+                - generic [ref=f23e829]: Tenable Nessus
+            - paragraph [ref=f23e830]: Vulnerability scanner based on simple YAML based DSL
+            - generic [ref=f23e832]:
+              - generic [ref=f23e833]: Hard
+              - generic [ref=f23e834]: 88% Parity
+          - generic [ref=f23e837] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e839]:
+              - heading [level=3]
+              - paragraph [ref=f23e840]:
+                - text: vs
+                - generic [ref=f23e841]: Landingfolio
+            - paragraph [ref=f23e842]: The NPM for Design Engineers
+            - generic [ref=f23e844]:
+              - generic [ref=f23e845]: Hard
+              - generic [ref=f23e846]: 74% Parity
+          - generic [ref=f23e849] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e851]:
+              - heading [level=3]
+              - paragraph [ref=f23e852]:
+                - text: vs
+                - generic [ref=f23e853]: Figma
+            - paragraph [ref=f23e854]: Code-based tool for designing and prototyping
+            - generic [ref=f23e856]:
+              - generic [ref=f23e857]: Easy
+              - generic [ref=f23e858]: 92% Parity
+          - generic [ref=f23e861] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e863]:
+              - heading [level=3]
+              - paragraph [ref=f23e864]:
+                - text: vs
+                - generic [ref=f23e865]: Figma
+            - paragraph [ref=f23e866]: Design & prototyping platform
+            - generic [ref=f23e868]:
+              - generic [ref=f23e869]: Easy
+              - generic [ref=f23e870]: 95% Parity
+          - generic [ref=f23e873] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e875]:
+              - heading "docuseal.co" [level=3] [ref=f23e876]
+              - paragraph [ref=f23e877]:
+                - text: vs
+                - generic [ref=f23e878]: DocuSign
+            - paragraph [ref=f23e879]: Digital Signing Infrastructure
+            - generic [ref=f23e881]:
+              - generic [ref=f23e882]: Easy
+              - generic [ref=f23e883]: 80% Parity
+          - generic [ref=f23e886] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e888]:
+              - heading "documenso.com" [level=3] [ref=f23e889]
+              - paragraph [ref=f23e890]:
+                - text: vs
+                - generic [ref=f23e891]: DocuSign
+            - paragraph [ref=f23e892]: Digital Signing Infrastructure
+            - generic [ref=f23e894]:
+              - generic [ref=f23e895]: Easy
+              - generic [ref=f23e896]: 86% Parity
+          - generic [ref=f23e899] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e901]:
+              - heading [level=3]
+              - paragraph [ref=f23e902]:
+                - text: vs
+                - generic [ref=f23e903]: DocuSign
+            - paragraph [ref=f23e904]: Digital document signer
+            - generic [ref=f23e906]:
+              - generic [ref=f23e907]: Medium
+              - generic [ref=f23e908]: 92% Parity
+          - generic [ref=f23e911] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e913]:
+              - heading [level=3]
+              - paragraph [ref=f23e914]:
+                - text: vs
+                - generic [ref=f23e915]: Shopify
+            - paragraph [ref=f23e916]: Headless e-commerce platform
+            - generic [ref=f23e918]:
+              - generic [ref=f23e919]: Easy
+              - generic [ref=f23e920]: 80% Parity
+          - generic [ref=f23e923] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e925]:
+              - heading [level=3]
+              - paragraph [ref=f23e926]:
+                - text: vs
+                - generic [ref=f23e927]: Shopify
+            - paragraph [ref=f23e928]: Headless e-commerce platform
+            - generic [ref=f23e930]:
+              - generic [ref=f23e931]: Hard
+              - generic [ref=f23e932]: 70% Parity
+          - generic [ref=f23e935] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e937]:
+              - heading [level=3]
+              - paragraph [ref=f23e938]:
+                - text: vs
+                - generic [ref=f23e939]: Shopify
+            - paragraph [ref=f23e940]: Headless e-commerce platform
+            - generic [ref=f23e942]:
+              - generic [ref=f23e943]: Easy
+              - generic [ref=f23e944]: 83% Parity
+          - generic [ref=f23e947] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e949]:
+              - heading "shuup.com" [level=3] [ref=f23e950]
+              - paragraph [ref=f23e951]:
+                - text: vs
+                - generic [ref=f23e952]: Shopify
+            - paragraph [ref=f23e953]: Headless e-commerce platform
+            - generic [ref=f23e955]:
+              - generic [ref=f23e956]: Medium
+              - generic [ref=f23e957]: 75% Parity
+          - generic [ref=f23e960] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e962]:
+              - heading [level=3]
+              - paragraph [ref=f23e963]:
+                - text: vs
+                - generic [ref=f23e964]: Shopify
+            - paragraph [ref=f23e965]: Headless e-commerce platform
+            - generic [ref=f23e967]:
+              - generic [ref=f23e968]: Easy
+              - generic [ref=f23e969]: 96% Parity
+          - generic [ref=f23e972] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e974]:
+              - heading [level=3]
+              - paragraph [ref=f23e975]:
+                - text: vs
+                - generic [ref=f23e976]: Shopify
+            - paragraph [ref=f23e977]: Headless e-commerce platform
+            - generic [ref=f23e979]:
+              - generic [ref=f23e980]: Medium
+              - generic [ref=f23e981]: 82% Parity
+          - generic [ref=f23e984] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e986]:
+              - heading [level=3]
+              - paragraph [ref=f23e987]:
+                - text: vs
+                - generic [ref=f23e988]: Shogun
+            - paragraph [ref=f23e989]: Frontend for e-commerce platform
+            - generic [ref=f23e991]:
+              - generic [ref=f23e992]: Easy
+              - generic [ref=f23e993]: 85% Parity
+          - generic [ref=f23e996] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e998]:
+              - heading [level=3]
+              - paragraph [ref=f23e999]:
+                - text: vs
+                - generic [ref=f23e1000]: Fivetran
+            - paragraph [ref=f23e1001]: Data integration platform
+            - generic [ref=f23e1003]:
+              - generic [ref=f23e1004]: Hard
+              - generic [ref=f23e1005]: 77% Parity
+          - generic [ref=f23e1008] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1010]:
+              - heading [level=3]
+              - paragraph [ref=f23e1011]:
+                - text: vs
+                - generic [ref=f23e1012]: Fivetran
+            - paragraph [ref=f23e1013]: Data streaming processor with yaml-driven pipeline configuration
+            - generic [ref=f23e1015]:
+              - generic [ref=f23e1016]: Easy
+              - generic [ref=f23e1017]: 92% Parity
+          - generic [ref=f23e1020] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1022]:
+              - heading [level=3]
+              - paragraph [ref=f23e1023]:
+                - text: vs
+                - generic [ref=f23e1024]: Fivetran
+            - paragraph [ref=f23e1025]: Orchestration platform for data assets
+            - generic [ref=f23e1027]:
+              - generic [ref=f23e1028]: Easy
+              - generic [ref=f23e1029]: 74% Parity
+          - generic [ref=f23e1032] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1034]:
+              - heading [level=3]
+              - paragraph [ref=f23e1035]:
+                - text: vs
+                - generic [ref=f23e1036]: Fivetran
+            - paragraph [ref=f23e1037]: orchestration and scheduling platform
+            - generic [ref=f23e1039]:
+              - generic [ref=f23e1040]: Medium
+              - generic [ref=f23e1041]: 95% Parity
+          - generic [ref=f23e1044] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1046]:
+              - heading [level=3]
+              - paragraph [ref=f23e1047]:
+                - text: vs
+                - generic [ref=f23e1048]: Fivetran
+            - paragraph [ref=f23e1049]: No-code data pipelines builder
+            - generic [ref=f23e1051]:
+              - generic [ref=f23e1052]: Easy
+              - generic [ref=f23e1053]: 97% Parity
+          - generic [ref=f23e1056] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1058]:
+              - heading [level=3]
+              - paragraph [ref=f23e1059]:
+                - text: vs
+                - generic [ref=f23e1060]: Fivetran
+            - paragraph [ref=f23e1061]: Data orchestration platform for a modern data stack
+            - generic [ref=f23e1063]:
+              - generic [ref=f23e1064]: Hard
+              - generic [ref=f23e1065]: 82% Parity
+          - generic [ref=f23e1068] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1070]:
+              - heading [level=3]
+              - paragraph [ref=f23e1071]:
+                - text: vs
+                - generic [ref=f23e1072]: Fivetran
+            - paragraph [ref=f23e1073]: An open-source policy-as-code software that provides analytics for multi-cloud and SaaS.
+            - generic [ref=f23e1075]:
+              - generic [ref=f23e1076]: Hard
+              - generic [ref=f23e1077]: 90% Parity
+          - generic [ref=f23e1080] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1082]:
+              - heading "dolicloud.com" [level=3] [ref=f23e1083]
+              - paragraph [ref=f23e1084]:
+                - text: vs
+                - generic [ref=f23e1085]: Oracle Fusion ERP Cloud
+            - paragraph [ref=f23e1086]: Business management suite (ERP and CRM)
+            - generic [ref=f23e1088]:
+              - generic [ref=f23e1089]: Easy
+              - generic [ref=f23e1090]: 95% Parity
+          - generic [ref=f23e1093] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1095]:
+              - heading "erpnext.com" [level=3] [ref=f23e1096]
+              - paragraph [ref=f23e1097]:
+                - text: vs
+                - generic [ref=f23e1098]: SAP Business One
+            - paragraph [ref=f23e1099]: Agile, modern, module based Business management suite
+            - generic [ref=f23e1101]:
+              - generic [ref=f23e1102]: Hard
+              - generic [ref=f23e1103]: 84% Parity
+          - generic [ref=f23e1106] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1108]:
+              - heading [level=3]
+              - paragraph [ref=f23e1109]:
+                - text: vs
+                - generic [ref=f23e1110]: Mailchimp
+            - paragraph [ref=f23e1111]: Email newsletter tool
+            - generic [ref=f23e1113]:
+              - generic [ref=f23e1114]: Hard
+              - generic [ref=f23e1115]: 88% Parity
+          - generic [ref=f23e1118] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1120]:
+              - heading [level=3]
+              - paragraph [ref=f23e1121]:
+                - text: vs
+                - generic [ref=f23e1122]: Algolia
+            - paragraph [ref=f23e1123]: Search UI components for React and Vue
+            - generic [ref=f23e1125]:
+              - generic [ref=f23e1126]: Hard
+              - generic [ref=f23e1127]: 72% Parity
+          - generic [ref=f23e1130] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1132]:
+              - heading [level=3]
+              - paragraph [ref=f23e1133]:
+                - text: vs
+                - generic [ref=f23e1134]: Algolia
+            - paragraph [ref=f23e1135]: Neural search framework for 𝙖𝙣𝙮 kind of data (including images)
+            - generic [ref=f23e1137]:
+              - generic [ref=f23e1138]: Medium
+              - generic [ref=f23e1139]: 96% Parity
+          - generic [ref=f23e1142] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1144]:
+              - heading [level=3]
+              - paragraph [ref=f23e1145]:
+                - text: vs
+                - generic [ref=f23e1146]: Elastic Cloud
+            - paragraph [ref=f23e1147]: Easy to use open source fast database for search
+            - generic [ref=f23e1149]:
+              - generic [ref=f23e1150]: Hard
+              - generic [ref=f23e1151]: 77% Parity
+          - generic [ref=f23e1154] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1156]:
+              - heading [level=3]
+              - paragraph [ref=f23e1157]:
+                - text: vs
+                - generic [ref=f23e1158]: Algolia
+            - paragraph [ref=f23e1159]: Typo tolerant search engine
+            - generic [ref=f23e1161]:
+              - generic [ref=f23e1162]: Medium
+              - generic [ref=f23e1163]: 86% Parity
+          - generic [ref=f23e1166] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1168]:
+              - heading [level=3]
+              - paragraph [ref=f23e1169]:
+                - text: vs
+                - generic [ref=f23e1170]: Google Vertex AI
+            - paragraph [ref=f23e1171]: Vector similarity search engine with extended filtering support
+            - generic [ref=f23e1173]:
+              - generic [ref=f23e1174]: Medium
+              - generic [ref=f23e1175]: 90% Parity
+          - generic [ref=f23e1178] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1180]:
+              - heading [level=3]
+              - paragraph [ref=f23e1181]:
+                - text: vs
+                - generic [ref=f23e1182]: Google Vertex AI
+            - paragraph [ref=f23e1183]: Real-time vector search engine
+            - generic [ref=f23e1185]:
+              - generic [ref=f23e1186]: Medium
+              - generic [ref=f23e1187]: 86% Parity
+          - generic [ref=f23e1190] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1192]:
+              - heading [level=3]
+              - paragraph [ref=f23e1193]:
+                - text: vs
+                - generic [ref=f23e1194]: Algolia
+            - paragraph [ref=f23e1195]: Typo tolerant fuzzy search engine
+            - generic [ref=f23e1197]:
+              - generic [ref=f23e1198]: Medium
+              - generic [ref=f23e1199]: 79% Parity
+          - generic [ref=f23e1202] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1204]:
+              - heading "zilliz.com" [level=3] [ref=f23e1205]
+              - paragraph [ref=f23e1206]:
+                - text: vs
+                - generic [ref=f23e1207]: Google Vertex AI
+            - paragraph [ref=f23e1208]: Vector database for AI applications
+            - generic [ref=f23e1210]:
+              - generic [ref=f23e1211]: Hard
+              - generic [ref=f23e1212]: 99% Parity
+          - generic [ref=f23e1215] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1217]:
+              - heading "www.zinclabs.io" [level=3] [ref=f23e1218]
+              - paragraph [ref=f23e1219]:
+                - text: vs
+                - generic [ref=f23e1220]: Elastic Cloud
+            - paragraph [ref=f23e1221]: Cloud native full text search
+            - generic [ref=f23e1223]:
+              - generic [ref=f23e1224]: Hard
+              - generic [ref=f23e1225]: 88% Parity
+          - generic [ref=f23e1228] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1230]:
+              - heading [level=3]
+              - paragraph [ref=f23e1231]:
+                - text: vs
+                - generic [ref=f23e1232]: AWS Kendra
+            - paragraph [ref=f23e1233]: NLP platform to build enterprise-grade semantic search
+            - generic [ref=f23e1235]:
+              - generic [ref=f23e1236]: Medium
+              - generic [ref=f23e1237]: 98% Parity
+          - generic [ref=f23e1240] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1242]:
+              - heading [level=3]
+              - paragraph [ref=f23e1243]:
+                - text: vs
+                - generic [ref=f23e1244]: LaunchDarkly
+            - paragraph [ref=f23e1245]: Feature Flag & Remote Config Service
+            - generic [ref=f23e1247]:
+              - generic [ref=f23e1248]: Hard
+              - generic [ref=f23e1249]: 93% Parity
+          - generic [ref=f23e1252] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1254]:
+              - heading [level=3]
+              - paragraph [ref=f23e1255]:
+                - text: vs
+                - generic [ref=f23e1256]: LaunchDarkly
+            - paragraph [ref=f23e1257]: Feature flags and A/B testing
+            - generic [ref=f23e1259]:
+              - generic [ref=f23e1260]: Medium
+              - generic [ref=f23e1261]: 83% Parity
+          - generic [ref=f23e1264] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1266]:
+              - heading [level=3]
+              - paragraph [ref=f23e1267]:
+                - text: vs
+                - generic [ref=f23e1268]: LaunchDarkly
+            - paragraph [ref=f23e1269]: Feature flags platform
+            - generic [ref=f23e1271]:
+              - generic [ref=f23e1272]: Easy
+              - generic [ref=f23e1273]: 99% Parity
+          - generic [ref=f23e1276] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1278]:
+              - heading [level=3]
+              - paragraph [ref=f23e1279]:
+                - text: vs
+                - generic [ref=f23e1280]: Dropbox
+            - paragraph [ref=f23e1281]: A file manager that let you manage your data anywhere it is located
+            - generic [ref=f23e1283]:
+              - generic [ref=f23e1284]: Hard
+              - generic [ref=f23e1285]: 91% Parity
+          - generic [ref=f23e1288] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1290]:
+              - heading [level=3]
+              - paragraph [ref=f23e1291]:
+                - text: vs
+                - generic [ref=f23e1292]: Dropbox
+            - paragraph [ref=f23e1293]: A personal cloud which runs on your own server
+            - generic [ref=f23e1295]:
+              - generic [ref=f23e1296]: Easy
+              - generic [ref=f23e1297]: 86% Parity
+          - generic [ref=f23e1300] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1302]:
+              - heading [level=3]
+              - paragraph [ref=f23e1303]:
+                - text: vs
+                - generic [ref=f23e1304]: Dropbox
+            - paragraph [ref=f23e1305]: A personal cloud which runs on your own server
+            - generic [ref=f23e1307]:
+              - generic [ref=f23e1308]: Hard
+              - generic [ref=f23e1309]: 99% Parity
+          - generic [ref=f23e1312] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1314]:
+              - heading [level=3]
+              - paragraph [ref=f23e1315]:
+                - text: vs
+                - generic [ref=f23e1316]: Dropbox
+            - paragraph [ref=f23e1317]: Cross-platform file manager, powered by a virtual distributed filesystem (VDFS) written in Rust
+            - generic [ref=f23e1319]:
+              - generic [ref=f23e1320]: Hard
+              - generic [ref=f23e1321]: 88% Parity
+          - generic [ref=f23e1324] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1326]:
+              - heading [level=3]
+              - paragraph [ref=f23e1327]:
+                - text: vs
+                - generic [ref=f23e1328]: Stripe Billing
+            - paragraph [ref=f23e1329]: Open Source Billing API
+            - generic [ref=f23e1331]:
+              - generic [ref=f23e1332]: Medium
+              - generic [ref=f23e1333]: 86% Parity
+          - generic [ref=f23e1336] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1338]:
+              - heading "OpenBBTerminal" [level=3] [ref=f23e1339]
+              - paragraph [ref=f23e1340]:
+                - text: vs
+                - generic [ref=f23e1341]: Bloomberg
+            - paragraph [ref=f23e1342]: Investment research for everyone
+            - generic [ref=f23e1344]:
+              - generic [ref=f23e1345]: Medium
+              - generic [ref=f23e1346]: 98% Parity
+          - generic [ref=f23e1349] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1351]:
+              - heading [level=3]
+              - paragraph [ref=f23e1352]:
+                - text: vs
+                - generic [ref=f23e1353]: Vueform
+            - paragraph [ref=f23e1354]: A software to help build attractive forms
+            - generic [ref=f23e1356]:
+              - generic [ref=f23e1357]: Medium
+              - generic [ref=f23e1358]: 83% Parity
+          - generic [ref=f23e1361] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1363]:
+              - heading [level=3]
+              - paragraph [ref=f23e1364]:
+                - text: vs
+                - generic [ref=f23e1365]: Typeform
+            - paragraph [ref=f23e1366]: Build forms and receive & manage submission data in one platform
+            - generic [ref=f23e1368]:
+              - generic [ref=f23e1369]: Medium
+              - generic [ref=f23e1370]: 99% Parity
+          - generic [ref=f23e1373] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1375]:
+              - heading [level=3]
+              - paragraph [ref=f23e1376]:
+                - text: vs
+                - generic [ref=f23e1377]: Vueform
+            - paragraph [ref=f23e1378]: A Form and Data Management Platform for Progressive Web Applications
+            - generic [ref=f23e1380]:
+              - generic [ref=f23e1381]: Medium
+              - generic [ref=f23e1382]: 91% Parity
+          - generic [ref=f23e1385] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1387]:
+              - heading [level=3]
+              - paragraph [ref=f23e1388]:
+                - text: vs
+                - generic [ref=f23e1389]: Tribe
+            - paragraph [ref=f23e1390]: A platform for community discussion
+            - generic [ref=f23e1392]:
+              - generic [ref=f23e1393]: Medium
+              - generic [ref=f23e1394]: 78% Parity
+          - generic [ref=f23e1397] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1399]:
+              - heading [level=3]
+              - paragraph [ref=f23e1400]:
+                - text: vs
+                - generic [ref=f23e1401]: Tribe
+            - paragraph [ref=f23e1402]: A platform for community discussion
+            - generic [ref=f23e1404]:
+              - generic [ref=f23e1405]: Medium
+              - generic [ref=f23e1406]: 72% Parity
+          - generic [ref=f23e1409] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1411]:
+              - heading [level=3]
+              - paragraph [ref=f23e1412]:
+                - text: vs
+                - generic [ref=f23e1413]: TigerGraph
+            - paragraph [ref=f23e1414]: Graph database and document store
+            - generic [ref=f23e1416]:
+              - generic [ref=f23e1417]: Hard
+              - generic [ref=f23e1418]: 74% Parity
+          - generic [ref=f23e1421] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1423]:
+              - heading [level=3]
+              - paragraph [ref=f23e1424]:
+                - text: vs
+                - generic [ref=f23e1425]: TigerGraph
+            - paragraph [ref=f23e1426]: In-memory graph database
+            - generic [ref=f23e1428]:
+              - generic [ref=f23e1429]: Medium
+              - generic [ref=f23e1430]: 87% Parity
+          - generic [ref=f23e1433] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1435]:
+              - heading [level=3]
+              - paragraph [ref=f23e1436]:
+                - text: vs
+                - generic [ref=f23e1437]: TigerGraph
+            - paragraph [ref=f23e1438]: Graph database platform
+            - generic [ref=f23e1440]:
+              - generic [ref=f23e1441]: Hard
+              - generic [ref=f23e1442]: 77% Parity
+          - generic [ref=f23e1445] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1447]:
+              - heading [level=3]
+              - paragraph [ref=f23e1448]:
+                - text: vs
+                - generic [ref=f23e1449]: TigerGraph
+            - paragraph [ref=f23e1450]: Knowledge graph and document store
+            - generic [ref=f23e1452]:
+              - generic [ref=f23e1453]: Hard
+              - generic [ref=f23e1454]: 76% Parity
+          - generic [ref=f23e1457] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1459]:
+              - heading "peppermint.sh" [level=3] [ref=f23e1460]
+              - paragraph [ref=f23e1461]:
+                - text: vs
+                - generic [ref=f23e1462]: Zendesk
+            - paragraph [ref=f23e1463]: Ticket Management & Helpdesk system
+            - generic [ref=f23e1465]:
+              - generic [ref=f23e1466]: Hard
+              - generic [ref=f23e1467]: 74% Parity
+          - generic [ref=f23e1470] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1472]:
+              - heading [level=3]
+              - paragraph [ref=f23e1473]:
+                - text: vs
+                - generic [ref=f23e1474]: Zendesk
+            - paragraph [ref=f23e1475]: Ticket Management & Helpdesk system
+            - generic [ref=f23e1477]:
+              - generic [ref=f23e1478]: Hard
+              - generic [ref=f23e1479]: 87% Parity
+          - generic [ref=f23e1482] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1484]:
+              - heading [level=3]
+              - paragraph [ref=f23e1485]:
+                - text: vs
+                - generic [ref=f23e1486]: Retool
+            - paragraph [ref=f23e1487]: Low-code platform for internal tools
+            - generic [ref=f23e1489]:
+              - generic [ref=f23e1490]: Easy
+              - generic [ref=f23e1491]: 98% Parity
+          - generic [ref=f23e1494] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1496]:
+              - heading [level=3]
+              - paragraph [ref=f23e1497]:
+                - text: vs
+                - generic [ref=f23e1498]: Retool
+            - paragraph [ref=f23e1499]: Low-code platform for internal tools
+            - generic [ref=f23e1501]:
+              - generic [ref=f23e1502]: Medium
+              - generic [ref=f23e1503]: 78% Parity
+          - generic [ref=f23e1506] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1508]:
+              - heading [level=3]
+              - paragraph [ref=f23e1509]:
+                - text: vs
+                - generic [ref=f23e1510]: Retool
+            - paragraph [ref=f23e1511]: Low-code platform for developers to build internal tools in minutes.
+            - generic [ref=f23e1513]:
+              - generic [ref=f23e1514]: Hard
+              - generic [ref=f23e1515]: 99% Parity
+          - generic [ref=f23e1518] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1520]:
+              - heading [level=3]
+              - paragraph [ref=f23e1521]:
+                - text: vs
+                - generic [ref=f23e1522]: Retool
+            - paragraph [ref=f23e1523]: YAML-based low-code platform for internal tools
+            - generic [ref=f23e1525]:
+              - generic [ref=f23e1526]: Easy
+              - generic [ref=f23e1527]: 73% Parity
+          - generic [ref=f23e1530] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1532]:
+              - heading [level=3]
+              - paragraph [ref=f23e1533]:
+                - text: vs
+                - generic [ref=f23e1534]: Retool
+            - paragraph [ref=f23e1535]: Low-code framework for internal tools
+            - generic [ref=f23e1537]:
+              - generic [ref=f23e1538]: Hard
+              - generic [ref=f23e1539]: 82% Parity
+          - generic [ref=f23e1542] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1544]:
+              - heading [level=3]
+              - paragraph [ref=f23e1545]:
+                - text: vs
+                - generic [ref=f23e1546]: Retool
+            - paragraph [ref=f23e1547]: Company-wide apps and automations from minimal python or typescript scripts
+            - generic [ref=f23e1549]:
+              - generic [ref=f23e1550]: Hard
+              - generic [ref=f23e1551]: 92% Parity
+          - generic [ref=f23e1554] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1556]:
+              - heading "tolgee.io" [level=3] [ref=f23e1557]
+              - paragraph [ref=f23e1558]:
+                - text: vs
+                - generic [ref=f23e1559]: Lokalise
+            - paragraph [ref=f23e1560]: Developer & translator friendly web-based localization platform
+            - generic [ref=f23e1562]:
+              - generic [ref=f23e1563]: Hard
+              - generic [ref=f23e1564]: 72% Parity
+          - generic [ref=f23e1567] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1569]:
+              - heading [level=3]
+              - paragraph [ref=f23e1570]:
+                - text: vs
+                - generic [ref=f23e1571]: Lokalise
+            - paragraph [ref=f23e1572]: Developer-first localization infrastructure built on git
+            - generic [ref=f23e1574]:
+              - generic [ref=f23e1575]: Medium
+              - generic [ref=f23e1576]: 77% Parity
+          - generic [ref=f23e1579] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1581]:
+              - heading [level=3]
+              - paragraph [ref=f23e1582]:
+                - text: vs
+                - generic [ref=f23e1583]: Splunk
+            - paragraph [ref=f23e1584]: Log management platform
+            - generic [ref=f23e1586]:
+              - generic [ref=f23e1587]: Hard
+              - generic [ref=f23e1588]: 77% Parity
+          - generic [ref=f23e1591] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1593]:
+              - heading [level=3]
+              - paragraph [ref=f23e1594]:
+                - text: vs
+                - generic [ref=f23e1595]: Elastic Cloud
+            - paragraph [ref=f23e1596]: Cloud-native log management & analytics
+            - generic [ref=f23e1598]:
+              - generic [ref=f23e1599]: Medium
+              - generic [ref=f23e1600]: 75% Parity
+          - generic [ref=f23e1603] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1605]:
+              - heading [level=3]
+              - paragraph [ref=f23e1606]:
+                - text: vs
+                - generic [ref=f23e1607]: AWS SageMaker
+            - paragraph [ref=f23e1608]: Production infrastructure for machine learning
+            - generic [ref=f23e1610]:
+              - generic [ref=f23e1611]: Medium
+              - generic [ref=f23e1612]: 77% Parity
+          - generic [ref=f23e1615] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1617]:
+              - heading "metarank.ai" [level=3] [ref=f23e1618]
+              - paragraph [ref=f23e1619]:
+                - text: vs
+                - generic [ref=f23e1620]: AWS Personalize
+            - paragraph [ref=f23e1621]: AutoML style personalized ranking
+            - generic [ref=f23e1623]:
+              - generic [ref=f23e1624]: Easy
+              - generic [ref=f23e1625]: 73% Parity
+          - generic [ref=f23e1628] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1630]:
+              - heading [level=3]
+              - paragraph [ref=f23e1631]:
+                - text: vs
+                - generic [ref=f23e1632]: BigQuery ML
+            - paragraph [ref=f23e1633]: In-database machine learning platform
+            - generic [ref=f23e1635]:
+              - generic [ref=f23e1636]: Medium
+              - generic [ref=f23e1637]: 97% Parity
+          - generic [ref=f23e1640] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1642]:
+              - heading [level=3]
+              - paragraph [ref=f23e1643]:
+                - text: vs
+                - generic [ref=f23e1644]: AWS SageMaker
+            - paragraph [ref=f23e1645]: YAML-based pipeline builder for ML models
+            - generic [ref=f23e1647]:
+              - generic [ref=f23e1648]: Hard
+              - generic [ref=f23e1649]: 83% Parity
+          - generic [ref=f23e1652] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1654]:
+              - heading [level=3]
+              - paragraph [ref=f23e1655]:
+                - text: vs
+                - generic [ref=f23e1656]: AWS SageMaker
+            - paragraph [ref=f23e1657]: Deployment & monitoring for machine learning at scale
+            - generic [ref=f23e1659]:
+              - generic [ref=f23e1660]: Easy
+              - generic [ref=f23e1661]: 93% Parity
+          - generic [ref=f23e1664] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1666]:
+              - heading [level=3]
+              - paragraph [ref=f23e1667]:
+                - text: vs
+                - generic [ref=f23e1668]: Bitly
+            - paragraph [ref=f23e1669]: Open-source Bitly Alternative with built-in analytics
+            - generic [ref=f23e1671]:
+              - generic [ref=f23e1672]: Hard
+              - generic [ref=f23e1673]: 73% Parity
+          - generic [ref=f23e1676] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1678]:
+              - heading [level=3]
+              - paragraph [ref=f23e1679]:
+                - text: vs
+                - generic [ref=f23e1680]: Slack
+            - paragraph [ref=f23e1681]: Enterprise communication platform
+            - generic [ref=f23e1683]:
+              - generic [ref=f23e1684]: Easy
+              - generic [ref=f23e1685]: 76% Parity
+          - generic [ref=f23e1688] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1690]:
+              - heading [level=3]
+              - paragraph [ref=f23e1691]:
+                - text: vs
+                - generic [ref=f23e1692]: Slack
+            - paragraph [ref=f23e1693]: Enterprise communication platform for developers
+            - generic [ref=f23e1695]:
+              - generic [ref=f23e1696]: Hard
+              - generic [ref=f23e1697]: 88% Parity
+          - generic [ref=f23e1700] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1702]:
+              - heading [level=3]
+              - paragraph [ref=f23e1703]:
+                - text: vs
+                - generic [ref=f23e1704]: Slack
+            - paragraph [ref=f23e1705]: Enterprise communication platform
+            - generic [ref=f23e1707]:
+              - generic [ref=f23e1708]: Easy
+              - generic [ref=f23e1709]: 93% Parity
+          - generic [ref=f23e1712] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1714]:
+              - heading [level=3]
+              - paragraph [ref=f23e1715]:
+                - text: vs
+                - generic [ref=f23e1716]: WhatsApp
+            - paragraph [ref=f23e1717]: General instant messaging
+            - generic [ref=f23e1719]:
+              - generic [ref=f23e1720]: Hard
+              - generic [ref=f23e1721]: 88% Parity
+          - generic [ref=f23e1724] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1726]:
+              - heading [level=3]
+              - paragraph [ref=f23e1727]:
+                - text: vs
+                - generic [ref=f23e1728]: Slack
+            - paragraph [ref=f23e1729]: Team chat
+            - generic [ref=f23e1731]:
+              - generic [ref=f23e1732]: Easy
+              - generic [ref=f23e1733]: 78% Parity
+          - generic [ref=f23e1736] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1738]:
+              - heading [level=3]
+              - paragraph [ref=f23e1739]:
+                - text: vs
+                - generic [ref=f23e1740]: Looker
+            - paragraph [ref=f23e1741]: Headless business intelligence suite
+            - generic [ref=f23e1743]:
+              - generic [ref=f23e1744]: Medium
+              - generic [ref=f23e1745]: 97% Parity
+          - generic [ref=f23e1748] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1750]:
+              - heading [level=3]
+              - paragraph [ref=f23e1751]:
+                - text: vs
+                - generic [ref=f23e1752]: Looker
+            - paragraph [ref=f23e1753]: Lightweight BI using SQL and markdown
+            - generic [ref=f23e1755]:
+              - generic [ref=f23e1756]: Medium
+              - generic [ref=f23e1757]: 79% Parity
+          - generic [ref=f23e1760] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1762]:
+              - heading [level=3]
+              - paragraph [ref=f23e1763]:
+                - text: vs
+                - generic [ref=f23e1764]: Looker
+            - paragraph [ref=f23e1765]: Low-code metrics layer, alternative to Looker
+            - generic [ref=f23e1767]:
+              - generic [ref=f23e1768]: Easy
+              - generic [ref=f23e1769]: 88% Parity
+          - generic [ref=f23e1772] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1774]:
+              - heading [level=3]
+              - paragraph [ref=f23e1775]:
+                - text: vs
+                - generic [ref=f23e1776]: Looker
+            - paragraph [ref=f23e1777]: Low-code metrics layer, alternative to Looker
+            - generic [ref=f23e1779]:
+              - generic [ref=f23e1780]: Easy
+              - generic [ref=f23e1781]: 72% Parity
+          - generic [ref=f23e1784] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1786]:
+              - heading [level=3]
+              - paragraph [ref=f23e1787]:
+                - text: vs
+                - generic [ref=f23e1788]: Looker
+            - paragraph [ref=f23e1789]: Headless business intelligence suite
+            - generic [ref=f23e1791]:
+              - generic [ref=f23e1792]: Easy
+              - generic [ref=f23e1793]: 82% Parity
+          - generic [ref=f23e1796] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1798]:
+              - heading [level=3]
+              - paragraph [ref=f23e1799]:
+                - text: vs
+                - generic [ref=f23e1800]: AirTable
+            - paragraph [ref=f23e1801]: No-code database and Airtable alternative
+            - generic [ref=f23e1803]:
+              - generic [ref=f23e1804]: Easy
+              - generic [ref=f23e1805]: 85% Parity
+          - generic [ref=f23e1808] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1810]:
+              - heading [level=3]
+              - paragraph [ref=f23e1811]:
+                - text: vs
+                - generic [ref=f23e1812]: AirTable
+            - paragraph [ref=f23e1813]: No-code database and Airtable alternative
+            - generic [ref=f23e1815]:
+              - generic [ref=f23e1816]: Medium
+              - generic [ref=f23e1817]: 80% Parity
+          - generic [ref=f23e1820] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1822]:
+              - heading [level=3]
+              - paragraph [ref=f23e1823]:
+                - text: vs
+                - generic [ref=f23e1824]: AirTable
+            - paragraph [ref=f23e1825]: Extendable Airtable-like spreadsheet UI for databases
+            - generic [ref=f23e1827]:
+              - generic [ref=f23e1828]: Hard
+              - generic [ref=f23e1829]: 98% Parity
+          - generic [ref=f23e1832] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1834]:
+              - heading [level=3]
+              - paragraph [ref=f23e1835]:
+                - text: vs
+                - generic [ref=f23e1836]: AirTable
+            - paragraph [ref=f23e1837]: Business database for non-programmers
+            - generic [ref=f23e1839]:
+              - generic [ref=f23e1840]: Hard
+              - generic [ref=f23e1841]: 71% Parity
+          - generic [ref=f23e1844] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1846]:
+              - heading [level=3]
+              - paragraph [ref=f23e1847]:
+                - text: vs
+                - generic [ref=f23e1848]: Notion
+            - paragraph [ref=f23e1849]: Open-source alternative to Notion
+            - generic [ref=f23e1851]:
+              - generic [ref=f23e1852]: Medium
+              - generic [ref=f23e1853]: 97% Parity
+          - generic [ref=f23e1856] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1858]:
+              - heading [level=3]
+              - paragraph [ref=f23e1859]:
+                - text: vs
+                - generic [ref=f23e1860]: Roam Research
+            - paragraph [ref=f23e1861]: Knowledge graph for research and notetaking
+            - generic [ref=f23e1863]:
+              - generic [ref=f23e1864]: Hard
+              - generic [ref=f23e1865]: 90% Parity
+          - generic [ref=f23e1868] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1870]:
+              - heading [level=3]
+              - paragraph [ref=f23e1871]:
+                - text: vs
+                - generic [ref=f23e1872]: Notion
+            - paragraph [ref=f23e1873]: A rich note note taking web app that works on top of your locally saved Markdown files
+            - generic [ref=f23e1875]:
+              - generic [ref=f23e1876]: Hard
+              - generic [ref=f23e1877]: 90% Parity
+          - generic [ref=f23e1880] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1882]:
+              - heading [level=3]
+              - paragraph [ref=f23e1883]:
+                - text: vs
+                - generic [ref=f23e1884]: Notion
+            - paragraph [ref=f23e1885]: Collaborative workspace for developer teams
+            - generic [ref=f23e1887]:
+              - generic [ref=f23e1888]: Medium
+              - generic [ref=f23e1889]: 95% Parity
+          - generic [ref=f23e1892] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1894]:
+              - heading [level=3]
+              - paragraph [ref=f23e1895]:
+                - text: vs
+                - generic [ref=f23e1896]: Roam Research
+            - paragraph [ref=f23e1897]: Knowledge base plugin for VS Code
+            - generic [ref=f23e1899]:
+              - generic [ref=f23e1900]: Easy
+              - generic [ref=f23e1901]: 88% Parity
+          - generic [ref=f23e1904] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1906]:
+              - heading [level=3]
+              - paragraph [ref=f23e1907]:
+                - text: vs
+                - generic [ref=f23e1908]: Evernote
+            - paragraph [ref=f23e1909]: Secure, Cross-platform, Open-Source Markdown Note Taking App
+            - generic [ref=f23e1911]:
+              - generic [ref=f23e1912]: Easy
+              - generic [ref=f23e1913]: 87% Parity
+          - generic [ref=f23e1916] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1918]:
+              - heading [level=3]
+              - paragraph [ref=f23e1919]:
+                - text: vs
+                - generic [ref=f23e1920]: Roam Research
+            - paragraph [ref=f23e1921]: Knowledge base manager
+            - generic [ref=f23e1923]:
+              - generic [ref=f23e1924]: Medium
+              - generic [ref=f23e1925]: 77% Parity
+          - generic [ref=f23e1928] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1930]:
+              - heading "notabase.io" [level=3] [ref=f23e1931]
+              - paragraph [ref=f23e1932]:
+                - text: vs
+                - generic [ref=f23e1933]: Notion
+            - paragraph [ref=f23e1934]: Powerful and easy-to-use note-taking app for networked thinking
+            - generic [ref=f23e1936]:
+              - generic [ref=f23e1937]: Hard
+              - generic [ref=f23e1938]: 74% Parity
+          - generic [ref=f23e1941] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1943]:
+              - heading [level=3]
+              - paragraph [ref=f23e1944]:
+                - text: vs
+                - generic [ref=f23e1945]: Evernote
+            - paragraph [ref=f23e1946]: A fully open source & end-to-end encrypted note taking alternative to Evernote.
+            - generic [ref=f23e1948]:
+              - generic [ref=f23e1949]: Medium
+              - generic [ref=f23e1950]: 82% Parity
+          - generic [ref=f23e1953] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1955]:
+              - heading [level=3]
+              - paragraph [ref=f23e1956]:
+                - text: vs
+                - generic [ref=f23e1957]: Notion
+            - paragraph [ref=f23e1958]: Wiki and knowledge base
+            - generic [ref=f23e1960]:
+              - generic [ref=f23e1961]: Hard
+              - generic [ref=f23e1962]: 88% Parity
+          - generic [ref=f23e1965] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1967]:
+              - heading [level=3]
+              - paragraph [ref=f23e1968]:
+                - text: vs
+                - generic [ref=f23e1969]: Evernote
+            - paragraph [ref=f23e1970]: Personal knowledge base
+            - generic [ref=f23e1972]:
+              - generic [ref=f23e1973]: Hard
+              - generic [ref=f23e1974]: 85% Parity
+          - generic [ref=f23e1977] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1979]:
+              - heading [level=3]
+              - paragraph [ref=f23e1980]:
+                - text: vs
+                - generic [ref=f23e1981]: AWS Lookout
+            - paragraph [ref=f23e1982]: ML powered analytics engine for outlier/anomaly detection and root cause analysis
+            - generic [ref=f23e1984]:
+              - generic [ref=f23e1985]: Hard
+              - generic [ref=f23e1986]: 97% Parity
+          - generic [ref=f23e1989] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e1991]:
+              - heading [level=3]
+              - paragraph [ref=f23e1992]:
+                - text: vs
+                - generic [ref=f23e1993]: DataDog
+            - paragraph [ref=f23e1994]: Observability and data visualization platform
+            - generic [ref=f23e1996]:
+              - generic [ref=f23e1997]: Hard
+              - generic [ref=f23e1998]: 71% Parity
+          - generic [ref=f23e2001] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2003]:
+              - heading "www.netdata.cloud" [level=3] [ref=f23e2004]
+              - paragraph [ref=f23e2005]:
+                - text: vs
+                - generic [ref=f23e2006]: DataDog
+            - paragraph [ref=f23e2007]: Application monitoring and observability platform
+            - generic [ref=f23e2009]:
+              - generic [ref=f23e2010]: Medium
+              - generic [ref=f23e2011]: 81% Parity
+          - generic [ref=f23e2014] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2016]:
+              - heading [level=3]
+              - paragraph [ref=f23e2017]:
+                - text: vs
+                - generic [ref=f23e2018]: DataDog
+            - paragraph [ref=f23e2019]: Synthetic monitoring platform
+            - generic [ref=f23e2021]:
+              - generic [ref=f23e2022]: Hard
+              - generic [ref=f23e2023]: 89% Parity
+          - generic [ref=f23e2026] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2028]:
+              - heading [level=3]
+              - paragraph [ref=f23e2029]:
+                - text: vs
+                - generic [ref=f23e2030]: DataDog
+            - paragraph [ref=f23e2031]: Application monitoring with a focus on error reporting
+            - generic [ref=f23e2033]:
+              - generic [ref=f23e2034]: Medium
+              - generic [ref=f23e2035]: 90% Parity
+          - generic [ref=f23e2038] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2040]:
+              - heading [level=3]
+              - paragraph [ref=f23e2041]:
+                - text: vs
+                - generic [ref=f23e2042]: DataDog
+            - paragraph [ref=f23e2043]: Application monitoring and observability platform
+            - generic [ref=f23e2045]:
+              - generic [ref=f23e2046]: Medium
+              - generic [ref=f23e2047]: 71% Parity
+          - generic [ref=f23e2050] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2052]:
+              - heading [level=3]
+              - paragraph [ref=f23e2053]:
+                - text: vs
+                - generic [ref=f23e2054]: DataDog
+            - paragraph [ref=f23e2055]: Application monitoring and observability platform
+            - generic [ref=f23e2057]:
+              - generic [ref=f23e2058]: Easy
+              - generic [ref=f23e2059]: 81% Parity
+          - generic [ref=f23e2062] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2064]:
+              - heading [level=3]
+              - paragraph [ref=f23e2065]:
+                - text: vs
+                - generic [ref=f23e2066]: DataDog
+            - paragraph [ref=f23e2067]: Application monitoring and observability platform
+            - generic [ref=f23e2069]:
+              - generic [ref=f23e2070]: Hard
+              - generic [ref=f23e2071]: 90% Parity
+          - generic [ref=f23e2074] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2076]:
+              - heading [level=3]
+              - paragraph [ref=f23e2077]:
+                - text: vs
+                - generic [ref=f23e2078]: 1Password
+            - paragraph [ref=f23e2079]: Password manager for teams and individuals
+            - generic [ref=f23e2081]:
+              - generic [ref=f23e2082]: Easy
+              - generic [ref=f23e2083]: 83% Parity
+          - generic [ref=f23e2086] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2088]:
+              - heading [level=3]
+              - paragraph [ref=f23e2089]:
+                - text: vs
+                - generic [ref=f23e2090]: 1Password
+            - paragraph [ref=f23e2091]: Password manager for teams and individuals
+            - generic [ref=f23e2093]:
+              - generic [ref=f23e2094]: Hard
+              - generic [ref=f23e2095]: 83% Parity
+          - generic [ref=f23e2098] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2100]:
+              - heading [level=3]
+              - paragraph [ref=f23e2101]:
+                - text: vs
+                - generic [ref=f23e2102]: 1Password
+            - paragraph [ref=f23e2103]: Password manager for teams and individuals
+            - generic [ref=f23e2105]:
+              - generic [ref=f23e2106]: Hard
+              - generic [ref=f23e2107]: 99% Parity
+          - generic [ref=f23e2110] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2112]:
+              - heading [level=3]
+              - paragraph [ref=f23e2113]:
+                - text: vs
+                - generic [ref=f23e2114]: Heroku
+            - paragraph [ref=f23e2115]: Self-hostable Heroku alternative
+            - generic [ref=f23e2117]:
+              - generic [ref=f23e2118]: Hard
+              - generic [ref=f23e2119]: 91% Parity
+          - generic [ref=f23e2122] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2124]:
+              - heading [level=3]
+              - paragraph [ref=f23e2125]:
+                - text: vs
+                - generic [ref=f23e2126]: Heroku
+            - paragraph [ref=f23e2127]: An open source PAAS alternative to Heroku
+            - generic [ref=f23e2129]:
+              - generic [ref=f23e2130]: Easy
+              - generic [ref=f23e2131]: 95% Parity
+          - generic [ref=f23e2134] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2136]:
+              - heading "otomi.io" [level=3] [ref=f23e2137]
+              - paragraph [ref=f23e2138]:
+                - text: vs
+                - generic [ref=f23e2139]: Heroku
+            - paragraph [ref=f23e2140]: Self-hosted PaaS for Kubernetes
+            - generic [ref=f23e2142]:
+              - generic [ref=f23e2143]: Medium
+              - generic [ref=f23e2144]: 71% Parity
+          - generic [ref=f23e2147] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2149]:
+              - heading [level=3]
+              - paragraph [ref=f23e2150]:
+                - text: vs
+                - generic [ref=f23e2151]: Heroku
+            - paragraph [ref=f23e2152]: Kubernetes powered PaaS that runs in your own cloud
+            - generic [ref=f23e2154]:
+              - generic [ref=f23e2155]: Easy
+              - generic [ref=f23e2156]: 75% Parity
+          - generic [ref=f23e2159] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2161]:
+              - heading [level=3]
+              - paragraph [ref=f23e2162]:
+                - text: vs
+                - generic [ref=f23e2163]: Heroku
+            - paragraph [ref=f23e2164]: Universal Infrastructure as Code
+            - generic [ref=f23e2166]:
+              - generic [ref=f23e2167]: Medium
+              - generic [ref=f23e2168]: 95% Parity
+          - generic [ref=f23e2171] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2173]:
+              - heading [level=3]
+              - paragraph [ref=f23e2174]:
+                - text: vs
+                - generic [ref=f23e2175]: Heroku
+            - paragraph [ref=f23e2176]: Kubernetes powered PaaS that runs in your own cloud
+            - generic [ref=f23e2178]:
+              - generic [ref=f23e2179]: Hard
+              - generic [ref=f23e2180]: 88% Parity
+          - generic [ref=f23e2183] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2185]:
+              - heading [level=3]
+              - paragraph [ref=f23e2186]:
+                - text: vs
+                - generic [ref=f23e2187]: Heroku
+            - paragraph [ref=f23e2188]: Serverless cloud deployment platform
+            - generic [ref=f23e2190]:
+              - generic [ref=f23e2191]: Medium
+              - generic [ref=f23e2192]: 82% Parity
+          - generic [ref=f23e2195] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2197]:
+              - heading "dyrector.io" [level=3] [ref=f23e2198]
+              - paragraph [ref=f23e2199]:
+                - text: vs
+                - generic [ref=f23e2200]: Heroku
+            - paragraph [ref=f23e2201]: Simplify container delivery without vendor lock
+            - generic [ref=f23e2203]:
+              - generic [ref=f23e2204]: Easy
+              - generic [ref=f23e2205]: 87% Parity
+          - generic [ref=f23e2208] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2210]:
+              - heading [level=3]
+              - paragraph [ref=f23e2211]:
+                - text: vs
+                - generic [ref=f23e2212]: Google Analytics
+            - paragraph [ref=f23e2213]: Product analytics infrastructure
+            - generic [ref=f23e2215]:
+              - generic [ref=f23e2216]: Medium
+              - generic [ref=f23e2217]: 84% Parity
+          - generic [ref=f23e2220] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2222]:
+              - heading [level=3]
+              - paragraph [ref=f23e2223]:
+                - text: vs
+                - generic [ref=f23e2224]: Amplitude
+            - paragraph [ref=f23e2225]: Product analytics platform
+            - generic [ref=f23e2227]:
+              - generic [ref=f23e2228]: Easy
+              - generic [ref=f23e2229]: 92% Parity
+          - generic [ref=f23e2232] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2234]:
+              - heading "trench.dev" [level=3] [ref=f23e2235]
+              - paragraph [ref=f23e2236]:
+                - text: vs
+                - generic [ref=f23e2237]: Segment
+            - paragraph [ref=f23e2238]: Open source analytics infrastructure
+            - generic [ref=f23e2240]:
+              - generic [ref=f23e2241]: Medium
+              - generic [ref=f23e2242]: 79% Parity
+          - generic [ref=f23e2245] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2247]:
+              - heading [level=3]
+              - paragraph [ref=f23e2248]:
+                - text: vs
+                - generic [ref=f23e2249]: Trello
+            - paragraph [ref=f23e2250]: Alternative to Trello, Notion, and Asana
+            - generic [ref=f23e2252]:
+              - generic [ref=f23e2253]: Hard
+              - generic [ref=f23e2254]: 79% Parity
+          - generic [ref=f23e2257] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2259]:
+              - heading [level=3]
+              - paragraph [ref=f23e2260]:
+                - text: vs
+                - generic [ref=f23e2261]: Asana
+            - paragraph [ref=f23e2262]: Project management software
+            - generic [ref=f23e2264]:
+              - generic [ref=f23e2265]: Hard
+              - generic [ref=f23e2266]: 76% Parity
+          - generic [ref=f23e2269] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2271]:
+              - heading [level=3]
+              - paragraph [ref=f23e2272]:
+                - text: vs
+                - generic [ref=f23e2273]: Linear
+            - paragraph [ref=f23e2274]: Alternative to Linear, JIRA, Trello and Height
+            - generic [ref=f23e2276]:
+              - generic [ref=f23e2277]: Hard
+              - generic [ref=f23e2278]: 85% Parity
+          - generic [ref=f23e2281] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2283]:
+              - heading [level=3]
+              - paragraph [ref=f23e2284]:
+                - text: vs
+                - generic [ref=f23e2285]: Asana
+            - paragraph [ref=f23e2286]: Project management software
+            - generic [ref=f23e2288]:
+              - generic [ref=f23e2289]: Hard
+              - generic [ref=f23e2290]: 87% Parity
+          - generic [ref=f23e2293] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2295]:
+              - heading [level=3]
+              - paragraph [ref=f23e2296]:
+                - text: vs
+                - generic [ref=f23e2297]: Todoist
+            - paragraph [ref=f23e2298]: The to-do app to organize your next project.
+            - generic [ref=f23e2300]:
+              - generic [ref=f23e2301]: Medium
+              - generic [ref=f23e2302]: 89% Parity
+          - generic [ref=f23e2305] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2307]:
+              - heading [level=3]
+              - paragraph [ref=f23e2308]:
+                - text: vs
+                - generic [ref=f23e2309]: Amazon Aurora
+            - paragraph [ref=f23e2310]: NewSQL database that supports HTAP workloads
+            - generic [ref=f23e2312]:
+              - generic [ref=f23e2313]: Hard
+              - generic [ref=f23e2314]: 81% Parity
+          - generic [ref=f23e2317] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2319]:
+              - heading [level=3]
+              - paragraph [ref=f23e2320]:
+                - text: vs
+                - generic [ref=f23e2321]: Amazon Aurora
+            - paragraph [ref=f23e2322]: High-performance distributed SQL database
+            - generic [ref=f23e2324]:
+              - generic [ref=f23e2325]: Hard
+              - generic [ref=f23e2326]: 98% Parity
+          - generic [ref=f23e2329] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2331]:
+              - heading [level=3]
+              - paragraph [ref=f23e2332]:
+                - text: vs
+                - generic [ref=f23e2333]: TeamViewer
+            - paragraph [ref=f23e2334]: Open source virtual / remote desktop infrastructure for everyone
+            - generic [ref=f23e2336]:
+              - generic [ref=f23e2337]: Easy
+              - generic [ref=f23e2338]: 72% Parity
+          - generic [ref=f23e2341] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2343]:
+              - heading [level=3]
+              - paragraph [ref=f23e2344]:
+                - text: vs
+                - generic [ref=f23e2345]: Hightouch
+            - paragraph [ref=f23e2346]: Data synchronization framework focused on external apps
+            - generic [ref=f23e2348]:
+              - generic [ref=f23e2349]: Easy
+              - generic [ref=f23e2350]: 77% Parity
+          - generic [ref=f23e2353] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2355]:
+              - heading [level=3]
+              - paragraph [ref=f23e2356]:
+                - text: vs
+                - generic [ref=f23e2357]: Hightouch
+            - paragraph [ref=f23e2358]: Data synchronization framework
+            - generic [ref=f23e2360]:
+              - generic [ref=f23e2361]: Medium
+              - generic [ref=f23e2362]: 80% Parity
+          - generic [ref=f23e2365] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2367]:
+              - heading [level=3]
+              - paragraph [ref=f23e2368]:
+                - text: vs
+                - generic [ref=f23e2369]: UiPath
+            - paragraph [ref=f23e2370]: Set of tooling that allows to create automation packages
+            - generic [ref=f23e2372]:
+              - generic [ref=f23e2373]: Medium
+              - generic [ref=f23e2374]: 94% Parity
+          - generic [ref=f23e2377] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2379]:
+              - heading [level=3]
+              - paragraph [ref=f23e2380]:
+                - text: vs
+                - generic [ref=f23e2381]: Calendly
+            - paragraph [ref=f23e2382]: Scheduling infrastructure, alternative to Calendly
+            - generic [ref=f23e2384]:
+              - generic [ref=f23e2385]: Medium
+              - generic [ref=f23e2386]: 90% Parity
+          - generic [ref=f23e2389] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2391]:
+              - heading [level=3]
+              - paragraph [ref=f23e2392]:
+                - text: vs
+                - generic [ref=f23e2393]: LogRocket
+            - paragraph [ref=f23e2394]: Session replay stack for developers
+            - generic [ref=f23e2396]:
+              - generic [ref=f23e2397]: Medium
+              - generic [ref=f23e2398]: 78% Parity
+          - generic [ref=f23e2401] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2403]:
+              - heading "postiz.com" [level=3] [ref=f23e2404]
+              - paragraph [ref=f23e2405]:
+                - text: vs
+                - generic [ref=f23e2406]: Buffer
+            - paragraph [ref=f23e2407]: Self-hosted social media scheduling tool
+            - generic [ref=f23e2409]:
+              - generic [ref=f23e2410]: Hard
+              - generic [ref=f23e2411]: 78% Parity
+          - generic [ref=f23e2414] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2416]:
+              - heading [level=3]
+              - paragraph [ref=f23e2417]:
+                - text: vs
+                - generic [ref=f23e2418]: Twitch
+            - paragraph [ref=f23e2419]: Live streaming platform
+            - generic [ref=f23e2421]:
+              - generic [ref=f23e2422]: Medium
+              - generic [ref=f23e2423]: 73% Parity
+          - generic [ref=f23e2426] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2428]:
+              - heading [level=3]
+              - paragraph [ref=f23e2429]:
+                - text: vs
+                - generic [ref=f23e2430]: SurveyMonkey
+            - paragraph [ref=f23e2431]: Online survey platform
+            - generic [ref=f23e2433]:
+              - generic [ref=f23e2434]: Easy
+              - generic [ref=f23e2435]: 92% Parity
+          - generic [ref=f23e2438] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2440]:
+              - heading [level=3]
+              - paragraph [ref=f23e2441]:
+                - text: vs
+                - generic [ref=f23e2442]: Kdb+
+            - paragraph [ref=f23e2443]: Distributed SQL database for real-time analytics of time series data
+            - generic [ref=f23e2445]:
+              - generic [ref=f23e2446]: Hard
+              - generic [ref=f23e2447]: 89% Parity
+          - generic [ref=f23e2450] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2452]:
+              - heading [level=3]
+              - paragraph [ref=f23e2453]:
+                - text: vs
+                - generic [ref=f23e2454]: Kdb+
+            - paragraph [ref=f23e2455]: Database designed to process time series data
+            - generic [ref=f23e2457]:
+              - generic [ref=f23e2458]: Hard
+              - generic [ref=f23e2459]: 70% Parity
+          - generic [ref=f23e2462] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2464]:
+              - heading [level=3]
+              - paragraph [ref=f23e2465]:
+                - text: vs
+                - generic [ref=f23e2466]: Kdb+
+            - paragraph [ref=f23e2467]: Database designed to process time series data
+            - generic [ref=f23e2469]:
+              - generic [ref=f23e2470]: Easy
+              - generic [ref=f23e2471]: 92% Parity
+          - generic [ref=f23e2474] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2476]:
+              - heading "?en" [level=3] [ref=f23e2477]
+              - paragraph [ref=f23e2478]:
+                - text: vs
+                - generic [ref=f23e2479]: Kdb+
+            - paragraph [ref=f23e2480]: Database designed to process time series data
+            - generic [ref=f23e2482]:
+              - generic [ref=f23e2483]: Easy
+              - generic [ref=f23e2484]: 78% Parity
+          - generic [ref=f23e2487] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2489]:
+              - heading [level=3]
+              - paragraph [ref=f23e2490]:
+                - text: vs
+                - generic [ref=f23e2491]: Kdb+
+            - paragraph [ref=f23e2492]: Database designed to process time series data
+            - generic [ref=f23e2494]:
+              - generic [ref=f23e2495]: Easy
+              - generic [ref=f23e2496]: 73% Parity
+          - generic [ref=f23e2499] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2501]:
+              - heading [level=3]
+              - paragraph [ref=f23e2502]:
+                - text: vs
+                - generic [ref=f23e2503]: Ngrok
+            - paragraph [ref=f23e2504]: Get a Public URL for your local development enviornment
+            - generic [ref=f23e2506]:
+              - generic [ref=f23e2507]: Hard
+              - generic [ref=f23e2508]: 75% Parity
+          - generic [ref=f23e2511] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2513]:
+              - heading [level=3]
+              - paragraph [ref=f23e2514]:
+                - text: vs
+                - generic [ref=f23e2515]: OpenVPN
+            - paragraph [ref=f23e2516]: No-code P2P layer-2 mesh VPN for enterprise with zero config
+            - generic [ref=f23e2518]:
+              - generic [ref=f23e2519]: Easy
+              - generic [ref=f23e2520]: 94% Parity
+          - generic [ref=f23e2523] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2525]:
+              - heading "meet" [level=3] [ref=f23e2526]
+              - paragraph [ref=f23e2527]:
+                - text: vs
+                - generic [ref=f23e2528]: Zoom
+            - paragraph [ref=f23e2529]: Video conferences platform and SDK
+            - generic [ref=f23e2531]:
+              - generic [ref=f23e2532]: Medium
+              - generic [ref=f23e2533]: 90% Parity
+          - generic [ref=f23e2536] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2538]:
+              - heading [level=3]
+              - paragraph [ref=f23e2539]:
+                - text: vs
+                - generic [ref=f23e2540]: Twilio
+            - paragraph [ref=f23e2541]: SFU and SDKs for high-performance, scalable WebRTC
+            - generic [ref=f23e2543]:
+              - generic [ref=f23e2544]: Medium
+              - generic [ref=f23e2545]: 72% Parity
+          - generic [ref=f23e2548] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2550]:
+              - heading [level=3]
+              - paragraph [ref=f23e2551]:
+                - text: vs
+                - generic [ref=f23e2552]: Twilio
+            - paragraph [ref=f23e2553]: Platform and SDKs to build on-premises WebRTC video conferences
+            - generic [ref=f23e2555]:
+              - generic [ref=f23e2556]: Hard
+              - generic [ref=f23e2557]: 81% Parity
+          - generic [ref=f23e2560] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2562]:
+              - heading [level=3]
+              - paragraph [ref=f23e2563]:
+                - text: vs
+                - generic [ref=f23e2564]: Pusher
+            - paragraph [ref=f23e2565]: Webhooks as a Service
+            - generic [ref=f23e2567]:
+              - generic [ref=f23e2568]: Hard
+              - generic [ref=f23e2569]: 79% Parity
+          - generic [ref=f23e2572] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2574]:
+              - heading [level=3]
+              - paragraph [ref=f23e2575]:
+                - text: vs
+                - generic [ref=f23e2576]: Google Analytics
+            - paragraph [ref=f23e2577]: Google Analytics alternative
+            - generic [ref=f23e2579]:
+              - generic [ref=f23e2580]: Hard
+              - generic [ref=f23e2581]: 74% Parity
+          - generic [ref=f23e2584] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2586]:
+              - heading [level=3]
+              - paragraph [ref=f23e2587]:
+                - text: vs
+                - generic [ref=f23e2588]: Google Analytics
+            - paragraph [ref=f23e2589]: Google Analytics alternative
+            - generic [ref=f23e2591]:
+              - generic [ref=f23e2592]: Medium
+              - generic [ref=f23e2593]: 80% Parity
+          - generic [ref=f23e2596] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2598]:
+              - heading [level=3]
+              - paragraph [ref=f23e2599]:
+                - text: vs
+                - generic [ref=f23e2600]: Google Analytics
+            - paragraph [ref=f23e2601]: Google Analytics alternative
+            - generic [ref=f23e2603]:
+              - generic [ref=f23e2604]: Medium
+              - generic [ref=f23e2605]: 83% Parity
+          - generic [ref=f23e2608] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2610]:
+              - heading "swetrix.com" [level=3] [ref=f23e2611]
+              - paragraph [ref=f23e2612]:
+                - text: vs
+                - generic [ref=f23e2613]: Google Analytics
+            - paragraph [ref=f23e2614]: Google Analytics alternative
+            - generic [ref=f23e2616]:
+              - generic [ref=f23e2617]: Medium
+              - generic [ref=f23e2618]: 78% Parity
+          - generic [ref=f23e2621] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2623]:
+              - heading "umami.is" [level=3] [ref=f23e2624]
+              - paragraph [ref=f23e2625]:
+                - text: vs
+                - generic [ref=f23e2626]: Google Analytics
+            - paragraph [ref=f23e2627]: Google Analytics alternative
+            - generic [ref=f23e2629]:
+              - generic [ref=f23e2630]: Medium
+              - generic [ref=f23e2631]: 74% Parity
+          - generic [ref=f23e2634] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2636]:
+              - heading "www.activepieces.com" [level=3] [ref=f23e2637]
+              - paragraph [ref=f23e2638]:
+                - text: vs
+                - generic [ref=f23e2639]: Zapier
+            - paragraph [ref=f23e2640]: No-code business automation tool
+            - generic [ref=f23e2642]:
+              - generic [ref=f23e2643]: Medium
+              - generic [ref=f23e2644]: 84% Parity
+          - generic [ref=f23e2647] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2649]:
+              - heading [level=3]
+              - paragraph [ref=f23e2650]:
+                - text: vs
+                - generic [ref=f23e2651]: Zapier
+            - paragraph [ref=f23e2652]: Node-based workflow automation tool for developers
+            - generic [ref=f23e2654]:
+              - generic [ref=f23e2655]: Hard
+              - generic [ref=f23e2656]: 87% Parity
+          - generic [ref=f23e2659] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2661]:
+              - heading [level=3]
+              - paragraph [ref=f23e2662]:
+                - text: vs
+                - generic [ref=f23e2663]: Zapier
+            - paragraph [ref=f23e2664]: Workflow automation and API integration platform
+            - generic [ref=f23e2666]:
+              - generic [ref=f23e2667]: Hard
+              - generic [ref=f23e2668]: 97% Parity
+          - generic [ref=f23e2671] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2673]:
+              - heading [level=3]
+              - paragraph [ref=f23e2674]:
+                - text: vs
+                - generic [ref=f23e2675]: Zapier
+            - paragraph [ref=f23e2676]: Workflows as code platform
+            - generic [ref=f23e2678]:
+              - generic [ref=f23e2679]: Easy
+              - generic [ref=f23e2680]: 90% Parity
+          - generic [ref=f23e2683] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2685]:
+              - heading "Open-Assistant" [level=3] [ref=f23e2686]
+              - paragraph [ref=f23e2687]:
+                - text: vs
+                - generic [ref=f23e2688]: ChatGPT
+            - paragraph
+            - generic [ref=f23e2690]:
+              - generic [ref=f23e2691]: Hard
+              - generic [ref=f23e2692]: 97% Parity
+          - generic [ref=f23e2695] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2697]:
+              - heading "leon" [level=3] [ref=f23e2698]
+              - paragraph [ref=f23e2699]:
+                - text: vs
+                - generic [ref=f23e2700]: ChatGPT
+            - paragraph
+            - generic [ref=f23e2702]:
+              - generic [ref=f23e2703]: Easy
+              - generic [ref=f23e2704]: 73% Parity
+          - generic [ref=f23e2707] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2709]:
+              - heading "ChatRWKV" [level=3] [ref=f23e2710]
+              - paragraph [ref=f23e2711]:
+                - text: vs
+                - generic [ref=f23e2712]: ChatGPT
+            - paragraph
+            - generic [ref=f23e2714]:
+              - generic [ref=f23e2715]: Medium
+              - generic [ref=f23e2716]: 73% Parity
+          - generic [ref=f23e2719] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2721]:
+              - heading "fauxpilot" [level=3] [ref=f23e2722]
+              - paragraph [ref=f23e2723]:
+                - text: vs
+                - generic [ref=f23e2724]: Github CoPilot
+            - paragraph
+            - generic [ref=f23e2726]:
+              - generic [ref=f23e2727]: Easy
+              - generic [ref=f23e2728]: 93% Parity
+          - generic [ref=f23e2731] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2733]:
+              - heading "ycmd" [level=3] [ref=f23e2734]
+              - paragraph [ref=f23e2735]:
+                - text: vs
+                - generic [ref=f23e2736]: Github CoPilot
+            - paragraph
+            - generic [ref=f23e2738]:
+              - generic [ref=f23e2739]: Easy
+              - generic [ref=f23e2740]: 98% Parity
+          - generic [ref=f23e2743] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2745]:
+              - heading "AppFlowy" [level=3] [ref=f23e2746]
+              - paragraph [ref=f23e2747]:
+                - text: vs
+                - generic [ref=f23e2748]: Notion
+            - paragraph
+            - generic [ref=f23e2750]:
+              - generic [ref=f23e2751]: Hard
+              - generic [ref=f23e2752]: 74% Parity
+          - generic [ref=f23e2755] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2757]:
+              - heading "AFFiNE" [level=3] [ref=f23e2758]
+              - paragraph [ref=f23e2759]:
+                - text: vs
+                - generic [ref=f23e2760]: Notion
+            - paragraph
+            - generic [ref=f23e2762]:
+              - generic [ref=f23e2763]: Hard
+              - generic [ref=f23e2764]: 78% Parity
+          - generic [ref=f23e2767] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2769]:
+              - heading "docmost" [level=3] [ref=f23e2770]
+              - paragraph [ref=f23e2771]:
+                - text: vs
+                - generic [ref=f23e2772]: Notion
+            - paragraph
+            - generic [ref=f23e2774]:
+              - generic [ref=f23e2775]: Easy
+              - generic [ref=f23e2776]: 77% Parity
+          - generic [ref=f23e2779] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2780]:
+              - generic [ref=f23e2781]:
+                - heading "appsmith" [level=3] [ref=f23e2782]
+                - paragraph [ref=f23e2783]:
+                  - text: vs
+                  - generic [ref=f23e2784]: Retool
+              - generic [ref=f23e2785]: ★ 40.7k
+            - paragraph
+            - generic [ref=f23e2788]:
+              - generic [ref=f23e2789]: Easy
+              - generic [ref=f23e2790]: 85% Parity
+          - generic [ref=f23e2793] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2795]:
+              - heading "tooljet" [level=3] [ref=f23e2796]
+              - paragraph [ref=f23e2797]:
+                - text: vs
+                - generic [ref=f23e2798]: Retool
+            - paragraph
+            - generic [ref=f23e2800]:
+              - generic [ref=f23e2801]: Hard
+              - generic [ref=f23e2802]: 91% Parity
+          - generic [ref=f23e2805] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2807]:
+              - heading "budibase" [level=3] [ref=f23e2808]
+              - paragraph [ref=f23e2809]:
+                - text: vs
+                - generic [ref=f23e2810]: Retool
+            - paragraph
+            - generic [ref=f23e2812]:
+              - generic [ref=f23e2813]: Medium
+              - generic [ref=f23e2814]: 89% Parity
+          - generic [ref=f23e2817] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2819]:
+              - heading "illa-builder" [level=3] [ref=f23e2820]
+              - paragraph [ref=f23e2821]:
+                - text: vs
+                - generic [ref=f23e2822]: Retool
+            - paragraph
+            - generic [ref=f23e2824]:
+              - generic [ref=f23e2825]: Medium
+              - generic [ref=f23e2826]: 77% Parity
+          - generic [ref=f23e2829] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2831]:
+              - heading "windmill" [level=3] [ref=f23e2832]
+              - paragraph [ref=f23e2833]:
+                - text: vs
+                - generic [ref=f23e2834]: Retool
+            - paragraph
+            - generic [ref=f23e2836]:
+              - generic [ref=f23e2837]: Hard
+              - generic [ref=f23e2838]: 73% Parity
+          - generic [ref=f23e2841] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2843]:
+              - heading "openblocks" [level=3] [ref=f23e2844]
+              - paragraph [ref=f23e2845]:
+                - text: vs
+                - generic [ref=f23e2846]: Retool
+            - paragraph
+            - generic [ref=f23e2848]:
+              - generic [ref=f23e2849]: Hard
+              - generic [ref=f23e2850]: 78% Parity
+          - generic [ref=f23e2853] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2855]:
+              - heading "dashpress" [level=3] [ref=f23e2856]
+              - paragraph [ref=f23e2857]:
+                - text: vs
+                - generic [ref=f23e2858]: Retool
+            - paragraph
+            - generic [ref=f23e2860]:
+              - generic [ref=f23e2861]: Easy
+              - generic [ref=f23e2862]: 87% Parity
+          - generic [ref=f23e2865] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2867]:
+              - heading "matomo" [level=3] [ref=f23e2868]
+              - paragraph [ref=f23e2869]:
+                - text: vs
+                - generic [ref=f23e2870]: Google Analytics
+            - paragraph
+            - generic [ref=f23e2872]:
+              - generic [ref=f23e2873]: Medium
+              - generic [ref=f23e2874]: 79% Parity
+          - generic [ref=f23e2877] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2879]:
+              - heading "umami" [level=3] [ref=f23e2880]
+              - paragraph [ref=f23e2881]:
+                - text: vs
+                - generic [ref=f23e2882]: Google Analytics
+            - paragraph
+            - generic [ref=f23e2884]:
+              - generic [ref=f23e2885]: Hard
+              - generic [ref=f23e2886]: 77% Parity
+          - generic [ref=f23e2889] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2891]:
+              - heading "analytics" [level=3] [ref=f23e2892]
+              - paragraph [ref=f23e2893]:
+                - text: vs
+                - generic [ref=f23e2894]: Google Analytics
+            - paragraph
+            - generic [ref=f23e2896]:
+              - generic [ref=f23e2897]: Medium
+              - generic [ref=f23e2898]: 71% Parity
+          - generic [ref=f23e2901] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2903]:
+              - heading "Open-Web-Analytics" [level=3] [ref=f23e2904]
+              - paragraph [ref=f23e2905]:
+                - text: vs
+                - generic [ref=f23e2906]: Google Analytics
+            - paragraph
+            - generic [ref=f23e2908]:
+              - generic [ref=f23e2909]: Hard
+              - generic [ref=f23e2910]: 79% Parity
+          - generic [ref=f23e2913] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2915]:
+              - heading "joplin" [level=3] [ref=f23e2916]
+              - paragraph [ref=f23e2917]:
+                - text: vs
+                - generic [ref=f23e2918]: Evernote
+            - paragraph
+            - generic [ref=f23e2920]:
+              - generic [ref=f23e2921]: Hard
+              - generic [ref=f23e2922]: 71% Parity
+          - generic [ref=f23e2925] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2927]:
+              - heading "logseq" [level=3] [ref=f23e2928]
+              - paragraph [ref=f23e2929]:
+                - text: vs
+                - generic [ref=f23e2930]: Evernote
+            - paragraph
+            - generic [ref=f23e2932]:
+              - generic [ref=f23e2933]: Easy
+              - generic [ref=f23e2934]: 79% Parity
+          - generic [ref=f23e2937] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2938]:
+              - generic [ref=f23e2939]:
+                - heading "siyuan" [level=3] [ref=f23e2940]
+                - paragraph [ref=f23e2941]:
+                  - text: vs
+                  - generic [ref=f23e2942]: Evernote
+              - generic [ref=f23e2943]: ★ 45.8k
+            - paragraph
+            - generic [ref=f23e2946]:
+              - generic [ref=f23e2947]: Medium
+              - generic [ref=f23e2948]: 78% Parity
+          - generic [ref=f23e2951] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2953]:
+              - heading "notesnook" [level=3] [ref=f23e2954]
+              - paragraph [ref=f23e2955]:
+                - text: vs
+                - generic [ref=f23e2956]: Evernote
+            - paragraph
+            - generic [ref=f23e2958]:
+              - generic [ref=f23e2959]: Easy
+              - generic [ref=f23e2960]: 73% Parity
+          - generic [ref=f23e2963] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2965]:
+              - heading "Ghost" [level=3] [ref=f23e2966]
+              - paragraph [ref=f23e2967]:
+                - text: vs
+                - generic [ref=f23e2968]: WordPress
+            - paragraph
+            - generic [ref=f23e2970]:
+              - generic [ref=f23e2971]: Easy
+              - generic [ref=f23e2972]: 76% Parity
+          - generic [ref=f23e2975] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2977]:
+              - heading "writefreely" [level=3] [ref=f23e2978]
+              - paragraph [ref=f23e2979]:
+                - text: vs
+                - generic [ref=f23e2980]: Medium
+            - paragraph
+            - generic [ref=f23e2982]:
+              - generic [ref=f23e2983]: Hard
+              - generic [ref=f23e2984]: 84% Parity
+          - generic [ref=f23e2987] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e2989]:
+              - heading "btw" [level=3] [ref=f23e2990]
+              - paragraph [ref=f23e2991]:
+                - text: vs
+                - generic [ref=f23e2992]: Medium
+            - paragraph
+            - generic [ref=f23e2994]:
+              - generic [ref=f23e2995]: Easy
+              - generic [ref=f23e2996]: 82% Parity
+          - generic [ref=f23e2999] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3001]:
+              - heading "listmonk" [level=3] [ref=f23e3002]
+              - paragraph [ref=f23e3003]:
+                - text: vs
+                - generic [ref=f23e3004]: ConvertKit
+            - paragraph
+            - generic [ref=f23e3006]:
+              - generic [ref=f23e3007]: Hard
+              - generic [ref=f23e3008]: 83% Parity
+          - generic [ref=f23e3011] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3013]:
+              - heading "hugo" [level=3] [ref=f23e3014]
+              - paragraph [ref=f23e3015]:
+                - text: vs
+                - generic [ref=f23e3016]: Static website generator
+            - paragraph
+            - generic [ref=f23e3018]:
+              - generic [ref=f23e3019]: Medium
+              - generic [ref=f23e3020]: 99% Parity
+          - generic [ref=f23e3023] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3025]:
+              - heading "jekyll" [level=3] [ref=f23e3026]
+              - paragraph [ref=f23e3027]:
+                - text: vs
+                - generic [ref=f23e3028]: Static website generator
+            - paragraph
+            - generic [ref=f23e3030]:
+              - generic [ref=f23e3031]: Medium
+              - generic [ref=f23e3032]: 74% Parity
+          - generic [ref=f23e3035] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3037]:
+              - heading "astro" [level=3] [ref=f23e3038]
+              - paragraph [ref=f23e3039]:
+                - text: vs
+                - generic [ref=f23e3040]: Static website generator
+            - paragraph
+            - generic [ref=f23e3042]:
+              - generic [ref=f23e3043]: Easy
+              - generic [ref=f23e3044]: 88% Parity
+          - generic [ref=f23e3047] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3049]:
+              - heading "eleventy" [level=3] [ref=f23e3050]
+              - paragraph [ref=f23e3051]:
+                - text: vs
+                - generic [ref=f23e3052]: Static website generator
+            - paragraph
+            - generic [ref=f23e3054]:
+              - generic [ref=f23e3055]: Easy
+              - generic [ref=f23e3056]: 94% Parity
+          - generic [ref=f23e3059] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3061]:
+              - heading "zola" [level=3] [ref=f23e3062]
+              - paragraph [ref=f23e3063]:
+                - text: vs
+                - generic [ref=f23e3064]: Static website generator
+            - paragraph
+            - generic [ref=f23e3066]:
+              - generic [ref=f23e3067]: Medium
+              - generic [ref=f23e3068]: 91% Parity
+          - generic [ref=f23e3071] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3073]:
+              - heading "Silex" [level=3] [ref=f23e3074]
+              - paragraph [ref=f23e3075]:
+                - text: vs
+                - generic [ref=f23e3076]: Wix, Strikingly, Webflow
+            - paragraph
+            - generic [ref=f23e3078]:
+              - generic [ref=f23e3079]: Hard
+              - generic [ref=f23e3080]: 96% Parity
+          - generic [ref=f23e3083] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3085]:
+              - heading "dotenx" [level=3] [ref=f23e3086]
+              - paragraph [ref=f23e3087]:
+                - text: vs
+                - generic [ref=f23e3088]: Wix, Strikingly, Webflow
+            - paragraph
+            - generic [ref=f23e3090]:
+              - generic [ref=f23e3091]: Hard
+              - generic [ref=f23e3092]: 72% Parity
+          - generic [ref=f23e3095] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3097]:
+              - heading "webstudio" [level=3] [ref=f23e3098]
+              - paragraph [ref=f23e3099]:
+                - text: vs
+                - generic [ref=f23e3100]: Wix, Strikingly, Webflow
+            - paragraph
+            - generic [ref=f23e3102]:
+              - generic [ref=f23e3103]: Medium
+              - generic [ref=f23e3104]: 99% Parity
+          - generic [ref=f23e3107] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3109]:
+              - heading "Font-Awesome" [level=3] [ref=f23e3110]
+              - paragraph [ref=f23e3111]:
+                - text: vs
+                - generic [ref=f23e3112]: Noun Project
+            - paragraph
+            - generic [ref=f23e3114]:
+              - generic [ref=f23e3115]: Hard
+              - generic [ref=f23e3116]: 96% Parity
+          - generic [ref=f23e3119] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3121]:
+              - heading "feather" [level=3] [ref=f23e3122]
+              - paragraph [ref=f23e3123]:
+                - text: vs
+                - generic [ref=f23e3124]: Noun Project
+            - paragraph
+            - generic [ref=f23e3126]:
+              - generic [ref=f23e3127]: Medium
+              - generic [ref=f23e3128]: 93% Parity
+          - generic [ref=f23e3131] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3133]:
+              - heading "tabler-icons" [level=3] [ref=f23e3134]
+              - paragraph [ref=f23e3135]:
+                - text: vs
+                - generic [ref=f23e3136]: Noun Project
+            - paragraph
+            - generic [ref=f23e3138]:
+              - generic [ref=f23e3139]: Easy
+              - generic [ref=f23e3140]: 95% Parity
+          - generic [ref=f23e3143] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3145]:
+              - heading "icons" [level=3] [ref=f23e3146]
+              - paragraph [ref=f23e3147]:
+                - text: vs
+                - generic [ref=f23e3148]: Noun Project
+            - paragraph
+            - generic [ref=f23e3150]:
+              - generic [ref=f23e3151]: Hard
+              - generic [ref=f23e3152]: 92% Parity
+          - generic [ref=f23e3155] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3157]:
+              - heading "RemixIcon" [level=3] [ref=f23e3158]
+              - paragraph [ref=f23e3159]:
+                - text: vs
+                - generic [ref=f23e3160]: Noun Project
+            - paragraph
+            - generic [ref=f23e3162]:
+              - generic [ref=f23e3163]: Medium
+              - generic [ref=f23e3164]: 82% Parity
+          - generic [ref=f23e3167] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3169]:
+              - heading "penpot" [level=3] [ref=f23e3170]
+              - paragraph [ref=f23e3171]:
+                - text: vs
+                - generic [ref=f23e3172]: Figma
+            - paragraph
+            - generic [ref=f23e3174]:
+              - generic [ref=f23e3175]: Medium
+              - generic [ref=f23e3176]: 81% Parity
+          - generic [ref=f23e3179] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3181]:
+              - heading "primitives" [level=3] [ref=f23e3182]
+              - paragraph [ref=f23e3183]:
+                - text: vs
+                - generic [ref=f23e3184]: Figma
+            - paragraph
+            - generic [ref=f23e3186]:
+              - generic [ref=f23e3187]: Easy
+              - generic [ref=f23e3188]: 74% Parity
+          - generic [ref=f23e3191] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3193]:
+              - heading "plasmic" [level=3] [ref=f23e3194]
+              - paragraph [ref=f23e3195]:
+                - text: vs
+                - generic [ref=f23e3196]: Figma
+            - paragraph
+            - generic [ref=f23e3198]:
+              - generic [ref=f23e3199]: Medium
+              - generic [ref=f23e3200]: 92% Parity
+          - generic [ref=f23e3203] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3205]:
+              - heading "quant-ux" [level=3] [ref=f23e3206]
+              - paragraph [ref=f23e3207]:
+                - text: vs
+                - generic [ref=f23e3208]: Figma
+            - paragraph
+            - generic [ref=f23e3210]:
+              - generic [ref=f23e3211]: Easy
+              - generic [ref=f23e3212]: 93% Parity
+          - generic [ref=f23e3215] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3217]:
+              - heading "formbricks" [level=3] [ref=f23e3218]
+              - paragraph [ref=f23e3219]:
+                - text: vs
+                - generic [ref=f23e3220]: Typeform
+            - paragraph
+            - generic [ref=f23e3222]:
+              - generic [ref=f23e3223]: Hard
+              - generic [ref=f23e3224]: 89% Parity
+          - generic [ref=f23e3227] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3229]:
+              - heading "highlight" [level=3] [ref=f23e3230]
+              - paragraph [ref=f23e3231]:
+                - text: vs
+                - generic [ref=f23e3232]: Fullstory
+            - paragraph
+            - generic [ref=f23e3234]:
+              - generic [ref=f23e3235]: Easy
+              - generic [ref=f23e3236]: 99% Parity
+          - generic [ref=f23e3239] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3241]:
+              - heading "strapi" [level=3] [ref=f23e3242]
+              - paragraph [ref=f23e3243]:
+                - text: vs
+                - generic [ref=f23e3244]: Contentful
+            - paragraph
+            - generic [ref=f23e3246]:
+              - generic [ref=f23e3247]: Hard
+              - generic [ref=f23e3248]: 96% Parity
+          - generic [ref=f23e3251] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3253]:
+              - heading "payload" [level=3] [ref=f23e3254]
+              - paragraph [ref=f23e3255]:
+                - text: vs
+                - generic [ref=f23e3256]: Contentful
+            - paragraph
+            - generic [ref=f23e3258]:
+              - generic [ref=f23e3259]: Hard
+              - generic [ref=f23e3260]: 81% Parity
+          - generic [ref=f23e3263] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3265]:
+              - heading "webiny-js" [level=3] [ref=f23e3266]
+              - paragraph [ref=f23e3267]:
+                - text: vs
+                - generic [ref=f23e3268]: Contentful
+            - paragraph
+            - generic [ref=f23e3270]:
+              - generic [ref=f23e3271]: Medium
+              - generic [ref=f23e3272]: 83% Parity
+          - generic [ref=f23e3275] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3277]:
+              - heading "graylog2-server" [level=3] [ref=f23e3278]
+              - paragraph [ref=f23e3279]:
+                - text: vs
+                - generic [ref=f23e3280]: Papertrail
+            - paragraph
+            - generic [ref=f23e3282]:
+              - generic [ref=f23e3283]: Medium
+              - generic [ref=f23e3284]: 78% Parity
+          - generic [ref=f23e3287] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3289]:
+              - heading "super-productivity" [level=3] [ref=f23e3290]
+              - paragraph [ref=f23e3291]:
+                - text: vs
+                - generic [ref=f23e3292]: To-do app
+            - paragraph
+            - generic [ref=f23e3294]:
+              - generic [ref=f23e3295]: Hard
+              - generic [ref=f23e3296]: 72% Parity
+          - generic [ref=f23e3299] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3301]:
+              - heading "discourse" [level=3] [ref=f23e3302]
+              - paragraph [ref=f23e3303]:
+                - text: vs
+                - generic [ref=f23e3304]: Community management
+            - paragraph
+            - generic [ref=f23e3306]:
+              - generic [ref=f23e3307]: Medium
+              - generic [ref=f23e3308]: 95% Parity
+          - generic [ref=f23e3311] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3313]:
+              - heading "flarum" [level=3] [ref=f23e3314]
+              - paragraph [ref=f23e3315]:
+                - text: vs
+                - generic [ref=f23e3316]: Community management
+            - paragraph
+            - generic [ref=f23e3318]:
+              - generic [ref=f23e3319]: Medium
+              - generic [ref=f23e3320]: 77% Parity
+          - generic [ref=f23e3323] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3325]:
+              - heading "crowd.dev" [level=3] [ref=f23e3326]
+              - paragraph [ref=f23e3327]:
+                - text: vs
+                - generic [ref=f23e3328]: Community management
+            - paragraph
+            - generic [ref=f23e3330]:
+              - generic [ref=f23e3331]: Hard
+              - generic [ref=f23e3332]: 94% Parity
+          - generic [ref=f23e3335] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3337]:
+              - heading "wekan" [level=3] [ref=f23e3338]
+              - paragraph [ref=f23e3339]:
+                - text: vs
+                - generic [ref=f23e3340]: Trello
+            - paragraph
+            - generic [ref=f23e3342]:
+              - generic [ref=f23e3343]: Easy
+              - generic [ref=f23e3344]: 80% Parity
+          - generic [ref=f23e3347] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3349]:
+              - heading "focalboard" [level=3] [ref=f23e3350]
+              - paragraph [ref=f23e3351]:
+                - text: vs
+                - generic [ref=f23e3352]: Trello
+            - paragraph
+            - generic [ref=f23e3354]:
+              - generic [ref=f23e3355]: Medium
+              - generic [ref=f23e3356]: 71% Parity
+          - generic [ref=f23e3359] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3361]:
+              - heading "kanboard" [level=3] [ref=f23e3362]
+              - paragraph [ref=f23e3363]:
+                - text: vs
+                - generic [ref=f23e3364]: Trello
+            - paragraph
+            - generic [ref=f23e3366]:
+              - generic [ref=f23e3367]: Medium
+              - generic [ref=f23e3368]: 89% Parity
+          - generic [ref=f23e3371] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3373]:
+              - heading "planka" [level=3] [ref=f23e3374]
+              - paragraph [ref=f23e3375]:
+                - text: vs
+                - generic [ref=f23e3376]: Trello
+            - paragraph
+            - generic [ref=f23e3378]:
+              - generic [ref=f23e3379]: Hard
+              - generic [ref=f23e3380]: 93% Parity
+          - generic [ref=f23e3383] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3384]:
+              - generic [ref=f23e3385]:
+                - heading "mastodon" [level=3] [ref=f23e3386]
+                - paragraph [ref=f23e3387]:
+                  - text: vs
+                  - generic [ref=f23e3388]: Twitter
+              - generic [ref=f23e3389]: ★ 50.2k
+            - paragraph
+            - generic [ref=f23e3392]:
+              - generic [ref=f23e3393]: Easy
+              - generic [ref=f23e3394]: 72% Parity
+          - generic [ref=f23e3397] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3399]:
+              - heading "humhub" [level=3] [ref=f23e3400]
+              - paragraph [ref=f23e3401]:
+                - text: vs
+                - generic [ref=f23e3402]: Twitter
+            - paragraph
+            - generic [ref=f23e3404]:
+              - generic [ref=f23e3405]: Medium
+              - generic [ref=f23e3406]: 79% Parity
+          - generic [ref=f23e3409] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3411]:
+              - heading "elgg" [level=3] [ref=f23e3412]
+              - paragraph [ref=f23e3413]:
+                - text: vs
+                - generic [ref=f23e3414]: Twitter
+            - paragraph
+            - generic [ref=f23e3416]:
+              - generic [ref=f23e3417]: Easy
+              - generic [ref=f23e3418]: 87% Parity
+          - generic [ref=f23e3421] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3423]:
+              - heading "zammad" [level=3] [ref=f23e3424]
+              - paragraph [ref=f23e3425]:
+                - text: vs
+                - generic [ref=f23e3426]: Zendesk, Freshdesk
+            - paragraph
+            - generic [ref=f23e3428]:
+              - generic [ref=f23e3429]: Easy
+              - generic [ref=f23e3430]: 74% Parity
+          - generic [ref=f23e3433] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3435]:
+              - heading "peppermint" [level=3] [ref=f23e3436]
+              - paragraph [ref=f23e3437]:
+                - text: vs
+                - generic [ref=f23e3438]: Zendesk, Freshdesk
+            - paragraph
+            - generic [ref=f23e3440]:
+              - generic [ref=f23e3441]: Medium
+              - generic [ref=f23e3442]: 88% Parity
+          - generic [ref=f23e3445] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3447]:
+              - heading "cal.com" [level=3] [ref=f23e3448]
+              - paragraph [ref=f23e3449]:
+                - text: vs
+                - generic [ref=f23e3450]: Calendly
+            - paragraph
+            - generic [ref=f23e3452]:
+              - generic [ref=f23e3453]: Easy
+              - generic [ref=f23e3454]: 95% Parity
+          - generic [ref=f23e3457] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3458]:
+              - generic [ref=f23e3459]:
+                - heading "nocodb" [level=3] [ref=f23e3460]
+                - paragraph [ref=f23e3461]:
+                  - text: vs
+                  - generic [ref=f23e3462]: Airtable
+              - generic [ref=f23e3463]: ★ 64.6k
+            - paragraph
+            - generic [ref=f23e3466]:
+              - generic [ref=f23e3467]: Hard
+              - generic [ref=f23e3468]: 84% Parity
+          - generic [ref=f23e3471] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3473]:
+              - heading "Luckysheet" [level=3] [ref=f23e3474]
+              - paragraph [ref=f23e3475]:
+                - text: vs
+                - generic [ref=f23e3476]: Airtable
+            - paragraph
+            - generic [ref=f23e3478]:
+              - generic [ref=f23e3479]: Easy
+              - generic [ref=f23e3480]: 84% Parity
+          - generic [ref=f23e3483] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3485]:
+              - heading "apitable" [level=3] [ref=f23e3486]
+              - paragraph [ref=f23e3487]:
+                - text: vs
+                - generic [ref=f23e3488]: Airtable
+            - paragraph
+            - generic [ref=f23e3490]:
+              - generic [ref=f23e3491]: Easy
+              - generic [ref=f23e3492]: 71% Parity
+          - generic [ref=f23e3495] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3497]:
+              - heading "grist-core" [level=3] [ref=f23e3498]
+              - paragraph [ref=f23e3499]:
+                - text: vs
+                - generic [ref=f23e3500]: Airtable
+            - paragraph
+            - generic [ref=f23e3502]:
+              - generic [ref=f23e3503]: Hard
+              - generic [ref=f23e3504]: 91% Parity
+          - generic [ref=f23e3507] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3509]:
+              - heading "Rocket.Chat" [level=3] [ref=f23e3510]
+              - paragraph [ref=f23e3511]:
+                - text: vs
+                - generic [ref=f23e3512]: Slack, Discord
+            - paragraph
+            - generic [ref=f23e3514]:
+              - generic [ref=f23e3515]: Hard
+              - generic [ref=f23e3516]: 82% Parity
+          - generic [ref=f23e3519] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3521]:
+              - heading "mattermost-server" [level=3] [ref=f23e3522]
+              - paragraph [ref=f23e3523]:
+                - text: vs
+                - generic [ref=f23e3524]: Slack, Discord
+            - paragraph
+            - generic [ref=f23e3526]:
+              - generic [ref=f23e3527]: Easy
+              - generic [ref=f23e3528]: 90% Parity
+          - generic [ref=f23e3531] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3532]:
+              - generic [ref=f23e3533]:
+                - heading "zulip" [level=3] [ref=f23e3534]
+                - paragraph [ref=f23e3535]:
+                  - text: vs
+                  - generic [ref=f23e3536]: Slack, Discord
+              - generic [ref=f23e3537]: ★ 25.7k
+            - paragraph
+            - generic [ref=f23e3540]:
+              - generic [ref=f23e3541]: Easy
+              - generic [ref=f23e3542]: 75% Parity
+          - generic [ref=f23e3545] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3547]:
+              - heading "element-web" [level=3] [ref=f23e3548]
+              - paragraph [ref=f23e3549]:
+                - text: vs
+                - generic [ref=f23e3550]: Slack, Discord
+            - paragraph
+            - generic [ref=f23e3552]:
+              - generic [ref=f23e3553]: Easy
+              - generic [ref=f23e3554]: 98% Parity
+          - generic [ref=f23e3557] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3559]:
+              - heading "spacebarchat" [level=3] [ref=f23e3560]
+              - paragraph [ref=f23e3561]:
+                - text: vs
+                - generic [ref=f23e3562]: Slack, Discord
+            - paragraph
+            - generic [ref=f23e3564]:
+              - generic [ref=f23e3565]: Medium
+              - generic [ref=f23e3566]: 74% Parity
+          - generic [ref=f23e3569] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3571]:
+              - heading "Messenger" [level=3] [ref=f23e3572]
+              - paragraph [ref=f23e3573]:
+                - text: vs
+                - generic [ref=f23e3574]: Slack, Discord
+            - paragraph
+            - generic [ref=f23e3576]:
+              - generic [ref=f23e3577]: Medium
+              - generic [ref=f23e3578]: 93% Parity
+          - generic [ref=f23e3581] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3583]:
+              - heading "chatwoot" [level=3] [ref=f23e3584]
+              - paragraph [ref=f23e3585]:
+                - text: vs
+                - generic [ref=f23e3586]: Intercom
+            - paragraph
+            - generic [ref=f23e3588]:
+              - generic [ref=f23e3589]: Medium
+              - generic [ref=f23e3590]: 86% Parity
+          - generic [ref=f23e3593] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3595]:
+              - heading "keycloak" [level=3] [ref=f23e3596]
+              - paragraph [ref=f23e3597]:
+                - text: vs
+                - generic [ref=f23e3598]: Auth0
+            - paragraph
+            - generic [ref=f23e3600]:
+              - generic [ref=f23e3601]: Hard
+              - generic [ref=f23e3602]: 75% Parity
+          - generic [ref=f23e3605] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3607]:
+              - heading "supertokens-core" [level=3] [ref=f23e3608]
+              - paragraph [ref=f23e3609]:
+                - text: vs
+                - generic [ref=f23e3610]: Auth0
+            - paragraph
+            - generic [ref=f23e3612]:
+              - generic [ref=f23e3613]: Easy
+              - generic [ref=f23e3614]: 70% Parity
+          - generic [ref=f23e3617] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3619]:
+              - heading "logto" [level=3] [ref=f23e3620]
+              - paragraph [ref=f23e3621]:
+                - text: vs
+                - generic [ref=f23e3622]: Auth0
+            - paragraph
+            - generic [ref=f23e3624]:
+              - generic [ref=f23e3625]: Easy
+              - generic [ref=f23e3626]: 92% Parity
+          - generic [ref=f23e3629] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3631]:
+              - heading "typesense" [level=3] [ref=f23e3632]
+              - paragraph [ref=f23e3633]:
+                - text: vs
+                - generic [ref=f23e3634]: Algolia
+            - paragraph
+            - generic [ref=f23e3636]:
+              - generic [ref=f23e3637]: Medium
+              - generic [ref=f23e3638]: 75% Parity
+          - generic [ref=f23e3641] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3642]:
+              - generic [ref=f23e3643]:
+                - heading "supabase" [level=3] [ref=f23e3644]
+                - paragraph [ref=f23e3645]:
+                  - text: vs
+                  - generic [ref=f23e3646]: Firebase
+              - generic [ref=f23e3647]: ★ 108.1k
+            - paragraph
+            - generic [ref=f23e3650]:
+              - generic [ref=f23e3651]: Medium
+              - generic [ref=f23e3652]: 75% Parity
+          - generic [ref=f23e3655] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3656]:
+              - generic [ref=f23e3657]:
+                - heading "appwrite" [level=3] [ref=f23e3658]
+                - paragraph [ref=f23e3659]:
+                  - text: vs
+                  - generic [ref=f23e3660]: Firebase
+              - generic [ref=f23e3661]:
+                - generic [ref=f23e3662]: ★ 57.0k
+                - 'generic "Editor''s Choice: High feature parity and extremely popular" [ref=f23e3663]': Editor's Choice
+            - paragraph
+            - generic [ref=f23e3668]:
+              - generic [ref=f23e3669]: Easy
+              - generic [ref=f23e3670]: 95% Parity
+          - generic [ref=f23e3673] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3675]:
+              - heading "nhost" [level=3] [ref=f23e3676]
+              - paragraph [ref=f23e3677]:
+                - text: vs
+                - generic [ref=f23e3678]: Firebase
+            - paragraph
+            - generic [ref=f23e3680]:
+              - generic [ref=f23e3681]: Medium
+              - generic [ref=f23e3682]: 85% Parity
+          - generic [ref=f23e3685] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3687]:
+              - heading "jitsu" [level=3] [ref=f23e3688]
+              - paragraph [ref=f23e3689]:
+                - text: vs
+                - generic [ref=f23e3690]: Segment
+            - paragraph
+            - generic [ref=f23e3692]:
+              - generic [ref=f23e3693]: Easy
+              - generic [ref=f23e3694]: 77% Parity
+          - generic [ref=f23e3697] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3699]:
+              - heading "dub" [level=3] [ref=f23e3700]
+              - paragraph [ref=f23e3701]:
+                - text: vs
+                - generic [ref=f23e3702]: Bitly
+            - paragraph
+            - generic [ref=f23e3704]:
+              - generic [ref=f23e3705]: Easy
+              - generic [ref=f23e3706]: 90% Parity
+          - generic [ref=f23e3709] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3711]:
+              - heading "medusa" [level=3] [ref=f23e3712]
+              - paragraph [ref=f23e3713]:
+                - text: vs
+                - generic [ref=f23e3714]: Shopify
+            - paragraph
+            - generic [ref=f23e3716]:
+              - generic [ref=f23e3717]: Easy
+              - generic [ref=f23e3718]: 96% Parity
+          - generic [ref=f23e3721] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3723]:
+              - heading "vue-storefront" [level=3] [ref=f23e3724]
+              - paragraph [ref=f23e3725]:
+                - text: vs
+                - generic [ref=f23e3726]: Shopify
+            - paragraph
+            - generic [ref=f23e3728]:
+              - generic [ref=f23e3729]: Hard
+              - generic [ref=f23e3730]: 71% Parity
+          - generic [ref=f23e3733] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3735]:
+              - heading "sylius" [level=3] [ref=f23e3736]
+              - paragraph [ref=f23e3737]:
+                - text: vs
+                - generic [ref=f23e3738]: Shopify
+            - paragraph
+            - generic [ref=f23e3740]:
+              - generic [ref=f23e3741]: Hard
+              - generic [ref=f23e3742]: 90% Parity
+          - generic [ref=f23e3745] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3747]:
+              - heading "PrestaShop" [level=3] [ref=f23e3748]
+              - paragraph [ref=f23e3749]:
+                - text: vs
+                - generic [ref=f23e3750]: Shopify
+            - paragraph
+            - generic [ref=f23e3752]:
+              - generic [ref=f23e3753]: Hard
+              - generic [ref=f23e3754]: 83% Parity
+          - generic [ref=f23e3757] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3759]:
+              - heading "bagisto" [level=3] [ref=f23e3760]
+              - paragraph [ref=f23e3761]:
+                - text: vs
+                - generic [ref=f23e3762]: Shopify
+            - paragraph
+            - generic [ref=f23e3764]:
+              - generic [ref=f23e3765]: Easy
+              - generic [ref=f23e3766]: 76% Parity
+          - generic [ref=f23e3769] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3771]:
+              - heading "svelte-commerce" [level=3] [ref=f23e3772]
+              - paragraph [ref=f23e3773]:
+                - text: vs
+                - generic [ref=f23e3774]: Shopify
+            - paragraph
+            - generic [ref=f23e3776]:
+              - generic [ref=f23e3777]: Hard
+              - generic [ref=f23e3778]: 75% Parity
+          - generic [ref=f23e3781] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3783]:
+              - heading "clients" [level=3] [ref=f23e3784]
+              - paragraph [ref=f23e3785]:
+                - text: vs
+                - generic [ref=f23e3786]: 1Password
+            - paragraph
+            - generic [ref=f23e3788]:
+              - generic [ref=f23e3789]: Medium
+              - generic [ref=f23e3790]: 71% Parity
+          - generic [ref=f23e3793] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3795]:
+              - heading "passbolt_api" [level=3] [ref=f23e3796]
+              - paragraph [ref=f23e3797]:
+                - text: vs
+                - generic [ref=f23e3798]: 1Password
+            - paragraph
+            - generic [ref=f23e3800]:
+              - generic [ref=f23e3801]: Hard
+              - generic [ref=f23e3802]: 87% Parity
+          - generic [ref=f23e3805] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3807]:
+              - heading "padloc" [level=3] [ref=f23e3808]
+              - paragraph [ref=f23e3809]:
+                - text: vs
+                - generic [ref=f23e3810]: 1Password
+            - paragraph
+            - generic [ref=f23e3812]:
+              - generic [ref=f23e3813]: Easy
+              - generic [ref=f23e3814]: 82% Parity
+          - generic [ref=f23e3817] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3819]:
+              - heading "postal" [level=3] [ref=f23e3820]
+              - paragraph [ref=f23e3821]:
+                - text: vs
+                - generic [ref=f23e3822]: Mailgun, SendGrid
+            - paragraph
+            - generic [ref=f23e3824]:
+              - generic [ref=f23e3825]: Easy
+              - generic [ref=f23e3826]: 99% Parity
+          - generic [ref=f23e3829] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3831]:
+              - heading "lago" [level=3] [ref=f23e3832]
+              - paragraph [ref=f23e3833]:
+                - text: vs
+                - generic [ref=f23e3834]: Stripe, Chargebee
+            - paragraph
+            - generic [ref=f23e3836]:
+              - generic [ref=f23e3837]: Medium
+              - generic [ref=f23e3838]: 83% Parity
+          - generic [ref=f23e3841] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3843]:
+              - heading "uppy" [level=3] [ref=f23e3844]
+              - paragraph [ref=f23e3845]:
+                - text: vs
+                - generic [ref=f23e3846]: File uploader
+            - paragraph
+            - generic [ref=f23e3848]:
+              - generic [ref=f23e3849]: Hard
+              - generic [ref=f23e3850]: 87% Parity
+          - generic [ref=f23e3853] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3855]:
+              - heading "novu" [level=3] [ref=f23e3856]
+              - paragraph [ref=f23e3857]:
+                - text: vs
+                - generic [ref=f23e3858]: Notification infrastructure
+            - paragraph
+            - generic [ref=f23e3860]:
+              - generic [ref=f23e3861]: Medium
+              - generic [ref=f23e3862]: 85% Parity
+          - generic [ref=f23e3865] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3867]:
+              - heading "ntfy" [level=3] [ref=f23e3868]
+              - paragraph [ref=f23e3869]:
+                - text: vs
+                - generic [ref=f23e3870]: Notification infrastructure
+            - paragraph
+            - generic [ref=f23e3872]:
+              - generic [ref=f23e3873]: Hard
+              - generic [ref=f23e3874]: 77% Parity
+          - generic [ref=f23e3877] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3879]:
+              - heading "server" [level=3] [ref=f23e3880]
+              - paragraph [ref=f23e3881]:
+                - text: vs
+                - generic [ref=f23e3882]: Notification infrastructure
+            - paragraph
+            - generic [ref=f23e3884]:
+              - generic [ref=f23e3885]: Hard
+              - generic [ref=f23e3886]: 90% Parity
+          - generic [ref=f23e3889] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3891]:
+              - heading "apprise" [level=3] [ref=f23e3892]
+              - paragraph [ref=f23e3893]:
+                - text: vs
+                - generic [ref=f23e3894]: Notification infrastructure
+            - paragraph
+            - generic [ref=f23e3896]:
+              - generic [ref=f23e3897]: Medium
+              - generic [ref=f23e3898]: 82% Parity
+          - generic [ref=f23e3901] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3903]:
+              - heading "hoppscotch" [level=3] [ref=f23e3904]
+              - paragraph [ref=f23e3905]:
+                - text: vs
+                - generic [ref=f23e3906]: Postman
+            - paragraph
+            - generic [ref=f23e3908]:
+              - generic [ref=f23e3909]: Medium
+              - generic [ref=f23e3910]: 97% Parity
+          - generic [ref=f23e3913] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3915]:
+              - heading "insomnia" [level=3] [ref=f23e3916]
+              - paragraph [ref=f23e3917]:
+                - text: vs
+                - generic [ref=f23e3918]: Postman
+            - paragraph
+            - generic [ref=f23e3920]:
+              - generic [ref=f23e3921]: Medium
+              - generic [ref=f23e3922]: 83% Parity
+          - generic [ref=f23e3925] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3927]:
+              - heading "firecamp" [level=3] [ref=f23e3928]
+              - paragraph [ref=f23e3929]:
+                - text: vs
+                - generic [ref=f23e3930]: Postman
+            - paragraph
+            - generic [ref=f23e3932]:
+              - generic [ref=f23e3933]: Medium
+              - generic [ref=f23e3934]: 84% Parity
+          - generic [ref=f23e3937] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3939]:
+              - heading "remotion" [level=3] [ref=f23e3940]
+              - paragraph [ref=f23e3941]:
+                - text: vs
+                - generic [ref=f23e3942]: Programmatic videos
+            - paragraph
+            - generic [ref=f23e3944]:
+              - generic [ref=f23e3945]: Easy
+              - generic [ref=f23e3946]: 75% Parity
+          - generic [ref=f23e3949] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3951]:
+              - heading "databend" [level=3] [ref=f23e3952]
+              - paragraph [ref=f23e3953]:
+                - text: vs
+                - generic [ref=f23e3954]: Snowflake
+            - paragraph
+            - generic [ref=f23e3956]:
+              - generic [ref=f23e3957]: Hard
+              - generic [ref=f23e3958]: 71% Parity
+          - generic [ref=f23e3961] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3963]:
+              - heading "doccano" [level=3] [ref=f23e3964]
+              - paragraph [ref=f23e3965]:
+                - text: vs
+                - generic [ref=f23e3966]: Annotation
+            - paragraph
+            - generic [ref=f23e3968]:
+              - generic [ref=f23e3969]: Medium
+              - generic [ref=f23e3970]: 99% Parity
+          - generic [ref=f23e3973] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3975]:
+              - heading "unleash" [level=3] [ref=f23e3976]
+              - paragraph [ref=f23e3977]:
+                - text: vs
+                - generic [ref=f23e3978]: Feature management/ Feature flag
+            - paragraph
+            - generic [ref=f23e3980]:
+              - generic [ref=f23e3981]: Medium
+              - generic [ref=f23e3982]: 96% Parity
+          - generic [ref=f23e3985] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3987]:
+              - heading "flagsmith" [level=3] [ref=f23e3988]
+              - paragraph [ref=f23e3989]:
+                - text: vs
+                - generic [ref=f23e3990]: Feature management/ Feature flag
+            - paragraph
+            - generic [ref=f23e3992]:
+              - generic [ref=f23e3993]: Easy
+              - generic [ref=f23e3994]: 98% Parity
+          - generic [ref=f23e3997] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e3999]:
+              - heading "flagr" [level=3] [ref=f23e4000]
+              - paragraph [ref=f23e4001]:
+                - text: vs
+                - generic [ref=f23e4002]: Feature management/ Feature flag
+            - paragraph
+            - generic [ref=f23e4004]:
+              - generic [ref=f23e4005]: Hard
+              - generic [ref=f23e4006]: 72% Parity
+          - generic [ref=f23e4009] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e4011]:
+              - heading "featbit" [level=3] [ref=f23e4012]
+              - paragraph [ref=f23e4013]:
+                - text: vs
+                - generic [ref=f23e4014]: Feature management/ Feature flag
+            - paragraph
+            - generic [ref=f23e4016]:
+              - generic [ref=f23e4017]: Hard
+              - generic [ref=f23e4018]: 97% Parity
+          - generic [ref=f23e4021] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e4022]:
+              - generic [ref=f23e4023]:
+                - heading "posthog" [level=3] [ref=f23e4024]
+                - paragraph [ref=f23e4025]:
+                  - text: vs
+                  - generic [ref=f23e4026]: Mixpanel, Amptitude
+              - generic [ref=f23e4027]:
+                - generic [ref=f23e4028]: ★ 37.7k
+                - 'generic "Editor''s Choice: High feature parity and extremely popular" [ref=f23e4029]': Editor's Choice
+            - paragraph
+            - generic [ref=f23e4034]:
+              - generic [ref=f23e4035]: Hard
+              - generic [ref=f23e4036]: 99% Parity
+          - generic [ref=f23e4039] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e4041]:
+              - heading "jitsi-meet" [level=3] [ref=f23e4042]
+              - paragraph [ref=f23e4043]:
+                - text: vs
+                - generic [ref=f23e4044]: Google Meet, Skype
+            - paragraph
+            - generic [ref=f23e4046]:
+              - generic [ref=f23e4047]: Hard
+              - generic [ref=f23e4048]: 77% Parity
+          - generic [ref=f23e4051] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e4053]:
+              - heading "element-call" [level=3] [ref=f23e4054]
+              - paragraph [ref=f23e4055]:
+                - text: vs
+                - generic [ref=f23e4056]: Google Meet, Skype
+            - paragraph
+            - generic [ref=f23e4058]:
+              - generic [ref=f23e4059]: Easy
+              - generic [ref=f23e4060]: 74% Parity
+          - generic [ref=f23e4063] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e4065]:
+              - heading "server" [level=3] [ref=f23e4066]
+              - paragraph [ref=f23e4067]:
+                - text: vs
+                - generic [ref=f23e4068]: Dropbox
+            - paragraph
+            - generic [ref=f23e4070]:
+              - generic [ref=f23e4071]: Easy
+              - generic [ref=f23e4072]: 84% Parity
+          - generic [ref=f23e4075] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e4077]:
+              - heading "metabase" [level=3] [ref=f23e4078]
+              - paragraph [ref=f23e4079]:
+                - text: vs
+                - generic [ref=f23e4080]: Tableau, Looker, Power BI
+            - paragraph
+            - generic [ref=f23e4082]:
+              - generic [ref=f23e4083]: Easy
+              - generic [ref=f23e4084]: 76% Parity
+          - generic [ref=f23e4087] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e4089]:
+              - heading "dokku" [level=3] [ref=f23e4090]
+              - paragraph [ref=f23e4091]:
+                - text: vs
+                - generic [ref=f23e4092]: Heroku, Netlify, Vercel
+            - paragraph
+            - generic [ref=f23e4094]:
+              - generic [ref=f23e4095]: Medium
+              - generic [ref=f23e4096]: 99% Parity
+          - generic [ref=f23e4099] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e4101]:
+              - heading "caprover" [level=3] [ref=f23e4102]
+              - paragraph [ref=f23e4103]:
+                - text: vs
+                - generic [ref=f23e4104]: Heroku, Netlify, Vercel
+            - paragraph
+            - generic [ref=f23e4106]:
+              - generic [ref=f23e4107]: Easy
+              - generic [ref=f23e4108]: 82% Parity
+          - generic [ref=f23e4111] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e4112]:
+              - generic [ref=f23e4113]:
+                - heading "coolify" [level=3] [ref=f23e4114]
+                - paragraph [ref=f23e4115]:
+                  - text: vs
+                  - generic [ref=f23e4116]: Heroku, Netlify, Vercel
+              - generic [ref=f23e4117]:
+                - generic [ref=f23e4118]: ★ 60.7k
+                - 'generic "Editor''s Choice: High feature parity and extremely popular" [ref=f23e4119]': Editor's Choice
+            - paragraph
+            - generic [ref=f23e4124]:
+              - generic [ref=f23e4125]: Easy
+              - generic [ref=f23e4126]: 96% Parity
+          - generic [ref=f23e4129] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e4131]:
+              - heading "kubero" [level=3] [ref=f23e4132]
+              - paragraph [ref=f23e4133]:
+                - text: vs
+                - generic [ref=f23e4134]: Heroku, Netlify, Vercel
+            - paragraph
+            - generic [ref=f23e4136]:
+              - generic [ref=f23e4137]: Medium
+              - generic [ref=f23e4138]: 72% Parity
+          - generic [ref=f23e4141] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e4143]:
+              - heading "fonoster" [level=3] [ref=f23e4144]
+              - paragraph [ref=f23e4145]:
+                - text: vs
+                - generic [ref=f23e4146]: Twilio
+            - paragraph
+            - generic [ref=f23e4148]:
+              - generic [ref=f23e4149]: Hard
+              - generic [ref=f23e4150]: 94% Parity
+          - generic [ref=f23e4153] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e4155]:
+              - heading "bugzilla" [level=3] [ref=f23e4156]
+              - paragraph [ref=f23e4157]:
+                - text: vs
+                - generic [ref=f23e4158]: Sentry
+            - paragraph
+            - generic [ref=f23e4160]:
+              - generic [ref=f23e4161]: Easy
+              - generic [ref=f23e4162]: 83% Parity
+          - generic [ref=f23e4165] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e4167]:
+              - heading "invoiceninja" [level=3] [ref=f23e4168]
+              - paragraph [ref=f23e4169]:
+                - text: vs
+                - generic [ref=f23e4170]: Invoicing
+            - paragraph
+            - generic [ref=f23e4172]:
+              - generic [ref=f23e4173]: Hard
+              - generic [ref=f23e4174]: 95% Parity
+          - generic [ref=f23e4177] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e4179]:
+              - heading "crater" [level=3] [ref=f23e4180]
+              - paragraph [ref=f23e4181]:
+                - text: vs
+                - generic [ref=f23e4182]: Invoicing
+            - paragraph
+            - generic [ref=f23e4184]:
+              - generic [ref=f23e4185]: Medium
+              - generic [ref=f23e4186]: 71% Parity
+          - generic [ref=f23e4189] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e4191]:
+              - heading "SolidInvoice" [level=3] [ref=f23e4192]
+              - paragraph [ref=f23e4193]:
+                - text: vs
+                - generic [ref=f23e4194]: Invoicing
+            - paragraph
+            - generic [ref=f23e4196]:
+              - generic [ref=f23e4197]: Medium
+              - generic [ref=f23e4198]: 94% Parity
+          - generic [ref=f23e4201] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e4203]:
+              - heading "janusgraph" [level=3] [ref=f23e4204]
+              - paragraph [ref=f23e4205]:
+                - text: vs
+                - generic [ref=f23e4206]: Graph database
+            - paragraph
+            - generic [ref=f23e4208]:
+              - generic [ref=f23e4209]: Easy
+              - generic [ref=f23e4210]: 83% Parity
+          - generic [ref=f23e4213] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e4215]:
+              - heading "memgraph" [level=3] [ref=f23e4216]
+              - paragraph [ref=f23e4217]:
+                - text: vs
+                - generic [ref=f23e4218]: Graph database
+            - paragraph
+            - generic [ref=f23e4220]:
+              - generic [ref=f23e4221]: Medium
+              - generic [ref=f23e4222]: 87% Parity
+          - generic [ref=f23e4225] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e4226]:
+              - generic [ref=f23e4227]:
+                - heading "milvus" [level=3] [ref=f23e4228]
+                - paragraph [ref=f23e4229]:
+                  - text: vs
+                  - generic [ref=f23e4230]: Vector database
+              - generic [ref=f23e4231]: ★ 45.7k
+            - paragraph
+            - generic [ref=f23e4234]:
+              - generic [ref=f23e4235]: Hard
+              - generic [ref=f23e4236]: 86% Parity
+          - generic [ref=f23e4239] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e4241]:
+              - heading "weaviate" [level=3] [ref=f23e4242]
+              - paragraph [ref=f23e4243]:
+                - text: vs
+                - generic [ref=f23e4244]: Vector database
+            - paragraph
+            - generic [ref=f23e4246]:
+              - generic [ref=f23e4247]: Hard
+              - generic [ref=f23e4248]: 99% Parity
+          - generic [ref=f23e4251] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e4253]:
+              - heading "deeplake" [level=3] [ref=f23e4254]
+              - paragraph [ref=f23e4255]:
+                - text: vs
+                - generic [ref=f23e4256]: Vector database
+            - paragraph
+            - generic [ref=f23e4258]:
+              - generic [ref=f23e4259]: Easy
+              - generic [ref=f23e4260]: 89% Parity
+          - generic [ref=f23e4263] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e4265]:
+              - heading "cozo" [level=3] [ref=f23e4266]
+              - paragraph [ref=f23e4267]:
+                - text: vs
+                - generic [ref=f23e4268]: Vector database
+            - paragraph
+            - generic [ref=f23e4270]:
+              - generic [ref=f23e4271]: Medium
+              - generic [ref=f23e4272]: 99% Parity
+          - generic [ref=f23e4275] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e4276]:
+              - generic [ref=f23e4277]:
+                - heading "prometheus" [level=3] [ref=f23e4278]
+                - paragraph [ref=f23e4279]:
+                  - text: vs
+                  - generic [ref=f23e4280]: Time-series database
+              - generic [ref=f23e4281]:
+                - generic [ref=f23e4282]: ★ 65.7k
+                - 'generic "Editor''s Choice: High feature parity and extremely popular" [ref=f23e4283]': Editor's Choice
+            - paragraph
+            - generic [ref=f23e4288]:
+              - generic [ref=f23e4289]: Medium
+              - generic [ref=f23e4290]: 93% Parity
+          - generic [ref=f23e4293] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e4295]:
+              - heading "questdb" [level=3] [ref=f23e4296]
+              - paragraph [ref=f23e4297]:
+                - text: vs
+                - generic [ref=f23e4298]: Time-series database
+            - paragraph
+            - generic [ref=f23e4300]:
+              - generic [ref=f23e4301]: Hard
+              - generic [ref=f23e4302]: 77% Parity
+          - generic [ref=f23e4305] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e4307]:
+              - heading "opentsdb" [level=3] [ref=f23e4308]
+              - paragraph [ref=f23e4309]:
+                - text: vs
+                - generic [ref=f23e4310]: Time-series database
+            - paragraph
+            - generic [ref=f23e4312]:
+              - generic [ref=f23e4313]: Medium
+              - generic [ref=f23e4314]: 94% Parity
+          - generic [ref=f23e4317] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e4319]:
+              - heading "kairosdb" [level=3] [ref=f23e4320]
+              - paragraph [ref=f23e4321]:
+                - text: vs
+                - generic [ref=f23e4322]: Time-series database
+            - paragraph
+            - generic [ref=f23e4324]:
+              - generic [ref=f23e4325]: Easy
+              - generic [ref=f23e4326]: 71% Parity
+          - generic [ref=f23e4329] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e4331]:
+              - heading "documenso" [level=3] [ref=f23e4332]
+              - paragraph [ref=f23e4333]:
+                - text: vs
+                - generic [ref=f23e4334]: DocuSign
+            - paragraph
+            - generic [ref=f23e4336]:
+              - generic [ref=f23e4337]: Hard
+              - generic [ref=f23e4338]: 85% Parity
+          - generic [ref=f23e4341] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e4343]:
+              - heading "automatisch" [level=3] [ref=f23e4344]
+              - paragraph [ref=f23e4345]:
+                - text: vs
+                - generic [ref=f23e4346]: Zapier
+            - paragraph
+            - generic [ref=f23e4348]:
+              - generic [ref=f23e4349]: Hard
+              - generic [ref=f23e4350]: 70% Parity
+          - generic [ref=f23e4353] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e4355]:
+              - heading "activepieces" [level=3] [ref=f23e4356]
+              - paragraph [ref=f23e4357]:
+                - text: vs
+                - generic [ref=f23e4358]: Zapier
+            - paragraph
+            - generic [ref=f23e4360]:
+              - generic [ref=f23e4361]: Medium
+              - generic [ref=f23e4362]: 92% Parity
+          - generic [ref=f23e4365] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e4367]:
+              - heading "plane" [level=3] [ref=f23e4368]
+              - paragraph [ref=f23e4369]:
+                - text: vs
+                - generic [ref=f23e4370]: Asana, JIRA
+            - paragraph
+            - generic [ref=f23e4372]:
+              - generic [ref=f23e4373]: Easy
+              - generic [ref=f23e4374]: 94% Parity
+          - generic [ref=f23e4377] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e4379]:
+              - heading "leantime" [level=3] [ref=f23e4380]
+              - paragraph [ref=f23e4381]:
+                - text: vs
+                - generic [ref=f23e4382]: Asana, JIRA
+            - paragraph
+            - generic [ref=f23e4384]:
+              - generic [ref=f23e4385]: Hard
+              - generic [ref=f23e4386]: 80% Parity
+          - generic [ref=f23e4389] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e4390]:
+              - generic [ref=f23e4391]:
+                - heading "kimai" [level=3] [ref=f23e4392]
+                - paragraph [ref=f23e4393]:
+                  - text: vs
+                  - generic [ref=f23e4394]: Toggl, Clockify
+              - generic [ref=f23e4395]: ★ 4.9k
+            - paragraph
+            - generic [ref=f23e4398]:
+              - generic [ref=f23e4399]: Medium
+              - generic [ref=f23e4400]: 79% Parity
+          - generic [ref=f23e4403] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e4405]:
+              - heading "solidtime" [level=3] [ref=f23e4406]
+              - paragraph [ref=f23e4407]:
+                - text: vs
+                - generic [ref=f23e4408]: Toggl, Clockify
+            - paragraph
+            - generic [ref=f23e4410]:
+              - generic [ref=f23e4411]: Hard
+              - generic [ref=f23e4412]: 78% Parity
+          - generic [ref=f23e4415] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e4417]:
+              - heading "ghostfolio" [level=3] [ref=f23e4418]
+              - paragraph [ref=f23e4419]:
+                - text: vs
+                - generic [ref=f23e4420]: Empower Personal Wealth
+            - paragraph
+            - generic [ref=f23e4422]:
+              - generic [ref=f23e4423]: Medium
+              - generic [ref=f23e4424]: 90% Parity
+          - generic [ref=f23e4427] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e4429]:
+              - heading "firefly-iii" [level=3] [ref=f23e4430]
+              - paragraph [ref=f23e4431]:
+                - text: vs
+                - generic [ref=f23e4432]: Empower Personal Wealth
+            - paragraph
+            - generic [ref=f23e4434]:
+              - generic [ref=f23e4435]: Easy
+              - generic [ref=f23e4436]: 71% Parity
+          - generic [ref=f23e4439] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e4441]:
+              - heading "twenty" [level=3] [ref=f23e4442]
+              - paragraph [ref=f23e4443]:
+                - text: vs
+                - generic [ref=f23e4444]: Salesforce, Hubspot
+            - paragraph
+            - generic [ref=f23e4446]:
+              - generic [ref=f23e4447]: Hard
+              - generic [ref=f23e4448]: 78% Parity
+          - generic [ref=f23e4451] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e4453]:
+              - heading "revert" [level=3] [ref=f23e4454]
+              - paragraph [ref=f23e4455]:
+                - text: vs
+                - generic [ref=f23e4456]: Tray.io, Merge.dev
+            - paragraph
+            - generic [ref=f23e4458]:
+              - generic [ref=f23e4459]: Hard
+              - generic [ref=f23e4460]: 87% Parity
+          - generic [ref=f23e4463] [cursor=pointer]:
+            - button "✓"
+            - generic [ref=f23e4465]:
+              - heading "LimeSurvey" [level=3] [ref=f23e4466]
+              - paragraph [ref=f23e4467]:
+                - text: vs
+                - generic [ref=f23e4468]: SurveyMonkey, Qualtrics
+            - paragraph
+            - generic [ref=f23e4470]:
+              - generic [ref=f23e4471]: Medium
+              - generic [ref=f23e4472]: 71% Parity
+  - contentinfo [ref=f23e63]:
+    - generic [ref=f23e65]:
+      - generic [ref=f23e66]:
+        - img "Openlysts" [ref=f23e67]
+        - generic [ref=f23e68]: Openlysts
+        - generic [ref=f23e69]: — Discover. Filter. Build.
+      - generic [ref=f23e70]:
+        - link "About" [ref=f23e71] [cursor=pointer]:
+          - /url: /about
+        - link "Contact" [ref=f23e72] [cursor=pointer]:
+          - /url: /contact
+        - link "Trending" [ref=f23e73] [cursor=pointer]:
+          - /url: /trending
+      - paragraph [ref=f23e74]: Built with for open source

@@ -1,0 +1,155 @@
+- generic [ref=f23e4]:
+  - banner [ref=f23e5]:
+    - generic [ref=f23e7]:
+      - link "Openlysts Openlysts" [ref=f23e8] [cursor=pointer]:
+        - /url: /
+        - img "Openlysts" [ref=f23e10]
+        - generic [ref=f23e11]: Openlysts
+      - navigation [ref=f23e12]:
+        - link "Discover" [ref=f23e13] [cursor=pointer]:
+          - /url: /
+        - link "Alternatives" [ref=f23e14] [cursor=pointer]:
+          - /url: /alternatives
+        - link "Trending" [ref=f23e15] [cursor=pointer]:
+          - /url: /trending
+        - link "Bookmarks" [ref=f23e16] [cursor=pointer]:
+          - /url: /bookmarks
+        - link "About" [ref=f23e17] [cursor=pointer]:
+          - /url: /about
+        - link "Contact" [ref=f23e18] [cursor=pointer]:
+          - /url: /contact
+      - generic [ref=f23e23]:
+        - generic [ref=f23e24]: Search openlysts...
+        - generic [ref=f23e25]:
+          - generic [ref=f23e26]: ⌘
+          - text: K
+      - generic [ref=f23e27]:
+        - link "Bookmarks" [ref=f23e28] [cursor=pointer]:
+          - /url: /bookmarks
+          - generic [ref=f23e79]: "1"
+        - link "Settings" [ref=f23e31] [cursor=pointer]:
+          - /url: /settings
+        - button "Switch to Mobile Layout" [ref=f23e35] [cursor=pointer]
+        - button "Toggle theme" [ref=f23e39] [cursor=pointer]
+  - main [ref=f23e42]:
+    - generic [ref=f23e4500]:
+      - textbox "Search open-source projects..." [active] [ref=f23e4505]: resume
+      - paragraph [ref=f23e4506]:
+        - text: 4 results for
+        - generic [ref=f23e4507]: "\"resume\""
+      - generic [ref=f23e4509]:
+        - generic [ref=f23e4510]:
+          - generic [ref=f23e4511]: "Sort:"
+          - combobox [ref=f23e4512] [cursor=pointer]:
+            - option "Trending" [selected]
+            - option "Most Stars"
+            - option "Recently Updated"
+            - option "Recently Added"
+        - button "Categories" [ref=f23e4514] [cursor=pointer]
+        - button "Filters" [ref=f23e4517] [cursor=pointer]
+      - generic [ref=f23e4521]:
+        - generic [ref=f23e4526] [cursor=pointer]:
+          - button "Bookmark" [ref=f23e4527]
+          - generic [ref=f23e4530]: Trending
+          - generic [ref=f23e4533]:
+            - generic [ref=f23e4534]:
+              - heading "reactive-resume" [level=3] [ref=f23e4535]
+              - paragraph [ref=f23e4536]: amruthpillai
+            - generic [ref=f23e4537]: MIT
+          - paragraph [ref=f23e4541]: A one-of-a-kind resume builder that keeps your privacy in mind. Completely secure, customizable, portable, open-source and free forever. Try it out today!
+          - generic [ref=f23e4542]:
+            - generic [ref=f23e4543]: Intermediate
+            - generic [ref=f23e4544]: AI
+            - generic [ref=f23e4545]: Web Applications
+          - generic [ref=f23e4546]:
+            - generic [ref=f23e4547]: ai
+            - generic [ref=f23e4548]: better-auth
+            - generic [ref=f23e4549]: dsh-plugin
+          - generic [ref=f23e4550]:
+            - generic [ref=f23e4551]: 40.7k
+            - generic [ref=f23e4554]: 4.6k
+            - generic [ref=f23e4560]: TypeScript
+          - generic [ref=f23e4562]: 1d ago
+          - button "Watch video explanations" [ref=f23e4565]
+        - generic [ref=f23e4571] [cursor=pointer]:
+          - button "Bookmark" [ref=f23e4572]
+          - generic [ref=f23e4575]: Trending
+          - generic [ref=f23e4578]:
+            - generic [ref=f23e4579]:
+              - heading "ai-job-search" [level=3] [ref=f23e4580]
+              - paragraph [ref=f23e4581]: MadsLorentzen
+            - generic [ref=f23e4582]: MIT
+          - paragraph [ref=f23e4586]: "The job search that runs on your machine. AI job application framework built on Claude Code: evaluate postings, tailor CVs, write cover letters, prep interviews. Fork it and own it."
+          - generic [ref=f23e4587]:
+            - generic [ref=f23e4588]: Intermediate
+            - generic [ref=f23e4589]: AI
+            - generic [ref=f23e4590]: AI Agents
+          - generic [ref=f23e4591]:
+            - generic [ref=f23e4592]: ai
+            - generic [ref=f23e4593]: ai-agents
+            - generic [ref=f23e4594]: career
+          - generic [ref=f23e4595]:
+            - generic [ref=f23e4596]: 32k
+            - generic [ref=f23e4599]: 11.2k
+            - generic [ref=f23e4605]: TypeScript
+          - generic [ref=f23e4607]: 1d ago
+          - button "Watch video explanations" [ref=f23e4610]
+        - generic [ref=f23e4616] [cursor=pointer]:
+          - button "Bookmark" [ref=f23e4617]
+          - generic [ref=f23e4620]: Trending
+          - generic [ref=f23e4623]:
+            - generic [ref=f23e4624]:
+              - heading "career-ops" [level=3] [ref=f23e4625]
+              - paragraph [ref=f23e4626]: santifer
+            - generic [ref=f23e4627]: MIT
+          - paragraph [ref=f23e4631]: "Open-source AI job search: scan job portals, evaluate listings with a structured A-F rubric into a 1.0-5.0 score, tailor your CV, track applications — runs locally in your AI coding CLI (Claude Code, Codex, OpenCode, Antigravity…)"
+          - generic [ref=f23e4632]:
+            - generic [ref=f23e4633]: Beginner
+            - generic [ref=f23e4634]: AI
+            - generic [ref=f23e4635]: Developer Tools
+          - generic [ref=f23e4636]:
+            - generic [ref=f23e4637]: ai
+            - generic [ref=f23e4638]: ai-agent
+            - generic [ref=f23e4639]: anthropic
+          - generic [ref=f23e4640]:
+            - generic [ref=f23e4641]: 64.1k
+            - generic [ref=f23e4644]: 12.6k
+            - generic [ref=f23e4650]: JavaScript
+          - generic [ref=f23e4652]: 1d ago
+          - button "Watch video explanations" [ref=f23e4655]
+        - generic [ref=f23e4661] [cursor=pointer]:
+          - button "Bookmark" [ref=f23e4662]
+          - generic [ref=f23e4665]:
+            - generic [ref=f23e4666]:
+              - heading "Jobs_Applier_AI_Agent_AIHawk" [level=3] [ref=f23e4667]
+              - paragraph [ref=f23e4668]: feder-cr
+            - generic [ref=f23e4669]: AGPL-3.0
+          - paragraph [ref=f23e4673]: "Open source AI job application bot in Python: auto apply to jobs, with a tailored resume and cover letter for each posting."
+          - generic [ref=f23e4674]:
+            - generic [ref=f23e4675]: Intermediate
+            - generic [ref=f23e4676]: AI
+            - generic [ref=f23e4677]: LLMs
+          - generic [ref=f23e4678]:
+            - generic [ref=f23e4679]: agent
+            - generic [ref=f23e4680]: application-resume
+            - generic [ref=f23e4681]: artificial-intelligence
+          - generic [ref=f23e4682]:
+            - generic [ref=f23e4683]: 30.2k
+            - generic [ref=f23e4686]: 4.6k
+            - generic [ref=f23e4692]: Python
+          - generic [ref=f23e4694]: 1d ago
+          - button "Watch video explanations" [ref=f23e4697]
+  - contentinfo [ref=f23e63]:
+    - generic [ref=f23e65]:
+      - generic [ref=f23e66]:
+        - img "Openlysts" [ref=f23e67]
+        - generic [ref=f23e68]: Openlysts
+        - generic [ref=f23e69]: — Discover. Filter. Build.
+      - generic [ref=f23e70]:
+        - link "About" [ref=f23e71] [cursor=pointer]:
+          - /url: /about
+        - link "Contact" [ref=f23e72] [cursor=pointer]:
+          - /url: /contact
+        - link "Trending" [ref=f23e73] [cursor=pointer]:
+          - /url: /trending
+      - paragraph [ref=f23e74]: Built with for open source

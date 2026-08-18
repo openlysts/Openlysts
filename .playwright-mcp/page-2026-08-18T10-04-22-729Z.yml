@@ -1,0 +1,138 @@
+- generic [ref=e4]:
+  - banner [ref=e5]:
+    - generic [ref=e7]:
+      - link "Openlysts Openlysts" [ref=e8] [cursor=pointer]:
+        - /url: /
+        - img "Openlysts" [ref=e10]
+        - generic [ref=e11]: Openlysts
+      - navigation [ref=e12]:
+        - link "Discover" [ref=e13] [cursor=pointer]:
+          - /url: /
+        - link "Alternatives" [active] [ref=e14] [cursor=pointer]:
+          - /url: /alternatives
+        - link "Trending" [ref=e15] [cursor=pointer]:
+          - /url: /trending
+        - link "Bookmarks" [ref=e16] [cursor=pointer]:
+          - /url: /bookmarks
+        - link "About" [ref=e17] [cursor=pointer]:
+          - /url: /about
+        - link "Contact" [ref=e18] [cursor=pointer]:
+          - /url: /contact
+      - textbox "Search open-source projects..." [ref=e262]
+      - generic [ref=e19]:
+        - link "Bookmarks" [ref=e20] [cursor=pointer]:
+          - /url: /bookmarks
+          - generic [ref=e23]: "1"
+        - link "Settings" [ref=e24] [cursor=pointer]:
+          - /url: /settings
+        - button "Switch to Mobile Layout" [ref=e28] [cursor=pointer]
+        - button "Toggle theme" [ref=e32] [cursor=pointer]
+  - main [ref=e39]:
+    - generic [ref=e263]:
+      - complementary [ref=e264]:
+        - generic [ref=e265]:
+          - generic [ref=e266]:
+            - heading "Discover" [level=2] [ref=e267]
+            - textbox "Search tools..." [ref=e272]
+          - generic [ref=e273]:
+            - heading "Categories" [level=3] [ref=e274]
+            - button "All" [ref=e276] [cursor=pointer]
+      - main [ref=e277]:
+        - generic [ref=e278]:
+          - heading "All Open Source Alternatives" [level=1] [ref=e279]
+          - paragraph [ref=e280]: Loading alternatives...
+        - generic [ref=e281]:
+          - generic [ref=e282] [cursor=pointer]:
+            - generic [ref=e284]:
+              - heading [level=3]
+              - paragraph [ref=e285]: Alternative to
+            - paragraph
+            - generic [ref=e288]:
+              - generic [ref=e289]: Medium Setup
+              - generic [ref=e290]: ~85% Parity
+          - generic [ref=e293] [cursor=pointer]:
+            - generic [ref=e295]:
+              - heading [level=3]
+              - paragraph [ref=e296]: Alternative to
+            - paragraph
+            - generic [ref=e299]:
+              - generic [ref=e300]: Medium Setup
+              - generic [ref=e301]: ~85% Parity
+          - generic [ref=e304] [cursor=pointer]:
+            - generic [ref=e306]:
+              - heading [level=3]
+              - paragraph [ref=e307]: Alternative to
+            - paragraph
+            - generic [ref=e310]:
+              - generic [ref=e311]: Medium Setup
+              - generic [ref=e312]: ~85% Parity
+          - generic [ref=e315] [cursor=pointer]:
+            - generic [ref=e317]:
+              - heading [level=3]
+              - paragraph [ref=e318]: Alternative to
+            - paragraph
+            - generic [ref=e321]:
+              - generic [ref=e322]: Medium Setup
+              - generic [ref=e323]: ~85% Parity
+          - generic [ref=e326] [cursor=pointer]:
+            - generic [ref=e328]:
+              - heading [level=3]
+              - paragraph [ref=e329]: Alternative to
+            - paragraph
+            - generic [ref=e332]:
+              - generic [ref=e333]: Medium Setup
+              - generic [ref=e334]: ~85% Parity
+          - generic [ref=e337] [cursor=pointer]:
+            - generic [ref=e339]:
+              - heading [level=3]
+              - paragraph [ref=e340]: Alternative to
+            - paragraph
+            - generic [ref=e343]:
+              - generic [ref=e344]: Medium Setup
+              - generic [ref=e345]: ~85% Parity
+          - generic [ref=e348] [cursor=pointer]:
+            - generic [ref=e350]:
+              - heading [level=3]
+              - paragraph [ref=e351]: Alternative to
+            - paragraph
+            - generic [ref=e354]:
+              - generic [ref=e355]: Medium Setup
+              - generic [ref=e356]: ~85% Parity
+          - generic [ref=e359] [cursor=pointer]:
+            - generic [ref=e361]:
+              - heading [level=3]
+              - paragraph [ref=e362]: Alternative to
+            - paragraph
+            - generic [ref=e365]:
+              - generic [ref=e366]: Medium Setup
+              - generic [ref=e367]: ~85% Parity
+          - generic [ref=e370] [cursor=pointer]:
+            - generic [ref=e372]:
+              - heading [level=3]
+              - paragraph [ref=e373]: Alternative to
+            - paragraph
+            - generic [ref=e376]:
+              - generic [ref=e377]: Medium Setup
+              - generic [ref=e378]: ~85% Parity
+          - generic [ref=e381] [cursor=pointer]:
+            - generic [ref=e383]:
+              - heading [level=3]
+              - paragraph [ref=e384]: Alternative to
+            - paragraph
+            - generic [ref=e387]:
+              - generic [ref=e388]: Medium Setup
+              - generic [ref=e389]: ~85% Parity
+  - contentinfo [ref=e244]:
+    - generic [ref=e246]:
+      - generic [ref=e247]:
+        - img "Openlysts" [ref=e248]
+        - generic [ref=e249]: Openlysts
+        - generic [ref=e250]: — Discover. Filter. Build.
+      - generic [ref=e251]:
+        - link "About" [ref=e252] [cursor=pointer]:
+          - /url: /about
+        - link "Contact" [ref=e253] [cursor=pointer]:
+          - /url: /contact
+        - link "Trending" [ref=e254] [cursor=pointer]:
+          - /url: /trending
+      - paragraph [ref=e255]: Built with for open source
