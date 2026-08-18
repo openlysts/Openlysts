@@ -57,6 +57,14 @@ const categoryIcons = {
   'ERP': '🏢', 'Forum Software': '💭'
 };
 
+const sortOptions = [
+  { value: 'score', label: 'Openlysts Score' },
+  { value: 'stars', label: 'GitHub Stars' },
+  { value: 'parity', label: 'Feature Parity' },
+  { value: 'name', label: 'Name A→Z' },
+  { value: 'difficulty', label: 'Easiest First' },
+];
+
 export default function Alternatives() {
   const [activeCategory, setActiveCategory] = useState('All');
   const [search, setSearch] = useState('');
@@ -64,11 +72,23 @@ export default function Alternatives() {
   const [selectedAlt, setSelectedAlt] = useState(null);
   const [selectedForCompare, setSelectedForCompare] = useState([]);
   const [sortBy, setSortBy] = useState('score');
+  const [isSortOpen, setIsSortOpen] = useState(false);
   const [viewMode, setViewMode] = useState('grid');
   const [expandedCategories, setExpandedCategories] = useState(new Set());
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const navigate = useNavigate();
   const categoryRefs = useRef({});
+  const sortRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (sortRef.current && !sortRef.current.contains(event.target)) {
+        setIsSortOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   // Debounce search
   useMemo(() => {
@@ -283,19 +303,44 @@ export default function Alternatives() {
           </div>
 
           {/* Sort Dropdown */}
-          <div className="flex items-center gap-1.5 bg-bg-card border border-border rounded-xl px-3 py-1.5">
-            <ArrowUpDown className="w-3.5 h-3.5 text-text-muted" />
-            <select 
-              value={sortBy} 
-              onChange={(e) => setSortBy(e.target.value)}
-              className="bg-transparent text-sm text-text-secondary font-medium focus:outline-none cursor-pointer"
+          <div className="relative" ref={sortRef}>
+            <button 
+              onClick={() => setIsSortOpen(!isSortOpen)}
+              className="flex items-center gap-2 bg-bg-card border border-border hover:border-accent/50 rounded-xl px-3 py-2 text-sm text-text-secondary font-medium transition-colors"
             >
-              <option value="score">Openlysts Score</option>
-              <option value="stars">GitHub Stars</option>
-              <option value="parity">Feature Parity</option>
-              <option value="name">Name A→Z</option>
-              <option value="difficulty">Easiest First</option>
-            </select>
+              <ArrowUpDown className="w-3.5 h-3.5 text-text-muted" />
+              <span>{sortOptions.find(o => o.value === sortBy)?.label}</span>
+              <ChevronDown className={`w-3.5 h-3.5 text-text-muted transition-transform ${isSortOpen ? 'rotate-180' : ''}`} />
+            </button>
+            
+            <AnimatePresence>
+              {isSortOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute top-full left-0 mt-2 w-48 bg-bg-card border border-border rounded-xl shadow-xl overflow-hidden z-50 py-1"
+                >
+                  {sortOptions.map((option) => (
+                    <button
+                      key={option.value}
+                      onClick={() => {
+                        setSortBy(option.value);
+                        setIsSortOpen(false);
+                      }}
+                      className={`w-full text-left px-4 py-2 text-sm transition-colors ${
+                        sortBy === option.value 
+                          ? 'bg-accent/10 text-accent font-bold' 
+                          : 'text-text-secondary hover:bg-bg-hover hover:text-text'
+                      }`}
+                    >
+                      {option.label}
+                    </button>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
           {/* View Toggle */}
