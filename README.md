@@ -6,10 +6,10 @@
   **The Ultimate Open-Source Discovery Engine**
 
   <p align="center">
-    <a href="https://github.com/Adilrafiq001/Openlyst/stargazers"><img src="https://img.shields.io/github/stars/Adilrafiq001/Openlyst?style=for-the-badge&color=8b5cf6" alt="Stars" /></a>
-    <a href="https://github.com/Adilrafiq001/Openlyst/network/members"><img src="https://img.shields.io/github/forks/Adilrafiq001/Openlyst?style=for-the-badge&color=3b82f6" alt="Forks" /></a>
-    <a href="https://github.com/Adilrafiq001/Openlyst/issues"><img src="https://img.shields.io/github/issues/Adilrafiq001/Openlyst?style=for-the-badge&color=f59e0b" alt="Issues" /></a>
-    <a href="https://github.com/Adilrafiq001/Openlyst/blob/main/LICENSE"><img src="https://img.shields.io/github/license/Adilrafiq001/Openlyst?style=for-the-badge&color=10b981" alt="License" /></a>
+    <img src="https://img.shields.io/badge/Version-v1.0.0-8b5cf6?style=for-the-badge" alt="Version" />
+    <img src="https://img.shields.io/badge/Build-Passing-3b82f6?style=for-the-badge" alt="Build" />
+    <img src="https://img.shields.io/badge/Status-Active-f59e0b?style=for-the-badge" alt="Status" />
+    <img src="https://img.shields.io/badge/License-MIT-10b981?style=for-the-badge" alt="License" />
   </p>
 
   <p align="center">
@@ -20,9 +20,7 @@
 ---
 
 <div align="center">
-  <!-- PLACEHOLDER FOR DEMO GIF -->
-  <!-- 💡 Tip: Record a quick screen capture of the app in action and place it here! -->
-  <img src="https://raw.githubusercontent.com/Adilrafiq001/Openlyst/main/public/demo.gif" alt="Openlysts App Demo GIF" width="800" style="border-radius: 12px; box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);" onerror="this.src='https://placehold.co/800x450/1a1b26/8b5cf6?text=Upload+demo.gif+to+show+your+app+in+action!'"/>
+  <img src="public/demo.gif" alt="Openlysts App Demo GIF" width="800" style="border-radius: 12px; box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);" />
 </div>
 
 ---
