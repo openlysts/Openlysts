@@ -113,15 +113,15 @@ npm run db:reset
 <summary><b>Click to view UI Screenshots</b></summary>
 <br/>
 
-*Placeholders for your stunning UI screenshots:*
+*Here is a closer look at the Openlysts user interface:*
 
 | Discover Feed | Alternatives Compare |
 |:---:|:---:|
-| <img src="https://placehold.co/400x250/1a1b26/3b82f6?text=Discover+Feed" alt="Discover Feed"/> | <img src="https://placehold.co/400x250/1a1b26/10b981?text=Alternatives+Compare" alt="Alternatives View"/> |
+| <img src="public/screenshots/discover.png" alt="Discover Feed"/> | <img src="public/screenshots/alternatives.png" alt="Alternatives View"/> |
 
 | 3D Welcome Screen | Project Insights |
 |:---:|:---:|
-| <img src="https://placehold.co/400x250/1a1b26/8b5cf6?text=3D+Welcome+Screen" alt="Welcome Screen"/> | <img src="https://placehold.co/400x250/1a1b26/f59e0b?text=Project+Insights" alt="Insights View"/> |
+| <img src="public/screenshots/welcome.png" alt="Welcome Screen"/> | <img src="public/screenshots/insights.png" alt="Insights View"/> |
 
 </details>
 
