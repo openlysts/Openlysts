@@ -1,0 +1,45 @@
+- generic [ref=f5e4]:
+  - banner [ref=f5e5]:
+    - generic [ref=f5e7]:
+      - link "Openlysts Openlysts" [ref=f5e8] [cursor=pointer]:
+        - /url: /
+        - img "Openlysts" [ref=f5e10]
+        - generic [ref=f5e11]: Openlysts
+      - navigation [ref=f5e12]:
+        - link "Discover" [ref=f5e13] [cursor=pointer]:
+          - /url: /
+        - link "Alternatives" [ref=f5e14] [cursor=pointer]:
+          - /url: /alternatives
+        - link "Trending" [ref=f5e15] [cursor=pointer]:
+          - /url: /trending
+        - link "Bookmarks" [ref=f5e16] [cursor=pointer]:
+          - /url: /bookmarks
+        - link "About" [ref=f5e17] [cursor=pointer]:
+          - /url: /about
+        - link "Contact" [ref=f5e18] [cursor=pointer]:
+          - /url: /contact
+      - generic [ref=f5e19]:
+        - link "Bookmarks" [ref=f5e20] [cursor=pointer]:
+          - /url: /bookmarks
+        - link "Settings" [ref=f5e23] [cursor=pointer]:
+          - /url: /settings
+        - button "Switch to Mobile Layout" [ref=f5e27] [cursor=pointer]
+        - button "Toggle theme" [ref=f5e31] [cursor=pointer]
+  - main [ref=f5e38]:
+    - generic [ref=f5e40]:
+      - heading "Paid vs Free Alternatives" [level=1] [ref=f5e41]
+      - paragraph [ref=f5e42]: Discover high-quality open-source alternatives to popular proprietary and paid tools.
+  - contentinfo [ref=f5e47]:
+    - generic [ref=f5e49]:
+      - generic [ref=f5e50]:
+        - img "Openlysts" [ref=f5e51]
+        - generic [ref=f5e52]: Openlysts
+        - generic [ref=f5e53]: — Discover. Filter. Build.
+      - generic [ref=f5e54]:
+        - link "About" [ref=f5e55] [cursor=pointer]:
+          - /url: /about
+        - link "Contact" [ref=f5e56] [cursor=pointer]:
+          - /url: /contact
+        - link "Trending" [ref=f5e57] [cursor=pointer]:
+          - /url: /trending
+      - paragraph [ref=f5e58]: Built with for open source

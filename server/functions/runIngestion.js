@@ -1,7 +1,7 @@
 import { entities } from '../services/entities.js';
 import {
   verifyLicense, classifyRepo, calculateQualityScore,
-  calculateTrendingScore, computeStarsGained,
+  calculateTrendingScore, computeStarsGained, autoClassifyDifficulty
 } from '../shared/openlyst.js';
 
 const GITHUB_API = 'https://api.github.com';
@@ -27,16 +27,20 @@ const SEED_QUERIES = [
   { query_string: 'developer productivity', category_hint: 'Developer Tools' },
 ];
 
-async function githubFetch(url, token, retries = 3) {
+export async function githubFetch(url, token, retries = 3) {
   for (let attempt = 0; attempt < retries; attempt++) {
     try {
+      const headers = {
+        'Accept': 'application/vnd.github+json',
+        'X-GitHub-Api-Version': '2022-11-28',
+        'User-Agent': 'Openlyst-Discovery-Engine',
+      };
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
       const res = await fetch(url, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Accept': 'application/vnd.github+json',
-          'X-GitHub-Api-Version': '2022-11-28',
-          'User-Agent': 'Openlyst-Discovery-Engine',
-        },
+        headers,
         signal: AbortSignal.timeout(15000),
       });
       if (res.status === 403 || res.status === 429) {
@@ -62,10 +66,94 @@ async function githubFetch(url, token, retries = 3) {
   throw new Error('GitHub API request failed after retries');
 }
 
+export async function ingestRepoItem(item, categoryHint = '') {
+  const existingRepos = await entities.Repository.list('-created_date', 5000);
+  const repoMap = new Map();
+  for (const r of existingRepos) {
+    if (r.github_id) repoMap.set(String(r.github_id), r);
+  }
+
+  const existingSnapshots = await entities.MetricSnapshot.list('-snapshot_date', 15000);
+  const snapshotMap = new Map();
+  for (const s of existingSnapshots) {
+    if (!snapshotMap.has(s.repository_id)) snapshotMap.set(s.repository_id, []);
+    snapshotMap.get(s.repository_id).push(s);
+  }
+
+  const licenseInfo = verifyLicense(item.license);
+  const repoData = {
+    github_id: item.id,
+    full_name: item.full_name,
+    owner: item.owner?.login || '',
+    name: item.name,
+    description: item.description || '',
+    html_url: item.html_url,
+    homepage_url: item.homepage || '',
+    default_branch: item.default_branch || 'main',
+    language: item.language || '',
+    license_key: licenseInfo.key || '',
+    license_name: licenseInfo.name || '',
+    license_url: licenseInfo.url || '',
+    license_status: licenseInfo.status,
+    stars: item.stargazers_count || 0,
+    forks: item.forks_count || 0,
+    open_issues: item.open_issues_count || 0,
+    watchers: item.watchers_count || 0,
+    topics: item.topics || [],
+    categories: classifyRepo(item, categoryHint),
+    github_created_at: item.created_at,
+    github_updated_at: item.updated_at,
+    last_ingested_at: new Date().toISOString(),
+    archived: item.archived || false,
+    quality_score: 0,
+    trending_score: 0,
+    stars_gained_24h: 0,
+    stars_gained_7d: 0,
+    stars_gained_30d: 0,
+  };
+  
+  repoData.difficulty = autoClassifyDifficulty(repoData);
+
+  const repoKey = String(item.id);
+  const existing = repoMap.get(repoKey);
+  const snapshots = snapshotMap.get(existing?.id) || [];
+  const { g24, g7, g30 } = computeStarsGained(snapshots, repoData.stars);
+  repoData.stars_gained_24h = g24;
+  repoData.stars_gained_7d = g7;
+  repoData.stars_gained_30d = g30;
+  repoData.quality_score = calculateQualityScore(repoData);
+  repoData.trending_score = calculateTrendingScore(g24, g7, g30);
+
+  let resultEntity;
+  if (existing) {
+    resultEntity = await entities.Repository.update(existing.id, {
+      ...repoData,
+      hidden: existing.hidden,
+      featured: existing.featured,
+    });
+  } else {
+    resultEntity = await entities.Repository.create({
+      ...repoData,
+      hidden: false,
+      featured: false,
+    });
+  }
+
+  await entities.MetricSnapshot.create({
+    repository_id: resultEntity.id,
+    stars: repoData.stars,
+    forks: repoData.forks,
+    open_issues: repoData.open_issues,
+    snapshot_date: new Date().toISOString(),
+  });
+  
+  return resultEntity;
+}
+
 export async function executeIngestion() {
   try {
     if (!process.env.GITHUB_TOKEN) {
-      throw new Error('GITHUB_TOKEN is not set');
+      console.warn('[INGESTION] WARNING: GITHUB_TOKEN is not set. Requests will be unauthenticated and severely rate-limited (60 req/hr).');
     }
 
     const startedAt = new Date().toISOString();
@@ -113,73 +201,9 @@ export async function executeIngestion() {
 
         for (const item of data.items) {
           try {
-            const licenseInfo = verifyLicense(item.license);
-            const repoData = {
-              github_id: item.id,
-              full_name: item.full_name,
-              owner: item.owner?.login || '',
-              name: item.name,
-              description: item.description || '',
-              html_url: item.html_url,
-              homepage_url: item.homepage || '',
-              default_branch: item.default_branch || 'main',
-              language: item.language || '',
-              license_key: licenseInfo.key || '',
-              license_name: licenseInfo.name || '',
-              license_url: licenseInfo.url || '',
-              license_status: licenseInfo.status,
-              stars: item.stargazers_count || 0,
-              forks: item.forks_count || 0,
-              open_issues: item.open_issues_count || 0,
-              watchers: item.watchers_count || 0,
-              topics: item.topics || [],
-              categories: classifyRepo(item, dq.category_hint),
-              github_created_at: item.created_at,
-              github_updated_at: item.updated_at,
-              last_ingested_at: new Date().toISOString(),
-              archived: item.archived || false,
-              quality_score: 0,
-              trending_score: 0,
-              stars_gained_24h: 0,
-              stars_gained_7d: 0,
-              stars_gained_30d: 0,
-            };
-
-            const repoKey = String(item.id);
-            const existing = repoMap.get(repoKey);
-            const snapshots = snapshotMap.get(existing?.id) || [];
-            const { g24, g7, g30 } = computeStarsGained(snapshots, repoData.stars);
-            repoData.stars_gained_24h = g24;
-            repoData.stars_gained_7d = g7;
-            repoData.stars_gained_30d = g30;
-            repoData.quality_score = calculateQualityScore(repoData);
-            repoData.trending_score = calculateTrendingScore(g24, g7, g30);
-
-            if (existing) {
-              await entities.Repository.update(existing.id, {
-                ...repoData,
-                hidden: existing.hidden,
-                featured: existing.featured,
-              });
-              reposUpdated++;
-            } else {
-              const created = await entities.Repository.create({
-                ...repoData,
-                hidden: false,
-                featured: false,
-              });
-              repoMap.set(repoKey, created);
-              reposAdded++;
-            }
+            await ingestRepoItem(item, dq.category_hint);
             reposProcessed++;
-
-            await entities.MetricSnapshot.create({
-              repository_id: (repoMap.get(repoKey) || existing)?.id || '',
-              stars: repoData.stars,
-              forks: repoData.forks,
-              open_issues: repoData.open_issues,
-              snapshot_date: new Date().toISOString(),
-            });
+            // We do not have granular reposAdded vs reposUpdated in this simplified loop
           } catch (repoErr) {
             errors.push(`Repo ${item.full_name}: ${repoErr.message}`);
           }

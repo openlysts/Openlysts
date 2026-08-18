@@ -3,7 +3,7 @@ import { localClient } from "@/api/localClient";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { format } from "date-fns";
-import { CalendarIcon, Sparkles, ArrowRight, ArrowLeft, Loader2, X } from "lucide-react";
+import { CalendarIcon, Sparkles, ArrowRight, ArrowLeft, Loader2 } from "lucide-react";
 import AiAvatar from "../shared/AiAvatar";
 import { motion, AnimatePresence } from "framer-motion";
 

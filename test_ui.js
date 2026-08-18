@@ -13,7 +13,7 @@ import path from 'path';
     log('1. Testing Home Page (/)');
     await page.goto('http://localhost:5173', { waitUntil: 'networkidle' });
     let title = await page.title();
-    if (!title.includes('Openlyst')) throw new Error('Home page title mismatch');
+    if (!title.includes('Openlysts')) throw new Error('Home page title mismatch');
     
     // Check main sections
     const trendingCards = page.locator('section:has-text("Trending This Week") .card');
@@ -99,7 +99,7 @@ import path from 'path';
     log('8. Testing Static Pages (About, Contact)');
     await page.click('nav a:has-text("About")');
     await page.waitForURL('**/about');
-    await page.waitForSelector('h1:has-text("About Openlyst")');
+    await page.waitForSelector('h1:has-text("About Openlysts")');
     
     await page.click('nav a:has-text("Contact")');
     await page.waitForURL('**/contact');

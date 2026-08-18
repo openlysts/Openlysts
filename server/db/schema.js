@@ -1,27 +1,5 @@
 export function initSchema(db) {
-  db.exec(`
-    CREATE TABLE IF NOT EXISTS Agent (
-      id TEXT PRIMARY KEY,
-      created_date TEXT,
-      name TEXT,
-      description TEXT,
-      instructions TEXT
-    );
-  `);
 
-  db.exec(`
-    CREATE TABLE IF NOT EXISTS AgentActivity (
-      id TEXT PRIMARY KEY,
-      created_date TEXT,
-      action_type TEXT,
-      title TEXT,
-      description TEXT,
-      related_goal_id TEXT,
-      related_task_id TEXT,
-      related_user_id TEXT,
-      metadata TEXT
-    );
-  `);
 
   db.exec(`
     CREATE TABLE IF NOT EXISTS DiscoveryQuery (
@@ -35,20 +13,7 @@ export function initSchema(db) {
     );
   `);
 
-  db.exec(`
-    CREATE TABLE IF NOT EXISTS Goal (
-      id TEXT PRIMARY KEY,
-      created_date TEXT,
-      title TEXT,
-      description TEXT,
-      owner_id TEXT,
-      owner_name TEXT,
-      status TEXT,
-      target_date TEXT,
-      clarifying_questions TEXT,
-      ai_context TEXT
-    );
-  `);
+
 
   db.exec(`
     CREATE TABLE IF NOT EXISTS IngestionRun (
@@ -79,21 +44,7 @@ export function initSchema(db) {
     );
   `);
 
-  db.exec(`
-    CREATE TABLE IF NOT EXISTS Ping (
-      id TEXT PRIMARY KEY,
-      created_date TEXT,
-      task_id TEXT,
-      task_title TEXT,
-      assignee_id TEXT,
-      assignee_name TEXT,
-      message TEXT,
-      responded_at TEXT,
-      response TEXT,
-      status TEXT,
-      description TEXT
-    );
-  `);
+
 
   db.exec(`
     CREATE TABLE IF NOT EXISTS Repository (
@@ -128,42 +79,12 @@ export function initSchema(db) {
       trending_score REAL,
       stars_gained_24h INTEGER,
       stars_gained_7d INTEGER,
-      stars_gained_30d INTEGER
+      stars_gained_30d INTEGER,
+      difficulty TEXT
     );
   `);
 
-  db.exec(`
-    CREATE TABLE IF NOT EXISTS Task (
-      id TEXT PRIMARY KEY,
-      created_date TEXT,
-      title TEXT,
-      description TEXT,
-      goal_id TEXT,
-      goal_title TEXT,
-      assignee_id TEXT,
-      assignee_name TEXT,
-      assignee_email TEXT,
-      deadline TEXT,
-      status TEXT,
-      estimated_hours REAL,
-      created_by_ai INTEGER,
-      "order" REAL
-    );
-  `);
 
-  db.exec(`
-    CREATE TABLE IF NOT EXISTS "Update" (
-      id TEXT PRIMARY KEY,
-      created_date TEXT,
-      task_id TEXT,
-      task_title TEXT,
-      user_id TEXT,
-      user_name TEXT,
-      status TEXT,
-      message TEXT,
-      description TEXT
-    );
-  `);
 
   db.exec(`
     CREATE TABLE IF NOT EXISTS Invitation (
@@ -189,17 +110,27 @@ export function initSchema(db) {
     );
   `);
 
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS Alternative (
+      id TEXT PRIMARY KEY,
+      created_date TEXT,
+      paid_tool_name TEXT,
+      free_tool_repo TEXT,
+      description TEXT,
+      pros_and_cons TEXT,
+      youtube_tutorial_url TEXT,
+      article_tutorial_url TEXT,
+      why_it_is_better TEXT,
+      migration_difficulty TEXT,
+      feature_parity_score REAL,
+      category TEXT
+    );
+  `);
+
   db.exec(`CREATE INDEX IF NOT EXISTS idx_repo_stars ON Repository(stars DESC);`);
   db.exec(`CREATE INDEX IF NOT EXISTS idx_repo_created ON Repository(created_date DESC);`);
   db.exec(`CREATE INDEX IF NOT EXISTS idx_repo_trending ON Repository(trending_score DESC);`);
   db.exec(`CREATE INDEX IF NOT EXISTS idx_repo_full_name ON Repository(full_name);`);
 
-  db.exec(`CREATE INDEX IF NOT EXISTS idx_task_goal_id ON Task(goal_id);`);
-  db.exec(`CREATE INDEX IF NOT EXISTS idx_task_created ON Task(created_date DESC);`);
-
-  db.exec(`CREATE INDEX IF NOT EXISTS idx_goal_created ON Goal(created_date DESC);`);
-  
-  db.exec(`CREATE INDEX IF NOT EXISTS idx_agent_activity_created ON AgentActivity(created_date DESC);`);
   db.exec(`CREATE INDEX IF NOT EXISTS idx_ingestion_run_started ON IngestionRun(started_at DESC);`);
-  db.exec(`CREATE INDEX IF NOT EXISTS idx_update_created ON "Update"(created_date DESC);`);
 }

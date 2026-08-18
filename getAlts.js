@@ -1,0 +1,1 @@
+fetch('http://localhost:3001/api/functions/queryAlternatives', { method: 'POST', body: '{}', headers: { 'content-type': 'application/json' } }).then(r => r.json()).then(j => console.log(JSON.stringify(j).substring(0, 500)));

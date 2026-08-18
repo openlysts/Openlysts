@@ -1,0 +1,77 @@
+- generic [ref=f7e4]:
+  - banner [ref=f7e5]:
+    - generic [ref=f7e7]:
+      - link "Openlysts Openlysts" [ref=f7e8] [cursor=pointer]:
+        - /url: /
+        - img "Openlysts" [ref=f7e10]
+        - generic [ref=f7e11]: Openlysts
+      - navigation [ref=f7e12]:
+        - link "Discover" [ref=f7e13] [cursor=pointer]:
+          - /url: /
+        - link "Alternatives" [ref=f7e14] [cursor=pointer]:
+          - /url: /alternatives
+        - link "Trending" [ref=f7e15] [cursor=pointer]:
+          - /url: /trending
+        - link "Bookmarks" [ref=f7e16] [cursor=pointer]:
+          - /url: /bookmarks
+        - link "About" [ref=f7e17] [cursor=pointer]:
+          - /url: /about
+        - link "Contact" [ref=f7e18] [cursor=pointer]:
+          - /url: /contact
+      - generic [ref=f7e19]:
+        - link "Bookmarks" [ref=f7e20] [cursor=pointer]:
+          - /url: /bookmarks
+        - link "Settings" [ref=f7e23] [cursor=pointer]:
+          - /url: /settings
+        - button "Switch to Mobile Layout" [ref=f7e27] [cursor=pointer]
+        - button "Toggle theme" [ref=f7e31] [cursor=pointer]
+  - main [ref=f7e38]:
+    - generic [ref=f7e39]:
+      - generic [ref=f7e40]:
+        - generic [ref=f7e41]: The Discovery Engine
+        - generic [ref=f7e44]:
+          - img "Openlysts" [ref=f7e46]
+          - heading "About Openlysts" [level=1] [ref=f7e47]
+        - generic [ref=f7e48]:
+          - paragraph [ref=f7e49]: Openlysts is a discovery engine for open-source software. It continuously scans GitHub, surfacing everything on Git — from high-quality curated repositories to vast unmapped projects — verifying licenses when applicable, and organizing them into intuitive categories so you can find the right project in seconds instead of scrolling endlessly through search results.
+          - paragraph [ref=f7e50]: Built for developers, technical leads, and open-source enthusiasts, Openlysts helps you cut through the noise of GitHub's massive catalog. Whether you are looking for a local LLM to run privately, a self-hosted alternative to a SaaS tool, a developer productivity booster, or a framework for your next project, Openlysts surfaces repositories that are actively maintained and genuinely useful.
+          - paragraph [ref=f7e51]: The platform is built and maintained by the Openlysts team, with data ingested and refreshed from GitHub every few hours. Trending scores highlight projects gaining momentum right now, while quality scores factor in documentation, community engagement, and maintenance activity — so you can trust that what you find is worth your time.
+      - generic [ref=f7e52]:
+        - generic [ref=f7e58]:
+          - heading "Search Less, Find More" [level=3] [ref=f7e59]
+          - paragraph [ref=f7e60]: Stop scrolling through GitHub. Search and filter across curated, categorized repositories in seconds.
+        - generic [ref=f7e66]:
+          - heading "Verified Open Source" [level=3] [ref=f7e67]
+          - paragraph [ref=f7e68]: Every repository is checked against OSI-recognized licenses. No more guessing if a project is truly open source.
+        - generic [ref=f7e74]:
+          - heading "Trending, Not Just Popular" [level=3] [ref=f7e75]
+          - paragraph [ref=f7e76]: Discover projects gaining momentum right now — not just the ones with the most total stars.
+        - generic [ref=f7e83]:
+          - heading "Automatically Updated" [level=3] [ref=f7e84]
+          - paragraph [ref=f7e85]: Data is ingested from GitHub every few hours, so you always see fresh, accurate repository information.
+      - generic [ref=f7e88]:
+        - generic [ref=f7e89]: ARD
+        - generic [ref=f7e90]:
+          - heading "Adil Rafiq Dar" [level=2] [ref=f7e91]
+          - generic [ref=f7e92]:
+            - generic [ref=f7e93]: Technologist
+            - generic [ref=f7e98]: AI Enthusiast
+            - generic [ref=f7e102]: Working Professional
+          - paragraph [ref=f7e106]: I am a passionate technologist and AI enthusiast dedicated to building tools that empower the developer community. Balancing a full-time professional career with an unrelenting drive to innovate, I pour my hard work and late nights into projects like Openlysts. My goal is to make discovering and leveraging open-source software and AI models easier and more accessible for everyone.
+          - generic [ref=f7e107]: Created withby ARD
+      - link "Start Exploring" [ref=f7e112] [cursor=pointer]:
+        - /url: /
+  - contentinfo [ref=f7e116]:
+    - generic [ref=f7e118]:
+      - generic [ref=f7e119]:
+        - img "Openlysts" [ref=f7e120]
+        - generic [ref=f7e121]: Openlysts
+        - generic [ref=f7e122]: — Discover. Filter. Build.
+      - generic [ref=f7e123]:
+        - link "About" [ref=f7e124] [cursor=pointer]:
+          - /url: /about
+        - link "Contact" [ref=f7e125] [cursor=pointer]:
+          - /url: /contact
+        - link "Trending" [ref=f7e126] [cursor=pointer]:
+          - /url: /trending
+      - paragraph [ref=f7e127]: Built with for open source

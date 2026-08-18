@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { localClient } from '@/api/localClient';
 import { runIngestion, recalculateScores, reclassifyRepos } from '@/lib/api';
-import { RefreshCw, Calculator, Tags, Eye, Star, Loader2, CheckCircle, AlertCircle, TrendingUp, Database, ShieldCheck } from 'lucide-react';
+import { RefreshCw, Calculator, Tags, Loader2, CheckCircle, AlertCircle, TrendingUp, Database, ShieldCheck } from 'lucide-react';
 import { CATEGORIES } from '@/lib/categories';
 
 export default function Admin() {

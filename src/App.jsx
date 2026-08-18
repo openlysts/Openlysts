@@ -10,11 +10,12 @@ import { MobileLayoutProvider } from '@/lib/MobileLayoutContext';
 
 import OpenlystLayout from './components/openlyst/OpenlystLayout';
 import AdminRoute from './components/openlyst/AdminRoute';
+import ErrorBoundary from './components/openlyst/ErrorBoundary';
+import Welcome from './pages/Welcome';
 import Home from './pages/Home';
 import Search from './pages/Search';
 import RepoDetail from './pages/RepoDetail';
-import CategoryPage from './pages/CategoryPage';
-import Categories from './pages/Categories';
+import Alternatives from './pages/Alternatives';
 import Trending from './pages/Trending';
 import Bookmarks from './pages/Bookmarks';
 import About from './pages/About';
@@ -47,23 +48,25 @@ function App() {
           <QueryClientProvider client={queryClientInstance}>
           <Router>
             <AuthGate>
-            <Routes>
-              <Route element={<OpenlystLayout />}>
-                <Route path="/" element={<Home />} />
-                <Route path="/search" element={<Search />} />
-                <Route path="/repo/:owner/:name" element={<RepoDetail />} />
-                <Route path="/category/:slug" element={<CategoryPage />} />
-                <Route path="/categories" element={<Categories />} />
-                <Route path="/trending" element={<Trending />} />
-                <Route path="/bookmarks" element={<Bookmarks />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/settings" element={<Settings />} />
-                <Route path="/compare" element={<Compare />} />
-                <Route path="/admin" element={<AdminRoute><Admin /></AdminRoute>} />
-              </Route>
-              <Route path="*" element={<PageNotFound />} />
-            </Routes>
+            <ErrorBoundary>
+              <Routes>
+                <Route path="/" element={<Welcome />} />
+                <Route element={<OpenlystLayout />}>
+                  <Route path="/discover" element={<Home />} />
+                  <Route path="/search" element={<Search />} />
+                  <Route path="/repo/:owner/:name" element={<RepoDetail />} />
+                  <Route path="/alternatives" element={<Alternatives />} />
+                  <Route path="/trending" element={<Trending />} />
+                  <Route path="/bookmarks" element={<Bookmarks />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="/settings" element={<Settings />} />
+                  <Route path="/compare" element={<Compare />} />
+                  <Route path="/admin" element={<AdminRoute><Admin /></AdminRoute>} />
+                </Route>
+                <Route path="*" element={<PageNotFound />} />
+              </Routes>
+            </ErrorBoundary>
             </AuthGate>
           </Router>
           <Toaster />

@@ -1,0 +1,410 @@
+- generic [active] [ref=f9e1]:
+  - generic [ref=f9e4]:
+    - banner [ref=f9e5]:
+      - generic [ref=f9e7]:
+        - link "Openlysts Openlysts" [ref=f9e8] [cursor=pointer]:
+          - /url: /
+          - img "Openlysts" [ref=f9e10]
+          - generic [ref=f9e11]: Openlysts
+        - navigation [ref=f9e12]:
+          - link "Discover" [ref=f9e13] [cursor=pointer]:
+            - /url: /
+          - link "Alternatives" [ref=f9e14] [cursor=pointer]:
+            - /url: /alternatives
+          - link "Trending" [ref=f9e15] [cursor=pointer]:
+            - /url: /trending
+          - link "Bookmarks" [ref=f9e16] [cursor=pointer]:
+            - /url: /bookmarks
+          - link "About" [ref=f9e17] [cursor=pointer]:
+            - /url: /about
+          - link "Contact" [ref=f9e18] [cursor=pointer]:
+            - /url: /contact
+        - generic [ref=f9e841]:
+          - generic [ref=f9e842]: Search openlysts...
+          - generic [ref=f9e843]:
+            - generic [ref=f9e844]: ⌘
+            - text: K
+        - generic [ref=f9e19]:
+          - link "Bookmarks" [ref=f9e20] [cursor=pointer]:
+            - /url: /bookmarks
+            - generic [ref=f9e23]: "1"
+          - link "Settings" [ref=f9e24] [cursor=pointer]:
+            - /url: /settings
+          - button "Switch to Mobile Layout" [ref=f9e28] [cursor=pointer]
+          - button "Toggle theme" [ref=f9e32] [cursor=pointer]
+    - main [ref=f9e39]:
+      - generic [ref=f9e845]:
+        - button "Back" [ref=f9e846] [cursor=pointer]
+        - generic [ref=f9e849]:
+          - generic [ref=f9e850]:
+            - generic [ref=f9e852]:
+              - generic [ref=f9e853]:
+                - generic [ref=f9e854]:
+                  - heading "pi" [level=1] [ref=f9e855]
+                  - paragraph [ref=f9e856]: earendil-works
+                - button "Saved" [ref=f9e857] [cursor=pointer]
+              - paragraph [ref=f9e860]: "AI agent toolkit: unified LLM API, agent loop, TUI, coding agent CLI"
+              - generic [ref=f9e861]:
+                - link "AI" [ref=f9e862] [cursor=pointer]:
+                  - /url: /category/ai
+                - link "LLMs" [ref=f9e863] [cursor=pointer]:
+                  - /url: /category/llms
+                - link "AI Agents" [ref=f9e864] [cursor=pointer]:
+                  - /url: /category/ai-agents
+                - link "Libraries & Frameworks" [ref=f9e865] [cursor=pointer]:
+                  - /url: /category/libraries-and-frameworks
+              - generic [ref=f9e866]:
+                - link "Compare" [ref=f9e867] [cursor=pointer]:
+                  - /url: /compare?repos=earendil-works/pi
+                - link "Open on GitHub" [ref=f9e871] [cursor=pointer]:
+                  - /url: https://github.com/earendil-works/pi
+            - generic [ref=f9e877]:
+              - heading "Tutorials & Explanations" [level=2] [ref=f9e878]
+              - button "Watch video explanations" [ref=f9e880] [cursor=pointer]
+            - generic [ref=f9e885]:
+              - heading "README" [level=2] [ref=f9e886]
+              - generic [ref=f9e887]:
+                - paragraph [ref=f9e888]:
+                  - link [ref=f9e889] [cursor=pointer]:
+                    - /url: https://pi.dev
+                    - img "pi logo" [ref=f9e890]
+                - paragraph [ref=f9e891]:
+                  - link [ref=f9e892] [cursor=pointer]:
+                    - /url: https://discord.com/invite/3cU7Bz4UPx
+                    - img "Discord" [ref=f9e893]
+                  - link [ref=f9e894] [cursor=pointer]:
+                    - /url: https://www.npmjs.com/package/@earendil-works/pi-coding-agent
+                    - img "npm" [ref=f9e895]
+                - blockquote [ref=f9e896]:
+                  - paragraph [ref=f9e897]:
+                    - text: New issues and PRs from new contributors are auto-closed by default. Maintainers review auto-closed issues daily. See
+                    - link "CONTRIBUTING.md" [ref=f9e898] [cursor=pointer]:
+                      - /url: CONTRIBUTING.md
+                    - text: .
+                - heading "Pi Agent Harness" [level=1] [ref=f9e899]
+                - paragraph [ref=f9e900]: This is the home of the Pi agent harness project including our self extensible coding agent.
+                - list [ref=f9e901]:
+                  - listitem [ref=f9e902]:
+                    - strong [ref=f9e903]:
+                      - link "@earendil-works/pi-coding-agent" [ref=f9e904] [cursor=pointer]:
+                        - /url: packages/coding-agent
+                    - text: ": Interactive coding agent CLI"
+                  - listitem [ref=f9e905]:
+                    - strong [ref=f9e906]:
+                      - link "@earendil-works/pi-agent-core" [ref=f9e907] [cursor=pointer]:
+                        - /url: packages/agent
+                    - text: ": Agent runtime with tool calling and state management"
+                  - listitem [ref=f9e908]:
+                    - strong [ref=f9e909]:
+                      - link "@earendil-works/pi-ai" [ref=f9e910] [cursor=pointer]:
+                        - /url: packages/ai
+                    - text: ": Unified multi-provider LLM API (OpenAI, Anthropic, Google, …)"
+                - paragraph [ref=f9e911]: "To learn more about Pi:"
+                - list [ref=f9e912]:
+                  - listitem [ref=f9e913]:
+                    - link "Visit pi.dev" [ref=f9e914] [cursor=pointer]:
+                      - /url: https://pi.dev
+                    - text: ", the project website with demos"
+                  - listitem [ref=f9e915]:
+                    - link "Read the documentation" [ref=f9e916] [cursor=pointer]:
+                      - /url: https://pi.dev/docs/latest
+                    - text: ", but you can also ask the agent to explain itself"
+                - heading "All Packages" [level=2] [ref=f9e917]
+                - paragraph [ref=f9e918]:
+                  - text: "| Package | Description | |---------|-------------| |"
+                  - strong [ref=f9e919]:
+                    - link "@earendil-works/pi-telemetry" [ref=f9e920] [cursor=pointer]:
+                      - /url: packages/telemetry
+                  - text: "| Vendor-neutral telemetry contracts, reference adapter, conformance tests, and typed schemas | |"
+                  - strong [ref=f9e921]:
+                    - link "@earendil-works/pi-ai" [ref=f9e922] [cursor=pointer]:
+                      - /url: packages/ai
+                  - text: "| Unified multi-provider LLM API (OpenAI, Anthropic, Google, etc.) | |"
+                  - strong [ref=f9e923]:
+                    - link "@earendil-works/pi-agent-core" [ref=f9e924] [cursor=pointer]:
+                      - /url: packages/agent
+                  - text: "| Agent runtime with tool calling and state management | |"
+                  - strong [ref=f9e925]:
+                    - link "@earendil-works/pi-coding-agent" [ref=f9e926] [cursor=pointer]:
+                      - /url: packages/coding-agent
+                  - text: "| Interactive coding agent CLI | |"
+                  - strong [ref=f9e927]:
+                    - link "@earendil-works/pi-tui" [ref=f9e928] [cursor=pointer]:
+                      - /url: packages/tui
+                  - text: "| Terminal UI library with differential rendering |"
+                - paragraph [ref=f9e929]:
+                  - text: For Slack/chat automation and workflows see
+                  - link "earendil-works/pi-chat" [ref=f9e930] [cursor=pointer]:
+                    - /url: https://github.com/earendil-works/pi-chat
+                  - text: .
+                - heading "Permissions & Containerization" [level=2] [ref=f9e931]
+                - paragraph [ref=f9e932]: Pi does not include a built-in permission system for restricting filesystem, process, network, or credential access. By default, it runs with the permissions of the user and process that launched it.
+                - paragraph [ref=f9e933]:
+                  - text: If you need stronger boundaries, containerize or sandbox Pi. See
+                  - link "packages/coding-agent/docs/containerization.md" [ref=f9e934] [cursor=pointer]:
+                    - /url: packages/coding-agent/docs/containerization.md
+                  - text: "for three patterns:"
+                - list [ref=f9e935]:
+                  - listitem [ref=f9e936]:
+                    - strong [ref=f9e937]: Gondolin extension
+                    - text: ": keep"
+                    - code [ref=f9e938]: "`pi`"
+                    - text: and provider auth on the host while routing built-in tools and
+                    - code [ref=f9e939]: "`!`"
+                    - text: commands into a local Linux micro-VM.
+                  - listitem [ref=f9e940]:
+                    - strong [ref=f9e941]: Plain Docker
+                    - text: ": run the whole"
+                    - code [ref=f9e942]: "`pi`"
+                    - text: process in a local container for simple isolation.
+                  - listitem [ref=f9e943]:
+                    - strong [ref=f9e944]: OpenShell
+                    - text: ": run the whole"
+                    - code [ref=f9e945]: "`pi`"
+                    - text: process in a policy-controlled sandbox.
+                - heading "Contributing" [level=2] [ref=f9e946]
+                - paragraph [ref=f9e947]:
+                  - text: See
+                  - link "CONTRIBUTING.md" [ref=f9e948] [cursor=pointer]:
+                    - /url: CONTRIBUTING.md
+                  - text: for contribution guidelines and
+                  - link "AGENTS.md" [ref=f9e949] [cursor=pointer]:
+                    - /url: AGENTS.md
+                  - text: for project-specific rules (for both humans and agents). Longer term plans for Pi can also be found in
+                  - link "RFCs" [ref=f9e950] [cursor=pointer]:
+                    - /url: https://rfc.earendil.com/keyword/pi/
+                  - text: .
+                - heading "Development" [level=2] [ref=f9e951]
+                - code [ref=f9e953]: "npm install --ignore-scripts # Install all dependencies without running lifecycle scripts npm run build # Refresh model data, then build all packages npm run build:offline # Rebuild using existing model data without network access npm run check # Lint, format, and type check ./test.sh # Run tests (skips LLM-dependent tests without API keys) ./pi-test.sh # Run pi from sources (can be run from any directory)"
+                - heading "Building standalone binaries from release source" [level=2] [ref=f9e954]
+                - paragraph [ref=f9e955]:
+                  - text: GitHub releases include a versioned source archive covered by the release's
+                  - code [ref=f9e956]: "`SHA256SUMS`"
+                  - text: "file. Extract it and run the same build script used for the official standalone binaries:"
+                - code [ref=f9e958]: "VERSION=\"<release-version>\" tar -xzf \"pi-${VERSION}-source.tar.gz\" cd \"pi-${VERSION}\" ./scripts/build-binaries.sh --offline-model-data --platform linux-x64 --out \"$PWD/out\""
+                - paragraph [ref=f9e959]:
+                  - text: The source archive includes the generated provider model data used for the release.
+                  - code [ref=f9e960]: "`--offline-model-data`"
+                  - text: builds with that snapshot instead of refreshing it from live provider catalogs. The script still installs dependencies, builds the monorepo, compiles the Bun executable, and stages its runtime assets. Package maintainers who provide dependencies separately can pass
+                  - code [ref=f9e961]: "`--skip-install --skip-deps`"
+                  - text: .
+                - heading "Supply-chain hardening" [level=2] [ref=f9e962]
+                - paragraph [ref=f9e963]: We treat npm dependency changes as reviewed code changes.
+                - list [ref=f9e964]:
+                  - listitem [ref=f9e965]: Direct external dependencies are pinned to exact versions. Internal workspace packages remain version-ranged.
+                  - listitem [ref=f9e966]:
+                    - code [ref=f9e967]: "`.npmrc`"
+                    - text: sets
+                    - code [ref=f9e968]: "`save-exact=true`"
+                    - text: and
+                    - code [ref=f9e969]: "`min-release-age=2`"
+                    - text: to avoid same-day dependency releases during npm resolution.
+                  - listitem [ref=f9e970]:
+                    - code [ref=f9e971]: "`package-lock.json`"
+                    - text: is the dependency ground truth. Pre-commit blocks accidental lockfile commits unless
+                    - code [ref=f9e972]: "`PI_ALLOW_LOCKFILE_CHANGE=1`"
+                    - text: is set.
+                  - listitem [ref=f9e973]:
+                    - code [ref=f9e974]: "`npm run check`"
+                    - text: verifies pinned direct deps, native TypeScript import compatibility, and the generated coding-agent shrinkwrap.
+                  - listitem [ref=f9e975]:
+                    - text: The published CLI package includes
+                    - code [ref=f9e976]: "`packages/coding-agent/npm-shrinkwrap.json`"
+                    - text: ", generated from the root lockfile, to pin transitive deps for npm users."
+                  - listitem [ref=f9e977]:
+                    - text: Release smoke tests use
+                    - code [ref=f9e978]: "`npm run release:local`"
+                    - text: to build, pack, and create isolated npm and Bun installs outside the repo before tagging a release.
+                  - listitem [ref=f9e979]:
+                    - text: Local release installs, documented npm installs, and
+                    - code [ref=f9e980]: "`pi update --self`"
+                    - text: use
+                    - code [ref=f9e981]: "`--ignore-scripts`"
+                    - text: where supported.
+                  - listitem [ref=f9e982]:
+                    - text: CI installs with
+                    - code [ref=f9e983]: "`npm ci --ignore-scripts`"
+                    - text: ", and a scheduled GitHub workflow runs"
+                    - code [ref=f9e984]: "`npm audit --omit=dev`"
+                    - text: plus
+                    - code [ref=f9e985]: "`npm audit signatures --omit=dev`"
+                    - text: .
+                  - listitem [ref=f9e986]: Shrinkwrap generation has an explicit allowlist for dependency lifecycle scripts; new lifecycle-script deps fail checks until reviewed.
+                - heading "Share your OSS coding agent sessions" [level=2] [ref=f9e987]
+                - paragraph [ref=f9e988]: If you use Pi or other coding agents for open source work, please share your sessions.
+                - paragraph [ref=f9e989]: Public OSS session data helps improve coding agents with real-world tasks, tool use, failures, and fixes instead of toy benchmarks.
+                - paragraph [ref=f9e990]:
+                  - text: For the full explanation, see
+                  - link "this post on X" [ref=f9e991] [cursor=pointer]:
+                    - /url: https://x.com/badlogicgames/status/2037811643774652911
+                  - text: .
+                - paragraph [ref=f9e992]:
+                  - text: To publish sessions, use
+                  - link [ref=f9e993] [cursor=pointer]:
+                    - /url: https://github.com/badlogic/pi-share-hf
+                    - code [ref=f9e994]: "`badlogic/pi-share-hf`"
+                  - text: . Read its README.md for setup instructions. All you need is a Hugging Face account, the Hugging Face CLI, and
+                  - code [ref=f9e995]: "`pi-share-hf`"
+                  - text: .
+                - paragraph [ref=f9e996]:
+                  - text: You can also watch
+                  - link "this video" [ref=f9e997] [cursor=pointer]:
+                    - /url: https://x.com/badlogicgames/status/2041151967695634619
+                  - text: ", where I show how I publish my"
+                  - code [ref=f9e998]: "`pi-mono`"
+                  - text: sessions.
+                - paragraph [ref=f9e999]:
+                  - text: I regularly publish my own
+                  - code [ref=f9e1000]: "`pi-mono`"
+                  - text: "work sessions here:"
+                - list [ref=f9e1001]:
+                  - listitem [ref=f9e1002]:
+                    - link "badlogicgames/pi-mono on Hugging Face" [ref=f9e1003] [cursor=pointer]:
+                      - /url: https://huggingface.co/datasets/badlogicgames/pi-mono
+                - heading "License" [level=2] [ref=f9e1004]
+                - paragraph [ref=f9e1005]: MIT
+                - paragraph [ref=f9e1006]:
+                  - link "pi.dev" [ref=f9e1007] [cursor=pointer]:
+                    - /url: https://pi.dev
+                  - text: domain graciously donated by
+                  - link [ref=f9e1008] [cursor=pointer]:
+                    - /url: https://exe.dev
+                    - img "Exy mascot" [ref=f9e1009]
+                    - text: exe.dev
+          - generic [ref=f9e1011]:
+            - generic [ref=f9e1012]:
+              - generic [ref=f9e1013]:
+                - generic [ref=f9e1014]: Stars
+                - paragraph [ref=f9e1017]: 92k
+              - generic [ref=f9e1018]:
+                - generic [ref=f9e1019]: Forks
+                - paragraph [ref=f9e1025]: 11.4k
+              - generic [ref=f9e1026]:
+                - generic [ref=f9e1027]: Issues
+                - paragraph [ref=f9e1030]: "145"
+              - generic [ref=f9e1031]:
+                - generic [ref=f9e1032]: Quality
+                - paragraph [ref=f9e1035]: "96.0"
+            - generic [ref=f9e1036]:
+              - generic [ref=f9e1037]:
+                - generic [ref=f9e1038]: License
+                - generic [ref=f9e1042]: MIT
+              - generic [ref=f9e1046]:
+                - generic [ref=f9e1047]: Language
+                - generic [ref=f9e1049]: TypeScript
+              - generic [ref=f9e1050]:
+                - generic [ref=f9e1051]: Created
+                - generic [ref=f9e1054]: Aug 9, 2025
+              - generic [ref=f9e1055]:
+                - generic [ref=f9e1056]: Updated
+                - generic [ref=f9e1060]: 1d ago
+              - generic [ref=f9e1061]:
+                - generic [ref=f9e1062]: Stars (7d)
+                - generic [ref=f9e1065]: "+191"
+              - generic [ref=f9e1066]:
+                - generic [ref=f9e1067]: Trending Score
+                - generic [ref=f9e1071]: "1146.0"
+            - generic [ref=f9e1072]:
+              - heading "Star Growth (30d)" [level=2] [ref=f9e1073]
+              - img [ref=f9e1076]:
+                - generic [ref=f9e1080]:
+                  - generic [ref=f9e1081]: Aug 16
+                  - generic [ref=f9e1083]: Aug 16
+                  - generic [ref=f9e1085]: Aug 17
+                  - generic [ref=f9e1087]: Aug 17
+                  - generic [ref=f9e1089]: Aug 17
+                  - generic [ref=f9e1091]: Aug 17
+                  - generic [ref=f9e1093]: Aug 17
+                  - generic [ref=f9e1095]: Aug 17
+                - generic [ref=f9e1098]:
+                  - generic [ref=f9e1099]: "0"
+                  - generic [ref=f9e1101]: 25k
+                  - generic [ref=f9e1103]: 50k
+                  - generic [ref=f9e1105]: 75k
+                  - generic [ref=f9e1107]: 100k
+            - generic [ref=f9e1111]:
+              - heading "You might also like" [level=2] [ref=f9e1112]
+              - generic [ref=f9e1115]:
+                - generic [ref=f9e1118] [cursor=pointer]:
+                  - button "Bookmark" [ref=f9e1119]
+                  - generic [ref=f9e1122]: Trending
+                  - generic [ref=f9e1125]:
+                    - generic [ref=f9e1126]:
+                      - heading "TencentDB-Agent-Memory" [level=3] [ref=f9e1127]
+                      - paragraph [ref=f9e1128]: TencentCloud
+                    - generic [ref=f9e1129]: Unknown
+                  - paragraph [ref=f9e1133]: TencentDB Agent Memory is a team-level memory hub for AI Agents — turning conversations, docs, and code into four reusable memory assets (Chat Memory, Skill, LLM-Wiki, Code-Graph) that are governed, shared, and equipped across agents and frameworks.
+                  - generic [ref=f9e1134]:
+                    - generic [ref=f9e1135]: Intermediate
+                    - generic [ref=f9e1136]: AI
+                    - generic [ref=f9e1137]: LLMs
+                  - generic [ref=f9e1138]:
+                    - generic [ref=f9e1139]: agent
+                    - generic [ref=f9e1140]: ai-agent
+                    - generic [ref=f9e1141]: embedding
+                  - generic [ref=f9e1142]:
+                    - generic [ref=f9e1143]: 22.5k
+                    - generic [ref=f9e1146]: 2k
+                    - generic [ref=f9e1152]: TypeScript
+                  - generic [ref=f9e1154]: 1d ago
+                  - button "Watch video explanations" [ref=f9e1157]
+                - generic [ref=f9e1163] [cursor=pointer]:
+                  - button "Bookmark" [ref=f9e1164]
+                  - generic [ref=f9e1167]: Trending
+                  - generic [ref=f9e1170]:
+                    - generic [ref=f9e1171]:
+                      - heading "mastra" [level=3] [ref=f9e1172]
+                      - paragraph [ref=f9e1173]: mastra-ai
+                    - generic [ref=f9e1174]: Unknown
+                  - paragraph [ref=f9e1178]: Mastra is the modern TypeScript framework for AI-powered applications and agents.
+                  - generic [ref=f9e1179]:
+                    - generic [ref=f9e1180]: Intermediate
+                    - generic [ref=f9e1181]: AI
+                    - generic [ref=f9e1182]: LLMs
+                  - generic [ref=f9e1183]:
+                    - generic [ref=f9e1184]: agents
+                    - generic [ref=f9e1185]: ai
+                    - generic [ref=f9e1186]: chatbots
+                  - generic [ref=f9e1187]:
+                    - generic [ref=f9e1188]: 27.2k
+                    - generic [ref=f9e1191]: 2.6k
+                    - generic [ref=f9e1197]: TypeScript
+                  - generic [ref=f9e1199]: 1d ago
+                  - button "Watch video explanations" [ref=f9e1202]
+                - generic [ref=f9e1208] [cursor=pointer]:
+                  - button "Bookmark" [ref=f9e1209]
+                  - generic [ref=f9e1212]:
+                    - generic [ref=f9e1213]:
+                      - heading "12-factor-agents" [level=3] [ref=f9e1214]
+                      - paragraph [ref=f9e1215]: humanlayer
+                    - generic [ref=f9e1216]: Unknown
+                  - paragraph [ref=f9e1220]: What are the principles we can use to build LLM-powered software that is actually good enough to put in the hands of production customers?
+                  - generic [ref=f9e1221]:
+                    - generic [ref=f9e1222]: Intermediate
+                    - generic [ref=f9e1223]: AI
+                    - generic [ref=f9e1224]: LLMs
+                  - generic [ref=f9e1225]:
+                    - generic [ref=f9e1226]: 12-factor
+                    - generic [ref=f9e1227]: 12-factor-agents
+                    - generic [ref=f9e1228]: agents
+                  - generic [ref=f9e1229]:
+                    - generic [ref=f9e1230]: 25.3k
+                    - generic [ref=f9e1233]: 1.9k
+                    - generic [ref=f9e1239]: TypeScript
+                  - generic [ref=f9e1241]: 1d ago
+                  - button "Watch video explanations" [ref=f9e1244]
+    - contentinfo [ref=f9e821]:
+      - generic [ref=f9e823]:
+        - generic [ref=f9e824]:
+          - img "Openlysts" [ref=f9e825]
+          - generic [ref=f9e826]: Openlysts
+          - generic [ref=f9e827]: — Discover. Filter. Build.
+        - generic [ref=f9e828]:
+          - link "About" [ref=f9e829] [cursor=pointer]:
+            - /url: /about
+          - link "Contact" [ref=f9e830] [cursor=pointer]:
+            - /url: /contact
+          - link "Trending" [ref=f9e831] [cursor=pointer]:
+            - /url: /trending
+        - paragraph [ref=f9e832]: Built with for open source
+  - generic [ref=f9e1248]: "0"

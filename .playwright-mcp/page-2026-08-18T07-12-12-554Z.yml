@@ -1,0 +1,48 @@
+- generic [ref=f12e4]:
+  - banner [ref=f12e5]:
+    - generic [ref=f12e7]:
+      - link "Openlysts Openlysts" [ref=f12e8] [cursor=pointer]:
+        - /url: /
+        - img "Openlysts" [ref=f12e10]
+        - generic [ref=f12e11]: Openlysts
+      - navigation [ref=f12e12]:
+        - link "Discover" [ref=f12e13] [cursor=pointer]:
+          - /url: /
+        - link "Alternatives" [ref=f12e14] [cursor=pointer]:
+          - /url: /alternatives
+        - link "Trending" [ref=f12e15] [cursor=pointer]:
+          - /url: /trending
+        - link "Bookmarks" [ref=f12e16] [cursor=pointer]:
+          - /url: /bookmarks
+        - link "About" [ref=f12e17] [cursor=pointer]:
+          - /url: /about
+        - link "Contact" [ref=f12e18] [cursor=pointer]:
+          - /url: /contact
+      - generic [ref=f12e19]:
+        - link "Bookmarks" [ref=f12e20] [cursor=pointer]:
+          - /url: /bookmarks
+        - link "Settings" [ref=f12e23] [cursor=pointer]:
+          - /url: /settings
+        - button "Switch to Mobile Layout" [ref=f12e27] [cursor=pointer]
+        - button "Toggle theme" [ref=f12e31] [cursor=pointer]
+  - main [ref=f12e38]:
+    - generic [ref=f12e39]:
+      - heading "Your Bookmarks" [level=1] [ref=f12e40]
+      - paragraph [ref=f12e43]: 0 saved repositories · stored locally in your browser
+      - generic [ref=f12e44]:
+        - paragraph [ref=f12e47]: No bookmarks yet
+        - paragraph [ref=f12e48]: Click the bookmark icon on any repository to save it here.
+  - contentinfo [ref=f12e50]:
+    - generic [ref=f12e52]:
+      - generic [ref=f12e53]:
+        - img "Openlysts" [ref=f12e54]
+        - generic [ref=f12e55]: Openlysts
+        - generic [ref=f12e56]: — Discover. Filter. Build.
+      - generic [ref=f12e57]:
+        - link "About" [ref=f12e58] [cursor=pointer]:
+          - /url: /about
+        - link "Contact" [ref=f12e59] [cursor=pointer]:
+          - /url: /contact
+        - link "Trending" [ref=f12e60] [cursor=pointer]:
+          - /url: /trending
+      - paragraph [ref=f12e61]: Built with for open source

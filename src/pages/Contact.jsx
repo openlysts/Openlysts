@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Mail, Github, Send, MessageCircle } from 'lucide-react';
+import { Mail, Github, MessageCircle } from 'lucide-react';
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const [errors, setErrors] = useState({});
   const [status, setStatus] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -11,8 +12,15 @@ export default function Contact() {
   };
 
   const handleEmail = async () => {
-    if (!form.name || !form.email || !form.message) {
-      setStatus({ type: 'error', message: 'Please fill in all fields.' });
+    const newErrors = {};
+    if (!form.name) newErrors.name = 'Name is required';
+    if (!form.email) newErrors.email = 'Email is required';
+    if (!form.message) newErrors.message = 'Message is required';
+    
+    setErrors(newErrors);
+    
+    if (Object.keys(newErrors).length > 0) {
+      setStatus({ type: 'error', message: 'Please fill in all required fields.' });
       return;
     }
     
@@ -76,34 +84,44 @@ export default function Contact() {
 
       <div className="card p-6 space-y-4">
         <div>
-          <label className="block text-sm font-medium text-text mb-1.5">Name</label>
+          <label className="block text-sm font-medium text-text mb-1.5">Name <span className="text-red-500">*</span></label>
           <input
             type="text"
             value={form.name}
-            onChange={(e) => setForm({ ...form, name: e.target.value })}
+            onChange={(e) => {
+              setForm({ ...form, name: e.target.value });
+              if (errors.name) setErrors({ ...errors, name: null });
+            }}
             placeholder="Your name"
-            className="w-full bg-bg-card border border-border rounded-lg px-3 py-2.5 text-sm text-text placeholder:text-text-muted focus:border-accent focus:outline-none" />
-          
+            className={`w-full bg-bg-card border rounded-lg px-3 py-2.5 text-sm text-text placeholder:text-text-muted focus:outline-none ${errors.name ? 'border-red-500 focus:border-red-500' : 'border-border focus:border-accent'}`} />
+          {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
         </div>
         <div>
-          <label className="block text-sm font-medium text-text mb-1.5">Email</label>
+          <label className="block text-sm font-medium text-text mb-1.5">Email <span className="text-red-500">*</span></label>
           <input
             type="email"
             value={form.email}
-            onChange={(e) => setForm({ ...form, email: e.target.value })}
+            onChange={(e) => {
+              setForm({ ...form, email: e.target.value });
+              if (errors.email) setErrors({ ...errors, email: null });
+            }}
             placeholder="you@example.com"
-            className="w-full bg-bg-card border border-border rounded-lg px-3 py-2.5 text-sm text-text placeholder:text-text-muted focus:border-accent focus:outline-none" />
-          
+            className={`w-full bg-bg-card border rounded-lg px-3 py-2.5 text-sm text-text placeholder:text-text-muted focus:outline-none ${errors.email ? 'border-red-500 focus:border-red-500' : 'border-border focus:border-accent'}`} />
+          {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
         </div>
         <div>
-          <label className="block text-sm font-medium text-text mb-1.5">Message</label>
+          <label className="block text-sm font-medium text-text mb-1.5">Message <span className="text-red-500">*</span></label>
           <textarea
             value={form.message}
-            onChange={(e) => setForm({ ...form, message: e.target.value })}
+            onChange={(e) => {
+              setForm({ ...form, message: e.target.value });
+              if (errors.message) setErrors({ ...errors, message: null });
+            }}
             placeholder="Tell us what's on your mind..."
             rows={5}
-            className="w-full bg-bg-card border border-border rounded-lg px-3 py-2.5 text-sm text-text placeholder:text-text-muted focus:border-accent focus:outline-none resize-none" />
-          
+            maxLength={2000}
+            className={`w-full bg-bg-card border rounded-lg px-3 py-2.5 text-sm text-text placeholder:text-text-muted focus:outline-none resize-none ${errors.message ? 'border-red-500 focus:border-red-500' : 'border-border focus:border-accent'}`} />
+          {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message}</p>}
         </div>
         
         <div className="flex gap-4 pt-2">

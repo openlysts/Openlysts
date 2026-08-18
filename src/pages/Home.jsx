@@ -1,17 +1,20 @@
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { Search, Sparkles, Clock, TrendingUp, ArrowRight, Database } from 'lucide-react';
+import { Sparkles, Clock, TrendingUp, ArrowRight, Database, RefreshCw } from 'lucide-react';
 import { queryRepos } from '@/lib/api';
-import CategoryPills from '@/components/openlyst/CategoryPills';
+
 import RepositoryGrid from '@/components/openlyst/RepositoryGrid';
 import AnimatedSearch from '@/components/openlyst/AnimatedSearch';
+import FilterBar from '@/components/openlyst/FilterBar';
 import { Link } from 'react-router-dom';
+
+const LANGUAGES = ['Python', 'JavaScript', 'TypeScript', 'Go', 'Rust', 'Java', 'C++', 'C', 'Ruby', 'PHP', 'Swift', 'Kotlin', 'Shell', 'Vue', 'HTML', 'Dart'];
 
 export default function Home() {
   const navigate = useNavigate();
 
-  const { data: trending, isLoading: tLoading } = useQuery({
+  const { data: trending, isLoading: tLoading, refetch: refetchTrending, isRefetching: tRefetching } = useQuery({
     queryKey: ['home-trending'],
     queryFn: () => queryRepos({ sort: 'trending', page: 1 }),
     refetchInterval: 60000
@@ -30,6 +33,32 @@ export default function Home() {
 
   const hasData = (trending?.results?.length || 0) > 0 || (recent?.results?.length || 0) > 0;
 
+  const emptyFilters = {
+    categories: [],
+    languages: [],
+    licenses: [],
+    difficulties: [],
+    minStars: 0,
+    updatedWithin: '',
+    activity: '',
+  };
+
+  const updateFilters = (newFilters) => {
+    const params = new URLSearchParams();
+    if (newFilters.categories?.length) params.set('categories', newFilters.categories.join(','));
+    if (newFilters.languages?.length) params.set('languages', newFilters.languages.join(','));
+    if (newFilters.licenses?.length) params.set('licenses', newFilters.licenses.join(','));
+    if (newFilters.difficulties?.length) params.set('difficulties', newFilters.difficulties.join(','));
+    if (newFilters.minStars > 0) params.set('minStars', String(newFilters.minStars));
+    if (newFilters.updatedWithin) params.set('updatedWithin', newFilters.updatedWithin);
+    if (newFilters.activity) params.set('activity', newFilters.activity);
+    
+    // Only navigate if a filter was actually selected
+    if (params.toString().length > 0) {
+      navigate(`/search?${params.toString()}`);
+    }
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 rounded-lg">
       {/* Hero */}
@@ -44,10 +73,10 @@ export default function Home() {
             Discover. Filter. Build.
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-text leading-tight mb-4 [font-family:'Bungee',_system-ui]">
-            Discover the open-source projects worth knowing.
+            Discover everything on GitHub.
           </h1>
           <p className="text-text-secondary text-base sm:text-lg leading-relaxed mb-8 max-w-2xl mx-auto">
-            Explore high-quality open-source software across AI, local models, developer tools, self-hosting, web applications, and more.
+            Explore and search high-quality open-source software across AI, developer tools, self-hosting, and the vast expanse of GitHub.
           </p>
         </motion.div>
 
@@ -56,16 +85,23 @@ export default function Home() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.1 }}
-          className="max-w-xl mx-auto z-30 relative">
+          className="max-w-xl mx-auto z-30 relative mb-8">
           
           <AnimatedSearch size="lg" />
         </motion.div>
+
+        {/* Global Filter Bar */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.2 }}
+          className="max-w-4xl mx-auto text-left"
+        >
+          <FilterBar filters={emptyFilters} onChange={updateFilters} languages={LANGUAGES} />
+        </motion.div>
       </section>
 
-      {/* Category pills */}
-      <section className="py-4">
-        <CategoryPills />
-      </section>
+
 
       {!hasData && !tLoading && !rLoading ?
       <div className="flex flex-col items-center justify-center py-20 text-center animate-pulse">
@@ -81,6 +117,15 @@ export default function Home() {
               <h2 className="flex items-center gap-2 text-xl font-bold text-text">
                 <TrendingUp className="w-5 h-5 text-trending" />
                 Trending This Week
+                <button 
+                  onClick={() => refetchTrending()} 
+                  disabled={tRefetching}
+                  className="ml-2 p-1 text-text-muted hover:text-text rounded-md hover:bg-bg-subtle transition-colors"
+                  title="Refresh Trending"
+                  aria-label="Refresh trending repositories"
+                >
+                  <RefreshCw className={`w-4 h-4 ${tRefetching ? 'animate-spin' : ''}`} />
+                </button>
               </h2>
               <Link to="/trending" className="text-sm text-text-muted hover:text-text flex items-center gap-1">
                 View all <ArrowRight className="w-3.5 h-3.5" />
@@ -107,7 +152,7 @@ export default function Home() {
                 <Sparkles className="w-5 h-5 text-accent" />
                 Popular in AI
               </h2>
-              <Link to="/category/ai" className="text-sm text-text-muted hover:text-text flex items-center gap-1">
+              <Link to="/search?categories=ai" className="text-sm text-text-muted hover:text-text flex items-center gap-1">
                 View all <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>

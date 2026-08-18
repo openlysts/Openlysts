@@ -1,0 +1,102 @@
+- generic [ref=f11e4]:
+  - banner [ref=f11e5]:
+    - generic [ref=f11e7]:
+      - link "Openlysts Openlysts" [ref=f11e8] [cursor=pointer]:
+        - /url: /
+        - img "Openlysts" [ref=f11e10]
+        - generic [ref=f11e11]: Openlysts
+      - navigation [ref=f11e12]:
+        - link "Discover" [ref=f11e13] [cursor=pointer]:
+          - /url: /
+        - link "Alternatives" [ref=f11e14] [cursor=pointer]:
+          - /url: /alternatives
+        - link "Trending" [ref=f11e15] [cursor=pointer]:
+          - /url: /trending
+        - link "Bookmarks" [ref=f11e16] [cursor=pointer]:
+          - /url: /bookmarks
+        - link "About" [ref=f11e17] [cursor=pointer]:
+          - /url: /about
+        - link "Contact" [ref=f11e18] [cursor=pointer]:
+          - /url: /contact
+      - generic [ref=f11e23]:
+        - generic [ref=f11e24]: Search openlysts...
+        - generic [ref=f11e25]:
+          - generic [ref=f11e26]: ⌘
+          - text: K
+      - generic [ref=f11e27]:
+        - link "Bookmarks" [ref=f11e28] [cursor=pointer]:
+          - /url: /bookmarks
+          - generic [ref=f11e31]: "2"
+        - link "Settings" [ref=f11e32] [cursor=pointer]:
+          - /url: /settings
+        - button "Switch to Mobile Layout" [ref=f11e36] [cursor=pointer]
+        - button "Toggle theme" [ref=f11e40] [cursor=pointer]
+  - main [ref=f11e47]:
+    - generic [ref=f11e48]:
+      - heading "Your Bookmarks" [level=1] [ref=f11e49]
+      - paragraph [ref=f11e52]: 2 saved repositories · stored locally in your browser
+      - generic [ref=f11e53]:
+        - generic [ref=f11e54]:
+          - generic [ref=f11e57] [cursor=pointer]:
+            - button "Bookmark" [ref=f11e58]
+            - generic [ref=f11e61]: Trending
+            - generic [ref=f11e64]:
+              - generic [ref=f11e65]:
+                - heading "ai-agent-book" [level=3] [ref=f11e66]
+                - paragraph [ref=f11e67]: bojieli
+              - generic [ref=f11e68]: APACHE-2.0
+            - paragraph [ref=f11e72]: 《深入理解 AI Agent：设计原理与工程实践》（李博杰 著）开源主仓库：全书正文、编译版 PDF 与按章配套代码
+            - generic [ref=f11e73]:
+              - generic [ref=f11e74]: Intermediate
+              - generic [ref=f11e75]: AI
+              - generic [ref=f11e76]: LLMs
+            - generic [ref=f11e77]:
+              - generic [ref=f11e78]: agent
+              - generic [ref=f11e79]: agent-memory
+              - generic [ref=f11e80]: ai-agent
+            - generic [ref=f11e81]:
+              - generic [ref=f11e82]: 38.3k
+              - generic [ref=f11e85]: 4.2k
+              - generic [ref=f11e91]: Python
+            - generic [ref=f11e93]: 1d ago
+            - button "Watch video explanations" [ref=f11e96]
+          - button "Remove bookmark" [ref=f11e100] [cursor=pointer]
+        - generic [ref=f11e104]:
+          - generic [ref=f11e107] [cursor=pointer]:
+            - button "Bookmark" [ref=f11e108]
+            - generic [ref=f11e111]: Trending
+            - generic [ref=f11e114]:
+              - generic [ref=f11e115]:
+                - heading "MoneyPrinterTurbo" [level=3] [ref=f11e116]
+                - paragraph [ref=f11e117]: harry0703
+              - generic [ref=f11e118]: MIT
+            - paragraph [ref=f11e122]: 利用 AI 大模型和自动化工作流，根据主题或关键词一键生成高清短视频。Generate HD short videos from a topic or keyword with an automated AI workflow.
+            - generic [ref=f11e123]:
+              - generic [ref=f11e124]: Intermediate
+              - generic [ref=f11e125]: AI
+              - generic [ref=f11e126]: LLMs
+            - generic [ref=f11e127]:
+              - generic [ref=f11e128]: ai-video-generator
+              - generic [ref=f11e129]: content-creation
+              - generic [ref=f11e130]: ffmpeg
+            - generic [ref=f11e131]:
+              - generic [ref=f11e132]: 105.1k
+              - generic [ref=f11e135]: 16k
+              - generic [ref=f11e141]: Python
+            - generic [ref=f11e143]: 1d ago
+            - button "Watch video explanations" [ref=f11e146]
+          - button "Remove bookmark" [ref=f11e150] [cursor=pointer]
+  - contentinfo [ref=f11e155]:
+    - generic [ref=f11e157]:
+      - generic [ref=f11e158]:
+        - img "Openlysts" [ref=f11e159]
+        - generic [ref=f11e160]: Openlysts
+        - generic [ref=f11e161]: — Discover. Filter. Build.
+      - generic [ref=f11e162]:
+        - link "About" [ref=f11e163] [cursor=pointer]:
+          - /url: /about
+        - link "Contact" [ref=f11e164] [cursor=pointer]:
+          - /url: /contact
+        - link "Trending" [ref=f11e165] [cursor=pointer]:
+          - /url: /trending
+      - paragraph [ref=f11e166]: Built with for open source

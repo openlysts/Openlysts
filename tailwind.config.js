@@ -46,6 +46,29 @@ module.exports = {
         'lg': 'var(--shadow-lg)',
         'hover': 'var(--shadow-hover)',
       },
+      keyframes: {
+        'logo-enter': {
+          '0%': { 
+            opacity: 0, 
+            transform: 'perspective(600px) rotateY(-180deg) rotateX(20deg) scale(0.3) translateY(-30px)' 
+          },
+          '60%': { 
+            opacity: 1, 
+            transform: 'perspective(600px) rotateY(20deg) rotateX(-5deg) scale(1.1) translateY(5px)' 
+          },
+          '80%': { 
+            transform: 'perspective(600px) rotateY(-5deg) rotateX(2deg) scale(0.95) translateY(-2px)' 
+          },
+          '100%': { 
+            opacity: 1, 
+            transform: 'perspective(600px) rotateY(0deg) rotateX(0deg) scale(1) translateY(0)' 
+          },
+        }
+      },
+      animation: {
+        'spin-slow': 'spin 8s linear infinite',
+        'logo-enter': 'logo-enter 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards',
+      },
     },
   },
   plugins: [

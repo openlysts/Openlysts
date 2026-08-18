@@ -6,6 +6,7 @@ import entitiesRouter from './api/entities.js';
 import functionsRouter from './api/functions.js';
 import contactRouter from './api/contact.js';
 import { executeIngestion } from './functions/runIngestion.js';
+import { ingestAlternatives } from './functions/ingestAlternatives.js';
 
 dotenv.config({ path: '.env.local' });
 
@@ -59,4 +60,17 @@ app.listen(PORT, () => {
 
   // Run it once on startup immediately
   setTimeout(() => executeIngestion().catch(console.error), 2000);
+
+  // Auto-Ingest Alternatives (Every 6 hours)
+  const SIX_HOURS = 6 * 60 * 60 * 1000;
+  setInterval(async () => {
+    try {
+      await ingestAlternatives();
+    } catch (err) {
+      console.error('[AUTO-INGESTION] Alternatives failed:', err.message);
+    }
+  }, SIX_HOURS);
+  
+  // Run once on startup
+  setTimeout(() => ingestAlternatives().catch(console.error), 5000);
 });

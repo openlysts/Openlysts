@@ -1,0 +1,12 @@
+- generic [ref=f16e5]:
+  - heading "404" [level=1] [ref=f16e7]
+  - generic [ref=f16e9]:
+    - heading "Page Not Found" [level=2] [ref=f16e10]
+    - paragraph [ref=f16e11]:
+      - text: The page
+      - generic [ref=f16e12]: "\"non-existent-route\""
+      - text: could not be found in this application.
+  - generic [ref=f16e17]:
+    - paragraph [ref=f16e18]: Admin Note
+    - paragraph [ref=f16e19]: This could mean that the AI hasn't implemented this page yet. Ask it to implement it in the chat.
+  - button "Go Home" [ref=f16e21] [cursor=pointer]

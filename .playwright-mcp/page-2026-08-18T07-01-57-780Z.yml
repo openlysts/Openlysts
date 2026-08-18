@@ -1,0 +1,13 @@
+- generic [ref=e3]:
+  - generic [ref=e4]: "[plugin:vite:import-analysis] Failed to resolve import \"@/lib/difficultyColors\" from \"src/components/openlyst/RepositoryCard.jsx\". Does the file exist?"
+  - generic [ref=e5]: D:/AI/Openlyst/openlyst/src/components/openlyst/RepositoryCard.jsx:5:35
+  - generic [ref=e6]: "20 | import { motion } from \"framer-motion\"; 21 | import { getLanguageColor } from \"@/lib/languageColors\"; 22 | import { getDifficultyColor } from \"@/lib/difficultyColors\"; | ^ 23 | import { isBookmarked, toggleBookmark } from \"@/lib/bookmarks\"; 24 | import { useState } from \"react\";"
+  - generic [ref=e7]: at TransformPluginContext._formatLog (file:///D:/AI/Openlyst/openlyst/node_modules/vite/dist/node/chunks/dep-Dm0c1Wj2.js:42658:41) at TransformPluginContext.error (file:///D:/AI/Openlyst/openlyst/node_modules/vite/dist/node/chunks/dep-Dm0c1Wj2.js:42655:16) at normalizeUrl (file:///D:/AI/Openlyst/openlyst/node_modules/vite/dist/node/chunks/dep-Dm0c1Wj2.js:40634:23) at process.processTicksAndRejections (node:internal/process/task_queues:104:5) at async file:///D:/AI/Openlyst/openlyst/node_modules/vite/dist/node/chunks/dep-Dm0c1Wj2.js:40753:37 at async Promise.all (index 7) at async TransformPluginContext.transform (file:///D:/AI/Openlyst/openlyst/node_modules/vite/dist/node/chunks/dep-Dm0c1Wj2.js:40680:7) at async EnvironmentPluginContainer.transform (file:///D:/AI/Openlyst/openlyst/node_modules/vite/dist/node/chunks/dep-Dm0c1Wj2.js:42453:18) at async loadAndTransform (file:///D:/AI/Openlyst/openlyst/node_modules/vite/dist/node/chunks/dep-Dm0c1Wj2.js:35845:27
+  - generic [ref=e8]:
+    - text: Click outside, press Esc key, or fix the code to dismiss.You can also disable this overlay by setting
+    - code [ref=e9]: server.hmr.overlay
+    - text: to
+    - code [ref=e10]: "false"
+    - text: in
+    - code [ref=e11]: vite.config.js
+    - text: .

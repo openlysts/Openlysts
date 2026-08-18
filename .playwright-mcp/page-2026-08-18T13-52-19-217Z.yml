@@ -1,0 +1,122 @@
+- generic [ref=f3e3]:
+  - link "Skip to main content" [ref=f3e4] [cursor=pointer]:
+    - /url: "#main-content"
+  - generic [ref=f3e5]:
+    - banner [ref=f3e6]:
+      - generic [ref=f3e8]:
+        - link "Openlysts Home" [ref=f3e9] [cursor=pointer]:
+          - /url: /discover
+          - generic [ref=f3e11]: Openlysts
+        - navigation [ref=f3e12]:
+          - link "Discover" [ref=f3e13] [cursor=pointer]:
+            - /url: /discover
+          - link "Alternatives" [ref=f3e14] [cursor=pointer]:
+            - /url: /alternatives
+          - link "Trending" [ref=f3e15] [cursor=pointer]:
+            - /url: /trending
+          - link "Bookmarks" [ref=f3e16] [cursor=pointer]:
+            - /url: /bookmarks
+          - link "About" [ref=f3e17] [cursor=pointer]:
+            - /url: /about
+          - link "Contact" [ref=f3e18] [cursor=pointer]:
+            - /url: /contact
+        - generic [ref=f3e23]:
+          - generic [ref=f3e24]: Search openlysts...
+          - generic [ref=f3e25]:
+            - generic [ref=f3e26]: ⌘
+            - text: K
+        - generic [ref=f3e27]:
+          - link "View Bookmarks" [ref=f3e28] [cursor=pointer]:
+            - /url: /bookmarks
+            - generic [ref=f3e31]: "1"
+          - link "Settings" [ref=f3e32] [cursor=pointer]:
+            - /url: /settings
+          - button "Switch to Mobile Layout" [ref=f3e36] [cursor=pointer]
+          - button "Toggle theme" [ref=f3e40] [cursor=pointer]
+    - main [ref=f3e43]:
+      - generic [ref=f3e44]:
+        - generic [ref=f3e50]:
+          - heading "Settings" [level=1] [ref=f3e51]
+          - paragraph [ref=f3e52]: Manage API keys, tokens, and preferences.
+        - generic [ref=f3e53]:
+          - heading "API Keys & Tokens" [level=2] [ref=f3e58]
+          - generic [ref=f3e59]:
+            - generic [ref=f3e60]:
+              - generic [ref=f3e64]: GitHub Personal Access Token
+              - generic [ref=f3e65]: Not set
+            - generic [ref=f3e66]:
+              - generic [ref=f3e67]:
+                - textbox "ghp_xxxxxxxxxxxxxxxxxxxx" [ref=f3e68]
+                - button "Show token" [ref=f3e69] [cursor=pointer]
+              - button "Save" [ref=f3e73] [cursor=pointer]
+            - paragraph [ref=f3e79]:
+              - text: Create a free token at
+              - link "github.com/settings/tokens" [ref=f3e80] [cursor=pointer]:
+                - /url: https://github.com/settings/tokens
+              - text: . No scopes needed — it only raises your rate limit for the ingestion pipeline.
+            - paragraph [ref=f3e81]: Stored locally and synced to backend. Used when an admin runs ingestion.
+        - generic [ref=f3e82]:
+          - heading "Display Preferences" [level=2] [ref=f3e85]
+          - generic [ref=f3e86]:
+            - generic [ref=f3e87]:
+              - generic [ref=f3e88]:
+                - paragraph [ref=f3e89]: Results per page
+                - paragraph [ref=f3e90]: Number of repositories shown per page in search results.
+              - combobox [ref=f3e91]:
+                - option "12" [selected]
+                - option "24"
+                - option "48"
+            - generic [ref=f3e92]:
+              - generic [ref=f3e93]:
+                - paragraph [ref=f3e94]: Default sort
+                - paragraph [ref=f3e95]: How repositories are sorted by default on the home page.
+              - combobox [ref=f3e96]:
+                - option "Trending" [selected]
+                - option "Most stars"
+                - option "Recently updated"
+                - option "Recently added"
+            - generic [ref=f3e97]:
+              - generic [ref=f3e98]:
+                - paragraph [ref=f3e99]: Auto-expand video links
+                - paragraph [ref=f3e100]: Automatically fetch video explanations on repository cards (slower).
+              - button [ref=f3e101] [cursor=pointer]
+            - generic [ref=f3e103]:
+              - generic [ref=f3e104]:
+                - paragraph [ref=f3e105]: 3D Background Style
+                - paragraph [ref=f3e106]: Choose your preferred background animation.
+              - combobox [ref=f3e107]:
+                - option "1. Particles" [selected]
+                - option "2. Network Mesh"
+                - option "3. Digital Topography"
+                - option "4. Matrix Rain"
+                - option "5. Galaxy Spiral"
+                - option "6. Floating Cubes"
+                - option "7. Concentric Rings"
+                - option "8. Particle Waves"
+                - option "9. DNA Helix"
+                - option "10. Vortex Tunnel"
+                - option "None (Disabled)"
+        - generic [ref=f3e108]:
+          - heading "Data Management" [level=2] [ref=f3e113]
+          - generic [ref=f3e114]:
+            - button "Clear all bookmarks" [ref=f3e115] [cursor=pointer]
+            - button "Reset all settings to defaults" [ref=f3e120] [cursor=pointer]
+        - generic [ref=f3e124]:
+          - heading "About" [level=2] [ref=f3e128]
+          - paragraph [ref=f3e130]: Openlysts is an open-source discovery engine for GitHub repositories. All settings are stored locally in your browser — no data is sent to any server except when you explicitly trigger an action (like running ingestion).
+    - contentinfo [ref=f3e131]:
+      - contentinfo [ref=f3e132]:
+        - generic [ref=f3e134]:
+          - generic [ref=f3e135]:
+            - img "Openlysts" [ref=f3e136]
+            - generic [ref=f3e137]: Openlysts
+            - generic [ref=f3e138]: — Discover. Filter. Build.
+          - generic [ref=f3e139]:
+            - link "About" [ref=f3e140] [cursor=pointer]:
+              - /url: /about
+            - link "Contact" [ref=f3e141] [cursor=pointer]:
+              - /url: /contact
+            - link "Trending" [ref=f3e142] [cursor=pointer]:
+              - /url: /trending
+          - paragraph [ref=f3e143]: Built with for open source
+  - button "Scroll to top"

@@ -5,7 +5,7 @@ import {
 } from 'lucide-react';
 import { getSettings, saveSettings, clearSettings } from '@/lib/settings';
 import { updateConfig } from '@/lib/api';
-import { getBookmarks, clearBookmarks } from '@/lib/bookmarks';
+import { clearBookmarks } from '@/lib/bookmarks';
 import { useToast } from '@/components/ui/use-toast';
 
 export default function Settings() {
@@ -93,7 +93,7 @@ export default function Settings() {
               <span className="ml-auto text-[11px] font-medium text-text-muted bg-bg-subtle px-2 py-0.5 rounded-full">Not set</span>
             )}
           </div>
-          <div className="flex gap-2">
+          <form className="flex gap-2" onSubmit={(e) => { e.preventDefault(); handleSaveToken(); }}>
             <div className="relative flex-1">
               <input
                 type={showToken ? 'text' : 'password'}
@@ -106,18 +106,19 @@ export default function Settings() {
                 type="button"
                 onClick={() => setShowToken(!showToken)}
                 className="absolute right-2 top-1/2 -translate-y-1/2 text-text-muted hover:text-text"
+                aria-label={showToken ? 'Hide token' : 'Show token'}
               >
                 {showToken ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               </button>
             </div>
             <button
-              onClick={handleSaveToken}
+              type="submit"
               className="px-4 py-2 rounded-lg bg-accent text-accent-fg text-sm font-medium hover:opacity-90 flex items-center gap-1.5"
             >
               {savedFlag ? <Check className="w-4 h-4" /> : <Save className="w-4 h-4" />}
               {savedFlag ? 'Saved' : 'Save'}
             </button>
-          </div>
+          </form>
           <div className="flex items-center justify-between mt-2">
             <p className="text-xs text-text-muted">
               Create a free token at{' '}
@@ -150,7 +151,7 @@ export default function Settings() {
               <p className="text-xs text-text-muted">Number of repositories shown per page in search results.</p>
             </div>
             <select
-              value={settings.resultsPerPage}
+              value={settings.resultsPerPage || 12}
               onChange={(e) => handlePrefChange('resultsPerPage', parseInt(e.target.value))}
               className="px-3 py-1.5 rounded-lg border border-border bg-bg-card text-sm text-text focus:outline-none focus:border-accent"
             >
@@ -166,7 +167,7 @@ export default function Settings() {
               <p className="text-xs text-text-muted">How repositories are sorted by default on the home page.</p>
             </div>
             <select
-              value={settings.defaultSort}
+              value={settings.defaultSort || 'trending'}
               onChange={(e) => handlePrefChange('defaultSort', e.target.value)}
               className="px-3 py-1.5 rounded-lg border border-border bg-bg-card text-sm text-text focus:outline-none focus:border-accent"
             >
@@ -196,7 +197,7 @@ export default function Settings() {
               <p className="text-xs text-text-muted">Choose your preferred background animation.</p>
             </div>
             <select
-              value={settings.backgroundType}
+              value={settings.backgroundType || 'particles'}
               onChange={(e) => handlePrefChange('backgroundType', e.target.value)}
               className="px-3 py-1.5 rounded-lg border border-border bg-bg-card text-sm text-text focus:outline-none focus:border-accent"
             >
@@ -246,9 +247,11 @@ export default function Settings() {
           <Info className="w-4 h-4 text-text-secondary" />
           <h2 className="font-semibold text-text">About</h2>
         </div>
-        <p className="text-sm text-text-secondary leading-relaxed">
-          Openlysts is an open-source discovery engine for GitHub repositories. All settings are stored locally in your browser — no data is sent to any server except when you explicitly trigger an action (like running ingestion).
-        </p>
+        <div className="mt-12 text-center text-text-muted text-sm space-y-4 max-w-xl mx-auto border-t border-border pt-8">
+          <p>
+            Openlysts is an open-source discovery engine for GitHub repositories. All settings are stored locally in your browser — no data is sent to any server except when you explicitly trigger an action (like running ingestion).
+          </p>
+        </div>
       </section>
     </div>
   );

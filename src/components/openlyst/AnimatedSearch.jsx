@@ -25,12 +25,27 @@ export default function AnimatedSearch({ className = '', size = 'default' }) {
     ? SUGGESTIONS.filter((s) => s.toLowerCase().includes(lowerVal)).slice(0, 6)
     : [];
 
+  const inputRef = useRef(null);
+
   useEffect(() => {
     const onClick = (e) => {
       if (wrapRef.current && !wrapRef.current.contains(e.target)) setFocused(false);
     };
+    const onKeyDown = (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        // Prevent CommandPalette from opening
+        e.stopPropagation();
+        inputRef.current?.focus();
+        setFocused(true);
+      }
+    };
     document.addEventListener('mousedown', onClick);
-    return () => document.removeEventListener('mousedown', onClick);
+    window.addEventListener('keydown', onKeyDown, { capture: true });
+    return () => {
+      document.removeEventListener('mousedown', onClick);
+      window.removeEventListener('keydown', onKeyDown, { capture: true });
+    };
   }, []);
 
   const submit = (q) => {
@@ -77,6 +92,7 @@ export default function AnimatedSearch({ className = '', size = 'default' }) {
       >
         <Search className={`absolute ${size === 'lg' ? 'left-4 w-5 h-5' : 'left-3 w-4 h-4'} top-1/2 -translate-y-1/2 text-text-muted pointer-events-none`} />
         <input
+          ref={inputRef}
           type="text"
           value={value}
           onChange={(e) => { setValue(e.target.value); setActiveIdx(-1); }}
@@ -85,11 +101,16 @@ export default function AnimatedSearch({ className = '', size = 'default' }) {
           placeholder="Search open-source projects..."
           className={`w-full bg-bg-card border border-border focus:border-accent focus:outline-none transition-all ${
             size === 'lg' 
-              ? 'rounded-xl pl-12 pr-4 py-3.5 text-base shadow-md' 
-              : 'rounded-lg pl-9 pr-3 py-2 text-sm'
+              ? 'rounded-xl pl-12 pr-12 py-3.5 text-base shadow-md' 
+              : 'rounded-lg pl-9 pr-12 py-2 text-sm'
           } text-text placeholder:text-text-muted`}
           style={{ boxShadow: focused ? '0 0 0 3px hsl(var(--accent-soft))' : 'none' }}
         />
+        <div className={`absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none ${focused ? 'opacity-0' : 'opacity-100'} transition-opacity`}>
+          <kbd className="hidden sm:inline-flex items-center gap-1 font-mono text-[10px] bg-bg border border-border px-1.5 py-0.5 rounded text-text-muted font-medium">
+            <span className="text-xs">⌘</span>K
+          </kbd>
+        </div>
       </motion.div>
 
       <AnimatePresence>

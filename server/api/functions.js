@@ -3,7 +3,6 @@ import queryRepositories from '../functions/queryRepositories.js';
 import runIngestion from '../functions/runIngestion.js';
 import recalculateScores from '../functions/recalculateScores.js';
 import reclassifyRepos from '../functions/reclassifyRepos.js';
-import getMyTasks from '../functions/getMyTasks.js';
 import inviteUser from '../functions/inviteUser.js';
 import getRepoVideos from '../functions/getRepoVideos.js';
 import getRepoReadme from '../functions/getRepoReadme.js';
@@ -11,6 +10,7 @@ import getSimilarRepos from '../functions/getSimilarRepos.js';
 import getRepoHistory from '../functions/getRepoHistory.js';
 import translateText from '../functions/translateText.js';
 import updateConfig from '../functions/updateConfig.js';
+import queryAlternatives from '../functions/queryAlternatives.js';
 
 const router = express.Router();
 
@@ -19,14 +19,14 @@ const fns = {
   runIngestion,
   recalculateScores,
   reclassifyRepos,
-  getMyTasks,
   inviteUser,
   getRepoVideos,
   getRepoReadme,
   getSimilarRepos,
   getRepoHistory,
   translateText,
-  updateConfig
+  updateConfig,
+  queryAlternatives
 };
 
 router.post('/:name', async (req, res, next) => {

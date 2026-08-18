@@ -1,0 +1,63 @@
+- generic [ref=f26e4]:
+  - banner [ref=f26e5]:
+    - generic [ref=f26e7]:
+      - link "Openlysts Openlysts" [ref=f26e8] [cursor=pointer]:
+        - /url: /
+        - img "Openlysts" [ref=f26e10]
+        - generic [ref=f26e11]: Openlysts
+      - navigation [ref=f26e12]:
+        - link "Discover" [ref=f26e13] [cursor=pointer]:
+          - /url: /
+        - link "Alternatives" [ref=f26e14] [cursor=pointer]:
+          - /url: /alternatives
+        - link "Trending" [ref=f26e15] [cursor=pointer]:
+          - /url: /trending
+        - link "Bookmarks" [ref=f26e16] [cursor=pointer]:
+          - /url: /bookmarks
+        - link "About" [ref=f26e17] [cursor=pointer]:
+          - /url: /about
+        - link "Contact" [ref=f26e18] [cursor=pointer]:
+          - /url: /contact
+      - generic [ref=f26e23]:
+        - generic [ref=f26e24]: Search openlysts...
+        - generic [ref=f26e25]:
+          - generic [ref=f26e26]: ⌘
+          - text: K
+      - generic [ref=f26e27]:
+        - link "Bookmarks" [ref=f26e28] [cursor=pointer]:
+          - /url: /bookmarks
+        - link "Settings" [ref=f26e31] [cursor=pointer]:
+          - /url: /settings
+        - button "Switch to Mobile Layout" [ref=f26e35] [cursor=pointer]
+        - button "Toggle theme" [ref=f26e39] [cursor=pointer]
+  - main [ref=f26e42]:
+    - generic [ref=f26e43]:
+      - heading "Trending Repositories" [level=1] [ref=f26e44]
+      - paragraph [ref=f26e47]: Repositories gaining the most stars recently.
+      - generic [ref=f26e49]:
+        - generic [ref=f26e50]:
+          - generic [ref=f26e51]: "Sort:"
+          - combobox [ref=f26e52] [cursor=pointer]:
+            - option "Trending" [selected]
+            - option "Most Stars"
+            - option "Recently Updated"
+            - option "Recently Added"
+        - button "Categories" [ref=f26e54] [cursor=pointer]
+        - button "Filters 1" [ref=f26e57] [cursor=pointer]:
+          - text: Filters
+          - generic [ref=f26e59]: "1"
+        - button "Clear" [ref=f26e62] [cursor=pointer]
+  - contentinfo [ref=f26e116]:
+    - generic [ref=f26e118]:
+      - generic [ref=f26e119]:
+        - img "Openlysts" [ref=f26e120]
+        - generic [ref=f26e121]: Openlysts
+        - generic [ref=f26e122]: — Discover. Filter. Build.
+      - generic [ref=f26e123]:
+        - link "About" [ref=f26e124] [cursor=pointer]:
+          - /url: /about
+        - link "Contact" [ref=f26e125] [cursor=pointer]:
+          - /url: /contact
+        - link "Trending" [ref=f26e126] [cursor=pointer]:
+          - /url: /trending
+      - paragraph [ref=f26e127]: Built with for open source

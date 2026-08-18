@@ -1,7 +1,7 @@
 import { db } from '../db/index.js';
 import crypto from 'crypto';
 
-const JSON_FIELDS = ['topics', 'categories', 'settings', 'clarifying_questions'];
+const JSON_FIELDS = ['topics', 'categories', 'settings', 'clarifying_questions', 'pros_and_cons'];
 
 function parseRow(row) {
   if (!row) return row;
@@ -165,5 +165,6 @@ export const entities = {
   DiscoveryQuery: new EntityService('DiscoveryQuery'),
   Ping: new EntityService('Ping'),
   Update: new EntityService('Update'),
-  Invitation: new EntityService('Invitation')
+  Invitation: new EntityService('Invitation'),
+  Alternative: new EntityService('Alternative')
 };
