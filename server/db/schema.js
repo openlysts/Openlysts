@@ -115,6 +115,7 @@ export function initSchema(db) {
       id TEXT PRIMARY KEY,
       created_date TEXT,
       paid_tool_name TEXT,
+      free_tool_name TEXT,
       free_tool_repo TEXT,
       description TEXT,
       pros_and_cons TEXT,
@@ -126,6 +127,13 @@ export function initSchema(db) {
       category TEXT
     );
   `);
+
+  // Add free_tool_name column if it doesn't exist (migration-safe)
+  try {
+    db.exec(`ALTER TABLE Alternative ADD COLUMN free_tool_name TEXT`);
+  } catch (e) {
+    // Column already exists, ignore
+  }
 
   db.exec(`CREATE INDEX IF NOT EXISTS idx_repo_stars ON Repository(stars DESC);`);
   db.exec(`CREATE INDEX IF NOT EXISTS idx_repo_created ON Repository(created_date DESC);`);

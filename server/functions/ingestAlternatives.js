@@ -49,8 +49,23 @@ export async function ingestAlternatives() {
       // Check if exists
       const existing = db.prepare('SELECT id FROM Alternative WHERE paid_tool_name = ? AND free_tool_repo = ?').get(m.paid, m.repoFullName);
       if (!existing) {
-        db.prepare('INSERT INTO Alternative (id, created_date, paid_tool_name, free_tool_repo) VALUES (?, ?, ?, ?)').run(
-          crypto.randomUUID(), new Date().toISOString(), m.paid, m.repoFullName
+        // Derive a name from the repo or URL
+        let toolName = '';
+        if (m.repoFullName.startsWith('http')) {
+          try {
+            const url = new URL(m.repoFullName);
+            toolName = url.hostname.replace(/^www\./, '').split('.')[0];
+            toolName = toolName.charAt(0).toUpperCase() + toolName.slice(1);
+          } catch { toolName = m.repoFullName; }
+        } else {
+          toolName = m.repoFullName.split('/').pop() || m.repoFullName;
+          if (toolName === toolName.toLowerCase()) {
+            toolName = toolName.charAt(0).toUpperCase() + toolName.slice(1);
+          }
+        }
+        
+        db.prepare('INSERT INTO Alternative (id, created_date, paid_tool_name, free_tool_name, free_tool_repo) VALUES (?, ?, ?, ?, ?)').run(
+          crypto.randomUUID(), new Date().toISOString(), m.paid, toolName, m.repoFullName
         );
         addedCount++;
       }
