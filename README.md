@@ -1,7 +1,7 @@
 <div align="center">
   <img src="public/logo.png" alt="Openlysts Logo" width="120" height="120" />
   
-  # 🌐 Openlysts
+  # Openlysts
   
   **The Ultimate Open-Source Discovery Engine**
 
@@ -20,7 +20,7 @@
 ---
 
 <div align="center">
-  <img src="public/demo.gif" alt="Openlysts App Demo GIF" width="800" style="border-radius: 12px; box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);" />
+  <img src="public/banner.jpg" alt="Openlysts Banner" width="800" style="border-radius: 12px; box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);" />
 </div>
 
 ---
