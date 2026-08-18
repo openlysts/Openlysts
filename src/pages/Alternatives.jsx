@@ -91,16 +91,92 @@ export default function Alternatives() {
   }, []);
 
   // Debounce search
-  useMemo(() => {
+  useEffect(() => {
     const timeout = setTimeout(() => setDebouncedSearch(search), 300);
     return () => clearTimeout(timeout);
   }, [search]);
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ['alternatives', activeCategory, debouncedSearch, sortBy],
-    queryFn: () => fetchAlternatives(activeCategory, debouncedSearch, sortBy),
+    queryKey: ['alternatives', debouncedSearch, sortBy],
+    queryFn: () => fetchAlternatives('All', debouncedSearch, sortBy),
     staleTime: 5 * 60 * 1000,
   });
+
+  // Client-side category filter so sidebar clicks are instant
+  const filteredData = useMemo(() => {
+    if (!data) return null;
+    if (activeCategory === 'All') return data;
+
+    const filtered = data.alternatives.filter(a => a.category === activeCategory);
+    const grouped = {};
+    for (const alt of filtered) {
+      const cat = alt.category || 'Uncategorized';
+      if (!grouped[cat]) grouped[cat] = {};
+      const paid = alt.paid_tool_name || 'Unknown';
+      if (!grouped[cat][paid]) grouped[cat][paid] = [];
+      grouped[cat][paid].push(alt);
+    }
+    
+    // Helper to get the value to sort by
+    const getSortValue = (alt) => {
+      switch (sortBy) {
+        case 'score': return alt.openlysts_score || 0;
+        case 'stars': return alt.github_stars || 0;
+        case 'parity': return alt.feature_parity || 0;
+        case 'difficulty': return alt.migration_difficulty === 'Easy' ? 3 : alt.migration_difficulty === 'Medium' ? 2 : 1;
+        case 'name': return (alt.free_tool_name || alt.name || '').toLowerCase();
+        default: return alt.openlysts_score || 0;
+      }
+    };
+    
+    // name and difficulty sort ascending, others descending
+    const isAscending = sortBy === 'name' || sortBy === 'difficulty';
+    
+    const sortAlts = (alts) => {
+      return [...alts].sort((a, b) => {
+        const valA = getSortValue(a);
+        const valB = getSortValue(b);
+        if (typeof valA === 'string' && typeof valB === 'string') {
+          return valA.localeCompare(valB);
+        }
+        return isAscending ? valA - valB : valB - valA;
+      });
+    };
+
+    const groupedArray = Object.entries(grouped)
+      .map(([categoryName, paidGroups]) => {
+        const paidGroupsArray = Object.entries(paidGroups)
+          .map(([paidName, alts]) => {
+            const sortedAlts = sortAlts(alts);
+            return {
+              paid_tool_name: paidName,
+              alternatives: sortedAlts,
+              count: sortedAlts.length,
+              best_sort_value: getSortValue(sortedAlts[0])
+            };
+          })
+          .sort((a, b) => {
+             if (typeof a.best_sort_value === 'string' && typeof b.best_sort_value === 'string') {
+               return a.best_sort_value.localeCompare(b.best_sort_value);
+             }
+             return isAscending ? a.best_sort_value - b.best_sort_value : b.best_sort_value - a.best_sort_value;
+          });
+          
+        return {
+          category: categoryName,
+          paid_groups: paidGroupsArray,
+          total: paidGroupsArray.reduce((sum, g) => sum + g.count, 0)
+        };
+      })
+      .sort((a, b) => b.total - a.total);
+
+    return {
+      ...data,
+      alternatives: filtered,
+      grouped: groupedArray,
+      stats: { ...data.stats, total_tools: filtered.length }
+    };
+  }, [data, activeCategory, sortBy]);
 
   // Auto-expand all categories on load
   useEffect(() => {
