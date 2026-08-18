@@ -30,13 +30,17 @@ const SEED_QUERIES = [
 export async function githubFetch(url, token, retries = 3) {
   for (let attempt = 0; attempt < retries; attempt++) {
     try {
+      const headers = {
+        'Accept': 'application/vnd.github+json',
+        'X-GitHub-Api-Version': '2022-11-28',
+        'User-Agent': 'Openlyst-Discovery-Engine',
+      };
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
       const res = await fetch(url, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Accept': 'application/vnd.github+json',
-          'X-GitHub-Api-Version': '2022-11-28',
-          'User-Agent': 'Openlyst-Discovery-Engine',
-        },
+        headers,
         signal: AbortSignal.timeout(15000),
       });
       if (res.status === 403 || res.status === 429) {
@@ -150,7 +154,7 @@ export async function ingestRepoItem(item, categoryHint = '') {
 export async function executeIngestion() {
   try {
     if (!process.env.GITHUB_TOKEN) {
-      throw new Error('GITHUB_TOKEN is not set');
+      console.warn('[INGESTION] WARNING: GITHUB_TOKEN is not set. Requests will be unauthenticated and severely rate-limited (60 req/hr).');
     }
 
     const startedAt = new Date().toISOString();

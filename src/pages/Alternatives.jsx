@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
-import RepoCard from '@/components/openlyst/RepoCard';
+import RepositoryCard from '@/components/openlyst/RepositoryCard';
 import { Loader2 } from 'lucide-react';
 
 async function fetchAlternatives() {
@@ -63,7 +63,7 @@ export default function Alternatives() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {alt.repos.map(repo => (
-                  <RepoCard key={repo.id} repo={repo} />
+                  <RepositoryCard key={repo.id} repo={repo} />
                 ))}
               </div>
             </motion.div>
