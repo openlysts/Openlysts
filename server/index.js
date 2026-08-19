@@ -27,10 +27,13 @@ app.use((req, res, next) => {
   next();
 });
 
+import { initSchema } from './db/schema.js';
+
 app.get('/api/health', async (req, res) => {
   try {
+    await initSchema(db);
     await db.query('SELECT 1');
-    res.json({ status: 'ok', database: 'connected' });
+    res.json({ status: 'ok', database: 'connected and schema initialized' });
   } catch (error) {
     res.status(500).json({ status: 'error', database: 'disconnected', error: error.message });
   }
