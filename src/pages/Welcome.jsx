@@ -112,10 +112,11 @@ export default function Welcome() {
               intensity={1.55}
               thickness={1.8}
               proximity={400}
-              className="mt-8"
+              className="mt-8 group relative"
             >
-              <span className="flex items-center gap-2">
-                Enter App <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <div className="absolute inset-0 bg-accent/20 rounded-[49px] blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <span className="relative z-10 flex items-center gap-2">
+                Discover Open Source <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </span>
             </SpecularButton>
           </>

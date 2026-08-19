@@ -25,7 +25,7 @@ function ScoreRing({ score, size = 44, strokeWidth = 3.5 }) {
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (score / 100) * circumference;
   
-  const color = score >= 80 ? '#22c55e' : score >= 60 ? '#f59e0b' : score >= 40 ? '#f97316' : '#ef4444';
+  const color = score >= 80 ? 'var(--accent)' : score >= 60 ? '#eab308' : score >= 40 ? '#f97316' : '#ef4444';
   
   return (
     <div className="relative flex items-center justify-center" style={{ width: size, height: size }}>
@@ -238,7 +238,7 @@ export default function Alternatives() {
         selectedForCompare.find(s => s.id === alt.id) 
           ? 'border-accent ring-1 ring-accent/50' 
           : 'border-border hover:border-accent/40'
-      } rounded-xl cursor-pointer hover:shadow-lg hover:shadow-accent/5 transition-all duration-200 ${
+      } rounded-xl cursor-pointer hover:-translate-y-1 hover:shadow-2xl hover:shadow-accent/10 transition-all duration-300 ${
         viewMode === 'list' ? 'flex items-center gap-4 p-3' : 'flex flex-col p-4'
       }`}
     >
@@ -348,15 +348,15 @@ export default function Alternatives() {
           {/* Stats Pills */}
           {data?.stats && (
             <div className="flex items-center gap-3 flex-shrink-0">
-              <div className="bg-bg-card border border-border rounded-xl px-4 py-2 text-center">
+              <div className="bg-bg-card/50 backdrop-blur-md border border-white/5 rounded-xl px-4 py-2 text-center shadow-sm">
                 <div className="text-xl font-black text-accent">{data.stats.total_tools}</div>
                 <div className="text-[10px] text-text-muted uppercase tracking-wider">Tools</div>
               </div>
-              <div className="bg-bg-card border border-border rounded-xl px-4 py-2 text-center">
+              <div className="bg-bg-card/50 backdrop-blur-md border border-white/5 rounded-xl px-4 py-2 text-center shadow-sm">
                 <div className="text-xl font-black text-text">{data.stats.total_categories}</div>
                 <div className="text-[10px] text-text-muted uppercase tracking-wider">Categories</div>
               </div>
-              <div className="bg-bg-card border border-border rounded-xl px-4 py-2 text-center">
+              <div className="bg-bg-card/50 backdrop-blur-md border border-white/5 rounded-xl px-4 py-2 text-center shadow-sm">
                 <div className="text-xl font-black text-amber-400">{data.stats.avg_score}</div>
                 <div className="text-[10px] text-text-muted uppercase tracking-wider">Avg Score</div>
               </div>

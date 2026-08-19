@@ -84,7 +84,7 @@ export default function RepositoryCard({ repo, index = 0 }) {
 
           {/* Trending badge */}
           {isTrending &&
-          <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-medium bg-trending-soft text-trending mb-2 w-fit">
+          <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-trending/30 bg-trending/10 text-trending backdrop-blur-md mb-2 w-fit shadow-sm">
               <Flame className="w-3 h-3" />
               Trending
             </div>
@@ -112,7 +112,7 @@ export default function RepositoryCard({ repo, index = 0 }) {
                   e.stopPropagation();
                   navigate(`/search?difficulties=${repo.difficulty}`);
                 }}
-                className={`px-2 py-0.5 rounded text-[11px] font-semibold uppercase tracking-wider bg-bg-card border hover:opacity-80 transition-opacity ${getDifficultyColor(repo.difficulty)}`}
+                className={`px-2 py-0.5 rounded-full text-[11px] font-semibold uppercase tracking-wider backdrop-blur-md border hover:opacity-80 transition-opacity shadow-sm ${getDifficultyColor(repo.difficulty)}`}
               >
                 {repo.difficulty}
               </span>
@@ -126,7 +126,7 @@ export default function RepositoryCard({ repo, index = 0 }) {
                     e.stopPropagation();
                     navigate(`/search?categories=${slug}`);
                   }}
-                  className="px-2 py-0.5 rounded text-[11px] font-semibold bg-bg-subtle text-text-secondary border border-border hover:bg-bg-hover transition-colors"
+                  className="px-2 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-border/50 bg-bg-subtle/50 text-text-secondary backdrop-blur-md hover:bg-bg-hover transition-colors shadow-sm"
                 >
                   {cat}
                 </span>
@@ -136,9 +136,9 @@ export default function RepositoryCard({ repo, index = 0 }) {
 
           {/* Topics */}
           {(repo.topics || []).length > 0 &&
-          <div className="flex flex-wrap gap-1 mb-3">
+          <div className="flex flex-wrap gap-1.5 mb-3">
               {(repo.topics || []).slice(0, 3).map((t) =>
-            <span key={t} className="px-1.5 py-0.5 rounded text-[11px] bg-bg-subtle text-text-muted font-mono">
+            <span key={t} className="px-2 py-0.5 rounded-full text-[10px] font-medium tracking-wide border border-border/30 bg-bg-card/50 text-text-muted backdrop-blur-md shadow-sm">
                   {t}
                 </span>
             )}

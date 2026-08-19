@@ -29,12 +29,10 @@ export default function OpenlystLayout() {
   };
   
   return (
-    <div className="min-h-screen flex flex-col theme-transition">
-      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-accent focus:text-accent-fg focus:rounded-lg font-medium">
-        Skip to main content
-      </a>
-      
+    <div className="min-h-screen flex flex-col theme-transition relative">
       <ThreeBackground />
+      {/* Premium radial glow background */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-accent/15 via-bg to-bg pointer-events-none z-0" />
       <div className="relative z-10 flex flex-col flex-1">
         <Header />
         <main id="main-content" role="main" className={`flex-1 transition-all duration-300 ease-in-out ${isMobileLayout ? 'max-w-md w-full mx-auto shadow-2xl border-x border-border bg-bg/50' : ''}`}>

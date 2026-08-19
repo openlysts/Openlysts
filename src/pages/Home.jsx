@@ -85,7 +85,7 @@ export default function Home() {
             <Sparkles className="w-3 h-3" />
             Discover. Filter. Build.
           </div>
-          <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-text leading-tight mb-4 [font-family:'Bungee',_system-ui]">
+          <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-text leading-tight mb-4">
             Discover everything on GitHub.
           </h1>
           <p className="text-text-secondary text-base sm:text-lg leading-relaxed mb-8 max-w-2xl mx-auto">

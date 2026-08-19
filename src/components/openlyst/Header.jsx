@@ -32,7 +32,7 @@ export default function Header() {
   }, [location.pathname]);
 
   return (
-    <header role="banner" className="sticky top-0 z-40 backdrop-blur-xl bg-bg/80 border-b border-border">
+    <header role="banner" className="sticky top-0 z-40 backdrop-blur-2xl bg-bg/60 border-b border-white/5 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-16 gap-4">
           {/* Logo */}
@@ -51,10 +51,12 @@ export default function Header() {
                 <Link
                   key={item.to}
                   to={item.to}
-                  className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-                  active ? 'text-accent bg-accent-soft' : 'text-text-secondary hover:text-text hover:bg-bg-hover'}`
+                  className={`relative px-3 py-1.5 text-sm font-medium transition-all duration-300 ${
+                  active ? 'text-text' : 'text-text-secondary hover:text-text'}`
                   }>
-                  
+                  {active && (
+                    <span className="absolute bottom-0 left-3 right-3 h-0.5 bg-accent rounded-t-full shadow-[0_-2px_10px_rgba(var(--accent-rgb),0.5)]" />
+                  )}
                   {item.label}
                 </Link>);
 
