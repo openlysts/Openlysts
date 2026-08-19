@@ -1,6 +1,6 @@
 export async function initSchema(db) {
   const createQueries = [
-    `CREATE TABLE IF NOT EXISTS DiscoveryQuery (
+    `CREATE TABLE IF NOT EXISTS "DiscoveryQuery" (
       id TEXT PRIMARY KEY,
       created_date TEXT,
       query_string TEXT,
@@ -9,7 +9,7 @@ export async function initSchema(db) {
       last_run_at TEXT,
       description TEXT
     );`,
-    `CREATE TABLE IF NOT EXISTS IngestionRun (
+    `CREATE TABLE IF NOT EXISTS "IngestionRun" (
       id TEXT PRIMARY KEY,
       created_date TEXT,
       started_at TEXT,
@@ -22,7 +22,7 @@ export async function initSchema(db) {
       query_used TEXT,
       description TEXT
     );`,
-    `CREATE TABLE IF NOT EXISTS MetricSnapshot (
+    `CREATE TABLE IF NOT EXISTS "MetricSnapshot" (
       id TEXT PRIMARY KEY,
       created_date TEXT,
       repository_id TEXT,
@@ -32,7 +32,7 @@ export async function initSchema(db) {
       snapshot_date TEXT,
       description TEXT
     );`,
-    `CREATE TABLE IF NOT EXISTS Repository (
+    `CREATE TABLE IF NOT EXISTS "Repository" (
       id TEXT PRIMARY KEY,
       created_date TEXT,
       github_id INTEGER,
@@ -67,7 +67,7 @@ export async function initSchema(db) {
       stars_gained_30d INTEGER,
       difficulty TEXT
     );`,
-    `CREATE TABLE IF NOT EXISTS Invitation (
+    `CREATE TABLE IF NOT EXISTS "Invitation" (
       id TEXT PRIMARY KEY,
       created_date TEXT,
       email TEXT,
@@ -85,7 +85,7 @@ export async function initSchema(db) {
       onboarded INTEGER,
       settings TEXT
     );`,
-    `CREATE TABLE IF NOT EXISTS Alternative (
+    `CREATE TABLE IF NOT EXISTS "Alternative" (
       id TEXT PRIMARY KEY,
       created_date TEXT,
       paid_tool_name TEXT,
@@ -113,17 +113,17 @@ export async function initSchema(db) {
   }
 
   try {
-    await db.query(`ALTER TABLE Alternative ADD COLUMN free_tool_name TEXT`);
+    await db.query(`ALTER TABLE "Alternative" ADD COLUMN free_tool_name TEXT`);
   } catch (e) {
     // Column already exists, ignore
   }
 
   const indexQueries = [
-    `CREATE INDEX IF NOT EXISTS idx_repo_stars ON Repository(stars DESC);`,
-    `CREATE INDEX IF NOT EXISTS idx_repo_created ON Repository(created_date DESC);`,
-    `CREATE INDEX IF NOT EXISTS idx_repo_trending ON Repository(trending_score DESC);`,
-    `CREATE INDEX IF NOT EXISTS idx_repo_full_name ON Repository(full_name);`,
-    `CREATE INDEX IF NOT EXISTS idx_ingestion_run_started ON IngestionRun(started_at DESC);`
+    `CREATE INDEX IF NOT EXISTS idx_repo_stars ON "Repository"(stars DESC);`,
+    `CREATE INDEX IF NOT EXISTS idx_repo_created ON "Repository"(created_date DESC);`,
+    `CREATE INDEX IF NOT EXISTS idx_repo_trending ON "Repository"(trending_score DESC);`,
+    `CREATE INDEX IF NOT EXISTS idx_repo_full_name ON "Repository"(full_name);`,
+    `CREATE INDEX IF NOT EXISTS idx_ingestion_run_started ON "IngestionRun"(started_at DESC);`
   ];
 
   for (const q of indexQueries) {
