@@ -66,20 +66,7 @@ export async function githubFetch(url, token, retries = 3) {
   throw new Error('GitHub API request failed after retries');
 }
 
-export async function ingestRepoItem(item, categoryHint = '') {
-  const existingRepos = await entities.Repository.list('-created_date', 5000);
-  const repoMap = new Map();
-  for (const r of existingRepos) {
-    if (r.github_id) repoMap.set(String(r.github_id), r);
-  }
-
-  const existingSnapshots = await entities.MetricSnapshot.list('-snapshot_date', 15000);
-  const snapshotMap = new Map();
-  for (const s of existingSnapshots) {
-    if (!snapshotMap.has(s.repository_id)) snapshotMap.set(s.repository_id, []);
-    snapshotMap.get(s.repository_id).push(s);
-  }
-
+export async function ingestRepoItem(item, categoryHint = '', repoMap = new Map(), snapshotMap = new Map()) {
   const licenseInfo = verifyLicense(item.license);
   const repoData = {
     github_id: item.id,
@@ -201,7 +188,7 @@ export async function executeIngestion() {
 
         for (const item of data.items) {
           try {
-            await ingestRepoItem(item, dq.category_hint);
+            await ingestRepoItem(item, dq.category_hint, repoMap, snapshotMap);
             reposProcessed++;
             // We do not have granular reposAdded vs reposUpdated in this simplified loop
           } catch (repoErr) {
