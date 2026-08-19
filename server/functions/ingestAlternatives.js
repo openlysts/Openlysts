@@ -17,16 +17,16 @@ export async function ingestAlternatives() {
 
     for (let line of lines) {
       line = line.trim();
-      if (line.startsWith('## ')) {
-        // e.g. "## 🤖 Artificial Intelligence" -> remove emojis if any, or just take as is
-        currentCategory = line.replace('## ', '').trim();
-      } else if (line.startsWith('### ')) {
+      if (line.startsWith('### ')) {
         const header = line.replace('### ', '').trim();
-        const altMatch = header.match(/\((.*?)\s+alternatives?\)/i);
+        // e.g. "Artificial intelligence chatbot/ LLM (ChatGPT alternatives):"
+        const altMatch = header.match(/(.*?)\s*\((.*?)\s+alternatives?\)/i);
         if (altMatch) {
-          currentPaid = altMatch[1].trim();
+          currentCategory = altMatch[1].trim();
+          currentPaid = altMatch[2].trim();
         } else {
           currentPaid = header.split(' alternatives')[0].replace(':', '').trim();
+          currentCategory = currentPaid; // fallback
         }
       } else if (currentPaid && line.includes('|') && !line.includes('Company|') && !line.includes(':---')) {
         // Look for GitHub link
