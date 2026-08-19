@@ -31,9 +31,9 @@ import { initSchema } from './db/schema.js';
 
 app.get('/api/health', async (req, res) => {
   try {
-    await initSchema(db);
+    const schemaErrors = await initSchema(db);
     await db.query('SELECT 1');
-    res.json({ status: 'ok', database: 'connected and schema initialized' });
+    res.json({ status: 'ok', database: 'connected and schema initialized', schemaErrors });
   } catch (error) {
     res.status(500).json({ status: 'error', database: 'disconnected', error: error.message });
   }

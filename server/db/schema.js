@@ -102,10 +102,12 @@ export async function initSchema(db) {
     );`
   ];
 
+  const errors = [];
   for (const q of createQueries) {
     try {
       await db.query(q);
     } catch (e) {
+      errors.push({ query: q.substring(0, 50), error: e.message });
       console.error('[DB] Failed to execute schema query:', e.message);
     }
   }
@@ -128,7 +130,10 @@ export async function initSchema(db) {
     try {
       await db.query(q);
     } catch (e) {
+      errors.push({ query: q.substring(0, 50), error: e.message });
       console.error('[DB] Failed to create index:', e.message);
     }
   }
+  
+  return errors;
 }
