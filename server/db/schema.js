@@ -1,7 +1,5 @@
-export function initSchema(db) {
-
-
-  db.exec(`
+export async function initSchema(db) {
+  await db.query(`
     CREATE TABLE IF NOT EXISTS DiscoveryQuery (
       id TEXT PRIMARY KEY,
       created_date TEXT,
@@ -13,9 +11,7 @@ export function initSchema(db) {
     );
   `);
 
-
-
-  db.exec(`
+  await db.query(`
     CREATE TABLE IF NOT EXISTS IngestionRun (
       id TEXT PRIMARY KEY,
       created_date TEXT,
@@ -31,7 +27,7 @@ export function initSchema(db) {
     );
   `);
 
-  db.exec(`
+  await db.query(`
     CREATE TABLE IF NOT EXISTS MetricSnapshot (
       id TEXT PRIMARY KEY,
       created_date TEXT,
@@ -44,9 +40,7 @@ export function initSchema(db) {
     );
   `);
 
-
-
-  db.exec(`
+  await db.query(`
     CREATE TABLE IF NOT EXISTS Repository (
       id TEXT PRIMARY KEY,
       created_date TEXT,
@@ -84,9 +78,7 @@ export function initSchema(db) {
     );
   `);
 
-
-
-  db.exec(`
+  await db.query(`
     CREATE TABLE IF NOT EXISTS Invitation (
       id TEXT PRIMARY KEY,
       created_date TEXT,
@@ -97,7 +89,7 @@ export function initSchema(db) {
     );
   `);
 
-  db.exec(`
+  await db.query(`
     CREATE TABLE IF NOT EXISTS "User" (
       id TEXT PRIMARY KEY,
       created_date TEXT,
@@ -110,7 +102,7 @@ export function initSchema(db) {
     );
   `);
 
-  db.exec(`
+  await db.query(`
     CREATE TABLE IF NOT EXISTS Alternative (
       id TEXT PRIMARY KEY,
       created_date TEXT,
@@ -128,17 +120,16 @@ export function initSchema(db) {
     );
   `);
 
-  // Add free_tool_name column if it doesn't exist (migration-safe)
   try {
-    db.exec(`ALTER TABLE Alternative ADD COLUMN free_tool_name TEXT`);
+    await db.query(`ALTER TABLE Alternative ADD COLUMN free_tool_name TEXT`);
   } catch (e) {
     // Column already exists, ignore
   }
 
-  db.exec(`CREATE INDEX IF NOT EXISTS idx_repo_stars ON Repository(stars DESC);`);
-  db.exec(`CREATE INDEX IF NOT EXISTS idx_repo_created ON Repository(created_date DESC);`);
-  db.exec(`CREATE INDEX IF NOT EXISTS idx_repo_trending ON Repository(trending_score DESC);`);
-  db.exec(`CREATE INDEX IF NOT EXISTS idx_repo_full_name ON Repository(full_name);`);
+  await db.query(`CREATE INDEX IF NOT EXISTS idx_repo_stars ON Repository(stars DESC);`);
+  await db.query(`CREATE INDEX IF NOT EXISTS idx_repo_created ON Repository(created_date DESC);`);
+  await db.query(`CREATE INDEX IF NOT EXISTS idx_repo_trending ON Repository(trending_score DESC);`);
+  await db.query(`CREATE INDEX IF NOT EXISTS idx_repo_full_name ON Repository(full_name);`);
 
-  db.exec(`CREATE INDEX IF NOT EXISTS idx_ingestion_run_started ON IngestionRun(started_at DESC);`);
+  await db.query(`CREATE INDEX IF NOT EXISTS idx_ingestion_run_started ON IngestionRun(started_at DESC);`);
 }

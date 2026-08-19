@@ -1,43 +1,31 @@
-import Database from 'better-sqlite3';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import { db } from '../db/index.js';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const dbPath = path.join(__dirname, '..', '..', 'data', 'openlyst.db');
-
-export async function cleanupUnusedSpace() {
-    console.log(`Connecting to DB at: ${dbPath}`);
-    const db = new Database(dbPath);
+async function cleanupDb() {
+  console.log('[Cleanup] Starting database cleanup...');
+  try {
+    const { rows: tables } = await db.query(`
+      SELECT tablename 
+      FROM pg_catalog.pg_tables 
+      WHERE schemaname != 'pg_catalog' AND schemaname != 'information_schema'
+    `);
     
-    const requiredTables = [
-        'Repository', 'Alternative', 'IngestionRun', 
-        'MetricSnapshot', 'User', 'Invitation', 'DiscoveryQuery'
-    ];
-    
-    const allTables = db.prepare(`SELECT name FROM sqlite_master WHERE type='table'`).all();
-    
-    let droppedCount = 0;
-    
-    for (const table of allTables) {
-        if (!requiredTables.includes(table.name) && table.name !== 'sqlite_sequence') {
-            console.log(`Dropping legacy unused table to save space: ${table.name}`);
-            db.exec(`DROP TABLE IF EXISTS "${table.name}"`);
-            droppedCount++;
-        }
-    }
-    
-    if (droppedCount > 0) {
-        console.log('Running VACUUM to reclaim disk space...');
-        db.exec('VACUUM;');
-        console.log('VACUUM complete. Wasted space reclaimed.');
+    if (tables.length === 0) {
+      console.log('[Cleanup] No tables found to drop.');
     } else {
-        console.log('No unused tables found. DB is clean.');
+      for (const table of tables) {
+        if (table.tablename !== 'sqlite_sequence') {
+          console.log(`[Cleanup] Dropping table ${table.tablename}...`);
+          await db.query(`DROP TABLE IF EXISTS "${table.tablename}" CASCADE`);
+        }
+      }
     }
     
-    db.close();
+    console.log('[Cleanup] Database completely reset. Restart your server to auto-recreate tables.');
+  } catch (error) {
+    console.error('[Cleanup] Error:', error);
+  } finally {
+    process.exit(0);
+  }
 }
 
-// Run if executed directly
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
-    cleanupUnusedSpace().catch(console.error);
-}
+cleanupDb();

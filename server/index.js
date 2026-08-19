@@ -27,9 +27,9 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/api/health', (req, res) => {
+app.get('/api/health', async (req, res) => {
   try {
-    db.prepare('SELECT 1').get();
+    await db.query('SELECT 1');
     res.json({ status: 'ok', database: 'connected' });
   } catch (error) {
     res.status(500).json({ status: 'error', database: 'disconnected', error: error.message });
@@ -58,33 +58,37 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`Express server running on http://localhost:${PORT}`);
-  
-  // Auto-Ingestion Loop (Every 10 minutes)
-  const TEN_MINUTES = 10 * 60 * 1000;
-  setInterval(async () => {
-    try {
-      console.log('[AUTO-INGESTION] Triggering scheduled ingestion...');
-      await executeIngestion();
-    } catch (err) {
-      console.error('[AUTO-INGESTION] Failed:', err.message);
-    }
-  }, TEN_MINUTES);
+export default app;
 
-  // Run it once on startup immediately
-  setTimeout(() => executeIngestion().catch(console.error), 2000);
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`Express server running on http://localhost:${PORT}`);
+    
+    // Auto-Ingestion Loop (Every 10 minutes)
+    const TEN_MINUTES = 10 * 60 * 1000;
+    setInterval(async () => {
+      try {
+        console.log('[AUTO-INGESTION] Triggering scheduled ingestion...');
+        await executeIngestion();
+      } catch (err) {
+        console.error('[AUTO-INGESTION] Failed:', err.message);
+      }
+    }, TEN_MINUTES);
 
-  // Auto-Ingest Alternatives (Every 6 hours)
-  const SIX_HOURS = 6 * 60 * 60 * 1000;
-  setInterval(async () => {
-    try {
-      await ingestAlternatives();
-    } catch (err) {
-      console.error('[AUTO-INGESTION] Alternatives failed:', err.message);
-    }
-  }, SIX_HOURS);
-  
-  // Run once on startup
-  setTimeout(() => ingestAlternatives().catch(console.error), 5000);
-});
+    // Run it once on startup immediately
+    setTimeout(() => executeIngestion().catch(console.error), 2000);
+
+    // Auto-Ingest Alternatives (Every 6 hours)
+    const SIX_HOURS = 6 * 60 * 60 * 1000;
+    setInterval(async () => {
+      try {
+        await ingestAlternatives();
+      } catch (err) {
+        console.error('[AUTO-INGESTION] Alternatives failed:', err.message);
+      }
+    }, SIX_HOURS);
+    
+    // Run once on startup
+    setTimeout(() => ingestAlternatives().catch(console.error), 5000);
+  });
+}

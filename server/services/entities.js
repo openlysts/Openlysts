@@ -54,8 +54,8 @@ export class EntityService {
     }
     let limitClause = '';
     if (limit) limitClause = `LIMIT ${parseInt(limit, 10)}`;
-    const stmt = db.prepare(`SELECT * FROM "${this.entity}" ${orderClause} ${limitClause}`);
-    return stmt.all().map(parseRow);
+    const { rows } = await db.query(`SELECT * FROM "${this.entity}" ${orderClause} ${limitClause}`);
+    return rows.map(parseRow);
   }
 
   async filter(where = {}, sort = null, limit = null) {
@@ -64,8 +64,8 @@ export class EntityService {
     if (where && Object.keys(where).length > 0) {
       const conditions = [];
       for (const [key, val] of Object.entries(where)) {
-        conditions.push(`"${key}" = ?`);
         params.push(val);
+        conditions.push(`"${key}" = $${params.length}`);
       }
       whereClause = `WHERE ` + conditions.join(' AND ');
     }
@@ -77,8 +77,8 @@ export class EntityService {
     }
     let limitClause = '';
     if (limit) limitClause = `LIMIT ${parseInt(limit, 10)}`;
-    const stmt = db.prepare(`SELECT * FROM "${this.entity}" ${whereClause} ${orderClause} ${limitClause}`);
-    return stmt.all(...params).map(parseRow);
+    const { rows } = await db.query(`SELECT * FROM "${this.entity}" ${whereClause} ${orderClause} ${limitClause}`, params);
+    return rows.map(parseRow);
   }
 
   async create(data) {
@@ -89,11 +89,10 @@ export class EntityService {
     
     const keys = Object.keys(payload);
     const cols = keys.map(k => `"${k}"`).join(', ');
-    const placeholders = keys.map(() => '?').join(', ');
+    const placeholders = keys.map((_, i) => `$${i + 1}`).join(', ');
     const values = keys.map(k => payload[k]);
     
-    const stmt = db.prepare(`INSERT INTO "${this.entity}" (${cols}) VALUES (${placeholders})`);
-    stmt.run(...values);
+    await db.query(`INSERT INTO "${this.entity}" (${cols}) VALUES (${placeholders})`, values);
     return parseRow(payload);
   }
 
@@ -101,16 +100,16 @@ export class EntityService {
     const payload = stringifyData(data);
     const keys = Object.keys(payload);
     if (keys.length === 0) return this.filter({ id }).then(res => res[0]);
-    const setClause = keys.map(k => `"${k}" = ?`).join(', ');
     const values = keys.map(k => payload[k]);
+    const setClause = keys.map((k, i) => `"${k}" = $${i + 1}`).join(', ');
+    values.push(id);
     
-    const stmt = db.prepare(`UPDATE "${this.entity}" SET ${setClause} WHERE id = ?`);
-    stmt.run(...values, id);
+    await db.query(`UPDATE "${this.entity}" SET ${setClause} WHERE id = $${values.length}`, values);
     return this.filter({ id }).then(res => res[0]);
   }
 
   async delete(id) {
-    db.prepare(`DELETE FROM "${this.entity}" WHERE id = ?`).run(id);
+    await db.query(`DELETE FROM "${this.entity}" WHERE id = $1`, [id]);
     return { success: true };
   }
 
@@ -118,11 +117,15 @@ export class EntityService {
     const conditions = [];
     const params = [];
     for (const [key, val] of Object.entries(where)) {
-      conditions.push(`"${key}" = ?`);
       params.push(val);
+      conditions.push(`"${key}" = $${params.length}`);
     }
     const whereClause = conditions.length > 0 ? `WHERE ` + conditions.join(' AND ') : '';
-    db.prepare(`DELETE FROM "${this.entity}" ${whereClause}`).run(...params);
+    if (whereClause) {
+      await db.query(`DELETE FROM "${this.entity}" ${whereClause}`, params);
+    } else {
+      await db.query(`DELETE FROM "${this.entity}"`);
+    }
     return { success: true };
   }
 
@@ -136,19 +139,25 @@ export class EntityService {
     
     if (payloadArray.length === 0) return [];
     
-    const keys = Object.keys(payloadArray[0]);
-    const cols = keys.map(k => `"${k}"`).join(', ');
-    const placeholders = keys.map(() => '?').join(', ');
-    const insertStmt = db.prepare(`INSERT INTO "${this.entity}" (${cols}) VALUES (${placeholders})`);
-    
-    const insertMany = db.transaction((items) => {
-      for (const item of items) {
+    const client = await db.connect();
+    try {
+      await client.query('BEGIN');
+      const keys = Object.keys(payloadArray[0]);
+      const cols = keys.map(k => `"${k}"`).join(', ');
+      const placeholders = keys.map((_, i) => `$${i + 1}`).join(', ');
+      const queryStr = `INSERT INTO "${this.entity}" (${cols}) VALUES (${placeholders})`;
+
+      for (const item of payloadArray) {
         const values = keys.map(k => item[k]);
-        insertStmt.run(...values);
+        await client.query(queryStr, values);
       }
-    });
-    
-    insertMany(payloadArray);
+      await client.query('COMMIT');
+    } catch (e) {
+      await client.query('ROLLBACK');
+      throw e;
+    } finally {
+      client.release();
+    }
     return payloadArray.map(parseRow);
   }
 }

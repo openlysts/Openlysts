@@ -1,25 +1,16 @@
-import Database from 'better-sqlite3';
-import path from 'path';
-import fs from 'fs';
-import { fileURLToPath } from 'url';
+import pg from 'pg';
 import { initSchema } from './schema.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const { Pool } = pg;
 
-const dataDir = path.join(__dirname, '../../data');
-if (!fs.existsSync(dataDir)) {
-  fs.mkdirSync(dataDir, { recursive: true });
-}
+const db = new Pool({
+  connectionString: process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/openlyst',
+});
 
-const dbPath = path.join(dataDir, 'openlyst.db');
-const db = new Database(dbPath);
-
-db.pragma('journal_mode = WAL');
-
-// Initialize tables if they don't exist
-initSchema(db);
-
-console.log('[DB] connected to SQLite');
+initSchema(db).then(() => {
+  console.log('[DB] connected to PostgreSQL & schema initialized');
+}).catch(err => {
+  console.error('[DB] Schema init failed:', err);
+});
 
 export { db };

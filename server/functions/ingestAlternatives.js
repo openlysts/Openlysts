@@ -1,4 +1,3 @@
-
 import { db } from '../db/index.js';
 import crypto from 'crypto';
 
@@ -47,7 +46,8 @@ export async function ingestAlternatives() {
     
     for (const m of mappings) {
       // Check if exists
-      const existing = db.prepare('SELECT id FROM Alternative WHERE paid_tool_name = ? AND free_tool_repo = ?').get(m.paid, m.repoFullName);
+      const { rows } = await db.query('SELECT id FROM Alternative WHERE paid_tool_name = $1 AND free_tool_repo = $2', [m.paid, m.repoFullName]);
+      const existing = rows[0];
       if (!existing) {
         // Derive a name from the repo or URL
         let toolName = '';
@@ -64,9 +64,9 @@ export async function ingestAlternatives() {
           }
         }
         
-        db.prepare('INSERT INTO Alternative (id, created_date, paid_tool_name, free_tool_name, free_tool_repo) VALUES (?, ?, ?, ?, ?)').run(
+        await db.query('INSERT INTO Alternative (id, created_date, paid_tool_name, free_tool_name, free_tool_repo) VALUES ($1, $2, $3, $4, $5)', [
           crypto.randomUUID(), new Date().toISOString(), m.paid, toolName, m.repoFullName
-        );
+        ]);
         addedCount++;
       }
     }
