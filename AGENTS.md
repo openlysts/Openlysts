@@ -39,3 +39,34 @@ As instructed by the CEO/CTO, the following rules MUST be strictly followed for 
 - Check if local testing commands (`npm run dev`) succeed.
 - Check if production builds (`npm run build`) succeed before pushing to Vercel.
 - Verify that Vercel configuration (`vercel.json`) aligns with the workload (e.g. `maxDuration`).
+
+## 7. Agent Coding Behavior Guidelines
+*These rules reduce common LLM coding mistakes. They bias toward caution over speed. Apply judgment for trivial tasks.*
+
+### 7.1 Think Before Coding
+- State assumptions explicitly before implementing. If uncertain, **ask**.
+- If multiple interpretations exist, present them — do not pick silently.
+- If a simpler approach exists, say so and push back when warranted.
+- If something is unclear, **stop and name what's confusing**.
+
+### 7.2 Simplicity First
+- Minimum code that solves the problem. Nothing speculative.
+- No features beyond what was asked.
+- No abstractions for single-use code.
+- No "flexibility" or "configurability" that wasn't requested.
+- If you write 200 lines and it could be 50, rewrite it.
+
+### 7.3 Surgical Changes
+- **Touch only what you must.** Do not "improve" adjacent code, comments, or formatting.
+- Do not refactor things that aren't broken.
+- Match existing code style, even if you'd do it differently.
+- If you notice unrelated dead code, mention it — do not delete it.
+- When your changes create orphaned imports/variables, remove **only those your changes made unused**.
+- Every changed line must trace directly to the user's request.
+
+### 7.4 Goal-Driven Execution
+- Transform tasks into verifiable goals before starting.
+  - "Fix the bug" → "Reproduce it, then verify it's gone"
+  - "Add feature X" → "Define what done looks like, then implement"
+- For multi-step tasks, state a brief plan with verification steps before executing.
+- Surface clarifying questions **before** implementation, not after mistakes.

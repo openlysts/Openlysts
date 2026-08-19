@@ -1,71 +1,54 @@
-const LOCAL_USER = {
-  id: "local-admin",
-  name: "Local Admin",
-  email: "admin@localhost",
-  role: "admin",
-  workspace_name: "Local Workspace",
-  onboarded: true,
-  settings: {
-    ping_frequency: "daily",
-    working_hours_start: "09:00",
-    working_hours_end: "17:00",
-    ai_tone: "friendly"
-  }
-};
-
-let currentUser = { ...LOCAL_USER };
-let userCreated = false;
+// Real Auth Client
 
 export const auth = {
   async me() {
-    // Ensure the user exists in the local DB so relationships work
-    if (!userCreated) {
-      try {
-        const res = await fetch('/api/entities/User/filter', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ where: { id: LOCAL_USER.id } })
-        });
-        const users = await res.json();
-        if (users.length === 0) {
-          await fetch('/api/entities/User/create', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ data: LOCAL_USER })
-          });
-        } else {
-          currentUser = users[0];
-        }
-        userCreated = true;
-      } catch (e) {
-        // ignore in case server is not ready yet
-      }
+    try {
+      const res = await fetch('/api/auth/me', {
+        headers: { 'Accept': 'application/json' },
+        credentials: 'include',
+      });
+      if (!res.ok) return null;
+      const data = await res.json();
+      return data.user || null;
+    } catch (e) {
+      console.error('[Auth Client] Error fetching me:', e);
+      return null;
     }
-    return currentUser;
   },
   
   async logout() {
-    console.log('[Auth] Logged out locally');
+    try {
+      await fetch('/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include',
+      });
+    } catch (e) {
+      console.error('[Auth Client] Logout error:', e);
+    }
   },
   
   async redirectToLogin(redirectUrl) {
-    window.location.href = '/';
+    if (redirectUrl) {
+      window.location.href = `/login?redirect=${encodeURIComponent(redirectUrl)}`;
+    } else {
+      window.location.href = '/login';
+    }
   },
   
   async updateMe(updates) {
-    currentUser = { ...currentUser, ...updates };
     try {
-      const res = await fetch(`/api/entities/User/update`, {
-        method: 'POST',
+      // Updates are mostly for profile/settings
+      const res = await fetch(`/api/profile/settings`, {
+        method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: currentUser.id, data: updates })
+        credentials: 'include',
+        body: JSON.stringify(updates)
       });
-      if (res.ok) {
-        currentUser = await res.json();
-      }
+      if (!res.ok) throw new Error('Failed to update profile');
+      return await this.me(); // refetch user
     } catch (e) {
-      console.error('[Auth] Error updating user locally', e);
+      console.error('[Auth Client] Error updating user locally', e);
+      throw e;
     }
-    return currentUser;
   }
 };

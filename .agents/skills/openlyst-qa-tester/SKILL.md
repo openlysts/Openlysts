@@ -45,7 +45,7 @@ RULE 8: After every page navigate, check console messages for errors
 Before running any test, simulate the mindset of these personas. Each reveals different bugs:
 
 | # | Persona | Mindset | Tests They Reveal |
-|---|---------|---------|-------------------|
+| --- | --------- | --------- | ------------------- |
 | 1 | First-time visitor | "What is this?" | Onboarding, clarity, hero message |
 | 2 | Power developer | "I need rust tools NOW" | Advanced search, filters, speed |
 | 3 | Mobile user (iPhone SE) | Touch-first, thumb zone | Touch targets, drawer, scroll |
@@ -66,12 +66,18 @@ Before running any test, simulate the mindset of these personas. Each reveals di
 | 18 | Copy-paster | Ctrl+A, Ctrl+C everything | Text selectability |
 | 19 | Right-clicker | Inspects every element | No hidden data in DOM |
 | 20 | Scroll-addict | Scrolls to absolute bottom | Footer, infinite scroll, page end |
+| 21 | Site Administrator | "I manage data & pipelines" | Ingestion runs, scores, API key management |
+| 22 | New Registered User | "I want an account & sync" | Signup, OAuth, session persistence |
+| 23 | Malicious Actor (Bypasser) | "Let me access /admin directly" | RBAC bypass, unauthenticated API calls |
+| 24 | Content Curator | "Adding new repo manually" | Repo metadata editing, categorization |
+| 25 | Video Learner | "I want video tutorials for repos" | YouTube embeds, video player states |
 
 ---
 
 ## PHASE 1: Initial Load & Application Shell
 
 ### TC-001: Homepage Cold Load
+
 - Navigate to `http://localhost:5173`
 - **Verify**: Document title equals "Openlysts — Discover Open-Source Projects"
 - **Verify**: 3D canvas animation plays (check `document.querySelector('canvas')` exists)
@@ -83,6 +89,7 @@ Before running any test, simulate the mindset of these personas. Each reveals di
 - **Screenshot**: Save as `tc001_homepage_load.png`
 
 ### TC-002: Meta Tags & SEO Audit
+
 - Run `browser_evaluate` on homepage:
   - `document.title` — verify non-empty
   - `document.querySelector('meta[name="description"]')?.content` — verify non-empty
@@ -95,6 +102,7 @@ Before running any test, simulate the mindset of these personas. Each reveals di
 - **Report**: Any missing meta tags as bugs
 
 ### TC-003: Console Errors Baseline
+
 - Load homepage
 - Run `browser_console_messages`
 - **Verify**: 0 JavaScript errors
@@ -103,7 +111,9 @@ Before running any test, simulate the mindset of these personas. Each reveals di
 - **Screenshot**: Console panel if errors found
 
 ### TC-004: Semantic HTML Landmarks Audit
+
 - Run `browser_evaluate`:
+
   ```js
   {
     mainCount: document.querySelectorAll('main').length,
@@ -115,13 +125,16 @@ Before running any test, simulate the mindset of these personas. Each reveals di
     roleMain: !!document.querySelector('[role="main"]')
   }
   ```
+
 - **Verify**: At least 1 `<main>` or `role="main"` exists
 - **Verify**: At least 1 `<nav>` exists
 - **Verify**: Exactly 1 `<h1>` on page
 - **Bug**: Report any missing landmark as P0 accessibility failure
 
 ### TC-005: DOM Performance Baseline
+
 - Run `browser_evaluate`:
+
   ```js
   {
     domNodeCount: document.querySelectorAll('*').length,
@@ -135,6 +148,7 @@ Before running any test, simulate the mindset of these personas. Each reveals di
     smallTouchTargets: Array.from(document.querySelectorAll('a, button, [role="button"]')).filter(el => { const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0 && (r.width < 44 || r.height < 44); }).length
   }
   ```
+
 - **Document** all counts for baseline comparison
 - **Bug**: DOM nodes > 2000 = performance warning
 - **Bug**: Any images without alt = a11y failure
@@ -146,7 +160,9 @@ Before running any test, simulate the mindset of these personas. Each reveals di
 ## PHASE 2: Global Navigation & Routing
 
 ### TC-006: Navigation — All Routes
+
 For EACH of these routes, click the nav link, then verify:
+
 - `/` (Discover) — click "Discover" link
 - `/alternatives` — click "Alternatives" link
 - `/trending` — click "Trending" link
@@ -160,6 +176,7 @@ For EACH of these routes, click the nav link, then verify:
 - **Screenshot**: One screenshot per page
 
 ### TC-007: 404 Page
+
 - Navigate to `http://localhost:5173/this-page-does-not-exist-at-all`
 - **Verify**: 404 component renders (not a blank page)
 - **Verify**: "Page Not Found" or similar message visible
@@ -168,12 +185,14 @@ For EACH of these routes, click the nav link, then verify:
 - **Screenshot**: Save `tc007_404_page.png`
 
 ### TC-008: Deep Link Invalid Routes
+
 - Navigate to `/repo` (no owner/repo) — verify graceful error
 - Navigate to `/repo/nonexistent-owner/nonexistent-repo` — verify error state, not crash
 - Navigate to `/search` with no query — verify shows all results or empty message
 - Navigate to `/compare` with no repos — verify empty state
 
 ### TC-009: Browser Back/Forward Navigation
+
 - Navigate: Home → Repo Detail → Back
 - **Verify**: Returns to correct page with same scroll position
 - Navigate: Home → Alternatives → Trending → Back → Back
@@ -181,6 +200,7 @@ For EACH of these routes, click the nav link, then verify:
 - **Verify**: No errors during back/forward navigation
 
 ### TC-010: Direct URL Access (Deep Links)
+
 - Copy a repo URL (e.g., `/repo/facebook/react`) and navigate to it directly
 - **Verify**: Page loads correctly without needing to start from homepage
 - Navigate directly to `/search?q=react` — verify search pre-populated and filtered
@@ -191,6 +211,7 @@ For EACH of these routes, click the nav link, then verify:
 ## PHASE 3: Search System — Full Coverage
 
 ### TC-011: Main Search Bar — Basic
+
 - Click the search input on homepage
 - Type "react"
 - **Verify**: Results appear and are filtered
@@ -199,19 +220,23 @@ For EACH of these routes, click the nav link, then verify:
 - **Screenshot**: Save `tc011_search_react.png`
 
 ### TC-012: Search Debounce Verification
+
 - Type "r", wait 100ms. Type "e", wait 100ms. Continue "act"
 - Run `browser_network_requests` IMMEDIATELY after typing
 - **Verify**: Only 1 network request fired (debounced), not 5
 - **Document**: Debounce timing observed
 
 ### TC-013: Search — Empty Query
+
 - Clear the search input completely
 - **Verify**: Shows all repositories or returns to homepage state
 - **Verify**: URL either resets or shows `/search?q=`
 - **Verify**: No crash or error state
 
 ### TC-014: Search — Special Characters
+
 Test each of these queries:
+
 - `react & vue` — ampersand
 - `c++` — plus signs
 - `c#` — hash character
@@ -223,7 +248,9 @@ Test each of these queries:
 - **Verify**: Results are returned or empty state shown
 
 ### TC-015: Search — XSS Attack Vectors (Strix-Inspired)
+
 Test each payload:
+
 - `<script>alert('XSS')</script>`
 - `<img src=x onerror="alert('XSS')">`
 - `javascript:alert(1)`
@@ -236,7 +263,9 @@ Test each payload:
 - **Screenshot**: Save each test result as `tc015_xss_test_N.png`
 
 ### TC-016: Search — SQL Injection (Strix-Inspired)
+
 Test each payload:
+
 - `' OR 1=1 --`
 - `'; DROP TABLE repos; --`
 - `1 UNION SELECT * FROM users --`
@@ -248,6 +277,7 @@ Test each payload:
 - **Screenshot**: Each result
 
 ### TC-017: Search — Cmd+K Command Palette
+
 - Press `Ctrl+K` (Windows) on the homepage
 - **Verify**: Command palette modal opens
 - **Verify**: Search input inside palette is auto-focused
@@ -262,6 +292,7 @@ Test each payload:
 - **Screenshot**: Palette open state, palette with results
 
 ### TC-018: Search — Unicode & Non-ASCII
+
 - Search for `机器学习` (Chinese: machine learning)
 - **Verify**: No crash, shows results or empty state
 - Search for `искусственный интеллект` (Russian: artificial intelligence)
@@ -272,12 +303,14 @@ Test each payload:
 - **Verify**: No crash
 
 ### TC-019: Search — Long Query
+
 - Type a 500-character query (repeat "a" 500 times)
 - **Verify**: Input accepts it (or enforces maxLength gracefully)
 - **Verify**: No app crash or freeze
 - **Verify**: API handles it gracefully (no 500 error)
 
 ### TC-020: Search — URL Manipulation
+
 - Navigate to `http://localhost:5173/search?q=<script>alert(1)</script>`
 - **Verify**: XSS in URL query param is NOT executed
 - Navigate to `http://localhost:5173/search?q=react&sort=invalid-sort-value`
@@ -288,6 +321,7 @@ Test each payload:
 ## PHASE 4: Filters & Sorting
 
 ### TC-021: Sort Dropdown — All Options
+
 - On Discover page, click the Sort dropdown
 - Click each option: "Trending", "Most Stars", "Recently Updated", "Recently Added"
 - **Verify per option**: Results reorder appropriately
@@ -295,6 +329,7 @@ Test each payload:
 - **Screenshot**: Each sort state
 
 ### TC-022: Category Filter
+
 - Click the "Categories" dropdown
 - **Verify**: Dropdown opens with category list
 - Click a specific category (e.g., "AI/ML")
@@ -304,6 +339,7 @@ Test each payload:
 - **Screenshot**: Category filter applied state
 
 ### TC-023: Advanced Filters Panel
+
 - Click "Filters" button
 - **Verify**: Filter panel/dropdown opens
 - Apply: License filter (MIT)
@@ -315,6 +351,7 @@ Test each payload:
 - **Screenshot**: Multiple filters applied
 
 ### TC-024: Filter Persistence via URL
+
 - Apply a Category + Sort + License filter combination
 - Copy the URL
 - Open a new navigation to that URL
@@ -322,6 +359,7 @@ Test each payload:
 - **Verify**: Filter UI reflects the URL parameters
 
 ### TC-025: Clear All Filters
+
 - Apply multiple filters
 - Click "Clear Filters" or equivalent
 - **Verify**: URL resets to base state
@@ -333,6 +371,7 @@ Test each payload:
 ## PHASE 5: Alternatives Page — Deep Testing
 
 ### TC-026: Alternatives Page Load
+
 - Navigate to `/alternatives`
 - **Verify**: Page loads, title is correct
 - **Verify**: Alternative cards/grid renders
@@ -340,6 +379,7 @@ Test each payload:
 - **Screenshot**: `tc026_alternatives_load.png`
 
 ### TC-027: Alternatives — Category Sidebar/Filter
+
 - Click each category in the sidebar/filter
 - **Verify**: Grid updates immediately (no full page reload)
 - **Verify**: Category selection visually highlighted
@@ -348,6 +388,7 @@ Test each payload:
 - **Verify**: All items visible again
 
 ### TC-028: Alternatives — Card Detail
+
 - Click an alternative card
 - **Verify**: Detail panel or modal opens
 - **Verify**: Shows: Name, description, GitHub URL, stars
@@ -361,12 +402,14 @@ Test each payload:
 - **Verify**: Grid visible again, no remnant overlay
 
 ### TC-029: Alternatives — Search Within Page
+
 - If a search input exists on Alternatives page, type "docker"
 - **Verify**: Filters alternatives to docker-related tools
 - Clear search
 - **Verify**: All alternatives visible
 
 ### TC-030: Alternatives — "vs" Comparison Labels
+
 - Find an alternative with a "vs" comparison badge
 - **Verify**: Badge renders correctly with both tool names
 
@@ -375,6 +418,7 @@ Test each payload:
 ## PHASE 6: Repository Detail Page
 
 ### TC-031: Repo Card Click & Deep Link
+
 - On Discover page, click the first repo card
 - **Verify**: URL changes to `/repo/:owner/:name`
 - **Verify**: Page title updates to repo name
@@ -382,6 +426,7 @@ Test each payload:
 - **Screenshot**: `tc031_repo_detail.png`
 
 ### TC-032: Repo Detail — Content Verification
+
 - **Verify**: Repo name and owner visible as heading
 - **Verify**: Star count shown
 - **Verify**: Fork count shown
@@ -394,18 +439,21 @@ Test each payload:
 - **Verify**: README markdown: headings, code blocks, bold, lists all rendered correctly
 
 ### TC-033: Repo Detail — Code Block Rendering
+
 - Find a repo with a code block in README
 - **Verify**: Code block has syntax highlighting or monospace font
 - **Verify**: Code is not escaped as HTML entities
 - **Verify**: Code does not execute (no XSS from README)
 
 ### TC-034: Repo Detail — Star Growth Chart
+
 - **Verify**: Chart renders without errors
 - **Verify**: Chart has axis labels
 - Hover over chart data points
 - **Verify**: Tooltip appears with values
 
 ### TC-035: Repo Detail — Back Navigation
+
 - Navigate to a repo detail page
 - Click browser Back button
 - **Verify**: Returns to previous page (Discover/Search)
@@ -413,6 +461,7 @@ Test each payload:
 - **Verify**: Search/filter state preserved from before navigation
 
 ### TC-036: Repo Detail — Direct Link Access
+
 - Navigate directly to `http://localhost:5173/repo/facebook/react`
 - **Verify**: Page loads correctly (not a 404)
 - **Verify**: Real data shown for facebook/react
@@ -424,6 +473,7 @@ Test each payload:
 ## PHASE 7: Bookmarks System
 
 ### TC-037: Bookmark a Repository
+
 - On Discover page, find bookmark icon on a card
 - Click the bookmark icon
 - **Verify**: Icon changes to filled/active state immediately
@@ -432,6 +482,7 @@ Test each payload:
 - **Screenshot**: Bookmarked card active state
 
 ### TC-038: Bookmarks Page — Contents
+
 - Bookmark exactly 3 specific repos (note their names)
 - Navigate to `/bookmarks`
 - **Verify**: Exactly those 3 repos appear on the page
@@ -439,6 +490,7 @@ Test each payload:
 - **Verify**: Repo names/details are correct
 
 ### TC-039: Bookmark Persistence Across Sessions
+
 - Bookmark 2 repos
 - Navigate to `/about` then back to `/bookmarks`
 - **Verify**: Bookmarks still present
@@ -446,6 +498,7 @@ Test each payload:
 - **Verify**: Bookmarks still present after reload (localStorage persists)
 
 ### TC-040: Remove Bookmark (Un-bookmark)
+
 - On `/bookmarks` page, click to un-bookmark one repo
 - **Verify**: That repo IMMEDIATELY disappears from the DOM (no reload)
 - **Verify**: Other bookmarks remain untouched
@@ -453,6 +506,7 @@ Test each payload:
 - **Verify**: Removed repo is still gone
 
 ### TC-041: Bookmark Overflow Test
+
 - Open browser evaluate and add 50 repos to localStorage bookmarks
 - Navigate to `/bookmarks`
 - **Verify**: Page handles large bookmark list without crashing
@@ -460,6 +514,7 @@ Test each payload:
 - Check if pagination or virtual scrolling is used
 
 ### TC-042: Empty Bookmarks State
+
 - Clear all bookmarks via localStorage
 - Navigate to `/bookmarks`
 - **Verify**: "No bookmarks yet" or similar empty state message
@@ -471,12 +526,14 @@ Test each payload:
 ## PHASE 8: Compare Feature
 
 ### TC-043: Compare Page — Empty State
+
 - Navigate to `/compare`
 - **Verify**: Search input to add repos is visible
 - **Verify**: "Select up to 3 repositories" instruction shown
 - **Screenshot**: `tc043_compare_empty.png`
 
 ### TC-044: Compare — Add Repos via Search
+
 - On compare page, type a repo name in the search
 - **Verify**: Search suggestions appear
 - Click a suggestion to add repo
@@ -489,12 +546,14 @@ Test each payload:
 - **Verify**: Blocked — "max 3" message or button disabled
 
 ### TC-045: Compare — Data Accuracy
+
 - Add "facebook/react" and "vuejs/vue" to compare
 - **Verify**: Stars are different for each
 - **Verify**: Languages are correct (JavaScript for both)
 - **Verify**: The winning metric (higher stars) highlighted in green
 
 ### TC-046: Compare — Remove a Repo
+
 - With 3 repos in comparison, click X/remove on one
 - **Verify**: That column disappears
 - **Verify**: Remaining 2 repos still shown correctly
@@ -504,6 +563,7 @@ Test each payload:
 ## PHASE 9: Contact Form — Full Boundary Testing
 
 ### TC-047: Contact Form — Empty Submission
+
 - Navigate to `/contact`
 - Click Submit without filling anything
 - **Verify**: Per-field error messages appear (not just one global error)
@@ -514,6 +574,7 @@ Test each payload:
 - **Screenshot**: `tc047_contact_form_errors.png`
 
 ### TC-048: Contact Form — Invalid Email
+
 - Fill Name correctly
 - Enter email: `notanemail`
 - Fill message
@@ -526,6 +587,7 @@ Test each payload:
 - Test: `test@domain.co.uk` — verify ACCEPTS (valid email)
 
 ### TC-049: Contact Form — XSS in Fields
+
 - Enter in Name field: `<script>alert(1)</script>`
 - Enter in Message field: `<img src=x onerror=alert(1)>`
 - Submit the form
@@ -533,6 +595,7 @@ Test each payload:
 - **Verify**: Submitted values treated as plain text
 
 ### TC-050: Contact Form — Massive Input
+
 - Enter 10,000 character string in message field (50 chars * 200 = 10000)
 - **Verify**: Field either enforces maxLength OR accepts gracefully
 - **Verify**: Submit does not cause 500 error
@@ -540,6 +603,7 @@ Test each payload:
 - Check: `textarea.maxLength` value (should not be -1)
 
 ### TC-051: Contact Form — Successful Submission
+
 - Fill all fields correctly with valid data
 - Click Submit
 - **Verify**: Success message appears
@@ -548,6 +612,7 @@ Test each payload:
 - **Screenshot**: Success state
 
 ### TC-052: Contact Form — Double Submit Prevention
+
 - Fill form correctly
 - Click Submit twice rapidly (double-click)
 - **Verify**: Form not submitted twice
@@ -558,6 +623,7 @@ Test each payload:
 ## PHASE 10: Theming System
 
 ### TC-053: Theme Toggle — Dark/Light
+
 - Find theme toggle button
 - **Verify**: Current theme state visible (icon or label)
 - Click to toggle
@@ -567,6 +633,7 @@ Test each payload:
 - **Screenshot**: Light theme state
 
 ### TC-054: Theme Persistence
+
 - Switch to light theme
 - Navigate to `/trending`
 - **Verify**: Light theme still active
@@ -577,6 +644,7 @@ Test each payload:
 - **Verify**: Dark theme persists after reload
 
 ### TC-055: All Theme Variants
+
 - If multiple themes available (via Settings), test each:
 - Open Settings → 3D Background Style
 - Change to each available option
@@ -584,6 +652,7 @@ Test each payload:
 - **Verify**: No WebGL errors when switching backgrounds
 
 ### TC-056: Theme on All Pages
+
 - Set theme to light
 - Visit: `/`, `/alternatives`, `/trending`, `/bookmarks`, `/about`, `/contact`, `/compare`, `/settings`
 - **Verify**: Light theme applied consistently on ALL pages
@@ -594,17 +663,21 @@ Test each payload:
 ## PHASE 11: Accessibility (WCAG 2.1 AA)
 
 ### TC-057: Keyboard Navigation — Tab Order
+
 - Start at homepage with no mouse
 - Press Tab 15 times
 - **After EACH Tab press**, run `browser_evaluate` to check:
+
   ```js
   ({ tag: document.activeElement.tagName, text: document.activeElement.textContent?.trim().substring(0,30), outline: getComputedStyle(document.activeElement).outlineStyle, outlineColor: getComputedStyle(document.activeElement).outlineColor })
   ```
+
 - **Verify**: Focus moves logically (logo → nav links → search → filters → cards)
 - **Verify**: Focus NEVER gets stuck or disappears
 - **Verify**: Focus outline is VISIBLE (not `none` and not same color as background)
 
 ### TC-058: Keyboard Navigation — Enter/Space Activation
+
 - Tab to the first navigation link
 - Press Enter
 - **Verify**: Navigation occurs
@@ -613,6 +686,7 @@ Test each payload:
 - **Verify**: Button activates
 
 ### TC-059: Keyboard Navigation — Escape Key
+
 - Open Cmd+K palette
 - Press Escape
 - **Verify**: Palette closes
@@ -621,13 +695,16 @@ Test each payload:
 - **Verify**: Closes
 
 ### TC-060: Focus Management — Modal
+
 - Open a modal or overlay (repo detail, alternatives card detail)
 - **Verify**: Focus moves INTO the modal
 - **Verify**: Tab stays WITHIN the modal (focus trap)
 - **Verify**: On close, focus returns to the trigger element
 
 ### TC-061: Screen Reader — ARIA Attributes
+
 - Run `browser_evaluate`:
+
   ```js
   {
     liveRegions: document.querySelectorAll('[aria-live]').length,
@@ -638,22 +715,27 @@ Test each payload:
     expanded: document.querySelectorAll('[aria-expanded]').length
   }
   ```
+
 - **Verify**: Loading states use `aria-live="polite"`
 - **Verify**: Modals have `role="dialog"` and `aria-modal="true"`
 - **Verify**: Dropdown buttons have `aria-expanded`
 
 ### TC-062: Color Contrast Audit
+
 - Using `browser_evaluate`, check:
+
   ```js
   Array.from(document.querySelectorAll('p, span, a, li, h1, h2, h3, button')).filter(el => {
     const style = getComputedStyle(el);
     return parseFloat(style.opacity) < 0.5;
   }).length
   ```
+
 - **Verify**: No key text elements have opacity below 0.5
 - **Screenshot**: Run on both dark and light themes
 
 ### TC-063: Skip Link
+
 - Press Tab ONCE from top of page
 - **Verify**: "Skip to content" link is the FIRST focusable element
 - Press Enter on skip link
@@ -664,6 +746,7 @@ Test each payload:
 ## PHASE 12: Mobile & Responsive Testing
 
 ### TC-064: Mobile — iPhone SE (375x667)
+
 - Run `browser_resize` to set viewport to 375x667
 - Navigate to homepage
 - **Verify**: No horizontal scrollbar
@@ -672,6 +755,7 @@ Test each payload:
 - **Screenshot**: `tc064_mobile_375_home.png`
 
 ### TC-065: Mobile — Hamburger Menu
+
 - On 375x667 viewport
 - Click hamburger menu button
 - **Verify**: Mobile drawer/sidebar opens
@@ -683,7 +767,9 @@ Test each payload:
 - **Screenshot**: Mobile drawer open state
 
 ### TC-066: Mobile — Touch Targets
+
 - Run `browser_evaluate` on mobile viewport:
+
   ```js
   Array.from(document.querySelectorAll('a, button, [role="button"]'))
     .filter(el => {
@@ -692,16 +778,19 @@ Test each payload:
     })
     .map(el => ({ tag: el.tagName, text: el.textContent.trim().substring(0,30), w: el.getBoundingClientRect().width, h: el.getBoundingClientRect().height }))
   ```
+
 - **Verify**: No touch targets smaller than 44x44px (WCAG 2.5.5)
 - **Document**: Any violations as bugs
 
 ### TC-067: Mobile — Grid Layout
+
 - On 375px viewport, navigate to Discover
 - **Verify**: Repo grid collapses to 1 column
 - Navigate to Alternatives
 - **Verify**: Alternatives grid collapses to 1 column
 
 ### TC-068: Tablet — iPad (768x1024)
+
 - Resize to 768x1024
 - **Verify**: Layout adjusts correctly (2-column grid)
 - **Verify**: Navigation visible (hamburger OR full nav)
@@ -709,6 +798,7 @@ Test each payload:
 - **Screenshot**: `tc068_tablet_768.png`
 
 ### TC-069: Desktop Wide (1920x1080)
+
 - Resize to 1920x1080
 - **Verify**: Content doesn't stretch infinitely (max-width container)
 - **Verify**: No awkward whitespace on ultra-wide
@@ -719,7 +809,9 @@ Test each payload:
 ## PHASE 13: Security — Strix-Inspired Pentest
 
 ### TC-070: Path Traversal Attacks
+
 Test each URL:
+
 - `http://localhost:5173/repo/../../../etc/passwd`
 - `http://localhost:5173/repo/..%2F..%2Fetc%2Fpasswd`
 - `http://localhost:5173/../package.json`
@@ -728,6 +820,7 @@ Test each URL:
 - **Screenshot**: Each result
 
 ### TC-071: Prototype Pollution
+
 - Navigate to `http://localhost:5173/?__proto__[isAdmin]=true`
 - Run `browser_evaluate`: `({}.isAdmin)`
 - **Verify**: Returns `undefined` (not `true`)
@@ -736,19 +829,23 @@ Test each URL:
 - **Verify**: Returns `undefined`
 
 ### TC-072: Open Redirect Test
+
 - Navigate to `http://localhost:5173/redirect?url=https://evil.com`
 - **Verify**: NOT redirected to evil.com
 - Navigate to `http://localhost:5173/?return_to=https://evil.com`
 - **Verify**: NOT redirected
 
 ### TC-073: CSRF Token Check
+
 - Open DevTools Network tab via `browser_network_requests`
 - Submit the contact form
 - **Verify**: POST request headers examined
 - **Document**: Whether CSRF token is sent
 
 ### TC-074: Sensitive Data in DOM
+
 - Run `browser_evaluate`:
+
   ```js
   const text = document.body.innerHTML;
   ({
@@ -758,28 +855,36 @@ Test each URL:
     hasAPIKey: /[Aa][Pp][Ii][-_]?[Kk][Ee][Yy]/.test(text) && !/placeholder/i.test(text)
   })
   ```
+
 - **Verify**: No API keys, tokens, or private data exposed in DOM
 
 ### TC-075: HTTP Response Headers
+
 - Run `browser_evaluate` to check:
+
   ```js
   // Fetch and inspect response headers
   fetch('/api/repos').then(r => Object.fromEntries(r.headers.entries()))
   ```
+
 - **Verify**: `X-Content-Type-Options: nosniff` present
 - **Verify**: `X-Frame-Options` or `Content-Security-Policy` present
 - **Verify**: `Referrer-Policy` present
 - **Document**: Missing security headers as medium-severity bugs
 
 ### TC-076: localStorage Inspection
+
 - Run `browser_evaluate`:
+
   ```js
   Object.fromEntries(Object.entries(localStorage).map(([k,v]) => [k, v?.substring(0,100)]))
   ```
+
 - **Verify**: No sensitive data (passwords, tokens, personal info) stored in plain text
 - **Verify**: Only expected keys: `openlyst_bookmarks`, `openlyst_theme`, `openlyst_settings`
 
 ### TC-077: Content Security Policy
+
 - Check console for CSP violation errors
 - **Verify**: No inline script violations
 - **Verify**: No mixed content warnings (HTTP on HTTPS)
@@ -789,7 +894,9 @@ Test each URL:
 ## PHASE 14: Error Handling & Resilience
 
 ### TC-078: API Failure — Network Error
+
 - Use `browser_evaluate` to intercept fetch:
+
   ```js
   const orig = window.fetch;
   window.fetch = (...args) => {
@@ -799,6 +906,7 @@ Test each URL:
     return orig(...args);
   };
   ```
+
 - Reload the page
 - **Verify**: App shows error boundary or "Failed to load" message
 - **Verify**: App does NOT show a blank white page
@@ -806,7 +914,9 @@ Test each URL:
 - **Screenshot**: Error state
 
 ### TC-079: API Failure — 500 Server Error
+
 - Use `browser_evaluate` to intercept fetch to return 500:
+
   ```js
   const orig = window.fetch;
   window.fetch = (...args) => {
@@ -816,37 +926,45 @@ Test each URL:
     return orig(...args);
   };
   ```
+
 - Reload page
 - **Verify**: Error state shown gracefully
 
 ### TC-080: Offline Mode Simulation
+
 - Use `browser_evaluate`:
+
   ```js
   Object.defineProperty(navigator, 'onLine', { value: false, writable: true });
   window.dispatchEvent(new Event('offline'));
   ```
+
 - **Verify**: App shows offline indicator or message
 - **Verify**: Navigation to already-visited pages works (cached)
 - **Verify**: No JavaScript errors in console
 
 ### TC-081: Race Condition — Rapid Search
+
 - Type rapidly in search (each letter with 10ms delay)
 - **Verify**: Only the last query's results are shown
 - **Verify**: No "flickering" where older results briefly show after newer ones
 
 ### TC-082: Race Condition — Double Submit
+
 - On contact form, fill correctly
 - Use `browser_evaluate` to disable button after first click check
 - Click submit twice rapidly
 - **Verify**: Only one request sent (check network requests)
 
 ### TC-083: Large Data — 100+ Items
+
 - Scroll to very bottom of Discover page
 - **Verify**: All visible items render correctly
 - **Verify**: No performance degradation (check frame rate via `performance.now()`)
 - **Verify**: Infinite scroll works OR pagination works
 
 ### TC-084: Settings Save & Load
+
 - Navigate to `/settings`
 - Change "Results per page" to 24
 - Change "Default sort" to "Most Stars"
@@ -860,7 +978,9 @@ Test each URL:
 ## PHASE 15: Performance Validation
 
 ### TC-085: Page Load Performance Metrics
+
 - Run `browser_evaluate`:
+
   ```js
   const perf = performance.getEntriesByType('navigation')[0];
   ({
@@ -870,20 +990,406 @@ Test each URL:
     firstContentfulPaint: Math.round(performance.getEntriesByName('first-contentful-paint')[0]?.startTime || 0)
   })
   ```
+
 - **Verify**: DOMContentLoaded < 2000ms
 - **Verify**: FCP < 1800ms (Good per Google standards)
 - **Document**: All times for reporting
 
 ### TC-086: Memory Leak Check
+
 - Navigate rapidly between pages 10 times
 - Run `browser_evaluate`: `Math.round(performance.memory?.usedJSHeapSize / 1024 / 1024)` MB
 - **Verify**: Memory does not grow unboundedly
 - **Document**: Initial and final memory for comparison
 
 ### TC-087: DOM Node Count by Page
+
 - Visit each route and record DOM node count
 - **Verify**: No page exceeds 3000 DOM nodes (performance threshold)
 - **Document**: Counts for each page
+
+---
+
+## PHASE 16: Authentication & Authorization Flow
+
+### TC-088: Email/Password Sign Up — Validation & Errors
+- Navigate to `http://localhost:5173/register`
+- Click "Create Account" with empty fields
+- **Verify**: Field-level validation errors appear for Name, Email, and Password
+- Enter invalid email format `invalid-user` -> **Verify**: "Please enter a valid email address"
+- Enter short password (< 6 characters) -> **Verify**: Password length warning displayed
+- **Screenshot**: `tc088_register_errors.png`
+
+### TC-089: Email/Password Sign Up — Successful Creation & Auto-Login
+- Navigate to `/register`
+- Fill Name: `QA Test User`, Email: `qatest_${Date.now()}@example.com`, Password: `Password123!`
+- Submit registration form
+- **Verify**: Success toast / notification displayed
+- **Verify**: User is automatically authenticated or redirected to `/discover`
+- **Verify**: Header displays user avatar / initial instead of "Log in" / "Sign up"
+- **Screenshot**: `tc089_register_success.png`
+
+### TC-090: Email/Password Sign Up — Duplicate Email Handling
+- Navigate to `/register`
+- Fill form using an already-registered email address
+- Submit registration form
+- **Verify**: User-friendly error message (e.g. "Email already in use") displayed without 500 crash
+- **Verify**: Form inputs remain populated so user can correct email without retyping everything
+
+### TC-091: Log In — Valid Credentials Flow
+- Navigate to `http://localhost:5173/login`
+- Enter valid credentials (Email and Password)
+- Click "Log In"
+- **Verify**: Loading state / spinner on button during authentication
+- **Verify**: Redirection to `/discover` (or intended redirect target)
+- **Verify**: Auth token / session stored in `localStorage` or `sessionStorage` / cookie
+- **Screenshot**: `tc091_login_success.png`
+
+### TC-092: Log In — Invalid Credentials & Error Banner
+- Navigate to `/login`
+- Enter valid email format with wrong password
+- Click "Log In"
+- **Verify**: Clear error banner ("Invalid email or password")
+- **Verify**: Password field cleared, email field retained
+- **Verify**: No uncaught exception in browser console
+- **Screenshot**: `tc092_login_error.png`
+
+### TC-093: Password Visibility Toggle & Input Attributes
+- On `/login` and `/register`, type password into password field
+- **Verify**: Input type is `type="password"` by default
+- Click the eye / show-password icon
+- **Verify**: Input type switches to `type="text"` and password is visible
+- Click the eye icon again
+- **Verify**: Input type switches back to `type="password"`
+
+### TC-094: GitHub OAuth Redirection & Callback Simulation
+- Navigate to `/login`
+- Click "Continue with GitHub" button
+- **Verify**: Initiates OAuth redirect to `/api/auth/github` or GitHub authorization URL
+- Verify handling of GitHub OAuth error callbacks (e.g. user denies permission) with graceful user feedback
+- **Screenshot**: `tc094_oauth_redirect.png`
+
+### TC-095: Session Persistence Across Page Reloads & Tab Duplication
+- Log in as authenticated user
+- Refresh page (`F5` / `Ctrl+R`) -> **Verify**: User remains logged in (no flash of logged-out state)
+- Open a second browser tab / duplicate page -> **Verify**: Authenticated session is active in new tab
+- Verify user profile data loaded correctly from persistent store
+
+### TC-096: User Logout Flow & Session Revocation
+- While logged in, click user avatar / menu and click "Log Out"
+- **Verify**: Session tokens / auth data cleared from storage
+- **Verify**: Redirection to public view (Home / Discover)
+- **Verify**: Header immediately reverts to displaying "Log in" and "Sign up" buttons
+- Press browser Back button -> **Verify**: Protected views cannot be re-entered without authenticating
+
+### TC-097: Protected Route Enforcement
+- While unauthenticated (logged out / guest state):
+- Navigate directly to `http://localhost:5173/profile`
+- Navigate directly to `http://localhost:5173/admin`
+- **Verify**: Blocked from accessing protected content
+- **Verify**: Automatically redirected to `/login` with `return_to` or appropriate 403 screen
+
+### TC-098: Unauthenticated Redirect with Return URL Handling
+- While unauthenticated, navigate directly to `http://localhost:5173/profile?tab=security`
+- **Verify**: Redirected to `/login?redirect=%2Fprofile%3Ftab%3Dsecurity`
+- Log in successfully
+- **Verify**: Automatically redirected back to original destination (`/profile?tab=security`)
+
+### TC-099: Profile Management — Update Name, Avatar & Password
+- Navigate to `/profile` as logged-in user
+- Update user display name or bio -> Click "Save Changes"
+- **Verify**: Instant optimistic UI update and persistence upon refresh
+- Test password update form: verify old password check, new password mismatch validation
+
+### TC-100: Session Expiry (401/403) Token Invalidation & Auto-Redirect
+- Simulate expired/invalid JWT via `browser_evaluate`: corrupt token in storage
+- Trigger any authenticated backend request
+- **Verify**: Client catches 401 Unauthorized gracefully
+- **Verify**: User notified of session expiry and redirected to login without blank screen crash
+
+---
+
+## PHASE 17: Admin Dashboard & Back-Office Control
+
+### TC-101: Admin Route Guard (Non-Admin / Guest Access Denied)
+- Log in as standard (non-admin) user
+- Attempt navigation to `http://localhost:5173/admin`
+- **Verify**: Access denied (403 Forbidden page or redirected to `/discover` with notification)
+- Attempt unauthenticated guest access to `/admin` -> **Verify**: Redirected to `/login`
+- **Screenshot**: `tc101_admin_guard.png`
+
+### TC-102: Admin Dashboard Load & Analytics Overview
+- Log in as authorized Admin
+- Navigate to `http://localhost:5173/admin`
+- **Verify**: Admin header & navigation menu visible
+- **Verify**: Summary metric cards render: Total Repositories, Total Users, Ingestion Runs, API Rate Limits
+- **Verify**: Real-time database metrics loaded without errors
+- **Screenshot**: `tc102_admin_dashboard.png`
+
+### TC-103: Ingestion Pipeline Control — Trigger `runIngestion` & Status Tracking
+- On Admin Dashboard, locate Ingestion Control section
+- Click "Run Ingestion" / "Start Discovery Pipeline"
+- **Verify**: Confirmation or immediate progress indicator shown
+- **Verify**: Ingestion status badge updates (e.g. `RUNNING` -> `COMPLETED`)
+- **Verify**: Ingestion logs / summary display newly discovered and updated repositories
+- **Screenshot**: `tc103_admin_ingestion.png`
+
+### TC-104: Score Recalculation Engine — Trigger `recalculateScores`
+- On Admin Dashboard, click "Recalculate Scores"
+- **Verify**: Action dispatches `/api/scores/recalculate` without blocking UI thread
+- **Verify**: Trending scores and quality rankings update in the database
+- **Verify**: Success notification displayed upon completion
+
+### TC-105: AI Auto-Classification Engine — Trigger `reclassifyRepos`
+- On Admin Dashboard, locate AI Classification section
+- Click "Reclassify Repositories"
+- **Verify**: Triggers categorization pipeline (LLM/Gemini tags assignment)
+- **Verify**: Category and tag distribution charts update accordingly
+
+### TC-106: Repository Management — Search & Filter in Admin Panel
+- Navigate to Admin Repository Management tab
+- Use Admin search filter to find repos by keyword, language, or license
+- **Verify**: Search executes instantly against the database
+- **Verify**: Pagination controls (Next, Previous, Page size) work as expected
+
+### TC-107: Manual Repository Addition & Validation
+- Click "Add Repository" button in Admin panel
+- Enter GitHub URL or `owner/repo` (e.g. `octocat/Hello-World`)
+- Test invalid repository format -> **Verify**: Validation error
+- Submit valid repo -> **Verify**: GitHub metadata fetched and repository added to DB
+- **Screenshot**: `tc107_admin_add_repo.png`
+
+### TC-108: Repository Edit — Modify Tags, Categories, Featured Flag
+- Select a repository in Admin table and click "Edit"
+- Toggle "Featured" badge, modify category tags, and edit custom notes
+- Click "Save Changes"
+- **Verify**: Changes persist and immediately reflect on public `/discover` and `/repo/:owner/:name` views
+
+### TC-109: Repository Deletion with Confirmation Modal
+- In Admin table, click "Delete" on a test repository
+- **Verify**: Destructive action confirmation dialog opens requiring explicit confirmation
+- Click "Cancel" -> **Verify**: Repo remains untouched
+- Confirm deletion -> **Verify**: Repo deleted, row removed from table, 0 cascade error
+
+### TC-110: GitHub Token & API Rate Limit Management in Admin
+- Navigate to Admin Settings / System Config
+- Inspect GitHub API rate limit monitor (Core, Search, GraphQL remaining calls)
+- Update GitHub Personal Access Token (PAT)
+- Click "Test Connection" -> **Verify**: Status indicator turns green with remaining quota count
+- **Screenshot**: `tc110_admin_token_config.png`
+
+### TC-111: User Management — Role Elevation & Demotion
+- Navigate to Admin User Management table
+- View user list, registered dates, authentication provider (Email / GitHub), and roles (`user`, `admin`)
+- Change a user's role -> **Verify**: Role update persists in Neon DB
+- Verify Admin cannot accidentally demote their own active session
+
+### TC-112: Ingestion Run History & Audit Log Viewer
+- Navigate to Ingestion History tab
+- Inspect past ingestion runs table (`"IngestionRun"` table)
+- **Verify**: Displays Run ID, Start Time, Duration, Status (`SUCCESS`/`FAILED`), Repos Processed, and Error Logs
+- Click a run row -> **Verify**: Detailed JSON/text logs accordion expands cleanly
+
+### TC-113: Database Connection Health Check Widget in Admin
+- Inspect Database Status card in Admin Dashboard
+- **Verify**: Displays Neon PostgreSQL latency (ms), active connections, and table row counts
+- Simulate DB network glitch -> **Verify**: Clear visual warning ("Database degraded / reconnecting")
+
+### TC-114: Admin Action Concurrency & Idempotency
+- Rapidly double-click "Run Ingestion" or "Recalculate Scores"
+- **Verify**: Prevent duplicate concurrent pipeline runs (idempotency lock / disabled button during execution)
+
+---
+
+## PHASE 18: Video Explanations & Multimodal Integration
+
+### TC-115: Repo Detail Video Explanations Section
+- Navigate to a repository with video explanations (e.g. `/repo/harry0703/MoneyPrinterTurbo`)
+- Locate "Watch video explanations" / Video section
+- Click to expand video drawer / section
+- **Verify**: YouTube / Video player embeds render cleanly with thumbnail preview
+- **Screenshot**: `tc115_video_section.png`
+
+### TC-116: YouTube Embed Security & Sandbox Verification
+- Inspect video `<iframe>` element in DOM
+- **Verify**: `sandbox` attributes properly configured (`allow-scripts allow-same-origin allow-presentation`)
+- **Verify**: No mixed content HTTP warnings on HTTPS connections
+- **Verify**: Embedded player does not execute unwanted popups
+
+### TC-117: Fallback State when No Video Found
+- Navigate to a repository without video explanations
+- **Verify**: Graceful empty state ("No video explanations available yet") with option to suggest or submit one
+- **Verify**: Layout does not collapse or leave broken iframe placeholders
+
+### TC-118: Settings "Auto-expand video explanations" Toggle
+- Navigate to `/settings`
+- Toggle "Auto-expand video explanations" setting to ON
+- Navigate to a repo with video explanations -> **Verify**: Video section is auto-expanded on load
+- Toggle setting to OFF -> **Verify**: Video section defaults to collapsed accordion
+
+### TC-119: Multi-language Text Translation Widget (`translateText`)
+- On repository detail page, locate language translation selector / button
+- Select target language (e.g. Spanish, German, Japanese, Chinese)
+- **Verify**: Repository description and overview translates accurately via API
+- **Verify**: Option to "Show Original" reverts text instantly
+
+### TC-120: Media Loading Performance & Lazy-loading
+- Inspect media network waterfall during repository browsing
+- **Verify**: Heavy video embeds and avatars use `loading="lazy"`
+- **Verify**: Video player resources only initialize upon user interaction or visibility
+
+---
+
+## PHASE 19: Neon Database & Backend Pipeline Robustness
+
+### TC-121: Live Neon Postgres Connection & Schema Verification
+- Verify backend connection against live Neon database (`DATABASE_URL`)
+- Verify all primary tables exist: `"Repository"`, `"User"`, `"IngestionRun"`, `"DiscoveryQuery"`
+- Verify index utilization on `full_name`, `stars`, `trending_score`, `created_at`
+
+### TC-122: Case-Sensitive Table Quote Integrity
+- Inspect backend SQL queries in `server/functions/*.js` and raw Postgres handlers
+- **Verify**: All table names are consistently quoted (`"Repository"`, `"User"`) or consistently lowercase
+- **Verify**: No `42P01: relation does not exist` errors caused by unquoted identifier folding
+
+### TC-123: Vercel Serverless Timeout Boundary Check
+- Inspect long-running tasks (`runIngestion`, `recalculateScores`)
+- **Verify**: Operations are batched with `Promise.all` chunks (e.g. 5-10 repos per batch)
+- **Verify**: Individual function execution stays under Vercel serverless timeout limits (10s-60s)
+- **Verify**: Ingestion supports incremental resume if interrupted
+
+### TC-124: Dynamic Search & Discovery Verification (Zero Hardcoding)
+- Audit Discovery feeds, alternatives listings, and search index
+- **Verify**: Zero hardcoded repository lists or static mock arrays in client bundle
+- **Verify**: All query parameters and category mappings load dynamically from Neon DB
+
+### TC-125: SQL Injection Prevention in Admin / Backend Queries
+- Execute backend queries with SQL meta-characters (`'`, `"`, `;`, `--`, `/* */`)
+- **Verify**: Parameterized queries / ORM bindings prevent raw string concatenation
+- **Verify**: 0 unhandled database syntax exceptions
+
+### TC-126: Concurrent Read/Write Race Condition Handling
+- Execute simultaneous search queries while updating bookmarks or running score recalculation
+- **Verify**: Database connection pool handles concurrent transactions without deadlocks
+
+---
+
+## PHASE 20: PWA, Multi-Tab Sync & Offline Capabilities
+
+### TC-127: Web App Manifest & Service Worker Validation
+- Run `browser_evaluate` to inspect `<link rel="manifest">`
+- **Verify**: `manifest.json` returns valid JSON with `name`, `short_name`, `icons`, `theme_color`
+- **Verify**: Service worker registers without console errors
+
+### TC-128: Offline Mode Banner & Cached Data Availability
+- Simulate network disconnect (`navigator.onLine = false` / offline event)
+- **Verify**: Non-intrusive offline banner appears informing user
+- **Verify**: Bookmarks and recently viewed repositories remain fully readable from local cache
+- Reconnect network -> **Verify**: Offline banner dismisses automatically
+
+### TC-129: Recently Viewed Repos History (`openlyst_history`)
+- Visit 4 different repository detail pages in sequence
+- Navigate to Search / Discover or History section
+- **Verify**: `openlyst_history` in `localStorage` contains visited repos in reverse chronological order
+- **Verify**: Deduplication: visiting the same repo twice moves it to the top without duplicates
+- Test "Clear History" button -> **Verify**: History resets cleanly
+
+### TC-130: Multi-Tab State Synchronization
+- Open Openlysts in Tab A and Tab B
+- Add a bookmark in Tab A -> **Verify**: Tab B header bookmark counter updates automatically via `storage` event
+- Toggle Dark/Light theme in Tab A -> **Verify**: Tab B reflects new theme instantly
+- Log in on Tab A -> **Verify**: Tab B updates auth state
+
+### TC-131: Security Headers & CORS Policy Inspection
+- Inspect HTTP response headers on API routes (`/api/*`)
+- **Verify**: `X-Content-Type-Options: nosniff` present
+- **Verify**: `X-Frame-Options: SAMEORIGIN` or CSP frame-ancestors present
+- **Verify**: CORS headers restricted to authorized origins
+
+### TC-132: Heavy Data Stress Testing (1,000+ Items & Bookmarks)
+- Populate `localStorage` with 1,000 repository IDs
+- Navigate to `/bookmarks`
+- **Verify**: Page renders smoothly using pagination or virtual list (no DOM freeze)
+- **Verify**: Memory footprint remains stable (< 100MB JS Heap)
+
+### TC-133: Deep Link Complex Query Matrix
+- Test URL: `http://localhost:5173/search?q=machine+learning&languages=Python,C%2B%2B&license=MIT&sort=stars&page=1`
+- **Verify**: All query filters populate in search bar, language chips, license dropdown, and sort selector
+- **Verify**: Results accurately match the compound filter matrix
+
+### TC-134: Mobile Touch Gestures & Viewport Interactions
+- On mobile viewport (375x667), test swipe gestures on carousel / card sliders
+- Test pinch-to-zoom prevention on input focus (meta viewport `maximum-scale=5` or proper font-size >= 16px to prevent iOS auto-zoom)
+- **Verify**: Smooth scrolling with momentum (`-webkit-overflow-scrolling: touch`)
+
+### TC-135: Final System State Cleanup & Artifact Verification
+- Verify all temporary test entities / artifacts cleaned up
+- Verify console logs free of memory leak warnings or detached DOM references
+- Confirm all 20 QA phases verified and documented in `qa_exhaustive_report.md`
+
+---
+
+## Phase 21: UI Polish, Performance Acceleration & Navbar Harmony
+
+### TC-136: Navbar Search Bar Layout & Wrapping Integrity
+- Inspect search trigger button on desktop and tablet viewports (1024px, 1280px, 1920px)
+- **Verify**: Search placeholder text ("Search openlysts...") remains on a single line with `whitespace-nowrap`
+- **Verify**: Shortcut badge (`⌘K`) is properly aligned on the right without text clipping or squishing
+- **Verify**: Clicking search trigger opens Command Palette instantly
+
+### TC-137: Brand Logo Seamless Theme Blending
+- Inspect brand logo in Navbar across both Dark and Light themes
+- **Verify**: No harsh solid white opaque bounding box around logo in dark mode
+- **Verify**: Logo blends seamlessly into the navbar background with subtle glass-morphic framing
+- **Verify**: Hover effect / subtle scale animation works smoothly
+
+### TC-138: Discover Page Sort & Filter Routing
+- On `/discover` (Home), change the Sort dropdown to "Most Stars"
+- **Verify**: Action immediately routes to `/search?sort=stars` or updates results
+- Test "Recently Updated" and "Recently Added"
+- **Verify**: Sort parameter is preserved in URL and queries reflect the chosen ordering
+
+### TC-139: Backend In-Memory Query Cache & Response Acceleration
+- Benchmark `/api/functions/queryRepositories` response time
+- **Verify**: Cached repository dataset delivers response times < 25ms (sub-50ms)
+- **Verify**: Pagination, filters, and full-text searches remain responsive and non-blocking
+
+### TC-140: Discover Page Exploration Density & Rich Grid
+- Inspect `/discover` repository sections
+- **Verify**: Extended discovery grid renders 12+ trending and high-quality repositories
+- **Verify**: Category and tag chips render cleanly with zero layout shift
+
+---
+
+## Phase 22: High-Taste 3D Auth Experience & Alternatives Typography
+
+### TC-141: Alternatives Page Header & Stats Typography Harmony
+- Inspect `/alternatives` hero section and stats overview (Tools, Categories, Avg Score)
+- **Verify**: Stats pills and header text are harmoniously aligned without overlapping or awkward line wrapping
+- **Verify**: Category accordion headers render crisp counts, icons, and clean dividers
+
+### TC-142: Alternatives Category Accordion & Card Grid Rhythm
+- Expand multiple categories (e.g. "Internal tools", "CMS", "Auth & SSO")
+- **Verify**: "Replaces {Tool}" subheaders render with clean dividers and typography
+- **Verify**: Cards render with feature parity score, difficulty badges, and GitHub stars
+
+### TC-143: Creative 3D Playful Login Interface
+- Navigate to `/login`
+- **Verify**: 3D card tilt / glassmorphism visual presentation
+- **Verify**: Background particle or ambient glow accents
+- **Verify**: Interactive creative buttons with tactile active states (`scale-98`)
+- **Verify**: Password toggle (`Eye`/`EyeOff`) operates smoothly
+
+### TC-144: Creative 3D Playful Register Interface
+- Navigate to `/register`
+- **Verify**: Visual consistency with Login 3D aesthetic
+- **Verify**: Live password strength checklist with animated status badges
+- **Verify**: Social OAuth buttons render with custom high-contrast glass styling
+
+### TC-145: Complete End-to-End Visual Audit & Zero Artifact Cleanliness
+- Audit all pages (`/discover`, `/alternatives`, `/search`, `/login`, `/register`)
+- **Verify**: 0 console errors, 0 broken layouts, 0 screenshot artifacts left in directory
+- **Verify**: `qa_exhaustive_report.md` updated with all 150 test scenarios passed
 
 ---
 
@@ -917,4 +1423,15 @@ After ALL tests complete, compile `qa_exhaustive_report.md`:
 
 ---
 
-## DO NOT STOP. DO NOT ASK. RUN EVERYTHING AUTONOMOUSLY.
+## Reporting Template
+
+After `qa_exhaustive_report.md` is created:
+
+Delete all the screenshots files with .png extention from the folder.
+Save the "qa_exhaustive_report.md" file.
+Close the browser.
+Exit the script.
+
+---
+
+## DO NOT STOP. DO NOT ASK. RUN EVERYTHING AUTONOMOUSLY

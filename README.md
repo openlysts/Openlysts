@@ -48,8 +48,8 @@ Openlysts is built using modern web technologies to ensure a blazing fast, resil
 - **Lucide React**: For crisp, scalable iconography.
 
 ### Backend & Database
-- **Express.js**: Providing robust REST APIs and background jobs for GitHub ingestion.
-- **SQLite3** (`better-sqlite3`): A zero-config, highly-performant local database storing our entity maps.
+- **Express.js**: Providing robust REST APIs, authentication, and background jobs for GitHub ingestion.
+- **PostgreSQL (Neon)**: The central source of truth for repository data, user accounts, and secure sessions.
 - **GitHub REST API**: For fetching live repository metrics, licenses, and README files.
 
 ---
@@ -59,7 +59,7 @@ Openlysts is built using modern web technologies to ensure a blazing fast, resil
 Want to run Openlysts locally on your own machine? It takes less than 3 minutes.
 
 ### 1. Prerequisites
-Ensure you have **Node.js** (v18+) and **npm** installed.
+Ensure you have **Node.js** (v18+) and **npm** installed. You will also need a PostgreSQL database (we recommend [Neon](https://neon.tech) for a free serverless Postgres instance).
 
 ### 2. Installation
 Clone the repository and install the required dependencies:
@@ -73,10 +73,22 @@ npm install
 Create a `.env.local` file in the root directory based on the `.env.example` template:
 
 ```env
+# REQUIRED: Your PostgreSQL Database Connection String
+DATABASE_URL="postgres://user:password@hostname/dbname?sslmode=require"
+
 # REQUIRED: Your GitHub Personal Access Token for API access
 GITHUB_TOKEN=your_github_personal_access_token
 
-# OPTIONAL: SMTP Credentials for the Contact form email dispatch
+# REQUIRED: For secure session management (min 32 chars)
+SESSION_SECRET=your_super_secret_session_key
+
+# OPTIONAL: OAuth Credentials
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+GITHUB_OAUTH_CLIENT_ID=your_github_client_id
+GITHUB_OAUTH_CLIENT_SECRET=your_github_client_secret
+
+# OPTIONAL: SMTP Credentials for the Contact form email dispatch & Password Resets
 SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
 SMTP_USER=reviewzxone@gmail.com
@@ -88,7 +100,7 @@ Start the unified full-stack dev server:
 ```bash
 npm run dev
 ```
-The application will launch concurrently:
+The application will automatically initialize the database schema on startup and launch concurrently:
 - 🎨 **Vite Frontend:** `http://localhost:5173`
 - ⚙️ **Express Backend:** `http://localhost:3001`
 
@@ -98,12 +110,7 @@ Open [http://localhost:5173](http://localhost:5173) in your browser to experienc
 
 ## 🗄️ Database Management
 
-The SQLite database is stored locally in the `data/` directory. It initializes itself automatically on the first run.
-
-If you ever need to reset the database to a completely clean slate:
-```bash
-npm run db:reset
-```
+The application connects to your configured PostgreSQL database via the `DATABASE_URL`. The schema is automatically initialized on the first run. For production, Openlysts expects a unified environment (local dev runs against the same schema model).
 
 ---
 

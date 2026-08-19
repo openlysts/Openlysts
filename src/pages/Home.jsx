@@ -56,6 +56,7 @@ export default function Home() {
     minStars: 0,
     updatedWithin: '',
     activity: '',
+    sort: 'trending',
   };
 
   const updateFilters = (newFilters) => {
@@ -67,11 +68,10 @@ export default function Home() {
     if (newFilters.minStars > 0) params.set('minStars', String(newFilters.minStars));
     if (newFilters.updatedWithin) params.set('updatedWithin', newFilters.updatedWithin);
     if (newFilters.activity) params.set('activity', newFilters.activity);
+    if (newFilters.sort && newFilters.sort !== 'trending') params.set('sort', newFilters.sort);
     
-    // Only navigate if a filter was actually selected
-    if (params.toString().length > 0) {
-      navigate(`/search?${params.toString()}`);
-    }
+    // Navigate to search with the updated filter matrix or sort
+    navigate(`/search?${params.toString()}`);
   };
 
   return (
@@ -116,8 +116,6 @@ export default function Home() {
         </motion.div>
       </section>
 
-
-
       {!hasData && !tLoading && !rLoading ?
       <div className="flex flex-col items-center justify-center py-20 text-center animate-pulse">
           <Database className="w-10 h-10 text-text-muted mb-3 animate-bounce" />
@@ -158,7 +156,7 @@ export default function Home() {
                 View all <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
-            <RepositoryGrid repos={trending?.results?.slice(0, 8) || []} loading={tLoading} />
+            <RepositoryGrid repos={trending?.results?.slice(0, 12) || []} loading={tLoading} />
           </section>
 
           {/* Recently Discovered */}
@@ -169,7 +167,7 @@ export default function Home() {
                 Recently Discovered
               </h2>
             </div>
-            <RepositoryGrid repos={recent?.results?.slice(0, 8) || []} loading={rLoading} />
+            <RepositoryGrid repos={recent?.results?.slice(0, 12) || []} loading={rLoading} />
           </section>
 
           {/* Recently Viewed History */}
@@ -205,7 +203,7 @@ export default function Home() {
                 View all <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
-            <RepositoryGrid repos={aiPopular?.results?.slice(0, 8) || []} loading={aLoading} />
+            <RepositoryGrid repos={aiPopular?.results?.slice(0, 12) || []} loading={aLoading} />
           </section>
         </div>
       }

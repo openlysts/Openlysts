@@ -1,12 +1,12 @@
 # Openlysts Architecture Document
 
-This document outlines the complete, ground-up architecture of the Openlyst local-first platform. Use this as a reference if you ever need to rebuild the application from scratch or deeply understand its moving parts.
+This document outlines the complete, ground-up architecture of the Openlyst platform. Use this as a reference if you ever need to rebuild the application from scratch or deeply understand its moving parts.
 
 ## 1. System Overview
 
 Openlysts is an open-source discovery platform that continuously monitors GitHub for trending repositories, scores them based on quality and velocity, and presents them in a beautiful, filterable UI. 
 
-Originally built on a proprietary cloud backend, it has been fully migrated to a **local-first, autonomous architecture** where the entire database and ingestion engine run directly on the user's machine.
+The application uses a full-stack JavaScript architecture, designed to run both locally for development and on Vercel Serverless Functions in production. It connects to a centralized PostgreSQL (Neon) database.
 
 ## 2. Technology Stack
 
@@ -20,23 +20,40 @@ Originally built on a proprietary cloud backend, it has been fully migrated to a
 ### Backend (Server)
 - **Runtime**: Node.js
 - **Server**: Express.js
-- **Database**: SQLite (via `better-sqlite3` - synchronous, high performance)
-- **Execution**: Run concurrently with Vite using `npm-run-all` or `concurrently`.
+- **Database**: PostgreSQL (via `pg` pool) hosted on Neon.
+- **Execution**: Runs on Vercel Serverless Functions (subject to execution timeouts) or concurrently with Vite locally using `npm-run-all`.
+
+### Security & Auth Stack
+- **Session Management**: Database-backed sessions via `express-session` and `connect-pg-simple`.
+- **Password Hashing**: `bcryptjs` (Cost factor 12).
+- **Authentication**: Local Email/Password + OAuth2 (Google & GitHub).
+- **Rate Limiting**: `express-rate-limit` to prevent brute force and enumeration attacks.
+- **Email Dispatch**: NodeMailer (SMTP via Gmail for Password Resets and Contact Forms).
 
 ## 3. Directory Structure
 
 ```text
 openlyst/
-├── data/                       # Local SQLite database files (ignored in git)
-│   └── openlyst.db
 ├── server/                     # Express Backend
 │   ├── api/                    # Express route definitions
+│   │   ├── admin.js            # Admin user management & audit logs
+│   │   ├── auth.js             # Login, register, oauth, resets
+│   │   ├── contact.js          # SMTP Email dispatch via nodemailer
 │   │   ├── entities.js         # Generic CRUD routes for all tables
 │   │   ├── functions.js        # Custom RPC routes (querying, ingestion)
-│   │   └── contact.js          # SMTP Email dispatch via nodemailer
+│   │   └── profile.js          # Self-service user profile updates
+│   ├── auth/                   # Core Authentication Modules
+│   │   ├── audit.js            # Audit logging system
+│   │   ├── bootstrap.js        # Auto-creation of first admin
+│   │   ├── constants.js        # Roles, statuses, actions
+│   │   ├── email.js            # Verification & Reset emails
+│   │   ├── middleware.js       # Auth guards (requireAuth, requireRole)
+│   │   ├── oauth.js            # OAuth provider logic
+│   │   ├── password.js         # Bcrypt hashing & strength checks
+│   │   └── session.js          # Session store config
 │   ├── db/                     # Database connection and schema
-│   │   ├── index.js            # better-sqlite3 connection singleton
-│   │   └── schema.js           # CREATE TABLE statements
+│   │   ├── index.js            # PostgreSQL connection pool singleton
+│   │   └── schema.js           # CREATE TABLE statements (auto-init)
 │   ├── functions/              # Core Business Logic
 │   │   ├── runIngestion.js     # GitHub API fetching and updating logic
 │   │   └── queryRepositories.js# Advanced filtering and sorting logic
@@ -45,150 +62,59 @@ openlyst/
 │   └── index.js                # Express app entry point & Background Worker loop
 ├── src/                        # React Frontend
 │   ├── api/                    # API clients
-│   │   └── localClient.js      # Replaces the legacy Base44 SDK
+│   │   └── localClient.js      # Fetch wrapper for generic entity calls
 │   ├── components/             # Reusable UI components
 │   ├── lib/                    # Utilities and configuration
-│   │   ├── local-runtime/      # The mock SDK logic that communicates with Express
-│   │   └── api.js              # Wrappers around localClient calls
-│   └── pages/                  # Top-level route components (Home, Search, etc.)
+│   │   ├── local-runtime/      # Auth client wrapper communicating with Express
+│   │   ├── api.js              # Wrappers around localClient calls
+│   │   └── AuthContext.jsx     # Global authentication state
+│   └── pages/                  # Top-level route components (Home, Search, Admin, etc.)
 └── package.json
 ```
 
-## 4. Data Model (SQLite Schema)
+## 4. Data Model (PostgreSQL Schema)
 
-The application uses a generic entity-based model. Key tables include:
-
-- **`Repository`**: The core entity. Stores GitHub metadata.
-  - Columns: `id`, `github_id`, `full_name`, `description`, `stars`, `language`, `topics`, `trending_score`, `quality_score`, `last_ingested_at`, etc.
-  - Indexes: Indexed on `stars`, `trending_score`, and `created_date` for fast querying.
-  
-- **`User`**: Local profile data.
-  - Columns: `id`, `name`, `email`, `role`, `settings`, `onboarded`.
-  
-- **`Goal`, `Task`, `Update`, `AgentActivity`**: 
-  - Supports the Orbital/AgentPM workflow functionality embedded in the app.
-
-## 5. Core Workflows
-
-### A. The SDK Mock Layer (Frontend)
-To avoid rewriting hundreds of React components that originally relied on a cloud SDK, we implemented an interceptor pattern in `src/lib/local-runtime/`.
-1. The frontend calls `localClient.entities.Repository.list()`.
-2. The mock SDK intercepts this, converts it to a standard `fetch()` POST request.
-3. The request hits `/api/entities/Repository/list` on the Express server.
-4. The backend dynamically translates this to `SELECT * FROM Repository`, runs it via `better-sqlite3`, and returns JSON.
-
-### B. Autonomous Background Ingestion (Backend)
-1. In `server/index.js`, a `setInterval` is established to run every 10 minutes (600,000 ms).
-2. It executes `executeIngestion()` (`server/functions/runIngestion.js`).
-3. This function fetches standard queries from the GitHub API, calculates a `trending_score` and `quality_score` for each repository based on activity and completeness, and runs `INSERT OR REPLACE` into the local SQLite database.
-
-### C. Backend Email Dispatch (Contact Form)
-1. A user submits the contact form (`Contact.jsx`) on the frontend.
-2. The frontend sends a POST request to `/api/contact/send` with the form data.
-3. The Express server uses `nodemailer` configured with the SMTP credentials in `.env.local` to securely dispatch the email to the platform owner without exposing email addresses or relying on local OS clients.
-
-### D. Real-Time UI Syncing (Frontend)
-# Openlysts Architecture Document
-
-This document outlines the complete, ground-up architecture of the Openlyst local-first platform. Use this as a reference if you ever need to rebuild the application from scratch or deeply understand its moving parts.
-
-## 1. System Overview
-
-Openlysts is an open-source discovery platform that continuously monitors GitHub for trending repositories, scores them based on quality and velocity, and presents them in a beautiful, filterable UI. 
-
-Originally built on a proprietary cloud backend, it has been fully migrated to a **local-first, autonomous architecture** where the entire database and ingestion engine run directly on the user's machine.
-
-## 2. Technology Stack
-
-### Frontend (Client)
-- **Framework**: React 18 + Vite
-- **Routing**: React Router DOM v6
-- **State Management / Data Fetching**: TanStack React Query (v5)
-- **Styling**: Tailwind CSS + standard CSS (`index.css`)
-- **UI Components**: Shadcn UI (Radix primitives), Framer Motion (animations), Lucide React (icons).
-
-### Backend (Server)
-- **Runtime**: Node.js
-- **Server**: Express.js
-- **Database**: SQLite (via `better-sqlite3` - synchronous, high performance)
-- **Execution**: Run concurrently with Vite using `npm-run-all` or `concurrently`.
-
-## 3. Directory Structure
-
-```text
-openlyst/
-├── data/                       # Local SQLite database files (ignored in git)
-│   └── openlyst.db
-├── server/                     # Express Backend
-│   ├── api/                    # Express route definitions
-│   │   ├── entities.js         # Generic CRUD routes for all tables
-│   │   ├── functions.js        # Custom RPC routes (querying, ingestion)
-│   │   └── contact.js          # SMTP Email dispatch via nodemailer
-│   ├── db/                     # Database connection and schema
-│   │   ├── index.js            # better-sqlite3 connection singleton
-│   │   └── schema.js           # CREATE TABLE statements
-│   ├── functions/              # Core Business Logic
-│   │   ├── runIngestion.js     # GitHub API fetching and updating logic
-│   │   └── queryRepositories.js# Advanced filtering and sorting logic
-│   ├── services/               # Database interaction layer
-│   │   └── entities.js         # Dynamic SQL generation for CRUD
-│   └── index.js                # Express app entry point & Background Worker loop
-├── src/                        # React Frontend
-│   ├── api/                    # API clients
-│   │   └── localClient.js      # Replaces the legacy Base44 SDK
-│   ├── components/             # Reusable UI components
-│   ├── lib/                    # Utilities and configuration
-│   │   ├── local-runtime/      # The mock SDK logic that communicates with Express
-│   │   └── api.js              # Wrappers around localClient calls
-│   └── pages/                  # Top-level route components (Home, Search, etc.)
-└── package.json
-```
-
-## 4. Data Model (SQLite Schema)
-
-The application uses a generic entity-based model. Key tables include:
+The application uses a generic entity-based model augmented by dedicated auth tables. Key tables include:
 
 - **`Repository`**: The core entity. Stores GitHub metadata.
   - Columns: `id`, `github_id`, `full_name`, `description`, `stars`, `language`, `topics`, `trending_score`, `quality_score`, `last_ingested_at`, etc.
-  - Indexes: Indexed on `stars`, `trending_score`, and `created_date` for fast querying.
   
-- **`User`**: Local profile data.
-  - Columns: `id`, `name`, `email`, `role`, `settings`, `onboarded`.
+- **`User`**: Core user accounts.
+  - Columns: `id`, `name`, `email`, `password_hash`, `role` (`user`, `admin`), `account_status`, `email_verified`.
   
-- **`Goal`, `Task`, `Update`, `AgentActivity`**: 
-  - Supports the Orbital/AgentPM workflow functionality embedded in the app.
+- **`AuthAccount`**: Linked OAuth providers.
+  - Columns: `id`, `user_id`, `provider` (`google`, `github`), `provider_id`.
+  
+- **`session`**: Serverless-compatible session store. Managed by `connect-pg-simple`.
+- **`PasswordResetToken` / `EmailVerificationToken`**: Time-limited cryptographic hashes for secure flows.
+- **`AuditLog`**: Immutable ledger of administrative and sensitive actions (role changes, suspensions).
 
 ## 5. Core Workflows
 
-### A. The SDK Mock Layer (Frontend)
-To avoid rewriting hundreds of React components that originally relied on a cloud SDK, we implemented an interceptor pattern in `src/lib/local-runtime/`.
-1. The frontend calls `localClient.entities.Repository.list()`.
-2. The mock SDK intercepts this, converts it to a standard `fetch()` POST request.
-3. The request hits `/api/entities/Repository/list` on the Express server.
-4. The backend dynamically translates this to `SELECT * FROM Repository`, runs it via `better-sqlite3`, and returns JSON.
+### A. Authentication & Session Flow
+1. Users authenticate via `/api/auth/login` (email/password) or `/api/auth/:provider` (OAuth).
+2. The server verifies credentials and establishes a session using `express-session` with the `connect-pg-simple` store.
+3. A `connect.sid` cookie is set (`HttpOnly`, `SameSite=Lax`, `Secure` in production).
+4. The frontend (`AuthContext.jsx`) calls `/api/auth/me` on load to hydrate user state.
+5. Mutating API endpoints in `/api/entities` and `/api/functions` are protected by `requireAdmin` middleware, checking `req.user`.
 
 ### B. Autonomous Background Ingestion (Backend)
-1. In `server/index.js`, a `setInterval` is established to run every 10 minutes (600,000 ms).
+1. In `server/index.js`, a `setInterval` is established to run every 10 minutes locally.
 2. It executes `executeIngestion()` (`server/functions/runIngestion.js`).
-3. This function fetches standard queries from the GitHub API, calculates a `trending_score` and `quality_score` for each repository based on activity and completeness, and runs `INSERT OR REPLACE` into the local SQLite database.
+3. This function fetches standard queries from the GitHub API, calculates a `trending_score` and `quality_score` for each repository based on activity and completeness, and runs `INSERT ... ON CONFLICT DO UPDATE` into the PostgreSQL database.
+4. *Note: On Vercel, this is typically adapted to a Cron Job due to serverless timeouts.*
 
-### C. Backend Email Dispatch (Contact Form)
-1. A user submits the contact form (`Contact.jsx`) on the frontend.
-2. The frontend sends a POST request to `/api/contact/send` with the form data.
-3. The Express server uses `nodemailer` configured with the SMTP credentials in `.env.local` to securely dispatch the email to the platform owner without exposing email addresses or relying on local OS clients.
+### C. Backend Email Dispatch (SMTP)
+1. A user triggers a password reset or submits a contact form.
+2. The Express server uses `nodemailer` configured with the SMTP credentials (`SMTP_HOST`, `SMTP_USER`, `SMTP_PASS`) in `.env.local`.
+3. Standardized, professional HTML emails are sent to the user or platform owner securely.
 
 ### D. Real-Time UI Syncing (Frontend)
 1. Pages like `Home.jsx` and `Trending.jsx` use `@tanstack/react-query`.
 2. The queries are configured with `refetchInterval: 60000` (1 minute).
-3. If the user leaves the page open, React Query quietly polls the backend every minute. When the background ingestion worker finishes a batch, the frontend instantly reflects the new database state without requiring a page refresh.
+3. If the user leaves the page open, React Query quietly polls the backend every minute. When background ingestion finishes a batch, the frontend instantly reflects the new database state without requiring a page refresh.
 
-## 6. Authentication
-
-Because this is a local-first application, true cloud authentication is unnecessary.
-- The `AuthContext.jsx` and `src/lib/local-runtime/auth.js` automatically create a local anonymous user profile (`local-admin`).
-- This bypasses login screens and allows the user immediate access to the platform while preserving the structural requirement of having an authenticated "User" attached to goals and bookmarks in the database.
-
-## 7. Git Workflow (Releases & Environments)
+## 6. Git Workflow (Releases & Environments)
 
 Openlysts strictly follows a 3-branch strategy for stability and rapid development:
 
@@ -196,4 +122,4 @@ Openlysts strictly follows a 3-branch strategy for stability and rapid developme
 - **`main`**: The latest stable version (Production). When `dev` is ready, it merges here and semantic version tags (e.g. `1.0.0`) are applied for official GitHub Releases.
 - **`backup`**: The most stable, "last known good" version. When `main` proves reliable in production, it is backed up here to serve as an immediate rollback point in case of critical failures.
 
-All AI interactions and workflows must default to the `dev` branch unless performing a specific release or backup action via the `git-release-workflow` skill.
+All AI interactions and workflows must default to the `dev` branch unless performing a specific release action.

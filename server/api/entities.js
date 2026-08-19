@@ -1,7 +1,12 @@
 import express from 'express';
 import { entities } from '../services/entities.js';
+import { requireAuth, requireRole } from '../auth/middleware.js';
+import { ROLES } from '../auth/constants.js';
 
 const router = express.Router();
+
+// Middleware for protecting mutating actions
+const requireAdmin = [requireAuth, requireRole(ROLES.ADMIN)];
 
 router.post('/:entity/:action', async (req, res, next) => {
   const { entity, action } = req.params;
@@ -9,6 +14,17 @@ router.post('/:entity/:action', async (req, res, next) => {
   
   if (!service) {
     return res.status(400).json({ error: true, message: `Unknown entity: ${entity}` });
+  }
+
+  // Authorize mutating actions
+  const isMutating = ['create', 'update', 'delete', 'deleteMany', 'bulkCreate'].includes(action);
+  
+  if (isMutating) {
+    // Manually run middleware stack
+    for (let mw of requireAdmin) {
+      const err = await new Promise((resolve) => mw(req, res, resolve));
+      if (err) return; // Response was already sent by middleware
+    }
   }
 
   try {

@@ -100,6 +100,55 @@ export async function initSchema(db) {
       migration_difficulty TEXT,
       feature_parity_score REAL,
       category TEXT
+    );`,
+
+    // ─── Auth Tables ──────────────────────────────────────────────────
+
+    `CREATE TABLE IF NOT EXISTS "AuthAccount" (
+      id TEXT PRIMARY KEY,
+      user_id TEXT NOT NULL REFERENCES "User"(id) ON DELETE CASCADE,
+      provider TEXT NOT NULL,
+      provider_account_id TEXT NOT NULL,
+      provider_email TEXT,
+      provider_name TEXT,
+      provider_avatar TEXT,
+      created_date TEXT NOT NULL,
+      CONSTRAINT uq_auth_provider UNIQUE (provider, provider_account_id)
+    );`,
+
+    `CREATE TABLE IF NOT EXISTS "session" (
+      sid VARCHAR NOT NULL PRIMARY KEY,
+      sess JSON NOT NULL,
+      expire TIMESTAMP(6) NOT NULL
+    );`,
+
+    `CREATE TABLE IF NOT EXISTS "PasswordResetToken" (
+      id TEXT PRIMARY KEY,
+      user_id TEXT NOT NULL REFERENCES "User"(id) ON DELETE CASCADE,
+      token_hash TEXT NOT NULL,
+      expires_at TEXT NOT NULL,
+      used INTEGER DEFAULT 0,
+      created_date TEXT NOT NULL
+    );`,
+
+    `CREATE TABLE IF NOT EXISTS "EmailVerificationToken" (
+      id TEXT PRIMARY KEY,
+      user_id TEXT NOT NULL REFERENCES "User"(id) ON DELETE CASCADE,
+      token_hash TEXT NOT NULL,
+      expires_at TEXT NOT NULL,
+      used INTEGER DEFAULT 0,
+      created_date TEXT NOT NULL
+    );`,
+
+    `CREATE TABLE IF NOT EXISTS "AuditLog" (
+      id TEXT PRIMARY KEY,
+      created_date TEXT NOT NULL,
+      actor_id TEXT,
+      target_user_id TEXT,
+      action TEXT NOT NULL,
+      ip_address TEXT,
+      user_agent TEXT,
+      metadata TEXT
     );`
   ];
 
@@ -113,30 +162,52 @@ export async function initSchema(db) {
     }
   }
 
-  try {
-    await db.query(`ALTER TABLE "Alternative" ADD COLUMN free_tool_name TEXT`);
-  } catch (e) {
-    // Column already exists, ignore
+  // ─── ALTER TABLE migrations (idempotent, errors suppressed) ─────
+
+  const alterQueries = [
+    // Existing migrations
+    `ALTER TABLE "Alternative" ADD COLUMN free_tool_name TEXT`,
+    `ALTER TABLE "Alternative" ADD COLUMN category TEXT`,
+    `ALTER TABLE "DiscoveryQuery" ADD COLUMN current_page INTEGER DEFAULT 1`,
+
+    // Auth columns for User table
+    `ALTER TABLE "User" ADD COLUMN password_hash TEXT`,
+    `ALTER TABLE "User" ADD COLUMN email_normalized TEXT`,
+    `ALTER TABLE "User" ADD COLUMN account_status TEXT DEFAULT 'ACTIVE'`,
+    `ALTER TABLE "User" ADD COLUMN email_verified INTEGER DEFAULT 0`,
+    `ALTER TABLE "User" ADD COLUMN avatar_url TEXT`,
+    `ALTER TABLE "User" ADD COLUMN last_login_at TEXT`,
+    `ALTER TABLE "User" ADD COLUMN updated_at TEXT`,
+  ];
+
+  for (const q of alterQueries) {
+    try {
+      await db.query(q);
+    } catch (e) {
+      // Column already exists — expected, ignore
+    }
   }
 
-  try {
-    await db.query(`ALTER TABLE "Alternative" ADD COLUMN category TEXT`);
-  } catch (e) {
-    // Column already exists, ignore
-  }
-
-  try {
-    await db.query(`ALTER TABLE "DiscoveryQuery" ADD COLUMN current_page INTEGER DEFAULT 1`);
-  } catch (e) {
-    // Column already exists, ignore
-  }
+  // ─── Indexes ────────────────────────────────────────────────────
 
   const indexQueries = [
+    // Existing indexes
     `CREATE INDEX IF NOT EXISTS idx_repo_stars ON "Repository"(stars DESC);`,
     `CREATE INDEX IF NOT EXISTS idx_repo_created ON "Repository"(created_date DESC);`,
     `CREATE INDEX IF NOT EXISTS idx_repo_trending ON "Repository"(trending_score DESC);`,
     `CREATE INDEX IF NOT EXISTS idx_repo_full_name ON "Repository"(full_name);`,
-    `CREATE INDEX IF NOT EXISTS idx_ingestion_run_started ON "IngestionRun"(started_at DESC);`
+    `CREATE INDEX IF NOT EXISTS idx_ingestion_run_started ON "IngestionRun"(started_at DESC);`,
+
+    // Auth indexes
+    `CREATE UNIQUE INDEX IF NOT EXISTS idx_user_email_normalized ON "User"(email_normalized);`,
+    `CREATE INDEX IF NOT EXISTS idx_auth_account_user ON "AuthAccount"(user_id);`,
+    `CREATE INDEX IF NOT EXISTS idx_session_expire ON "session"(expire);`,
+    `CREATE INDEX IF NOT EXISTS idx_prt_user ON "PasswordResetToken"(user_id);`,
+    `CREATE INDEX IF NOT EXISTS idx_prt_expires ON "PasswordResetToken"(expires_at);`,
+    `CREATE INDEX IF NOT EXISTS idx_evt_user ON "EmailVerificationToken"(user_id);`,
+    `CREATE INDEX IF NOT EXISTS idx_audit_created ON "AuditLog"(created_date DESC);`,
+    `CREATE INDEX IF NOT EXISTS idx_audit_actor ON "AuditLog"(actor_id);`,
+    `CREATE INDEX IF NOT EXISTS idx_audit_action ON "AuditLog"(action);`,
   ];
 
   for (const q of indexQueries) {

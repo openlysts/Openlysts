@@ -146,7 +146,7 @@ export default function RepoDetail() {
         <AlertCircle className="w-10 h-10 text-text-muted mx-auto mb-3" />
         <h1 className="text-xl font-bold text-text mb-1">Repository not found</h1>
         <p className="text-text-muted text-sm mb-4">This repository may have been removed or not yet ingested.</p>
-        <Link to="/" className="inline-flex items-center gap-1.5 text-accent hover:underline">
+        <Link to="/discover" className="inline-flex items-center gap-1.5 text-accent hover:underline">
           <ArrowLeft className="w-4 h-4" /> Back to Discover
         </Link>
       </div>

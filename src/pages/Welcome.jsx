@@ -48,7 +48,8 @@ export default function Welcome() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 max-w-4xl mx-auto w-full">
+      <main id="main-content" role="main" className="relative z-10 flex flex-col items-center justify-center text-center px-4 max-w-4xl mx-auto w-full">
+        <h1 className="sr-only">Openlysts — Discover Open-Source Projects</h1>
         {mounted && (
           <>
             <motion.div
@@ -121,7 +122,7 @@ export default function Welcome() {
             </SpecularButton>
           </>
         )}
-      </div>
+      </main>
     </div>
   );
 }

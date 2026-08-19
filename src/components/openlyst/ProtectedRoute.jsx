@@ -1,9 +1,9 @@
+import React, { useEffect } from 'react';
 import { useAuth } from '@/lib/AuthContext';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
 
-export default function AdminRoute({ children }) {
-  const { user, isLoadingAuth, isAuthenticated, authChecked } = useAuth();
+export default function ProtectedRoute({ children }) {
+  const { isAuthenticated, isLoadingAuth, authChecked } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -23,15 +23,6 @@ export default function AdminRoute({ children }) {
 
   if (!isAuthenticated) {
     return null;
-  }
-
-  if (user?.role?.toUpperCase() !== 'ADMIN') {
-    return (
-      <div className="max-w-md mx-auto px-4 py-20 text-center">
-        <h1 className="text-xl font-bold text-text mb-2">Admin Access Required</h1>
-        <p className="text-text-muted text-sm">You need an admin account to access this page.</p>
-      </div>
-    );
   }
 
   return children;

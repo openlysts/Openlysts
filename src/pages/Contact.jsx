@@ -13,9 +13,16 @@ export default function Contact() {
 
   const handleEmail = async () => {
     const newErrors = {};
-    if (!form.name) newErrors.name = 'Name is required';
-    if (!form.email) newErrors.email = 'Email is required';
-    if (!form.message) newErrors.message = 'Message is required';
+    if (!form.name || !form.name.trim()) newErrors.name = 'Name is required';
+    
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!form.email || !form.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!emailRegex.test(form.email.trim())) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+
+    if (!form.message || !form.message.trim()) newErrors.message = 'Message is required';
     
     setErrors(newErrors);
     

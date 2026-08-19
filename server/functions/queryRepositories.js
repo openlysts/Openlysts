@@ -5,6 +5,10 @@ const PER_PAGE = 24;
 
 import { githubFetch, ingestRepoItem } from './runIngestion.js';
 
+let cachedRepos = null;
+let lastCacheTime = 0;
+const CACHE_TTL_MS = 15000;
+
 export default async function queryRepositories(req, res) {
   try {
     const body = req.body || {};
@@ -44,7 +48,12 @@ export default async function queryRepositories(req, res) {
       });
     }
 
-    const allRepos = await entities.Repository.list('-created_date', 3000);
+    const now = Date.now();
+    if (!cachedRepos || now - lastCacheTime > CACHE_TTL_MS) {
+      cachedRepos = await entities.Repository.list('-created_date', 3000);
+      lastCacheTime = now;
+    }
+    const allRepos = cachedRepos;
     let repos = allRepos.filter((r) => !r.hidden);
 
     if (q && q.trim()) {
@@ -108,10 +117,10 @@ export default async function queryRepositories(req, res) {
     }
 
     const sortFns = {
-      trending: (a, b) => (b.trending_score || 0) - (a.trending_score || 0) || a.id.localeCompare(b.id),
-      stars: (a, b) => (b.stars || 0) - (a.stars || 0) || a.id.localeCompare(b.id),
-      updated: (a, b) => new Date(b.github_updated_at || 0).getTime() - new Date(a.github_updated_at || 0).getTime() || a.id.localeCompare(b.id),
-      recent: (a, b) => new Date(b.last_ingested_at || 0).getTime() - new Date(a.last_ingested_at || 0).getTime() || a.id.localeCompare(b.id),
+      trending: (a, b) => (b.trending_score || 0) - (a.trending_score || 0) || String(a.id || '').localeCompare(String(b.id || '')),
+      stars: (a, b) => (b.stars || 0) - (a.stars || 0) || String(a.id || '').localeCompare(String(b.id || '')),
+      updated: (a, b) => new Date(b.github_updated_at || 0).getTime() - new Date(a.github_updated_at || 0).getTime() || String(a.id || '').localeCompare(String(b.id || '')),
+      recent: (a, b) => new Date(b.last_ingested_at || 0).getTime() - new Date(a.last_ingested_at || 0).getTime() || String(a.id || '').localeCompare(String(b.id || '')),
     };
     repos.sort(sortFns[sort] || sortFns.trending);
 

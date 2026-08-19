@@ -1,7 +1,14 @@
+import './env.js';
 import express from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import { db } from './db/index.js';
+import { configureSession } from './auth/session.js';
+import { loadSessionUser } from './auth/middleware.js';
+import { autoBootstrapFromEnv } from './auth/bootstrap.js';
+
+import authRouter from './api/auth.js';
+import adminRouter from './api/admin.js';
+import profileRouter from './api/profile.js';
 import entitiesRouter from './api/entities.js';
 import functionsRouter from './api/functions.js';
 import contactRouter from './api/contact.js';
@@ -11,16 +18,20 @@ import { ingestAlternatives } from './functions/ingestAlternatives.js';
 import { fileURLToPath } from 'url';
 import path from 'path';
 
-dotenv.config({ path: '.env.local' });
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-app.use(cors());
+app.use(cors({
+  origin: process.env.APP_URL || 'http://localhost:5173',
+  credentials: true
+}));
 app.use(express.json({ limit: '50mb' }));
+
+configureSession(app);
+app.use(loadSessionUser);
 
 app.use((req, res, next) => {
   console.log(`[API] ${req.method} ${req.url}`);
@@ -32,6 +43,7 @@ import { initSchema } from './db/schema.js';
 app.get('/api/health', async (req, res) => {
   try {
     const schemaErrors = await initSchema(db);
+    await autoBootstrapFromEnv(); // Bootstrap admin if env vars are present
     await db.query('SELECT 1');
     res.json({ status: 'ok', database: 'connected and schema initialized', schemaErrors });
   } catch (error) {
@@ -39,6 +51,9 @@ app.get('/api/health', async (req, res) => {
   }
 });
 
+app.use('/api/auth', authRouter);
+app.use('/api/admin', adminRouter);
+app.use('/api/profile', profileRouter);
 app.use('/api/entities', entitiesRouter);
 app.use('/api/functions', functionsRouter);
 app.use('/api/contact', contactRouter);
@@ -63,7 +78,9 @@ app.use((err, req, res, next) => {
 
 export default app;
 
-if (!process.env.VERCEL) {
+const isMainModule = process.argv[1] === fileURLToPath(import.meta.url);
+
+if (isMainModule) {
   app.listen(PORT, () => {
     console.log(`Express server running on http://localhost:${PORT}`);
     

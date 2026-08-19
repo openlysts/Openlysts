@@ -33,6 +33,14 @@ export function clearBookmarks() {
   window.dispatchEvent(new CustomEvent('bookmarks-changed'));
 }
 
+if (typeof window !== 'undefined') {
+  window.addEventListener('storage', (e) => {
+    if (e.key === KEY) {
+      window.dispatchEvent(new CustomEvent('bookmarks-changed'));
+    }
+  });
+}
+
 export function useBookmarkCount() {
   // Re-render hook helper — components subscribe to the custom event
   return getBookmarks().length;

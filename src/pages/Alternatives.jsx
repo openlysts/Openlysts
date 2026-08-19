@@ -325,55 +325,55 @@ export default function Alternatives() {
   );
 
   return (
-    <div className="max-w-[1700px] mx-auto px-4 sm:px-6 py-6 relative">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 relative">
 
       {/* ─── Hero Header ─── */}
-      <div className="mb-6">
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
-          <div>
-            <div className="flex items-center gap-3 mb-2">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-accent/20 to-accent/5 border border-accent/20 flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-accent" />
+      <div className="mb-8 p-6 rounded-2xl bg-gradient-to-b from-bg-card/80 to-bg-card/30 border border-border shadow-sm">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+          <div className="max-w-2xl">
+            <div className="flex items-center gap-2.5 mb-2.5">
+              <div className="w-9 h-9 rounded-xl bg-accent-soft text-accent border border-accent/20 flex items-center justify-center flex-shrink-0">
+                <Sparkles className="w-4 h-4" />
               </div>
-              <h1 className="text-3xl font-black text-text tracking-tight">
+              <h1 className="text-2xl sm:text-3xl font-black text-text tracking-tight">
                 {activeCategory === 'All' ? 'Open Source Alternatives' : `${activeCategory}`}
               </h1>
             </div>
-            <p className="text-sm text-text-secondary max-w-xl">
-              Discover {data?.stats?.total_tools || '...'} curated open-source replacements for {data?.stats?.total_paid_tools || '...'} paid tools across {data?.stats?.total_categories || '...'} categories — each scored by the Openlysts algorithm.
+            <p className="text-sm text-text-secondary leading-relaxed">
+              Discover {data?.stats?.total_tools || '146+'} curated open-source replacements for {data?.stats?.total_paid_tools || '61'} SaaS products — scored by code quality, community health, and feature parity.
             </p>
           </div>
 
           {/* Stats Pills */}
           {data?.stats && (
-            <div className="flex items-center gap-3 flex-shrink-0">
-              <div className="bg-bg-card/50 backdrop-blur-md border border-white/5 rounded-xl px-4 py-2 text-center shadow-sm">
+            <div className="flex items-center gap-2 sm:gap-3 flex-wrap sm:flex-nowrap">
+              <div className="bg-bg-subtle/80 border border-border rounded-xl px-4 py-2.5 text-center min-w-[90px]">
                 <div className="text-xl font-black text-accent">{data.stats.total_tools}</div>
-                <div className="text-[10px] text-text-muted uppercase tracking-wider">Tools</div>
+                <div className="text-[10px] font-bold text-text-muted uppercase tracking-wider">Tools</div>
               </div>
-              <div className="bg-bg-card/50 backdrop-blur-md border border-white/5 rounded-xl px-4 py-2 text-center shadow-sm">
+              <div className="bg-bg-subtle/80 border border-border rounded-xl px-4 py-2.5 text-center min-w-[90px]">
                 <div className="text-xl font-black text-text">{data.stats.total_categories}</div>
-                <div className="text-[10px] text-text-muted uppercase tracking-wider">Categories</div>
+                <div className="text-[10px] font-bold text-text-muted uppercase tracking-wider">Categories</div>
               </div>
-              <div className="bg-bg-card/50 backdrop-blur-md border border-white/5 rounded-xl px-4 py-2 text-center shadow-sm">
+              <div className="bg-bg-subtle/80 border border-border rounded-xl px-4 py-2.5 text-center min-w-[90px]">
                 <div className="text-xl font-black text-amber-400">{data.stats.avg_score}</div>
-                <div className="text-[10px] text-text-muted uppercase tracking-wider">Avg Score</div>
+                <div className="text-[10px] font-bold text-text-muted uppercase tracking-wider">Avg Score</div>
               </div>
             </div>
           )}
         </div>
 
         {/* ─── Controls Bar ─── */}
-        <div className="flex flex-wrap items-center gap-3 mt-5">
+        <div className="flex flex-wrap items-center gap-3 mt-6 pt-5 border-t border-border/50">
           {/* Search */}
-          <div className="relative flex-1 min-w-[200px] max-w-md">
+          <div className="relative flex-1 min-w-[240px]">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search tools, categories, or SaaS products..."
-              className="w-full bg-bg-card border border-border rounded-xl pl-10 pr-4 py-2.5 text-sm text-text focus:outline-none focus:border-accent transition-colors placeholder:text-text-muted"
+              className="w-full bg-bg border border-border rounded-xl pl-9 pr-4 py-2 text-sm text-text focus:outline-none focus:border-accent transition-colors placeholder:text-text-muted"
             />
           </div>
 
@@ -381,7 +381,7 @@ export default function Alternatives() {
           <div className="relative" ref={sortRef}>
             <button 
               onClick={() => setIsSortOpen(!isSortOpen)}
-              className="flex items-center gap-2 bg-bg-card border border-border hover:border-accent/50 rounded-xl px-3 py-2 text-sm text-text-secondary font-medium transition-colors"
+              className="flex items-center gap-2 bg-bg border border-border hover:border-accent/50 rounded-xl px-3 py-2 text-sm text-text-secondary font-medium transition-colors"
             >
               <ArrowUpDown className="w-3.5 h-3.5 text-text-muted" />
               <span>{sortOptions.find(o => o.value === sortBy)?.label}</span>
@@ -419,7 +419,7 @@ export default function Alternatives() {
           </div>
 
           {/* View Toggle */}
-          <div className="flex items-center bg-bg-card border border-border rounded-xl overflow-hidden">
+          <div className="flex items-center bg-bg border border-border rounded-xl overflow-hidden">
             <button 
               onClick={() => setViewMode('grid')}
               className={`p-2 transition-colors ${viewMode === 'grid' ? 'bg-accent/10 text-accent' : 'text-text-muted hover:text-text'}`}
@@ -439,7 +439,7 @@ export default function Alternatives() {
           {/* Sidebar Toggle */}
           <button 
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className={`p-2 rounded-xl border transition-colors ${sidebarOpen ? 'bg-accent/10 text-accent border-accent/20' : 'bg-bg-card text-text-muted border-border hover:text-text'}`}
+            className={`p-2 rounded-xl border transition-colors ${sidebarOpen ? 'bg-accent/10 text-accent border-accent/20' : 'bg-bg text-text-muted border-border hover:text-text'}`}
             title="Toggle category sidebar"
           >
             <Filter className="w-4 h-4" />
@@ -459,50 +459,50 @@ export default function Alternatives() {
       </div>
 
       {/* ─── Main Layout: Sidebar + Content ─── */}
-      <div className="flex gap-5">
+      <div className="flex gap-6">
 
         {/* ─── Sidebar ─── */}
         <AnimatePresence>
           {sidebarOpen && (
             <motion.aside 
               initial={{ width: 0, opacity: 0 }}
-              animate={{ width: 220, opacity: 1 }}
+              animate={{ width: 230, opacity: 1 }}
               exit={{ width: 0, opacity: 0 }}
               transition={{ duration: 0.2 }}
               className="flex-shrink-0 overflow-hidden"
             >
-              <div className="w-[220px] sticky top-20">
-                <div className="bg-bg-card border border-border rounded-xl overflow-hidden">
-                  <div className="p-3 border-b border-border">
-                    <h3 className="text-xs font-bold text-text-muted uppercase tracking-wider flex items-center gap-1.5">
-                      <Layers className="w-3.5 h-3.5" /> Categories
+              <div className="w-[230px] sticky top-20">
+                <div className="bg-bg-card border border-border rounded-xl overflow-hidden shadow-sm">
+                  <div className="p-3.5 border-b border-border bg-bg-subtle/50">
+                    <h3 className="text-xs font-bold text-text uppercase tracking-wider flex items-center gap-1.5">
+                      <Layers className="w-3.5 h-3.5 text-accent" /> Categories
                     </h3>
                   </div>
-                  <div className="max-h-[calc(100vh-200px)] overflow-y-auto custom-scrollbar">
+                  <div className="max-h-[calc(100vh-220px)] overflow-y-auto custom-scrollbar p-1.5 space-y-0.5">
                     <button
                       onClick={() => setActiveCategory('All')}
-                      className={`w-full text-left px-3 py-2 text-xs font-medium transition-colors flex items-center justify-between ${
-                        activeCategory === 'All' ? 'bg-accent/10 text-accent border-l-2 border-accent' : 'text-text-secondary hover:bg-bg-hover hover:text-text'
+                      className={`w-full text-left px-3 py-2 text-xs rounded-lg font-medium transition-colors flex items-center justify-between ${
+                        activeCategory === 'All' ? 'bg-accent text-accent-fg font-bold' : 'text-text-secondary hover:bg-bg-subtle hover:text-text'
                       }`}
                     >
                       <span>All Tools</span>
-                      <span className="text-[10px] bg-bg-subtle px-1.5 py-0.5 rounded font-bold">{data?.stats?.total_tools || 0}</span>
+                      <span className={`text-[10px] px-1.5 py-0.5 rounded font-bold ${activeCategory === 'All' ? 'bg-black/20 text-white' : 'bg-bg-subtle text-text-muted'}`}>{data?.stats?.total_tools || 0}</span>
                     </button>
                     {data?.categories?.map((cat) => (
                       <button
                         key={cat.name}
                         onClick={() => setActiveCategory(cat.name)}
-                        className={`w-full text-left px-3 py-2 text-xs transition-colors flex items-center justify-between gap-1 ${
+                        className={`w-full text-left px-3 py-2 text-xs rounded-lg transition-colors flex items-center justify-between gap-1 ${
                           activeCategory === cat.name 
-                            ? 'bg-accent/10 text-accent font-bold border-l-2 border-accent' 
-                            : 'text-text-secondary hover:bg-bg-hover hover:text-text'
+                            ? 'bg-accent text-accent-fg font-bold' 
+                            : 'text-text-secondary hover:bg-bg-subtle hover:text-text'
                         }`}
                       >
                         <span className="truncate flex items-center gap-1.5">
                           <span className="text-sm">{categoryIcons[cat.name] || '📂'}</span>
                           {cat.name}
                         </span>
-                        <span className="text-[10px] bg-bg-subtle px-1.5 py-0.5 rounded font-bold flex-shrink-0">{cat.count}</span>
+                        <span className={`text-[10px] px-1.5 py-0.5 rounded font-bold flex-shrink-0 ${activeCategory === cat.name ? 'bg-black/20 text-white' : 'bg-bg-subtle text-text-muted'}`}>{cat.count}</span>
                       </button>
                     ))}
                   </div>
@@ -530,12 +530,12 @@ export default function Alternatives() {
           {/* Flat view when searching or specific category */}
           {data?.alternatives && (activeCategory !== 'All' || debouncedSearch) && (
             <div className={viewMode === 'grid' 
-              ? 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-3' 
-              : 'flex flex-col gap-2'
+              ? 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4' 
+              : 'flex flex-col gap-2.5'
             }>
               {data.alternatives.map((alt, idx) => renderCard(alt, idx))}
               {data.alternatives.length === 0 && !isLoading && (
-                <div className="col-span-full text-center py-16 text-text-muted border border-dashed border-border rounded-2xl">
+                <div className="col-span-full text-center py-16 text-text-muted border border-dashed border-border rounded-2xl bg-bg-card/40">
                   <Search className="w-8 h-8 mx-auto mb-3 text-text-muted/50" />
                   <p className="font-medium">No tools found</p>
                   <p className="text-xs mt-1">Try adjusting your search or category filter.</p>
@@ -551,24 +551,24 @@ export default function Alternatives() {
                 <div 
                   key={group.category} 
                   ref={el => categoryRefs.current[group.category] = el}
-                  className="bg-bg-card/50 border border-border rounded-xl overflow-hidden"
+                  className="bg-bg-card/60 border border-border rounded-2xl overflow-hidden shadow-sm"
                 >
                   {/* Category Header */}
                   <button
                     onClick={() => toggleCategory(group.category)}
-                    className="w-full flex items-center justify-between px-5 py-3.5 hover:bg-bg-hover/50 transition-colors"
+                    className="w-full flex items-center justify-between px-5 py-4 hover:bg-bg-hover/40 transition-colors"
                   >
                     <div className="flex items-center gap-3">
-                      <span className="text-xl">{categoryIcons[group.category] || '📂'}</span>
+                      <span className="text-2xl">{categoryIcons[group.category] || '📂'}</span>
                       <div className="text-left">
                         <h2 className="text-base font-bold text-text">{group.category}</h2>
-                        <p className="text-[11px] text-text-muted">
+                        <p className="text-xs text-text-muted">
                           {group.total} tool{group.total !== 1 ? 's' : ''} · {group.paid_groups.length} SaaS replacement{group.paid_groups.length !== 1 ? 's' : ''}
                         </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
-                      <span className="text-xs text-text-muted bg-bg-subtle px-2 py-1 rounded-lg border border-border">
+                      <span className="text-xs font-semibold text-text-secondary bg-bg-subtle px-2.5 py-1 rounded-lg border border-border">
                         {group.total}
                       </span>
                       {expandedCategories.has(group.category) 
@@ -588,24 +588,23 @@ export default function Alternatives() {
                         transition={{ duration: 0.2 }}
                         className="overflow-hidden"
                       >
-                        <div className="px-5 pb-4 space-y-4">
+                        <div className="px-5 pb-5 space-y-5 border-t border-border/40 pt-4">
                           {group.paid_groups.map((pg) => (
                             <div key={pg.paid_tool_name}>
                               {/* Paid Tool Subheader */}
-                              <div className="flex items-center gap-2 mb-2.5 mt-1">
-                                <div className="h-px flex-1 bg-border/50" />
-                                <span className="text-[11px] font-bold text-text-muted uppercase tracking-wider flex items-center gap-1.5 px-2">
-                                  <Shield className="w-3 h-3" />
-                                  Replaces {pg.paid_tool_name}
-                                  <span className="text-accent">({pg.count})</span>
+                              <div className="flex items-center gap-2.5 mb-3">
+                                <span className="text-xs font-bold text-text-secondary bg-bg-subtle/80 px-2.5 py-1 rounded-lg border border-border flex items-center gap-1.5">
+                                  <Shield className="w-3.5 h-3.5 text-accent" />
+                                  Replaces <span className="text-text font-extrabold">{pg.paid_tool_name}</span>
+                                  <span className="text-accent font-bold">({pg.count})</span>
                                 </span>
-                                <div className="h-px flex-1 bg-border/50" />
+                                <div className="h-px flex-1 bg-border/40" />
                               </div>
 
                               {/* Cards */}
                               <div className={viewMode === 'grid'
-                                ? 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3'
-                                : 'flex flex-col gap-2'
+                                ? 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3.5'
+                                : 'flex flex-col gap-2.5'
                               }>
                                 {pg.alternatives.map((alt, idx) => renderCard(alt, idx))}
                               </div>

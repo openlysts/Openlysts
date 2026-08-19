@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSearchParams, useNavigate, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { localClient } from '@/api/localClient';
+import { queryRepos } from '@/lib/api';
 import { motion } from 'framer-motion';
 import { Star, GitFork, AlertCircle, X, Plus, Search } from 'lucide-react';
 import LicenseBadge from '@/components/openlyst/LicenseBadge';
@@ -21,8 +21,9 @@ export default function Compare() {
       if (repoNames.length === 0) return [];
       const results = [];
       for (const name of repoNames) {
-        const res = await localClient.entities.Repository.filter({ full_name: name });
-        if (res && res.length > 0) results.push(res[0]);
+        const res = await queryRepos({ q: name });
+        const match = res?.results?.find(r => r.full_name.toLowerCase() === name.toLowerCase() || r.name.toLowerCase() === name.toLowerCase()) || res?.results?.[0];
+        if (match) results.push(match);
       }
       return results;
     },
@@ -32,11 +33,13 @@ export default function Compare() {
   const handleSearch = async (e) => {
     const val = e.target.value;
     setSearchInput(val);
-    if (val.length > 2) {
-      const allRepos = await localClient.entities.Repository.list('-stars', 3000);
-      const query = val.toLowerCase();
-      const matches = allRepos.filter(r => r.full_name.toLowerCase().includes(query) || r.name.toLowerCase().includes(query)).slice(0, 5);
-      setSearchResults(matches);
+    if (val.trim().length > 0) {
+      try {
+        const res = await queryRepos({ q: val.trim() });
+        setSearchResults((res?.results || []).slice(0, 5));
+      } catch {
+        setSearchResults([]);
+      }
     } else {
       setSearchResults([]);
     }
