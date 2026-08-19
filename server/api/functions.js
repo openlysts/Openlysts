@@ -41,11 +41,16 @@ const adminOnlyFunctions = [
 
 const requireAdmin = [requireAuth, requireRole(ROLES.ADMIN)];
 
-router.post('/:name', async (req, res, next) => {
+router.all('/:name', async (req, res, next) => {
   const { name } = req.params;
   const fn = fns[name];
   if (!fn) {
     return res.status(404).json({ error: true, message: `Function not found: ${name}` });
+  }
+
+  // If GET, merge query parameters into body so functions receiving params can access them uniformly
+  if (req.method === 'GET' && (!req.body || Object.keys(req.body).length === 0)) {
+    req.body = { ...req.query };
   }
   
   // Authorize admin-only functions
