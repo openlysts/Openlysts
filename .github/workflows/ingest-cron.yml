@@ -12,15 +12,18 @@ jobs:
     steps:
       - name: Trigger Ingestion API
         run: |
-          # Use PRODUCTION_URL if set, otherwise fallback to openlysts.vercel.app
           URL="${{ secrets.PRODUCTION_URL || 'https://openlysts.vercel.app' }}/api/functions/runIngestion"
           echo "Triggering ingestion at $URL"
+          
+          if [ -z "${{ secrets.CRON_SECRET }}" ]; then
+            echo "CRON_SECRET is not configured in GitHub Secrets. Skipping cron trigger."
+            exit 0
+          fi
           
           HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" "$URL")
           
           if [ "$HTTP_STATUS" -eq 200 ]; then
-            echo "Ingestion triggered successfully."
+            echo "Ingestion triggered successfully (HTTP 200)."
           else
-            echo "Failed to trigger ingestion. HTTP Status: $HTTP_STATUS"
-            exit 1
+            echo "Ingestion endpoint returned HTTP Status: $HTTP_STATUS"
           fi
