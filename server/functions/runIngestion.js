@@ -262,15 +262,13 @@ export async function executeIngestion() {
 
 export default async function runIngestion(req, res) {
   try {
-    // Secure the endpoint for automated cron triggers
     const authHeader = req.headers.authorization;
-    // TEMP BYPASS FOR MANUAL TRIGGER
-    // if (process.env.CRON_SECRET) {
-    //   if (!authHeader || authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-    //     console.warn('[INGESTION] Unauthorized attempt to trigger ingestion.');
-    //     return res.status(401).json({ error: true, message: 'Unauthorized' });
-    //   }
-    // }
+    if (process.env.CRON_SECRET) {
+      if (!authHeader || authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+        console.warn('[INGESTION] Unauthorized attempt to trigger ingestion.');
+        return res.status(401).json({ error: true, message: 'Unauthorized' });
+      }
+    }
 
     const result = await executeIngestion();
     return res.json(result);
