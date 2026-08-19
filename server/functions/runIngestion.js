@@ -166,7 +166,11 @@ export async function executeIngestion() {
 
     const enabledQueries = queries
       .filter((q) => q.enabled)
-      .sort(() => 0.5 - Math.random())
+      .sort((a, b) => {
+        if (!a.last_run_at) return -1;
+        if (!b.last_run_at) return 1;
+        return new Date(a.last_run_at) - new Date(b.last_run_at);
+      })
       .slice(0, 3);
     const errors = [];
     let reposProcessed = 0, reposAdded = 0, reposUpdated = 0;
@@ -186,29 +190,40 @@ export async function executeIngestion() {
 
     for (const dq of enabledQueries) {
       try {
-        const url = `${GITHUB_API}/search/repositories?q=${encodeURIComponent(dq.query_string)}&sort=stars&order=desc&per_page=${PER_PAGE}`;
+        const page = dq.current_page || 1;
+        // Fetch repositories using GitHub search API with pagination
+        const url = `${GITHUB_API}/search/repositories?q=${encodeURIComponent(dq.query_string)}&sort=stars&order=desc&per_page=${PER_PAGE}&page=${page}`;
         const data = await githubFetch(url, process.env.GITHUB_TOKEN);
-        if (!data.items) continue;
-
-        // Process in parallel batches of 10 to speed up DB inserts and prevent 60s timeout
-        const items = data.items;
-        const batchSize = 10;
-        for (let i = 0; i < items.length; i += batchSize) {
-          const batch = items.slice(i, i + batchSize);
-          await Promise.all(
-            batch.map(async (item) => {
-              try {
-                await ingestRepoItem(item, dq.category_hint, repoMap, snapshotMap);
-                reposProcessed++;
-              } catch (repoErr) {
-                errors.push(`Repo ${item.full_name}: ${repoErr.message}`);
-              }
-            })
-          );
+        
+        let hasMore = false;
+        if (data.items && data.items.length > 0) {
+          hasMore = data.items.length === PER_PAGE;
+          
+          // Process in parallel batches of 10 to speed up DB inserts and prevent 60s timeout
+          const items = data.items;
+          const batchSize = 10;
+          for (let i = 0; i < items.length; i += batchSize) {
+            const batch = items.slice(i, i + batchSize);
+            await Promise.all(
+              batch.map(async (item) => {
+                try {
+                  await ingestRepoItem(item, dq.category_hint, repoMap, snapshotMap);
+                  reposProcessed++;
+                } catch (repoErr) {
+                  errors.push(`Repo ${item.full_name}: ${repoErr.message}`);
+                }
+              })
+            );
+          }
         }
+
+        // Deep Pagination logic
+        // GitHub search limits results to the first 1000 items. (1000 / 30 = 33 pages)
+        const next_page = (hasMore && page < 33) ? page + 1 : 1;
 
         await entities.DiscoveryQuery.update(dq.id, {
           last_run_at: new Date().toISOString(),
+          current_page: next_page
         });
       } catch (queryErr) {
         errors.push(`Query "${dq.query_string}": ${queryErr.message}`);
@@ -227,9 +242,6 @@ export async function executeIngestion() {
     });
 
     console.log(`[INGESTION] completed (Processed: ${reposProcessed})`);
-    
-    // Also ingest open source alternatives
-    await ingestAlternatives();
 
     return {
       status,
@@ -246,6 +258,15 @@ export async function executeIngestion() {
 
 export default async function runIngestion(req, res) {
   try {
+    // Secure the endpoint for automated cron triggers
+    const authHeader = req.headers.authorization;
+    if (process.env.CRON_SECRET) {
+      if (!authHeader || authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+        console.warn('[INGESTION] Unauthorized attempt to trigger ingestion.');
+        return res.status(401).json({ error: true, message: 'Unauthorized' });
+      }
+    }
+
     const result = await executeIngestion();
     return res.json(result);
   } catch (error) {

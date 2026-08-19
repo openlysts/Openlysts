@@ -1,0 +1,26 @@
+name: Ingestion Cron
+
+on:
+  schedule:
+    # Runs every 30 minutes
+    - cron: '*/30 * * * *'
+  workflow_dispatch: # Allows manual triggering from GitHub UI
+
+jobs:
+  run-ingestion:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Ingestion API
+        run: |
+          # Use PRODUCTION_URL if set, otherwise fallback to openlysts.vercel.app
+          URL="${{ secrets.PRODUCTION_URL || 'https://openlysts.vercel.app' }}/api/functions/runIngestion"
+          echo "Triggering ingestion at $URL"
+          
+          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" "$URL")
+          
+          if [ "$HTTP_STATUS" -eq 200 ]; then
+            echo "Ingestion triggered successfully."
+          else
+            echo "Failed to trigger ingestion. HTTP Status: $HTTP_STATUS"
+            exit 1
+          fi

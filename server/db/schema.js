@@ -7,6 +7,7 @@ export async function initSchema(db) {
       category_hint TEXT,
       enabled INTEGER,
       last_run_at TEXT,
+      current_page INTEGER,
       description TEXT
     );`,
     `CREATE TABLE IF NOT EXISTS "IngestionRun" (
@@ -120,6 +121,12 @@ export async function initSchema(db) {
 
   try {
     await db.query(`ALTER TABLE "Alternative" ADD COLUMN category TEXT`);
+  } catch (e) {
+    // Column already exists, ignore
+  }
+
+  try {
+    await db.query(`ALTER TABLE "DiscoveryQuery" ADD COLUMN current_page INTEGER DEFAULT 1`);
   } catch (e) {
     // Column already exists, ignore
   }
