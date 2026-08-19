@@ -9,6 +9,7 @@ const GITHUB_API = 'https://api.github.com';
 const PER_PAGE = 30;
 
 const SEED_QUERIES = [
+  // AI & Machine Learning
   { query_string: 'LLM', category_hint: 'LLMs' },
   { query_string: 'AI', category_hint: 'AI' },
   { query_string: 'generative AI', category_hint: 'AI' },
@@ -20,12 +21,53 @@ const SEED_QUERIES = [
   { query_string: 'llama.cpp', category_hint: 'Local AI' },
   { query_string: 'machine learning', category_hint: 'Machine Learning' },
   { query_string: 'AI framework', category_hint: 'Libraries & Frameworks' },
+  
+  // Web Development
+  { query_string: 'react', category_hint: 'Web Frameworks' },
+  { query_string: 'vue', category_hint: 'Web Frameworks' },
+  { query_string: 'nextjs', category_hint: 'Web Frameworks' },
+  { query_string: 'typescript', category_hint: 'Languages' },
+  { query_string: 'tailwindcss', category_hint: 'Styling' },
+  { query_string: 'static site generator', category_hint: 'Static Site Generators' },
+  { query_string: 'headless cms', category_hint: 'CMS' },
+
+  // Backend & Infrastructure
+  { query_string: 'database', category_hint: 'Databases' },
+  { query_string: 'orm', category_hint: 'ORMs' },
+  { query_string: 'api gateway', category_hint: 'API Gateways' },
+  { query_string: 'graphql', category_hint: 'APIs' },
+  { query_string: 'serverless', category_hint: 'Serverless' },
+  
+  // DevOps & Cloud Native
+  { query_string: 'kubernetes', category_hint: 'DevOps' },
+  { query_string: 'docker', category_hint: 'DevOps' },
+  { query_string: 'ci/cd', category_hint: 'CI/CD' },
+  { query_string: 'infrastructure as code', category_hint: 'Infrastructure' },
+  { query_string: 'observability', category_hint: 'Monitoring' },
+  { query_string: 'monitoring', category_hint: 'Monitoring' },
+  { query_string: 'prometheus', category_hint: 'Monitoring' },
+  
+  // Developer Tools
+  { query_string: 'developer tools', category_hint: 'Developer Tools' },
+  { query_string: 'developer productivity', category_hint: 'Developer Tools' },
+  { query_string: 'cli', category_hint: 'CLI Tools' },
+  { query_string: 'testing framework', category_hint: 'Testing' },
+  
+  // Security
+  { query_string: 'security', category_hint: 'Security' },
+  { query_string: 'authentication', category_hint: 'Authentication' },
+  { query_string: 'authorization', category_hint: 'Authentication' },
+  { query_string: 'penetration testing', category_hint: 'Security' },
+  
+  // Miscellaneous
   { query_string: 'self-hosted', category_hint: 'Self-Hosted' },
   { query_string: 'open-source web application', category_hint: 'Web Applications' },
-  { query_string: 'developer tools', category_hint: 'Developer Tools' },
   { query_string: 'automation', category_hint: 'Automation' },
-  { query_string: 'databases', category_hint: 'Databases' },
-  { query_string: 'developer productivity', category_hint: 'Developer Tools' },
+  { query_string: 'open source alternative', category_hint: 'Alternatives' },
+  { query_string: 'low code', category_hint: 'Low Code' },
+  { query_string: 'rust', category_hint: 'Languages' },
+  { query_string: 'python', category_hint: 'Languages' },
+  { query_string: 'golang', category_hint: 'Languages' }
 ];
 
 export async function githubFetch(url, token, retries = 3) {
@@ -161,9 +203,14 @@ export async function executeIngestion() {
     });
 
     let queries = await entities.DiscoveryQuery.list('-created_date', 100);
-    if (!queries || queries.length === 0) {
+    
+    // Check for missing seed queries and add them dynamically
+    const existingQueryStrings = new Set(queries.map(q => q.query_string));
+    const newQueriesToAdd = SEED_QUERIES.filter(sq => !existingQueryStrings.has(sq.query_string));
+    
+    if (newQueriesToAdd.length > 0) {
       await entities.DiscoveryQuery.bulkCreate(
-        SEED_QUERIES.map((q) => ({ ...q, enabled: true }))
+        newQueriesToAdd.map((q) => ({ ...q, enabled: true }))
       );
       queries = await entities.DiscoveryQuery.list('-created_date', 100);
     }
@@ -195,8 +242,18 @@ export async function executeIngestion() {
     for (const dq of enabledQueries) {
       try {
         const page = dq.current_page || 1;
+        
+        let qStr = dq.query_string;
+        // Interleave fresh discovery: on even pages, fetch repos created in the last year
+        if (page % 2 === 0) {
+           const oneYearAgo = new Date();
+           oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+           const dateStr = oneYearAgo.toISOString().split('T')[0];
+           qStr += ` created:>${dateStr}`;
+        }
+
         // Fetch repositories using GitHub search API with pagination
-        const url = `${GITHUB_API}/search/repositories?q=${encodeURIComponent(dq.query_string)}&sort=stars&order=desc&per_page=${PER_PAGE}&page=${page}`;
+        const url = `${GITHUB_API}/search/repositories?q=${encodeURIComponent(qStr)}&sort=stars&order=desc&per_page=${PER_PAGE}&page=${page}`;
         const data = await githubFetch(url, process.env.GITHUB_TOKEN);
         
         let hasMore = false;
