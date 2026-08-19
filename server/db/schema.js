@@ -118,6 +118,12 @@ export async function initSchema(db) {
     // Column already exists, ignore
   }
 
+  try {
+    await db.query(`ALTER TABLE "Alternative" ADD COLUMN category TEXT`);
+  } catch (e) {
+    // Column already exists, ignore
+  }
+
   const indexQueries = [
     `CREATE INDEX IF NOT EXISTS idx_repo_stars ON "Repository"(stars DESC);`,
     `CREATE INDEX IF NOT EXISTS idx_repo_created ON "Repository"(created_date DESC);`,

@@ -2,11 +2,10 @@ import { useState, useMemo, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import { 
-  Loader2, Search, ExternalLink, PlayCircle, Info, ChevronRight, ChevronDown,
-  Scale, Award, Star, Grid3X3, List, ArrowUpDown, Zap, Shield, TrendingUp,
+  Loader2, Search, ExternalLink, PlayCircle, Info, ChevronRight, ChevronDown, Award, Grid3X3, List, ArrowUpDown, Shield,
   Layers, Filter, X, Sparkles
 } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import RepositoryCard from '@/components/openlyst/RepositoryCard';
 
 async function fetchAlternatives(category, search, sort) {

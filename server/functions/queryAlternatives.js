@@ -43,6 +43,7 @@ export default async function queryAlternatives(req, res) {
       return {
         ...alt,
         repo,
+        description: alt.description || repo?.description || '',
         resolved_name: resolvedName,
         openlysts_score: openlystsScore
       };

@@ -12,11 +12,15 @@ export async function ingestAlternatives() {
     const lines = text.split('\n');
 
     let currentPaid = null;
+    let currentCategory = null;
     const mappings = [];
 
     for (let line of lines) {
       line = line.trim();
-      if (line.startsWith('### ')) {
+      if (line.startsWith('## ')) {
+        // e.g. "## 🤖 Artificial Intelligence" -> remove emojis if any, or just take as is
+        currentCategory = line.replace('## ', '').trim();
+      } else if (line.startsWith('### ')) {
         const header = line.replace('### ', '').trim();
         const altMatch = header.match(/\((.*?)\s+alternatives?\)/i);
         if (altMatch) {
@@ -34,7 +38,8 @@ export async function ingestAlternatives() {
           
           mappings.push({
             paid: currentPaid,
-            repoFullName: `${owner}/${repo}`
+            repoFullName: `${owner}/${repo}`,
+            category: currentCategory
           });
         }
       }
@@ -43,12 +48,23 @@ export async function ingestAlternatives() {
     console.log(`[Ingest] Parsed ${mappings.length} alternative mappings.`);
     
     let addedCount = 0;
+    let updatedCount = 0;
     
     // Fetch existing alternative repos to avoid duplicate insertions and slow individual SELECTs
-    const { rows: existingRows } = await db.query('SELECT free_tool_repo FROM "Alternative"');
-    const existingRepos = new Set(existingRows.map(r => r.free_tool_repo.toLowerCase()));
+    const { rows: existingRows } = await db.query('SELECT free_tool_repo, category FROM "Alternative"');
+    const existingRepos = new Map(existingRows.map(r => [r.free_tool_repo.toLowerCase(), r.category]));
     
-    const newMappings = mappings.filter(m => !existingRepos.has(m.repoFullName.toLowerCase()));
+    const newMappings = [];
+    const updateMappings = [];
+
+    for (const m of mappings) {
+      const lowerRepo = m.repoFullName.toLowerCase();
+      if (!existingRepos.has(lowerRepo)) {
+        newMappings.push(m);
+      } else if (existingRepos.get(lowerRepo) !== m.category) {
+        updateMappings.push(m);
+      }
+    }
 
     // Batch insert new mappings to prevent Vercel timeout
     const batchSize = 10;
@@ -70,15 +86,26 @@ export async function ingestAlternatives() {
             }
           }
           
-          await db.query('INSERT INTO "Alternative" (id, created_date, paid_tool_name, free_tool_name, free_tool_repo) VALUES ($1, $2, $3, $4, $5)', [
-            crypto.randomUUID(), new Date().toISOString(), m.paid, toolName, m.repoFullName
+          await db.query('INSERT INTO "Alternative" (id, created_date, paid_tool_name, free_tool_name, free_tool_repo, category) VALUES ($1, $2, $3, $4, $5, $6)', [
+            crypto.randomUUID(), new Date().toISOString(), m.paid, toolName, m.repoFullName, m.category
           ]);
           addedCount++;
         })
       );
     }
+    
+    // Batch update mappings to fix missing categories
+    for (let i = 0; i < updateMappings.length; i += batchSize) {
+      const batch = updateMappings.slice(i, i + batchSize);
+      await Promise.all(
+        batch.map(async (m) => {
+          await db.query('UPDATE "Alternative" SET category = $1 WHERE LOWER(free_tool_repo) = $2', [m.category, m.repoFullName.toLowerCase()]);
+          updatedCount++;
+        })
+      );
+    }
 
-    console.log(`[Ingest] Inserted ${addedCount} new alternatives into the database.`);
+    console.log(`[Ingest] Inserted ${addedCount} new alternatives and updated ${updatedCount} existing alternatives in the database.`);
   } catch (error) {
     console.error('[Ingest] Alternatives ingestion failed:', error);
   }

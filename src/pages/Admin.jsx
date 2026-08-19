@@ -2,13 +2,14 @@ import { useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { localClient } from '@/api/localClient';
 import { runIngestion, recalculateScores, reclassifyRepos } from '@/lib/api';
-import { RefreshCw, Calculator, Tags, Loader2, CheckCircle, AlertCircle, TrendingUp, Database, ShieldCheck } from 'lucide-react';
+import { RefreshCw, Calculator, Tags, Loader2, CheckCircle, AlertCircle, TrendingUp, Database, ShieldCheck, Search, Plus, ToggleLeft, ToggleRight } from 'lucide-react';
 import { CATEGORIES } from '@/lib/categories';
 
 export default function Admin() {
   const queryClient = useQueryClient();
   const [running, setRunning] = useState(null);
   const [message, setMessage] = useState(null);
+  const [newQuery, setNewQuery] = useState({ query_string: '', category_hint: 'AI' });
 
   const { data: repos = [], isLoading } = useQuery({
     queryKey: ['admin-repos'],
@@ -17,6 +18,10 @@ export default function Admin() {
   const { data: runs = [] } = useQuery({
     queryKey: ['admin-runs'],
     queryFn: () => localClient.entities.IngestionRun.list('-started_at', 10),
+  });
+  const { data: queries = [] } = useQuery({
+    queryKey: ['admin-queries'],
+    queryFn: () => localClient.entities.DiscoveryQuery.list('-created_date', 100),
   });
 
   const totalRepos = repos.length;
@@ -50,6 +55,31 @@ export default function Admin() {
   const toggleFlag = async (repo, flag) => {
     await localClient.entities.Repository.update(repo.id, { [flag]: !repo[flag] });
     queryClient.invalidateQueries({ queryKey: ['admin-repos'] });
+  };
+
+  const handleAddQuery = async (e) => {
+    e.preventDefault();
+    if (!newQuery.query_string.trim()) return;
+    setRunning('Add Query');
+    try {
+      await localClient.entities.DiscoveryQuery.create({
+        query_string: newQuery.query_string.trim(),
+        category_hint: newQuery.category_hint,
+        enabled: true,
+      });
+      setNewQuery({ query_string: '', category_hint: 'AI' });
+      queryClient.invalidateQueries({ queryKey: ['admin-queries'] });
+      setMessage({ type: 'success', text: `Query added.` });
+    } catch (err) {
+      setMessage({ type: 'error', text: `Failed to add query: ${err.message}` });
+    } finally {
+      setRunning(null);
+    }
+  };
+
+  const toggleQuery = async (q) => {
+    await localClient.entities.DiscoveryQuery.update(q.id, { enabled: !q.enabled });
+    queryClient.invalidateQueries({ queryKey: ['admin-queries'] });
   };
 
   return (
@@ -179,6 +209,86 @@ export default function Admin() {
             ))}
           </div>
         )}
+      </div>
+
+      {/* Discovery Engine Config */}
+      <div className="card p-5 mb-6">
+        <h3 className="font-semibold text-text mb-3">Discovery Engine Configuration</h3>
+        <p className="text-sm text-text-muted mb-4">Manage the search queries used by the background ingestion worker to find and categorize repositories dynamically.</p>
+        
+        <form onSubmit={handleAddQuery} className="flex flex-col sm:flex-row gap-3 mb-6">
+          <div className="flex-1">
+            <input
+              type="text"
+              placeholder="e.g. repo:leonxlnx/taste-skill OR topic:ai"
+              value={newQuery.query_string}
+              onChange={(e) => setNewQuery(prev => ({ ...prev, query_string: e.target.value }))}
+              className="w-full bg-bg-card border border-border rounded-lg px-3 py-2 text-sm text-text placeholder-text-muted focus:outline-none focus:border-accent"
+              required
+            />
+          </div>
+          <div className="sm:w-48">
+            <select
+              value={newQuery.category_hint}
+              onChange={(e) => setNewQuery(prev => ({ ...prev, category_hint: e.target.value }))}
+              className="w-full bg-bg-card border border-border rounded-lg px-3 py-2 text-sm text-text focus:outline-none focus:border-accent"
+            >
+              {CATEGORIES.map(c => (
+                <option key={c.slug} value={c.label}>{c.label}</option>
+              ))}
+            </select>
+          </div>
+          <button
+            type="submit"
+            disabled={!!running || !newQuery.query_string.trim()}
+            className="flex items-center justify-center gap-2 px-4 py-2 bg-accent text-accent-fg font-medium rounded-lg text-sm hover:opacity-90 disabled:opacity-50"
+          >
+            {running === 'Add Query' ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
+            Add Query
+          </button>
+        </form>
+
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="text-left text-text-muted border-b border-border">
+                <th className="pb-2 pr-4 font-medium">Search Query</th>
+                <th className="pb-2 pr-4 font-medium">Category Hint</th>
+                <th className="pb-2 pr-4 font-medium">Last Run</th>
+                <th className="pb-2 font-medium">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {queries.map((q) => (
+                <tr key={q.id} className="border-b border-border last:border-0 hover:bg-bg-subtle/30">
+                  <td className="py-2.5 pr-4 font-mono text-xs text-text">{q.query_string}</td>
+                  <td className="py-2.5 pr-4 text-text-secondary">{q.category_hint}</td>
+                  <td className="py-2.5 pr-4 text-text-muted text-xs">
+                    {q.last_run_at ? new Date(q.last_run_at).toLocaleString() : 'Never'}
+                  </td>
+                  <td className="py-2.5">
+                    <button
+                      onClick={() => toggleQuery(q)}
+                      className={`flex items-center gap-1.5 px-2 py-1 rounded-md text-xs font-medium transition-colors ${
+                        q.enabled 
+                          ? 'text-oss bg-oss-soft hover:bg-oss/20' 
+                          : 'text-text-muted bg-bg-subtle hover:bg-bg-hover'
+                      }`}
+                    >
+                      {q.enabled ? <ToggleRight className="w-3.5 h-3.5" /> : <ToggleLeft className="w-3.5 h-3.5" />}
+                      {q.enabled ? 'Enabled' : 'Disabled'}
+                    </button>
+                  </td>
+                </tr>
+              ))}
+              {queries.length === 0 && (
+                <tr>
+                  <td colSpan="4" className="py-4 text-center text-text-muted text-sm">No discovery queries configured.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {/* Repo management table */}

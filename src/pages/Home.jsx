@@ -1,4 +1,5 @@
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { Sparkles, Clock, TrendingUp, ArrowRight, Database, RefreshCw } from 'lucide-react';
@@ -7,14 +8,15 @@ import { queryRepos } from '@/lib/api';
 import RepositoryGrid from '@/components/openlyst/RepositoryGrid';
 import AnimatedSearch from '@/components/openlyst/AnimatedSearch';
 import FilterBar from '@/components/openlyst/FilterBar';
-import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useToast } from '@/components/ui/use-toast';
 
 const LANGUAGES = ['Python', 'JavaScript', 'TypeScript', 'Go', 'Rust', 'Java', 'C++', 'C', 'Ruby', 'PHP', 'Swift', 'Kotlin', 'Shell', 'Vue', 'HTML', 'Dart'];
 
 export default function Home() {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [viewHistory, setViewHistory] = useState([]);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   useEffect(() => {
     try {
@@ -131,13 +133,25 @@ export default function Home() {
                 <TrendingUp className="w-5 h-5 text-trending" />
                 Trending This Week
                 <button 
-                  onClick={() => refetchTrending()} 
-                  disabled={tRefetching}
+                  onClick={async () => {
+                    setIsRefreshing(true);
+                    toast({ title: 'Refreshing', description: 'Fetching latest repositories from GitHub...', duration: 2000 });
+                    try {
+                      await fetch('/api/functions/runIngestion', { method: 'POST' });
+                      await refetchTrending();
+                      toast({ title: 'Success', description: 'Trending repositories updated.', duration: 2000 });
+                    } catch (e) {
+                      toast({ title: 'Error', description: 'Failed to refresh.', variant: 'destructive', duration: 2000 });
+                    } finally {
+                      setIsRefreshing(false);
+                    }
+                  }} 
+                  disabled={tRefetching || isRefreshing}
                   className="ml-2 p-1 text-text-muted hover:text-text rounded-md hover:bg-bg-subtle transition-colors"
                   title="Refresh Trending"
                   aria-label="Refresh trending repositories"
                 >
-                  <RefreshCw className={`w-4 h-4 ${tRefetching ? 'animate-spin' : ''}`} />
+                  <RefreshCw className={`w-4 h-4 ${tRefetching || isRefreshing ? 'animate-spin' : ''}`} />
                 </button>
               </h2>
               <Link to="/trending" className="text-sm text-text-muted hover:text-text flex items-center gap-1">
