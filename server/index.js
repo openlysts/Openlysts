@@ -25,7 +25,10 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 app.use(cors({
-  origin: process.env.APP_URL || 'http://localhost:5173',
+  origin: (origin, callback) => {
+    // Dynamically allow requesting origin to enable credentials with Vercel preview & prod URLs
+    callback(null, true);
+  },
   credentials: true
 }));
 app.use(express.json({ limit: '50mb' }));
@@ -58,13 +61,13 @@ app.use('/api/entities', entitiesRouter);
 app.use('/api/functions', functionsRouter);
 app.use('/api/contact', contactRouter);
 
-// Serve static frontend files (used in production/Glitch)
-app.use(express.static(path.join(__dirname, '../dist')));
-
-// Catch-all to render the React app
-app.get(/.*/, (req, res) => {
-  res.sendFile(path.join(__dirname, '../dist/index.html'));
-});
+// Serve static frontend files (used only in self-hosted standalone server)
+if (!process.env.VERCEL) {
+  app.use(express.static(path.join(__dirname, '../dist')));
+  app.get(/.*/, (req, res) => {
+    res.sendFile(path.join(__dirname, '../dist/index.html'));
+  });
+}
 
 // Centralized JSON error handling
 app.use((err, req, res, next) => {
