@@ -44,31 +44,38 @@ export async function ingestAlternatives() {
     
     let addedCount = 0;
     
-    for (const m of mappings) {
-      // Check if exists
-      const { rows } = await db.query('SELECT id FROM Alternative WHERE paid_tool_name = $1 AND free_tool_repo = $2', [m.paid, m.repoFullName]);
-      const existing = rows[0];
-      if (!existing) {
-        // Derive a name from the repo or URL
-        let toolName = '';
-        if (m.repoFullName.startsWith('http')) {
-          try {
-            const url = new URL(m.repoFullName);
-            toolName = url.hostname.replace(/^www\./, '').split('.')[0];
-            toolName = toolName.charAt(0).toUpperCase() + toolName.slice(1);
-          } catch { toolName = m.repoFullName; }
-        } else {
-          toolName = m.repoFullName.split('/').pop() || m.repoFullName;
-          if (toolName === toolName.toLowerCase()) {
-            toolName = toolName.charAt(0).toUpperCase() + toolName.slice(1);
+    // Fetch existing alternative repos to avoid duplicate insertions and slow individual SELECTs
+    const { rows: existingRows } = await db.query('SELECT free_tool_repo FROM "Alternative"');
+    const existingRepos = new Set(existingRows.map(r => r.free_tool_repo.toLowerCase()));
+    
+    const newMappings = mappings.filter(m => !existingRepos.has(m.repoFullName.toLowerCase()));
+
+    // Batch insert new mappings to prevent Vercel timeout
+    const batchSize = 10;
+    for (let i = 0; i < newMappings.length; i += batchSize) {
+      const batch = newMappings.slice(i, i + batchSize);
+      await Promise.all(
+        batch.map(async (m) => {
+          let toolName = '';
+          if (m.repoFullName.startsWith('http')) {
+            try {
+              const url = new URL(m.repoFullName);
+              toolName = url.hostname.replace(/^www\./, '').split('.')[0];
+              toolName = toolName.charAt(0).toUpperCase() + toolName.slice(1);
+            } catch { toolName = m.repoFullName; }
+          } else {
+            toolName = m.repoFullName.split('/').pop() || m.repoFullName;
+            if (toolName === toolName.toLowerCase()) {
+              toolName = toolName.charAt(0).toUpperCase() + toolName.slice(1);
+            }
           }
-        }
-        
-        await db.query('INSERT INTO Alternative (id, created_date, paid_tool_name, free_tool_name, free_tool_repo) VALUES ($1, $2, $3, $4, $5)', [
-          crypto.randomUUID(), new Date().toISOString(), m.paid, toolName, m.repoFullName
-        ]);
-        addedCount++;
-      }
+          
+          await db.query('INSERT INTO "Alternative" (id, created_date, paid_tool_name, free_tool_name, free_tool_repo) VALUES ($1, $2, $3, $4, $5)', [
+            crypto.randomUUID(), new Date().toISOString(), m.paid, toolName, m.repoFullName
+          ]);
+          addedCount++;
+        })
+      );
     }
 
     console.log(`[Ingest] Inserted ${addedCount} new alternatives into the database.`);

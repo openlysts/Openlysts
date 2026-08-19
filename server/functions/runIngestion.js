@@ -3,6 +3,7 @@ import {
   verifyLicense, classifyRepo, calculateQualityScore,
   calculateTrendingScore, computeStarsGained, autoClassifyDifficulty
 } from '../shared/openlyst.js';
+import { ingestAlternatives } from './ingestAlternatives.js';
 
 const GITHUB_API = 'https://api.github.com';
 const PER_PAGE = 30;
@@ -226,6 +227,9 @@ export async function executeIngestion() {
     });
 
     console.log(`[INGESTION] completed (Processed: ${reposProcessed})`);
+    
+    // Also ingest open source alternatives
+    await ingestAlternatives();
 
     return {
       status,
