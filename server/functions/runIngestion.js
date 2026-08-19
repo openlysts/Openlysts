@@ -163,7 +163,10 @@ export async function executeIngestion() {
       queries = await entities.DiscoveryQuery.list('-created_date', 100);
     }
 
-    const enabledQueries = queries.filter((q) => q.enabled);
+    const enabledQueries = queries
+      .filter((q) => q.enabled)
+      .sort(() => 0.5 - Math.random())
+      .slice(0, 3);
     const errors = [];
     let reposProcessed = 0, reposAdded = 0, reposUpdated = 0;
 
@@ -186,14 +189,21 @@ export async function executeIngestion() {
         const data = await githubFetch(url, process.env.GITHUB_TOKEN);
         if (!data.items) continue;
 
-        for (const item of data.items) {
-          try {
-            await ingestRepoItem(item, dq.category_hint, repoMap, snapshotMap);
-            reposProcessed++;
-            // We do not have granular reposAdded vs reposUpdated in this simplified loop
-          } catch (repoErr) {
-            errors.push(`Repo ${item.full_name}: ${repoErr.message}`);
-          }
+        // Process in parallel batches of 10 to speed up DB inserts and prevent 60s timeout
+        const items = data.items;
+        const batchSize = 10;
+        for (let i = 0; i < items.length; i += batchSize) {
+          const batch = items.slice(i, i + batchSize);
+          await Promise.all(
+            batch.map(async (item) => {
+              try {
+                await ingestRepoItem(item, dq.category_hint, repoMap, snapshotMap);
+                reposProcessed++;
+              } catch (repoErr) {
+                errors.push(`Repo ${item.full_name}: ${repoErr.message}`);
+              }
+            })
+          );
         }
 
         await entities.DiscoveryQuery.update(dq.id, {
