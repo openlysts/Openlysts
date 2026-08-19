@@ -68,9 +68,9 @@ export default function Welcome() {
               className="w-full h-[200px] md:h-[300px] lg:h-[400px] flex items-center justify-center -my-4 md:-my-8"
             >
               <ParticleText
-                text="Welcome to Openlysts"
-                particleSize={1.4}
-                density={3}
+                text="Openlyst"
+                particleSize={2}
+                density={4}
                 color="#f8fafc"
                 highlightColor="#8b5cf6"
                 scatter={190}
@@ -80,10 +80,10 @@ export default function Welcome() {
                 repelRadius={145}
                 idleDrift={0.5}
                 trigger="mount"
-                fontSize="clamp(3rem, 10vw, 8rem)"
+                fontSize="clamp(4rem, 15vw, 10rem)"
                 fontWeight={900}
                 fontFamily="'Inter', 'Roboto', 'Helvetica Neue', sans-serif"
-                glow={false}
+                glow={true}
                 className="w-full h-full"
               />
             </motion.div>
