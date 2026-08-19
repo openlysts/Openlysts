@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "start": "vite build && node server/index.js",
     "dev": "concurrently \"node server/index.js\" \"vite\"",
     "build": "vite build",
     "lint": "eslint . --quiet",

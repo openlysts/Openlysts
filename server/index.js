@@ -8,7 +8,13 @@ import contactRouter from './api/contact.js';
 import { executeIngestion } from './functions/runIngestion.js';
 import { ingestAlternatives } from './functions/ingestAlternatives.js';
 
+import { fileURLToPath } from 'url';
+import path from 'path';
+
 dotenv.config({ path: '.env.local' });
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -33,6 +39,14 @@ app.get('/api/health', (req, res) => {
 app.use('/api/entities', entitiesRouter);
 app.use('/api/functions', functionsRouter);
 app.use('/api/contact', contactRouter);
+
+// Serve static frontend files (used in production/Glitch)
+app.use(express.static(path.join(__dirname, '../dist')));
+
+// Catch-all to render the React app
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist/index.html'));
+});
 
 // Centralized JSON error handling
 app.use((err, req, res, next) => {
