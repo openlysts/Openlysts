@@ -8,6 +8,7 @@ import { queryRepos } from '@/lib/api';
 import RepositoryGrid from '@/components/openlyst/RepositoryGrid';
 import AnimatedSearch from '@/components/openlyst/AnimatedSearch';
 import FilterBar from '@/components/openlyst/FilterBar';
+import DiscoverLiveMetrics from '@/components/openlyst/DiscoverLiveMetrics';
 import { useToast } from '@/components/ui/use-toast';
 
 const LANGUAGES = ['Python', 'JavaScript', 'TypeScript', 'Go', 'Rust', 'Java', 'C++', 'C', 'Ruby', 'PHP', 'Swift', 'Kotlin', 'Shell', 'Vue', 'HTML', 'Dart'];
@@ -77,7 +78,7 @@ export default function Home() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 rounded-lg">
       {/* Hero */}
-      <section className="pt-12 sm:pt-20 pb-8 text-center max-w-3xl mx-auto">
+      <section className="pt-12 sm:pt-20 pb-8 text-center max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
@@ -90,16 +91,25 @@ export default function Home() {
           <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-text leading-tight mb-4">
             Discover everything on GitHub.
           </h1>
-          <p className="text-text-secondary text-base sm:text-lg leading-relaxed mb-8 max-w-2xl mx-auto">
+          <p className="text-text-secondary text-base sm:text-lg leading-relaxed mb-6 max-w-2xl mx-auto">
             Explore and search high-quality open-source software across AI, developer tools, self-hosting, and the vast expanse of GitHub.
           </p>
+        </motion.div>
+
+        {/* 3D Interactive Live Metrics & Category Breakdown */}
+        <motion.div
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45, delay: 0.08 }}
+        >
+          <DiscoverLiveMetrics totalRepos={trending?.total || 3000} />
         </motion.div>
 
         {/* Search */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.1 }}
+          transition={{ duration: 0.4, delay: 0.15 }}
           className="max-w-xl mx-auto z-30 relative mb-8">
           
           <AnimatedSearch size="lg" />
