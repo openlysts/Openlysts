@@ -14,6 +14,8 @@ import functionsRouter from './api/functions.js';
 import contactRouter from './api/contact.js';
 import { executeIngestion } from './functions/runIngestion.js';
 import { ingestAlternatives } from './functions/ingestAlternatives.js';
+import { prewarmRepositoriesCache } from './functions/queryRepositories.js';
+import { prewarmAlternativesCache } from './functions/queryAlternatives.js';
 
 import { fileURLToPath } from 'url';
 import path from 'path';
@@ -84,9 +86,21 @@ export default app;
 const isMainModule = process.argv[1] === fileURLToPath(import.meta.url);
 
 if (isMainModule) {
-  app.listen(PORT, () => {
+  app.listen(PORT, async () => {
     console.log(`Express server running on http://localhost:${PORT}`);
     
+    // Immediately prewarm in-memory caches on boot so GUI gets instant sub-20ms responses
+    try {
+      console.log('[CACHE] Prewarming Repository and Alternatives caches...');
+      await Promise.all([
+        prewarmRepositoriesCache(),
+        prewarmAlternativesCache()
+      ]);
+      console.log('[CACHE] Prewarming completed. Ready for instant GUI responses.');
+    } catch (cacheErr) {
+      console.warn('[CACHE] Prewarm warning:', cacheErr.message);
+    }
+
     // Auto-Ingestion Loop (Every 10 minutes)
     const TEN_MINUTES = 10 * 60 * 1000;
     setInterval(async () => {
@@ -98,9 +112,6 @@ if (isMainModule) {
       }
     }, TEN_MINUTES);
 
-    // Run it once on startup immediately
-    setTimeout(() => executeIngestion().catch(console.error), 2000);
-
     // Auto-Ingest Alternatives (Every 6 hours)
     const SIX_HOURS = 6 * 60 * 60 * 1000;
     setInterval(async () => {
@@ -110,8 +121,5 @@ if (isMainModule) {
         console.error('[AUTO-INGESTION] Alternatives failed:', err.message);
       }
     }, SIX_HOURS);
-    
-    // Run once on startup
-    setTimeout(() => ingestAlternatives().catch(console.error), 5000);
   });
 }

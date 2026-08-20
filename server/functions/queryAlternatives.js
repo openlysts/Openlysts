@@ -2,19 +2,25 @@ import { db } from '../db/index.js';
 
 let cachedEnriched = null;
 let lastCacheTime = 0;
-const CACHE_TTL_MS = 60000; // 60s in-memory cache
+let inflightAltPromise = null;
+const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes in-memory cache
 
 export function invalidateAlternativesCache() {
   cachedEnriched = null;
   lastCacheTime = 0;
+  inflightAltPromise = null;
 }
 
-export default async function queryAlternatives(req, res) {
-  try {
-    const { category, search, sort = 'score', view } = req.body || {};
-    const now = Date.now();
+export async function prewarmAlternativesCache() {
+  if (cachedEnriched && Date.now() - lastCacheTime < CACHE_TTL_MS) {
+    return cachedEnriched;
+  }
+  if (inflightAltPromise) {
+    return inflightAltPromise;
+  }
 
-    if (!cachedEnriched || now - lastCacheTime > CACHE_TTL_MS) {
+  inflightAltPromise = (async () => {
+    try {
       const query = `
         SELECT 
           a.id, a.created_date, a.paid_tool_name, a.free_tool_name, a.free_tool_repo,
@@ -40,7 +46,17 @@ export default async function queryAlternatives(req, res) {
       // Find max stars for normalization
       const maxStars = Math.max(1, ...rows.map(r => r.repo_stars || 0));
 
-      cachedEnriched = rows.map(row => {
+      const seenKeys = new Set();
+      const dedupedRows = [];
+      for (const row of rows) {
+        const uniqueKey = `${(row.paid_tool_name || '').trim().toLowerCase()}::${(row.free_tool_repo || row.free_tool_name || '').trim().toLowerCase()}`;
+        if (!seenKeys.has(uniqueKey)) {
+          seenKeys.add(uniqueKey);
+          dedupedRows.push(row);
+        }
+      }
+
+      const enriched = dedupedRows.map(row => {
         let repo = null;
         if (row.repo_id) {
           let topics = row.repo_topics;
@@ -124,10 +140,26 @@ export default async function queryAlternatives(req, res) {
         };
       });
 
-      lastCacheTime = now;
+      cachedEnriched = enriched;
+      lastCacheTime = Date.now();
+      return cachedEnriched;
+    } finally {
+      inflightAltPromise = null;
     }
+  })();
 
-    const enriched = cachedEnriched;
+  return inflightAltPromise;
+}
+
+export default async function queryAlternatives(req, res) {
+  try {
+    const { category, search, sort = 'score', view } = req.body || {};
+    const now = Date.now();
+
+    let enriched = cachedEnriched;
+    if (!enriched || now - lastCacheTime > CACHE_TTL_MS) {
+      enriched = await prewarmAlternativesCache();
+    }
 
     // Filter by category
     let filtered = enriched;

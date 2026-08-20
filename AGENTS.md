@@ -70,3 +70,13 @@ As instructed by the CEO/CTO, the following rules MUST be strictly followed for 
   - "Add feature X" → "Define what done looks like, then implement"
 - For multi-step tasks, state a brief plan with verification steps before executing.
 - Surface clarifying questions **before** implementation, not after mistakes.
+
+## 8. Physical Browser Testing Protocol (Playwright MCP)
+- **Zero reliance on `browser_subagent`**: When executing browser QA tests or verifying UI, **NEVER use the `browser_subagent` tool container** (due to known upstream Azure CDN driver 404 issues on `open_browser_url`).
+- **Always use raw Playwright MCP tools**: Always execute browser actions via `call_mcp_tool` using the Playwright MCP server:
+  - `browser_navigate` (navigate to `http://localhost:5173/...`)
+  - `browser_click`, `browser_type`, `browser_press_key`, `browser_hover`, `browser_select_option`
+  - `browser_take_screenshot` (capture full page / element screenshots saved to artifacts)
+  - `browser_snapshot`, `browser_evaluate`, `browser_console_messages`, `browser_network_requests`
+- **Mandatory Physical Verification**: Check actual rendered DOM, network timings, and visual layout on the local running instance before reporting completion.
+
