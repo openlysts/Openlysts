@@ -45,95 +45,108 @@ export default function DiscoverLiveMetrics({ totalRepos = 3000 }) {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto my-6 perspective-[1200px]">
-      <motion.div
-        ref={cardRef}
-        onMouseMove={handleMouseMove}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={handleMouseLeave}
-        animate={{
-          rotateX: rotate.x,
-          rotateY: rotate.y,
-          scale: hovered ? 1.015 : 1,
-        }}
-        transition={{ type: 'spring', stiffness: 260, damping: 20, mass: 0.5 }}
-        style={{ transformStyle: 'preserve-3d' }}
-        className="relative overflow-hidden rounded-2xl border border-white/10 dark:border-white/10 bg-surface/60 dark:bg-card/40 backdrop-blur-xl shadow-2xl p-5 sm:p-6 transition-colors duration-300"
-      >
-        {/* Dynamic 3D Cursor Spotlight Effect */}
-        <div 
-          className="pointer-events-none absolute -inset-px opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-          style={{
-            opacity: hovered ? 1 : 0,
-            background: `radial-gradient(600px circle at ${spotlight.x}% ${spotlight.y}%, rgba(99, 102, 241, 0.12), rgba(16, 185, 129, 0.08), transparent 70%)`
+    <div 
+      className="w-full max-w-4xl mx-auto my-6 perspective-[1200px]"
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={handleMouseLeave}
+    >
+      <div className="relative">
+        {/* Background Layer: 3D Tilt Effect */}
+        <motion.div
+          animate={{
+            rotateX: rotate.x,
+            rotateY: rotate.y,
           }}
-        />
+          transition={{ type: 'spring', stiffness: 260, damping: 20, mass: 0.5 }}
+          className="absolute inset-0 rounded-2xl border border-white/10 dark:border-white/10 bg-surface/60 dark:bg-card/40 backdrop-blur-xl shadow-2xl"
+        >
+          {/* Dynamic 3D Cursor Spotlight Effect */}
+          <div 
+            className="absolute inset-0 rounded-2xl pointer-events-none transition-opacity duration-300"
+            style={{
+              opacity: hovered ? 1 : 0,
+              background: `radial-gradient(600px circle at ${spotlight.x}% ${spotlight.y}%, rgba(99, 102, 241, 0.12), rgba(16, 185, 129, 0.08), transparent 70%)`
+            }}
+          />
+        </motion.div>
 
-        {/* Ambient Top Glow Line */}
-        <div className="absolute top-0 left-1/4 right-1/4 h-[1px] bg-gradient-to-r from-transparent via-accent/40 to-transparent" />
+        {/* Foreground Content Layer: 2D Parallax (Guarantees Razor Sharp Text) */}
+        <motion.div
+          animate={{
+            x: rotate.y * -0.5,
+            y: rotate.x * 0.5,
+          }}
+          transition={{ type: 'spring', stiffness: 260, damping: 20, mass: 0.5 }}
+          className="relative p-5 sm:p-6"
+        >
+          {/* Ambient Top Glow Line */}
+          <div className="absolute top-0 left-1/4 right-1/4 h-[1px] bg-gradient-to-r from-transparent via-accent/40 to-transparent" />
 
-        {/* Header Bar with Live Indicator */}
-        <div className="flex flex-wrap items-center justify-between gap-3 pb-4 mb-4 border-b border-border/40" style={{ transform: 'translateZ(20px)' }}>
-          <div className="flex items-center gap-3">
-            <div className="relative flex items-center justify-center p-2 rounded-xl bg-accent-soft/40 border border-accent/20 text-accent">
-              <Database className="w-4 h-4" />
-              <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-              </span>
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-base sm:text-lg font-black text-text tracking-tight">
-                  {totalRepos.toLocaleString()}+ Repositories
-                </span>
-                <span className="inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                  <Activity className="w-3 h-3 animate-pulse" /> Live Neon Sync
+          {/* Header Bar with Live Indicator */}
+          <div className="flex flex-wrap items-center justify-between gap-3 pb-4 mb-4 border-b border-border/40">
+            <div className="flex items-center gap-3">
+              <div className="relative flex items-center justify-center p-2 rounded-xl bg-accent-soft/40 border border-accent/20 text-accent">
+                <Database className="w-4 h-4" />
+                <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
                 </span>
               </div>
-              <p className="text-xs text-text-muted">
-                Continuously synchronized and rated across 60+ open-source categories
-              </p>
-            </div>
-          </div>
-
-          <div className="hidden sm:flex items-center gap-4 text-xs text-text-secondary">
-            <div className="flex items-center gap-1.5 font-mono">
-              <Sparkles className="w-3.5 h-3.5 text-accent" />
-              <span>Auto-Ingestion: <strong>Active</strong></span>
-            </div>
-          </div>
-        </div>
-
-        {/* Category Breakdown 3D Interactive Pills */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2" style={{ transform: 'translateZ(30px)' }}>
-          {CATEGORIES.map((cat) => {
-            const Icon = cat.icon;
-            return (
-              <motion.button
-                key={cat.id}
-                whileHover={{ scale: 1.06, y: -3 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => navigate(`/search?categories=${encodeURIComponent(cat.id)}`)}
-                className={`group/chip relative flex flex-col items-start p-2.5 rounded-xl border ${cat.border} bg-gradient-to-br ${cat.color} hover:shadow-lg transition-all duration-200 text-left`}
-              >
-                <div className="flex items-center justify-between w-full mb-1.5">
-                  <div className={`p-1 rounded-lg bg-black/20 ${cat.text}`}>
-                    <Icon className="w-3.5 h-3.5" />
-                  </div>
-                  <ArrowUpRight className="w-3 h-3 text-text-muted opacity-0 group-hover/chip:opacity-100 transition-opacity" />
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="text-base sm:text-lg font-black text-text tracking-tight">
+                    {totalRepos.toLocaleString()}+ Repositories
+                  </span>
+                  <span className="inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                    <Activity className="w-3 h-3 animate-pulse" /> Live Neon Sync
+                  </span>
                 </div>
-                <span className="text-[11px] font-medium text-text-secondary line-clamp-1 group-hover/chip:text-text transition-colors">
-                  {cat.name}
-                </span>
-                <span className={`text-xs font-bold ${cat.text}`}>
-                  {cat.count}
-                </span>
-              </motion.button>
-            );
-          })}
-        </div>
-      </motion.div>
+                <p className="text-xs text-text-muted">
+                  Continuously synchronized and rated across 60+ open-source categories
+                </p>
+              </div>
+            </div>
+
+            <div className="hidden sm:flex items-center gap-4 text-xs text-text-secondary">
+              <div className="flex items-center gap-1.5 font-mono">
+                <Sparkles className="w-3.5 h-3.5 text-accent" />
+                <span>Auto-Ingestion: <strong>Active</strong></span>
+              </div>
+            </div>
+          </div>
+
+          {/* Category Breakdown Interactive Pills */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2">
+            {CATEGORIES.map((cat) => {
+              const Icon = cat.icon;
+              return (
+                <motion.button
+                  key={cat.id}
+                  whileHover={{ y: -4 }}
+                  whileTap={{ y: 0 }}
+                  onClick={() => navigate(`/search?categories=${encodeURIComponent(cat.id)}`)}
+                  className={`group/chip relative flex flex-col items-start p-2.5 rounded-xl border ${cat.border} bg-gradient-to-br ${cat.color} hover:shadow-lg transition-all duration-200 text-left`}
+                >
+                  <div className="flex items-center justify-between w-full mb-1.5">
+                    <div className={`p-1 rounded-lg bg-black/20 ${cat.text}`}>
+                      <Icon className="w-3.5 h-3.5" />
+                    </div>
+                    <ArrowUpRight className="w-3 h-3 text-text-muted opacity-0 group-hover/chip:opacity-100 transition-opacity" />
+                  </div>
+                  <span className="text-[11px] font-medium text-text-secondary line-clamp-1 group-hover/chip:text-text transition-colors">
+                    {cat.name}
+                  </span>
+                  <span className={`text-xs font-bold ${cat.text}`}>
+                    {cat.count}
+                  </span>
+                </motion.button>
+              );
+            })}
+          </div>
+        </motion.div>
+      </div>
     </div>
   );
 }

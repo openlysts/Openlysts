@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { ChevronRight, LayoutDashboard, Target, CheckSquare, Activity, Users, Settings } from "lucide-react";
 import { localClient } from "@/api/localClient";
 import { useQuery } from "@tanstack/react-query";
+import { useLogoEasterEgg } from "@/hooks/useLogoEasterEgg";
 
 const WORKSPACE_NAV = [
   { path: "/",         icon: LayoutDashboard, label: "Dashboard"      },
@@ -143,6 +144,7 @@ function NavSection({ label, items, location, collapsed }) {
 
 export default function Sidebar({ collapsed, onToggle }) {
   const location = useLocation();
+  const handleLogoClick = useLogoEasterEgg();
 
 
   const { data: tasks = [] } = useQuery({
@@ -172,7 +174,7 @@ export default function Sidebar({ collapsed, onToggle }) {
         className="flex items-center mb-8"
         style={{ justifyContent: collapsed ? 'center' : 'flex-start', paddingLeft: collapsed ? 0 : 10 }}
       >
-        <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8 }}>
+        <Link to="/" onClick={handleLogoClick} style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8 }}>
           <LogoIcon size={collapsed ? 8.8 : 11} />
           {!collapsed && (
             <span style={{

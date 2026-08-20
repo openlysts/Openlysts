@@ -77,6 +77,10 @@ router.post('/register', registerRateLimiter, async (req, res) => {
     // Send verification email
     const appUrl = process.env.APP_URL || `${req.protocol}://${req.get('host')}`.replace('3001', '5173');
     const verifyUrl = `${appUrl}/verify-email?token=${encodeURIComponent(rawToken)}`;
+    console.log('\n==================================================');
+    console.log(`[QA DEV] Email Verification Link for ${email}:`);
+    console.log(verifyUrl);
+    console.log('==================================================\n');
     
     if (isSmtpConfigured()) {
       try {
@@ -475,6 +479,10 @@ router.post('/password/reset-request', resetRateLimiter, async (req, res) => {
     // Send email
     const appUrl = process.env.APP_URL || `${req.protocol}://${req.get('host')}`.replace('3001', '5173');
     const resetUrl = `${appUrl}/reset-password?token=${encodeURIComponent(rawToken)}`;
+    console.log('\n==================================================');
+    console.log(`[QA DEV] Password Reset Link for ${user.email}:`);
+    console.log(resetUrl);
+    console.log('==================================================\n');
 
     if (isSmtpConfigured()) {
       try {
@@ -662,6 +670,10 @@ router.post('/resend-verification', resetRateLimiter, async (req, res) => {
 
     const appUrl = process.env.APP_URL || `${req.protocol}://${req.get('host')}`.replace('3001', '5173');
     const verifyUrl = `${appUrl}/verify-email?token=${encodeURIComponent(rawToken)}`;
+    console.log('\n==================================================');
+    console.log(`[QA DEV] Email Verification Link for ${user.email}:`);
+    console.log(verifyUrl);
+    console.log('==================================================\n');
 
     if (isSmtpConfigured()) {
       try {

@@ -7,7 +7,8 @@ import LogoIcon from "./LogoIcon";
 import { ChevronLeft, LogOut } from "lucide-react";
 import { useAuth } from "@/lib/AuthContext";
 import { localClient } from "@/api/localClient";
-
+import { motion } from "framer-motion";
+import MagneticButton from "@/components/ui/MagneticButton";
 const PAGE_LABELS = {
   '/': null,
   '/goals': 'Goals',
@@ -65,7 +66,7 @@ export default function AppLayout() {
   return (
     <>
       {/* ── Desktop layout (≥1024px) ── */}
-      <div
+      <motion.div
         className="hidden lg:flex h-screen"
         style={{ background: '#ebe7e2', padding: '24px', gap: '24px', position: 'relative', overflow: 'hidden' }}
       >
@@ -74,10 +75,10 @@ export default function AppLayout() {
         <main className="flex-1 min-w-0" style={{ padding: '0 0 24px 0', overflowY: 'auto', overflowX: 'visible', position: 'relative', zIndex: 1 }}>
           <Outlet />
         </main>
-      </div>
+      </motion.div>
 
       {/* ── Tablet layout (768px – 1023px) ── */}
-      <div
+      <motion.div
         className="hidden md:block lg:hidden"
         style={{ background: '#ebe7e2', position: 'relative' }}
       >
@@ -114,10 +115,10 @@ export default function AppLayout() {
           <Outlet />
         </main>
         <TabletNav />
-      </div>
+      </motion.div>
 
       {/* ── Mobile layout (<768px) ── */}
-      <div
+      <motion.div
         className="flex md:hidden flex-col"
         style={{ background: '#ebe7e2', minHeight: '100dvh', position: 'relative', overflow: 'hidden' }}
       >
@@ -135,7 +136,7 @@ export default function AppLayout() {
           alignItems: 'center',
           justifyContent: 'space-between',
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }}>
             <LogoIcon size={9} />
             <span style={{
               fontFamily: "'Archivo', sans-serif",
@@ -198,7 +199,7 @@ export default function AppLayout() {
               )}
             </div>
           ) : (
-            <button
+            <MagneticButton
               onClick={() => localClient.auth.redirectToLogin(window.location.href)}
               style={{
                 background: '#ebe7e2',
@@ -210,7 +211,7 @@ export default function AppLayout() {
               }}
             >
               Log In
-            </button>
+            </MagneticButton>
           )}
         </header>
 
@@ -218,7 +219,7 @@ export default function AppLayout() {
           <Outlet />
         </main>
         <MobileNav />
-      </div>
+      </motion.div>
     </>
   );
 }

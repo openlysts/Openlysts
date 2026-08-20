@@ -5,10 +5,13 @@ import { Sparkles, ArrowRight } from 'lucide-react';
 import ParticleText from '../components/reactbits/ParticleText';
 import Scanner from '../components/reactbits/Scanner';
 import SpecularButton from '@/components/reactbits/SpecularButton';
+import MagneticButton from '@/components/reactbits/MagneticButton';
+import { useLogoEasterEgg } from '@/hooks/useLogoEasterEgg';
 
 export default function Welcome() {
   const navigate = useNavigate();
   const [mounted, setMounted] = useState(false);
+  const triggerConfetti = useLogoEasterEgg();
 
   useEffect(() => {
     setMounted(true);
@@ -66,7 +69,8 @@ export default function Welcome() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1.2, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="w-full h-[200px] md:h-[300px] lg:h-[400px] flex items-center justify-center -my-4 md:-my-8"
+              className="w-full h-[200px] md:h-[300px] lg:h-[400px] flex items-center justify-center -my-4 md:-my-8 cursor-pointer"
+              onClick={triggerConfetti}
             >
               <ParticleText
                 text="Openlysts"
@@ -98,28 +102,30 @@ export default function Welcome() {
               Explore, compare, and discover the highest-quality open-source software, all in one stunning ecosystem.
             </motion.p>
 
-            <SpecularButton
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 1.0, type: "spring", stiffness: 200 }}
-              onClick={() => navigate('/discover')}
-              highlight="#ffffff"
-              edge="#525252"
-              tint="#ffffff"
-              textColor="#f5f5f5"
-              radius="49px"
-              tintOpacity={0}
-              blur={0}
-              intensity={1.55}
-              thickness={1.8}
-              proximity={400}
-              className="mt-8 group relative"
-            >
-              <div className="absolute inset-0 bg-accent/20 rounded-[49px] blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <span className="relative z-10 flex items-center gap-2">
-                Discover Open Source <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </span>
-            </SpecularButton>
+            <MagneticButton magneticPull={0.3}>
+              <SpecularButton
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 1.0, type: "spring", stiffness: 200 }}
+                onClick={() => navigate('/discover')}
+                highlight="#ffffff"
+                edge="#525252"
+                tint="#ffffff"
+                textColor="#f5f5f5"
+                radius="49px"
+                tintOpacity={0}
+                blur={0}
+                intensity={1.55}
+                thickness={1.8}
+                proximity={400}
+                className="mt-8 group relative"
+              >
+                <div className="absolute inset-0 bg-accent/20 rounded-[49px] blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <span className="relative z-10 flex items-center gap-2">
+                  Discover Open Source <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </span>
+              </SpecularButton>
+            </MagneticButton>
           </>
         )}
       </main>

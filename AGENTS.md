@@ -78,5 +78,58 @@ As instructed by the CEO/CTO, the following rules MUST be strictly followed for 
   - `browser_click`, `browser_type`, `browser_press_key`, `browser_hover`, `browser_select_option`
   - `browser_take_screenshot` (capture full page / element screenshots saved to artifacts)
   - `browser_snapshot`, `browser_evaluate`, `browser_console_messages`, `browser_network_requests`
-- **Mandatory Physical Verification**: Check actual rendered DOM, network timings, and visual layout on the local running instance before reporting completion.
+- **Mandatory Physical Verification**: Check actual rendered DOM, network timings, and visual layout on the local running instance before reporting completion. **Do a physical test yourself always before letting the user test the fix, feature, and so on.**
 
+## 9. CRITICAL Physical QA STANDARD — NON-NEGOTIABLE
+
+Perform **exhaustive 10/10 QA with zero skipped steps, assumptions, shortcuts, or unverified claims.**
+
+First, inspect the **entire implementation and architecture** and derive a complete QA/test matrix from the actual codebase, requirements, features, integrations, dependencies, and user workflows. **Do not assume the listed tests are sufficient.**
+
+Test the complete integrated system end-to-end, including:
+- Frontend/UI and every user-facing workflow
+- Backend/services/business logic
+- APIs and API contracts
+- Database, persistence, migrations, and data integrity
+- Authentication, authorization, roles, and permissions
+- Third-party and internal integrations
+- State management and synchronization
+- Input validation and sanitization
+- Loading, success, empty, failure, timeout, retry, and recovery states
+- Positive, negative, boundary, edge, and unexpected-user scenarios
+- Security-critical paths
+- Responsive behavior and supported environments
+
+**PASS requires actual execution and verification in the real integrated application.** Never declare PASS based solely on code inspection, compilation, static analysis, absence of obvious errors, or the assumption that something “should work.”
+
+For **every failure or defect**:
+**reproduce → identify root cause → fix completely → re-run the failed test → test affected dependencies → perform regression testing → verify the fix in the integrated application.**
+
+After **every code change**, re-test all functionality that could reasonably be affected by that change. Do not introduce regressions while fixing another issue.
+
+Before completion, verify there are **zero known or reproducible**:
+- Broken workflows or integrations
+- Frontend/backend mismatches
+- API, database, authentication, or authorization failures
+- Console, runtime, network, build, or server errors
+- Dead buttons, links, routes, forms, or controls
+- Placeholder, mock, fake, hardcoded, or incomplete production logic
+- Missing loading, success, empty, error, timeout, or recovery states
+- Unhandled edge cases, validation failures, or regressions
+- Broken dependencies or integration contracts
+- Data integrity or persistence issues
+
+### FINAL RELEASE GATE
+
+Do **NOT** say **PASS, COMPLETE, DONE, READY, or PRODUCTION-READY** until:
+1. Every identified requirement and feature has been tested.
+2. Every applicable positive and negative scenario has been tested.
+3. Every discovered failure has been fixed and re-tested.
+4. Regression testing has passed across all affected functionality.
+5. Frontend, backend, database, APIs, and integrations have been verified working together.
+6. No known or reproducible blocking defects remain.
+7. **Test evidence/results support every PASS claim.**
+
+If something cannot be verified, **do not mark it PASS**. Clearly report it as **UNVERIFIED** and continue testing or fixing.
+
+**Evidence over assumption. Execution over inspection. Verification over confidence. Zero known gaps.**

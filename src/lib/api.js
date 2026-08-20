@@ -1,7 +1,7 @@
 import { localClient } from '@/api/localClient';
 
-export async function queryRepos(params) {
-  const res = await localClient.functions.invoke('queryRepositories', params);
+export async function queryRepos(params, options = {}) {
+  const res = await localClient.functions.invoke('queryRepositories', params, options);
   return res;
 }
 

@@ -6,6 +6,8 @@ import { getBookmarks } from '@/lib/bookmarks';
 import { useMobileLayout } from '@/lib/MobileLayoutContext';
 import CommandPalette from './CommandPalette';
 import { useAuth } from '@/lib/AuthContext';
+import { useLogoEasterEgg } from '@/hooks/useLogoEasterEgg';
+import MagneticButton from '@/components/ui/MagneticButton';
 
 const NAV = [
 { to: '/discover', label: 'Discover' },
@@ -21,6 +23,7 @@ export default function Header() {
   const [bookmarkCount, setBookmarkCount] = useState(0);
   const { isMobileLayout, toggleMobileLayout } = useMobileLayout();
   const { user } = useAuth();
+  const triggerConfetti = useLogoEasterEgg();
 
   useEffect(() => {
     setBookmarkCount(getBookmarks().length);
@@ -38,7 +41,7 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-16 gap-4">
           {/* Logo */}
-          <Link to="/discover" className="flex items-center gap-2.5 flex-shrink-0 group" aria-label="Openlysts Home">
+          <Link to="/discover" onClick={triggerConfetti} className="flex items-center gap-2.5 flex-shrink-0 group" aria-label="Openlysts Home">
             <div className="relative w-10 h-10 rounded-xl bg-white/10 dark:bg-white/5 border border-black/5 dark:border-white/10 shadow-sm overflow-hidden flex items-center justify-center backdrop-blur-md group-hover:scale-105 group-hover:border-accent/40 transition-all duration-300">
               <img src="/logo.png" alt="" className="w-8 h-8 object-contain animate-logo-enter filter drop-shadow-sm" />
             </div>
@@ -126,7 +129,9 @@ export default function Header() {
             ) : (
               <div className="hidden sm:flex items-center gap-2 ml-1 pl-1 sm:pl-3 border-l border-border/50">
                 <Link to="/login" className="text-xs sm:text-sm font-medium text-text-secondary hover:text-text transition-colors">Log in</Link>
-                <Link to="/register" className="text-xs sm:text-sm font-medium bg-accent text-accent-fg px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg hover:bg-accent/90 transition-colors shadow-sm">Sign up</Link>
+                <MagneticButton>
+                  <Link to="/register" className="text-xs sm:text-sm font-medium bg-accent text-accent-fg px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg hover:bg-accent/90 transition-colors shadow-sm block">Sign up</Link>
+                </MagneticButton>
               </div>
             )}
 

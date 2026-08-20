@@ -12,6 +12,7 @@ import OpenlystLayout from './components/openlyst/OpenlystLayout';
 import AdminRoute from './components/openlyst/AdminRoute';
 import ProtectedRoute from './components/openlyst/ProtectedRoute';
 import ErrorBoundary from './components/openlyst/ErrorBoundary';
+import EasterEggsOverlay from './components/openlyst/EasterEggsOverlay';
 
 // Public Pages
 import Welcome from './pages/Welcome';
@@ -46,6 +47,7 @@ function App() {
             <QueryClientProvider client={queryClientInstance}>
             <Router>
               <ErrorBoundary>
+                <EasterEggsOverlay />
                 <Routes>
                   <Route path="/" element={<Welcome />} />
                   <Route path="/login" element={<Login />} />

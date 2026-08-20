@@ -104,7 +104,7 @@ export default function AnimatedSearch({ className = '', size = 'default' }) {
               ? 'rounded-xl pl-12 pr-12 py-3.5 text-base shadow-md' 
               : 'rounded-lg pl-9 pr-12 py-2 text-sm'
           } text-text placeholder:text-text-muted`}
-          style={{ boxShadow: focused ? '0 0 0 3px hsl(var(--accent-soft))' : 'none' }}
+          style={{ boxShadow: focused ? '0 0 15px 0px hsl(var(--accent) / 0.4), 0 0 0 2px hsl(var(--accent-soft))' : 'none' }}
         />
         <div className={`absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none ${focused ? 'opacity-0' : 'opacity-100'} transition-opacity`}>
           <kbd className="hidden sm:inline-flex items-center gap-1 font-mono text-[10px] bg-bg border border-border px-1.5 py-0.5 rounded text-text-muted font-medium">

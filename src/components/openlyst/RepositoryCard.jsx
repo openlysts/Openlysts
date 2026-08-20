@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Star, GitFork, Bookmark, Flame, AlertCircle, GitCompare } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useSpring, useTransform, useMotionTemplate } from 'framer-motion';
 import { getLanguageColor } from '@/lib/languageColors';
 import { getDifficultyColor } from '@/lib/difficultyColors';
 import { isBookmarked, toggleBookmark } from '@/lib/bookmarks';
@@ -38,6 +38,40 @@ export default function RepositoryCard({ repo, index = 0 }) {
   const { selectedForCompare, toggleCompare } = useCompare();
   const isCompared = selectedForCompare.some(r => r.id === repo.id);
 
+  // 3D Parallax logic
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  
+  const mouseXSpring = useSpring(x, { stiffness: 300, damping: 20 });
+  const mouseYSpring = useSpring(y, { stiffness: 300, damping: 20 });
+  
+  const rotateXRaw = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"]);
+  const rotateYRaw = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
+  
+  // Math.round to avoid sub-pixel blur during rendering
+  const rotateX = useTransform(rotateXRaw, (val) => `${Math.round(parseFloat(val))}deg`);
+  const rotateY = useTransform(rotateYRaw, (val) => `${Math.round(parseFloat(val))}deg`);
+
+  // An easter egg sparkle gradient position based on mouse
+  const gradientX = useTransform(mouseXSpring, [-0.5, 0.5], [100, 0]);
+  const gradientY = useTransform(mouseYSpring, [-0.5, 0.5], [100, 0]);
+  const background = useMotionTemplate`radial-gradient(circle at ${gradientX}% ${gradientY}%, rgba(var(--accent-rgb, 100, 200, 100), 0.08) 0%, transparent 60%)`;
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    const xPct = (mouseX / rect.width) - 0.5;
+    const yPct = (mouseY / rect.height) - 0.5;
+    x.set(xPct);
+    y.set(yPct);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
   const handleBookmark = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -58,10 +92,28 @@ export default function RepositoryCard({ repo, index = 0 }) {
     <motion.div
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, delay: Math.min(index * 0.04, 0.4) }}>
+      transition={{ duration: 0.3, delay: Math.min(index * 0.04, 0.4) }}
+      style={{ perspective: 1200, transformStyle: "preserve-3d" }}>
       
-      <div onClick={handleCardClick} className="block h-full cursor-pointer">
-        <div className="card card-hover h-full flex flex-col p-4 relative rounded-lg">
+      <motion.div 
+        onClick={handleCardClick} 
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        whileHover={{ scale: 1.02 }}
+        style={{ rotateX, rotateY, transformStyle: "preserve-3d", willChange: "transform" }}
+        className="block h-full cursor-pointer relative group">
+        
+        <motion.div 
+          className="card h-full flex flex-col p-4 relative rounded-lg border border-border/50 bg-bg-card transition-colors group-hover:border-accent/40"
+          style={{ transform: "translateZ(15px)", willChange: "transform" }}
+        >
+          {/* Subtle easter-egg glow on hover inside card */}
+          <motion.div 
+            className="absolute inset-0 z-0 pointer-events-none rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            style={{ background }}
+          />
+
+          <div className="relative z-10 flex-1 flex flex-col">
           {/* Bookmark */}
           <div className="absolute top-3 right-3 flex items-center gap-1">
             <button
@@ -84,7 +136,7 @@ export default function RepositoryCard({ repo, index = 0 }) {
 
           {/* Trending badge */}
           {isTrending &&
-          <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-trending/30 bg-trending/10 text-trending backdrop-blur-md mb-2 w-fit shadow-sm">
+          <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-trending/40 bg-trending/10 text-trending backdrop-blur-md mb-2 w-fit shadow-[0_0_8px_rgba(255,100,50,0.3)] animate-pulse">
               <Flame className="w-3 h-3" />
               Trending
             </div>
@@ -173,8 +225,9 @@ export default function RepositoryCard({ repo, index = 0 }) {
 
           {/* Video explanation links */}
           <RepoVideoLinks repo={repo} />
-        </div>
-      </div>
+          </div>
+        </motion.div>
+      </motion.div>
     </motion.div>);
 
 }

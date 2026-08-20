@@ -7,11 +7,44 @@ import { githubFetch, ingestRepoItem } from './runIngestion.js';
 
 let cachedRepos = null;
 let lastCacheTime = 0;
-const CACHE_TTL_MS = 60000; // 60s in-memory cache
+let inflightFetchPromise = null;
+const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes in-memory cache
 
 export function invalidateRepositoriesCache() {
   cachedRepos = null;
   lastCacheTime = 0;
+  inflightFetchPromise = null;
+}
+
+export async function prewarmRepositoriesCache() {
+  if (cachedRepos && Date.now() - lastCacheTime < CACHE_TTL_MS) {
+    return cachedRepos;
+  }
+  if (inflightFetchPromise) {
+    return inflightFetchPromise;
+  }
+
+  inflightFetchPromise = (async () => {
+    try {
+      const rawRepos = await entities.Repository.list('-stars', 5000);
+      const seen = new Set();
+      const deduped = [];
+      for (const r of rawRepos) {
+        const key = (r.full_name || '').toLowerCase();
+        if (key && !seen.has(key)) {
+          seen.add(key);
+          deduped.push(r);
+        }
+      }
+      cachedRepos = deduped;
+      lastCacheTime = Date.now();
+      return cachedRepos;
+    } finally {
+      inflightFetchPromise = null;
+    }
+  })();
+
+  return inflightFetchPromise;
 }
 
 export default async function queryRepositories(req, res) {
@@ -40,8 +73,6 @@ export default async function queryRepositories(req, res) {
       const queryStr = q.trim();
       const url = `https://api.github.com/search/repositories?q=${encodeURIComponent(queryStr)}&sort=stars&order=desc&per_page=30`;
       
-      // Fire-and-forget background ingestion so we don't block the API response
-      // if GitHub rate limits us.
       githubFetch(url, GITHUB_TOKEN, 1).then(async (data) => {
         if (data && data.items) {
           for (const item of data.items) {
@@ -55,23 +86,11 @@ export default async function queryRepositories(req, res) {
     }
 
     const now = Date.now();
-    if (!cachedRepos || now - lastCacheTime > CACHE_TTL_MS) {
-      const rawRepos = await entities.Repository.list('-stars', 5000);
-      // Deduplicate by lowercase full_name
-      const seen = new Set();
-      const deduped = [];
-      for (const r of rawRepos) {
-        const key = (r.full_name || '').toLowerCase();
-        if (key && !seen.has(key)) {
-          seen.add(key);
-          deduped.push(r);
-        }
-      }
-      cachedRepos = deduped;
-      lastCacheTime = now;
+    let allRepos = cachedRepos;
+    if (!allRepos || now - lastCacheTime > CACHE_TTL_MS) {
+      allRepos = await prewarmRepositoriesCache();
     }
-    const allRepos = cachedRepos;
-    let repos = allRepos.filter((r) => !r.hidden);
+    let repos = (allRepos || []).filter((r) => !r.hidden);
 
     if (q && q.trim()) {
       const query = q.trim().toLowerCase();

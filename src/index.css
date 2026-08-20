@@ -37,9 +37,9 @@
     --bg-card: 222 44% 10%;
     --bg-subtle: 222 40% 13%;
     --bg-hover: 222 40% 16%;
-    --text: 210 20% 92%;
-    --text-secondary: 215 16% 65%;
-    --text-muted: 215 14% 50%;
+    --text: 210 20% 96%;
+    --text-secondary: 215 16% 75%;
+    --text-muted: 215 14% 65%;
     --border: 217 19% 20%;
     --border-strong: 217 19% 28%;
     --accent: 142 71% 52%;
@@ -290,14 +290,17 @@
 
   body {
     font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
     background: hsl(var(--bg));
     color: hsl(var(--text));
     transition: background-color 0.25s ease, color 0.25s ease;
   }
 
   h1, h2, h3, h4 {
-    font-weight: 600;
-    letter-spacing: -0.02em;
+    font-weight: 700;
+    letter-spacing: -0.03em;
   }
 
   .font-mono {
@@ -376,4 +379,11 @@
 }
 .prose tbody tr {
   border-bottom-color: hsl(var(--border)) !important;
+}
+#root {
+  transition: transform 1.5s ease-in-out, filter 1.5s ease-in-out;
+}
+#root.konami-active {
+  transform: rotateX(180deg);
+  filter: invert(1) hue-rotate(180deg);
 }

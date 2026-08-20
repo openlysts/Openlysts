@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import RepositoryCard from '@/components/openlyst/RepositoryCard';
+import SkeletonCard from '@/components/openlyst/SkeletonCard';
 
 async function fetchAlternatives(category, search, sort) {
   const res = await fetch('/api/functions/queryAlternatives', {
@@ -63,6 +64,166 @@ const sortOptions = [
   { value: 'name', label: 'Name A→Z' },
   { value: 'difficulty', label: 'Easiest First' },
 ];
+
+const getDifficultyColor = (d) => {
+  if (d === 'Easy') return 'bg-green-500/15 text-green-400 border-green-500/25';
+  if (d === 'Medium') return 'bg-amber-500/15 text-amber-400 border-amber-500/25';
+  return 'bg-red-500/15 text-red-400 border-red-500/25';
+};
+
+const getScoreLabel = (score) => {
+  if (score >= 85) return 'Excellent';
+  if (score >= 70) return 'Great';
+  if (score >= 55) return 'Good';
+  if (score >= 40) return 'Fair';
+  return 'Basic';
+};
+
+function AlternativeCard({ alt, idx, viewMode, isSelected, onToggleCompare, onSelect }) {
+  const cardRef = useRef(null);
+  const [rotate, setRotate] = useState({ x: 0, y: 0 });
+  const [spotlight, setSpotlight] = useState({ x: 50, y: 50 });
+  const [hovered, setHovered] = useState(false);
+
+  const handleMouseMove = (e) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotX = ((y - centerY) / centerY) * -8;
+    const rotY = ((x - centerX) / centerX) * 8;
+
+    setRotate({ x: rotX, y: rotY });
+    setSpotlight({ x: (x / rect.width) * 100, y: (y / rect.height) * 100 });
+  };
+
+  const handleMouseLeave = () => {
+    setHovered(false);
+    setRotate({ x: 0, y: 0 });
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      whileHover={{ y: -4 }}
+      transition={{ delay: Math.min(idx * 0.03, 0.3) }}
+      onClick={() => onSelect(alt)}
+      className="relative cursor-pointer"
+      style={{ perspective: 1200 }}
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={handleMouseLeave}
+    >
+      {/* Background Layer: 3D Tilt Effect */}
+      <motion.div
+        animate={{ rotateX: rotate.x, rotateY: rotate.y }}
+        transition={{ type: 'spring', stiffness: 300, damping: 25, mass: 0.5 }}
+        style={{ transformStyle: 'preserve-3d' }}
+        className={`absolute inset-0 rounded-xl bg-bg-card border transition-colors duration-300 ${
+          isSelected 
+            ? 'border-accent ring-1 ring-accent/50' 
+            : 'border-border'
+        } ${hovered && !isSelected ? 'border-accent/40 shadow-2xl shadow-accent/10' : ''}`}
+      >
+        <div 
+          className="absolute inset-0 rounded-xl pointer-events-none transition-opacity duration-300"
+          style={{
+            opacity: hovered ? 1 : 0,
+            background: `radial-gradient(400px circle at ${spotlight.x}% ${spotlight.y}%, rgba(99, 102, 241, 0.08), rgba(16, 185, 129, 0.05), transparent 60%)`
+          }}
+        />
+      </motion.div>
+
+      {/* Foreground Content Layer: 2D Parallax */}
+      <motion.div
+        animate={{ x: Math.round(rotate.y * -0.5), y: Math.round(rotate.x * 0.5) }}
+        transition={{ type: 'spring', stiffness: 300, damping: 25, mass: 0.5 }}
+        className={`relative ${viewMode === 'list' ? 'flex items-center gap-4 p-3' : 'flex flex-col p-4'} h-full group`}
+      >
+        <button
+          onClick={(e) => onToggleCompare(e, alt)}
+          className={`absolute -top-1 -right-1 w-7 h-7 rounded-full border-2 flex items-center justify-center transition-all z-10 shadow-sm text-xs ${
+            isSelected
+              ? 'bg-accent border-bg text-bg scale-100'
+              : 'bg-bg-card border-border text-transparent hover:border-accent/50 group-hover:scale-100 scale-0'
+          }`}
+        >
+          ✓
+        </button>
+
+        {viewMode === 'grid' ? (
+          <>
+            <div className="flex justify-between items-start mb-2.5">
+              <div className="flex-1 min-w-0 pr-2">
+                <h3 className="text-sm font-bold text-text group-hover:text-accent transition-colors truncate">
+                  {alt.resolved_name}
+                </h3>
+                <p className="text-[10px] font-medium text-text-muted mt-0.5 flex items-center gap-1">
+                  replaces <span className="text-text-secondary bg-bg-subtle px-1.5 py-0.5 rounded border border-border text-[10px]">{alt.paid_tool_name}</span>
+                </p>
+              </div>
+              <ScoreRing score={alt.openlysts_score} size={40} strokeWidth={3} />
+            </div>
+
+            <p className="text-xs text-text-secondary line-clamp-2 mb-3 flex-grow leading-relaxed">{alt.description}</p>
+
+            <div className="flex items-center justify-between mt-auto pt-2.5 border-t border-border/40">
+              <div className="flex items-center gap-1.5 flex-wrap">
+                <span className={`text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded border ${getDifficultyColor(alt.migration_difficulty)}`}>
+                  {alt.migration_difficulty || 'Medium'}
+                </span>
+                <span className="text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded border bg-accent/10 text-accent border-accent/20">
+                  {alt.feature_parity_score || 70}% Match
+                </span>
+                {alt.repo && (
+                  <span className="text-[9px] font-bold px-1.5 py-0.5 rounded border bg-yellow-500/10 text-yellow-500 border-yellow-500/20 flex items-center gap-0.5">
+                    ★ {alt.repo.stars >= 1000 ? (alt.repo.stars / 1000).toFixed(1) + 'k' : alt.repo.stars || 0}
+                  </span>
+                )}
+              </div>
+              {alt.openlysts_score >= 80 && alt.repo?.stars >= 5000 && (
+                <div title="Top Pick" className="flex items-center gap-0.5 text-accent text-[9px] font-bold">
+                  <Award className="w-3 h-3" /> Top Pick
+                </div>
+              )}
+            </div>
+          </>
+        ) : (
+          <>
+            <ScoreRing score={alt.openlysts_score} size={36} strokeWidth={3} />
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2">
+                <h3 className="text-sm font-bold text-text group-hover:text-accent transition-colors truncate">{alt.resolved_name}</h3>
+                <span className="text-[10px] text-text-muted">replaces</span>
+                <span className="text-[10px] text-text-secondary bg-bg-subtle px-1.5 py-0.5 rounded border border-border">{alt.paid_tool_name}</span>
+              </div>
+              <p className="text-xs text-text-secondary line-clamp-1 mt-0.5">{alt.description}</p>
+            </div>
+            <div className="flex items-center gap-1.5 flex-shrink-0">
+              <span className={`text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded border ${getDifficultyColor(alt.migration_difficulty)}`}>
+                {alt.migration_difficulty || 'Medium'}
+              </span>
+              <span className="text-[9px] font-bold px-1.5 py-0.5 rounded border bg-accent/10 text-accent border-accent/20">
+                {alt.feature_parity_score || 70}%
+              </span>
+              {alt.repo && (
+                <span className="text-[9px] font-bold px-1.5 py-0.5 rounded border bg-yellow-500/10 text-yellow-500 border-yellow-500/20">
+                  ★ {alt.repo.stars >= 1000 ? (alt.repo.stars / 1000).toFixed(1) + 'k' : alt.repo.stars || 0}
+                </span>
+              )}
+            </div>
+            <ChevronRight className="w-4 h-4 text-text-muted group-hover:text-accent transition-colors flex-shrink-0" />
+          </>
+        )}
+      </motion.div>
+    </motion.div>
+  );
+}
 
 export default function Alternatives() {
   const [activeCategory, setActiveCategory] = useState('All');
@@ -212,116 +373,16 @@ export default function Alternatives() {
     }
   };
 
-  const getDifficultyColor = (d) => {
-    if (d === 'Easy') return 'bg-green-500/15 text-green-400 border-green-500/25';
-    if (d === 'Medium') return 'bg-amber-500/15 text-amber-400 border-amber-500/25';
-    return 'bg-red-500/15 text-red-400 border-red-500/25';
-  };
-
-  const getScoreLabel = (score) => {
-    if (score >= 85) return 'Excellent';
-    if (score >= 70) return 'Great';
-    if (score >= 55) return 'Good';
-    if (score >= 40) return 'Fair';
-    return 'Basic';
-  };
-
   const renderCard = (alt, idx) => (
-    <motion.div
+    <AlternativeCard 
       key={alt.id}
-      initial={{ opacity: 0, y: 8 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: Math.min(idx * 0.03, 0.3) }}
-      onClick={() => setSelectedAlt(alt)}
-      className={`group relative bg-bg-card border ${
-        selectedForCompare.find(s => s.id === alt.id) 
-          ? 'border-accent ring-1 ring-accent/50' 
-          : 'border-border hover:border-accent/40'
-      } rounded-xl cursor-pointer hover:-translate-y-1 hover:shadow-2xl hover:shadow-accent/10 transition-all duration-300 ${
-        viewMode === 'list' ? 'flex items-center gap-4 p-3' : 'flex flex-col p-4'
-      }`}
-    >
-      {/* Compare checkbox */}
-      <button
-        onClick={(e) => toggleCompare(e, alt)}
-        className={`absolute -top-2 -right-2 w-7 h-7 rounded-full border-2 flex items-center justify-center transition-all z-10 shadow-sm text-xs ${
-          selectedForCompare.find(s => s.id === alt.id)
-            ? 'bg-accent border-bg text-bg scale-100'
-            : 'bg-bg-card border-border text-transparent hover:border-accent/50 group-hover:scale-100 scale-0'
-        }`}
-      >
-        ✓
-      </button>
-
-      {viewMode === 'grid' ? (
-        <>
-          {/* Grid Card Header */}
-          <div className="flex justify-between items-start mb-2.5">
-            <div className="flex-1 min-w-0 pr-2">
-              <h3 className="text-sm font-bold text-text group-hover:text-accent transition-colors truncate">
-                {alt.resolved_name}
-              </h3>
-              <p className="text-[10px] font-medium text-text-muted mt-0.5 flex items-center gap-1">
-                replaces <span className="text-text-secondary bg-bg-subtle px-1.5 py-0.5 rounded border border-border text-[10px]">{alt.paid_tool_name}</span>
-              </p>
-            </div>
-            <ScoreRing score={alt.openlysts_score} size={40} strokeWidth={3} />
-          </div>
-
-          {/* Description */}
-          <p className="text-xs text-text-secondary line-clamp-2 mb-3 flex-grow leading-relaxed">{alt.description}</p>
-
-          {/* Footer Badges */}
-          <div className="flex items-center justify-between mt-auto pt-2.5 border-t border-border/40">
-            <div className="flex items-center gap-1.5 flex-wrap">
-              <span className={`text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded border ${getDifficultyColor(alt.migration_difficulty)}`}>
-                {alt.migration_difficulty || 'Medium'}
-              </span>
-              <span className="text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded border bg-accent/10 text-accent border-accent/20">
-                {alt.feature_parity_score || 70}% Match
-              </span>
-              {alt.repo && (
-                <span className="text-[9px] font-bold px-1.5 py-0.5 rounded border bg-yellow-500/10 text-yellow-500 border-yellow-500/20 flex items-center gap-0.5">
-                  ★ {alt.repo.stars >= 1000 ? (alt.repo.stars / 1000).toFixed(1) + 'k' : alt.repo.stars || 0}
-                </span>
-              )}
-            </div>
-            {alt.openlysts_score >= 80 && alt.repo?.stars >= 5000 && (
-              <div title="Top Pick" className="flex items-center gap-0.5 text-accent text-[9px] font-bold">
-                <Award className="w-3 h-3" /> Top Pick
-              </div>
-            )}
-          </div>
-        </>
-      ) : (
-        /* List View */
-        <>
-          <ScoreRing score={alt.openlysts_score} size={36} strokeWidth={3} />
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2">
-              <h3 className="text-sm font-bold text-text group-hover:text-accent transition-colors truncate">{alt.resolved_name}</h3>
-              <span className="text-[10px] text-text-muted">replaces</span>
-              <span className="text-[10px] text-text-secondary bg-bg-subtle px-1.5 py-0.5 rounded border border-border">{alt.paid_tool_name}</span>
-            </div>
-            <p className="text-xs text-text-secondary line-clamp-1 mt-0.5">{alt.description}</p>
-          </div>
-          <div className="flex items-center gap-1.5 flex-shrink-0">
-            <span className={`text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded border ${getDifficultyColor(alt.migration_difficulty)}`}>
-              {alt.migration_difficulty || 'Medium'}
-            </span>
-            <span className="text-[9px] font-bold px-1.5 py-0.5 rounded border bg-accent/10 text-accent border-accent/20">
-              {alt.feature_parity_score || 70}%
-            </span>
-            {alt.repo && (
-              <span className="text-[9px] font-bold px-1.5 py-0.5 rounded border bg-yellow-500/10 text-yellow-500 border-yellow-500/20">
-                ★ {alt.repo.stars >= 1000 ? (alt.repo.stars / 1000).toFixed(1) + 'k' : alt.repo.stars || 0}
-              </span>
-            )}
-          </div>
-          <ChevronRight className="w-4 h-4 text-text-muted group-hover:text-accent transition-colors flex-shrink-0" />
-        </>
-      )}
-    </motion.div>
+      alt={alt}
+      idx={idx}
+      viewMode={viewMode}
+      isSelected={!!selectedForCompare.find(s => s.id === alt.id)}
+      onToggleCompare={toggleCompare}
+      onSelect={setSelectedAlt}
+    />
   );
 
   return (
@@ -515,9 +576,10 @@ export default function Alternatives() {
         {/* ─── Main Content ─── */}
         <main className="flex-1 min-w-0">
           {isLoading && (
-            <div className="flex flex-col items-center justify-center py-20 gap-3">
-              <Loader2 className="w-8 h-8 animate-spin text-accent" />
-              <p className="text-sm text-text-muted">Loading alternatives...</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+              {[...Array(6)].map((_, i) => (
+                <SkeletonCard key={i} />
+              ))}
             </div>
           )}
 
@@ -628,7 +690,7 @@ export default function Alternatives() {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 50 }}
-            className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-bg-card border border-border rounded-full shadow-2xl px-6 py-3 flex items-center gap-6 z-40"
+            className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-surface/60 backdrop-blur-2xl border border-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_8px_32px_rgba(0,0,0,0.2)] rounded-full px-6 py-3 flex items-center gap-6 z-40"
           >
             <div className="flex items-center gap-3">
               <span className="text-sm font-medium text-text">

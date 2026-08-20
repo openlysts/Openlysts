@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { motion } from 'framer-motion';
-import { Sparkles, Clock, TrendingUp, ArrowRight, Database, RefreshCw } from 'lucide-react';
+import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion';
+import { Sparkles, Clock, TrendingUp, ArrowRight, Database, RefreshCw, Cpu, Wrench, HardDrive, Bot, Package, Cloud, ShieldCheck } from 'lucide-react';
 import { queryRepos } from '@/lib/api';
 
 import RepositoryGrid from '@/components/openlyst/RepositoryGrid';
@@ -13,11 +13,32 @@ import { useToast } from '@/components/ui/use-toast';
 
 const LANGUAGES = ['Python', 'JavaScript', 'TypeScript', 'Go', 'Rust', 'Java', 'C++', 'C', 'Ruby', 'PHP', 'Swift', 'Kotlin', 'Shell', 'Vue', 'HTML', 'Dart'];
 
+const QUICK_CATEGORIES = [
+  { id: 'ai', name: 'AI & LLMs', icon: Cpu },
+  { id: 'developer-tools', name: 'Developer Tools', icon: Wrench },
+  { id: 'databases', name: 'Databases & RAG', icon: HardDrive },
+  { id: 'ai-agents', name: 'AI Agents', icon: Bot },
+  { id: 'libraries-frameworks', name: 'Libraries', icon: Package },
+  { id: 'cloud-devops', name: 'Cloud & DevOps', icon: Cloud },
+];
+
 export default function Home() {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [viewHistory, setViewHistory] = useState([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [historyPaused, setHistoryPaused] = useState(false);
+  
+  const { scrollY } = useScroll();
+  const [showStickyFilters, setShowStickyFilters] = useState(false);
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    if (latest > 450 && !showStickyFilters) {
+      setShowStickyFilters(true);
+    } else if (latest <= 450 && showStickyFilters) {
+      setShowStickyFilters(false);
+    }
+  });
 
   useEffect(() => {
     try {
@@ -25,6 +46,7 @@ export default function Home() {
       if (stored) {
         setViewHistory(JSON.parse(stored));
       }
+      setHistoryPaused(localStorage.getItem('openlyst_history_paused') === 'true');
     } catch (e) {
       console.error(e);
     }
@@ -32,19 +54,19 @@ export default function Home() {
 
   const { data: trending, isLoading: tLoading, refetch: refetchTrending, isRefetching: tRefetching } = useQuery({
     queryKey: ['home-trending'],
-    queryFn: () => queryRepos({ sort: 'trending', page: 1 }),
+    queryFn: ({ signal }) => queryRepos({ sort: 'trending', page: 1 }, { signal }),
     staleTime: 300000,
     refetchInterval: 60000
   });
   const { data: recent, isLoading: rLoading } = useQuery({
     queryKey: ['home-recent'],
-    queryFn: () => queryRepos({ sort: 'recent', page: 1 }),
+    queryFn: ({ signal }) => queryRepos({ sort: 'recent', page: 1 }, { signal }),
     staleTime: 300000,
     refetchInterval: 60000
   });
   const { data: aiPopular, isLoading: aLoading } = useQuery({
     queryKey: ['home-ai'],
-    queryFn: () => queryRepos({ categories: ['ai'], sort: 'stars', page: 1 }),
+    queryFn: ({ signal }) => queryRepos({ categories: ['ai'], sort: 'stars', page: 1 }, { signal }),
     staleTime: 300000,
     refetchInterval: 60000
   });
@@ -79,7 +101,34 @@ export default function Home() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 rounded-lg">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 rounded-lg relative">
+      {/* Dynamic Floating Quick-Filters (Premium Glassmorphism) */}
+      <AnimatePresence>
+        {showStickyFilters && (
+          <motion.div
+            initial={{ y: -100, opacity: 0, x: '-50%' }}
+            animate={{ y: 0, opacity: 1, x: '-50%' }}
+            exit={{ y: -100, opacity: 0, x: '-50%' }}
+            transition={{ type: "spring", stiffness: 300, damping: 25 }}
+            className="fixed top-6 left-1/2 z-50 hidden md:flex items-center gap-1.5 p-1.5 rounded-full bg-surface/60 backdrop-blur-2xl border border-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_8px_32px_rgba(0,0,0,0.2)]"
+          >
+            {QUICK_CATEGORIES.map((cat) => {
+              const Icon = cat.icon;
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => updateFilters({ categories: [cat.id] })}
+                  className="group relative px-4 py-2 rounded-full text-sm font-medium text-text-secondary hover:text-text transition-colors flex items-center gap-2 hover:bg-white/10"
+                >
+                  <Icon className="w-4 h-4 opacity-70 group-hover:opacity-100 transition-opacity" />
+                  {cat.name}
+                </button>
+              );
+            })}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Hero */}
       <section className="pt-12 sm:pt-20 pb-8 text-center max-w-4xl mx-auto">
         <motion.div
@@ -184,24 +233,42 @@ export default function Home() {
           </section>
 
           {/* Recently Viewed History */}
-          {viewHistory.length > 0 && (
+          {(viewHistory.length > 0 || historyPaused) && (
             <section>
               <div className="flex items-center justify-between mb-4">
                 <h2 className="flex items-center gap-2 text-xl font-bold text-text">
                   <Clock className="w-5 h-5 text-accent" />
                   Your Viewing History
                 </h2>
-                <button
-                  onClick={() => {
-                    localStorage.removeItem('openlyst_history');
-                    setViewHistory([]);
-                  }}
-                  className="text-sm text-text-muted hover:text-red-400 flex items-center gap-1 transition-colors"
-                >
-                  Clear History
-                </button>
+                <div className="flex items-center gap-4">
+                  <button
+                    onClick={() => {
+                      const newState = !historyPaused;
+                      setHistoryPaused(newState);
+                      localStorage.setItem('openlyst_history_paused', String(newState));
+                    }}
+                    className={`text-sm flex items-center gap-1 transition-colors ${historyPaused ? 'text-accent hover:text-accent/80' : 'text-text-muted hover:text-text'}`}
+                  >
+                    {historyPaused ? 'Resume History' : 'Pause History'}
+                  </button>
+                  <button
+                    onClick={() => {
+                      localStorage.removeItem('openlyst_history');
+                      setViewHistory([]);
+                    }}
+                    className="text-sm text-text-muted hover:text-red-400 flex items-center gap-1 transition-colors"
+                  >
+                    Clear History
+                  </button>
+                </div>
               </div>
-              <RepositoryGrid repos={viewHistory.slice(0, 4)} loading={false} />
+              {viewHistory.length > 0 ? (
+                <RepositoryGrid repos={viewHistory.slice(0, 4)} loading={false} />
+              ) : (
+                <div className="flex flex-col items-center justify-center py-8 text-center rounded-2xl border border-dashed border-border/50 bg-surface/20">
+                  <p className="text-text-muted text-sm max-w-sm">Your viewing history is currently paused and empty.</p>
+                </div>
+              )}
             </section>
           )}
 
