@@ -76,6 +76,8 @@ As instructed by the CEO/CTO, the following rules MUST be strictly followed for 
 - **Always read this file (`AGENTS.md`) before deploying or making any structural changes.**
 - Check that local testing commands such as `npm run dev` succeed.
 - Check that production builds such as `npm run build` succeed before pushing to Vercel.
+- **MANDATORY VERCEL DEPLOYMENT BRANCH:** Vercel production deployments MUST ONLY and ALWAYS be executed while checked out to the `main` branch (`git checkout main`). Never deploy to Vercel from `experimental`, `dev`, or `backup`.
+- Sync and push all 4 branches (`experimental`, `dev`, `main`, `backup`) prior to deployment.
 - Verify that Vercel configuration (`vercel.json`) aligns with the workload, including `maxDuration` where applicable.
 - Verify the deployed application after deployment.
 - Do not declare deployment successful without actual verification.
@@ -118,6 +120,7 @@ Current approved autonomous triggers include:
 - **Test everything end-to-end**
 - **Perform end-to-end QA**
 - **Run end-to-end QA**
+- **E2E**
 
 ### Production Deployment
 
@@ -125,6 +128,7 @@ Current approved autonomous triggers include:
 - **Deploy to production**
 - **Prod deployment**
 - **Deploy production**
+- **Prod deploy**
 
 Clearly equivalent wording MUST activate AUTONOMOUS MODE when the user's intent unambiguously requests the same approved operation.
 
@@ -307,19 +311,22 @@ When the user explicitly requests **production deployment** using an approved au
 2. Inspect the current implementation relevant to deployment.
 3. Perform all mandatory pre-deployment checks.
 4. Verify the local application.
-5. Verify the production build.
+5. Verify the production build (`npm run build`).
 6. Verify required environment/configuration.
 7. Verify relevant API/database integrations.
-8. Execute the production deployment without intermediate permission requests.
-9. Verify the deployed application.
-10. Verify relevant frontend behavior.
-11. Verify relevant backend/API behavior.
-12. Verify relevant database connectivity and persistence.
-13. Check relevant runtime, network, console, and deployment errors.
-14. If a directly related deployment failure occurs, diagnose and fix it.
-15. Re-run the affected verification.
-16. Complete post-deployment verification.
-17. Produce the final deployment report.
+8. Commit changes on active branch and sync across all 4 branches (`experimental` -> `dev` -> `main` -> `backup`).
+9. **Checkout `main` branch (`git checkout main`)**. Production deployments on Vercel must ONLY and ALWAYS originate from the `main` branch.
+10. Execute the production deployment (`npx vercel --prod --yes --force` or prebuilt) while on `main` without intermediate permission requests.
+11. Verify the deployed application.
+12. Verify relevant frontend behavior.
+13. Verify relevant backend/API behavior.
+14. Verify relevant database connectivity and persistence.
+15. Check relevant runtime, network, console, and deployment errors.
+16. If a directly related deployment failure occurs, diagnose and fix it.
+17. Re-run the affected verification.
+18. Complete post-deployment verification.
+19. Return to the active working branch (`git checkout experimental`).
+20. Produce the final deployment report.
 
 Do not declare production deployment successful without actual verification.
 

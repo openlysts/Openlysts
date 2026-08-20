@@ -52,17 +52,22 @@ Convert a React/Vite application heavily dependent on a proprietary backend SDK 
    - **The Consequence**: The user refreshed `localhost:5173` and repeatedly saw the old, unmodified code, leading to immense confusion.
    - **The Fix**: Always kill stale Node processes (`Stop-Process -Id ...`) or instruct the user to completely close their old terminals before testing new backend changes.
 
-## 🏗️ Rebuilding From Scratch (Step-by-Step Guide)
+## 5. Branch Architecture & Production Deployment Protocol
 
-If you must rebuild this from 0, follow this exact order of operations:
+Openlysts enforces a strict 4-branch architecture (`experimental` -> `dev` -> `main` -> `backup`):
+- **`experimental`**: Working branch where active coding occurs.
+- **`dev`**: Staging sync.
+- **`main`**: Production release branch. **Vercel CLI production deployments MUST ONLY and ALWAYS be triggered while on `main` (`git checkout main`).**
+- **`backup`**: Rollback snapshot.
 
-1. **Scaffold the Foundation**: Create a Vite + React project. Set up TailwindCSS, React Query, and React Router.
-2. **Build the Backend Server**: Create `server/index.js` using Express. Configure Vite's `server.proxy` to route `/api` to the Express server (e.g., port 3001).
-3. **Initialize the Database**: Install `better-sqlite3`. Create `server/db/schema.js` and meticulously map every single entity from the old system to a SQL `CREATE TABLE` statement.
-4. **Create the Local SDK Mock**: Build an object mapping (`localClient`) in the frontend that mimics the old cloud SDK. It should have `.auth`, `.entities`, and `.functions` namespaces, which internally just make `fetch('/api/...')` calls to the Express server.
-5. **Implement Backend Routes**: Map the Express routes (`/api/entities/:entity/:action`) to generic CRUD operations that interact with SQLite.
-6. **Implement Background Ingestion**: Write the script that hits the GitHub API. Attach it to `setInterval` in the Express server.
-7. **Hook up the Frontend**: Drop in the existing React components. Ensure React Query uses `refetchInterval`.
+### Production Release Sequence:
+1. `npm run build` (Verify zero errors).
+2. Commit on `experimental`.
+3. Fast-forward merge `experimental` -> `dev` -> `main` -> `backup` and push all branches.
+4. `git checkout main`
+5. `npx vercel --prod --yes --force` (or `vercel build --prod` + `vercel deploy --prebuilt --prod --yes`).
+6. Verify live deployment (`https://openlysts.vercel.app`).
+7. `git checkout experimental`
 
 ---
 *Created by Antigravity IDE during the Openlysts Migration.*

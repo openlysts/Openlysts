@@ -10,10 +10,12 @@ This skill outlines the strict procedure for version releases, multi-branch Git 
 ## 1. Golden Rule: "Deploy to Production"
 > [!IMPORTANT]
 > **When the user (CEO/CTO) says "deploy to production", that ALWAYS means:**
-> 1. **Commit all changes cleanly** on the active branch (`experimental`).
+> 1. **Commit all changes cleanly** on the active working branch (`experimental`).
 > 2. **Sync and push to Git across ALL 4 branches** (`experimental`, `dev`, `main`, `backup`).
-> 3. **Trigger a forced production deployment on Vercel** (`npx vercel --prod --yes --force`).
-> 4. **Keep `experimental` as the active working branch** at the end of the operation.
+> 3. **Checkout `main` branch** before triggering Vercel deployment so that Vercel exclusively links and stamps production deployments to `main`.
+> 4. **Trigger a forced production deployment on Vercel** (`npx vercel --prod --yes --force` or prebuilt deploy).
+> 5. **Verify the live production deployment.**
+> 6. **Return to `experimental` as the active working branch** at the end of the operation.
 
 ---
 
@@ -22,7 +24,7 @@ This skill outlines the strict procedure for version releases, multi-branch Git 
 Openlysts maintains a 4-branch structure:
 1. **`experimental`**: The primary active working branch where current development and experiments take place.
 2. **`dev`**: The unified staging branch.
-3. **`main`**: The latest stable production branch.
+3. **`main`**: The latest stable production branch. **Vercel production deployments MUST ALWAYS and EXCLUSIVELY be executed from `main`.**
 4. **`backup`**: The disaster recovery / rollback branch.
 
 ---
@@ -40,7 +42,7 @@ npm run build
 ### Step 2: Commit on Active Branch
 ```bash
 git add .
-git commit -m "feat/fix: <clear summary of changes>"
+git commit -m "feat/fix/chore: <clear summary of changes>"
 git push origin experimental
 ```
 
@@ -60,20 +62,24 @@ git push origin main
 git checkout backup
 git merge main --ff-only || git merge main -m "Merge main into backup"
 git push origin backup
-
-# Return to active working branch
-git checkout experimental
 ```
 
-### Step 4: Force Deployment to Vercel Production
-Deploy the build directly to Vercel production to bypass cache or paused pipelines:
+### Step 4: Checkout `main` and Force Deploy to Vercel Production
+> [!IMPORTANT]
+> **You MUST switch to `main` branch before deploying.** This ensures the Vercel CLI tags the production deployment as originating strictly from `main`.
 ```bash
+git checkout main
 npx vercel --prod --yes --force
 ```
 
 ### Step 5: Post-Deployment Verification
 - Verify the live production deployment URL (`https://openlysts.vercel.app`).
-- Confirm active working branch is `experimental` via `git branch --show-current`.
+- Verify critical routes, database loading, and UI responsiveness.
+
+### Step 6: Return to Working Branch
+```bash
+git checkout experimental
+```
 
 ---
 

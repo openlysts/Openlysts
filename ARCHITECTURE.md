@@ -114,12 +114,13 @@ The application uses a generic entity-based model augmented by dedicated auth ta
 2. The queries are configured with `refetchInterval: 60000` (1 minute).
 3. If the user leaves the page open, React Query quietly polls the backend every minute. When background ingestion finishes a batch, the frontend instantly reflects the new database state without requiring a page refresh.
 
-## 6. Git Workflow (Releases & Environments)
+## 6. Git Workflow & Branch Architecture (Releases & Environments)
 
-Openlysts strictly follows a 3-branch strategy for stability and rapid development:
+Openlysts strictly follows a 4-branch strategy for stability, rapid experimentation, and isolated production releases:
 
-- **`dev`**: The active development branch. All day-to-day AI changes, new features, and bug fixes happen here.
-- **`main`**: The latest stable version (Production). When `dev` is ready, it merges here and semantic version tags (e.g. `1.0.0`) are applied for official GitHub Releases.
-- **`backup`**: The most stable, "last known good" version. When `main` proves reliable in production, it is backed up here to serve as an immediate rollback point in case of critical failures.
+1. **`experimental`**: The active working branch. Day-to-day development, feature engineering, and UI adjustments happen here.
+2. **`dev`**: The unified staging branch. Merged from `experimental` after passing local validation.
+3. **`main`**: The official production branch. **Vercel production deployments MUST ALWAYS and EXCLUSIVELY be executed while on `main` (`git checkout main`).** Semantic version tags (e.g. `v1.0.0`) are applied here for official releases.
+4. **`backup`**: The disaster recovery / rollback branch. Merged from `main` to serve as an instant rollback snapshot.
 
-All AI interactions and workflows must default to the `dev` branch unless performing a specific release action.
+All AI interactions, QA, and local features default to `experimental`, and sync across all 4 branches prior to production deployment from `main`.

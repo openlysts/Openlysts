@@ -134,6 +134,16 @@ The application connects to your configured PostgreSQL database via the `DATABAS
 
 ---
 
+## 🌿 Branch Architecture & Deployment
+
+Openlysts enforces a multi-branch workflow for isolated development and reliable production releases:
+- **`experimental`**: The active working branch for new features and iterative updates.
+- **`dev`**: The staging branch for integration testing.
+- **`main`**: The official production branch. **All Vercel production deployments are strictly and exclusively deployed from `main`.**
+- **`backup`**: Rollback snapshot branch for disaster recovery.
+
+---
+
 ## 🤝 Contributing
 
 Contributions make the open-source community an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
