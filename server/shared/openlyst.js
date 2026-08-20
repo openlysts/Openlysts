@@ -37,6 +37,8 @@ const CATEGORY_RULES = [
   { category: "Databases", keywords: ["database", "sql", "nosql", "datastore", "storage engine", "key-value store", "vector database"], topics: ["database", "sql", "nosql", "db", "datastore", "key-value", "vector-database"] },
   { category: "Automation", keywords: ["automation", "workflow", "automate", "pipeline", "ci/cd", "orchestration", "scheduler"], topics: ["automation", "workflow", "ci-cd", "orchestration", "pipeline", "scheduler", "automation-tool"] },
   { category: "Libraries & Frameworks", keywords: ["library", "framework", "sdk", "package", "module", "toolkit"], topics: ["library", "framework", "sdk", "package", "module", "toolkit"] },
+  { category: "Cloud & DevOps", keywords: ["cloud", "devops", "kubernetes", "docker", "container", "infrastructure", "terraform", "ansible", "helm", "serverless", "microservice"], topics: ["cloud", "devops", "kubernetes", "docker", "containers", "infrastructure", "terraform", "ansible", "helm", "serverless", "cloud-native", "iaas", "paas", "k8s"] },
+  { category: "Security", keywords: ["security", "authentication", "authorization", "auth", "sso", "oauth", "encryption", "firewall", "vulnerability", "pentest", "cybersecurity"], topics: ["security", "authentication", "authorization", "auth", "sso", "oauth", "encryption", "cybersecurity", "vulnerability", "pentesting", "identity"] },
 ];
 
 const QUERY_HINT_MAP = {
@@ -132,6 +134,8 @@ export const CATEGORIES = [
   { slug: "databases", label: "Databases", description: "Open-source databases and data stores." },
   { slug: "automation", label: "Automation", description: "Workflow automation and orchestration tools." },
   { slug: "libraries-frameworks", label: "Libraries & Frameworks", description: "Reusable libraries and frameworks." },
+  { slug: "cloud-devops", label: "Cloud & DevOps", description: "Cloud infrastructure, containers, and DevOps tooling." },
+  { slug: "security-auth", label: "Security", description: "Security, authentication, and authorization tools." },
 ];
 
 export function slugToLabel(slug) {

@@ -168,7 +168,7 @@ export default function Search() {
       <RepositoryGrid
         repos={data?.results || []}
         loading={isLoading}
-        emptyMessage={q ? `No repositories found for "${q}"` : 'Start typing to search'}
+        emptyMessage={q ? `No repositories found for "${q}"` : (filters.categories?.length > 0 ? 'No matches found. Try adjusting your filters, searching for something else, or contributing a new project.' : 'Start typing to search')}
       />
 
       {data && data.totalPages > 1 && (

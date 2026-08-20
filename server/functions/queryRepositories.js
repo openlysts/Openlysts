@@ -1,5 +1,5 @@
 import { entities } from '../services/entities.js';
-import { slugToLabel } from '../shared/openlyst.js';
+import { slugToLabel, classifyRepo } from '../shared/openlyst.js';
 
 const PER_PAGE = 24;
 
@@ -33,6 +33,8 @@ export async function prewarmRepositoriesCache() {
         const key = (r.full_name || '').toLowerCase();
         if (key && !seen.has(key)) {
           seen.add(key);
+          const dynamicCats = classifyRepo(r);
+          r.categories = Array.from(new Set([...(r.categories || []), ...dynamicCats]));
           deduped.push(r);
         }
       }
@@ -166,7 +168,19 @@ export default async function queryRepositories(req, res) {
     const offset = (pageNum - 1) * PER_PAGE;
     const results = repos.slice(offset, offset + PER_PAGE);
 
-    return res.json({ results, total, page: pageNum, totalPages, perPage: PER_PAGE });
+    // Compute category counts across all repos
+    const categoryCounts = {};
+    if (allRepos) {
+      allRepos.forEach(r => {
+        if (!r.hidden && r.categories && Array.isArray(r.categories)) {
+          r.categories.forEach(c => {
+            categoryCounts[c] = (categoryCounts[c] || 0) + 1;
+          });
+        }
+      });
+    }
+
+    return res.json({ results, total, page: pageNum, totalPages, perPage: PER_PAGE, categoryCounts });
   } catch (error) {
     return res.status(500).json({ error: true, message: error.message });
   }

@@ -1484,3 +1484,119 @@ Exit the script.
 ---
 
 ## DO NOT STOP. DO NOT ASK. RUN EVERYTHING AUTONOMOUSLY
+
+---
+
+## Phase 24: Category Navigation Integrity, Slug-Label Mapping & Dynamic Metrics
+
+> These tests were added after a P0 bug where clicking category chips on the Home page
+> navigated to `/search?categories=<slug>` but the backend `slugToLabel()` could not
+> resolve the slug, resulting in zero results despite the UI showing non-zero counts.
+
+### TC-156: Category Chip → Search Route End-to-End (ALL Chips)
+- On the Home page (`/`), identify ALL category chips inside DiscoverLiveMetrics
+- For EACH chip, perform the following:
+  1. Note the displayed count (e.g. "AI & LLMs: 142")
+  2. Click the chip
+  3. **Verify**: URL changes to `/search?categories=<expected-slug>`
+  4. **Verify**: Search page loads with results (NOT "No matches found")
+  5. **Verify**: Result count is > 0 and approximately matches the chip count
+  6. **Verify**: 0 console errors
+  7. Navigate back to Home and repeat for the next chip
+- **CRITICAL**: This test MUST cover ALL chips including Cloud & DevOps and Security & Auth
+- **Screenshot**: Any chip that produces zero results
+
+### TC-157: Backend `slugToLabel()` Mapping Coverage
+- Run `browser_evaluate` or inspect backend code:
+  ```
+  For each slug used in frontend navigation:
+  ['ai', 'developer-tools', 'databases', 'ai-agents', 'libraries-frameworks', 'cloud-devops', 'security-auth']
+  ```
+- **Verify**: Every slug used in frontend `navigate()` calls has a corresponding entry in `server/shared/openlyst.js` CATEGORIES array
+- **Verify**: `slugToLabel(slug)` returns a valid label (NOT the raw slug unchanged)
+- **Bug**: Any slug that falls through to the raw-slug fallback is a P0 data integrity failure
+
+### TC-158: Backend `CATEGORY_RULES` Classification Coverage
+- For each label in the canonical CATEGORIES list, verify at least one `CATEGORY_RULES` entry exists that can classify repos into that category
+- **Verify**: Every label returned by `slugToLabel()` matches at least one `CATEGORY_RULES[].category` string
+- **Bug**: A category label with no classification rules means repos can never be assigned to it
+
+### TC-159: Category Count Accuracy (Frontend vs Backend)
+- On Home page, capture the counts displayed on each category chip
+- Query the backend API: `POST /api/functions/queryRepositories` with `categories: ['<slug>']` for each slug
+- **Verify**: The returned `total` approximately matches the chip count (within ±10 due to live counter increment)
+- **Bug**: A chip showing 50+ but API returning 0 is a P0 data mismatch
+
+### TC-160: Category Chip Navigation Does Not Show "Start typing to search"
+- Click any category chip on Home page
+- **Verify**: The Search page shows actual repository cards, NOT the empty prompt "Start typing to search"
+- **Verify**: The FilterBar shows the category as actively selected (green badge)
+- This specifically tests that category-only navigation (no search text) still triggers data loading
+
+### TC-161: Discover Live Metrics — Dynamic Counts from Backend (Zero Hardcoding)
+- Inspect `DiscoverLiveMetrics.jsx` source code
+- **Verify**: Category chip initial counts come from `categoryCounts` prop (backend data), NOT from hardcoded `initialCount` constants
+- **Verify**: The `totalRepos` prop is sourced from `trending?.total` (backend response), NOT a hardcoded default like `3000`
+- **Bug**: Any hardcoded numeric constant used as the primary data source (not as a fallback) violates Zero Hardcoding policy
+
+### TC-162: Home Page Quick Category Buttons (Sticky Navbar Floating Pills)
+- Scroll down on the Home page until the floating sticky category bar appears
+- Click each button in the floating bar (AI & LLMs, Developer Tools, Databases & RAG, AI Agents, Libraries, Cloud & DevOps)
+- **Verify**: Each navigates to `/search?categories=<slug>` with actual results
+- **Verify**: The slug used matches a valid backend category
+
+### TC-163: Alternatives Page — Stats Pills Dynamic Data Verification
+- Navigate to `/alternatives`
+- Inspect the "Tools", "Categories", and "Avg Score" stat pills in the header
+- **Verify**: Values are populated from the API response (`data.stats`), not hardcoded
+- **Verify**: Values increment dynamically over time (useLiveCounter integration)
+- Wait 15 seconds and **Verify**: At least one stat value has increased
+
+### TC-164: Search Page — Category Filter with Zero Results Handling
+- Navigate to `/search?categories=nonexistent-category-slug`
+- **Verify**: App does NOT crash
+- **Verify**: Shows empty results message gracefully
+- **Verify**: 0 console errors
+
+### TC-165: Category Chip Count vs categoryCounts API Response Consistency
+- On Home page, run `browser_evaluate` to capture the `categoryCounts` object from the API response
+- Compare each category chip's count with the corresponding `categoryCounts[label]` value
+- **Verify**: Exact match (before live counter starts incrementing)
+- **Bug**: Any mismatch indicates the label key mapping is wrong
+
+### TC-166: Slug-to-Label Round-Trip Integrity
+- For every slug in the system, verify: `labelToSlug(slugToLabel(slug)) === slug`
+- For every label in the system, verify: `slugToLabel(labelToSlug(label)) === label`
+- **Bug**: Any round-trip failure indicates a broken bidirectional mapping
+
+### TC-167: CATEGORY_RULES Keywords Actually Match Real Repos
+- For each `CATEGORY_RULES` entry, verify that at least 1 repo in the database matches the keywords/topics
+- This can be verified by querying each category slug and checking `total > 0`
+- **Bug**: A category rule that matches zero repos is dead code and misleading to users
+
+### TC-168: Home Page → Category Chip → Back Navigation State Preservation
+- On Home page, note scroll position and visible content
+- Click a category chip (e.g. "AI & LLMs")
+- Wait for Search page to load with results
+- Press browser Back button
+- **Verify**: Returns to Home page
+- **Verify**: DiscoverLiveMetrics section is visible and chips still show counts
+- **Verify**: No flash of loading state or blank content
+
+### TC-169: Category Chips — Mobile Responsiveness (375px)
+- Resize viewport to 375x667
+- Navigate to Home page
+- **Verify**: Category chip grid collapses to 2 columns (not overflowing)
+- **Verify**: Chip text is not truncated beyond recognition
+- **Verify**: All chips are tappable (touch target ≥ 44x44px effective area)
+- Click a chip on mobile
+- **Verify**: Navigation works correctly on mobile viewport
+
+### TC-170: Dynamic Metric Increment Does Not Inflate Beyond Reason
+- On Home page, note the initial totalRepos value
+- Wait 60 seconds
+- Note the new totalRepos value
+- **Verify**: The increase is < 5% of the initial value (sanity check against runaway counters)
+- **Bug**: If counter grows by 500+ in 60 seconds from a base of 4000, the increment rate is unrealistically fast
+
+---

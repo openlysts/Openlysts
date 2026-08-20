@@ -20,6 +20,7 @@ const QUICK_CATEGORIES = [
   { id: 'ai-agents', name: 'AI Agents', icon: Bot },
   { id: 'libraries-frameworks', name: 'Libraries', icon: Package },
   { id: 'cloud-devops', name: 'Cloud & DevOps', icon: Cloud },
+  { id: 'security-auth', name: 'Security & Auth', icon: ShieldCheck },
 ];
 
 export default function Home() {
@@ -154,7 +155,7 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, delay: 0.08 }}
         >
-          <DiscoverLiveMetrics totalRepos={trending?.total || 3000} />
+          <DiscoverLiveMetrics totalRepos={trending?.total || 3000} categoryCounts={trending?.categoryCounts || {}} />
         </motion.div>
 
         {/* Search */}

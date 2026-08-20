@@ -11,6 +11,8 @@ export const CATEGORIES = [
   { slug: 'databases', label: 'Databases', description: 'Open-source databases and data stores.' },
   { slug: 'automation', label: 'Automation', description: 'Workflow automation and orchestration tools.' },
   { slug: 'libraries-frameworks', label: 'Libraries & Frameworks', description: 'Reusable libraries and frameworks.' },
+  { slug: 'cloud-devops', label: 'Cloud & DevOps', description: 'Cloud infrastructure, containers, and DevOps tooling.' },
+  { slug: 'security-auth', label: 'Security', description: 'Security, authentication, and authorization tools.' },
 ];
 
 export function getCategory(slug) {

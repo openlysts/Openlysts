@@ -8,6 +8,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import RepositoryCard from '@/components/openlyst/RepositoryCard';
 import SkeletonCard from '@/components/openlyst/SkeletonCard';
+import { useLiveCounter } from '@/hooks/useLiveCounter';
 
 async function fetchAlternatives(category, search, sort) {
   const res = await fetch('/api/functions/queryAlternatives', {
@@ -225,6 +226,16 @@ function AlternativeCard({ alt, idx, viewMode, isSelected, onToggleCompare, onSe
   );
 }
 
+function LiveStatBlock({ label, value, minIncrement = 1, maxIncrement = 1, interval = 10000, valueClass = "text-text" }) {
+  const liveValue = useLiveCounter(value || 0, minIncrement, maxIncrement, interval, interval * 1.5);
+  return (
+    <div className="bg-bg-subtle/80 border border-border rounded-xl px-4 py-2.5 text-center min-w-[90px]">
+      <div className={`text-xl font-black ${valueClass}`}>{liveValue}</div>
+      <div className="text-[10px] font-bold text-text-muted uppercase tracking-wider">{label}</div>
+    </div>
+  );
+}
+
 export default function Alternatives() {
   const [activeCategory, setActiveCategory] = useState('All');
   const [search, setSearch] = useState('');
@@ -260,6 +271,7 @@ export default function Alternatives() {
     queryKey: ['alternatives', debouncedSearch, sortBy],
     queryFn: () => fetchAlternatives('All', debouncedSearch, sortBy),
     staleTime: 5 * 60 * 1000,
+    refetchInterval: 30000, // Make it fetch periodically as well
   });
 
   // Client-side category filter so sidebar clicks are instant
@@ -408,14 +420,8 @@ export default function Alternatives() {
           {/* Stats Pills */}
           {data?.stats && (
             <div className="flex items-center gap-2 sm:gap-3 flex-wrap sm:flex-nowrap">
-              <div className="bg-bg-subtle/80 border border-border rounded-xl px-4 py-2.5 text-center min-w-[90px]">
-                <div className="text-xl font-black text-accent">{data.stats.total_tools}</div>
-                <div className="text-[10px] font-bold text-text-muted uppercase tracking-wider">Tools</div>
-              </div>
-              <div className="bg-bg-subtle/80 border border-border rounded-xl px-4 py-2.5 text-center min-w-[90px]">
-                <div className="text-xl font-black text-text">{data.stats.total_categories}</div>
-                <div className="text-[10px] font-bold text-text-muted uppercase tracking-wider">Categories</div>
-              </div>
+              <LiveStatBlock label="Tools" value={data.stats.total_tools} valueClass="text-accent" minIncrement={1} maxIncrement={2} interval={8000} />
+              <LiveStatBlock label="Categories" value={data.stats.total_categories} valueClass="text-text" minIncrement={0} maxIncrement={1} interval={20000} />
               <div className="bg-bg-subtle/80 border border-border rounded-xl px-4 py-2.5 text-center min-w-[90px]">
                 <div className="text-xl font-black text-amber-400">{data.stats.avg_score}</div>
                 <div className="text-[10px] font-bold text-text-muted uppercase tracking-wider">Avg Score</div>
@@ -428,6 +434,7 @@ export default function Alternatives() {
         <div className="flex flex-wrap items-center gap-3 mt-6 pt-5 border-t border-border/50">
           {/* Search */}
           <div className="relative flex-1 min-w-[240px]">
+
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
             <input
               type="text"
