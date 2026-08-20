@@ -75,6 +75,7 @@ export default function Search() {
   const { data, isLoading } = useQuery({
     queryKey: ['search', filters],
     queryFn: () => queryRepos(filters),
+    staleTime: 300000,
     refetchInterval: 60000,
   });
 

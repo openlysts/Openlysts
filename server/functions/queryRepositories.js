@@ -7,7 +7,12 @@ import { githubFetch, ingestRepoItem } from './runIngestion.js';
 
 let cachedRepos = null;
 let lastCacheTime = 0;
-const CACHE_TTL_MS = 15000;
+const CACHE_TTL_MS = 60000; // 60s in-memory cache
+
+export function invalidateRepositoriesCache() {
+  cachedRepos = null;
+  lastCacheTime = 0;
+}
 
 export default async function queryRepositories(req, res) {
   try {
@@ -42,6 +47,7 @@ export default async function queryRepositories(req, res) {
           for (const item of data.items) {
             await ingestRepoItem(item);
           }
+          invalidateRepositoriesCache();
         }
       }).catch(err => {
         console.error('GitHub fallback search failed in background:', err.message);
@@ -50,7 +56,18 @@ export default async function queryRepositories(req, res) {
 
     const now = Date.now();
     if (!cachedRepos || now - lastCacheTime > CACHE_TTL_MS) {
-      cachedRepos = await entities.Repository.list('-created_date', 3000);
+      const rawRepos = await entities.Repository.list('-stars', 5000);
+      // Deduplicate by lowercase full_name
+      const seen = new Set();
+      const deduped = [];
+      for (const r of rawRepos) {
+        const key = (r.full_name || '').toLowerCase();
+        if (key && !seen.has(key)) {
+          seen.add(key);
+          deduped.push(r);
+        }
+      }
+      cachedRepos = deduped;
       lastCacheTime = now;
     }
     const allRepos = cachedRepos;

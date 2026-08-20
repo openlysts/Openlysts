@@ -1386,10 +1386,59 @@ Test each URL:
 - **Verify**: Live password strength checklist with animated status badges
 - **Verify**: Social OAuth buttons render with custom high-contrast glass styling
 
-### TC-145: Complete End-to-End Visual Audit & Zero Artifact Cleanliness
-- Audit all pages (`/discover`, `/alternatives`, `/search`, `/login`, `/register`)
-- **Verify**: 0 console errors, 0 broken layouts, 0 screenshot artifacts left in directory
-- **Verify**: `qa_exhaustive_report.md` updated with all 150 test scenarios passed
+---
+
+## Phase 23: High-Performance Sub-20ms Loading, Alternatives Metadata Enrichment & Zero-Duplicate Sync
+
+### TC-146: Sub-20ms queryAlternatives Response Time
+- Benchmark `/api/functions/queryAlternatives` response time
+- **Verify**: Response time is < 25ms (instantaneous server execution via optimized SQL join & in-memory cache)
+- **Verify**: Payload contains full alternative stats (`total_tools`, `total_categories`, `top_rated`) and grouped data
+
+### TC-147: Sub-20ms queryRepositories Feed Acceleration
+- Benchmark `/api/functions/queryRepositories` with `sort: 'trending'`, `recent`, and `stars`
+- **Verify**: Cached repository feeds respond in < 25ms with 0 database bottleneck
+- **Verify**: Response contains total, page, perPage, and verified repository arrays
+
+### TC-148: Complete Alternative Repository Linkage (100% Non-Null Metadata)
+- Query all alternatives via `/api/functions/queryAlternatives`
+- **Verify**: 100% of alternatives with valid GitHub repositories resolve with linked `repo` metadata (stars > 0, verified license, real description)
+- **Verify**: Zero alternative cards render with broken/empty "Unknown" repository states
+
+### TC-149: Expanded Modern Alternatives Catalog
+- Inspect modern categories in Alternatives (AI Chatbots, AI Code Assistants, Analytics, Note-taking, Databases, Storage)
+- **Verify**: Top modern open-source alternatives are present (e.g. OpenWebUI, Aider, AppFlowy, PostHog, Cal.com, Dub.co, Coolify, Documenso, MinIO, Supabase)
+- **Verify**: Category counts and paid-tool replacement subheaders match live tool counts
+
+### TC-150: Client-Side Zero-Latency Tab Switching
+- Navigate rapidly between `/discover`, `/alternatives`, and `/search` in browser
+- **Verify**: Pages render instantly from TanStack Query memory cache (`staleTime: 5m`) without showing loading spinners or layout flash
+- **Verify**: Background refetches do not disrupt scroll position or user input
+
+### TC-151: Database Deduplication & Integrity on Repository Table
+- Query `"Repository"` table for duplicate `full_name` or `github_id`
+- **Verify**: Zero duplicate records exist in the database
+- **Verify**: Ingestion logic performs case-insensitive upserts without creating orphaned or redundant entries
+
+### TC-152: Rate-Limit Aware Ingestion Engine
+- Trigger `/api/functions/runIngestion`
+- **Verify**: Ingestion respects GitHub rate limits with exponential backoff and never throws unhandled rate-limit rejections
+- **Verify**: Returns clean JSON summary with `repos_added`, `repos_updated`, and `status: 'completed'`
+
+### TC-153: Discover Live Metrics Instant Synchronization
+- Inspect Discover page 3D live metrics badge
+- **Verify**: Total live repository count reflects live database count (3,000+) with zero latency
+- **Verify**: Category distribution pills (AI, DevTools, Databases, Agents, Libraries, DevOps, Security) link directly to filtered searches
+
+### TC-154: Real-time Search Auto-Debouncing and Instant Sub-50ms Filter Queries
+- Perform search queries with multi-faceted filters (e.g., `categories: ['ai']`, `languages: ['Python']`, `minStars: 1000`)
+- **Verify**: Filtered queries return accurate subsets in < 50ms
+- **Verify**: Clear all filters resets back to global feed instantly
+
+### TC-155: Memory & Resource Leak Audit on High-Frequency Requests
+- Send 50 consecutive requests to `/api/functions/queryAlternatives` and `/api/functions/queryRepositories`
+- **Verify**: Memory footprint remains stable, zero connection leak on PostgreSQL pool
+- **Verify**: Server CPU and RAM stay optimal with 0 dropped connections
 
 ---
 

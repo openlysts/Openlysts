@@ -1,9 +1,11 @@
 import { entities } from '../services/entities.js';
+import { db } from '../db/index.js';
 import {
   verifyLicense, classifyRepo, calculateQualityScore,
   calculateTrendingScore, computeStarsGained, autoClassifyDifficulty
 } from '../shared/openlyst.js';
 import { ingestAlternatives } from './ingestAlternatives.js';
+import { invalidateRepositoriesCache } from './queryRepositories.js';
 
 const GITHUB_API = 'https://api.github.com';
 const PER_PAGE = 30;
@@ -226,10 +228,11 @@ export async function executeIngestion() {
     const errors = [];
     let reposProcessed = 0, reposAdded = 0, reposUpdated = 0;
 
-    const existingRepos = await entities.Repository.list('-created_date', 2000);
+    const { rows: existingRows } = await db.query('SELECT id, github_id, full_name, hidden, featured FROM "Repository"');
     const repoMap = new Map();
-    for (const r of existingRepos) {
+    for (const r of existingRows) {
       if (r.github_id) repoMap.set(String(r.github_id), r);
+      if (r.full_name) repoMap.set(r.full_name.toLowerCase(), r);
     }
 
     const existingSnapshots = await entities.MetricSnapshot.list('-snapshot_date', 10000);
@@ -303,6 +306,7 @@ export async function executeIngestion() {
     });
 
     console.log(`[INGESTION] completed (Processed: ${reposProcessed})`);
+    invalidateRepositoriesCache();
 
     return {
       status,

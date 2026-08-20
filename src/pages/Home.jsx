@@ -33,16 +33,19 @@ export default function Home() {
   const { data: trending, isLoading: tLoading, refetch: refetchTrending, isRefetching: tRefetching } = useQuery({
     queryKey: ['home-trending'],
     queryFn: () => queryRepos({ sort: 'trending', page: 1 }),
+    staleTime: 300000,
     refetchInterval: 60000
   });
   const { data: recent, isLoading: rLoading } = useQuery({
     queryKey: ['home-recent'],
     queryFn: () => queryRepos({ sort: 'recent', page: 1 }),
+    staleTime: 300000,
     refetchInterval: 60000
   });
   const { data: aiPopular, isLoading: aLoading } = useQuery({
     queryKey: ['home-ai'],
     queryFn: () => queryRepos({ categories: ['ai'], sort: 'stars', page: 1 }),
+    staleTime: 300000,
     refetchInterval: 60000
   });
 
