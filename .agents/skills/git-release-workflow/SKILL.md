@@ -1,79 +1,87 @@
 ---
 name: git-release-workflow
-description: "SOP for merging dev into main, tagging a release, and maintaining the backup branch."
+description: "SOP for multi-branch Git synchronization, production releases, and forced Vercel deployments."
 ---
 
-# Git Release Workflow
+# Git Release & Production Deployment Workflow
 
-This skill outlines the strict procedure for releasing new versions of Openlyst. Openlyst uses a 3-branch strategy (`dev`, `main`, and `backup`). This workflow should ONLY be executed when the user explicitly requests to "release a version" or "backup the app".
+This skill outlines the strict procedure for version releases, multi-branch Git synchronization, and production deployments for Openlysts.
 
-## Branch Architecture
+## 1. Golden Rule: "Deploy to Production"
+> [!IMPORTANT]
+> **When the user (CEO/CTO) says "deploy to production", that ALWAYS means:**
+> 1. **Commit all changes cleanly** on the active branch (`experimental`).
+> 2. **Sync and push to Git across ALL 4 branches** (`experimental`, `dev`, `main`, `backup`).
+> 3. **Trigger a forced production deployment on Vercel** (`npx vercel --prod --yes --force`).
+> 4. **Keep `experimental` as the active working branch** at the end of the operation.
 
-1. **`dev`**: The active development branch. All day-to-day AI changes, new features, and bug fixes happen here.
-2. **`main`**: The latest stable version (Production). When `dev` is ready, it merges here. Never merge directly into `main` or `backup`without asking the user.
-3. **`backup`**: The most stable, "last known good" version. When `main` proves reliable, it is backed up here.
+---
 
-## Procedure: Releasing a New Version (dev -> main)
+## 2. Branch Architecture
 
-1. **Verify State**: Ensure all current changes are committed to the `dev` branch and the working directory is clean.
-2. **Switch to Main**:
+Openlysts maintains a 4-branch structure:
+1. **`experimental`**: The primary active working branch where current development and experiments take place.
+2. **`dev`**: The unified staging branch.
+3. **`main`**: The latest stable production branch.
+4. **`backup`**: The disaster recovery / rollback branch.
 
-   ```bash
-   git checkout main
-   ```
+---
 
-3. **Merge**:
+## 3. Standard Execution Protocol: "Deploy to Production"
 
-   ```bash
-   git merge dev
-   ```
+Whenever instructed to "deploy to production", execute this sequential workflow:
 
-4. **Tag the Release**: Ask the user what version number they want (or increment automatically if instructed, e.g. `v1.2.0`). Create the tag:
+### Step 1: Pre-Deployment Build Check
+Verify local build passes with 0 errors before initiating release:
+```bash
+npm run build
+```
 
-   ```bash
-   git tag v1.2.0
-   ```
+### Step 2: Commit on Active Branch
+```bash
+git add .
+git commit -m "feat/fix: <clear summary of changes>"
+git push origin experimental
+```
 
-5. **Push to Remote**: Push both the branch and the new tag to GitHub.
+### Step 3: Fast-Forward Sync & Push All Branches
+```bash
+# Sync dev
+git checkout dev
+git merge experimental --ff-only || git merge experimental -m "Merge experimental into dev"
+git push origin dev
 
-   ```bash
-   git push origin main
-   git push origin v1.2.0
-   ```
+# Sync main
+git checkout main
+git merge dev --ff-only || git merge dev -m "Merge dev into main"
+git push origin main
 
-6. **Return to Sandbox**: Immediately switch the user back to the active development branch to prevent accidental commits to `main` or `backup`.
+# Sync backup
+git checkout backup
+git merge main --ff-only || git merge main -m "Merge main into backup"
+git push origin backup
 
-   ```bash
-   git checkout dev
-   ```
+# Return to active working branch
+git checkout experimental
+```
 
-## Procedure: Creating a Backup (main -> backup)
+### Step 4: Force Deployment to Vercel Production
+Deploy the build directly to Vercel production to bypass cache or paused pipelines:
+```bash
+npx vercel --prod --yes --force
+```
 
-When the user asks to "backup" the latest stable version:
+### Step 5: Post-Deployment Verification
+- Verify the live production deployment URL (`https://openlysts.vercel.app`).
+- Confirm active working branch is `experimental` via `git branch --show-current`.
 
-1. **Switch to Backup**:
+---
 
-   ```bash
-   git checkout backup
-   ```
-
-2. **Merge Main**:
-
-   ```bash
-   git merge main
-   ```
-
-3. **Push to Remote**:
-
-   ```bash
-   git push origin backup
-   ```
-
-4. **Return to Sandbox**:
-
-   ```bash
-   git checkout dev
-   ```
-
-> [!WARNING]
-> Do NOT execute this workflow unprompted. The `main` and `backup` branches are treated as immutable stable states. All standard AI work must be done on the `dev` branch.
+## 4. Releasing a Tagged Version (dev -> main with Git Tag)
+When the user specifically asks for a version release tag (e.g., `v1.2.0`):
+```bash
+git checkout main
+git tag v1.X.X
+git push origin v1.X.X
+git checkout experimental
+```

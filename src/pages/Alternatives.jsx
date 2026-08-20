@@ -67,9 +67,9 @@ const sortOptions = [
 ];
 
 const getDifficultyColor = (d) => {
-  if (d === 'Easy') return 'bg-green-500/15 text-green-400 border-green-500/25';
-  if (d === 'Medium') return 'bg-amber-500/15 text-amber-400 border-amber-500/25';
-  return 'bg-red-500/15 text-red-400 border-red-500/25';
+  if (d === 'Easy') return 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-500/30';
+  if (d === 'Medium') return 'bg-amber-500/10 text-amber-800 dark:text-amber-300 border-amber-500/30';
+  return 'bg-rose-500/10 text-rose-700 dark:text-rose-300 border-rose-500/30';
 };
 
 const getScoreLabel = (score) => {
@@ -182,7 +182,7 @@ function AlternativeCard({ alt, idx, viewMode, isSelected, onToggleCompare, onSe
                   {alt.feature_parity_score || 70}% Match
                 </span>
                 {alt.repo && (
-                  <span className="text-[9px] font-bold px-1.5 py-0.5 rounded border bg-yellow-500/10 text-yellow-500 border-yellow-500/20 flex items-center gap-0.5">
+                  <span className="text-[9px] font-bold px-1.5 py-0.5 rounded border bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-500/30 flex items-center gap-0.5">
                     ★ {alt.repo.stars >= 1000 ? (alt.repo.stars / 1000).toFixed(1) + 'k' : alt.repo.stars || 0}
                   </span>
                 )}
@@ -201,7 +201,7 @@ function AlternativeCard({ alt, idx, viewMode, isSelected, onToggleCompare, onSe
               <div className="flex items-center gap-2">
                 <h3 className="text-sm font-bold text-text group-hover:text-accent transition-colors truncate">{alt.resolved_name}</h3>
                 <span className="text-[10px] text-text-muted">replaces</span>
-                <span className="text-[10px] text-text-secondary bg-bg-subtle px-1.5 py-0.5 rounded border border-border">{alt.paid_tool_name}</span>
+                <span className="text-[10px] text-text-secondary bg-bg-subtle px-1.5 py-0.5 rounded border border-border font-medium">{alt.paid_tool_name}</span>
               </div>
               <p className="text-xs text-text-secondary line-clamp-1 mt-0.5">{alt.description}</p>
             </div>
@@ -213,7 +213,7 @@ function AlternativeCard({ alt, idx, viewMode, isSelected, onToggleCompare, onSe
                 {alt.feature_parity_score || 70}%
               </span>
               {alt.repo && (
-                <span className="text-[9px] font-bold px-1.5 py-0.5 rounded border bg-yellow-500/10 text-yellow-500 border-yellow-500/20">
+                <span className="text-[9px] font-bold px-1.5 py-0.5 rounded border bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-500/30">
                   ★ {alt.repo.stars >= 1000 ? (alt.repo.stars / 1000).toFixed(1) + 'k' : alt.repo.stars || 0}
                 </span>
               )}

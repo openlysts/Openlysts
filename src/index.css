@@ -6,30 +6,30 @@
 
 @layer base {
   :root, [data-theme="light"] {
-    --bg: 0 0% 99%;
+    --bg: 210 20% 98%;
     --bg-card: 0 0% 100%;
-    --bg-subtle: 210 20% 96%;
-    --bg-hover: 210 20% 94%;
+    --bg-subtle: 215 25% 94%;
+    --bg-hover: 215 25% 90%;
     --text: 222 47% 11%;
-    --text-secondary: 215 16% 47%;
-    --text-muted: 215 14% 60%;
-    --border: 214 20% 90%;
-    --border-strong: 214 20% 84%;
-    --accent: 142 71% 45%;
+    --text-secondary: 215 25% 30%;
+    --text-muted: 215 20% 44%;
+    --border: 214 20% 86%;
+    --border-strong: 214 22% 74%;
+    --accent: 142 71% 40%;
     --accent-fg: 0 0% 100%;
-    --accent-soft: 142 71% 96%;
-    --trending: 25 95% 53%;
-    --trending-soft: 25 95% 95%;
-    --oss: 142 71% 45%;
+    --accent-soft: 142 71% 94%;
+    --trending: 25 95% 48%;
+    --trending-soft: 25 95% 94%;
+    --oss: 142 71% 40%;
     --oss-soft: 142 71% 94%;
-    --unknown: 215 14% 60%;
-    --unknown-soft: 210 20% 94%;
-    --nonoss: 0 72% 51%;
-    --nonoss-soft: 0 72% 96%;
+    --unknown: 215 20% 46%;
+    --unknown-soft: 210 20% 92%;
+    --nonoss: 0 72% 48%;
+    --nonoss-soft: 0 72% 95%;
     --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-    --shadow-md: 0 4px 12px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.04);
-    --shadow-lg: 0 12px 32px rgba(0,0,0,0.08), 0 4px 8px rgba(0,0,0,0.04);
-    --shadow-hover: 0 16px 40px rgba(0,0,0,0.10), 0 6px 12px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+    --shadow-lg: 0 12px 32px rgba(0,0,0,0.10), 0 4px 8px rgba(0,0,0,0.05);
+    --shadow-hover: 0 16px 40px rgba(0,0,0,0.12), 0 6px 12px rgba(0,0,0,0.06);
   }
 
   [data-theme="dark"] {
@@ -87,30 +87,30 @@
   }
 
   [data-theme="creme"] {
-    --bg: 40 33% 96%;
-    --bg-card: 40 33% 98%;
-    --bg-subtle: 40 25% 90%;
-    --bg-hover: 40 25% 88%;
-    --text: 30 20% 25%;
-    --text-secondary: 30 15% 45%;
-    --text-muted: 30 15% 55%;
-    --border: 40 25% 85%;
-    --border-strong: 40 25% 75%;
-    --accent: 20 80% 60%;
+    --bg: 40 30% 96%;
+    --bg-card: 40 33% 99%;
+    --bg-subtle: 40 25% 91%;
+    --bg-hover: 40 25% 86%;
+    --text: 30 35% 15%;
+    --text-secondary: 30 25% 30%;
+    --text-muted: 30 20% 44%;
+    --border: 40 22% 82%;
+    --border-strong: 40 25% 70%;
+    --accent: 20 80% 50%;
     --accent-fg: 0 0% 100%;
     --accent-soft: 20 80% 92%;
-    --trending: 15 90% 55%;
+    --trending: 15 90% 50%;
     --trending-soft: 15 90% 92%;
-    --oss: 120 40% 50%;
+    --oss: 120 40% 45%;
     --oss-soft: 120 40% 92%;
-    --unknown: 30 15% 55%;
+    --unknown: 30 20% 46%;
     --unknown-soft: 40 25% 88%;
-    --nonoss: 0 60% 55%;
+    --nonoss: 0 65% 50%;
     --nonoss-soft: 0 60% 92%;
     --shadow: 0 1px 3px rgba(100, 80, 60, 0.06), 0 1px 2px rgba(100, 80, 60, 0.04);
-    --shadow-md: 0 4px 12px rgba(100, 80, 60, 0.07), 0 2px 4px rgba(100, 80, 60, 0.04);
-    --shadow-lg: 0 12px 32px rgba(100, 80, 60, 0.08), 0 4px 8px rgba(100, 80, 60, 0.04);
-    --shadow-hover: 0 16px 40px rgba(100, 80, 60, 0.10), 0 6px 12px rgba(100, 80, 60, 0.05);
+    --shadow-md: 0 4px 12px rgba(100, 80, 60, 0.08), 0 2px 4px rgba(100, 80, 60, 0.04);
+    --shadow-lg: 0 12px 32px rgba(100, 80, 60, 0.10), 0 4px 8px rgba(100, 80, 60, 0.05);
+    --shadow-hover: 0 16px 40px rgba(100, 80, 60, 0.12), 0 6px 12px rgba(100, 80, 60, 0.06);
   }
 
   [data-theme="dracula"] {
@@ -195,79 +195,79 @@
   }
 
   [data-theme="royal"] {
-    --bg: 45 20% 98%;
+    --bg: 260 20% 98%;
     --bg-card: 0 0% 100%;
-    --bg-subtle: 260 20% 95%;
-    --bg-hover: 260 20% 92%;
-    --text: 260 50% 18%;
-    --text-secondary: 260 30% 45%;
-    --text-muted: 260 20% 55%;
-    --border: 260 20% 88%;
-    --border-strong: 260 30% 80%;
+    --bg-subtle: 260 25% 94%;
+    --bg-hover: 260 25% 89%;
+    --text: 260 60% 14%;
+    --text-secondary: 260 35% 30%;
+    --text-muted: 260 25% 44%;
+    --border: 260 20% 84%;
+    --border-strong: 260 25% 72%;
     --accent: 45 90% 45%;
     --accent-fg: 0 0% 100%;
     --accent-soft: 45 90% 92%;
-    --trending: 15 90% 55%;
+    --trending: 15 90% 50%;
     --trending-soft: 15 90% 92%;
-    --oss: 120 40% 50%;
+    --oss: 120 40% 45%;
     --oss-soft: 120 40% 92%;
-    --unknown: 260 20% 55%;
-    --unknown-soft: 260 20% 92%;
-    --nonoss: 0 60% 55%;
+    --unknown: 260 25% 46%;
+    --unknown-soft: 260 20% 90%;
+    --nonoss: 0 65% 50%;
     --nonoss-soft: 0 60% 92%;
     --shadow: 0 1px 3px rgba(40, 20, 60, 0.05), 0 1px 2px rgba(40, 20, 60, 0.03);
     --shadow-md: 0 4px 12px rgba(40, 20, 60, 0.08), 0 2px 4px rgba(40, 20, 60, 0.04);
-    --shadow-lg: 0 12px 32px rgba(40, 20, 60, 0.1), 0 4px 8px rgba(40, 20, 60, 0.05);
+    --shadow-lg: 0 12px 32px rgba(40, 20, 60, 0.10), 0 4px 8px rgba(40, 20, 60, 0.05);
     --shadow-hover: 0 16px 40px rgba(40, 20, 60, 0.12), 0 6px 12px rgba(40, 20, 60, 0.06);
   }
 
   [data-theme="sand"] {
-    --bg: 30 30% 94%;
-    --bg-card: 30 40% 97%;
-    --bg-subtle: 30 30% 88%;
-    --bg-hover: 30 30% 85%;
-    --text: 215 50% 22%;
-    --text-secondary: 215 30% 45%;
-    --text-muted: 215 20% 55%;
-    --border: 30 20% 82%;
-    --border-strong: 30 20% 72%;
-    --accent: 42 70% 45%;
+    --bg: 30 25% 95%;
+    --bg-card: 30 35% 99%;
+    --bg-subtle: 30 25% 90%;
+    --bg-hover: 30 25% 84%;
+    --text: 215 60% 15%;
+    --text-secondary: 215 35% 30%;
+    --text-muted: 215 25% 44%;
+    --border: 30 20% 80%;
+    --border-strong: 30 22% 68%;
+    --accent: 35 80% 42%;
     --accent-fg: 0 0% 100%;
-    --accent-soft: 42 60% 88%;
-    --trending: 15 90% 55%;
+    --accent-soft: 35 60% 90%;
+    --trending: 15 90% 50%;
     --trending-soft: 15 90% 92%;
-    --oss: 120 40% 50%;
+    --oss: 120 40% 45%;
     --oss-soft: 120 40% 92%;
-    --unknown: 215 20% 55%;
+    --unknown: 215 25% 46%;
     --unknown-soft: 215 20% 88%;
-    --nonoss: 0 60% 55%;
+    --nonoss: 0 65% 50%;
     --nonoss-soft: 0 60% 92%;
     --shadow: 0 1px 3px rgba(40, 30, 20, 0.06), 0 1px 2px rgba(40, 30, 20, 0.04);
     --shadow-md: 0 4px 12px rgba(40, 30, 20, 0.08), 0 2px 4px rgba(40, 30, 20, 0.05);
-    --shadow-lg: 0 12px 32px rgba(40, 30, 20, 0.1), 0 4px 8px rgba(40, 30, 20, 0.06);
+    --shadow-lg: 0 12px 32px rgba(40, 30, 20, 0.10), 0 4px 8px rgba(40, 30, 20, 0.06);
     --shadow-hover: 0 16px 40px rgba(40, 30, 20, 0.12), 0 6px 12px rgba(40, 30, 20, 0.07);
   }
 
   [data-theme="mint"] {
-    --bg: 150 20% 95%;
-    --bg-card: 150 30% 98%;
-    --bg-subtle: 150 20% 88%;
-    --bg-hover: 150 20% 84%;
-    --text: 160 50% 20%;
-    --text-secondary: 160 30% 45%;
-    --text-muted: 160 20% 55%;
-    --border: 150 20% 85%;
-    --border-strong: 150 20% 75%;
-    --accent: 150 40% 45%;
+    --bg: 150 20% 96%;
+    --bg-card: 150 25% 99%;
+    --bg-subtle: 150 20% 90%;
+    --bg-hover: 150 20% 85%;
+    --text: 160 60% 12%;
+    --text-secondary: 160 35% 28%;
+    --text-muted: 160 25% 42%;
+    --border: 150 20% 82%;
+    --border-strong: 150 22% 70%;
+    --accent: 150 50% 40%;
     --accent-fg: 0 0% 100%;
-    --accent-soft: 150 40% 88%;
-    --trending: 40 90% 50%;
-    --trending-soft: 40 90% 90%;
-    --oss: 150 40% 45%;
-    --oss-soft: 150 40% 88%;
-    --unknown: 160 20% 55%;
+    --accent-soft: 150 40% 90%;
+    --trending: 35 90% 48%;
+    --trending-soft: 35 90% 90%;
+    --oss: 150 50% 40%;
+    --oss-soft: 150 40% 90%;
+    --unknown: 160 25% 44%;
     --unknown-soft: 160 20% 88%;
-    --nonoss: 0 60% 55%;
+    --nonoss: 0 65% 50%;
     --nonoss-soft: 0 60% 92%;
     --shadow: 0 1px 3px rgba(20, 60, 40, 0.05), 0 1px 2px rgba(20, 60, 40, 0.03);
     --shadow-md: 0 4px 12px rgba(20, 60, 40, 0.07), 0 2px 4px rgba(20, 60, 40, 0.04);
@@ -289,22 +289,31 @@
   }
 
   body {
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11", "calt", "liga";
+    font-optical-sizing: auto;
     background: hsl(var(--bg));
     color: hsl(var(--text));
     transition: background-color 0.25s ease, color 0.25s ease;
   }
 
-  h1, h2, h3, h4 {
+  h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.025em;
+    color: hsl(var(--text));
+    text-rendering: optimizeLegibility;
+  }
+
+  p, span, a, label, input, button {
+    text-rendering: optimizeLegibility;
   }
 
   .font-mono {
     font-family: 'JetBrains Mono', monospace;
+    font-feature-settings: "liga" 1, "calt" 1;
   }
 }
 

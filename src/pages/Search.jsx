@@ -149,14 +149,14 @@ export default function Search() {
 
       {q && (
         <div className="flex items-center justify-between mb-4">
-          <p className="text-text-muted text-sm">
-            {data ? `${data.total} result${data.total !== 1 ? 's' : ''} for` : 'Searching for'} <span className="text-text font-medium">"{q}"</span>
+          <p className="text-text-secondary text-sm font-medium">
+            {data ? `${data.total} result${data.total !== 1 ? 's' : ''} for` : 'Searching for'} <span className="text-text font-bold">"{q}"</span>
           </p>
           <div className="flex items-center gap-2">
-            <button onClick={handleShare} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm bg-bg-card border border-border text-text-secondary hover:text-text hover:bg-bg-hover transition-colors">
+            <button onClick={handleShare} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm bg-bg-card border border-border text-text-secondary hover:text-text hover:bg-bg-hover transition-colors font-medium">
               <Share2 className="w-4 h-4" /> Share
             </button>
-            <button onClick={handleExport} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm bg-bg-card border border-border text-text-secondary hover:text-text hover:bg-bg-hover transition-colors">
+            <button onClick={handleExport} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm bg-bg-card border border-border text-text-secondary hover:text-text hover:bg-bg-hover transition-colors font-medium">
               <Download className="w-4 h-4" /> Export JSON
             </button>
           </div>

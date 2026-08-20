@@ -37,15 +37,15 @@ export default function Header() {
   }, [location.pathname]);
 
   return (
-    <header role="banner" className="sticky top-0 z-40 backdrop-blur-2xl bg-bg/60 border-b border-white/5 shadow-sm">
+    <header role="banner" className="sticky top-0 z-40 backdrop-blur-2xl bg-bg/90 border-b border-border shadow-sm transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-16 gap-4">
           {/* Logo */}
           <Link to="/discover" onClick={triggerConfetti} className="flex items-center gap-2.5 flex-shrink-0 group" aria-label="Openlysts Home">
-            <div className="relative w-10 h-10 rounded-xl bg-white/10 dark:bg-white/5 border border-black/5 dark:border-white/10 shadow-sm overflow-hidden flex items-center justify-center backdrop-blur-md group-hover:scale-105 group-hover:border-accent/40 transition-all duration-300">
+            <div className="relative w-10 h-10 rounded-xl bg-bg-card border border-border shadow-sm overflow-hidden flex items-center justify-center backdrop-blur-md group-hover:scale-105 group-hover:border-accent/40 transition-all duration-300">
               <img src="/logo.png" alt="" className="w-8 h-8 object-contain animate-logo-enter filter drop-shadow-sm" />
             </div>
-            <span className="text-xl font-extrabold tracking-tight text-text hidden sm:block bg-gradient-to-r from-text to-text-secondary bg-clip-text">Openlysts</span>
+            <span className="text-xl font-black tracking-tight text-text hidden sm:block">Openlysts</span>
           </Link>
 
           {/* Desktop nav */}
@@ -56,8 +56,8 @@ export default function Header() {
                 <Link
                   key={item.to}
                   to={item.to}
-                  className={`relative px-3 py-1.5 text-sm font-medium transition-all duration-300 whitespace-nowrap ${
-                  active ? 'text-text' : 'text-text-secondary hover:text-text'}`
+                  className={`relative px-3 py-1.5 text-sm transition-all duration-200 whitespace-nowrap ${
+                  active ? 'text-text font-bold' : 'text-text-secondary hover:text-text font-medium'}`
                   }>
                   {active && (
                     <span className="absolute bottom-0 left-3 right-3 h-0.5 bg-accent rounded-t-full shadow-[0_-2px_10px_rgba(var(--accent-rgb),0.5)]" />
@@ -78,9 +78,9 @@ export default function Header() {
               }}
             >
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted group-hover:text-accent transition-colors flex-shrink-0" />
-              <div className="w-full bg-bg-subtle border border-border rounded-xl pl-9 pr-3 py-1.5 text-sm text-text-muted flex items-center justify-between transition-colors group-hover:border-accent/50 group-hover:bg-bg-hover">
-                <span className="truncate whitespace-nowrap text-xs sm:text-sm">Search openlysts...</span>
-                <kbd className="hidden lg:inline-flex items-center gap-0.5 font-mono text-[10px] bg-bg border border-border px-1.5 py-0.5 rounded text-text-muted font-medium ml-2 flex-shrink-0">
+              <div className="w-full bg-bg-subtle border border-border rounded-xl pl-9 pr-3 py-1.5 text-sm text-text-secondary flex items-center justify-between transition-colors group-hover:border-accent/50 group-hover:bg-bg-hover">
+                <span className="truncate whitespace-nowrap text-xs sm:text-sm font-medium">Search openlysts...</span>
+                <kbd className="hidden lg:inline-flex items-center gap-0.5 font-mono text-[10px] bg-bg-card border border-border px-1.5 py-0.5 rounded text-text-secondary font-semibold ml-2 flex-shrink-0">
                   <span className="text-xs">⌘</span>K
                 </kbd>
               </div>

@@ -7,7 +7,7 @@ export default function ThreeBackground() {
   const mountRef = useRef(null);
   const { theme } = useTheme();
   const [bgType, setBgType] = useState(getSettings().backgroundType || 'particles');
-  const isLight = theme === 'light' || theme === 'creme';
+  const isLight = theme === 'light' || theme === 'creme' || theme === 'sand' || theme === 'mint' || theme === 'royal';
 
   useEffect(() => {
     const handleSettingsChange = (e) => {
@@ -46,8 +46,8 @@ export default function ThreeBackground() {
     }
     const color = new THREE.Color(formattedHsl ? `hsl(${formattedHsl})` : '#4ade80');
     
-    const oMult = isLight ? 3 : 1;
-    if (isLight) color.lerp(new THREE.Color('#000000'), 0.15); // slightly darken
+    const oMult = isLight ? 0.35 : 1;
+    if (isLight) color.lerp(new THREE.Color('#334155'), 0.25); // tint towards crisp slate
     
     let updateFn = () => {};
     const geometries = [];
@@ -66,7 +66,7 @@ export default function ThreeBackground() {
       geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
       const material = new THREE.PointsMaterial({ 
         color, 
-        size: size * (isLight ? 1.5 : 1), 
+        size: size * (isLight ? 0.6 : 1), 
         transparent: true, 
         opacity: Math.min(1.0, opacity * oMult), 
         depthWrite: false 
@@ -340,5 +340,5 @@ export default function ThreeBackground() {
 
   if (bgType === 'none') return null;
 
-  return <div ref={mountRef} className={`fixed inset-0 pointer-events-none z-0 transition-opacity duration-1000 ${isLight ? 'opacity-100' : 'opacity-70'}`} />;
+  return <div ref={mountRef} className={`fixed inset-0 pointer-events-none z-0 transition-opacity duration-1000 ${isLight ? 'opacity-40' : 'opacity-70'}`} />;
 }

@@ -93,27 +93,14 @@ export default function RepositoryCard({ repo, index = 0 }) {
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: Math.min(index * 0.04, 0.4) }}
-      style={{ perspective: 1200, transformStyle: "preserve-3d" }}>
-      
+      className="h-full"
+    >
       <motion.div 
         onClick={handleCardClick} 
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        whileHover={{ scale: 1.02 }}
-        style={{ rotateX, rotateY, transformStyle: "preserve-3d", willChange: "transform" }}
-        className="block h-full cursor-pointer relative group">
-        
-        <motion.div 
-          className="card h-full flex flex-col p-4 relative rounded-lg border border-border/50 bg-bg-card transition-colors group-hover:border-accent/40"
-          style={{ transform: "translateZ(15px)", willChange: "transform" }}
-        >
-          {/* Subtle easter-egg glow on hover inside card */}
-          <motion.div 
-            className="absolute inset-0 z-0 pointer-events-none rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            style={{ background }}
-          />
-
-          <div className="relative z-10 flex-1 flex flex-col">
+        whileHover={{ y: -4, transition: { duration: 0.2, ease: "easeOut" } }}
+        className="card h-full flex flex-col p-4 relative rounded-xl border border-border bg-bg-card transition-all duration-200 group-hover:border-accent/40 shadow-sm hover:shadow-md cursor-pointer group"
+      >
+        <div className="relative z-10 flex-1 flex flex-col">
           {/* Bookmark */}
           <div className="absolute top-3 right-3 flex items-center gap-1">
             <button
@@ -223,11 +210,10 @@ export default function RepositoryCard({ repo, index = 0 }) {
             </span>
           </div>
 
-          {/* Video explanation links */}
-          <RepoVideoLinks repo={repo} />
+            {/* Video explanation links */}
+            <RepoVideoLinks repo={repo} />
           </div>
         </motion.div>
       </motion.div>
-    </motion.div>);
-
+    );
 }
