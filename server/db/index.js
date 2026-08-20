@@ -25,7 +25,8 @@ const db = new Pool({
   ssl: (isNeonOrCloud && connectionString && !connectionString.includes('localhost')) ? { rejectUnauthorized: false } : undefined,
   max: process.env.VERCEL ? 5 : 10,
   idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 10000,
+  connectionTimeoutMillis: 30000,
+  keepAlive: true
 });
 
 if (connectionString && connectionString !== '[SENSITIVE]') {
