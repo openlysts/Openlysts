@@ -94,29 +94,50 @@ export default function RepositoryCard({ repo, index = 0 }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: Math.min(index * 0.04, 0.4) }}
       className="h-full"
+      style={{ perspective: 1000 }}
     >
       <motion.div 
         onClick={handleCardClick} 
-        whileHover={{ y: -4, transition: { duration: 0.2, ease: "easeOut" } }}
-        className="card h-full flex flex-col p-4 relative rounded-xl border border-border bg-bg-card transition-all duration-200 group-hover:border-accent/40 shadow-sm hover:shadow-md cursor-pointer group"
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        style={{
+          rotateX,
+          rotateY,
+          transformStyle: "preserve-3d",
+        }}
+        whileHover={{ 
+          y: -6, 
+          scale: 1.012,
+          transition: { duration: 0.22, ease: [0.25, 1, 0.5, 1] } 
+        }}
+        whileTap={{ scale: 0.985, transition: { duration: 0.1 } }}
+        className="card h-full flex flex-col justify-between p-4 relative rounded-xl border border-border bg-bg-card transition-[border-color,box-shadow,background-color] duration-200 hover:border-accent/60 hover:shadow-[0_16px_36px_rgba(0,0,0,0.18),0_0_24px_rgba(var(--accent-rgb),0.2)] cursor-pointer group touch-active overflow-hidden"
       >
-        <div className="relative z-10 flex-1 flex flex-col">
-          {/* Bookmark */}
-          <div className="absolute top-3 right-3 flex items-center gap-1">
+        <motion.div 
+          className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"
+          style={{ background }}
+        />
+        <div className="relative z-10 flex-1 flex flex-col justify-between">
+          {/* Bookmark & Compare Actions */}
+          <div className="absolute top-2.5 right-2.5 flex items-center gap-1">
             <button
               onClick={handleCompareClick}
-              className={`p-1.5 rounded-lg transition-colors ${
-              isCompared ? 'text-accent bg-accent-soft' : 'text-text-muted hover:text-text hover:bg-bg-hover'}`
-              }
-              aria-label="Add to compare">
+              className={`p-2 rounded-xl transition-colors touch-target ${
+                isCompared ? 'text-accent bg-accent-soft' : 'text-text-muted hover:text-text hover:bg-bg-hover active:bg-bg-subtle'
+              }`}
+              aria-label="Add to compare"
+              title="Compare"
+            >
               <GitCompare className="w-4 h-4" />
             </button>
             <button
               onClick={handleBookmark}
-              className={`p-1.5 rounded-lg transition-colors ${
-              bookmarked ? 'text-accent bg-accent-soft' : 'text-text-muted hover:text-text hover:bg-bg-hover'}`
-              }
-              aria-label="Bookmark">
+              className={`p-2 rounded-xl transition-colors touch-target ${
+                bookmarked ? 'text-accent bg-accent-soft' : 'text-text-muted hover:text-text hover:bg-bg-hover active:bg-bg-subtle'
+              }`}
+              aria-label="Bookmark"
+              title="Bookmark"
+            >
               <Bookmark className="w-4 h-4" fill={bookmarked ? 'currentColor' : 'none'} />
             </button>
           </div>

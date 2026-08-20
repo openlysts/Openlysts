@@ -16,6 +16,7 @@
     --border: 214 20% 86%;
     --border-strong: 214 22% 74%;
     --accent: 142 71% 40%;
+    --accent-rgb: 34, 197, 94;
     --accent-fg: 0 0% 100%;
     --accent-soft: 142 71% 94%;
     --trending: 25 95% 48%;
@@ -43,6 +44,7 @@
     --border: 217 19% 20%;
     --border-strong: 217 19% 28%;
     --accent: 142 71% 52%;
+    --accent-rgb: 74, 222, 128;
     --accent-fg: 222 47% 9%;
     --accent-soft: 142 40% 14%;
     --trending: 25 95% 58%;
@@ -70,6 +72,7 @@
     --border: 210 20% 28%;
     --border-strong: 210 20% 36%;
     --accent: 199 89% 48%;
+    --accent-rgb: 14, 165, 233;
     --accent-fg: 210 40% 10%;
     --accent-soft: 199 50% 20%;
     --trending: 25 95% 58%;
@@ -97,6 +100,7 @@
     --border: 40 22% 82%;
     --border-strong: 40 25% 70%;
     --accent: 20 80% 50%;
+    --accent-rgb: 235, 94, 40;
     --accent-fg: 0 0% 100%;
     --accent-soft: 20 80% 92%;
     --trending: 15 90% 50%;
@@ -124,6 +128,7 @@
     --border: 231 15% 30%;
     --border-strong: 231 15% 40%;
     --accent: 326 100% 74%;
+    --accent-rgb: 255, 121, 198;
     --accent-fg: 231 15% 18%;
     --accent-soft: 326 50% 25%;
     --trending: 41 100% 69%;
@@ -141,16 +146,17 @@
   }
 
   [data-theme="ocean"] {
-    --bg: 220 50% 12%;
-    --bg-card: 220 50% 16%;
-    --bg-subtle: 220 50% 20%;
-    --bg-hover: 220 50% 24%;
-    --text: 210 30% 92%;
-    --text-secondary: 210 20% 70%;
+    --bg: 220 50% 10%;
+    --bg-card: 220 45% 14%;
+    --bg-subtle: 220 40% 18%;
+    --bg-hover: 220 40% 22%;
+    --text: 200 40% 95%;
+    --text-secondary: 200 25% 72%;
     --text-muted: 210 20% 55%;
     --border: 220 40% 26%;
     --border-strong: 220 40% 36%;
     --accent: 190 80% 60%;
+    --accent-rgb: 71, 215, 235;
     --accent-fg: 220 50% 10%;
     --accent-soft: 190 80% 20%;
     --trending: 30 90% 60%;
@@ -178,6 +184,7 @@
     --border: 140 25% 26%;
     --border-strong: 140 25% 36%;
     --accent: 90 60% 50%;
+    --accent-rgb: 128, 204, 51;
     --accent-fg: 140 30% 10%;
     --accent-soft: 90 60% 20%;
     --trending: 30 80% 60%;
@@ -205,6 +212,7 @@
     --border: 260 20% 84%;
     --border-strong: 260 25% 72%;
     --accent: 45 90% 45%;
+    --accent-rgb: 218, 163, 11;
     --accent-fg: 0 0% 100%;
     --accent-soft: 45 90% 92%;
     --trending: 15 90% 50%;
@@ -232,6 +240,7 @@
     --border: 30 20% 80%;
     --border-strong: 30 22% 68%;
     --accent: 35 80% 42%;
+    --accent-rgb: 193, 119, 21;
     --accent-fg: 0 0% 100%;
     --accent-soft: 35 60% 90%;
     --trending: 15 90% 50%;
@@ -259,6 +268,7 @@
     --border: 150 20% 82%;
     --border-strong: 150 22% 70%;
     --accent: 150 50% 40%;
+    --accent-rgb: 51, 153, 102;
     --accent-fg: 0 0% 100%;
     --accent-soft: 150 40% 90%;
     --trending: 35 90% 48%;
@@ -333,18 +343,14 @@
   border: 1px solid hsl(var(--border));
   border-radius: 14px;
   box-shadow: var(--shadow);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.card-hover {
+  transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.2s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.2s ease;
 }
 .card-hover:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-hover);
-  border-color: hsl(var(--border-strong));
-}
-
-/* Smooth theme transition for colored elements */
-.theme-transition,
-.theme-transition * {
-  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+  transform: translateY(-6px);
+  box-shadow: 0 16px 36px rgba(0,0,0,0.18), 0 0 20px rgba(var(--accent-rgb), 0.2);
+  border-color: hsl(var(--accent) / 0.6);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -389,10 +395,69 @@
 .prose tbody tr {
   border-bottom-color: hsl(var(--border)) !important;
 }
-#root {
-  transition: transform 1.5s ease-in-out, filter 1.5s ease-in-out;
-}
 #root.konami-active {
+  transition: transform 1.5s ease-in-out, filter 1.5s ease-in-out;
   transform: rotateX(180deg);
   filter: invert(1) hue-rotate(180deg);
+}
+
+/* ─── Mobile, Tablet & Touch Device Utilities ─── */
+
+/* Eliminate 300ms tap delay and mobile grey highlight */
+button, a, input, select, textarea, [role="button"], [tabindex="0"] {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Safe Area Insets for modern iOS & Android devices */
+.pt-safe {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.pl-safe {
+  padding-left: env(safe-area-inset-left, 0px);
+}
+.pr-safe {
+  padding-right: env(safe-area-inset-right, 0px);
+}
+.mb-safe {
+  margin-bottom: env(safe-area-inset-bottom, 0px);
+}
+.bottom-safe {
+  bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Smooth Touch Scrolling with momentum inertia */
+.touch-scroll {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+/* WCAG 2.5.5 minimum 44px tap target utility */
+.touch-target {
+  min-width: 44px;
+  min-height: 44px;
+}
+.touch-target:not(.hidden):not([style*="display: none"]) {
+  align-items: center;
+  justify-content: center;
+}
+
+/* Touch-specific feedback: replace stuck hover states with crisp active touch feedback */
+@media (hover: none) and (pointer: coarse) {
+  .card-hover:hover {
+    transform: none !important;
+    box-shadow: var(--shadow) !important;
+    border-color: hsl(var(--border)) !important;
+  }
+  .card-hover:active,
+  .touch-active:active {
+    transform: scale(0.985) !important;
+    transition: transform 0.08s ease !important;
+  }
+  button:active, a:active {
+    opacity: 0.85;
+  }
 }

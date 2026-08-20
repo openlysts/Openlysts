@@ -24,41 +24,43 @@ export default function CompareDock() {
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: 100, opacity: 0 }}
-        className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-bg-card border border-border shadow-2xl rounded-2xl p-3 flex items-center gap-4 w-[90%] max-w-2xl"
+        className="fixed bottom-16 sm:bottom-6 left-1/2 -translate-x-1/2 z-50 bg-bg-card/95 backdrop-blur-xl border border-border shadow-2xl rounded-2xl p-2 sm:p-3 flex items-center gap-2 sm:gap-4 w-[95%] max-w-2xl"
       >
-        <div className="flex items-center gap-2 px-2 text-text">
-          <GitCompare className="w-5 h-5 text-accent" />
-          <span className="font-semibold text-sm whitespace-nowrap">Compare ({selectedForCompare.length}/3)</span>
+        <div className="flex items-center gap-1.5 sm:gap-2 px-1 sm:px-2 text-text flex-shrink-0">
+          <GitCompare className="w-4 h-4 sm:w-5 sm:h-5 text-accent" />
+          <span className="font-bold text-xs sm:text-sm whitespace-nowrap">({selectedForCompare.length}/3)</span>
         </div>
 
-        <div className="flex-1 flex gap-2 overflow-x-auto custom-scrollbar pb-1">
+        <div className="flex-1 flex gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar touch-scroll py-0.5">
           {selectedForCompare.map(repo => (
-            <div key={repo.id} className="flex items-center gap-2 bg-bg-subtle px-3 py-1.5 rounded-lg border border-border min-w-0 max-w-[150px]">
-              <span className="text-xs truncate font-medium">{repo.name}</span>
+            <div key={repo.id} className="flex items-center gap-1.5 bg-bg-subtle px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg border border-border min-w-0 max-w-[120px] sm:max-w-[160px] flex-shrink-0">
+              <span className="text-xs truncate font-semibold">{repo.name}</span>
               <button 
                 onClick={() => removeFromCompare(repo.id)}
-                className="text-text-muted hover:text-red-400 p-0.5 rounded-full hover:bg-bg-hover transition-colors"
+                className="text-text-muted hover:text-red-400 p-1 rounded-full hover:bg-bg-hover transition-colors touch-target"
+                aria-label={`Remove ${repo.name}`}
               >
-                <X className="w-3 h-3" />
+                <X className="w-3.5 h-3.5" />
               </button>
             </div>
           ))}
         </div>
 
-        <div className="flex items-center gap-2 pl-2 border-l border-border">
+        <div className="flex items-center gap-1.5 sm:gap-2 pl-1 sm:pl-2 border-l border-border flex-shrink-0">
           <button
             onClick={clearCompare}
-            className="p-2 text-text-muted hover:text-red-400 hover:bg-bg-hover rounded-lg transition-colors"
+            className="p-2 text-text-muted hover:text-red-400 hover:bg-bg-hover rounded-lg transition-colors touch-target"
             title="Clear all"
+            aria-label="Clear all"
           >
             <Trash2 className="w-4 h-4" />
           </button>
           <button
             onClick={handleCompareClick}
             disabled={selectedForCompare.length < 2}
-            className={`px-4 py-2 rounded-lg font-medium text-sm transition-colors ${
+            className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl font-bold text-xs sm:text-sm transition-colors touch-target ${
               selectedForCompare.length >= 2
-                ? 'bg-accent text-white hover:bg-accent-hover'
+                ? 'bg-accent text-accent-fg hover:bg-accent/90 shadow-sm'
                 : 'bg-bg-hover text-text-muted cursor-not-allowed'
             }`}
           >

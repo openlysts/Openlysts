@@ -46,18 +46,21 @@ export default function ThreeBackground() {
     }
     const color = new THREE.Color(formattedHsl ? `hsl(${formattedHsl})` : '#4ade80');
     
-    const oMult = isLight ? 0.35 : 1;
-    if (isLight) color.lerp(new THREE.Color('#334155'), 0.25); // tint towards crisp slate
+    // Ambient opacity multiplier calibrated for visual elegance
+    const oMult = isLight ? 0.45 : 0.85;
     
     let updateFn = () => {};
     const geometries = [];
     const materials = [];
 
+    const isMobileScreen = width < 640;
+
     // Common setup function for points
-    const createPoints = (count, posFunc, size = 0.7, opacity = 0.5) => {
+    const createPoints = (count, posFunc, size = 0.8, opacity = 0.6) => {
+      const actualCount = isMobileScreen ? Math.max(50, Math.floor(count * 0.35)) : count;
       const geometry = new THREE.BufferGeometry();
-      const positions = new Float32Array(count * 3);
-      for (let i = 0; i < count; i++) {
+      const positions = new Float32Array(actualCount * 3);
+      for (let i = 0; i < actualCount; i++) {
         const [x, y, z] = posFunc(i);
         positions[i * 3] = x;
         positions[i * 3 + 1] = y;
@@ -66,7 +69,7 @@ export default function ThreeBackground() {
       geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
       const material = new THREE.PointsMaterial({ 
         color, 
-        size: size * (isLight ? 0.6 : 1), 
+        size: size * (isLight ? 0.9 : 1.1), 
         transparent: true, 
         opacity: Math.min(1.0, opacity * oMult), 
         depthWrite: false 
@@ -79,22 +82,23 @@ export default function ThreeBackground() {
     };
 
     if (bgType === 'particles') {
-      const { points } = createPoints(320, () => [
-        (Math.random() - 0.5) * 180, (Math.random() - 0.5) * 120, (Math.random() - 0.5) * 80
-      ]);
+      const { points } = createPoints(420, () => [
+        (Math.random() - 0.5) * 220, (Math.random() - 0.5) * 150, (Math.random() - 0.5) * 110
+      ], 0.85, 0.7);
       let rotY = 0;
       updateFn = (time, mx, my) => {
         rotY += 0.0006;
-        points.rotation.y += (rotY - points.rotation.y) * 0.06;
-        points.rotation.x += (my * 0.12 - points.rotation.x) * 0.04;
-        camera.position.x += (mx * 5 - camera.position.x) * 0.03;
+        points.rotation.y += (rotY - points.rotation.y) * 0.05;
+        points.rotation.x += (my * 0.2 - points.rotation.x) * 0.04;
+        camera.position.x += (mx * 10 - camera.position.x) * 0.03;
+        camera.position.y += (-my * 6 - camera.position.y) * 0.03;
         camera.lookAt(0, 0, 0);
       };
     } 
     else if (bgType === 'network') {
-      const count = 150;
+      const count = isMobileScreen ? 50 : 160;
       const { geometry, points } = createPoints(count, () => [
-        (Math.random() - 0.5) * 140, (Math.random() - 0.5) * 100, (Math.random() - 0.5) * 60
+        (Math.random() - 0.5) * 160, (Math.random() - 0.5) * 110, (Math.random() - 0.5) * 80
       ], 1.0, 0.8);
       
       const lineMaterial = new THREE.LineBasicMaterial({ color, transparent: true, opacity: Math.min(1.0, 0.15 * oMult) });
@@ -110,7 +114,7 @@ export default function ThreeBackground() {
         const pos = geometry.attributes.position.array;
         for (let i = 0; i < count * 3; i++) {
           pos[i] += velocities[i];
-          if (pos[i] > 70 || pos[i] < -70) velocities[i] *= -1;
+          if (pos[i] > 80 || pos[i] < -80) velocities[i] *= -1;
         }
         geometry.attributes.position.needsUpdate = true;
         
@@ -121,7 +125,7 @@ export default function ThreeBackground() {
             const dy = pos[i*3+1] - pos[j*3+1];
             const dz = pos[i*3+2] - pos[j*3+2];
             const distSq = dx*dx + dy*dy + dz*dz;
-            if (distSq < 400) {
+            if (distSq < 420) {
               linePositions.push(pos[i*3], pos[i*3+1], pos[i*3+2]);
               linePositions.push(pos[j*3], pos[j*3+1], pos[j*3+2]);
             }
@@ -129,35 +133,57 @@ export default function ThreeBackground() {
         }
         linesMesh.geometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
         
-        points.rotation.y += (mx * 0.2 - points.rotation.y) * 0.05;
-        points.rotation.x += (my * 0.2 - points.rotation.x) * 0.05;
+        points.rotation.y += (mx * 0.25 - points.rotation.y) * 0.04;
+        points.rotation.x += (my * 0.25 - points.rotation.x) * 0.04;
         linesMesh.rotation.copy(points.rotation);
+        camera.position.x += (mx * 8 - camera.position.x) * 0.03;
+        camera.position.y += (-my * 6 - camera.position.y) * 0.03;
       };
     }
     else if (bgType === 'topography') {
-      const geometry = new THREE.PlaneGeometry(200, 100, 40, 20);
-      const material = new THREE.MeshBasicMaterial({ color, wireframe: true, transparent: true, opacity: Math.min(1.0, 0.15 * oMult) });
-      geometries.push(geometry);
-      materials.push(material);
-      const plane = new THREE.Mesh(geometry, material);
-      plane.rotation.x = -Math.PI / 2.5;
-      plane.position.y = -20;
-      scene.add(plane);
+      // Elegant low-horizon ambient particle wave terrain
+      const cols = isMobileScreen ? 30 : 60;
+      const rows = isMobileScreen ? 18 : 36;
+      const totalPoints = cols * rows;
       
-      const pos = geometry.attributes.position;
-      const initialZ = new Float32Array(pos.count);
-      for(let i=0; i<pos.count; i++) {
-        initialZ[i] = pos.getZ(i);
+      const geometry = new THREE.BufferGeometry();
+      const positions = new Float32Array(totalPoints * 3);
+      
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const idx = (r * cols + c) * 3;
+          positions[idx] = (c - cols / 2) * 3.5;
+          positions[idx + 1] = -28;
+          positions[idx + 2] = (r - rows / 2) * 3.5 - 20;
+        }
       }
       
+      geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      const material = new THREE.PointsMaterial({ 
+        color, 
+        size: isLight ? 0.9 : 1.1, 
+        transparent: true, 
+        opacity: Math.min(0.65, 0.4 * oMult), 
+        depthWrite: false 
+      });
+      geometries.push(geometry);
+      materials.push(material);
+      const terrain = new THREE.Points(geometry, material);
+      scene.add(terrain);
+      
       updateFn = (time, mx, my) => {
-        for(let i=0; i<pos.count; i++) {
-          const x = pos.getX(i);
-          const y = pos.getY(i);
-          pos.setZ(i, initialZ[i] + Math.sin(x * 0.1 + time * 2) * 4 + Math.cos(y * 0.1 + time * 2) * 4);
+        const posArray = geometry.attributes.position.array;
+        for (let r = 0; r < rows; r++) {
+          for (let c = 0; c < cols; c++) {
+            const idx = (r * cols + c) * 3;
+            const x = posArray[idx];
+            const z = posArray[idx + 2];
+            posArray[idx + 1] = -26 + Math.sin(x * 0.08 + time * 1.5) * 4 + Math.cos(z * 0.08 + time * 1.2) * 3;
+          }
         }
-        pos.needsUpdate = true;
-        plane.rotation.z = mx * 0.1;
+        geometry.attributes.position.needsUpdate = true;
+        terrain.rotation.y = mx * 0.15;
+        camera.position.x += (mx * 8 - camera.position.x) * 0.03;
       };
     }
     else if (bgType === 'matrix') {
@@ -304,7 +330,14 @@ export default function ThreeBackground() {
       mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
       mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
     };
+    const onTouchMove = (e) => {
+      if (e.touches && e.touches[0]) {
+        mouseX = (e.touches[0].clientX / window.innerWidth - 0.5) * 2;
+        mouseY = (e.touches[0].clientY / window.innerHeight - 0.5) * 2;
+      }
+    };
     window.addEventListener('mousemove', onMove, { passive: true });
+    window.addEventListener('touchmove', onTouchMove, { passive: true });
 
     let frameId;
     let time = 0;
@@ -329,6 +362,7 @@ export default function ThreeBackground() {
       cancelAnimationFrame(frameId);
       window.removeEventListener('resize', onResize);
       window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('touchmove', onTouchMove);
       if (renderer.domElement.parentNode === mount) {
         mount.removeChild(renderer.domElement);
       }
@@ -340,5 +374,14 @@ export default function ThreeBackground() {
 
   if (bgType === 'none') return null;
 
-  return <div ref={mountRef} className={`fixed inset-0 pointer-events-none z-0 transition-opacity duration-1000 ${isLight ? 'opacity-40' : 'opacity-70'}`} />;
+  return (
+    <div 
+      ref={mountRef} 
+      className={`fixed inset-0 pointer-events-none z-0 transition-opacity duration-1000 ${isLight ? 'opacity-35' : 'opacity-55'}`}
+      style={{
+        maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 60%, rgba(0,0,0,0.15) 100%)',
+        WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 60%, rgba(0,0,0,0.15) 100%)',
+      }}
+    />
+  );
 }

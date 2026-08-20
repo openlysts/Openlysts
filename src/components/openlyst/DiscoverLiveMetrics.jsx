@@ -28,20 +28,22 @@ function CategoryChip({ cat, actualCount }) {
       whileHover={{ y: -3 }}
       whileTap={{ y: 0 }}
       onClick={() => navigate(`/search?categories=${encodeURIComponent(cat.id)}`)}
-      className={`group/chip relative flex flex-col items-start p-3 rounded-xl border ${cat.border} bg-gradient-to-br ${cat.color} hover:shadow-md transition-all duration-200 text-left`}
+      className={`group/chip relative flex flex-col justify-between w-full h-[88px] p-3 rounded-xl border ${cat.border} bg-gradient-to-br ${cat.color} hover:shadow-md transition-all duration-200 text-left`}
     >
-      <div className="flex items-center justify-between w-full mb-1.5">
+      <div className="flex items-center justify-between w-full">
         <div className={`p-1.5 rounded-lg bg-black/5 dark:bg-black/20 ${cat.text}`}>
           <Icon className="w-3.5 h-3.5" />
         </div>
         <ArrowUpRight className="w-3.5 h-3.5 text-text-muted opacity-0 group-hover/chip:opacity-100 transition-opacity" />
       </div>
-      <span className="text-[12px] font-semibold text-text-secondary line-clamp-1 group-hover/chip:text-text transition-colors">
-        {cat.name}
-      </span>
-      <span className={`text-xs font-bold ${cat.text}`}>
-        {liveCount.toLocaleString()}
-      </span>
+      <div>
+        <span className="text-[12px] font-semibold text-text line-clamp-1 block">
+          {cat.name}
+        </span>
+        <span className={`text-xs font-bold ${cat.text} block mt-0.5`}>
+          {liveCount.toLocaleString()}
+        </span>
+      </div>
     </motion.button>
   );
 }
@@ -52,14 +54,14 @@ export default function DiscoverLiveMetrics({ totalRepos = 0, categoryCounts = {
 
   return (
     <div className="w-full max-w-5xl mx-auto my-6 px-2 sm:px-4">
-      <div className="relative rounded-2xl border border-border bg-bg-card shadow-lg p-5 sm:p-6 transition-all">
+      <div className="relative rounded-2xl border border-border bg-bg-card shadow-lg p-4 sm:p-6 transition-all">
         {/* Ambient Top Glow Line */}
         <div className="absolute top-0 left-1/4 right-1/4 h-[1px] bg-gradient-to-r from-transparent via-accent/40 to-transparent" />
 
         {/* Header Bar with Live Indicator */}
         <div className="flex flex-wrap items-center justify-between gap-3 pb-4 mb-4 border-b border-border">
           <div className="flex items-center gap-3">
-            <div className="relative flex items-center justify-center p-2 rounded-xl bg-accent-soft border border-accent/30 text-accent">
+            <div className="relative flex items-center justify-center p-2 rounded-xl bg-accent-soft border border-accent/30 text-accent flex-shrink-0">
               <Database className="w-4 h-4" />
               <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -67,7 +69,7 @@ export default function DiscoverLiveMetrics({ totalRepos = 0, categoryCounts = {
               </span>
             </div>
             <div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 <span className="text-base sm:text-lg font-extrabold text-text tracking-tight">
                   {liveTotalRepos.toLocaleString()} Repositories
                 </span>
@@ -75,7 +77,7 @@ export default function DiscoverLiveMetrics({ totalRepos = 0, categoryCounts = {
                   <Activity className="w-3 h-3 animate-pulse" /> Live Neon Sync
                 </span>
               </div>
-              <p className="text-xs text-text-muted font-medium">
+              <p className="text-xs text-text-muted font-medium mt-0.5">
                 Continuously synchronized and rated across 60+ open-source categories
               </p>
             </div>
@@ -89,10 +91,12 @@ export default function DiscoverLiveMetrics({ totalRepos = 0, categoryCounts = {
           </div>
         </div>
 
-        {/* Category Breakdown Interactive Pills */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2.5">
+        {/* Category Breakdown: Smooth Horizontal Scroll on Mobile/Tablet, 7-col on Desktop */}
+        <div className="flex lg:grid lg:grid-cols-7 gap-2.5 overflow-x-auto no-scrollbar touch-scroll py-1 -mx-1 px-1">
           {CATEGORIES.map((cat) => (
-            <CategoryChip key={cat.id} cat={cat} actualCount={categoryCounts[cat.label] || 0} />
+            <div key={cat.id} className="min-w-[130px] sm:min-w-[150px] lg:min-w-0 flex-1 flex-shrink-0">
+              <CategoryChip cat={cat} actualCount={categoryCounts[cat.label] || 0} />
+            </div>
           ))}
         </div>
       </div>

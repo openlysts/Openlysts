@@ -148,16 +148,24 @@ export default function Search() {
       </div>
 
       {q && (
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-4 p-3 rounded-xl bg-bg-card border border-border">
           <p className="text-text-secondary text-sm font-medium">
             {data ? `${data.total} result${data.total !== 1 ? 's' : ''} for` : 'Searching for'} <span className="text-text font-bold">"{q}"</span>
           </p>
           <div className="flex items-center gap-2">
-            <button onClick={handleShare} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm bg-bg-card border border-border text-text-secondary hover:text-text hover:bg-bg-hover transition-colors font-medium">
-              <Share2 className="w-4 h-4" /> Share
+            <button 
+              onClick={handleShare} 
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm bg-bg-subtle border border-border text-text-secondary hover:text-text hover:bg-bg-hover transition-colors font-semibold touch-target"
+              title="Share Search"
+            >
+              <Share2 className="w-3.5 h-3.5" /> <span>Share</span>
             </button>
-            <button onClick={handleExport} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm bg-bg-card border border-border text-text-secondary hover:text-text hover:bg-bg-hover transition-colors font-medium">
-              <Download className="w-4 h-4" /> Export JSON
+            <button 
+              onClick={handleExport} 
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm bg-bg-subtle border border-border text-text-secondary hover:text-text hover:bg-bg-hover transition-colors font-semibold touch-target"
+              title="Export JSON"
+            >
+              <Download className="w-3.5 h-3.5" /> <span>Export JSON</span>
             </button>
           </div>
         </div>

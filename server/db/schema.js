@@ -178,6 +178,12 @@ export async function initSchema(db) {
     `ALTER TABLE "User" ADD COLUMN avatar_url TEXT`,
     `ALTER TABLE "User" ADD COLUMN last_login_at TEXT`,
     `ALTER TABLE "User" ADD COLUMN updated_at TEXT`,
+
+    // Repository columns for Admin Studio & boosts
+    `ALTER TABLE "Repository" ADD COLUMN staff_pick INTEGER DEFAULT 0`,
+    `ALTER TABLE "Repository" ADD COLUMN openlysts_score_boost INTEGER DEFAULT 0`,
+    `ALTER TABLE "Repository" ADD COLUMN updated_at TEXT`,
+    `ALTER TABLE "Repository" ADD COLUMN tags TEXT`,
   ];
 
   for (const q of alterQueries) {

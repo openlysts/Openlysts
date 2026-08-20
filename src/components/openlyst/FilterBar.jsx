@@ -61,32 +61,35 @@ export default function FilterBar({ filters, onChange, languages = [] }) {
   const reset = () => onChange({ q: filters.q, categories: [], languages: [], licenses: [], difficulties: [], minStars: 0, updatedWithin: '', activity: '', sort: 'trending', page: 1 });
 
   return (
-    <div className="mb-4">
-      <div className="flex items-center gap-2 flex-wrap">
-        {/* Sort */}
-        <div className="flex items-center gap-1.5">
-          <span className="text-xs text-text-muted">Sort:</span>
-          <select
-            value={filters.sort || 'trending'}
-            onChange={(e) => update('sort', e.target.value)}
-            className="text-sm bg-bg-card border border-border rounded-lg px-2.5 py-1.5 text-text-secondary cursor-pointer hover:border-border-strong"
-          >
-            {SORTS.map((s) => <option key={s.value} value={s.value}>{s.label}</option>)}
-          </select>
+    <div className="mb-5">
+      <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap">
+        {/* Sort dropdown */}
+        <div className="flex-1 sm:flex-initial min-w-[130px]">
+          <div className="relative flex items-center">
+            <select
+              value={filters.sort || 'trending'}
+              onChange={(e) => update('sort', e.target.value)}
+              className="w-full h-10 sm:h-9 text-sm bg-bg-card border border-border rounded-xl px-3 pr-8 text-text-secondary font-medium cursor-pointer hover:border-border-strong focus:outline-none focus:border-accent appearance-none transition-colors"
+            >
+              {SORTS.map((s) => <option key={s.value} value={s.value}>Sort: {s.label}</option>)}
+            </select>
+            <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted pointer-events-none" />
+          </div>
         </div>
 
-        <div className="relative">
+        {/* Categories button */}
+        <div className="relative flex-1 sm:flex-initial">
           <button
             onClick={() => { setCategoriesExpanded((v) => !v); setExpanded(false); }}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm border transition-colors ${
+            className={`w-full h-10 sm:h-9 flex items-center justify-center gap-1.5 px-3 rounded-xl text-sm font-medium border transition-all ${
               categoriesExpanded || (filters.categories?.length || 0) > 0
-                ? 'bg-accent-soft text-accent border-accent'
+                ? 'bg-accent-soft text-accent border-accent shadow-sm'
                 : 'bg-bg-card text-text-secondary border-border hover:border-border-strong'
             }`}
           >
-            Categories
+            <span>Categories</span>
             {(filters.categories?.length || 0) > 0 && (
-              <span className="ml-0.5 px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-accent text-accent-fg">
+              <span className="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-accent text-accent-fg">
                 {filters.categories.length}
               </span>
             )}
@@ -94,7 +97,7 @@ export default function FilterBar({ filters, onChange, languages = [] }) {
           </button>
           
           {categoriesExpanded && (
-            <div className="absolute top-full left-0 mt-2 w-64 p-3 rounded-xl border border-border bg-bg-card shadow-lg z-50 max-h-96 overflow-y-auto">
+            <div className="absolute top-full left-0 mt-2 w-64 max-w-[calc(100vw-32px)] p-3 rounded-xl border border-border bg-bg-card shadow-2xl z-50 max-h-80 sm:max-h-96 overflow-y-auto custom-scrollbar touch-scroll">
               <div className="flex flex-col gap-1">
                 {CATEGORIES.map((c) => {
                   const active = (filters.categories || []).includes(c.slug);
@@ -102,8 +105,8 @@ export default function FilterBar({ filters, onChange, languages = [] }) {
                     <button
                       key={c.slug}
                       onClick={() => toggleArray('categories', c.slug)}
-                      className={`text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                        active ? 'bg-accent text-accent-fg' : 'text-text-secondary hover:bg-bg-subtle hover:text-text'
+                      className={`text-left px-3 py-2.5 rounded-lg text-sm font-medium transition-colors touch-target ${
+                        active ? 'bg-accent text-accent-fg' : 'text-text-secondary hover:bg-bg-subtle hover:text-text active:bg-bg-subtle'
                       }`}
                     >
                       {c.label}
@@ -115,25 +118,27 @@ export default function FilterBar({ filters, onChange, languages = [] }) {
           )}
         </div>
 
+        {/* Filters button */}
         <button
           onClick={() => { setExpanded((v) => !v); setCategoriesExpanded(false); }}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm border transition-colors ${
+          className={`flex-1 sm:flex-initial h-10 sm:h-9 flex items-center justify-center gap-1.5 px-3 rounded-xl text-sm font-medium border transition-all ${
             expanded || activeCount > 0
-              ? 'bg-accent-soft text-accent border-accent'
+              ? 'bg-accent-soft text-accent border-accent shadow-sm'
               : 'bg-bg-card text-text-secondary border-border hover:border-border-strong'
           }`}
         >
           <SlidersHorizontal className="w-3.5 h-3.5" />
-          Filters
+          <span>Filters</span>
           {activeCount > 0 && (
-            <span className="ml-0.5 px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-accent text-accent-fg">{activeCount}</span>
+            <span className="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-accent text-accent-fg">{activeCount}</span>
           )}
           <ChevronDown className={`w-3.5 h-3.5 transition-transform ${expanded ? 'rotate-180' : ''}`} />
         </button>
 
+        {/* Clear button */}
         {activeCount > 0 && (
-          <button onClick={reset} className="flex items-center gap-1 text-xs text-text-muted hover:text-text px-2 py-1.5">
-            <X className="w-3 h-3" /> Clear
+          <button onClick={reset} className="h-10 sm:h-9 flex items-center gap-1 text-xs font-semibold text-text-muted hover:text-text px-2.5 rounded-xl border border-transparent hover:border-border transition-colors">
+            <X className="w-3.5 h-3.5" /> Clear
           </button>
         )}
       </div>

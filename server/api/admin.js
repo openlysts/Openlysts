@@ -1,24 +1,420 @@
-// ─── Admin User Management Router ───────────────────────────────────
+// ─── Admin Hypervisor Router ─────────────────────────────────────────
 // All endpoints require ADMIN role. Mounted at /api/admin.
 
 import { Router } from 'express';
 import crypto from 'crypto';
 import { db } from '../db/index.js';
 import { requireAuth, requireRole } from '../auth/middleware.js';
-import { ROLES, ACCOUNT_STATUS, AUDIT_ACTIONS } from '../auth/constants.js';
+import { ROLES, ACCOUNT_STATUS, AUDIT_ACTIONS, TOKEN_EXPIRY } from '../auth/constants.js';
 import { hashPassword, validatePasswordStrength, normalizeEmail } from '../auth/password.js';
 import { logAuditEvent, getRequestMeta } from '../auth/audit.js';
+import { githubFetch, fetchRepoWithFallback, ingestRepoItem } from '../functions/runIngestion.js';
+import { invalidateRepositoriesCache } from '../functions/queryRepositories.js';
 
 const router = Router();
 
 // All admin routes require authentication + ADMIN role
 router.use(requireAuth, requireRole(ROLES.ADMIN));
 
+
+// ─── GET /api/admin/telemetry ───────────────────────────────────────
+// Live GitHub rate limit status, database table storage, and system metrics
+
+router.get('/telemetry', async (req, res) => {
+  try {
+    const token = process.env.GITHUB_TOKEN || process.env.GITHUB_PERSONAL_ACCESS_TOKEN || '';
+    
+    // 1. Fetch live GitHub rate limit status
+    let rateLimit = { limit: 60, remaining: 60, reset: 0, used: 0 };
+    try {
+      const rlData = await githubFetch('https://api.github.com/rate_limit', token);
+      if (rlData && rlData.resources && rlData.resources.core) {
+        rateLimit = rlData.resources.core;
+      }
+    } catch (e) {
+      console.warn('[ADMIN] Rate limit fetch warning:', e.message);
+    }
+
+    // 2. Query PostgreSQL Table Record Counts
+    const [reposCount, usersCount, queriesCount, runsCount, auditCount, altsCount] = await Promise.all([
+      db.query('SELECT COUNT(*) as count FROM "Repository"').catch(() => ({ rows: [{ count: 0 }] })),
+      db.query('SELECT COUNT(*) as count FROM "User"').catch(() => ({ rows: [{ count: 0 }] })),
+      db.query('SELECT COUNT(*) as count FROM "DiscoveryQuery"').catch(() => ({ rows: [{ count: 0 }] })),
+      db.query('SELECT COUNT(*) as count FROM "IngestionRun"').catch(() => ({ rows: [{ count: 0 }] })),
+      db.query('SELECT COUNT(*) as count FROM "AuditLog"').catch(() => ({ rows: [{ count: 0 }] })),
+      db.query('SELECT COUNT(*) as count FROM "Alternative"').catch(() => ({ rows: [{ count: 0 }] })),
+    ]);
+
+    const memory = process.memoryUsage();
+
+    return res.json({
+      success: true,
+      githubRateLimit: rateLimit,
+      databaseStats: {
+        repositories: parseInt(reposCount.rows[0]?.count || 0),
+        users: parseInt(usersCount.rows[0]?.count || 0),
+        discoveryQueries: parseInt(queriesCount.rows[0]?.count || 0),
+        ingestionRuns: parseInt(runsCount.rows[0]?.count || 0),
+        auditLogs: parseInt(auditCount.rows[0]?.count || 0),
+        alternatives: parseInt(altsCount.rows[0]?.count || 0),
+      },
+      system: {
+        uptimeSeconds: Math.floor(process.uptime()),
+        memoryRssMb: Math.round(memory.rss / (1024 * 1024)),
+        memoryHeapUsedMb: Math.round(memory.heapUsed / (1024 * 1024)),
+        nodeVersion: process.version,
+      }
+    });
+  } catch (err) {
+    console.error('[ADMIN] Telemetry error:', err.message);
+    return res.status(500).json({ error: true, message: 'Failed to fetch telemetry.' });
+  }
+});
+
+
+// ─── POST /api/admin/repos/sync ─────────────────────────────────────
+// On-demand custom single or multi-line batch GitHub repo ingestion
+
+router.post('/repos/sync', async (req, res) => {
+  try {
+    const { repo, repos: repoBatch, category_hint = '' } = req.body;
+    const targets = [];
+
+    if (Array.isArray(repoBatch)) {
+      targets.push(...repoBatch);
+    } else if (typeof repo === 'string' && repo.trim()) {
+      // Split by newlines or commas
+      const split = repo.split(/[\n,]+/).map(s => s.trim()).filter(Boolean);
+      targets.push(...split);
+    }
+
+    if (targets.length === 0) {
+      return res.status(400).json({ error: true, message: 'At least one repository URL or owner/name is required.' });
+    }
+
+    const token = process.env.GITHUB_TOKEN || process.env.GITHUB_PERSONAL_ACCESS_TOKEN || '';
+    const results = [];
+    const errors = [];
+
+    for (const raw of targets) {
+      const clean = raw.replace(/^https?:\/\/github\.com\//i, '').replace(/\.git$/i, '').replace(/\/$/, '').trim();
+      const parts = clean.split('/');
+      if (parts.length < 2) {
+        errors.push({ repo: raw, error: 'Invalid format. Expected owner/repo' });
+        continue;
+      }
+      const [owner, name] = parts;
+
+      try {
+        const repoJson = await fetchRepoWithFallback(owner, name, token);
+        const ingested = await ingestRepoItem(repoJson, category_hint);
+        results.push({
+          full_name: repoJson.full_name,
+          stars: repoJson.stargazers_count,
+          categories: ingested.categories,
+          quality_score: ingested.quality_score,
+          openlysts_score: ingested.openlysts_score,
+          license_status: ingested.license_status,
+        });
+      } catch (e) {
+        errors.push({ repo: raw, error: e.message });
+      }
+    }
+
+    invalidateRepositoriesCache();
+
+    const meta = getRequestMeta(req);
+    await logAuditEvent({
+      actorId: req.user.id,
+      action: AUDIT_ACTIONS.REPO_SYNCED,
+      ...meta,
+      metadata: { syncedCount: results.length, errorsCount: errors.length },
+    });
+
+    if (results.length === 0 && errors.length > 0) {
+      return res.status(422).json({
+        error: true,
+        message: `Failed to ingest repository: ${errors.map(e => e.error).join('; ')}`,
+        errors,
+        count: 0,
+        processed: []
+      });
+    }
+
+    return res.json({
+      success: true,
+      processed: results,
+      errors,
+      count: results.length,
+    });
+  } catch (err) {
+    console.error('[ADMIN] Sync repo error:', err.message);
+    return res.status(500).json({ error: true, message: `Sync failed: ${err.message}` });
+  }
+});
+
+
+// ─── PATCH /api/admin/repos/:id ─────────────────────────────────────
+// Update repository metadata, editorial boosts, staff pick, or flags
+
+router.patch('/repos/:id', async (req, res) => {
+  try {
+    const repoId = req.params.id;
+    const { name, description, categories, tags, hidden, featured, staff_pick, openlysts_score_boost } = req.body;
+
+    const updates = [];
+    const params = [repoId];
+
+    if (name !== undefined) {
+      params.push(name.trim());
+      updates.push(`name = $${params.length}`);
+    }
+    if (description !== undefined) {
+      params.push(description.trim());
+      updates.push(`description = $${params.length}`);
+    }
+    if (Array.isArray(categories)) {
+      params.push(JSON.stringify(categories));
+      updates.push(`categories = $${params.length}`);
+    }
+    if (Array.isArray(tags)) {
+      params.push(JSON.stringify(tags));
+      updates.push(`tags = $${params.length}`);
+    }
+    if (hidden !== undefined) {
+      params.push(hidden ? 1 : 0);
+      updates.push(`hidden = $${params.length}`);
+    }
+    if (featured !== undefined) {
+      params.push(featured ? 1 : 0);
+      updates.push(`featured = $${params.length}`);
+    }
+    if (staff_pick !== undefined) {
+      params.push(staff_pick ? 1 : 0);
+      updates.push(`staff_pick = $${params.length}`);
+    }
+    if (openlysts_score_boost !== undefined) {
+      params.push(parseInt(openlysts_score_boost) || 0);
+      updates.push(`openlysts_score_boost = $${params.length}`);
+    }
+
+    if (updates.length === 0) {
+      return res.status(400).json({ error: true, message: 'No valid fields provided for update.' });
+    }
+
+    params.push(new Date().toISOString());
+    updates.push(`updated_at = $${params.length}`);
+
+    const sql = `UPDATE "Repository" SET ${updates.join(', ')} WHERE id = $1 RETURNING *`;
+    const { rows } = await db.query(sql, params);
+
+    if (rows.length === 0) {
+      return res.status(404).json({ error: true, message: 'Repository not found.' });
+    }
+
+    invalidateRepositoriesCache();
+
+    const meta = getRequestMeta(req);
+    await logAuditEvent({
+      actorId: req.user.id,
+      action: AUDIT_ACTIONS.REPO_UPDATED,
+      ...meta,
+      metadata: { repoId, updates: req.body },
+    });
+
+    return res.json({ success: true, repository: rows[0] });
+  } catch (err) {
+    console.error('[ADMIN] Update repo error:', err.message);
+    return res.status(500).json({ error: true, message: 'Failed to update repository.' });
+  }
+});
+
+
+// ─── DELETE /api/admin/repos/:id ────────────────────────────────────
+// Purge repository from database
+
+router.delete('/repos/:id', async (req, res) => {
+  try {
+    const repoId = req.params.id;
+    const { rows } = await db.query('DELETE FROM "Repository" WHERE id = $1 RETURNING id, full_name, name', [repoId]);
+
+    if (rows.length === 0) {
+      return res.status(404).json({ error: true, message: 'Repository not found.' });
+    }
+
+    invalidateRepositoriesCache();
+
+    const meta = getRequestMeta(req);
+    await logAuditEvent({
+      actorId: req.user.id,
+      action: AUDIT_ACTIONS.REPO_DELETED,
+      ...meta,
+      metadata: { repoId, repoName: rows[0].full_name },
+    });
+
+    return res.json({ success: true, message: `Repository ${rows[0].name} deleted successfully.` });
+  } catch (err) {
+    console.error('[ADMIN] Delete repo error:', err.message);
+    return res.status(500).json({ error: true, message: 'Failed to delete repository.' });
+  }
+});
+
+
+// ─── POST /api/admin/repos/bulk ─────────────────────────────────────
+// Bulk operations on repositories (hide, unhide, feature, unfeature, delete)
+
+router.post('/repos/bulk', async (req, res) => {
+  try {
+    const { ids, action } = req.body;
+    if (!Array.isArray(ids) || ids.length === 0) {
+      return res.status(400).json({ error: true, message: 'No repository IDs provided.' });
+    }
+
+    const validActions = ['hide', 'unhide', 'feature', 'unfeature', 'delete'];
+    if (!validActions.includes(action)) {
+      return res.status(400).json({ error: true, message: `Invalid bulk action: ${action}` });
+    }
+
+    if (action === 'delete') {
+      await db.query('DELETE FROM "Repository" WHERE id = ANY($1)', [ids]);
+    } else if (action === 'hide') {
+      await db.query('UPDATE "Repository" SET hidden = true, updated_at = NOW() WHERE id = ANY($1)', [ids]);
+    } else if (action === 'unhide') {
+      await db.query('UPDATE "Repository" SET hidden = false, updated_at = NOW() WHERE id = ANY($1)', [ids]);
+    } else if (action === 'feature') {
+      await db.query('UPDATE "Repository" SET featured = true, updated_at = NOW() WHERE id = ANY($1)', [ids]);
+    } else if (action === 'unfeature') {
+      await db.query('UPDATE "Repository" SET featured = false, updated_at = NOW() WHERE id = ANY($1)', [ids]);
+    }
+
+    invalidateRepositoriesCache();
+
+    const meta = getRequestMeta(req);
+    await logAuditEvent({
+      actorId: req.user.id,
+      action: AUDIT_ACTIONS.REPO_UPDATED,
+      ...meta,
+      metadata: { bulkAction: action, count: ids.length },
+    });
+
+    return res.json({ success: true, message: `Bulk ${action} completed on ${ids.length} repositories.` });
+  } catch (err) {
+    console.error('[ADMIN] Bulk action error:', err.message);
+    return res.status(500).json({ error: true, message: 'Failed to execute bulk action.' });
+  }
+});
+
+
+// ─── POST /api/admin/discovery/test ─────────────────────────────────
+// Live dry-run query preview against GitHub Search API
+
+router.post('/discovery/test', async (req, res) => {
+  try {
+    const { query_string } = req.body;
+    if (!query_string || typeof query_string !== 'string' || !query_string.trim()) {
+      return res.status(400).json({ error: true, message: 'Search query string is required.' });
+    }
+
+    const token = process.env.GITHUB_TOKEN || process.env.GITHUB_PERSONAL_ACCESS_TOKEN || '';
+    const searchUrl = `https://api.github.com/search/repositories?q=${encodeURIComponent(query_string.trim())}&sort=stars&order=desc&per_page=5`;
+
+    const data = await githubFetch(searchUrl, token);
+
+    return res.json({
+      success: true,
+      total_count: data.total_count || 0,
+      preview: (data.items || []).map(item => ({
+        full_name: item.full_name,
+        description: item.description,
+        stars: item.stargazers_count,
+        language: item.language,
+        license: item.license?.spdx_id || item.license?.name || 'No License',
+        updated_at: item.updated_at,
+      }))
+    });
+  } catch (err) {
+    console.error('[ADMIN] Discovery dry-run error:', err.message);
+    return res.status(500).json({ error: true, message: `Dry run failed: ${err.message}` });
+  }
+});
+
+
+// ─── POST /api/admin/users/:id/reset-link ───────────────────────────
+// Generate instant one-time password reset token & link for user
+
+router.post('/users/:id/reset-link', async (req, res) => {
+  try {
+    const targetUserId = req.params.id;
+    const { rows: users } = await db.query('SELECT id, email, name FROM "User" WHERE id = $1', [targetUserId]);
+
+    if (users.length === 0) {
+      return res.status(404).json({ error: true, message: 'User not found.' });
+    }
+
+    const targetUser = users[0];
+    const rawToken = crypto.randomBytes(32).toString('hex');
+    const tokenHash = crypto.createHash('sha256').update(rawToken).digest('hex');
+    const expiresAt = new Date(Date.now() + (TOKEN_EXPIRY?.PASSWORD_RESET || 3600000)).toISOString();
+    const now = new Date().toISOString();
+
+    await db.query(
+      `INSERT INTO "PasswordResetToken" (id, user_id, token_hash, expires_at, used, created_date)
+       VALUES ($1, $2, $3, $4, 0, $5)`,
+      [crypto.randomUUID(), targetUser.id, tokenHash, expiresAt, now]
+    );
+
+    const appUrl = process.env.APP_URL || `${req.protocol}://${req.get('host')}`.replace('3001', '5173');
+    const resetUrl = `${appUrl}/reset-password?token=${encodeURIComponent(rawToken)}`;
+
+    const meta = getRequestMeta(req);
+    await logAuditEvent({
+      actorId: req.user.id,
+      targetUserId: targetUser.id,
+      action: AUDIT_ACTIONS.PASSWORD_RESET_REQUESTED,
+      ...meta,
+      metadata: { generatedByAdmin: true },
+    });
+
+    return res.json({
+      success: true,
+      resetUrl,
+      expiresAt,
+      user: { id: targetUser.id, email: targetUser.email, name: targetUser.name },
+    });
+  } catch (err) {
+    console.error('[ADMIN] Generate reset link error:', err.message);
+    return res.status(500).json({ error: true, message: 'Failed to generate reset link.' });
+  }
+});
+
+
+// ─── POST /api/admin/cache/flush ────────────────────────────────────
+// Invalidate in-memory caches and prewarm repositories
+
+router.post('/cache/flush', async (req, res) => {
+  try {
+    invalidateRepositoriesCache();
+
+    const meta = getRequestMeta(req);
+    await logAuditEvent({
+      actorId: req.user.id,
+      action: AUDIT_ACTIONS.CACHE_FLUSHED,
+      ...meta,
+    });
+
+    return res.json({ success: true, message: 'All in-memory repository caches successfully flushed.' });
+  } catch (err) {
+    console.error('[ADMIN] Cache flush error:', err.message);
+    return res.status(500).json({ error: true, message: 'Failed to flush cache.' });
+  }
+});
+
+
 // ─── GET /api/admin/users ───────────────────────────────────────────
 
 router.get('/users', async (req, res) => {
   try {
-    const { search, role, status, page = 1, limit = 25 } = req.query;
+    const { search, role, status, page = 1, limit = 50 } = req.query;
     const offset = (Math.max(1, parseInt(page)) - 1) * parseInt(limit);
     const params = [];
     const conditions = [];
@@ -38,13 +434,11 @@ router.get('/users', async (req, res) => {
 
     const where = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
 
-    // Get count
     const { rows: countRows } = await db.query(
       `SELECT COUNT(*) as total FROM "User" ${where}`,
       params
     );
 
-    // Get users
     params.push(parseInt(limit), offset);
     const { rows: users } = await db.query(
       `SELECT id, name, email, role, account_status, email_verified, avatar_url, created_date, last_login_at
@@ -54,7 +448,6 @@ router.get('/users', async (req, res) => {
       params
     );
 
-    // Get provider counts for each user
     const userIds = users.map((u) => u.id);
     let providerMap = {};
     if (userIds.length > 0) {
@@ -217,7 +610,6 @@ router.post('/users/:id/suspend', async (req, res) => {
     const protectionError = await checkFinalAdminProtection(targetId);
     if (protectionError) return res.status(403).json(protectionError);
 
-    // Cannot suspend self
     if (targetId === req.user.id) {
       return res.status(403).json({ error: true, message: 'Cannot suspend your own account.' });
     }
@@ -227,7 +619,6 @@ router.post('/users/:id/suspend', async (req, res) => {
       [ACCOUNT_STATUS.SUSPENDED, new Date().toISOString(), targetId]
     );
 
-    // Invalidate all sessions for the suspended user
     await db.query(
       `DELETE FROM "session" WHERE sess::text LIKE $1`,
       [`%"userId":"${targetId}"%`]
@@ -292,7 +683,6 @@ router.post('/users/:id/disable', async (req, res) => {
       [ACCOUNT_STATUS.DISABLED, new Date().toISOString(), targetId]
     );
 
-    // Invalidate all sessions
     await db.query(
       `DELETE FROM "session" WHERE sess::text LIKE $1`,
       [`%"userId":"${targetId}"%`]
@@ -310,6 +700,53 @@ router.post('/users/:id/disable', async (req, res) => {
   } catch (err) {
     console.error('[ADMIN] Disable error:', err.message);
     return res.status(500).json({ error: true, message: 'Failed to disable user.' });
+  }
+});
+
+
+// ─── DELETE /api/admin/users/:id ───────────────────────────────────
+// Hard delete a user account and cascade delete related bookmarks, auth accounts, reset tokens, sessions
+
+router.delete('/users/:id', async (req, res) => {
+  try {
+    const targetId = req.params.id;
+
+    const protectionError = await checkFinalAdminProtection(targetId);
+    if (protectionError) return res.status(403).json(protectionError);
+
+    if (targetId === req.user.id) {
+      return res.status(403).json({ error: true, message: 'Cannot delete your own account.' });
+    }
+
+    const { rows: targetUser } = await db.query('SELECT id, name, email FROM "User" WHERE id = $1', [targetId]);
+    if (targetUser.length === 0) {
+      return res.status(404).json({ error: true, message: 'User not found.' });
+    }
+
+    // Cascade delete related records
+    await Promise.all([
+      db.query('DELETE FROM "Bookmark" WHERE user_id = $1', [targetId]).catch(() => {}),
+      db.query('DELETE FROM "AuthAccount" WHERE user_id = $1', [targetId]).catch(() => {}),
+      db.query('DELETE FROM "PasswordResetToken" WHERE user_id = $1', [targetId]).catch(() => {}),
+      db.query('DELETE FROM "session" WHERE sess::text LIKE $1', [`%"userId":"${targetId}"%`]).catch(() => {}),
+    ]);
+
+    // Delete user
+    await db.query('DELETE FROM "User" WHERE id = $1', [targetId]);
+
+    const meta = getRequestMeta(req);
+    await logAuditEvent({
+      actorId: req.user.id,
+      targetUserId: targetId,
+      action: AUDIT_ACTIONS.USER_DELETED || 'USER_DELETED',
+      ...meta,
+      metadata: { deletedEmail: targetUser[0].email, deletedName: targetUser[0].name },
+    });
+
+    return res.json({ success: true, message: `User ${targetUser[0].name} (${targetUser[0].email}) permanently deleted.` });
+  } catch (err) {
+    console.error('[ADMIN] Delete user error:', err.message);
+    return res.status(500).json({ error: true, message: 'Failed to delete user.' });
   }
 });
 
@@ -389,6 +826,5 @@ async function checkFinalAdminProtection(targetUserId) {
 
   return null;
 }
-
 
 export default router;

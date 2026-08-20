@@ -265,15 +265,24 @@ router.get('/me', async (req, res) => {
 
 // ─── OAuth: Google ──────────────────────────────────────────────────
 
-router.get('/google', (req, res) => {
-  if (!process.env.GOOGLE_CLIENT_ID) {
-    return res.status(501).json({ error: true, message: 'Google OAuth is not configured.' });
+const handleGoogleAuth = (req, res) => {
+  const appUrl = (process.env.APP_URL || `${req.protocol}://${req.get('host')}`).replace('3001', '5173').replace(/\/$/, '');
+  const returnTo = req.query.redirect || (req.headers.referer?.includes('/profile') ? '/profile' : '/discover');
+
+  if (!process.env.GOOGLE_CLIENT_ID || process.env.GOOGLE_CLIENT_ID === '[SENSITIVE]') {
+    if (req.accepts('html')) {
+      return res.redirect(`${appUrl}${returnTo}?notice=oauth_not_configured&provider=Google`);
+    }
+    return res.status(501).json({ error: true, configured: false, message: 'Google OAuth is not configured in environment variables (GOOGLE_CLIENT_ID missing).' });
   }
-  const redirect = req.query.redirect || '/discover';
-  const state = generateOAuthState(redirect);
+
+  const state = generateOAuthState(returnTo);
   const url = getGoogleAuthUrl(state);
   return res.redirect(url);
-});
+};
+
+router.get('/google', handleGoogleAuth);
+router.get('/oauth/google', handleGoogleAuth);
 
 router.get('/google/callback', async (req, res) => {
   const appUrl = (process.env.APP_URL || 'http://localhost:5173').replace(/\/$/, '');
@@ -324,15 +333,24 @@ router.get('/google/callback', async (req, res) => {
 
 // ─── OAuth: GitHub ──────────────────────────────────────────────────
 
-router.get('/github', (req, res) => {
-  if (!process.env.GITHUB_CLIENT_ID) {
-    return res.status(501).json({ error: true, message: 'GitHub OAuth is not configured.' });
+const handleGithubAuth = (req, res) => {
+  const appUrl = (process.env.APP_URL || `${req.protocol}://${req.get('host')}`).replace('3001', '5173').replace(/\/$/, '');
+  const returnTo = req.query.redirect || (req.headers.referer?.includes('/profile') ? '/profile' : '/discover');
+
+  if (!process.env.GITHUB_CLIENT_ID || process.env.GITHUB_CLIENT_ID === '[SENSITIVE]') {
+    if (req.accepts('html')) {
+      return res.redirect(`${appUrl}${returnTo}?notice=oauth_not_configured&provider=GitHub`);
+    }
+    return res.status(501).json({ error: true, configured: false, message: 'GitHub OAuth is not configured in environment variables (GITHUB_CLIENT_ID missing).' });
   }
-  const redirect = req.query.redirect || '/discover';
-  const state = generateOAuthState(redirect);
+
+  const state = generateOAuthState(returnTo);
   const url = getGithubAuthUrl(state);
   return res.redirect(url);
-});
+};
+
+router.get('/github', handleGithubAuth);
+router.get('/oauth/github', handleGithubAuth);
 
 router.get('/github/callback', async (req, res) => {
   const appUrl = (process.env.APP_URL || 'http://localhost:5173').replace(/\/$/, '');

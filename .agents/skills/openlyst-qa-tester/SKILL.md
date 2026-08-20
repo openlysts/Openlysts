@@ -1013,6 +1013,7 @@ Test each URL:
 ## PHASE 16: Authentication & Authorization Flow
 
 ### TC-088: Email/Password Sign Up — Validation & Errors
+
 - Navigate to `http://localhost:5173/register`
 - Click "Create Account" with empty fields
 - **Verify**: Field-level validation errors appear for Name, Email, and Password
@@ -1021,6 +1022,7 @@ Test each URL:
 - **Screenshot**: `tc088_register_errors.png`
 
 ### TC-089: Email/Password Sign Up — Successful Creation & Auto-Login
+
 - Navigate to `/register`
 - Fill Name: `QA Test User`, Email: `qatest_${Date.now()}@example.com`, Password: `Password123!`
 - Submit registration form
@@ -1030,6 +1032,7 @@ Test each URL:
 - **Screenshot**: `tc089_register_success.png`
 
 ### TC-090: Email/Password Sign Up — Duplicate Email Handling
+
 - Navigate to `/register`
 - Fill form using an already-registered email address
 - Submit registration form
@@ -1037,6 +1040,7 @@ Test each URL:
 - **Verify**: Form inputs remain populated so user can correct email without retyping everything
 
 ### TC-091: Log In — Valid Credentials Flow
+
 - Navigate to `http://localhost:5173/login`
 - Enter valid credentials (Email and Password)
 - Click "Log In"
@@ -1046,6 +1050,7 @@ Test each URL:
 - **Screenshot**: `tc091_login_success.png`
 
 ### TC-092: Log In — Invalid Credentials & Error Banner
+
 - Navigate to `/login`
 - Enter valid email format with wrong password
 - Click "Log In"
@@ -1055,6 +1060,7 @@ Test each URL:
 - **Screenshot**: `tc092_login_error.png`
 
 ### TC-093: Password Visibility Toggle & Input Attributes
+
 - On `/login` and `/register`, type password into password field
 - **Verify**: Input type is `type="password"` by default
 - Click the eye / show-password icon
@@ -1063,6 +1069,7 @@ Test each URL:
 - **Verify**: Input type switches back to `type="password"`
 
 ### TC-094: GitHub OAuth Redirection & Callback Simulation
+
 - Navigate to `/login`
 - Click "Continue with GitHub" button
 - **Verify**: Initiates OAuth redirect to `/api/auth/github` or GitHub authorization URL
@@ -1070,12 +1077,14 @@ Test each URL:
 - **Screenshot**: `tc094_oauth_redirect.png`
 
 ### TC-095: Session Persistence Across Page Reloads & Tab Duplication
+
 - Log in as authenticated user
 - Refresh page (`F5` / `Ctrl+R`) -> **Verify**: User remains logged in (no flash of logged-out state)
 - Open a second browser tab / duplicate page -> **Verify**: Authenticated session is active in new tab
 - Verify user profile data loaded correctly from persistent store
 
 ### TC-096: User Logout Flow & Session Revocation
+
 - While logged in, click user avatar / menu and click "Log Out"
 - **Verify**: Session tokens / auth data cleared from storage
 - **Verify**: Redirection to public view (Home / Discover)
@@ -1083,6 +1092,7 @@ Test each URL:
 - Press browser Back button -> **Verify**: Protected views cannot be re-entered without authenticating
 
 ### TC-097: Protected Route Enforcement
+
 - While unauthenticated (logged out / guest state):
 - Navigate directly to `http://localhost:5173/profile`
 - Navigate directly to `http://localhost:5173/admin`
@@ -1090,18 +1100,21 @@ Test each URL:
 - **Verify**: Automatically redirected to `/login` with `return_to` or appropriate 403 screen
 
 ### TC-098: Unauthenticated Redirect with Return URL Handling
+
 - While unauthenticated, navigate directly to `http://localhost:5173/profile?tab=security`
 - **Verify**: Redirected to `/login?redirect=%2Fprofile%3Ftab%3Dsecurity`
 - Log in successfully
 - **Verify**: Automatically redirected back to original destination (`/profile?tab=security`)
 
 ### TC-099: Profile Management — Update Name, Avatar & Password
+
 - Navigate to `/profile` as logged-in user
 - Update user display name or bio -> Click "Save Changes"
 - **Verify**: Instant optimistic UI update and persistence upon refresh
 - Test password update form: verify old password check, new password mismatch validation
 
 ### TC-100: Session Expiry (401/403) Token Invalidation & Auto-Redirect
+
 - Simulate expired/invalid JWT via `browser_evaluate`: corrupt token in storage
 - Trigger any authenticated backend request
 - **Verify**: Client catches 401 Unauthorized gracefully
@@ -1112,6 +1125,7 @@ Test each URL:
 ## PHASE 17: Admin Dashboard & Back-Office Control
 
 ### TC-101: Admin Route Guard (Non-Admin / Guest Access Denied)
+
 - Log in as standard (non-admin) user
 - Attempt navigation to `http://localhost:5173/admin`
 - **Verify**: Access denied (403 Forbidden page or redirected to `/discover` with notification)
@@ -1119,6 +1133,7 @@ Test each URL:
 - **Screenshot**: `tc101_admin_guard.png`
 
 ### TC-102: Admin Dashboard Load & Analytics Overview
+
 - Log in as authorized Admin
 - Navigate to `http://localhost:5173/admin`
 - **Verify**: Admin header & navigation menu visible
@@ -1127,6 +1142,7 @@ Test each URL:
 - **Screenshot**: `tc102_admin_dashboard.png`
 
 ### TC-103: Ingestion Pipeline Control — Trigger `runIngestion` & Status Tracking
+
 - On Admin Dashboard, locate Ingestion Control section
 - Click "Run Ingestion" / "Start Discovery Pipeline"
 - **Verify**: Confirmation or immediate progress indicator shown
@@ -1135,24 +1151,28 @@ Test each URL:
 - **Screenshot**: `tc103_admin_ingestion.png`
 
 ### TC-104: Score Recalculation Engine — Trigger `recalculateScores`
+
 - On Admin Dashboard, click "Recalculate Scores"
 - **Verify**: Action dispatches `/api/scores/recalculate` without blocking UI thread
 - **Verify**: Trending scores and quality rankings update in the database
 - **Verify**: Success notification displayed upon completion
 
 ### TC-105: AI Auto-Classification Engine — Trigger `reclassifyRepos`
+
 - On Admin Dashboard, locate AI Classification section
 - Click "Reclassify Repositories"
 - **Verify**: Triggers categorization pipeline (LLM/Gemini tags assignment)
 - **Verify**: Category and tag distribution charts update accordingly
 
 ### TC-106: Repository Management — Search & Filter in Admin Panel
+
 - Navigate to Admin Repository Management tab
 - Use Admin search filter to find repos by keyword, language, or license
 - **Verify**: Search executes instantly against the database
 - **Verify**: Pagination controls (Next, Previous, Page size) work as expected
 
 ### TC-107: Manual Repository Addition & Validation
+
 - Click "Add Repository" button in Admin panel
 - Enter GitHub URL or `owner/repo` (e.g. `octocat/Hello-World`)
 - Test invalid repository format -> **Verify**: Validation error
@@ -1160,18 +1180,21 @@ Test each URL:
 - **Screenshot**: `tc107_admin_add_repo.png`
 
 ### TC-108: Repository Edit — Modify Tags, Categories, Featured Flag
+
 - Select a repository in Admin table and click "Edit"
 - Toggle "Featured" badge, modify category tags, and edit custom notes
 - Click "Save Changes"
 - **Verify**: Changes persist and immediately reflect on public `/discover` and `/repo/:owner/:name` views
 
 ### TC-109: Repository Deletion with Confirmation Modal
+
 - In Admin table, click "Delete" on a test repository
 - **Verify**: Destructive action confirmation dialog opens requiring explicit confirmation
 - Click "Cancel" -> **Verify**: Repo remains untouched
 - Confirm deletion -> **Verify**: Repo deleted, row removed from table, 0 cascade error
 
 ### TC-110: GitHub Token & API Rate Limit Management in Admin
+
 - Navigate to Admin Settings / System Config
 - Inspect GitHub API rate limit monitor (Core, Search, GraphQL remaining calls)
 - Update GitHub Personal Access Token (PAT)
@@ -1179,23 +1202,27 @@ Test each URL:
 - **Screenshot**: `tc110_admin_token_config.png`
 
 ### TC-111: User Management — Role Elevation & Demotion
+
 - Navigate to Admin User Management table
 - View user list, registered dates, authentication provider (Email / GitHub), and roles (`user`, `admin`)
 - Change a user's role -> **Verify**: Role update persists in Neon DB
 - Verify Admin cannot accidentally demote their own active session
 
 ### TC-112: Ingestion Run History & Audit Log Viewer
+
 - Navigate to Ingestion History tab
 - Inspect past ingestion runs table (`"IngestionRun"` table)
 - **Verify**: Displays Run ID, Start Time, Duration, Status (`SUCCESS`/`FAILED`), Repos Processed, and Error Logs
 - Click a run row -> **Verify**: Detailed JSON/text logs accordion expands cleanly
 
 ### TC-113: Database Connection Health Check Widget in Admin
+
 - Inspect Database Status card in Admin Dashboard
 - **Verify**: Displays Neon PostgreSQL latency (ms), active connections, and table row counts
 - Simulate DB network glitch -> **Verify**: Clear visual warning ("Database degraded / reconnecting")
 
 ### TC-114: Admin Action Concurrency & Idempotency
+
 - Rapidly double-click "Run Ingestion" or "Recalculate Scores"
 - **Verify**: Prevent duplicate concurrent pipeline runs (idempotency lock / disabled button during execution)
 
@@ -1204,6 +1231,7 @@ Test each URL:
 ## PHASE 18: Video Explanations & Multimodal Integration
 
 ### TC-115: Repo Detail Video Explanations Section
+
 - Navigate to a repository with video explanations (e.g. `/repo/harry0703/MoneyPrinterTurbo`)
 - Locate "Watch video explanations" / Video section
 - Click to expand video drawer / section
@@ -1211,29 +1239,34 @@ Test each URL:
 - **Screenshot**: `tc115_video_section.png`
 
 ### TC-116: YouTube Embed Security & Sandbox Verification
+
 - Inspect video `<iframe>` element in DOM
 - **Verify**: `sandbox` attributes properly configured (`allow-scripts allow-same-origin allow-presentation`)
 - **Verify**: No mixed content HTTP warnings on HTTPS connections
 - **Verify**: Embedded player does not execute unwanted popups
 
 ### TC-117: Fallback State when No Video Found
+
 - Navigate to a repository without video explanations
 - **Verify**: Graceful empty state ("No video explanations available yet") with option to suggest or submit one
 - **Verify**: Layout does not collapse or leave broken iframe placeholders
 
 ### TC-118: Settings "Auto-expand video explanations" Toggle
+
 - Navigate to `/settings`
 - Toggle "Auto-expand video explanations" setting to ON
 - Navigate to a repo with video explanations -> **Verify**: Video section is auto-expanded on load
 - Toggle setting to OFF -> **Verify**: Video section defaults to collapsed accordion
 
 ### TC-119: Multi-language Text Translation Widget (`translateText`)
+
 - On repository detail page, locate language translation selector / button
 - Select target language (e.g. Spanish, German, Japanese, Chinese)
 - **Verify**: Repository description and overview translates accurately via API
 - **Verify**: Option to "Show Original" reverts text instantly
 
 ### TC-120: Media Loading Performance & Lazy-loading
+
 - Inspect media network waterfall during repository browsing
 - **Verify**: Heavy video embeds and avatars use `loading="lazy"`
 - **Verify**: Video player resources only initialize upon user interaction or visibility
@@ -1243,32 +1276,38 @@ Test each URL:
 ## PHASE 19: Neon Database & Backend Pipeline Robustness
 
 ### TC-121: Live Neon Postgres Connection & Schema Verification
+
 - Verify backend connection against live Neon database (`DATABASE_URL`)
 - Verify all primary tables exist: `"Repository"`, `"User"`, `"IngestionRun"`, `"DiscoveryQuery"`
 - Verify index utilization on `full_name`, `stars`, `trending_score`, `created_at`
 
 ### TC-122: Case-Sensitive Table Quote Integrity
+
 - Inspect backend SQL queries in `server/functions/*.js` and raw Postgres handlers
 - **Verify**: All table names are consistently quoted (`"Repository"`, `"User"`) or consistently lowercase
 - **Verify**: No `42P01: relation does not exist` errors caused by unquoted identifier folding
 
 ### TC-123: Vercel Serverless Timeout Boundary Check
+
 - Inspect long-running tasks (`runIngestion`, `recalculateScores`)
 - **Verify**: Operations are batched with `Promise.all` chunks (e.g. 5-10 repos per batch)
 - **Verify**: Individual function execution stays under Vercel serverless timeout limits (10s-60s)
 - **Verify**: Ingestion supports incremental resume if interrupted
 
 ### TC-124: Dynamic Search & Discovery Verification (Zero Hardcoding)
+
 - Audit Discovery feeds, alternatives listings, and search index
 - **Verify**: Zero hardcoded repository lists or static mock arrays in client bundle
 - **Verify**: All query parameters and category mappings load dynamically from Neon DB
 
 ### TC-125: SQL Injection Prevention in Admin / Backend Queries
+
 - Execute backend queries with SQL meta-characters (`'`, `"`, `;`, `--`, `/* */`)
 - **Verify**: Parameterized queries / ORM bindings prevent raw string concatenation
 - **Verify**: 0 unhandled database syntax exceptions
 
 ### TC-126: Concurrent Read/Write Race Condition Handling
+
 - Execute simultaneous search queries while updating bookmarks or running score recalculation
 - **Verify**: Database connection pool handles concurrent transactions without deadlocks
 
@@ -1277,17 +1316,20 @@ Test each URL:
 ## PHASE 20: PWA, Multi-Tab Sync & Offline Capabilities
 
 ### TC-127: Web App Manifest & Service Worker Validation
+
 - Run `browser_evaluate` to inspect `<link rel="manifest">`
 - **Verify**: `manifest.json` returns valid JSON with `name`, `short_name`, `icons`, `theme_color`
 - **Verify**: Service worker registers without console errors
 
 ### TC-128: Offline Mode Banner & Cached Data Availability
+
 - Simulate network disconnect (`navigator.onLine = false` / offline event)
 - **Verify**: Non-intrusive offline banner appears informing user
 - **Verify**: Bookmarks and recently viewed repositories remain fully readable from local cache
 - Reconnect network -> **Verify**: Offline banner dismisses automatically
 
 ### TC-129: Recently Viewed Repos History (`openlyst_history`)
+
 - Visit 4 different repository detail pages in sequence
 - Navigate to Search / Discover or History section
 - **Verify**: `openlyst_history` in `localStorage` contains visited repos in reverse chronological order
@@ -1295,34 +1337,40 @@ Test each URL:
 - Test "Clear History" button -> **Verify**: History resets cleanly
 
 ### TC-130: Multi-Tab State Synchronization
+
 - Open Openlysts in Tab A and Tab B
 - Add a bookmark in Tab A -> **Verify**: Tab B header bookmark counter updates automatically via `storage` event
 - Toggle Dark/Light theme in Tab A -> **Verify**: Tab B reflects new theme instantly
 - Log in on Tab A -> **Verify**: Tab B updates auth state
 
 ### TC-131: Security Headers & CORS Policy Inspection
+
 - Inspect HTTP response headers on API routes (`/api/*`)
 - **Verify**: `X-Content-Type-Options: nosniff` present
 - **Verify**: `X-Frame-Options: SAMEORIGIN` or CSP frame-ancestors present
 - **Verify**: CORS headers restricted to authorized origins
 
 ### TC-132: Heavy Data Stress Testing (1,000+ Items & Bookmarks)
+
 - Populate `localStorage` with 1,000 repository IDs
 - Navigate to `/bookmarks`
 - **Verify**: Page renders smoothly using pagination or virtual list (no DOM freeze)
 - **Verify**: Memory footprint remains stable (< 100MB JS Heap)
 
 ### TC-133: Deep Link Complex Query Matrix
+
 - Test URL: `http://localhost:5173/search?q=machine+learning&languages=Python,C%2B%2B&license=MIT&sort=stars&page=1`
 - **Verify**: All query filters populate in search bar, language chips, license dropdown, and sort selector
 - **Verify**: Results accurately match the compound filter matrix
 
 ### TC-134: Mobile Touch Gestures & Viewport Interactions
+
 - On mobile viewport (375x667), test swipe gestures on carousel / card sliders
 - Test pinch-to-zoom prevention on input focus (meta viewport `maximum-scale=5` or proper font-size >= 16px to prevent iOS auto-zoom)
 - **Verify**: Smooth scrolling with momentum (`-webkit-overflow-scrolling: touch`)
 
 ### TC-135: Final System State Cleanup & Artifact Verification
+
 - Verify all temporary test entities / artifacts cleaned up
 - Verify console logs free of memory leak warnings or detached DOM references
 - Confirm all 20 QA phases verified and documented in `qa_exhaustive_report.md`
@@ -1332,29 +1380,34 @@ Test each URL:
 ## Phase 21: UI Polish, Performance Acceleration & Navbar Harmony
 
 ### TC-136: Navbar Search Bar Layout & Wrapping Integrity
+
 - Inspect search trigger button on desktop and tablet viewports (1024px, 1280px, 1920px)
 - **Verify**: Search placeholder text ("Search openlysts...") remains on a single line with `whitespace-nowrap`
 - **Verify**: Shortcut badge (`⌘K`) is properly aligned on the right without text clipping or squishing
 - **Verify**: Clicking search trigger opens Command Palette instantly
 
 ### TC-137: Brand Logo Seamless Theme Blending
+
 - Inspect brand logo in Navbar across both Dark and Light themes
 - **Verify**: No harsh solid white opaque bounding box around logo in dark mode
 - **Verify**: Logo blends seamlessly into the navbar background with subtle glass-morphic framing
 - **Verify**: Hover effect / subtle scale animation works smoothly
 
 ### TC-138: Discover Page Sort & Filter Routing
+
 - On `/discover` (Home), change the Sort dropdown to "Most Stars"
 - **Verify**: Action immediately routes to `/search?sort=stars` or updates results
 - Test "Recently Updated" and "Recently Added"
 - **Verify**: Sort parameter is preserved in URL and queries reflect the chosen ordering
 
 ### TC-139: Backend In-Memory Query Cache & Response Acceleration
+
 - Benchmark `/api/functions/queryRepositories` response time
 - **Verify**: Cached repository dataset delivers response times < 25ms (sub-50ms)
 - **Verify**: Pagination, filters, and full-text searches remain responsive and non-blocking
 
 ### TC-140: Discover Page Exploration Density & Rich Grid
+
 - Inspect `/discover` repository sections
 - **Verify**: Extended discovery grid renders 12+ trending and high-quality repositories
 - **Verify**: Category and tag chips render cleanly with zero layout shift
@@ -1364,16 +1417,19 @@ Test each URL:
 ## Phase 22: High-Taste 3D Auth Experience & Alternatives Typography
 
 ### TC-141: Alternatives Page Header & Stats Typography Harmony
+
 - Inspect `/alternatives` hero section and stats overview (Tools, Categories, Avg Score)
 - **Verify**: Stats pills and header text are harmoniously aligned without overlapping or awkward line wrapping
 - **Verify**: Category accordion headers render crisp counts, icons, and clean dividers
 
 ### TC-142: Alternatives Category Accordion & Card Grid Rhythm
+
 - Expand multiple categories (e.g. "Internal tools", "CMS", "Auth & SSO")
 - **Verify**: "Replaces {Tool}" subheaders render with clean dividers and typography
 - **Verify**: Cards render with feature parity score, difficulty badges, and GitHub stars
 
 ### TC-143: Creative 3D Playful Login Interface
+
 - Navigate to `/login`
 - **Verify**: 3D card tilt / glassmorphism visual presentation
 - **Verify**: Background particle or ambient glow accents
@@ -1381,6 +1437,7 @@ Test each URL:
 - **Verify**: Password toggle (`Eye`/`EyeOff`) operates smoothly
 
 ### TC-144: Creative 3D Playful Register Interface
+
 - Navigate to `/register`
 - **Verify**: Visual consistency with Login 3D aesthetic
 - **Verify**: Live password strength checklist with animated status badges
@@ -1391,51 +1448,61 @@ Test each URL:
 ## Phase 23: High-Performance Sub-20ms Loading, Alternatives Metadata Enrichment & Zero-Duplicate Sync
 
 ### TC-146: Sub-20ms queryAlternatives Response Time
+
 - Benchmark `/api/functions/queryAlternatives` response time
 - **Verify**: Response time is < 25ms (instantaneous server execution via optimized SQL join & in-memory cache)
 - **Verify**: Payload contains full alternative stats (`total_tools`, `total_categories`, `top_rated`) and grouped data
 
 ### TC-147: Sub-20ms queryRepositories Feed Acceleration
+
 - Benchmark `/api/functions/queryRepositories` with `sort: 'trending'`, `recent`, and `stars`
 - **Verify**: Cached repository feeds respond in < 25ms with 0 database bottleneck
 - **Verify**: Response contains total, page, perPage, and verified repository arrays
 
 ### TC-148: Complete Alternative Repository Linkage (100% Non-Null Metadata)
+
 - Query all alternatives via `/api/functions/queryAlternatives`
 - **Verify**: 100% of alternatives with valid GitHub repositories resolve with linked `repo` metadata (stars > 0, verified license, real description)
 - **Verify**: Zero alternative cards render with broken/empty "Unknown" repository states
 
 ### TC-149: Expanded Modern Alternatives Catalog
+
 - Inspect modern categories in Alternatives (AI Chatbots, AI Code Assistants, Analytics, Note-taking, Databases, Storage)
 - **Verify**: Top modern open-source alternatives are present (e.g. OpenWebUI, Aider, AppFlowy, PostHog, Cal.com, Dub.co, Coolify, Documenso, MinIO, Supabase)
 - **Verify**: Category counts and paid-tool replacement subheaders match live tool counts
 
 ### TC-150: Client-Side Zero-Latency Tab Switching
+
 - Navigate rapidly between `/discover`, `/alternatives`, and `/search` in browser
 - **Verify**: Pages render instantly from TanStack Query memory cache (`staleTime: 5m`) without showing loading spinners or layout flash
 - **Verify**: Background refetches do not disrupt scroll position or user input
 
 ### TC-151: Database Deduplication & Integrity on Repository Table
+
 - Query `"Repository"` table for duplicate `full_name` or `github_id`
 - **Verify**: Zero duplicate records exist in the database
 - **Verify**: Ingestion logic performs case-insensitive upserts without creating orphaned or redundant entries
 
 ### TC-152: Rate-Limit Aware Ingestion Engine
+
 - Trigger `/api/functions/runIngestion`
 - **Verify**: Ingestion respects GitHub rate limits with exponential backoff and never throws unhandled rate-limit rejections
 - **Verify**: Returns clean JSON summary with `repos_added`, `repos_updated`, and `status: 'completed'`
 
 ### TC-153: Discover Live Metrics Instant Synchronization
+
 - Inspect Discover page 3D live metrics badge
 - **Verify**: Total live repository count reflects live database count (3,000+) with zero latency
 - **Verify**: Category distribution pills (AI, DevTools, Databases, Agents, Libraries, DevOps, Security) link directly to filtered searches
 
 ### TC-154: Real-time Search Auto-Debouncing and Instant Sub-50ms Filter Queries
+
 - Perform search queries with multi-faceted filters (e.g., `categories: ['ai']`, `languages: ['Python']`, `minStars: 1000`)
 - **Verify**: Filtered queries return accurate subsets in < 50ms
 - **Verify**: Clear all filters resets back to global feed instantly
 
 ### TC-155: Memory & Resource Leak Audit on High-Frequency Requests
+
 - Send 50 consecutive requests to `/api/functions/queryAlternatives` and `/api/functions/queryRepositories`
 - **Verify**: Memory footprint remains stable, zero connection leak on PostgreSQL pool
 - **Verify**: Server CPU and RAM stay optimal with 0 dropped connections
@@ -1494,6 +1561,7 @@ Exit the script.
 > resolve the slug, resulting in zero results despite the UI showing non-zero counts.
 
 ### TC-156: Category Chip → Search Route End-to-End (ALL Chips)
+
 - On the Home page (`/`), identify ALL category chips inside DiscoverLiveMetrics
 - For EACH chip, perform the following:
   1. Note the displayed count (e.g. "AI & LLMs: 142")
@@ -1507,45 +1575,54 @@ Exit the script.
 - **Screenshot**: Any chip that produces zero results
 
 ### TC-157: Backend `slugToLabel()` Mapping Coverage
+
 - Run `browser_evaluate` or inspect backend code:
+
   ```
   For each slug used in frontend navigation:
   ['ai', 'developer-tools', 'databases', 'ai-agents', 'libraries-frameworks', 'cloud-devops', 'security-auth']
   ```
+
 - **Verify**: Every slug used in frontend `navigate()` calls has a corresponding entry in `server/shared/openlyst.js` CATEGORIES array
 - **Verify**: `slugToLabel(slug)` returns a valid label (NOT the raw slug unchanged)
 - **Bug**: Any slug that falls through to the raw-slug fallback is a P0 data integrity failure
 
 ### TC-158: Backend `CATEGORY_RULES` Classification Coverage
+
 - For each label in the canonical CATEGORIES list, verify at least one `CATEGORY_RULES` entry exists that can classify repos into that category
 - **Verify**: Every label returned by `slugToLabel()` matches at least one `CATEGORY_RULES[].category` string
 - **Bug**: A category label with no classification rules means repos can never be assigned to it
 
 ### TC-159: Category Count Accuracy (Frontend vs Backend)
+
 - On Home page, capture the counts displayed on each category chip
 - Query the backend API: `POST /api/functions/queryRepositories` with `categories: ['<slug>']` for each slug
 - **Verify**: The returned `total` approximately matches the chip count (within ±10 due to live counter increment)
 - **Bug**: A chip showing 50+ but API returning 0 is a P0 data mismatch
 
 ### TC-160: Category Chip Navigation Does Not Show "Start typing to search"
+
 - Click any category chip on Home page
 - **Verify**: The Search page shows actual repository cards, NOT the empty prompt "Start typing to search"
 - **Verify**: The FilterBar shows the category as actively selected (green badge)
 - This specifically tests that category-only navigation (no search text) still triggers data loading
 
 ### TC-161: Discover Live Metrics — Dynamic Counts from Backend (Zero Hardcoding)
+
 - Inspect `DiscoverLiveMetrics.jsx` source code
 - **Verify**: Category chip initial counts come from `categoryCounts` prop (backend data), NOT from hardcoded `initialCount` constants
 - **Verify**: The `totalRepos` prop is sourced from `trending?.total` (backend response), NOT a hardcoded default like `3000`
 - **Bug**: Any hardcoded numeric constant used as the primary data source (not as a fallback) violates Zero Hardcoding policy
 
 ### TC-162: Home Page Quick Category Buttons (Sticky Navbar Floating Pills)
+
 - Scroll down on the Home page until the floating sticky category bar appears
 - Click each button in the floating bar (AI & LLMs, Developer Tools, Databases & RAG, AI Agents, Libraries, Cloud & DevOps)
 - **Verify**: Each navigates to `/search?categories=<slug>` with actual results
 - **Verify**: The slug used matches a valid backend category
 
 ### TC-163: Alternatives Page — Stats Pills Dynamic Data Verification
+
 - Navigate to `/alternatives`
 - Inspect the "Tools", "Categories", and "Avg Score" stat pills in the header
 - **Verify**: Values are populated from the API response (`data.stats`), not hardcoded
@@ -1553,28 +1630,33 @@ Exit the script.
 - Wait 15 seconds and **Verify**: At least one stat value has increased
 
 ### TC-164: Search Page — Category Filter with Zero Results Handling
+
 - Navigate to `/search?categories=nonexistent-category-slug`
 - **Verify**: App does NOT crash
 - **Verify**: Shows empty results message gracefully
 - **Verify**: 0 console errors
 
 ### TC-165: Category Chip Count vs categoryCounts API Response Consistency
+
 - On Home page, run `browser_evaluate` to capture the `categoryCounts` object from the API response
 - Compare each category chip's count with the corresponding `categoryCounts[label]` value
 - **Verify**: Exact match (before live counter starts incrementing)
 - **Bug**: Any mismatch indicates the label key mapping is wrong
 
 ### TC-166: Slug-to-Label Round-Trip Integrity
+
 - For every slug in the system, verify: `labelToSlug(slugToLabel(slug)) === slug`
 - For every label in the system, verify: `slugToLabel(labelToSlug(label)) === label`
 - **Bug**: Any round-trip failure indicates a broken bidirectional mapping
 
 ### TC-167: CATEGORY_RULES Keywords Actually Match Real Repos
+
 - For each `CATEGORY_RULES` entry, verify that at least 1 repo in the database matches the keywords/topics
 - This can be verified by querying each category slug and checking `total > 0`
 - **Bug**: A category rule that matches zero repos is dead code and misleading to users
 
 ### TC-168: Home Page → Category Chip → Back Navigation State Preservation
+
 - On Home page, note scroll position and visible content
 - Click a category chip (e.g. "AI & LLMs")
 - Wait for Search page to load with results
@@ -1584,6 +1666,7 @@ Exit the script.
 - **Verify**: No flash of loading state or blank content
 
 ### TC-169: Category Chips — Mobile Responsiveness (375px)
+
 - Resize viewport to 375x667
 - Navigate to Home page
 - **Verify**: Category chip grid collapses to 2 columns (not overflowing)
@@ -1593,6 +1676,7 @@ Exit the script.
 - **Verify**: Navigation works correctly on mobile viewport
 
 ### TC-170: Dynamic Metric Increment Does Not Inflate Beyond Reason
+
 - On Home page, note the initial totalRepos value
 - Wait 60 seconds
 - Note the new totalRepos value
@@ -1600,3 +1684,643 @@ Exit the script.
 - **Bug**: If counter grows by 500+ in 60 seconds from a base of 4000, the increment rate is unrealistically fast
 
 ---
+
+## PHASE 14: Mobile, Tablet & Multi-Device Exhaustive Test Suite (10/10 Standard)
+
+### TC-171: Ultra-Compact Mobile Viewport (320px–360px) Zero Overflow Check
+
+- Set viewport size to 320x568 (iPhone 5/SE1) and 360x740 (Android Galaxy A)
+- Navigate through `/discover`, `/alternatives`, `/search`, `/compare`, `/repo/:owner/:name`
+- Run `browser_evaluate`: `document.documentElement.scrollWidth <= document.documentElement.clientWidth`
+- **Verify**: Result is strictly `true` on every single page (zero horizontal scrollbar or clipped elements).
+
+### TC-172: Standard Mobile Viewport (375px–390px) Complete Layout Audit
+
+- Set viewport size to 375x667 (iPhone SE/6/7/8) and 390x844 (iPhone 12/13/14)
+- **Verify**: Header displays logo icon (without text crowding), search trigger, theme toggle, and hamburger menu.
+- **Verify**: BottomNav displays fixed at base with 5 thumb navigation items (Discover, Alternatives, Search, Trending, Saved).
+- **Verify**: Content main element has `pb-16` to prevent bottom nav occlusion.
+
+### TC-173: Phablet / Large Mobile Viewport (412px–430px) Screen Space Utilization
+
+- Set viewport size to 412x915 (Google Pixel 7) and 430x932 (iPhone 14/15 Pro Max)
+- **Verify**: DiscoverLiveMetrics category chips render balanced in 2-column or 4-column layout without awkward orphan chips.
+- **Verify**: Repository cards occupy 100% width with appropriate padding (16px margins).
+
+### TC-174: Foldable Outer & Inner Display Transition (280px to 768px)
+
+- Resize viewport dynamically from 280px (Galaxy Z Fold outer cover screen) to 768px (unfolded interior tablet screen)
+- **Verify**: No crash, no UI clipping, and responsive breakpoints adapt cleanly without requiring page reload.
+
+### TC-175: Tablet Portrait Viewport (768px $\times$ 1024px) Header & Grid Integrity
+
+- Set viewport size to 768x1024 (iPad Air / iPad Mini portrait)
+- **Verify**: Header renders logo, search icon, warp icon, bookmarks counter badge, settings, theme toggle, auth buttons, and drawer menu without horizontal overflow.
+- **Verify**: Repository grids render in a clean 2-column layout with consistent card heights and alignment.
+
+### TC-176: Tablet Landscape Viewport (1024px $\times$ 768px) Breakpoint Shift
+
+- Set viewport size to 1024x768 (iPad landscape)
+- **Verify**: Header does NOT crowd navigation items; uses clean tablet header layout with 0 horizontal overflow (`scrollWidth <= clientWidth`).
+- **Verify**: Alternatives page category chips rail / drawer provide quick category switching.
+
+### TC-177: Large Tablet Pro (1112px–1366px) Layout & Touch Target Check
+
+- Set viewport size to 1112x834 and 1366x1024 (iPad Pro 12.9)
+- **Verify**: Layout fluidly transitions into full desktop navigation at $\ge 1280\text{px}$.
+- **Verify**: Touch gestures and mouse hovers both operate simultaneously without conflicts.
+
+### TC-178: Touchscreen Laptop Dual-Input (Mouse + Touch Screen) Desktop Mode Verification
+
+- On standard desktop viewports (1440x900, 1920x1080) with touch capability reported (`navigator.maxTouchPoints > 0`):
+- **Verify**: Full 3D WebGL background (particles, waves, topography, etc.) is vibrant and fully rendered with high particle density.
+- **Verify**: Mouse cursor moves camera in 3D parallax depth smoothly.
+- **Verify**: Interactive mouse glow aura follows the cursor across the screen.
+- **Verify**: Card hover elevations (`translateY(-6px)` and glowing shadow) operate flawlessly on mouse hover.
+
+### TC-179: WCAG 2.5.5 Tap Target Size Verification (≥ 44px $\times$ 44px on all interactive elements)
+
+- On mobile viewport (390x844), inspect all interactive buttons and links:
+  - Header search trigger button (`min-width: 44px, min-height: 44px`)
+  - Header hamburger button (`min-width: 44px, min-height: 44px`)
+  - BottomNav 5 navigation links (`min-width: 44px, min-height: 44px`)
+  - Alternative card compare checkbox (`min-width: 44px, min-height: 44px`)
+  - Repo card bookmark and compare buttons (`min-width: 44px, min-height: 44px`)
+  - Floating scroll-to-top button (`min-width: 44px, min-height: 44px`)
+- **Verify**: Every interactive element satisfies the 44px minimum target bounding box.
+
+### TC-180: Touch Action Delay Elimination (Instant Response, Zero 300ms Delay)
+
+- Inspect computed CSS on buttons, links, inputs, and cards:
+- **Verify**: `touch-action: manipulation` and `-webkit-tap-highlight-color: transparent` are present.
+- **Verify**: Tap actions execute instantaneously without mobile double-tap zoom hesitation.
+
+### TC-181: Momentum Touch Scrolling with Inertia (`-webkit-overflow-scrolling: touch`)
+
+- On scrollable containers (`overflow-x-auto`, `overflow-y-auto`, modals, drawers, and category rails):
+- **Verify**: `-webkit-overflow-scrolling: touch` and `scroll-behavior: smooth` are applied.
+- **Verify**: Flick gestures glide smoothly with realistic deceleration.
+
+### TC-182: Mobile Bottom Navigation (`BottomNav.jsx`) Fixed Docking & Active Tab Sync
+
+- On mobile viewport (390x844):
+- Navigate to `/discover`: **Verify** "Discover" tab highlighted with active pill indicator.
+- Navigate to `/alternatives`: **Verify** "Alternatives" tab highlighted with active indicator.
+- Navigate to `/search`: **Verify** "Search" tab highlighted with active indicator.
+- Navigate to `/trending`: **Verify** "Trending" tab highlighted with active indicator.
+- Navigate to `/bookmarks`: **Verify** "Saved" tab highlighted with active indicator.
+
+### TC-183: Mobile BottomNav Live Saved Bookmark Counter Badge Sync
+
+- On mobile viewport:
+- Bookmark 2 repositories on `/discover`.
+- **Verify**: "Saved" tab in BottomNav immediately shows red/accent badge with count `2`.
+- Remove 1 bookmark: **Verify** badge immediately updates to `1`.
+- Remove all bookmarks: **Verify** badge disappears cleanly.
+
+### TC-184: Mobile Slide-Over Navigation Drawer Full-Screen Coverage via Portal
+
+- On mobile viewport:
+- Click hamburger menu button in Header.
+- **Verify**: Drawer opens from right edge using `createPortal` attached directly to `document.body`.
+- **Verify**: Drawer covers 100% viewport height (`h-screen` / `100vh`) regardless of header containing block.
+- **Verify**: Drawer includes Logo, Openlysts title, Close button, all navigation links with bookmark badge, Settings, Welcome Screen, and Log In / Sign Up buttons.
+
+### TC-185: Navigation Drawer Scroll Locking (`document.body.style.overflow = 'hidden'`)
+
+- Open mobile Navigation Drawer.
+- Attempt to scroll background page content behind drawer.
+- **Verify**: Background body scrolling is completely locked (`overflow: hidden`).
+- Close drawer: **Verify** `document.body.style.overflow` is restored immediately.
+
+### TC-186: Navigation Drawer Backdrop Blur & Tap-Outside Dismissal
+
+- Open mobile Navigation Drawer.
+- Tap on dark backdrop overlay outside drawer content.
+- **Verify**: Drawer slides closed smoothly with spring animation.
+
+### TC-187: Navigation Drawer Keyboard ESC Key Dismissal
+
+- Open mobile Navigation Drawer.
+- Press `Escape` key.
+- **Verify**: Drawer dismisses immediately.
+
+### TC-188: Alternatives Page Full-Width Responsive Card Grid (No 230px Sidebar Squish)
+
+- On mobile viewport (390x844) and tablet (768x1024):
+- Navigate to `/alternatives`.
+- **Verify**: Desktop 230px sidebar is hidden (`lg:hidden`).
+- **Verify**: Alternative cards occupy **100% container width** with clear readable SaaS names, open-source replacements, score badges, and action buttons.
+
+### TC-189: Alternatives Page Horizontal Swipeable Category Chips Rail
+
+- On mobile `/alternatives`:
+- **Verify**: Horizontal category chips rail renders below stats bar with "All Tools", "Internal tools", "Online store builder", etc.
+- Swipe left/right on category rail: **Verify** rail scrolls smoothly without affecting parent page horizontal bounds.
+- Tap a category chip: **Verify** active chip is highlighted with accent background and card list filters instantly.
+
+### TC-190: Alternatives Page Slide-Up Category Sheet Drawer Modal
+
+- On mobile `/alternatives`:
+- Tap "Categories" filter button in the toolbar.
+- **Verify**: Slide-up Category Sheet Drawer opens from bottom with drag handle, search/list of all 72 categories, and item counts.
+- Tap any category: **Verify** sheet closes and list filters to chosen category.
+
+### TC-191: Alternatives Detail Modal Responsive Bottom Sheet Transition on Mobile
+
+- On mobile `/alternatives`:
+- Tap on any alternative card (e.g. "Appsmith").
+- **Verify**: Alternative detail modal renders as a bottom sheet modal (`max-h-[90vh] rounded-t-2xl sm:rounded-2xl`) with easy-to-tap close and external GitHub links.
+
+### TC-192: Compare Page Sticky First Column (Row Labels) on Horizontal Scroll
+
+- On mobile viewport (390x844):
+- Navigate to `/compare?repos=facebook/react,vuejs/core,angular/angular`.
+- **Verify**: ATTRIBUTES first column is sticky on the left (`sticky left-0 bg-bg-card/95 backdrop-blur-md z-20 shadow-[4px_0_12px_rgba(0,0,0,0.15)]`).
+- Scroll table horizontally to the right: **Verify** row labels (Description, Stars, Forks, Issues, Language, License, etc.) remain permanently visible and aligned with repository rows.
+
+### TC-193: Compare Table Horizontal Scroll Swipe with 2, 3, and 4 Repositories
+
+- Test horizontal swipe physics with 2, 3, and 4 repositories.
+- **Verify**: Mobile swipe hint banner displays: "Comparing N repositories | Scroll horizontally →".
+- **Verify**: Repo remove `✕` buttons have 44px tap target and remove repositories dynamically without table layout breakdown.
+
+### TC-194: Compare Floating Dock Mobile Offset (`bottom-16 sm:bottom-6`) No Overlap with BottomNav
+
+- On mobile viewport (390x844):
+- Select 2 repositories for compare from `/discover` or `/alternatives`.
+- **Verify**: CompareDock appears floating at `bottom-16`, sitting cleanly above `BottomNav` without overlapping tab icons.
+- **Verify**: "Compare" action button and clear trash button are easily clickable.
+
+### TC-195: FilterBar Categories & Filter Popovers Width Constraints on Narrow Screens (`max-w-[calc(100vw-32px)]`)
+
+- On mobile `/discover` and `/search`:
+- Tap "Categories" dropdown in FilterBar.
+- **Verify**: Popover width is constrained to `max-w-[calc(100vw-32px)]` and does NOT clip beyond right screen edge.
+- Tap "Filters" toggle button: **Verify** accordion expands smoothly with responsive 1-column grid for licenses, languages, and difficulty filters.
+
+### TC-196: Virtual Keyboard Appearance & Form Input Visibility (`100dvh` Viewport Resilience)
+
+- On mobile `/search` and `/login`:
+- Focus text inputs to simulate virtual keyboard trigger.
+- **Verify**: Viewport height handles `100dvh` without unwanted content overflow or hidden submit buttons.
+
+### TC-197: Search Page Sticky Input & Clear Button Touch Usability
+
+- On mobile `/search`:
+- Enter search query "react".
+- **Verify**: Search input is responsive, clear button (`✕`) has 44px touch target, and "Share" / "Export JSON" action buttons fit gracefully without horizontal overflow.
+
+### TC-200: Device Orientation Change (Portrait to Landscape) Re-flow & Geometry
+
+- Trigger viewport resize from 390x844 (portrait) to 844x390 (landscape).
+- **Verify**: Page reflows cleanly, bottom nav adapts height, and modals fit landscape viewport.
+
+### TC-201: WebGL 3D Canvas Multi-Touch Gesture (`touchmove` Particle Interaction)
+
+- On touch mobile/tablet:
+- Perform touch drag on background canvas.
+- **Verify**: `touchmove` passive event listener rotates 3D particle field smoothly in response to finger movement.
+
+### TC-202: Mobile GPU & Battery Optimization (Particle count throttled on actual mobile devices)
+
+- Inspect WebGL renderer on mobile screen (`< 640px`):
+- **Verify**: Particle count is scaled down to ~80-120 particles for sustained 60FPS without CPU overheating or battery drain.
+
+### TC-203: Desktop Mouse Glow Aura Dynamic Following & Radial Spotlight Visibility
+
+- On desktop viewport (1440x900):
+- Move mouse across the screen.
+- **Verify**: Dynamic radial glow spotlight follows mouse cursor with smooth spring lerp interpolation (`rgba(var(--accent-rgb), 0.15)`).
+- **Verify**: Mouse glow creates a rich, ambient modern glow behind cards and headings.
+
+### TC-204: Desktop 3D WebGL Background Depth, Parallax & Particle Visibility across All Themes
+
+- On desktop viewport (1440x900):
+- Test each background type: `particles`, `waves`, `torus`, `sphere`, `rings`, `network`, `cube`, `topography`.
+- Test across Dark and Light themes (`dark`, `light`, `creme`, `sand`, `mint`, `cyberpunk`, `neon`, `ocean`, `forest`, `royal`).
+- **Verify**: Particles and wireframes are crisp, vibrant, and clearly visible.
+- **Verify**: Mouse movement provides pronounced 3D camera parallax rotation and depth response.
+
+### TC-205: Desktop Card 3D Tilt, Elevation & Spotlight Border Hover Interactions
+
+- On desktop viewport (1440x900):
+- Hover cursor over repository cards on `/discover`, `/search`, `/trending`.
+- **Verify**: Card smoothly elevates (`translateY(-6px)`), border illuminates with accent color glow, and drop-shadow expands with ambient accent hue.
+- **Verify**: Hover transitions operate at 60FPS without jitter or conflict between CSS transitions and Framer Motion.
+
+### TC-206: Desktop Magnetic Button Hover Physics & Fluid Motion
+
+- On desktop viewport:
+- Hover over "Sign up", "Discover", and primary action buttons.
+- **Verify**: MagneticButton subtly pulls toward cursor position with spring dynamics and returns to center on mouse leave.
+
+### TC-207: Desktop Layout Toggle Simulator (`Monitor` / `Smartphone` Layout Button)
+
+- In desktop Header (line > 1280px):
+- Click the Smartphone/Monitor layout simulator toggle icon.
+- **Verify**: Layout instantly constrains to mobile frame (`max-w-md`) with simulated mobile borders and shadow for quick desktop previewing of mobile UX.
+
+### TC-208: Mobile Offline & Slow Network (3G Simulation) Touch State Handling
+
+- Throttle network to Slow 3G on mobile viewport:
+- **Verify**: Skeleton loader cards render with smooth shimmer animation and touch actions are safely disabled until data loads.
+
+### TC-209: Mobile Double-Tap Zoom Prevention & Native Gestures Preservation
+
+- Verify `touch-action: manipulation` prevents inadvertent double-tap zoom on buttons while allowing fluid vertical pinch/scroll gestures.
+
+### TC-210: Full Regression Matrix: Zero Broken Features Across Desktop, Tablet, and Mobile
+
+- Execute complete regression check across all 11 core routes (`/`, `/discover`, `/search`, `/alternatives`, `/trending`, `/compare`, `/bookmarks`, `/about`, `/contact`, `/login`, `/register`).
+- **Verify**: 0 console errors, 0 runtime exceptions, 0 broken links, 0 unhandled states across all 3 device tiers (Mobile, Tablet, Desktop).
+
+---
+
+## PHASE 15: Admin Hypervisor & Superpower Operations Suite
+
+### TC-211: Admin Access Authorization Guard
+
+- Navigate to `/admin` as an unauthenticated visitor or regular user (`USER` role).
+- **Verify**: User is immediately redirected to `/login?redirect=%2Fadmin` with zero access to admin APIs or state.
+- **Verify**: Attempting direct API call `GET /api/admin/users` returns HTTP 401/403.
+
+### TC-212: Admin Hypervisor 6-Pillar Navigation & State Preservation
+
+- Sign in as an authenticated admin (`admin@localhost`).
+- Navigate to `/admin`.
+- **Verify**: 6-pillar command-center navigation renders:
+  1. `Telemetry & Vitals`
+  2. `Repository Studio & Ingest`
+  3. `SaaS Alternatives`
+  4. `Discovery Intelligence`
+  5. `User Governance`
+  6. `Security Audit`
+- Switch between each tab: **Verify** active tab highlights, URL/view state updates without flickering, and data queries trigger cleanly.
+
+### TC-213: Live GitHub Rate Limit & Database Telemetry
+
+- On `Telemetry & Vitals` tab:
+- **Verify**: GitHub API rate limit gauge renders remaining requests, total ceiling, and live reset timer.
+- **Verify**: PostgreSQL database storage breakdown displays exact record counts for `"Repository"`, `"User"`, `"DiscoveryQuery"`, `"IngestionRun"`, and `"AuditLog"`.
+- **Verify**: Ingestion health stats display last run status, execution duration, and success rate.
+
+### TC-214: On-Demand Custom Repo Ingestion by URL (Single Sync)
+
+- On `Repository Studio & Ingest` tab:
+- In "Force Ingest Repo", enter `https://github.com/vllm-project/vllm` (or `vllm-project/vllm`).
+- Click "Ingest Repository".
+- **Verify**: Live progress spinner activates.
+- **Verify**: Repo metadata (stars, description, forks, open issues) is fetched from GitHub API.
+- **Verify**: OSS license is verified (Apache-2.0).
+- **Verify**: Openlysts quality score and trending score are computed in real time.
+- **Verify**: Repository is committed to PostgreSQL database and immediately appears in the repository table with success toast notification.
+
+### TC-215: Batch Multi-URL Repository Ingestion
+
+- In "Batch URL Ingestion", enter multiple GitHub URLs (one per line):
+
+  ```
+  https://github.com/ollama/ollama
+  https://github.com/huggingface/transformers
+  https://github.com/shadcn-ui/ui
+  ```
+
+- Click "Start Batch Ingestion".
+- **Verify**: Ingestion worker processes each repository sequentially/concurrently with live per-repo progress.
+- **Verify**: Success/failure summary displayed with total repos added/updated.
+
+### TC-216: Invalid / Non-Existent Repository Ingestion Error Boundary
+
+- In "Force Ingest Repo", enter a non-existent repo `nonexistent-user-12345/nonexistent-repo-67890`.
+- Submit ingestion.
+- **Verify**: UI catches HTTP 404 from GitHub gracefully.
+- **Verify**: Toast notification displays clear error ("Repository not found on GitHub").
+- **Verify**: No database corruption, unhandled exceptions, or blank screen crash.
+
+### TC-217: Inline Repository Studio & Score Booster Drawer
+
+- In Repository table, click "Edit / Boost" on any repository.
+- **Verify**: Slide-out drawer opens with editable fields: Name, Description, Categories, Tags, and Openlysts Score Booster.
+- Adjust score boost (+10), toggle `Staff Pick` badge, and update category.
+- Save changes: **Verify** database updates immediately, table updates, and audit event `REPO_UPDATED` is recorded.
+
+### TC-218: Repository Live Search, Category & License Multi-Filter
+
+- In Repository table:
+- Enter live search query "python".
+- Filter by category "AI & LLMs" and license "verified_oss".
+- **Verify**: Table updates instantaneously without full page reload.
+- **Verify**: Matching count matches the filtered dataset.
+
+### TC-219: Repository Bulk Operations (Bulk Hide, Feature, Export, Delete)
+
+- Multi-select 3 repositories using row checkboxes.
+- Click "Bulk Actions" $\rightarrow$ "Hide from Public".
+- **Verify**: `hidden = true` in database for selected rows; repositories are hidden from public `/discover` feed.
+- Click "Bulk Actions" $\rightarrow$ "Feature".
+- **Verify**: `featured = true` for selected rows.
+- Click "Export Selected" $\rightarrow$ **Verify** clean JSON/CSV export file downloads.
+
+### TC-220: Single Repository Purge / Hard Deletion
+
+- Click "Delete" on a test repository in the table.
+- **Verify**: Confirmation modal prompts admin to confirm repository slug.
+- Confirm deletion: **Verify** repository is removed from `"Repository"` table, related bookmarks/cache invalidated, and audit log `REPO_DELETED` logged.
+
+### TC-221: SaaS Alternative Linker & Migration Parity Studio
+
+- On `SaaS Alternatives` tab:
+- Click "Map New Alternative".
+- Select Open-Source Repo (e.g. `Supabase`), Proprietary SaaS (e.g. `Firebase`), Category (`Databases & Backend`), Migration Difficulty (`Medium`), and Match Score (`92%`).
+- Submit: **Verify** alternative is mapped in database, immediately visible in public `/alternatives` page under the respective category and paid tool replacement group.
+
+### TC-222: Discovery Engine GitHub Query Sandbox & Live Dry-Run
+
+- On `Discovery Intelligence` tab:
+- In "Query Sandbox", enter GitHub query syntax: `topic:rag stars:>500`.
+- Click "Test Query (Dry Run)".
+- **Verify**: GitHub Search API is executed without ingesting.
+- **Verify**: Sandbox displays total matched repository count (e.g. `1,240 repos on GitHub`) and previews top 5 sample repositories with stars, descriptions, and license badges.
+
+### TC-223: Discovery Query Bulk Importer & Auto-Schedule Toggle
+
+- Paste a batch of discovery queries with category hints.
+- Submit: **Verify** queries are added to `"DiscoveryQuery"` table.
+- Click "Toggle Status" on any query: **Verify** `enabled` flips between `true` (Active) and `false` (Disabled) with real-time UI toggle indicator.
+
+### TC-224: Global Operations Hub (Ingestion, Recalculate, Reclassify, Cache Flush)
+
+- Click "Run Full Ingestion": **Verify** background worker initiates, button enters spinning state, and completion summary toast displays processed/added counts.
+- Click "Recalculate Quality Scores": **Verify** scores recalculate across all repos using latest star velocity, fork ratio, and issue closure rate.
+- Click "Reclassify Categories": **Verify** taxonomy classification runs across all repositories.
+- Click "Flush Cache": **Verify** API and client-side query cache is purged.
+
+---
+
+## PHASE 16: User Governance, Security Audit & Resilience
+
+### TC-225: User Governance List & Multi-Provider Breakdown
+
+- On `User Governance` tab:
+- **Verify**: All registered accounts render in a paginated/searchable table with Name, Email, Role, Status badge, and Auth Providers (Email, Google, GitHub).
+- Search user by email: **Verify** instant table filtering.
+
+### TC-226: User Role Promotion & Demotion (`USER` $\leftrightarrow$ `ADMIN`)
+
+- Select a standard user and change role dropdown from `user` to `admin`.
+- **Verify**: Database `role` updates to `ADMIN`, success toast appears, and audit event `USER_ROLE_CHANGED` is logged.
+- Change role back to `user`: **Verify** update succeeds.
+
+### TC-227: Final Active Admin Protection Guard
+
+- Attempt to demote the sole remaining active admin account or change its role to `user`.
+- **Verify**: Server rejects with HTTP 403 ("Cannot remove the last active admin. Promote another user first").
+- **Verify**: UI displays a clear, friendly error toast and role remains `ADMIN`.
+
+### TC-228: Instant User Suspension & Session Invalidation
+
+- Click "Suspend User" on a target user account.
+- Confirm suspension: **Verify** `account_status` updates to `SUSPENDED` in database.
+- **Verify**: Target user's active session is immediately purged from `"session"` table so their next request returns 401/403.
+- Attempt to log in with the suspended user's credentials: **Verify** login rejected with "Account suspended".
+
+### TC-229: User Reactivation Cycle
+
+- Click "Reactivate User" on a suspended account.
+- **Verify**: `account_status` transitions back to `ACTIVE`.
+- Log in with user credentials: **Verify** login succeeds and session is restored.
+
+### TC-230: Superpower: One-Click Magic Password Reset Link Generator
+
+- In User row, click "Generate Reset Link" (Key icon).
+- **Verify**: Server generates a cryptographically secure 32-byte token, hashes it into `"PasswordResetToken"` table with 1-hour expiration.
+- **Verify**: Modal displays the direct URL (`http://localhost:5173/reset-password?token=...`) with a "Copy to Clipboard" button.
+- Click "Copy Link": **Verify** clipboard receives full URL with success feedback.
+- Open link in browser: **Verify** Reset Password form loads cleanly and accepts new password.
+
+### TC-231: Real-Time Security Audit Log Stream
+
+- On `Security Audit` tab:
+- **Verify**: Chronological list of security events renders with Actor name, Target user, Action badge (`USER_LOGIN`, `USER_REGISTERED`, `REPO_SYNCED`, `QUERY_CREATED`, `USER_SUSPENDED`), Client IP address, User Agent, and timestamp.
+- Filter audit logs by action type: **Verify** table filters accurately.
+- Click "Export Audit Logs" $\rightarrow$ **Verify** JSON audit export downloads.
+
+### TC-232: Mobile & Tablet Admin Hypervisor Touch Ergonomics
+
+- Test `/admin` across Mobile ($390\times844$) and Tablet ($768\times1024$):
+- **Verify**: 6-pillar navigation converts to a horizontal touch-swipe tab rail.
+- **Verify**: Large tables reflow into responsive touch-friendly cards.
+- **Verify**: Drawers and modals open with smooth backdrop animation and touch-friendly close targets ($44\times44\text{px}$).
+- **Verify**: DOM inspection confirms `scrollWidth <= clientWidth` (zero horizontal page scroll).
+
+### TC-233: Theme System Aesthetic Harmony (Light & Dark Admin Auditing)
+
+- Toggle between all 10 theme variants (`dark`, `light`, `creme`, `sand`, `mint`, `cyberpunk`, `neon`, `ocean`, `forest`, `royal`):
+- **Verify**: All admin cards, telemetry meters, tables, and badge contrast ratios meet WCAG AA standards (4.5:1 min).
+- **Verify**: Ambient 3D particle background remains subtle behind admin panels.
+
+### TC-234: Network Resilience & Offline Error Boundary
+
+- Simulate network disconnection or server 500 error during an admin mutation.
+- **Verify**: UI displays contextual inline error / toast notification with retry button.
+- **Verify**: Application does not crash, unmount, or leave orphaned loading spinners.
+
+### TC-235: Self-Action Guard (Admin cannot suspend or delete self)
+
+- Attempt to click "Suspend" or "Disable" on the currently authenticated admin's row.
+- **Verify**: Action buttons are disabled with tooltip "You cannot perform this action on yourself" or server returns HTTP 403 error.
+
+---
+
+## PHASE 17: User Profile Studio & Customization Hub
+
+### TC-241: Profile Authentication Guard
+- Navigate to `/profile` as an unauthenticated guest.
+- **Verify**: User is immediately redirected to `/login?redirect=%2Fprofile`.
+
+### TC-242: Hero Identity Card & Display Name Live Update
+- On `/profile`, update Display Name to "Lead OSS Architect" and click Save Profile.
+- **Verify**: Success toast with 3D animation appears.
+- **Verify**: Header user avatar and profile hero card immediately reflect the new name without requiring a hard refresh.
+
+### TC-243: Interactive Password Strength Meter & Rules Checklist
+- In Change Password section, type `short`:
+- **Verify**: Strength meter shows "Weak" (red bar) and checklists (8+ chars, uppercase, number, special char) highlight failed rules.
+- Type `Openlyst2026!`:
+- **Verify**: Strength meter transitions to "Strong" (emerald bar) and all 4 rule checkmarks turn green.
+
+### TC-244: Password Change Cycle & Re-Authentication
+- Fill Current Password and valid New Password (`NewPass123456!`).
+- Click "Update Password".
+- **Verify**: Success toast appears, form fields reset cleanly.
+- Log out and log in with the new password: **Verify** authentication succeeds.
+
+### TC-245: Neon Avatar Preset Customization
+- In the Avatar Picker modal / carousel, select a new avatar preset (e.g. `Cyber Explorer`, `Quantum Dev`, `Matrix Hacker`).
+- Click "Apply Avatar": **Verify** avatar immediately updates across header, hero card, and user menu.
+
+### TC-246: Connected OAuth Accounts (Google & GitHub)
+- On Connected Accounts card:
+- **Verify**: Connected social providers display connected date and unlink option.
+- Disconnect a linked provider: **Verify** confirmation prompt appears, provider unlinks, and status updates cleanly.
+
+### TC-247: Developer Tech Stack & Topic Tag Customization
+- Select preferred language/stack tags (e.g. `React`, `Python`, `Rust`, `AI & LLMs`, `DevOps`).
+- Save preferences: **Verify** tags persist in user settings and influence recommended repositories.
+
+### TC-248: Profile Bookmarks Quick Hub & Instant Un-bookmark
+- In Bookmarks section of `/profile`:
+- **Verify**: Grid of bookmarked repositories renders with stars, language, and quick action buttons.
+- Click un-bookmark on a repo: **Verify** 3D deletion/trash toast triggers and repository animates out smoothly.
+
+### TC-249: 1-Click User Data Vault & Privacy Export
+- Click "Download My Data (JSON)":
+- **Verify**: Clean JSON file `openlysts_user_data_<timestamp>.json` downloads containing user profile details, bookmarks, and preferences.
+
+### TC-250: Mobile & Tablet Profile Viewport Ergonomics
+- Test `/profile` across Mobile ($390\times844$) and Tablet ($768\times1024$):
+- **Verify**: Bento grid stacks into a clean 1-column mobile flow with zero horizontal page scroll (`scrollWidth <= clientWidth`).
+
+---
+
+## PHASE 18: 3D macOS Dynamic Toast Engine & Gesture Testing
+
+### TC-256: 3D Perspective Toast Mount & Spring Entrance Physics
+- Trigger any toast (e.g. bookmark repo, save profile):
+- **Verify**: Toast container mounts in a 3D perspective field with spring tilt entry (`rotateX(-10deg) scale(0.92)` $\rightarrow$ `rotateX(0deg) scale(1)`).
+- **Verify**: Glassmorphic frosted backdrop with dynamic ambient refraction blur (`backdrop-blur-xl`).
+
+### TC-257: macOS-Style Trash Crumple Physics on Deletion Toasts
+- Trigger a deletion action (e.g. un-bookmark repository, delete discovery query, delete user):
+- **Verify**: Toast triggers with `variant: 'delete'`.
+- **Verify**: Toast features a burning red/amber glass glow, trash can icon, and plays a macOS-style paper crumble / vacuum suck-away exit animation (`scale(0.3) rotate(-15deg)`).
+
+### TC-258: Dynamic Contextual Action Types
+- Test all 5 dynamic toast action styles:
+  1. `success` (Emerald glow with pulsating checkmark and sparkle aura)
+  2. `delete` (Crimson-amber glow with macOS trash crumple physics)
+  3. `security` (Cyber-purple glow with glowing key/shield dynamic shine)
+  4. `error` (Ruby red glow with gentle horizontal micro-shake on entrance)
+  5. `info` (Neon sapphire pulse with animated progress spinner)
+- **Verify**: Each variant displays distinct icons, glow colors, and particle borders.
+
+### TC-259: Interactive Countdown Progress Bar & Swipe-to-Dismiss
+- Trigger toast: **Verify** subtle animated progress bar at the bottom drains in sync with the auto-dismiss timer (4000ms).
+- Hover over toast: **Verify** dismiss timer pauses while hovered.
+- Swipe toast to the right: **Verify** gesture dismisses toast smoothly.
+
+### TC-260: Multi-Toast Stacking & Boundary Limits
+- Trigger 5 toasts in rapid succession:
+- **Verify**: Toasts stack vertically with staggered 3D depth and subtle scale degradation on older toasts.
+- **Verify**: Toaster does not overflow screen or overlap modal dialogs.
+
+---
+
+## PHASE 19: Comprehensive OAuth Lifecycle & Provider Fallback Suite
+
+### TC-261: OAuth Route Aliases Multi-Path Routing
+- Navigate to `/api/auth/google`, `/api/auth/oauth/google`, `/api/auth/github`, and `/api/auth/oauth/github`:
+- **Verify**: All route variants are cleanly mapped by the backend router.
+- **Verify**: No unhandled 404 "Cannot GET" errors occur on any alias path.
+
+### TC-262: Unconfigured OAuth Environment Graceful Redirection & Notice
+- In an environment where `GOOGLE_CLIENT_ID` or `GITHUB_CLIENT_ID` are missing/unconfigured:
+- Click `+ Connect Google` or `+ Connect GitHub` from `/profile`:
+- **Verify**: User is redirected cleanly back to `/profile?notice=oauth_not_configured&provider=<Provider>` instead of getting stranded on a raw 501 JSON page.
+- **Verify**: Profile hub intercepts query parameter and displays an informative 3D info toast explaining that the OAuth provider requires client credentials.
+- **Verify**: URL query parameters are cleanly stripped after toast display without leaving trailing tokens in the browser address bar.
+
+### TC-263: OAuth State Parameter & CSRF Tampering Protection
+- Initiate OAuth flow with invalid or modified `state` parameter:
+- **Verify**: Backend detects state mismatch, refuses token exchange, and redirects to `/login?error=invalid_state`.
+- **Verify**: Security audit log records `OAUTH_LOGIN_FAILED` with client IP and user agent.
+
+### TC-264: OAuth User Account Auto-Linking & De-duplication
+- Sign in with an OAuth account whose verified email matches an existing local password account:
+- **Verify**: System links the OAuth provider ID into `"AuthAccount"` without duplicating the user in `"User"`.
+- **Verify**: User is authenticated seamlessly into their existing account profile and bookmarks.
+
+### TC-265: OAuth Disconnect & Last Authentication Method Safeguard
+- User with only 1 OAuth method and no password attempts to unlink provider:
+- **Verify**: System warns or requires setting a password before removing the sole authentication provider.
+
+---
+
+## PHASE 20: Hyper-Resilient Repository Ingestion & Scraping Fallbacks
+
+### TC-271: On-Demand Custom Repo Ingest with GitHub API Active
+- In Admin Repository Studio, enter a valid repository (e.g. `https://github.com/facebook/react`):
+- Click "Ingest Repository":
+- **Verify**: System fetches repo metadata, verifies license, calculates Openlysts score, and commits to `"Repository"`.
+- **Verify**: Success 3D toast displays repo name and stars count, and repository table refreshes instantly.
+
+### TC-272: Automated Web Scraping Fallback on Exhausted GitHub Rate Limits (403/429)
+- Trigger on-demand sync for a repository (e.g. `https://github.com/leonxlnx/taste-skill`) when GitHub API unauthenticated 60 req/hr rate limit is exhausted:
+- **Verify**: System logs `[INGEST] GitHub API rate-limited... Attempting web fallback...`.
+- **Verify**: Web metadata fallback parser scrapes public repository OpenGraph tags, star counts, and license information without timing out or failing.
+- **Verify**: Repository is successfully saved into PostgreSQL with accurate description, stars, and Openlysts score.
+- **Verify**: Success toast displays `Successfully ingested 1 repository: leonxlnx/taste-skill`.
+
+### TC-273: Multi-Line Batch Repository Ingestion
+- In Admin Repository Studio, paste multiple repos separated by newlines:
+  ```
+  https://github.com/vitejs/vite
+  https://github.com/tailwindlabs/tailwindcss
+  shadcn/ui
+  ```
+- Click "Ingest Repository":
+- **Verify**: System parses all formats (full URLs and `owner/name`), ingests each in sequence, and reports total ingested count in the 3D toast.
+
+### TC-274: Ingestion Error Surfacing & Destructive Toast Feedback
+- Enter an invalid or non-existent repository (e.g. `https://github.com/nonexistent_user_9999/does-not-exist`):
+- Click "Ingest Repository":
+- **Verify**: Server returns HTTP 422 with specific error details.
+- **Verify**: Admin UI surfaces the exact error in a red destructive 3D toast (does NOT claim "Successfully ingested 0 repository").
+
+### TC-275: License Verification & OSI Classification Accuracy
+- Ingest repos with various licenses (`MIT`, `Apache-2.0`, `GPL-3.0`, `Proprietary`, `No License`):
+- **Verify**: Verified OSS licenses receive `verified_oss` status and green badge.
+- **Verify**: Non-OSS licenses receive `non_oss` status and yellow/red flags.
+
+### TC-276: Repository Studio Editorial Boost, Staff Pick & Flag Mutations
+- In Admin Repository Studio, click "Edit / Boost" on any repository:
+- Modify Display Name, Description, set Openlysts Score Booster (e.g. `+15`), and check "Mark as Staff Pick":
+- Click "Save Changes":
+- **Verify**: Backend processes `PATCH /api/admin/repos/:id` with integer boolean mapping and persists values to PostgreSQL.
+- **Verify**: Drawer closes, 3D success toast appears, and repository table instantly reflects the Gold `Staff Pick` badge and boosted score (e.g. `95 +15`).
+- **Verify**: In-memory cache is invalidated and fresh boosted scores propagate to Discovery and Alternatives.
+
+---
+
+## PHASE 21: Deep Security, Role-Based Access Control & Audit Trails
+
+### TC-281: Admin Hypervisor Route Isolation
+- Attempt direct HTTP requests to `/api/admin/*` endpoints as an unauthenticated guest or standard `USER` role:
+- **Verify**: Server responds with HTTP 401 Unauthorized or HTTP 403 Forbidden.
+- **Verify**: Admin frontend route `/admin` redirects unauthorized users immediately to `/login`.
+
+### TC-282: Live Security Audit Trail Logging
+- Perform administrative operations (user deletion, repo metadata edit, query sync):
+- **Verify**: Every action generates an immutable record in `"AuditLog"` containing `actor_id`, `action`, `ip_address`, `user_agent`, and payload metadata.
+- **Verify**: Admin Security Audit tab renders recent events in real-time.
+
+### TC-283: Last-Admin Permanent Lockout Guard
+- Attempt to delete or demote the sole remaining administrator account:
+- **Verify**: Backend blocks operation with `Cannot delete or demote the last remaining active administrator.`
+- **Verify**: Red security toast warns the user of the safeguard.
+
+---
+
+## PHASE 22: Cache Invalidation & Telemetry Consistency
+
+### TC-291: In-Memory Cache Invalidation on Mutation
+- After any repository ingestion, update, or deletion:
+- **Verify**: `invalidateRepositoriesCache()` clears stale cache immediately.
+- **Verify**: Subsequent calls to `/api/functions/queryRepositories` return fresh data from DB within sub-20ms.
+
+### TC-292: Telemetry Table Storage Counter Consistency
+- In Admin Telemetry & Vitals tab:
+- **Verify**: Repository, User, Query, and Audit Log counters match actual `SELECT COUNT(*)` values in PostgreSQL database.
+
+

@@ -131,40 +131,30 @@ export default function Home() {
       </AnimatePresence>
 
       {/* Hero */}
-      <section className="pt-12 sm:pt-20 pb-8 text-center max-w-4xl mx-auto">
+      <section className="pt-10 sm:pt-16 pb-6 text-center max-w-5xl mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}>
           
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent-soft text-accent text-xs font-medium mb-5">
-            <Sparkles className="w-3 h-3" />
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent-soft text-accent text-xs font-semibold mb-4 border border-accent/20">
+            <Sparkles className="w-3.5 h-3.5" />
             Discover. Filter. Build.
           </div>
-          <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-text leading-tight mb-4">
+          <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-text leading-tight mb-3">
             Discover everything on GitHub.
           </h1>
-          <p className="text-text-secondary text-base sm:text-lg leading-relaxed mb-6 max-w-2xl mx-auto">
+          <p className="text-text-secondary text-base sm:text-lg leading-relaxed mb-7 max-w-2xl mx-auto">
             Explore and search high-quality open-source software across AI, developer tools, self-hosting, and the vast expanse of GitHub.
           </p>
         </motion.div>
 
-        {/* 3D Interactive Live Metrics & Category Breakdown */}
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, delay: 0.08 }}
-        >
-          <DiscoverLiveMetrics totalRepos={trending?.total || 3000} categoryCounts={trending?.categoryCounts || {}} />
-        </motion.div>
-
-        {/* Search */}
+        {/* Search Bar (Primary Spotlight Action) */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.15 }}
-          className="max-w-xl mx-auto z-30 relative mb-8">
-          
+          transition={{ duration: 0.4, delay: 0.08 }}
+          className="max-w-2xl mx-auto z-30 relative mb-4">
           <AnimatedSearch size="lg" />
         </motion.div>
 
@@ -172,10 +162,19 @@ export default function Home() {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.2 }}
-          className="max-w-4xl mx-auto text-left"
+          transition={{ duration: 0.4, delay: 0.14 }}
+          className="max-w-3xl mx-auto text-left mb-6"
         >
           <FilterBar filters={emptyFilters} onChange={updateFilters} languages={LANGUAGES} />
+        </motion.div>
+
+        {/* 3D Interactive Live Metrics & Category Breakdown */}
+        <motion.div
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45, delay: 0.2 }}
+        >
+          <DiscoverLiveMetrics totalRepos={trending?.total || 3000} categoryCounts={trending?.categoryCounts || {}} />
         </motion.div>
       </section>
 

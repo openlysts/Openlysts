@@ -128,8 +128,9 @@ router.patch('/settings', async (req, res) => {
     }
 
     if (settings !== undefined) {
+      const settingsVal = typeof settings === 'object' ? JSON.stringify(settings) : String(settings);
       updates.push(`settings = $${updates.length + 1}`);
-      values.push(settings);
+      values.push(settingsVal);
     }
 
     if (updates.length === 0) {

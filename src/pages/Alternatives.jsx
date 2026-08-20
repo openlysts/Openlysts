@@ -148,13 +148,14 @@ function AlternativeCard({ alt, idx, viewMode, isSelected, onToggleCompare, onSe
       >
         <button
           onClick={(e) => onToggleCompare(e, alt)}
-          className={`absolute -top-1 -right-1 w-7 h-7 rounded-full border-2 flex items-center justify-center transition-all z-10 shadow-sm text-xs ${
+          aria-label={`Compare ${alt.resolved_name}`}
+          className={`absolute -top-1.5 -right-1.5 w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all z-10 shadow-sm text-xs touch-target ${
             isSelected
               ? 'bg-accent border-bg text-bg scale-100'
-              : 'bg-bg-card border-border text-transparent hover:border-accent/50 group-hover:scale-100 scale-0'
+              : 'bg-bg-card border-border text-text-muted hover:border-accent/50 sm:scale-0 sm:group-hover:scale-100 scale-100'
           }`}
         >
-          ✓
+          {isSelected ? '✓' : '+'}
         </button>
 
         {viewMode === 'grid' ? (
@@ -397,23 +398,25 @@ export default function Alternatives() {
     />
   );
 
+  const [categoryDrawerOpen, setCategoryDrawerOpen] = useState(false);
+
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 relative">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 relative">
 
       {/* ─── Hero Header ─── */}
-      <div className="mb-8 p-6 rounded-2xl bg-gradient-to-b from-bg-card/80 to-bg-card/30 border border-border shadow-sm">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+      <div className="mb-6 sm:mb-8 p-4 sm:p-6 rounded-2xl bg-gradient-to-b from-bg-card/80 to-bg-card/30 border border-border shadow-sm">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 sm:gap-6">
           <div className="max-w-2xl">
-            <div className="flex items-center gap-2.5 mb-2.5">
-              <div className="w-9 h-9 rounded-xl bg-accent-soft text-accent border border-accent/20 flex items-center justify-center flex-shrink-0">
+            <div className="flex items-center gap-2.5 mb-2 sm:mb-2.5">
+              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-accent-soft text-accent border border-accent/20 flex items-center justify-center flex-shrink-0">
                 <Sparkles className="w-4 h-4" />
               </div>
-              <h1 className="text-2xl sm:text-3xl font-black text-text tracking-tight">
+              <h1 className="text-xl sm:text-3xl font-black text-text tracking-tight">
                 {activeCategory === 'All' ? 'Open Source Alternatives' : `${activeCategory}`}
               </h1>
             </div>
-            <p className="text-sm text-text-secondary leading-relaxed">
-              Discover {data?.stats?.total_tools || '146+'} curated open-source replacements for {data?.stats?.total_paid_tools || '61'} SaaS products — scored by code quality, community health, and feature parity.
+            <p className="text-xs sm:text-sm text-text-secondary leading-relaxed">
+              Discover {data?.stats?.total_tools || '160+'} curated open-source replacements for {data?.stats?.total_paid_tools || '70+'} SaaS products — scored by code quality, community health, and feature parity.
             </p>
           </div>
 
@@ -422,114 +425,162 @@ export default function Alternatives() {
             <div className="flex items-center gap-2 sm:gap-3 flex-wrap sm:flex-nowrap">
               <LiveStatBlock label="Tools" value={data.stats.total_tools} valueClass="text-accent" minIncrement={1} maxIncrement={2} interval={8000} />
               <LiveStatBlock label="Categories" value={data.stats.total_categories} valueClass="text-text" minIncrement={0} maxIncrement={1} interval={20000} />
-              <div className="bg-bg-subtle/80 border border-border rounded-xl px-4 py-2.5 text-center min-w-[90px]">
-                <div className="text-xl font-black text-amber-400">{data.stats.avg_score}</div>
-                <div className="text-[10px] font-bold text-text-muted uppercase tracking-wider">Avg Score</div>
+              <div className="bg-bg-subtle/80 border border-border rounded-xl px-3 sm:px-4 py-2 sm:py-2.5 text-center min-w-[75px] sm:min-w-[90px]">
+                <div className="text-lg sm:text-xl font-black text-amber-400">{data.stats.avg_score}</div>
+                <div className="text-[9px] sm:text-[10px] font-bold text-text-muted uppercase tracking-wider">Avg Score</div>
               </div>
             </div>
           )}
         </div>
 
         {/* ─── Controls Bar ─── */}
-        <div className="flex flex-wrap items-center gap-3 mt-6 pt-5 border-t border-border/50">
-          {/* Search */}
-          <div className="relative flex-1 min-w-[240px]">
-
+        <div className="flex flex-wrap items-center justify-between gap-2.5 sm:gap-3 mt-5 pt-4 sm:pt-5 border-t border-border/50">
+          {/* Search Input */}
+          <div className="relative flex-1 min-w-[180px] sm:min-w-[240px]">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search tools, categories, or SaaS products..."
-              className="w-full bg-bg border border-border rounded-xl pl-9 pr-4 py-2 text-sm text-text focus:outline-none focus:border-accent transition-colors placeholder:text-text-muted"
+              placeholder="Search alternatives, categories, or SaaS..."
+              className="w-full bg-bg border border-border rounded-xl pl-9 pr-4 py-2 text-xs sm:text-sm text-text focus:outline-none focus:border-accent transition-colors placeholder:text-text-muted"
             />
           </div>
 
-          {/* Sort Dropdown */}
-          <div className="relative" ref={sortRef}>
+          <div className="flex items-center gap-2 flex-wrap">
+            {/* Sort Dropdown */}
+            <div className="relative" ref={sortRef}>
+              <button 
+                onClick={() => setIsSortOpen(!isSortOpen)}
+                className="flex items-center gap-1.5 sm:gap-2 bg-bg border border-border hover:border-accent/50 rounded-xl px-2.5 sm:px-3 py-2 text-xs sm:text-sm text-text-secondary font-medium transition-colors touch-target"
+              >
+                <ArrowUpDown className="w-3.5 h-3.5 text-text-muted" />
+                <span className="hidden xs:inline">{sortOptions.find(o => o.value === sortBy)?.label}</span>
+                <span className="xs:hidden">Sort</span>
+                <ChevronDown className={`w-3.5 h-3.5 text-text-muted transition-transform ${isSortOpen ? 'rotate-180' : ''}`} />
+              </button>
+              
+              <AnimatePresence>
+                {isSortOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                    transition={{ duration: 0.15 }}
+                    className="absolute top-full right-0 sm:left-0 mt-2 w-48 bg-bg-card border border-border rounded-xl shadow-xl overflow-hidden z-50 py-1"
+                  >
+                    {sortOptions.map((option) => (
+                      <button
+                        key={option.value}
+                        onClick={() => {
+                          setSortBy(option.value);
+                          setIsSortOpen(false);
+                        }}
+                        className={`w-full text-left px-4 py-2.5 text-xs sm:text-sm transition-colors ${
+                          sortBy === option.value 
+                            ? 'bg-accent/10 text-accent font-bold' 
+                            : 'text-text-secondary hover:bg-bg-hover hover:text-text'
+                        }`}
+                      >
+                        {option.label}
+                      </button>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* View Toggle */}
+            <div className="flex items-center bg-bg border border-border rounded-xl overflow-hidden">
+              <button 
+                onClick={() => setViewMode('grid')}
+                className={`p-2 transition-colors touch-target ${viewMode === 'grid' ? 'bg-accent/10 text-accent' : 'text-text-muted hover:text-text'}`}
+                title="Grid View"
+                aria-label="Grid View"
+              >
+                <Grid3X3 className="w-4 h-4" />
+              </button>
+              <button 
+                onClick={() => setViewMode('list')}
+                className={`p-2 transition-colors touch-target ${viewMode === 'list' ? 'bg-accent/10 text-accent' : 'text-text-muted hover:text-text'}`}
+                title="List View"
+                aria-label="List View"
+              >
+                <List className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Category Button (Mobile opens Drawer, Desktop toggles Sidebar) */}
             <button 
-              onClick={() => setIsSortOpen(!isSortOpen)}
-              className="flex items-center gap-2 bg-bg border border-border hover:border-accent/50 rounded-xl px-3 py-2 text-sm text-text-secondary font-medium transition-colors"
+              onClick={() => {
+                if (window.innerWidth < 1024) {
+                  setCategoryDrawerOpen(true);
+                } else {
+                  setSidebarOpen(!sidebarOpen);
+                }
+              }}
+              className="flex items-center gap-1.5 p-2 px-2.5 rounded-xl border border-border bg-bg text-text-secondary hover:text-accent hover:border-accent/40 transition-colors touch-target"
+              title="Categories"
+              aria-label="Categories"
             >
-              <ArrowUpDown className="w-3.5 h-3.5 text-text-muted" />
-              <span>{sortOptions.find(o => o.value === sortBy)?.label}</span>
-              <ChevronDown className={`w-3.5 h-3.5 text-text-muted transition-transform ${isSortOpen ? 'rotate-180' : ''}`} />
+              <Filter className="w-4 h-4" />
+              <span className="text-xs font-semibold lg:hidden">Categories</span>
             </button>
-            
-            <AnimatePresence>
-              {isSortOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                  transition={{ duration: 0.15 }}
-                  className="absolute top-full left-0 mt-2 w-48 bg-bg-card border border-border rounded-xl shadow-xl overflow-hidden z-50 py-1"
-                >
-                  {sortOptions.map((option) => (
-                    <button
-                      key={option.value}
-                      onClick={() => {
-                        setSortBy(option.value);
-                        setIsSortOpen(false);
-                      }}
-                      className={`w-full text-left px-4 py-2 text-sm transition-colors ${
-                        sortBy === option.value 
-                          ? 'bg-accent/10 text-accent font-bold' 
-                          : 'text-text-secondary hover:bg-bg-hover hover:text-text'
-                      }`}
-                    >
-                      {option.label}
-                    </button>
-                  ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
+
+            {/* Active Category Chip */}
+            {activeCategory !== 'All' && (
+              <button 
+                onClick={() => setActiveCategory('All')}
+                className="flex items-center gap-1.5 bg-accent/10 text-accent text-xs font-bold px-2.5 py-1.5 rounded-full border border-accent/20 hover:bg-accent/20 transition-colors touch-target"
+              >
+                {categoryIcons[activeCategory] || '📂'} <span className="truncate max-w-[120px]">{activeCategory}</span>
+                <X className="w-3 h-3" />
+              </button>
+            )}
           </div>
-
-          {/* View Toggle */}
-          <div className="flex items-center bg-bg border border-border rounded-xl overflow-hidden">
-            <button 
-              onClick={() => setViewMode('grid')}
-              className={`p-2 transition-colors ${viewMode === 'grid' ? 'bg-accent/10 text-accent' : 'text-text-muted hover:text-text'}`}
-              title="Grid View"
-            >
-              <Grid3X3 className="w-4 h-4" />
-            </button>
-            <button 
-              onClick={() => setViewMode('list')}
-              className={`p-2 transition-colors ${viewMode === 'list' ? 'bg-accent/10 text-accent' : 'text-text-muted hover:text-text'}`}
-              title="List View"
-            >
-              <List className="w-4 h-4" />
-            </button>
-          </div>
-
-          {/* Sidebar Toggle */}
-          <button 
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-            className={`p-2 rounded-xl border transition-colors ${sidebarOpen ? 'bg-accent/10 text-accent border-accent/20' : 'bg-bg text-text-muted border-border hover:text-text'}`}
-            title="Toggle category sidebar"
-          >
-            <Filter className="w-4 h-4" />
-          </button>
-
-          {/* Active Category Chip */}
-          {activeCategory !== 'All' && (
-            <button 
-              onClick={() => setActiveCategory('All')}
-              className="flex items-center gap-1.5 bg-accent/10 text-accent text-xs font-bold px-3 py-1.5 rounded-full border border-accent/20 hover:bg-accent/20 transition-colors"
-            >
-              {categoryIcons[activeCategory] || '📂'} {activeCategory}
-              <X className="w-3 h-3" />
-            </button>
-          )}
         </div>
       </div>
 
-      {/* ─── Main Layout: Sidebar + Content ─── */}
+      {/* ─── Mobile/Tablet Horizontal Swipeable Category Rail (Visible on < 1024px) ─── */}
+      <div className="lg:hidden mb-5 -mx-4 px-4 sm:-mx-6 sm:px-6">
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar touch-scroll py-1">
+          <button
+            onClick={() => setActiveCategory('All')}
+            className={`px-3 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all touch-target flex items-center gap-1.5 flex-shrink-0 ${
+              activeCategory === 'All'
+                ? 'bg-accent text-accent-fg shadow-sm'
+                : 'bg-bg-card border border-border text-text-secondary hover:text-text hover:border-border-strong'
+            }`}
+          >
+            <span>All Tools</span>
+            <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${activeCategory === 'All' ? 'bg-black/20 text-white' : 'bg-bg-subtle text-text-muted'}`}>
+              {data?.stats?.total_tools || 0}
+            </span>
+          </button>
+          {data?.categories?.map((cat) => (
+            <button
+              key={cat.name}
+              onClick={() => setActiveCategory(cat.name)}
+              className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all touch-target flex items-center gap-1.5 flex-shrink-0 ${
+                activeCategory === cat.name
+                  ? 'bg-accent text-accent-fg font-bold shadow-sm'
+                  : 'bg-bg-card border border-border text-text-secondary hover:text-text hover:border-border-strong'
+              }`}
+            >
+              <span>{categoryIcons[cat.name] || '📂'}</span>
+              <span>{cat.name}</span>
+              <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${activeCategory === cat.name ? 'bg-black/20 text-white' : 'bg-bg-subtle text-text-muted'}`}>
+                {cat.count}
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* ─── Main Layout: Desktop Sidebar + Content ─── */}
       <div className="flex gap-6">
 
-        {/* ─── Sidebar ─── */}
+        {/* ─── Desktop Sidebar (Only visible on lg: >= 1024px) ─── */}
         <AnimatePresence>
           {sidebarOpen && (
             <motion.aside 
@@ -537,7 +588,7 @@ export default function Alternatives() {
               animate={{ width: 230, opacity: 1 }}
               exit={{ width: 0, opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="flex-shrink-0 overflow-hidden"
+              className="hidden lg:block flex-shrink-0 overflow-hidden"
             >
               <div className="w-[230px] sticky top-20">
                 <div className="bg-bg-card border border-border rounded-xl overflow-hidden shadow-sm">
@@ -580,8 +631,8 @@ export default function Alternatives() {
           )}
         </AnimatePresence>
 
-        {/* ─── Main Content ─── */}
-        <main className="flex-1 min-w-0">
+        {/* ─── Main Content (Takes 100% on mobile & tablet, flex-1 on desktop) ─── */}
+        <main className="flex-1 w-full min-w-0">
           {isLoading && (
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
               {[...Array(6)].map((_, i) => (
@@ -893,15 +944,15 @@ export default function Alternatives() {
                       </div>
 
                       {/* Learning Hub */}
-                      <div className="bg-bg-subtle rounded-2xl p-5 border border-border">
-                        <h3 className="text-lg font-bold text-text mb-4 flex items-center gap-2">
+                      <div className="bg-bg-subtle rounded-2xl p-4 sm:p-5 border border-border">
+                        <h3 className="text-base sm:text-lg font-bold text-text mb-3 sm:mb-4 flex items-center gap-2">
                           <PlayCircle className="w-5 h-5 text-red-500" /> Learning Hub
                         </h3>
                         <a 
                           href={selectedAlt.youtube_tutorial_url || `https://www.youtube.com/results?search_query=${encodeURIComponent(selectedAlt.resolved_name + ' tutorial')}`} 
                           target="_blank" 
                           rel="noreferrer"
-                          className="flex items-center gap-3 p-3 bg-bg rounded-xl border border-border hover:border-red-500/50 hover:bg-red-500/5 transition-all group"
+                          className="flex items-center gap-3 p-3 bg-bg rounded-xl border border-border hover:border-red-500/50 hover:bg-red-500/5 transition-all group touch-target"
                         >
                           <div className="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center flex-shrink-0">
                             <PlayCircle className="w-5 h-5 text-red-500 group-hover:scale-110 transition-transform" />
@@ -919,6 +970,89 @@ export default function Alternatives() {
           </div>
         )}
       </AnimatePresence>
+
+      {/* ─── Mobile Category Bottom Sheet Drawer ─── */}
+      <AnimatePresence>
+        {categoryDrawerOpen && (
+          <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 backdrop-blur-sm lg:hidden">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setCategoryDrawerOpen(false)}
+              className="absolute inset-0"
+            />
+            <motion.div
+              initial={{ y: '100%' }}
+              animate={{ y: 0 }}
+              exit={{ y: '100%' }}
+              transition={{ type: 'spring', damping: 28, stiffness: 300 }}
+              className="relative w-full max-h-[80vh] bg-bg-card border-t border-border rounded-t-3xl shadow-2xl flex flex-col z-10 pb-safe overflow-hidden"
+            >
+              {/* Handle Bar */}
+              <div className="flex justify-center pt-3 pb-1">
+                <div className="w-12 h-1.5 rounded-full bg-border-strong" />
+              </div>
+
+              {/* Drawer Header */}
+              <div className="p-4 border-b border-border flex items-center justify-between">
+                <h3 className="font-bold text-base text-text flex items-center gap-2">
+                  <Layers className="w-4 h-4 text-accent" /> Select Category
+                </h3>
+                <button 
+                  onClick={() => setCategoryDrawerOpen(false)}
+                  className="p-2 rounded-lg text-text-muted hover:text-text hover:bg-bg-hover transition-colors touch-target"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Categories List */}
+              <div className="flex-1 overflow-y-auto p-4 space-y-1 custom-scrollbar touch-scroll">
+                <button
+                  onClick={() => {
+                    setActiveCategory('All');
+                    setCategoryDrawerOpen(false);
+                  }}
+                  className={`w-full text-left px-4 py-3 rounded-xl text-sm font-semibold transition-colors flex items-center justify-between touch-target ${
+                    activeCategory === 'All'
+                      ? 'bg-accent text-accent-fg'
+                      : 'text-text-secondary hover:bg-bg-hover hover:text-text active:bg-bg-subtle'
+                  }`}
+                >
+                  <span>All Tools</span>
+                  <span className={`text-xs px-2 py-0.5 rounded-full font-bold ${activeCategory === 'All' ? 'bg-black/20 text-white' : 'bg-bg-subtle text-text-muted'}`}>
+                    {data?.stats?.total_tools || 0}
+                  </span>
+                </button>
+                {data?.categories?.map((cat) => (
+                  <button
+                    key={cat.name}
+                    onClick={() => {
+                      setActiveCategory(cat.name);
+                      setCategoryDrawerOpen(false);
+                    }}
+                    className={`w-full text-left px-4 py-3 rounded-xl text-sm font-semibold transition-colors flex items-center justify-between touch-target ${
+                      activeCategory === cat.name
+                        ? 'bg-accent text-accent-fg'
+                        : 'text-text-secondary hover:bg-bg-hover hover:text-text active:bg-bg-subtle'
+                    }`}
+                  >
+                    <span className="flex items-center gap-2.5 truncate">
+                      <span className="text-base">{categoryIcons[cat.name] || '📂'}</span>
+                      <span className="truncate">{cat.name}</span>
+                    </span>
+                    <span className={`text-xs px-2 py-0.5 rounded-full font-bold flex-shrink-0 ${activeCategory === cat.name ? 'bg-black/20 text-white' : 'bg-bg-subtle text-text-muted'}`}>
+                      {cat.count}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
+
