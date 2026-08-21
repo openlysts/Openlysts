@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Outlet } from 'react-router-dom';
-import { ArrowUp } from 'lucide-react';
+import { ArrowUp, WifiOff } from 'lucide-react';
 import Header from './Header';
 import Footer from './Footer';
 import BottomNav from './BottomNav';
@@ -12,9 +12,23 @@ import { useMobileLayout } from '@/lib/MobileLayoutContext';
 export default function OpenlystLayout() {
   const { isMobileLayout } = useMobileLayout();
   const [showScroll, setShowScroll] = useState(false);
+  const [isOffline, setIsOffline] = useState(!navigator.onLine);
   const glowRef = useRef(null);
   const posRef = useRef({ x: 50, y: 50 });
   const currentRef = useRef({ x: 50, y: 50 });
+
+  useEffect(() => {
+    const goOnline = () => setIsOffline(false);
+    const goOffline = () => setIsOffline(true);
+
+    window.addEventListener('online', goOnline);
+    window.addEventListener('offline', goOffline);
+
+    return () => {
+      window.removeEventListener('online', goOnline);
+      window.removeEventListener('offline', goOffline);
+    };
+  }, []);
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -63,6 +77,9 @@ export default function OpenlystLayout() {
   
   return (
     <div className="min-h-screen flex flex-col theme-transition relative">
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-bg focus:text-text focus:outline-none focus-visible:ring-2 focus-visible:ring-accent">
+        Skip to main content
+      </a>
       <ThreeBackground />
       {/* Interactive Cursor Spotlight Glow */}
       <div 
@@ -73,8 +90,14 @@ export default function OpenlystLayout() {
       {/* Ambient top hero glow */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-accent/12 via-transparent to-transparent pointer-events-none z-0" />
       <div className="relative z-10 flex flex-col flex-1">
+        {isOffline && (
+          <div className="bg-red-500/90 text-white text-center py-2 px-4 text-xs font-semibold flex items-center justify-center gap-2 backdrop-blur-md border-b border-red-500/20 z-50 sticky top-0 animate-in slide-in-from-top duration-300">
+            <WifiOff className="w-3.5 h-3.5" />
+            You are currently offline. Some features may be unavailable.
+          </div>
+        )}
         <Header />
-        <main id="main-content" role="main" className={`flex-1 transition-all duration-300 ease-in-out pb-16 sm:pb-0 ${isMobileLayout ? 'max-w-md w-full mx-auto shadow-2xl border-x border-border bg-bg/50' : ''}`}>
+        <main id="main-content" role="main" tabIndex="-1" className={`flex-1 transition-all duration-300 ease-in-out pb-16 sm:pb-0 ${isMobileLayout ? 'max-w-md w-full mx-auto shadow-2xl border-x border-border bg-bg/50' : ''}`}>
           <Outlet />
         </main>
         <footer role="contentinfo" className={`${isMobileLayout ? 'max-w-md w-full mx-auto' : ''}`}>

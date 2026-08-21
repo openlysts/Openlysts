@@ -251,6 +251,7 @@ export default function Alternatives() {
   const navigate = useNavigate();
   const categoryRefs = useRef({});
   const sortRef = useRef(null);
+  const previousFocusRef = useRef(null);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -267,6 +268,51 @@ export default function Alternatives() {
     const timeout = setTimeout(() => setDebouncedSearch(search), 300);
     return () => clearTimeout(timeout);
   }, [search]);
+
+  // Handle modal focus trap and Escape
+  useEffect(() => {
+    if (selectedAlt) {
+      previousFocusRef.current = document.activeElement;
+    } else {
+      if (previousFocusRef.current) {
+        setTimeout(() => previousFocusRef.current?.focus(), 0);
+      }
+      return;
+    }
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setSelectedAlt(null);
+      }
+      
+      if (e.key === 'Tab') {
+        const modal = document.getElementById('alt-detail-modal');
+        if (!modal) return;
+        
+        const focusableElements = modal.querySelectorAll(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusableElements.length === 0) return;
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+
+        if (e.shiftKey) {
+          if (document.activeElement === firstElement || document.activeElement === document.body) {
+            lastElement.focus();
+            e.preventDefault();
+          }
+        } else {
+          if (document.activeElement === lastElement || document.activeElement === document.body) {
+            firstElement.focus();
+            e.preventDefault();
+          }
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedAlt]);
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['alternatives', debouncedSearch, sortBy],
@@ -452,6 +498,8 @@ export default function Alternatives() {
             <div className="relative" ref={sortRef}>
               <button 
                 onClick={() => setIsSortOpen(!isSortOpen)}
+                aria-expanded={isSortOpen}
+                aria-haspopup="true"
                 className="flex items-center gap-1.5 sm:gap-2 bg-bg border border-border hover:border-accent/50 rounded-xl px-2.5 sm:px-3 py-2 text-xs sm:text-sm text-text-secondary font-medium transition-colors touch-target"
               >
                 <ArrowUpDown className="w-3.5 h-3.5 text-text-muted" />
@@ -788,7 +836,7 @@ export default function Alternatives() {
       {/* ─── Detail Modal ─── */}
       <AnimatePresence>
         {selectedAlt && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
+          <div id="alt-detail-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -808,7 +856,7 @@ export default function Alternatives() {
                     <div className="flex items-center gap-3 mb-2">
                       <ScoreRing score={selectedAlt.openlysts_score} size={52} strokeWidth={4} />
                       <div>
-                        <h2 className="text-2xl font-black text-text">{selectedAlt.resolved_name}</h2>
+                        <h2 id="modal-title" className="text-2xl font-black text-text">{selectedAlt.resolved_name}</h2>
                         <span className="text-xs font-bold text-text-muted uppercase">{getScoreLabel(selectedAlt.openlysts_score)} Alternative</span>
                       </div>
                     </div>
@@ -831,7 +879,7 @@ export default function Alternatives() {
                       </a>
                     </div>
                   </div>
-                  <button onClick={() => setSelectedAlt(null)} className="p-2 hover:bg-bg rounded-lg text-text-muted hover:text-text transition-colors">
+                  <button autoFocus onClick={() => setSelectedAlt(null)} className="p-2 hover:bg-bg rounded-lg text-text-muted hover:text-text transition-colors">
                     ✕
                   </button>
                </div>

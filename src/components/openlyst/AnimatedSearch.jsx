@@ -99,6 +99,7 @@ export default function AnimatedSearch({ className = '', size = 'default' }) {
           onFocus={() => setFocused(true)}
           onKeyDown={onKeyDown}
           placeholder="Search open-source projects..."
+          aria-label="Search open-source projects"
           className={`w-full bg-bg-card border border-border focus:border-accent focus:outline-none transition-all ${
             size === 'lg' 
               ? 'rounded-xl pl-12 pr-12 py-3.5 text-base shadow-md' 

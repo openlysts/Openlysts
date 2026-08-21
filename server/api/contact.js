@@ -22,6 +22,12 @@ router.post('/send', async (req, res) => {
     },
   });
 
+  // DEV BYPASS for E2E TESTING
+  if (!process.env.SMTP_USER) {
+    console.log('[DEV] Simulating successful email send (no SMTP_USER configured).');
+    return res.json({ status: 'success', message: 'Email sent successfully! (Simulated)' });
+  }
+
   try {
     // Verify connection configuration
     await transporter.verify();

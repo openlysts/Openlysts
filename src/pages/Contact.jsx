@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Mail, Github, MessageCircle } from 'lucide-react';
 
 export default function Contact() {
@@ -6,12 +6,15 @@ export default function Contact() {
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState(null);
   const [loading, setLoading] = useState(false);
+  const sendingRef = useRef(false);
 
   const getMessageBody = () => {
     return `${form.message}\n\n— ${form.name}${form.email ? ` (${form.email})` : ''}`;
   };
 
   const handleEmail = async () => {
+    if (sendingRef.current) return;
+    
     const newErrors = {};
     if (!form.name || !form.name.trim()) newErrors.name = 'Name is required';
     
@@ -31,6 +34,7 @@ export default function Contact() {
       return;
     }
     
+    sendingRef.current = true;
     setLoading(true);
     setStatus(null);
     try {
@@ -51,6 +55,7 @@ export default function Contact() {
       setStatus({ type: 'error', message: err.message });
     } finally {
       setLoading(false);
+      sendingRef.current = false;
     }
   };
 

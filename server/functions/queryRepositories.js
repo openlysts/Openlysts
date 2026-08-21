@@ -99,7 +99,8 @@ export default async function queryRepositories(req, res) {
       repos = repos.filter((r) => {
         const haystack = [
           r.name, r.full_name, r.description, r.owner, r.language,
-          (r.topics || []).join(' '), (r.categories || []).join(' '),
+          Array.isArray(r.topics) ? r.topics.join(' ') : '',
+          Array.isArray(r.categories) ? r.categories.join(' ') : '',
         ].join(' ').toLowerCase();
         return haystack.includes(query);
       });
@@ -182,6 +183,7 @@ export default async function queryRepositories(req, res) {
 
     return res.json({ results, total, page: pageNum, totalPages, perPage: PER_PAGE, categoryCounts });
   } catch (error) {
-    return res.status(500).json({ error: true, message: error.message });
+    console.error('queryRepositories 500 ERROR:', error);
+    return res.status(500).json({ error: true, message: error.message || "Internal Server Error" });
   }
 }

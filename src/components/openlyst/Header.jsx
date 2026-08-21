@@ -6,7 +6,6 @@ import { Bookmark, Menu, X, Settings as SettingsIcon, Smartphone, Monitor, Searc
 import ThemeToggle from './ThemeToggle';
 import { getBookmarks } from '@/lib/bookmarks';
 import { useMobileLayout } from '@/lib/MobileLayoutContext';
-import CommandPalette from './CommandPalette';
 import { useAuth } from '@/lib/AuthContext';
 import { useLogoEasterEgg } from '@/hooks/useLogoEasterEgg';
 import MagneticButton from '@/components/ui/MagneticButton';
@@ -46,21 +45,28 @@ export default function Header() {
     setMobileOpen(false);
   }, [location.pathname]);
 
-  // Lock body scroll when mobile navigation drawer is open
+  // Lock body scroll when mobile navigation drawer is open and handle ESC key
   useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && mobileOpen) {
+        setMobileOpen(false);
+      }
+    };
+
     if (mobileOpen) {
       document.body.style.overflow = 'hidden';
+      window.addEventListener('keydown', handleKeyDown);
     } else {
       document.body.style.overflow = '';
     }
     return () => {
       document.body.style.overflow = '';
+      window.removeEventListener('keydown', handleKeyDown);
     };
   }, [mobileOpen]);
 
   const openSearch = () => {
-    const event = new KeyboardEvent('keydown', { key: 'k', metaKey: true });
-    window.dispatchEvent(event);
+    window.dispatchEvent(new CustomEvent('open-command-palette'));
   };
 
   return (
@@ -68,9 +74,9 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-16 gap-3">
           {/* Logo */}
-          <Link to="/discover" onClick={triggerConfetti} className="flex items-center gap-2 flex-shrink-0 group" aria-label="Openlysts Home">
+          <Link to="/discover" onClick={triggerConfetti} className="flex items-center gap-2 flex-shrink-0 group touch-target" aria-label="Openlysts Home">
             <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-bg-card border border-border shadow-sm overflow-hidden flex items-center justify-center backdrop-blur-md group-hover:scale-105 group-hover:border-accent/40 transition-all duration-300">
-              <img src="/logo.png" alt="" className="w-7 h-7 sm:w-8 sm:h-8 object-contain animate-logo-enter filter drop-shadow-sm" />
+              <img src="/logo.png" alt="Openlysts Logo" className="w-7 h-7 sm:w-8 sm:h-8 object-contain animate-logo-enter filter drop-shadow-sm" />
             </div>
             <span className="text-lg sm:text-xl font-black tracking-tight text-text hidden sm:block">Openlysts</span>
           </Link>
@@ -168,7 +174,7 @@ export default function Header() {
             
             {/* Auth Buttons */}
             {user ? (
-              <Link to="/profile" className="ml-1 flex items-center justify-center w-8 h-8 rounded-full bg-accent/20 text-accent font-bold text-sm hover:bg-accent/30 transition-colors" title="Profile">
+              <Link to="/profile" className="ml-1 flex items-center justify-center w-8 h-8 rounded-full bg-accent/20 text-accent font-bold text-sm hover:bg-accent/30 transition-colors touch-target" title="Profile">
                 {(user.name || user.email || 'U')[0].toUpperCase()}
               </Link>
             ) : (
@@ -220,7 +226,7 @@ export default function Header() {
                 <div className="p-5 border-b border-border flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
                     <div className="w-8 h-8 rounded-lg bg-bg border border-border flex items-center justify-center">
-                      <img src="/logo.png" alt="" className="w-6 h-6 object-contain" />
+                      <img src="/logo.png" alt="Openlysts Logo" className="w-6 h-6 object-contain" />
                     </div>
                     <span className="font-bold text-base text-text">Openlysts</span>
                   </div>
@@ -326,8 +332,6 @@ export default function Header() {
         </AnimatePresence>,
         document.body
       )}
-
-      <CommandPalette />
     </header>
   );
-}
+}

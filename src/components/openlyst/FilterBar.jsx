@@ -69,6 +69,7 @@ export default function FilterBar({ filters, onChange, languages = [] }) {
             <select
               value={filters.sort || 'trending'}
               onChange={(e) => update('sort', e.target.value)}
+              aria-label="Sort repositories"
               className="w-full h-10 sm:h-9 text-sm bg-bg-card border border-border rounded-xl px-3 pr-8 text-text-secondary font-medium cursor-pointer hover:border-border-strong focus:outline-none focus:border-accent appearance-none transition-colors"
             >
               {SORTS.map((s) => <option key={s.value} value={s.value}>Sort: {s.label}</option>)}

@@ -24,7 +24,7 @@ export default function CompareDock() {
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: 100, opacity: 0 }}
-        className="fixed bottom-16 sm:bottom-6 left-1/2 -translate-x-1/2 z-50 bg-bg-card/95 backdrop-blur-xl border border-border shadow-2xl rounded-2xl p-2 sm:p-3 flex items-center gap-2 sm:gap-4 w-[95%] max-w-2xl"
+        className="fixed bottom-20 sm:bottom-6 left-1/2 -translate-x-1/2 z-50 bg-bg-card/95 backdrop-blur-xl border border-border shadow-2xl rounded-2xl p-2 sm:p-3 flex items-center gap-2 sm:gap-4 w-[95%] max-w-2xl"
       >
         <div className="flex items-center gap-1.5 sm:gap-2 px-1 sm:px-2 text-text flex-shrink-0">
           <GitCompare className="w-4 h-4 sm:w-5 sm:h-5 text-accent" />

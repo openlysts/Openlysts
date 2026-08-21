@@ -171,8 +171,8 @@ export default function RepositoryCard({ repo, index = 0 }) {
           )}
 
           {/* Name + owner */}
-          <div className="flex justify-between items-start mb-1.5 pr-8">
-            <div className="min-w-0 flex-1 pr-2">
+          <div className="flex justify-between items-start mb-1.5 pr-20">
+            <div className="min-w-0 flex-1">
               <Link 
                 to={repoUrl}
                 onClick={(e) => e.stopPropagation()}
@@ -182,7 +182,6 @@ export default function RepositoryCard({ repo, index = 0 }) {
               </Link>
               <p className="text-text-muted text-xs mt-0.5 truncate">{owner || repo?.owner}</p>
             </div>
-            <LicenseBadge repo={repo} />
           </div>
 
           {/* Description */}
@@ -232,7 +231,7 @@ export default function RepositoryCard({ repo, index = 0 }) {
           )}
 
           {/* Stats row */}
-          <div className="flex items-center gap-3 text-xs text-text-muted mb-2.5">
+          <div className="flex items-center gap-3 text-xs text-text-muted mb-2.5 flex-wrap">
             <span className="flex items-center gap-1">
               <Star className="w-3.5 h-3.5" />
               {formatStars(repo?.stars)}
@@ -247,6 +246,7 @@ export default function RepositoryCard({ repo, index = 0 }) {
                 {repo.language}
               </span>
             )}
+            <LicenseBadge repo={repo} />
           </div>
 
           {/* Footer: updated */}

@@ -1,4 +1,4 @@
-# Openlysts Architecture Document
+# Openlysts Architecture Document (v1.1.0)
 
 This document outlines the complete, ground-up architecture of the Openlyst platform. Use this as a reference if you ever need to rebuild the application from scratch or deeply understand its moving parts.
 
@@ -16,6 +16,8 @@ The application uses a full-stack JavaScript architecture, designed to run both 
 - **State Management / Data Fetching**: TanStack React Query (v5)
 - **Styling**: Tailwind CSS + standard CSS (`index.css`)
 - **UI Components**: Shadcn UI (Radix primitives), Framer Motion (animations), Lucide React (icons).
+- **Global State Contexts**: `AuthContext` (user session), `CompareContext` (side-by-side repo comparison up to 3), `BookmarkContext` (local-storage bookmarks).
+- **PWA**: Vite Plugin PWA with Workbox — full offline caching, installable on desktop & mobile, custom icons.
 
 ### Backend (Server)
 - **Runtime**: Node.js
@@ -63,12 +65,23 @@ openlyst/
 ├── src/                        # React Frontend
 │   ├── api/                    # API clients
 │   │   └── localClient.js      # Fetch wrapper for generic entity calls
-│   ├── components/             # Reusable UI components
+│   ├── components/
+│   │   ├── openlyst/           # Core discovery UI components
+│   │   │   ├── RepositoryCard.jsx  # Card with Compare & Bookmark actions (top-right absolute, pr-20 clearance)
+│   │   │   ├── LicenseBadge.jsx    # License chip (now in stats row)
+│   │   │   ├── CompareBar.jsx      # Sticky bottom comparison tray
+│   │   │   └── RepoVideoLinks.jsx  # Embedded video explanation links
+│   │   └── ui/                 # Shadcn + custom UI primitives
 │   ├── lib/                    # Utilities and configuration
 │   │   ├── local-runtime/      # Auth client wrapper communicating with Express
+│   │   ├── CompareContext.jsx   # Global context for side-by-side comparison
+│   │   ├── bookmarks.js        # LocalStorage bookmark helpers
 │   │   ├── api.js              # Wrappers around localClient calls
 │   │   └── AuthContext.jsx     # Global authentication state
 │   └── pages/                  # Top-level route components (Home, Search, Admin, etc.)
+├── public/
+│   ├── sw.js                   # Service Worker (Workbox via vite-plugin-pwa)
+│   └── manifest.webmanifest    # PWA manifest (icons, theme, display mode)
 └── package.json
 ```
 

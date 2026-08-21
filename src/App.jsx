@@ -24,6 +24,8 @@ import Trending from './pages/Trending';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Compare from './pages/Compare';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
 
 // Auth Pages
 import Login from './pages/Login';
@@ -65,6 +67,8 @@ function App() {
                     <Route path="/about" element={<About />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/compare" element={<Compare />} />
+                    <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                    <Route path="/terms-of-service" element={<TermsOfService />} />
                     <Route path="/bookmarks" element={<Bookmarks />} />
                     
                     {/* Protected Routes */}

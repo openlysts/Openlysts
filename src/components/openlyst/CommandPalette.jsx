@@ -17,26 +17,66 @@ export default function CommandPalette() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const navigate = useNavigate();
   const inputRef = useRef(null);
+  const previousFocusRef = useRef(null);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
         setIsOpen((open) => !open);
       }
+      
+      if (!isOpen) return;
+
       if (e.key === 'Escape') {
         setIsOpen(false);
       }
+      
+      if (e.key === 'Tab') {
+        const modal = document.getElementById('command-palette-dialog');
+        if (!modal) return;
+        
+        const focusableElements = modal.querySelectorAll(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusableElements.length === 0) return;
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+
+        if (e.shiftKey) {
+          if (document.activeElement === firstElement || document.activeElement === document.body) {
+            lastElement.focus();
+            e.preventDefault();
+          }
+        } else {
+          if (document.activeElement === lastElement || document.activeElement === document.body) {
+            firstElement.focus();
+            e.preventDefault();
+          }
+        }
+      }
     };
+    
+    const handleOpenCommand = () => setIsOpen(true);
+    
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+    window.addEventListener('open-command-palette', handleOpenCommand);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('open-command-palette', handleOpenCommand);
+    };
+  }, [isOpen]);
 
   useEffect(() => {
     if (isOpen) {
+      previousFocusRef.current = document.activeElement;
       setSearch('');
       setSelectedIndex(0);
       setTimeout(() => inputRef.current?.focus(), 50);
+    } else {
+      if (previousFocusRef.current) {
+        setTimeout(() => previousFocusRef.current?.focus(), 0);
+      }
     }
   }, [isOpen]);
 
@@ -86,7 +126,7 @@ export default function CommandPalette() {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[100] flex items-start justify-center pt-[15vh] px-4 sm:px-6">
+        <div id="command-palette-dialog" role="dialog" aria-modal="true" aria-label="Command Palette" className="fixed inset-0 z-[100] flex items-start justify-center pt-[15vh] px-4 sm:px-6">
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

@@ -96,6 +96,8 @@ export default function Admin() {
   const [sandboxQuery, setSandboxQuery] = useState('topic:rag stars:>500');
   const [sandboxResults, setSandboxResults] = useState(null);
   const [isSandboxing, setIsSandboxing] = useState(false);
+  const [showAltModal, setShowAltModal] = useState(false);
+  const [newAlt, setNewAlt] = useState({ paid_tool_name: '', free_tool_name: '', free_tool_repo: '', category: '', migration_difficulty: 'Medium', feature_parity_score: '' });
 
   // New Discovery Query Form
   const [newQueryString, setNewQueryString] = useState('');
@@ -201,6 +203,22 @@ export default function Admin() {
     }
   };
 
+  const handleMapAlternative = async (e) => {
+    e.preventDefault();
+    try {
+      await localClient.entities.Alternative.create({
+        ...newAlt,
+        feature_parity_score: parseFloat(newAlt.feature_parity_score) || 0
+      });
+      setShowAltModal(false);
+      refetchAlts();
+      setNewAlt({ paid_tool_name: '', free_tool_name: '', free_tool_repo: '', category: '', migration_difficulty: 'Medium', feature_parity_score: '' });
+      toast({ title: 'Success', description: 'Alternative mapped successfully' });
+    } catch (err) {
+      toast({ title: 'Error', description: err.message, variant: 'destructive' });
+    }
+  };
+
   const handleRunSandbox = async (e) => {
     e.preventDefault();
     if (!sandboxQuery.trim()) return;
@@ -226,14 +244,17 @@ export default function Admin() {
     e.preventDefault();
     if (!newQueryString.trim()) return;
     try {
-      await localClient.entities.DiscoveryQuery.create({
-        query_string: newQueryString.trim(),
-        category_hint: newQueryCategory,
-        enabled: true,
-      });
+      const queries = newQueryString.split('\n').map(q => q.trim()).filter(Boolean);
+      await Promise.all(queries.map(q => 
+        localClient.entities.DiscoveryQuery.create({
+          query_string: q,
+          category_hint: newQueryCategory,
+          enabled: true,
+        })
+      ));
       setNewQueryString('');
       refetchQueries();
-      toast({ title: 'Query Created', description: `Added "${newQueryString}" to discovery schedule.` });
+      toast({ title: 'Queries Created', description: `Added ${queries.length} queries to discovery schedule.` });
     } catch (err) {
       toast({ title: 'Error', description: err.message, variant: 'destructive' });
     }
@@ -468,6 +489,15 @@ export default function Admin() {
           </button>
 
           <button
+            onClick={() => handleGlobalAction('Reclassify Categories', reclassifyRepos)}
+            disabled={!!runningAction}
+            className="px-3.5 py-2 rounded-xl bg-bg-card border border-border text-text hover:text-accent hover:border-accent/40 text-xs font-semibold shadow-sm active:scale-95 transition-all flex items-center gap-1.5 touch-target disabled:opacity-50"
+          >
+            {runningAction === 'Reclassify Categories' ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Layers className="w-3.5 h-3.5" />}
+            <span>Reclassify Categories</span>
+          </button>
+
+          <button
             onClick={handleFlushCache}
             disabled={!!runningAction}
             className="p-2 rounded-xl bg-bg-card border border-border text-text-muted hover:text-text hover:border-accent/40 shadow-sm active:scale-95 transition-all touch-target"
@@ -655,13 +685,13 @@ export default function Admin() {
             <form onSubmit={handleForceSync} className="space-y-3">
               <div className="flex flex-col sm:flex-row gap-3">
                 <div className="flex-1">
-                  <input
-                    type="text"
+                  <textarea
                     placeholder="e.g. facebook/react, https://github.com/vllm-project/vllm (or multi-line batch)"
                     value={syncInput}
                     onChange={(e) => setSyncInput(e.target.value)}
-                    className="w-full bg-bg-card border border-border rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-text placeholder-text-muted focus:outline-none focus:border-accent"
+                    className="w-full bg-bg-card border border-border rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-text placeholder-text-muted focus:outline-none focus:border-accent min-h-[42px] max-h-32 resize-y"
                     required
+                    rows={1}
                   />
                 </div>
                 <div className="sm:w-56">
@@ -708,6 +738,15 @@ export default function Admin() {
                 >
                   <option value="all">All Categories</option>
                   {CATEGORIES.map(c => <option key={c.slug} value={c.label}>{c.label}</option>)}
+                </select>
+                <select
+                  value={repoLicenseFilter}
+                  onChange={(e) => setRepoLicenseFilter(e.target.value)}
+                  className="bg-bg-subtle border border-border rounded-xl px-2.5 py-1.5 text-xs text-text focus:outline-none focus:border-accent"
+                >
+                  <option value="all">All Licenses</option>
+                  <option value="verified_oss">Verified OSS</option>
+                  <option value="unknown">Unknown</option>
                 </select>
               </div>
 
@@ -865,9 +904,54 @@ export default function Admin() {
       {/* ─── TAB 3: SAAS ALTERNATIVES STUDIO ─── */}
       {activeTab === 'alternatives' && (
         <div className="space-y-6">
+          {/* MAP NEW ALTERNATIVE MODAL */}
+          {showAltModal && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+              <div className="bg-bg-card border border-border rounded-xl w-full max-w-lg p-6 shadow-2xl">
+                <h3 className="text-lg font-bold text-text mb-4">Map New SaaS Alternative</h3>
+                <form onSubmit={handleMapAlternative} className="space-y-4">
+                  <div>
+                    <label className="text-xs text-text-secondary block mb-1">Proprietary SaaS (e.g. Firebase)</label>
+                    <input required className="w-full bg-bg border border-border rounded p-2 text-sm text-text" value={newAlt.paid_tool_name} onChange={e => setNewAlt({...newAlt, paid_tool_name: e.target.value})} />
+                  </div>
+                  <div>
+                    <label className="text-xs text-text-secondary block mb-1">Open Source Repo (e.g. Supabase)</label>
+                    <input required className="w-full bg-bg border border-border rounded p-2 text-sm text-text" value={newAlt.free_tool_name} onChange={e => setNewAlt({...newAlt, free_tool_name: e.target.value})} />
+                  </div>
+                  <div>
+                    <label className="text-xs text-text-secondary block mb-1">GitHub Repo Slug (e.g. supabase/supabase)</label>
+                    <input required className="w-full bg-bg border border-border rounded p-2 text-sm text-text" value={newAlt.free_tool_repo} onChange={e => setNewAlt({...newAlt, free_tool_repo: e.target.value})} />
+                  </div>
+                  <div>
+                    <label className="text-xs text-text-secondary block mb-1">Category (e.g. Databases & Backend)</label>
+                    <input required className="w-full bg-bg border border-border rounded p-2 text-sm text-text" value={newAlt.category} onChange={e => setNewAlt({...newAlt, category: e.target.value})} />
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-xs text-text-secondary block mb-1">Migration Difficulty</label>
+                      <select className="w-full bg-bg border border-border rounded p-2 text-sm text-text" value={newAlt.migration_difficulty} onChange={e => setNewAlt({...newAlt, migration_difficulty: e.target.value})}>
+                        <option>Easy</option><option>Medium</option><option>Hard</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="text-xs text-text-secondary block mb-1">Match Score (%)</label>
+                      <input required type="number" className="w-full bg-bg border border-border rounded p-2 text-sm text-text" value={newAlt.feature_parity_score} onChange={e => setNewAlt({...newAlt, feature_parity_score: e.target.value})} />
+                    </div>
+                  </div>
+                  <div className="flex justify-end gap-3 mt-6">
+                    <button type="button" onClick={() => setShowAltModal(false)} className="px-4 py-2 rounded text-sm text-text border border-border hover:bg-bg-subtle">Cancel</button>
+                    <button type="submit" className="px-4 py-2 rounded text-sm bg-emerald-500 text-black font-bold hover:bg-emerald-400">Submit</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          )}
           <div className="card p-5 sm:p-6 bg-gradient-to-r from-emerald-500/5 via-bg-card to-bg-card border-emerald-500/20">
-            <h3 className="font-bold text-text text-sm sm:text-base mb-1 flex items-center gap-2">
-              <Layers className="w-4 h-4 text-emerald-400" /> SaaS Alternative Mapping Studio
+            <h3 className="font-bold text-text text-sm sm:text-base mb-1 flex items-center justify-between gap-2">
+              <span className="flex items-center gap-2"><Layers className="w-4 h-4 text-emerald-400" /> SaaS Alternative Mapping Studio</span>
+              <button onClick={() => setShowAltModal(true)} className="px-4 py-1.5 rounded-lg bg-emerald-500 text-black text-xs font-bold hover:opacity-90 active:scale-95 transition-all shadow-sm">
+                Map New Alternative
+              </button>
             </h3>
             <p className="text-xs text-text-secondary">
               Map and manage curated open-source alternatives for proprietary SaaS products with migration difficulty ratings and feature parity scores.
@@ -976,12 +1060,11 @@ export default function Admin() {
             <h3 className="font-bold text-text text-sm">Scheduled Discovery Queries ({queries.length})</h3>
             
             <form onSubmit={handleAddDiscoveryQuery} className="flex flex-col sm:flex-row gap-3">
-              <input
-                type="text"
-                placeholder="New discovery query (e.g. topic:ai-agents stars:>100)"
+              <textarea
+                placeholder="New discovery query (e.g. topic:ai-agents stars:>100)&#10;Support multiple separated by newlines."
                 value={newQueryString}
                 onChange={(e) => setNewQueryString(e.target.value)}
-                className="flex-1 bg-bg-subtle border border-border rounded-xl px-3 py-2 text-xs text-text focus:outline-none focus:border-accent"
+                className="flex-1 bg-bg-subtle border border-border rounded-xl px-3 py-2 text-xs text-text focus:outline-none focus:border-accent min-h-[40px] resize-y"
                 required
               />
               <select
@@ -1286,6 +1369,26 @@ export default function Admin() {
                       rows={3}
                       value={editingRepo.description || ''}
                       onChange={(e) => setEditingRepo({ ...editingRepo, description: e.target.value })}
+                      className="w-full bg-bg-subtle border border-border rounded-xl px-3 py-2 text-text focus:border-accent outline-none"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="font-bold text-text mb-1 block">Categories (comma separated)</label>
+                    <input
+                      type="text"
+                      value={Array.isArray(editingRepo.categories) ? editingRepo.categories.join(', ') : (editingRepo.categories || '')}
+                      onChange={(e) => setEditingRepo({ ...editingRepo, categories: e.target.value.split(',').map(s => s.trim()).filter(Boolean) })}
+                      className="w-full bg-bg-subtle border border-border rounded-xl px-3 py-2 text-text focus:border-accent outline-none"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="font-bold text-text mb-1 block">Tags (comma separated)</label>
+                    <input
+                      type="text"
+                      value={Array.isArray(editingRepo.tags) ? editingRepo.tags.join(', ') : (editingRepo.tags || '')}
+                      onChange={(e) => setEditingRepo({ ...editingRepo, tags: e.target.value.split(',').map(s => s.trim()).filter(Boolean) })}
                       className="w-full bg-bg-subtle border border-border rounded-xl px-3 py-2 text-text focus:border-accent outline-none"
                     />
                   </div>

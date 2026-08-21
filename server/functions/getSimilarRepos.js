@@ -6,6 +6,8 @@ export default async function getSimilarRepos(req, res) {
     if (!fullName) {
       return res.status(400).json({ error: true, message: 'Missing fullName' });
     }
+    
+    console.log('[getSimilarRepos] Requested for:', fullName);
 
     const allRepos = await entities.Repository.list('-created_date', 3000);
     const targetRepo = allRepos.find((r) => (r.full_name || '').toLowerCase() === fullName.toLowerCase());

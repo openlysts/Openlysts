@@ -76,7 +76,7 @@ Before running any test, simulate the mindset of these personas. Each reveals di
 
 ## PHASE 1: Initial Load & Application Shell
 
-### TC-001: Homepage Cold Load
+### TC-001: Welcome Page Cold Load
 
 - Navigate to `http://localhost:5173`
 - **Verify**: Document title equals "Openlysts — Discover Open-Source Projects"
@@ -84,9 +84,16 @@ Before running any test, simulate the mindset of these personas. Each reveals di
 - **Verify**: No WebGL context errors in console
 - **Verify**: No horizontal scrollbar (`document.documentElement.scrollWidth <= document.documentElement.clientWidth`)
 - **Verify**: Page loads in under 3 seconds (check performance marks)
-- **Verify**: Hero heading "DISCOVER EVERYTHING ON GITHUB" is visible
-- **Verify**: Subheading and search bar visible above fold
-- **Screenshot**: Save as `tc001_homepage_load.png`
+- **Verify**: "Openlysts" particle text is visible
+- **Verify**: Subheading "Explore, compare, and discover..." is visible
+- **Screenshot**: Save as `tc001_welcome_load.png`
+
+### TC-001b: Discover Page Cold Load
+
+- Navigate to `http://localhost:5173/discover`
+- **Verify**: Hero heading "DISCOVER EVERYTHING ON GITHUB." (case-insensitive) is visible
+- **Verify**: Search bar is visible above fold
+- **Screenshot**: Save as `tc001b_discover_load.png`
 
 ### TC-002: Meta Tags & SEO Audit
 

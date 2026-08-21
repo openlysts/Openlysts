@@ -276,15 +276,15 @@ router.post('/repos/bulk', async (req, res) => {
     }
 
     if (action === 'delete') {
-      await db.query('DELETE FROM "Repository" WHERE id = ANY($1)', [ids]);
+      await db.query('DELETE FROM "Repository" WHERE id = ANY($1::text[])', [ids]);
     } else if (action === 'hide') {
-      await db.query('UPDATE "Repository" SET hidden = true, updated_at = NOW() WHERE id = ANY($1)', [ids]);
+      await db.query('UPDATE "Repository" SET hidden = 1, updated_at = NOW() WHERE id = ANY($1::text[])', [ids]);
     } else if (action === 'unhide') {
-      await db.query('UPDATE "Repository" SET hidden = false, updated_at = NOW() WHERE id = ANY($1)', [ids]);
+      await db.query('UPDATE "Repository" SET hidden = 0, updated_at = NOW() WHERE id = ANY($1::text[])', [ids]);
     } else if (action === 'feature') {
-      await db.query('UPDATE "Repository" SET featured = true, updated_at = NOW() WHERE id = ANY($1)', [ids]);
+      await db.query('UPDATE "Repository" SET featured = 1, updated_at = NOW() WHERE id = ANY($1::text[])', [ids]);
     } else if (action === 'unfeature') {
-      await db.query('UPDATE "Repository" SET featured = false, updated_at = NOW() WHERE id = ANY($1)', [ids]);
+      await db.query('UPDATE "Repository" SET featured = 0, updated_at = NOW() WHERE id = ANY($1::text[])', [ids]);
     }
 
     invalidateRepositoriesCache();

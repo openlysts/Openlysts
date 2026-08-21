@@ -9,6 +9,8 @@ import { isBookmarked, toggleBookmark } from '@/lib/bookmarks';
 import { getRepoReadme, getSimilarRepos, getRepoHistory } from '@/lib/api';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
+import rehypeHighlight from 'rehype-highlight';
+import 'highlight.js/styles/atom-one-dark.css';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 import LicenseBadge from '@/components/openlyst/LicenseBadge';
 import RepoVideoLinks from '@/components/openlyst/RepoVideoLinks';
@@ -292,7 +294,7 @@ export default function RepoDetail() {
                     <div className="h-5 bg-bg-subtle rounded w-1/2 mt-4"></div>
                   </div>
                 ) : readme ? (
-                  <ReactMarkdown rehypePlugins={[rehypeRaw]}>{readme}</ReactMarkdown>
+                  <ReactMarkdown rehypePlugins={[rehypeRaw, rehypeHighlight]}>{readme}</ReactMarkdown>
                 ) : (
                   <p className="text-text-muted italic">No README found for this repository.</p>
                 )}

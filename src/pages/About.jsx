@@ -16,7 +16,7 @@ export default function About() {
           The Discovery Engine
         </motion.div>
         <div className="flex items-center justify-center gap-4 mb-6">
-          <div className="relative w-24 h-24 sm:w-32 sm:h-32 rounded-2xl bg-white shadow-md overflow-hidden flex items-center justify-center [perspective:1000px]">
+          <div className="relative w-24 h-24 sm:w-32 sm:h-32 rounded-2xl bg-bg-card border border-border/50 shadow-md overflow-hidden flex items-center justify-center [perspective:1000px]">
             <img src="/logo.png" alt="Openlysts" className="w-20 h-20 sm:w-28 sm:h-28 object-contain animate-logo-enter" />
           </div>
           <h1 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-text to-text-secondary tracking-tight">About Openlysts</h1>
@@ -111,6 +111,23 @@ export default function About() {
           </div>
         </div>
       </motion.div>
+
+      {/* FAQ Section */}
+      <div className="mb-20 max-w-3xl mx-auto">
+        <h2 className="text-2xl font-bold text-center text-text mb-8">Frequently Asked Questions</h2>
+        <div className="space-y-4">
+          {[
+            { q: 'How often is the data updated?', a: 'We sync with GitHub every few hours to ensure all repository metrics, trending scores, and metadata are fresh.' },
+            { q: 'How are trending scores calculated?', a: 'Trending scores are based on a proprietary algorithm that weights recent stars, forks, issue activity, and commit velocity to surface projects gaining real momentum.' },
+            { q: 'Is Openlysts free to use?', a: 'Yes! Openlysts is completely free for developers and open-source enthusiasts.' }
+          ].map((faq, idx) => (
+            <div key={idx} className="p-5 rounded-2xl bg-bg-card border border-border">
+              <h3 className="font-semibold text-text mb-2">{faq.q}</h3>
+              <p className="text-text-secondary">{faq.a}</p>
+            </div>
+          ))}
+        </div>
+      </div>
 
       {/* CTA */}
       <div className="text-center">

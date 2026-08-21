@@ -6,7 +6,7 @@
   **The Ultimate Open-Source Discovery Engine**
 
   <p align="center">
-    <img src="https://img.shields.io/badge/Version-v1.0.0-8b5cf6?style=for-the-badge" alt="Version" />
+    <img src="https://img.shields.io/badge/Version-v1.1.0-8b5cf6?style=for-the-badge" alt="Version" />
     <img src="https://img.shields.io/badge/Build-Passing-3b82f6?style=for-the-badge" alt="Build" />
     <img src="https://img.shields.io/badge/Status-Active-f59e0b?style=for-the-badge" alt="Status" />
     <img src="https://img.shields.io/badge/License-MIT-10b981?style=for-the-badge" alt="License" />
@@ -29,11 +29,14 @@
 
 - 🚀 **Trending & Hot Projects**: A continuously updated feed of repositories gaining momentum right now.
 - 🔍 **Lightning-Fast Search**: Press `⌘ + K` to instantly access our Spotlight-style command palette for quick navigation.
-- 🆚 **Smart Alternatives**: Find high-quality, self-hosted open-source alternatives to expensive SaaS products with direct feature comparisons.
+- 🆚 **Smart Alternatives**: Find self-hosted open-source alternatives to expensive SaaS products with direct feature comparisons.
+- ⚖️ **Side-by-Side Compare**: Select up to 3 repositories and compare stars, forks, license, language, and quality score in one view.
 - 📊 **Deep Insights**: View repository health, maintenance activity, contributor stats, and quality scores at a glance.
 - 🎨 **Multiple Gorgeous Themes**: Personalize your experience with built-in themes including Dark, Light, Ocean, Dracula, Forest, and more.
-- 💾 **Local Bookmarks**: Save your favorite projects locally without needing to create an account.
-- 🛠️ **Local-First Architecture**: Powered entirely by a lightweight, standalone SQLite + Express backend.
+- 💾 **Local Bookmarks**: Save your favorite projects locally — no account required. Bookmark icon is on every card.
+- 📲 **Progressive Web App (PWA)**: Installable on desktop and mobile. Works offline with full Service Worker caching.
+- 🔐 **Full Authentication Suite**: Email/Password, Google OAuth, GitHub OAuth, email verification, and password resets.
+- 🛡️ **Admin Dashboard**: Manage users, ingestion runs, audit logs, and repository studio from a secure admin panel.
 
 ---
 

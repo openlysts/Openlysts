@@ -6,7 +6,6 @@ export function useLogoEasterEgg() {
   const clickTimer = useRef(null);
 
   const handleLogoClick = useCallback((e) => {
-    e.preventDefault();
     clickCount.current += 1;
 
     if (clickTimer.current) {
