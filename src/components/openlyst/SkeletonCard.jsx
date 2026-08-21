@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 
 export default function SkeletonCard() {
   return (
-    <div className="card relative overflow-hidden p-4 h-[210px] flex flex-col border border-border/40 bg-surface/30 backdrop-blur-sm" aria-hidden="true">
+    <div className="card relative overflow-hidden p-4 h-[210px] flex flex-col border border-border/40 bg-bg-card/40 backdrop-blur-sm" aria-hidden="true">
       <motion.div
         className="absolute inset-0 w-[200%] bg-gradient-to-r from-transparent via-white/10 dark:via-white/5 to-transparent skew-x-[-20deg]"
         animate={{ x: ['-100%', '50%'] }}

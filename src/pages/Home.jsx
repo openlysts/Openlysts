@@ -111,7 +111,7 @@ export default function Home() {
             animate={{ y: 0, opacity: 1, x: '-50%' }}
             exit={{ y: -100, opacity: 0, x: '-50%' }}
             transition={{ type: "spring", stiffness: 300, damping: 25 }}
-            className="fixed top-6 left-1/2 z-50 hidden md:flex items-center gap-1.5 p-1.5 rounded-full bg-surface/60 backdrop-blur-2xl border border-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_8px_32px_rgba(0,0,0,0.2)]"
+            className="fixed top-6 left-1/2 z-50 hidden md:flex items-center gap-1.5 p-1.5 rounded-full bg-bg-card/90 backdrop-blur-2xl border border-border shadow-2xl"
           >
             {QUICK_CATEGORIES.map((cat) => {
               const Icon = cat.icon;
@@ -119,7 +119,7 @@ export default function Home() {
                 <button
                   key={cat.id}
                   onClick={() => updateFilters({ categories: [cat.id] })}
-                  className="group relative px-4 py-2 rounded-full text-sm font-medium text-text-secondary hover:text-text transition-colors flex items-center gap-2 hover:bg-white/10"
+                  className="group relative px-4 py-2 rounded-full text-sm font-medium text-text-secondary hover:text-accent transition-colors flex items-center gap-2 hover:bg-bg-hover"
                 >
                   <Icon className="w-4 h-4 opacity-70 group-hover:opacity-100 transition-opacity" />
                   {cat.name}

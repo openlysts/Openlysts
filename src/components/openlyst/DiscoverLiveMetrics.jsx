@@ -28,7 +28,7 @@ function CategoryChip({ cat, actualCount }) {
       whileHover={{ y: -3 }}
       whileTap={{ y: 0 }}
       onClick={() => navigate(`/search?categories=${encodeURIComponent(cat.id)}`)}
-      className={`group/chip relative flex flex-col justify-between w-full h-[88px] p-3 rounded-xl border ${cat.border} bg-gradient-to-br ${cat.color} hover:shadow-md transition-all duration-200 text-left`}
+      className={`group/chip relative flex flex-col justify-between w-full h-full min-h-[96px] p-2.5 sm:p-3 rounded-xl border ${cat.border} bg-gradient-to-br ${cat.color} hover:shadow-md transition-all duration-200 text-left`}
     >
       <div className="flex items-center justify-between w-full">
         <div className={`p-1.5 rounded-lg bg-black/5 dark:bg-black/20 ${cat.text}`}>
@@ -36,8 +36,8 @@ function CategoryChip({ cat, actualCount }) {
         </div>
         <ArrowUpRight className="w-3.5 h-3.5 text-text-muted opacity-0 group-hover/chip:opacity-100 transition-opacity" />
       </div>
-      <div>
-        <span className="text-[12px] font-semibold text-text line-clamp-1 block">
+      <div className="mt-2 w-full">
+        <span className="text-[12px] font-semibold text-text truncate block leading-tight" title={cat.name}>
           {cat.name}
         </span>
         <span className={`text-xs font-bold ${cat.text} block mt-0.5`}>
@@ -92,9 +92,9 @@ export default function DiscoverLiveMetrics({ totalRepos = 0, categoryCounts = {
         </div>
 
         {/* Category Breakdown: Smooth Horizontal Scroll on Mobile/Tablet, 7-col on Desktop */}
-        <div className="flex lg:grid lg:grid-cols-7 gap-2.5 overflow-x-auto no-scrollbar touch-scroll py-1 -mx-1 px-1">
+        <div className="flex lg:grid lg:grid-cols-7 gap-2.5 overflow-x-auto no-scrollbar touch-scroll py-1 -mx-1 px-1 items-stretch">
           {CATEGORIES.map((cat) => (
-            <div key={cat.id} className="min-w-[130px] sm:min-w-[150px] lg:min-w-0 flex-1 flex-shrink-0">
+            <div key={cat.id} className="min-w-[130px] sm:min-w-[150px] lg:min-w-0 flex-1 flex-shrink-0 flex flex-col">
               <CategoryChip cat={cat} actualCount={categoryCounts[cat.label] || 0} />
             </div>
           ))}
