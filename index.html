@@ -16,7 +16,7 @@
     <meta property="og:title" content="Openlysts — Discover Open-Source Projects" />
     <meta property="og:description" content="Openlysts — Discover high-quality free and open-source GitHub repositories across AI, local models, developer tools, self-hosting, and more." />
     <meta property="og:image" content="/logo.png" />
-    <link rel="manifest" href="/manifest.json" />
+    <link rel="manifest" href="/manifest.json?v=1.0.0" />
     <title>Openlysts — Discover Open-Source Projects</title>
   </head>
   <body>
@@ -25,7 +25,7 @@
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js').catch((err) => {
+          navigator.serviceWorker.register('/sw.js?v=1.0.0').catch((err) => {
             console.warn('[PWA] ServiceWorker registration skipped:', err);
           });
         });

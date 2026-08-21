@@ -1,9 +1,9 @@
 {
-  "id": "/",
-  "name": "Openlysts — Open-Source Discovery Engine",
+  "id": "https://openlysts.vercel.app/",
+  "name": "Openlysts",
   "short_name": "Openlysts",
   "description": "Discover, compare, and track high-quality open-source software and trending GitHub repositories.",
-  "start_url": "/discover",
+  "start_url": "/discover?source=pwa",
   "scope": "/",
   "lang": "en",
   "dir": "ltr",
@@ -11,7 +11,8 @@
   "display_override": [
     "standalone",
     "window-controls-overlay",
-    "minimal-ui"
+    "minimal-ui",
+    "browser"
   ],
   "orientation": "any",
   "background_color": "#0B0F17",

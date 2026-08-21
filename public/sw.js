@@ -1,12 +1,15 @@
-// Openlysts PWA Service Worker
-const CACHE_NAME = 'openlysts-v1';
+// Openlysts PWA Service Worker v1.0.0
+const CACHE_NAME = 'openlysts-v1.0.0';
 const OFFLINE_URLS = [
   '/',
   '/discover',
   '/manifest.json',
   '/logo.png',
   '/icons/icon-192x192.png',
-  '/icons/icon-512x512.png'
+  '/icons/icon-512x512.png',
+  '/icons/icon-maskable-192x192.png',
+  '/icons/icon-maskable-512x512.png',
+  '/icons/apple-touch-icon.png'
 ];
 
 self.addEventListener('install', (event) => {
