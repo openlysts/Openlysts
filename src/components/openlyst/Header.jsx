@@ -11,6 +11,8 @@ import { useAuth } from '@/lib/AuthContext';
 import { useLogoEasterEgg } from '@/hooks/useLogoEasterEgg';
 import MagneticButton from '@/components/ui/MagneticButton';
 
+import PWAInstallButton from './PWAInstallButton';
+
 const NAV = [
   { to: '/discover', label: 'Discover', icon: Sparkles },
   { to: '/alternatives', label: 'Alternatives', icon: RefreshCw },
@@ -148,6 +150,9 @@ export default function Header() {
               <SettingsIcon className="w-4 h-4" />
             </Link>
 
+            {/* PWA Install Button (Desktop & Tablet) */}
+            <PWAInstallButton className="hidden sm:flex" />
+
             {/* Mobile Layout Simulator Toggle (Desktop only) */}
             <button
               onClick={toggleMobileLayout}
@@ -258,6 +263,9 @@ export default function Header() {
                   })}
 
                   <div className="h-px bg-border/60 my-3" />
+
+                  {/* PWA Install in Mobile Drawer */}
+                  <PWAInstallButton variant="drawer" className="mb-2" />
 
                   <Link
                     to="/settings"

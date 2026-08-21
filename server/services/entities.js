@@ -65,7 +65,11 @@ export class EntityService {
       const conditions = [];
       for (const [key, val] of Object.entries(where)) {
         params.push(val);
-        conditions.push(`"${key}" = $${params.length}`);
+        if (typeof val === 'string' && (key === 'full_name' || key === 'name' || key === 'owner' || key === 'email')) {
+          conditions.push(`LOWER("${key}") = LOWER($${params.length})`);
+        } else {
+          conditions.push(`"${key}" = $${params.length}`);
+        }
       }
       whereClause = `WHERE ` + conditions.join(' AND ');
     }

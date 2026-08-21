@@ -47,8 +47,49 @@ export default function RepoDetail() {
     queryKey: ['repo', owner, name],
     /** @returns {Promise<any>} */
     queryFn: async () => {
-      const results = await localClient.entities.Repository.filter({ full_name: `${owner}/${name}` }, '-stars', 5);
-      return results[0] || null;
+      if (!owner || !name) return null;
+      
+      // 1. Try case-insensitive full_name filter
+      let results = await localClient.entities.Repository.filter({ full_name: `${owner}/${name}` }, '-stars', 5);
+      if (results && results[0]) return results[0];
+
+      // 2. Try match by repository name
+      results = await localClient.entities.Repository.filter({ name: name }, '-stars', 10);
+      if (results && results.length > 0) {
+        const exact = results.find(r => (r.owner || '').toLowerCase() === owner.toLowerCase());
+        if (exact) return exact;
+        return results[0];
+      }
+
+      // 3. Fallback to GitHub public API if repository is not yet in local database
+      try {
+        const ghRes = await fetch(`https://api.github.com/repos/${owner}/${name}`);
+        if (ghRes.ok) {
+          const ghData = await ghRes.json();
+          return {
+            id: String(ghData.id),
+            name: ghData.name,
+            full_name: ghData.full_name,
+            owner: ghData.owner?.login || owner,
+            description: ghData.description || '',
+            stars: ghData.stargazers_count || 0,
+            forks: ghData.forks_count || 0,
+            language: ghData.language || 'Unknown',
+            topics: ghData.topics || [],
+            categories: [],
+            github_updated_at: ghData.updated_at,
+            html_url: ghData.html_url,
+            homepage_url: ghData.homepage || '',
+            default_branch: ghData.default_branch || 'main',
+            open_issues_count: ghData.open_issues_count || 0,
+            license_spdx: ghData.license?.spdx_id || 'Other'
+          };
+        }
+      } catch (e) {
+        console.warn('GitHub API fallback fetch failed:', e);
+      }
+
+      return null;
     }
   });
 

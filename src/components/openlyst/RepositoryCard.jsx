@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Star, GitFork, Bookmark, Flame, AlertCircle, GitCompare } from 'lucide-react';
 import { motion, useMotionValue, useSpring, useTransform, useMotionTemplate } from 'framer-motion';
 import { getLanguageColor } from '@/lib/languageColors';
@@ -30,15 +30,24 @@ function timeAgo(dateStr) {
 }
 
 export default function RepositoryCard({ repo, index = 0 }) {
-  const [bookmarked, setBookmarked] = useState(() => isBookmarked(repo.id));
-  const isTrending = (repo.trending_score || 0) > 10;
-  const langColor = getLanguageColor(repo.language);
+  const [bookmarked, setBookmarked] = useState(() => isBookmarked(repo?.id));
+  const isTrending = (repo?.trending_score || 0) > 10;
+  const langColor = getLanguageColor(repo?.language);
   const navigate = useNavigate();
 
   const { selectedForCompare, toggleCompare } = useCompare();
-  const isCompared = selectedForCompare.some(r => r.id === repo.id);
+  const isCompared = selectedForCompare.some(r => r.id === repo?.id);
 
-  // 3D Parallax logic
+  // Safe owner and name extraction
+  const owner = (typeof repo?.owner === 'string' && repo.owner)
+    ? repo.owner
+    : (repo?.full_name?.includes('/') ? repo.full_name.split('/')[0] : (repo?.owner?.login || ''));
+  const name = repo?.name
+    ? repo.name
+    : (repo?.full_name?.includes('/') ? repo.full_name.split('/')[1] : (repo?.full_name || ''));
+  const repoUrl = (owner && name) ? `/repo/${encodeURIComponent(owner)}/${encodeURIComponent(name)}` : '/discover';
+
+  // 3D Parallax logic for desktop
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   
@@ -48,23 +57,25 @@ export default function RepositoryCard({ repo, index = 0 }) {
   const rotateXRaw = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"]);
   const rotateYRaw = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
   
-  // Math.round to avoid sub-pixel blur during rendering
   const rotateX = useTransform(rotateXRaw, (val) => `${Math.round(parseFloat(val))}deg`);
   const rotateY = useTransform(rotateYRaw, (val) => `${Math.round(parseFloat(val))}deg`);
 
-  // An easter egg sparkle gradient position based on mouse
+  // Sparkle gradient position based on mouse
   const gradientX = useTransform(mouseXSpring, [-0.5, 0.5], [100, 0]);
   const gradientY = useTransform(mouseYSpring, [-0.5, 0.5], [100, 0]);
   const background = useMotionTemplate`radial-gradient(circle at ${gradientX}% ${gradientY}%, rgba(var(--accent-rgb, 100, 200, 100), 0.08) 0%, transparent 60%)`;
 
   const handleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-    const xPct = (mouseX / rect.width) - 0.5;
-    const yPct = (mouseY / rect.height) - 0.5;
-    x.set(xPct);
-    y.set(yPct);
+    // Only compute on devices with mouse hover
+    if (window.matchMedia('(hover: hover)').matches) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+      const xPct = (mouseX / rect.width) - 0.5;
+      const yPct = (mouseY / rect.height) - 0.5;
+      x.set(xPct);
+      y.set(yPct);
+    }
   };
 
   const handleMouseLeave = () => {
@@ -75,17 +86,27 @@ export default function RepositoryCard({ repo, index = 0 }) {
   const handleBookmark = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    setBookmarked(toggleBookmark(repo.id));
+    if (repo?.id) {
+      setBookmarked(toggleBookmark(repo.id));
+    }
   };
 
-  const handleCardClick = () => {
-    navigate(`/repo/${repo.owner}/${repo.name}`);
+  const handleCardClick = (e) => {
+    // Prevent navigation if clicking interactive child elements
+    if (e.target.closest('button') || e.target.closest('a') || e.target.closest('.no-card-nav')) {
+      return;
+    }
+    if (owner && name) {
+      navigate(repoUrl);
+    }
   };
 
   const handleCompareClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    toggleCompare(repo);
+    if (repo) {
+      toggleCompare(repo);
+    }
   };
 
   return (
@@ -103,7 +124,6 @@ export default function RepositoryCard({ repo, index = 0 }) {
         style={{
           rotateX,
           rotateY,
-          transformStyle: "preserve-3d",
         }}
         whileHover={{ 
           y: -6, 
@@ -111,15 +131,15 @@ export default function RepositoryCard({ repo, index = 0 }) {
           transition: { duration: 0.22, ease: [0.25, 1, 0.5, 1] } 
         }}
         whileTap={{ scale: 0.985, transition: { duration: 0.1 } }}
-        className="card h-full flex flex-col justify-between p-4 relative rounded-xl border border-border bg-bg-card transition-[border-color,box-shadow,background-color] duration-200 hover:border-accent/60 hover:shadow-[0_16px_36px_rgba(0,0,0,0.18),0_0_24px_rgba(var(--accent-rgb),0.2)] cursor-pointer group touch-active overflow-hidden"
+        className="card h-full flex flex-col justify-between p-4 relative rounded-xl border border-border bg-bg-card transition-[border-color,box-shadow,background-color] duration-200 hover:border-accent/60 hover:shadow-[0_16px_36px_rgba(0,0,0,0.18),0_0_24px_rgba(var(--accent-rgb),0.2)] cursor-pointer group touch-active overflow-hidden select-none"
       >
         <motion.div 
           className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"
           style={{ background }}
         />
-        <div className="relative z-10 flex-1 flex flex-col justify-between">
+        <div className="relative z-10 flex-1 flex flex-col justify-between pointer-events-auto">
           {/* Bookmark & Compare Actions */}
-          <div className="absolute top-2.5 right-2.5 flex items-center gap-1">
+          <div className="absolute top-2.5 right-2.5 flex items-center gap-1 z-20">
             <button
               onClick={handleCompareClick}
               className={`p-2 rounded-xl transition-colors touch-target ${
@@ -143,30 +163,36 @@ export default function RepositoryCard({ repo, index = 0 }) {
           </div>
 
           {/* Trending badge */}
-          {isTrending &&
-          <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-trending/40 bg-trending/10 text-trending backdrop-blur-md mb-2 w-fit shadow-[0_0_8px_rgba(255,100,50,0.3)] animate-pulse">
+          {isTrending && (
+            <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-trending/40 bg-trending/10 text-trending backdrop-blur-md mb-2 w-fit shadow-[0_0_8px_rgba(255,100,50,0.3)] animate-pulse">
               <Flame className="w-3 h-3" />
               Trending
             </div>
-          }
+          )}
 
           {/* Name + owner */}
           <div className="flex justify-between items-start mb-1.5 pr-8">
-            <div className="min-w-0">
-              <h3 className="font-semibold text-text text-[15px] leading-snug truncate">{repo.name}</h3>
-              <p className="text-text-muted text-xs mt-0.5 truncate">{repo.owner}</p>
+            <div className="min-w-0 flex-1 pr-2">
+              <Link 
+                to={repoUrl}
+                onClick={(e) => e.stopPropagation()}
+                className="font-semibold text-text text-[15px] leading-snug hover:text-accent transition-colors truncate block focus:outline-none focus:underline"
+              >
+                {name || repo?.name || 'Repository'}
+              </Link>
+              <p className="text-text-muted text-xs mt-0.5 truncate">{owner || repo?.owner}</p>
             </div>
             <LicenseBadge repo={repo} />
           </div>
 
           {/* Description */}
           <p className="text-text-secondary text-sm leading-relaxed line-clamp-2 mb-3 flex-1">
-            {repo.description || 'No description available.'}
+            {repo?.description || 'No description available.'}
           </p>
 
           {/* Difficulty and Categories */}
-          <div className="flex flex-wrap gap-1.5 mb-2.5">
-            {repo.difficulty && (
+          <div className="flex flex-wrap gap-1.5 mb-2.5 no-card-nav">
+            {repo?.difficulty && (
               <span
                 onClick={(e) => {
                   e.stopPropagation();
@@ -177,7 +203,7 @@ export default function RepositoryCard({ repo, index = 0 }) {
                 {repo.difficulty}
               </span>
             )}
-            {(repo.categories || []).slice(0, 2).map((cat) => {
+            {(repo?.categories || []).slice(0, 2).map((cat) => {
               const slug = CATEGORIES.find(c => c.label === cat)?.slug || cat.toLowerCase().replace(/\s+/g, '-');
               return (
                 <span
@@ -195,46 +221,48 @@ export default function RepositoryCard({ repo, index = 0 }) {
           </div>
 
           {/* Topics */}
-          {(repo.topics || []).length > 0 &&
-          <div className="flex flex-wrap gap-1.5 mb-3">
-              {(repo.topics || []).slice(0, 3).map((t) =>
-            <span key={t} className="px-2 py-0.5 rounded-full text-[10px] font-medium tracking-wide border border-border/30 bg-bg-card/50 text-text-muted backdrop-blur-md shadow-sm">
+          {(repo?.topics || []).length > 0 && (
+            <div className="flex flex-wrap gap-1.5 mb-3 no-card-nav">
+              {(repo.topics || []).slice(0, 3).map((t) => (
+                <span key={t} className="px-2 py-0.5 rounded-full text-[10px] font-medium tracking-wide border border-border/30 bg-bg-card/50 text-text-muted backdrop-blur-md shadow-sm">
                   {t}
                 </span>
-            )}
+              ))}
             </div>
-          }
+          )}
 
           {/* Stats row */}
           <div className="flex items-center gap-3 text-xs text-text-muted mb-2.5">
             <span className="flex items-center gap-1">
               <Star className="w-3.5 h-3.5" />
-              {formatStars(repo.stars)}
+              {formatStars(repo?.stars)}
             </span>
             <span className="flex items-center gap-1">
               <GitFork className="w-3.5 h-3.5" />
-              {formatStars(repo.forks)}
+              {formatStars(repo?.forks)}
             </span>
-            {repo.language &&
-            <span className="flex items-center gap-1.5">
+            {repo?.language && (
+              <span className="flex items-center gap-1.5">
                 <span className="w-2.5 h-2.5 rounded-full" style={{ background: langColor }} />
                 {repo.language}
               </span>
-            }
+            )}
           </div>
 
           {/* Footer: updated */}
           <div className="flex items-center justify-end gap-2 pt-2.5 border-t border-border">
             <span className="text-[11px] text-text-muted">
-              {repo.archived && <AlertCircle className="w-3 h-3 inline mr-1 text-nonoss" />}
-              {timeAgo(repo.github_updated_at)}
+              {repo?.archived && <AlertCircle className="w-3 h-3 inline mr-1 text-nonoss" />}
+              {timeAgo(repo?.github_updated_at)}
             </span>
           </div>
 
-            {/* Video explanation links */}
+          {/* Video explanation links */}
+          <div className="no-card-nav">
             <RepoVideoLinks repo={repo} />
           </div>
-        </motion.div>
+        </div>
       </motion.div>
-    );
+    </motion.div>
+  );
 }

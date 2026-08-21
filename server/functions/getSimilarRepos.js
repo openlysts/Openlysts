@@ -8,10 +8,10 @@ export default async function getSimilarRepos(req, res) {
     }
 
     const allRepos = await entities.Repository.list('-created_date', 3000);
-    const targetRepo = allRepos.find((r) => r.full_name === fullName);
+    const targetRepo = allRepos.find((r) => (r.full_name || '').toLowerCase() === fullName.toLowerCase());
 
     if (!targetRepo) {
-      return res.status(404).json({ error: true, message: 'Repository not found' });
+      return res.json({ similarRepos: [] });
     }
 
     const targetCategories = targetRepo.categories || [];
@@ -19,7 +19,7 @@ export default async function getSimilarRepos(req, res) {
     const targetLanguage = targetRepo.language;
 
     const scoredRepos = allRepos
-      .filter((r) => !r.hidden && r.full_name !== fullName)
+      .filter((r) => !r.hidden && (r.full_name || '').toLowerCase() !== fullName.toLowerCase())
       .map((r) => {
         let score = 0;
         

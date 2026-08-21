@@ -2323,4 +2323,29 @@ Exit the script.
 - In Admin Telemetry & Vitals tab:
 - **Verify**: Repository, User, Query, and Audit Log counters match actual `SELECT COUNT(*)` values in PostgreSQL database.
 
+---
+
+## PHASE 23: Mobile Experience, PWA Installability & Universal Route Resilience
+
+### TC-293: Mobile Repository Card Tap Navigation & Touch Gestures
+- On mobile viewports (e.g. 390x844 iPhone / Android):
+- Tap any repository card in `/discover`, `/search`, `/trending`, or `/bookmarks`:
+- **Verify**: Tapping anywhere on the card (or the repository title `<Link>`) cleanly triggers client-side navigation to `/repo/:owner/:name`.
+- **Verify**: 3D mouse parallax tilt is safely disabled on coarse/touch screens, preventing touch scroll conflicts or dropped tap events.
+- **Verify**: Nested bookmark and compare buttons remain independently clickable without triggering navigation.
+
+### TC-294: Case-Insensitive Repository Querying & GitHub API Fallback
+- Navigate to repository routes with mixed casing (e.g. `/repo/amruthpillai/reactive-resume`, `/repo/AmruthPillai/Reactive-Resume`):
+- **Verify**: `EntityService.filter` performs case-insensitive database matching (`LOWER(full_name) = LOWER($1)`).
+- **Verify**: Detail view loads repository data, stats, README, and similar repos cleanly without "Repository not found" errors.
+- **Verify**: If a repository is not present in the local database, it falls back to public GitHub API fetch gracefully.
+
+### TC-295: PWA Web App Manifest, Service Worker & Native Installation Support
+- Inspect application on mobile and desktop browsers:
+- **Verify**: `manifest.json` contains valid standalone configuration, theme colors, 192x192 and 512x512 icons, and maskable icons.
+- **Verify**: `sw.js` Service Worker registers successfully on load with offline fallback caching.
+- **Verify**: Browser fires `beforeinstallprompt` event.
+- **Verify**: "Install Openlysts App" action appears in Mobile Navigation Drawer and Header, opening native prompt or iOS step-by-step guide.
+
+
 
