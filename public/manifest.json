@@ -1,13 +1,22 @@
 {
+  "id": "/",
   "name": "Openlysts — Open-Source Discovery Engine",
   "short_name": "Openlysts",
   "description": "Discover, compare, and track high-quality open-source software and trending GitHub repositories.",
   "start_url": "/discover",
   "scope": "/",
+  "lang": "en",
+  "dir": "ltr",
   "display": "standalone",
+  "display_override": [
+    "standalone",
+    "window-controls-overlay",
+    "minimal-ui"
+  ],
   "orientation": "any",
   "background_color": "#0B0F17",
   "theme_color": "#10b981",
+  "prefer_related_applications": false,
   "categories": [
     "developer tools",
     "utilities",
@@ -37,12 +46,6 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
-    },
-    {
-      "src": "/logo.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
     }
   ]
 }

@@ -38,7 +38,12 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
-  // For API endpoints, prefer network only
+  // Strictly only intercept same-origin requests
+  if (!event.request.url.startsWith(self.location.origin)) {
+    return;
+  }
+
+  // Bypass API endpoints to ensure real-time backend communication
   if (event.request.url.includes('/api/')) {
     return;
   }

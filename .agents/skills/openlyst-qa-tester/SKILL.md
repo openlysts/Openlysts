@@ -2347,5 +2347,13 @@ Exit the script.
 - **Verify**: Browser fires `beforeinstallprompt` event.
 - **Verify**: "Install Openlysts App" action appears in Mobile Navigation Drawer and Header, opening native prompt or iOS step-by-step guide.
 
+### TC-296: PWA WebAPK Minting Integrity, Exact Icon Geometry & Enterprise Security Headers
+- Inspect PWA security posture and WebAPK minting parameters:
+- **Verify**: All PWA PNG icons (`icon-192x192.png`, `icon-512x512.png`, `icon-maskable-192x192.png`, `icon-maskable-512x512.png`, `apple-touch-icon.png`) have exact binary dimensions matching declared manifest sizes with safe-zone padding.
+- **Verify**: `manifest.json` defines explicit `id: "/"`, `display_override`, `scope: "/"`, and `prefer_related_applications: false`.
+- **Verify**: `sw.js` strictly isolates fetch interception to same-origin URLs (`event.request.url.startsWith(self.location.origin)`), eliminating cross-origin interception warnings.
+- **Verify**: `vercel.json` provides enterprise security headers (`Strict-Transport-Security`, `X-Content-Type-Options: nosniff`, `X-Frame-Options: SAMEORIGIN`, `X-XSS-Protection`, `Referrer-Policy`, and `Permissions-Policy`).
+
+
 
 
