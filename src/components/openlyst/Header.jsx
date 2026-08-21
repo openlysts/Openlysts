@@ -74,7 +74,7 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-16 gap-3">
           {/* Logo */}
-          <Link to="/discover" onClick={triggerConfetti} className="flex items-center gap-2 flex-shrink-0 group touch-target" aria-label="Openlysts Home">
+          <Link data-tour="easter-eggs" to="/discover" onClick={triggerConfetti} className="flex items-center gap-2 flex-shrink-0 group touch-target" aria-label="Openlysts Home">
             <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-bg-card border border-border shadow-sm overflow-hidden flex items-center justify-center backdrop-blur-md group-hover:scale-105 group-hover:border-accent/40 transition-all duration-300">
               <img src="/logo.png" alt="Openlysts Logo" className="w-7 h-7 sm:w-8 sm:h-8 object-contain animate-logo-enter filter drop-shadow-sm" />
             </div>
@@ -105,6 +105,7 @@ export default function Header() {
           {/* Search Button (Desktop) */}
           {location.pathname !== '/discover' && (
             <div 
+              data-tour="search-bar"
               className="relative hidden xl:block w-48 2xl:w-64 group cursor-text flex-shrink"
               onClick={openSearch}
             >
@@ -119,7 +120,7 @@ export default function Header() {
           )}
 
           {/* Right actions */}
-          <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
+          <div data-tour="auth-menu" className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
             {/* Quick Search trigger icon for mobile/tablet */}
             <button
               onClick={openSearch}

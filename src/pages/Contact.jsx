@@ -73,7 +73,7 @@ export default function Contact() {
         </p>
       </div>
 
-      <div className="grid sm:grid-cols-2 gap-4 mb-10">
+      <div data-tour="contact-methods" className="grid sm:grid-cols-2 gap-4 mb-10">
         <a href="mailto:reviewzxone@gmail.com" className="card p-5 flex items-center gap-3 card-hover">
           <div className="w-10 h-10 rounded-lg bg-accent-soft flex items-center justify-center flex-shrink-0">
             <Mail className="w-5 h-5 text-accent" />
@@ -94,7 +94,7 @@ export default function Contact() {
         </a>
       </div>
 
-      <div className="card p-6 space-y-4">
+      <div data-tour="contact-form" className="card p-6 space-y-4">
         <div>
           <label className="block text-sm font-medium text-text mb-1.5">Name <span className="text-red-500">*</span></label>
           <input

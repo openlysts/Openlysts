@@ -151,6 +151,7 @@ export default function Home() {
 
         {/* Search Bar (Primary Spotlight Action) */}
         <motion.div
+          data-tour="search-bar"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.08 }}

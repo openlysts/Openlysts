@@ -41,7 +41,7 @@ export default function Bookmarks() {
       </p>
 
       {bookmarkIds.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-20 text-center">
+        <div data-tour="bookmarks-list" className="flex flex-col items-center justify-center py-20 text-center">
           <Bookmark className="w-10 h-10 text-text-muted mb-3" />
           <p className="text-text-secondary text-lg font-medium mb-1">No bookmarks yet</p>
           <p className="text-text-muted text-sm">Click the bookmark icon on any repository to save it here.</p>
@@ -57,7 +57,7 @@ export default function Bookmarks() {
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <div data-tour="bookmarks-list" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {repos.map((repo) =>
             repo._missing ? (
               <div key={repo.id} className="card p-4 flex flex-col">

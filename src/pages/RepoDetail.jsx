@@ -255,7 +255,7 @@ export default function RepoDetail() {
                 ))}
               </div>
 
-              <div className="flex flex-wrap items-center gap-3">
+              <div className="flex flex-wrap items-center gap-3" data-tour="repo-links">
                 <Link to={`/compare?repos=${repo.full_name}`} className="flex items-center gap-2 px-5 py-2.5 rounded-xl border border-border text-text-secondary font-medium text-sm hover:bg-bg-hover transition-colors shadow-sm">
                   <CopyPlus className="w-4 h-4" /> Compare
                 </Link>
@@ -283,7 +283,7 @@ export default function RepoDetail() {
 
           {/* README Section */}
           <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: 0.2 }}>
-            <div className="card p-6 md:p-8">
+            <div className="card p-6 md:p-8" data-tour="repo-readme">
               <h2 className="text-xl font-bold text-text mb-6">README</h2>
               <div className="prose prose-sm sm:prose-base dark:prose-invert max-w-none break-words text-text-secondary overflow-hidden">
                 {isReadmeLoading ? (
@@ -308,7 +308,7 @@ export default function RepoDetail() {
           
           <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: 0.1 }}>
             {/* Stats grid (2x2) */}
-            <div className="grid grid-cols-2 gap-3 mb-6">
+            <div className="grid grid-cols-2 gap-3 mb-6" data-tour="repo-stats-bar">
               <div className="card p-4 hover:border-border transition-colors">
                 <div className="flex items-center gap-1.5 text-text-muted text-xs mb-1.5 font-medium uppercase tracking-wider"><Star className="w-3.5 h-3.5 text-yellow-500" /> Stars</div>
                 <p className="text-2xl font-bold text-text">{formatNum(repo.stars)}</p>

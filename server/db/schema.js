@@ -182,6 +182,7 @@ export async function initSchema(db) {
     `ALTER TABLE "User" ADD COLUMN avatar_url TEXT`,
     `ALTER TABLE "User" ADD COLUMN last_login_at TEXT`,
     `ALTER TABLE "User" ADD COLUMN updated_at TEXT`,
+    `ALTER TABLE "User" ADD COLUMN has_seen_tour INTEGER DEFAULT 0`,
 
     // Repository columns for Admin Studio & boosts
     `ALTER TABLE "Repository" ADD COLUMN staff_pick INTEGER DEFAULT 0`,

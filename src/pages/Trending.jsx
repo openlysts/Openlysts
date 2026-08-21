@@ -57,7 +57,9 @@ export default function Trending() {
       </h1>
       <p className="text-text-secondary text-sm mb-6">Repositories gaining the most stars recently.</p>
 
-      <FilterBar filters={filters} onChange={updateFilters} languages={LANGUAGES} />
+      <div data-tour="trending-filters">
+        <FilterBar filters={filters} onChange={updateFilters} languages={LANGUAGES} />
+      </div>
 
       <RepositoryGrid repos={data?.results || []} loading={isLoading} emptyMessage="No trending repositories found." />
 

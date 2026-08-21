@@ -35,7 +35,7 @@ export default function About() {
       </div>
 
       {/* Features Grid */}
-      <div className="grid md:grid-cols-2 gap-6 mb-20">
+      <div data-tour="about-features" className="grid md:grid-cols-2 gap-6 mb-20">
         {[
           { icon: Search, title: 'Search Less, Find More', desc: 'Stop scrolling through GitHub. Search and filter across curated, categorized repositories in seconds.' },
           { icon: ShieldCheck, title: 'Verified Open Source', desc: 'Every repository is checked against OSI-recognized licenses. No more guessing if a project is truly open source.' },
@@ -61,6 +61,7 @@ export default function About() {
 
       {/* About the Creator Section */}
       <motion.div 
+        data-tour="about-creator"
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.4 }}

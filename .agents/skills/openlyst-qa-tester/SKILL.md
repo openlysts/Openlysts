@@ -3531,4 +3531,36 @@ The most important coverage improvements added by this addendum are:
 
 ---
 
+# PHASE 37: PRODUCT TOUR REGRESSION
+
+### TC-405: Product Tour - First Time Unauthenticated
+- Open an incognito browser window or clear `localStorage`.
+- Navigate to `http://localhost:5173/` (Homepage).
+- **Verify**: The Product Tour popover appears automatically after ~1 second.
+- **Verify**: The spotlight highlights the center of the screen first (Welcome).
+- **Verify**: Clicking "Next" highlights the Search Bar (`[data-tour="search-bar"]`).
+- **Verify**: Clicking "Next" highlights the Filter Bar (`[data-tour="filter-bar"]`).
+- **Verify**: Clicking "Next" highlights a Repository Card (`[data-tour="repo-card"]`).
+- **Verify**: Clicking "Next" highlights the Auth/Profile Menu (`[data-tour="auth-menu"]`).
+- **Verify**: Clicking "Skip" or finishing the tour closes the tour and sets `openlyst_has_seen_tour` in `localStorage` to `'true'`.
+
+### TC-406: Product Tour - Suppression on Reload (Unauthenticated)
+- Perform TC-405 to ensure `openlyst_has_seen_tour` is set to `'true'`.
+- Reload the page.
+- **Verify**: The Product Tour does NOT appear automatically.
+- Clear `localStorage`.
+- Reload the page.
+- **Verify**: The Product Tour appears again.
+
+### TC-407: Product Tour - Suppression (Authenticated)
+- Sign in to the application as a user who has completed the tour (`has_seen_tour` = true in DB).
+- Ensure `openlyst_has_seen_tour` is NOT in `localStorage` (simulating a new device).
+- Reload the page.
+- **Verify**: The Product Tour does NOT appear automatically, because the DB state takes precedence and sets the local state.
+- Sign in as a completely new user.
+- **Verify**: Tour appears. Complete the tour.
+- **Verify**: DB state `has_seen_tour` updates to `true` (check Network tab for `PATCH /api/profile/settings`).
+
+---
+
 # END OF ADDITIVE QA CONTROL LAYER

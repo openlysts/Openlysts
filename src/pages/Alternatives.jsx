@@ -482,7 +482,7 @@ export default function Alternatives() {
         {/* ─── Controls Bar ─── */}
         <div className="flex flex-wrap items-center justify-between gap-2.5 sm:gap-3 mt-5 pt-4 sm:pt-5 border-t border-border/50">
           {/* Search Input */}
-          <div className="relative flex-1 min-w-[180px] sm:min-w-[240px]">
+          <div className="relative flex-1 min-w-[180px] sm:min-w-[240px]" data-tour="alts-search">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
             <input
               type="text"
@@ -680,7 +680,7 @@ export default function Alternatives() {
         </AnimatePresence>
 
         {/* ─── Main Content (Takes 100% on mobile & tablet, flex-1 on desktop) ─── */}
-        <main className="flex-1 w-full min-w-0">
+        <main className="flex-1 w-full min-w-0" data-tour="alts-grid">
           {isLoading && (
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
               {[...Array(6)].map((_, i) => (

@@ -120,6 +120,7 @@ export default function RepositoryCard({ repo, index = 0 }) {
       style={{ perspective: 1000 }}
     >
       <motion.div 
+        data-tour="repo-card"
         onClick={handleCardClick} 
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
@@ -208,7 +209,7 @@ export default function RepositoryCard({ repo, index = 0 }) {
           </p>
 
           {/* Difficulty and Categories */}
-          <div className="flex flex-wrap gap-1.5 mb-2.5 no-card-nav">
+          <div className="flex flex-wrap gap-1.5 mb-2.5 no-card-nav" data-tour="repo-tags">
             {repo?.difficulty && (
               <span
                 onClick={(e) => {
@@ -249,7 +250,7 @@ export default function RepositoryCard({ repo, index = 0 }) {
           )}
 
           {/* Stats row */}
-          <div className="flex items-center gap-3 text-xs text-text-muted mb-2.5 flex-wrap">
+          <div className="flex items-center gap-3 text-xs text-text-muted mb-2.5 flex-wrap" data-tour="repo-stats">
             <span className="flex items-center gap-1">
               <Star className="w-3.5 h-3.5" />
               {formatStars(repo?.stars)}
@@ -276,7 +277,7 @@ export default function RepositoryCard({ repo, index = 0 }) {
           </div>
 
           {/* Video explanation links */}
-          <div className="no-card-nav">
+          <div className="no-card-nav" data-tour="repo-video">
             <RepoVideoLinks repo={repo} />
           </div>
         </div>

@@ -136,7 +136,7 @@ export default function Search() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
       {/* Search input */}
-      <div className="relative max-w-2xl mb-6">
+      <div data-tour="search-input" className="relative max-w-2xl mb-6">
         <SearchIcon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted" />
         <input
           type="text"
@@ -171,7 +171,9 @@ export default function Search() {
         </div>
       )}
 
-      <FilterBar filters={filters} onChange={updateFilters} languages={LANGUAGES} />
+      <div data-tour="search-filters">
+        <FilterBar filters={filters} onChange={updateFilters} languages={LANGUAGES} />
+      </div>
 
       <RepositoryGrid
         repos={data?.results || []}

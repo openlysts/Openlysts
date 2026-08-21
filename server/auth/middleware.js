@@ -18,7 +18,7 @@ export async function loadSessionUser(req, res, next) {
     }
     try {
       const { rows } = await db.query(
-        'SELECT id, name, email, email_normalized, role, account_status, email_verified, avatar_url, created_date, last_login_at, updated_at FROM "User" WHERE id = $1',
+        'SELECT id, name, email, email_normalized, role, account_status, email_verified, avatar_url, has_seen_tour, created_date, last_login_at, updated_at FROM "User" WHERE id = $1',
         [req.session.userId]
       );
       req.user = rows[0] || null;

@@ -7,6 +7,7 @@ import BottomNav from './BottomNav';
 import CommandPalette from './CommandPalette';
 import CompareDock from './CompareDock';
 import ThreeBackground from './ThreeBackground';
+import ProductTour from './ProductTour';
 import { useMobileLayout } from '@/lib/MobileLayoutContext';
 
 export default function OpenlystLayout() {
@@ -108,6 +109,8 @@ export default function OpenlystLayout() {
       <CommandPalette />
       <CompareDock />
       <BottomNav />
+      
+      <ProductTour />
 
       {/* Floating Scroll to Top */}
       <button

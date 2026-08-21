@@ -61,7 +61,7 @@ export default function FilterBar({ filters, onChange, languages = [] }) {
   const reset = () => onChange({ q: filters.q, categories: [], languages: [], licenses: [], difficulties: [], minStars: 0, updatedWithin: '', activity: '', sort: 'trending', page: 1 });
 
   return (
-    <div className="mb-5">
+    <div data-tour="filter-bar" className="mb-5">
       <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap">
         {/* Sort dropdown */}
         <div className="flex-1 sm:flex-initial min-w-[130px]">

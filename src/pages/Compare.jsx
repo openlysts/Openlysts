@@ -159,7 +159,7 @@ export default function Compare() {
         </div>
         
         {repoNames.length < 3 && (
-          <div className="relative w-full sm:w-72 z-20">
+          <div className="relative w-full sm:w-72 z-20" data-tour="compare-search">
             {showSearch ? (
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
@@ -207,7 +207,7 @@ export default function Compare() {
           <div className="w-9 h-9 border-4 border-accent/30 border-t-accent rounded-full animate-spin" />
         </div>
       ) : (
-        <>
+        <div data-tour="compare-table">
           {/* ─── MOBILE VIEW (< 768px): Industry-Standard Native Comparative Cards ─── */}
           <div className="block md:hidden space-y-5">
             {/* Top Repositories Grid */}
@@ -389,7 +389,7 @@ export default function Compare() {
               ))}
             </div>
           </div>
-        </>
+        </div>
       )}
     </div>
   );

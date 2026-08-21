@@ -115,7 +115,7 @@ router.post('/password', async (req, res) => {
 
 router.patch('/settings', async (req, res) => {
   try {
-    const { name, settings } = req.body;
+    const { name, settings, has_seen_tour } = req.body;
     let updates = [];
     let values = [];
 
@@ -131,6 +131,11 @@ router.patch('/settings', async (req, res) => {
       const settingsVal = typeof settings === 'object' ? JSON.stringify(settings) : String(settings);
       updates.push(`settings = $${updates.length + 1}`);
       values.push(settingsVal);
+    }
+
+    if (has_seen_tour !== undefined) {
+      updates.push(`has_seen_tour = $${updates.length + 1}`);
+      values.push(has_seen_tour ? 1 : 0);
     }
 
     if (updates.length === 0) {
