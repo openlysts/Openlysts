@@ -150,8 +150,8 @@ export default function Header() {
               <SettingsIcon className="w-4 h-4" />
             </Link>
 
-            {/* PWA Install Button (Desktop & Tablet) */}
-            <PWAInstallButton className="hidden sm:flex" />
+            {/* PWA Install Button (Mobile, Tablet & Desktop) */}
+            <PWAInstallButton className="flex" />
 
             {/* Mobile Layout Simulator Toggle (Desktop only) */}
             <button
