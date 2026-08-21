@@ -138,41 +138,17 @@ export default function RepositoryCard({ repo, index = 0 }) {
           style={{ background }}
         />
         <div className="relative z-10 flex-1 flex flex-col justify-between pointer-events-auto">
-          {/* Bookmark & Compare Actions */}
-          <div className="absolute top-2.5 right-2.5 flex items-center gap-1 z-20">
-            <button
-              onClick={handleCompareClick}
-              className={`p-2 rounded-xl transition-colors touch-target ${
-                isCompared ? 'text-accent bg-accent-soft' : 'text-text-muted hover:text-text hover:bg-bg-hover active:bg-bg-subtle'
-              }`}
-              aria-label="Add to compare"
-              title="Compare"
-            >
-              <GitCompare className="w-4 h-4" />
-            </button>
-            <button
-              onClick={handleBookmark}
-              className={`p-2 rounded-xl transition-colors touch-target ${
-                bookmarked ? 'text-accent bg-accent-soft' : 'text-text-muted hover:text-text hover:bg-bg-hover active:bg-bg-subtle'
-              }`}
-              aria-label="Bookmark"
-              title="Bookmark"
-            >
-              <Bookmark className="w-4 h-4" fill={bookmarked ? 'currentColor' : 'none'} />
-            </button>
-          </div>
-
-          {/* Trending badge */}
-          {isTrending && (
-            <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-trending/40 bg-trending/10 text-trending backdrop-blur-md mb-2 w-fit shadow-[0_0_8px_rgba(255,100,50,0.3)] animate-pulse">
-              <Flame className="w-3 h-3" />
-              Trending
-            </div>
-          )}
-
-          {/* Name + owner */}
-          <div className="flex justify-between items-start mb-1.5 pr-20">
+          <div className="flex justify-between items-start mb-1.5 gap-2">
             <div className="min-w-0 flex-1">
+              {/* Trending badge */}
+              {isTrending && (
+                <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-trending/40 bg-trending/10 text-trending backdrop-blur-md mb-2 w-fit shadow-[0_0_8px_rgba(255,100,50,0.3)] animate-pulse">
+                  <Flame className="w-3 h-3" />
+                  Trending
+                </div>
+              )}
+
+              {/* Name + owner */}
               <Link 
                 to={repoUrl}
                 onClick={(e) => e.stopPropagation()}
@@ -181,6 +157,30 @@ export default function RepositoryCard({ repo, index = 0 }) {
                 {name || repo?.name || 'Repository'}
               </Link>
               <p className="text-text-muted text-xs mt-0.5 truncate">{owner || repo?.owner}</p>
+            </div>
+
+            {/* Bookmark & Compare Actions */}
+            <div className="flex items-center gap-1 z-20 flex-shrink-0 relative -top-1 -right-1">
+              <button
+                onClick={handleCompareClick}
+                className={`p-2 rounded-xl transition-colors touch-target ${
+                  isCompared ? 'text-accent bg-accent-soft' : 'text-text-muted hover:text-text hover:bg-bg-hover active:bg-bg-subtle'
+                }`}
+                aria-label="Add to compare"
+                title="Compare"
+              >
+                <GitCompare className="w-4 h-4" />
+              </button>
+              <button
+                onClick={handleBookmark}
+                className={`p-2 rounded-xl transition-colors touch-target ${
+                  bookmarked ? 'text-accent bg-accent-soft' : 'text-text-muted hover:text-text hover:bg-bg-hover active:bg-bg-subtle'
+                }`}
+                aria-label="Bookmark"
+                title="Bookmark"
+              >
+                <Bookmark className="w-4 h-4" fill={bookmarked ? 'currentColor' : 'none'} />
+              </button>
             </div>
           </div>
 
