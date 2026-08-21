@@ -3487,7 +3487,13 @@ The most important coverage improvements added by this addendum are:
 - requirement-to-test traceability
 - clean-state regression
 - historical P0/P1 revalidation
-- final release-candidate gate
+### TC-401: Category Metrics Chip Height, Text Truncation & Number Collision Prevention
+
+- Load homepage (`/` or `/discover`) across responsive viewports: 375px, 768px, 1024px, 1280px, 1440px.
+- Inspect `DiscoverLiveMetrics` category chips (all 7 categories).
+- **Verify**: Every category chip maintains a minimum height of $\ge 96\text{px}$ and equal heights across the grid (`items-stretch`).
+- **Verify**: Long category titles (e.g. "Databases & RAG") truncate with clean ellipsis or wrap without pushing the counter down.
+- **Verify**: The numeric count (e.g. `490`) maintains at least 8px padding from the bottom border with zero text collision or clipping.
 
 ---
 
