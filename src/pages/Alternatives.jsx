@@ -462,17 +462,17 @@ export default function Alternatives() {
               </h1>
             </div>
             <p className="text-xs sm:text-sm text-text-secondary leading-relaxed">
-              Discover {data?.stats?.total_tools || '160+'} curated open-source replacements for {data?.stats?.total_paid_tools || '70+'} SaaS products — scored by code quality, community health, and feature parity.
+              Discover {filteredData?.stats?.total_tools || '160+'} curated open-source replacements for {filteredData?.stats?.total_paid_tools || '70+'} SaaS products — scored by code quality, community health, and feature parity.
             </p>
           </div>
 
           {/* Stats Pills */}
-          {data?.stats && (
+          {filteredData?.stats && (
             <div className="flex items-center gap-2 sm:gap-3 flex-wrap sm:flex-nowrap">
-              <LiveStatBlock label="Tools" value={data.stats.total_tools} valueClass="text-accent" minIncrement={1} maxIncrement={2} interval={8000} />
-              <LiveStatBlock label="Categories" value={data.stats.total_categories} valueClass="text-text" minIncrement={0} maxIncrement={1} interval={20000} />
+              <LiveStatBlock label="Tools" value={filteredData.stats.total_tools} valueClass="text-accent" minIncrement={1} maxIncrement={2} interval={8000} />
+              <LiveStatBlock label="Categories" value={filteredData.stats.total_categories} valueClass="text-text" minIncrement={0} maxIncrement={1} interval={20000} />
               <div className="bg-bg-subtle/80 border border-border rounded-xl px-3 sm:px-4 py-2 sm:py-2.5 text-center min-w-[75px] sm:min-w-[90px]">
-                <div className="text-lg sm:text-xl font-black text-amber-400">{data.stats.avg_score}</div>
+                <div className="text-lg sm:text-xl font-black text-amber-400">{filteredData.stats.avg_score}</div>
                 <div className="text-[9px] sm:text-[10px] font-bold text-text-muted uppercase tracking-wider">Avg Score</div>
               </div>
             </div>
@@ -602,10 +602,10 @@ export default function Alternatives() {
           >
             <span>All Tools</span>
             <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${activeCategory === 'All' ? 'bg-black/20 text-white' : 'bg-bg-subtle text-text-muted'}`}>
-              {data?.stats?.total_tools || 0}
+              {filteredData?.stats?.total_tools || 0}
             </span>
           </button>
-          {data?.categories?.map((cat) => (
+          {filteredData?.categories?.map((cat) => (
             <button
               key={cat.name}
               onClick={() => setActiveCategory(cat.name)}
@@ -653,9 +653,9 @@ export default function Alternatives() {
                       }`}
                     >
                       <span>All Tools</span>
-                      <span className={`text-[10px] px-1.5 py-0.5 rounded font-bold ${activeCategory === 'All' ? 'bg-black/20 text-white' : 'bg-bg-subtle text-text-muted'}`}>{data?.stats?.total_tools || 0}</span>
+                      <span className={`text-[10px] px-1.5 py-0.5 rounded font-bold ${activeCategory === 'All' ? 'bg-black/20 text-white' : 'bg-bg-subtle text-text-muted'}`}>{filteredData?.stats?.total_tools || 0}</span>
                     </button>
-                    {data?.categories?.map((cat) => (
+                    {filteredData?.categories?.map((cat) => (
                       <button
                         key={cat.name}
                         onClick={() => setActiveCategory(cat.name)}
@@ -696,13 +696,13 @@ export default function Alternatives() {
           )}
 
           {/* Flat view when searching or specific category */}
-          {data?.alternatives && (activeCategory !== 'All' || debouncedSearch) && (
+          {filteredData?.alternatives && (activeCategory !== 'All' || debouncedSearch) && (
             <div className={viewMode === 'grid' 
               ? 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4' 
               : 'flex flex-col gap-2.5'
             }>
-              {data.alternatives.map((alt, idx) => renderCard(alt, idx))}
-              {data.alternatives.length === 0 && !isLoading && (
+              {filteredData.alternatives.map((alt, idx) => renderCard(alt, idx))}
+              {filteredData.alternatives.length === 0 && !isLoading && (
                 <div className="col-span-full text-center py-16 text-text-muted border border-dashed border-border rounded-2xl bg-bg-card/40">
                   <Search className="w-8 h-8 mx-auto mb-3 text-text-muted/50" />
                   <p className="font-medium">No tools found</p>
@@ -713,9 +713,9 @@ export default function Alternatives() {
           )}
 
           {/* Grouped view (default: All categories, no search) */}
-          {data?.grouped && activeCategory === 'All' && !debouncedSearch && (
+          {filteredData?.grouped && activeCategory === 'All' && !debouncedSearch && (
             <div className="space-y-4">
-              {data.grouped.map((group) => (
+              {filteredData.grouped.map((group) => (
                 <div 
                   key={group.category} 
                   ref={el => categoryRefs.current[group.category] = el}
