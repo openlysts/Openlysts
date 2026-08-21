@@ -90,7 +90,7 @@ openlyst/
 The application uses a generic entity-based model augmented by dedicated auth tables. Key tables include:
 
 - **`Repository`**: The core entity. Stores GitHub metadata.
-  - Columns: `id`, `github_id`, `full_name`, `description`, `stars`, `language`, `topics`, `trending_score`, `quality_score`, `last_ingested_at`, etc.
+  - Columns: `id`, `github_id`, `full_name`, `description`, `stars`, `language`, `topics`, `trending_score`, `quality_score`, `authority_score`, `engagement_score`, `last_ingested_at`, etc.
   
 - **`User`**: Core user accounts.
   - Columns: `id`, `name`, `email`, `password_hash`, `role` (`user`, `admin`), `account_status`, `email_verified`.
@@ -117,12 +117,18 @@ The application uses a generic entity-based model augmented by dedicated auth ta
 3. This function fetches standard queries from the GitHub API, calculates a `trending_score` and `quality_score` for each repository based on activity and completeness, and runs `INSERT ... ON CONFLICT DO UPDATE` into the PostgreSQL database.
 4. *Note: On Vercel, this is typically adapted to a Cron Job due to serverless timeouts.*
 
-### C. Backend Email Dispatch (SMTP)
+### C. Hybrid Similarity Engine (Search & Discover)
+1. Instead of pure text search or vector proximity, Openlysts uses a weighted hybrid formula inside `queryRepositories.js` and `getSimilarRepos.js`.
+2. Repositories receive algorithmic scores (`authority_score` and `engagement_score`) during periodic processing.
+3. The engine ranks matches by fusing these heuristics: `(textScore * 1.5) + (authority_score * 0.5) + (engagement_score * 0.2) + log10(stars)`.
+4. This ensures that canonical, highly-adopted projects organically rank higher than obscure projects containing identical keyword terms.
+
+### D. Backend Email Dispatch (SMTP)
 1. A user triggers a password reset or submits a contact form.
 2. The Express server uses `nodemailer` configured with the SMTP credentials (`SMTP_HOST`, `SMTP_USER`, `SMTP_PASS`) in `.env.local`.
 3. Standardized, professional HTML emails are sent to the user or platform owner securely.
 
-### D. Real-Time UI Syncing (Frontend)
+### E. Real-Time UI Syncing (Frontend)
 1. Pages like `Home.jsx` and `Trending.jsx` use `@tanstack/react-query`.
 2. The queries are configured with `refetchInterval: 60000` (1 minute).
 3. If the user leaves the page open, React Query quietly polls the backend every minute. When background ingestion finishes a batch, the frontend instantly reflects the new database state without requiring a page refresh.

@@ -26,7 +26,12 @@ Convert a React/Vite application heavily dependent on a proprietary backend SDK 
    - Instead of relying on Admin UI buttons to trigger GitHub API data ingestion, we extracted the ingestion logic (`server/functions/runIngestion.js`) and attached it to a `setInterval` loop in `server/index.js`.
    - **Result**: The backend became a self-sustaining engine that autonomously updates data every 10 minutes.
 
-4. **Real-Time Frontend Syncing**
+4. **Algorithmic Infrastructure (Hybrid Similarity)**
+   - Instead of simple text matching or relying purely on vector embeddings (which can be too narrow), we introduced calculated heuristic columns (`authority_score` and `engagement_score`) based on stars, forks, and issues during ingestion.
+   - We updated search functions (`queryRepositories` and `getSimilarRepos`) to fuse vector similarity (`_hybrid_relevance`) with these calculated scores: `(textScore * 1.5) + (authority_score * 0.5) + (engagement_score * 0.2) + log10(stars)`.
+   - **Result**: Superior search results where highly-adopted, canonical projects naturally outrank obscure projects with exact keyword matches.
+
+5. **Real-Time Frontend Syncing**
    - We added `refetchInterval: 60000` (60 seconds) to the `@tanstack/react-query` hooks on the frontend.
    - **Result**: The UI updates automatically as the background worker fetches new data, creating a magical "Live" feeling for the user without websockets.
 

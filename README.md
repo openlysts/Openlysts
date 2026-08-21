@@ -28,6 +28,7 @@
 ## ✨ Features
 
 - 🚀 **Trending & Hot Projects**: A continuously updated feed of repositories gaining momentum right now.
+- 🧠 **Hybrid Similarity Engine**: Advanced algorithmic sorting that weights repository authority and developer engagement alongside text relevance.
 - 🔍 **Lightning-Fast Search**: Press `⌘ + K` to instantly access our Spotlight-style command palette for quick navigation.
 - 🆚 **Smart Alternatives**: Find self-hosted open-source alternatives to expensive SaaS products with direct feature comparisons.
 - ⚖️ **Side-by-Side Compare**: Select up to 3 repositories and compare stars, forks, license, language, and quality score in one view.

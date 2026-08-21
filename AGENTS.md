@@ -726,3 +726,17 @@ The agent MUST operate according to this model:
 > **AUTONOMOUS AUTHORITY IS SCOPED TO THE TRIGGERED OPERATION AND NEVER SELF-EXPANDS.**
 >
 > **WHEN THE OPERATION IS COMPLETE, RETURN TO APPROVAL MODE.**
+
+---
+
+# 13. DOCUMENTATION PROTOCOL
+
+Whenever the user instructs the agent to **"update md files"** (or a similar phrase), it is a strict directive to update all relevant project documentation to reflect newly implemented changes. This explicitly includes:
+
+1. **`README.md`**: Update the main project readme if core features, setup steps, or product descriptions have changed.
+2. **`ARCHITECTURE.md` (or similar architecture docs)**: Update technical architecture files to explain new systems, databases, or logic.
+3. **Antigravity Skills (`SKILL.md`)**: Update relevant workflow or setup skills if the processes or commands have changed.
+4. **QA Testing Protocols (`.agents/skills/openlyst-qa-tester/SKILL.md`)**: Ensure new features have corresponding test cases (TCs) added.
+5. **Other Relevant MD files**: Any other documentation files that are logically impacted by the new changes.
+
+The agent MUST explicitly verify and update these files to ensure documentation stays perfectly synchronized with the codebase.
