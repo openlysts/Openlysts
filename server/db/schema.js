@@ -1,5 +1,6 @@
 export async function initSchema(db) {
   const createQueries = [
+    `CREATE EXTENSION IF NOT EXISTS vector;`,
     `CREATE TABLE IF NOT EXISTS "DiscoveryQuery" (
       id TEXT PRIMARY KEY,
       created_date TEXT,
@@ -66,7 +67,10 @@ export async function initSchema(db) {
       stars_gained_24h INTEGER,
       stars_gained_7d INTEGER,
       stars_gained_30d INTEGER,
-      difficulty TEXT
+      difficulty TEXT,
+      engagement_score INTEGER DEFAULT 0,
+      authority_score REAL DEFAULT 0,
+      embedding vector(768)
     );`,
     `CREATE TABLE IF NOT EXISTS "Invitation" (
       id TEXT PRIMARY KEY,
@@ -184,6 +188,9 @@ export async function initSchema(db) {
     `ALTER TABLE "Repository" ADD COLUMN openlysts_score_boost INTEGER DEFAULT 0`,
     `ALTER TABLE "Repository" ADD COLUMN updated_at TEXT`,
     `ALTER TABLE "Repository" ADD COLUMN tags TEXT`,
+    `ALTER TABLE "Repository" ADD COLUMN engagement_score INTEGER DEFAULT 0`,
+    `ALTER TABLE "Repository" ADD COLUMN authority_score REAL DEFAULT 0`,
+    `ALTER TABLE "Repository" ADD COLUMN embedding vector(768)`,
   ];
 
   for (const q of alterQueries) {

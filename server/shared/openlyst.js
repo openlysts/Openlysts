@@ -121,6 +121,50 @@ export function computeStarsGained(snapshots, currentStars) {
   return { g24, g7, g30 };
 }
 
+export function calculateEngagementScore(repo, g30) {
+  // Heuristic engagement score without needing individual issue/PR queries
+  // High weight for recent stars (g30) and open issues activity relative to stars
+  let score = 0;
+  score += Math.min(50, (g30 || 0) * 2); // Up to 50 points from recent 30d star growth
+  
+  if (repo.open_issues > 0) {
+    const issueToStarRatio = repo.open_issues / Math.max(1, repo.stars);
+    // Ideal ratio implies active community but not overwhelmed (e.g. 1 issue per 50 stars)
+    if (issueToStarRatio > 0.01 && issueToStarRatio < 0.1) score += 20;
+    else if (issueToStarRatio >= 0.1) score += 10;
+  }
+  
+  // Penalize dead projects (archived or old update)
+  const updated = new Date(repo.github_updated_at || 0);
+  const daysSinceUpdate = (Date.now() - updated.getTime()) / 86400000;
+  if (repo.archived || daysSinceUpdate > 365) score -= 30;
+  else if (daysSinceUpdate < 14) score += 30; // Highly responsive
+  else if (daysSinceUpdate < 60) score += 15;
+
+  return Math.max(0, Math.min(100, score)); // Clamp between 0-100
+}
+
+export function calculateAuthorityScore(repo) {
+  // Simple heuristic for dependency pagerank / authority
+  // Real pagerank requires analyzing full dependency trees which is offline-only
+  // Heuristic: Very high stars (>10k) + high forks relative to stars implies foundational library
+  let score = 0;
+  if (repo.stars > 10000) score += 40;
+  else if (repo.stars > 5000) score += 20;
+
+  const forkRatio = (repo.forks || 0) / Math.max(1, repo.stars);
+  if (forkRatio > 0.15) score += 30; // High fork ratio = lots of developers customizing/relying on it
+  else if (forkRatio > 0.05) score += 15;
+  
+  // foundational topics
+  const topics = (repo.topics || []).map(t => t.toLowerCase());
+  if (topics.some(t => ['framework', 'library', 'database', 'language', 'infrastructure'].includes(t))) {
+    score += 30;
+  }
+  
+  return Math.min(100, score);
+}
+
 export const CATEGORIES = [
   { slug: "ai", label: "AI", description: "Artificial intelligence projects, tools, and frameworks." },
   { slug: "llms", label: "LLMs", description: "Large language models and model tooling." },

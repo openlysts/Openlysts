@@ -42,9 +42,13 @@ export default async function getSimilarRepos(req, res) {
           score += 1;
         }
 
+        // Boost by Authority and Engagement (Hybrid CF alternative)
+        score += (r.authority_score || 0) * 0.1;
+        score += (r.engagement_score || 0) * 0.05;
+
         return { repo: r, score };
       })
-      .filter((item) => item.score > 0); // Only keep repos with at least some similarity
+      .filter((item) => item.score > 2); // Only keep repos with at least some similarity
 
     // Sort by similarity score, then by trending score to break ties
     scoredRepos.sort((a, b) => {

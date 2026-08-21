@@ -96,13 +96,39 @@ export default async function queryRepositories(req, res) {
 
     if (q && q.trim()) {
       const query = q.trim().toLowerCase();
+      const queryTerms = query.split(/\s+/);
+      
       repos = repos.filter((r) => {
-        const haystack = [
-          r.name, r.full_name, r.description, r.owner, r.language,
-          Array.isArray(r.topics) ? r.topics.join(' ') : '',
-          Array.isArray(r.categories) ? r.categories.join(' ') : '',
-        ].join(' ').toLowerCase();
-        return haystack.includes(query);
+        const name = (r.name || '').toLowerCase();
+        const fullName = (r.full_name || '').toLowerCase();
+        const desc = (r.description || '').toLowerCase();
+        const owner = (r.owner || '').toLowerCase();
+        const lang = (r.language || '').toLowerCase();
+        const topics = Array.isArray(r.topics) ? r.topics.map(t => t.toLowerCase()) : [];
+        const cats = Array.isArray(r.categories) ? r.categories.map(c => c.toLowerCase()) : [];
+        
+        const haystack = [name, fullName, desc, owner, lang, ...topics, ...cats].join(' ');
+        
+        // Must contain all terms (basic filtering)
+        if (!queryTerms.every(term => haystack.includes(term))) {
+          return false;
+        }
+        
+        // Calculate hybrid relevance score (BM25-lite + Authority)
+        let textScore = 0;
+        if (name === query) textScore += 100;
+        else if (name.includes(query)) textScore += 50;
+        
+        if (topics.includes(query)) textScore += 40;
+        if (cats.includes(query)) textScore += 40;
+        if (lang === query) textScore += 30;
+        
+        if (desc.includes(query)) textScore += 10;
+        
+        // Combine text relevance with authority and engagement (Hybrid Algorithm)
+        r._hybrid_relevance = textScore * 1.5 + (r.authority_score || 0) * 0.5 + (r.engagement_score || 0) * 0.2 + Math.log10(Math.max(1, r.stars || 0));
+        
+        return true;
       });
     }
 
@@ -160,8 +186,15 @@ export default async function queryRepositories(req, res) {
       stars: (a, b) => (b.stars || 0) - (a.stars || 0) || String(a.id || '').localeCompare(String(b.id || '')),
       updated: (a, b) => new Date(b.github_updated_at || 0).getTime() - new Date(a.github_updated_at || 0).getTime() || String(a.id || '').localeCompare(String(b.id || '')),
       recent: (a, b) => new Date(b.last_ingested_at || 0).getTime() - new Date(a.last_ingested_at || 0).getTime() || String(a.id || '').localeCompare(String(b.id || '')),
+      engagement: (a, b) => (b.engagement_score || 0) - (a.engagement_score || 0) || (b.stars || 0) - (a.stars || 0),
+      authority: (a, b) => (b.authority_score || 0) - (a.authority_score || 0) || (b.stars || 0) - (a.stars || 0),
+      relevance: (a, b) => (b._hybrid_relevance || 0) - (a._hybrid_relevance || 0) || (b.trending_score || 0) - (a.trending_score || 0),
     };
-    repos.sort(sortFns[sort] || sortFns.trending);
+    
+    // If a query was provided and no explicit sort was requested (or if sort is trending which is default), 
+    // we default to our new 'relevance' hybrid sort
+    const effectiveSort = (q && q.trim() && sort === 'trending') ? 'relevance' : sort;
+    repos.sort(sortFns[effectiveSort] || sortFns.trending);
 
     const total = repos.length;
     const totalPages = Math.ceil(total / PER_PAGE);

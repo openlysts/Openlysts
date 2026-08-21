@@ -3504,4 +3504,31 @@ The most important coverage improvements added by this addendum are:
 
 ---
 
+# PHASE 36: ALGORITHMIC METRICS & HYBRID SIMILARITY ENGINE
+
+### TC-402: Authority Score UI Rendering (Core Badge)
+
+- Navigate to `/search` or `/discover`.
+- Locate a repository known to have `stars > 25000` (or `authority_score > 40`).
+- **Verify**: The UI displays the "Core" badge (ShieldCheck icon, indigo).
+- Locate a repository known to have `stars < 5000`.
+- **Verify**: The UI does *not* display the "Core" badge.
+
+### TC-403: Engagement Score UI Rendering (Active Badge)
+
+- Navigate to `/search` or `/discover`.
+- Locate a repository known to have high recent engagement (e.g., `forks > 5000`, `open_issues < 100`, high `engagement_score > 60`).
+- **Verify**: The UI displays the "Active" badge (Activity icon, emerald).
+- Locate a repository known to be inactive (e.g., archived or very few forks).
+- **Verify**: The UI does *not* display the "Active" badge.
+
+### TC-404: Hybrid Similarity Sorting
+
+- Navigate to a repository detail page (`/repo/:owner/:name`) for a well-known project (e.g., `facebook/react`).
+- Check the "Similar Repositories" list.
+- **Verify**: Highly popular repositories with similar topics appear before less popular repositories with identical topics. (Verifying the 0.1 authority weight and 0.05 engagement weight are successfully applied to the base similarity score).
+- **Verify**: Only repositories with a total `relevance > 2` are returned in the similar results.
+
+---
+
 # END OF ADDITIVE QA CONTROL LAYER

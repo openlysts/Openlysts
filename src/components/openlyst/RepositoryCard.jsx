@@ -1,5 +1,5 @@
 import { useNavigate, Link } from 'react-router-dom';
-import { Star, GitFork, Bookmark, Flame, AlertCircle, GitCompare } from 'lucide-react';
+import { Star, GitFork, Bookmark, Flame, AlertCircle, GitCompare, ShieldCheck, Activity } from 'lucide-react';
 import { motion, useMotionValue, useSpring, useTransform, useMotionTemplate } from 'framer-motion';
 import { getLanguageColor } from '@/lib/languageColors';
 import { getDifficultyColor } from '@/lib/difficultyColors';
@@ -32,6 +32,8 @@ function timeAgo(dateStr) {
 export default function RepositoryCard({ repo, index = 0 }) {
   const [bookmarked, setBookmarked] = useState(() => isBookmarked(repo?.id));
   const isTrending = (repo?.trending_score || 0) > 10;
+  const isAuthority = (repo?.authority_score || 0) > 40;
+  const isEngaged = (repo?.engagement_score || 0) > 60;
   const langColor = getLanguageColor(repo?.language);
   const navigate = useNavigate();
 
@@ -140,13 +142,29 @@ export default function RepositoryCard({ repo, index = 0 }) {
         <div className="relative z-10 flex-1 flex flex-col justify-between pointer-events-auto">
           <div className="flex justify-between items-start mb-1.5 gap-2">
             <div className="min-w-0 flex-1">
-              {/* Trending badge */}
-              {isTrending && (
-                <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-trending/40 bg-trending/10 text-trending backdrop-blur-md mb-2 w-fit shadow-[0_0_8px_rgba(255,100,50,0.3)] animate-pulse">
-                  <Flame className="w-3 h-3" />
-                  Trending
-                </div>
-              )}
+              <div className="flex flex-wrap gap-1.5 mb-2">
+                {/* Trending badge */}
+                {isTrending && (
+                  <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-trending/40 bg-trending/10 text-trending backdrop-blur-md w-fit shadow-[0_0_8px_rgba(255,100,50,0.3)] animate-pulse">
+                    <Flame className="w-3 h-3" />
+                    Trending
+                  </div>
+                )}
+                {/* Authority badge */}
+                {isAuthority && (
+                  <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-blue-500/40 bg-blue-500/10 text-blue-500 backdrop-blur-md w-fit shadow-[0_0_8px_rgba(59,130,246,0.3)]">
+                    <ShieldCheck className="w-3 h-3" />
+                    Core
+                  </div>
+                )}
+                {/* Engagement badge */}
+                {isEngaged && (
+                  <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-green-500/40 bg-green-500/10 text-green-500 backdrop-blur-md w-fit shadow-[0_0_8px_rgba(34,197,94,0.3)]">
+                    <Activity className="w-3 h-3" />
+                    Active
+                  </div>
+                )}
+              </div>
 
               {/* Name + owner */}
               <Link 

@@ -2,7 +2,8 @@ import { entities } from '../services/entities.js';
 import { db } from '../db/index.js';
 import {
   verifyLicense, classifyRepo, calculateQualityScore,
-  calculateTrendingScore, computeStarsGained, autoClassifyDifficulty
+  calculateTrendingScore, computeStarsGained, autoClassifyDifficulty,
+  calculateEngagementScore, calculateAuthorityScore
 } from '../shared/openlyst.js';
 import { ingestAlternatives } from './ingestAlternatives.js';
 import { invalidateRepositoriesCache } from './queryRepositories.js';
@@ -214,6 +215,8 @@ export async function ingestRepoItem(item, categoryHint = '', repoMap = new Map(
     stars_gained_24h: 0,
     stars_gained_7d: 0,
     stars_gained_30d: 0,
+    engagement_score: 0,
+    authority_score: 0,
   };
   
   repoData.difficulty = autoClassifyDifficulty(repoData);
@@ -227,6 +230,12 @@ export async function ingestRepoItem(item, categoryHint = '', repoMap = new Map(
   repoData.stars_gained_30d = g30;
   repoData.quality_score = calculateQualityScore(repoData);
   repoData.trending_score = calculateTrendingScore(g24, g7, g30);
+  repoData.engagement_score = calculateEngagementScore(repoData, g30);
+  repoData.authority_score = calculateAuthorityScore(repoData);
+
+  // Note: Semantic embedding vector generation requires an external API (like OpenAI)
+  // For now we will leave the vector empty unless an embedding system is integrated.
+  // pgvector allows us to store the array directly if we had it.
 
   let resultEntity;
   if (existing) {
