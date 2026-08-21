@@ -1,10 +1,10 @@
 ---
 name: openlyst-qa-tester
 description: >-
-  Acts as a dedicated QA/UAT team for Openlysts. Uses Playwright MCP physical browser testing to perform exhaustive manual testing covering UAT, Regression, Integration, Accessibility, Performance, Security (Strix-inspired AI pentesting), and Resilience paths. 10/10 award-winning QA precision. Acts as 100 different users with 1000 test scenarios.
+  Acts as a dedicated QA/UAT team for Openlysts. Uses Playwright MCP physical browser testing to perform exhaustive manual testing covering UAT, Regression, Integration, Accessibility, Performance, Security (Strix-inspired AI pentesting), and Resilience paths. Award-winning QA precision. Acts as 100 different users with 1000 test scenarios.
 ---
 
-# Openlysts Exhaustive QA & UAT Tester — 10/10 Edition
+# Openlysts Exhaustive QA & UAT Tester -
 
 ## Role & Identity
 
@@ -2355,5 +2355,1140 @@ Exit the script.
 - **Verify**: `vercel.json` provides enterprise security headers (`Strict-Transport-Security`, `X-Content-Type-Options: nosniff`, `X-Frame-Options: SAMEORIGIN`, `X-XSS-Protection`, `Referrer-Policy`, and `Permissions-Policy`).
 
 
+---
 
+# 10/10 QA GOVERNANCE, COVERAGE GAP CLOSURE & EXECUTION CONTROL ADDENDUM
 
+> **Purpose:** This addendum strengthens the existing skill without deleting or weakening any existing rule, phase, persona, test case, reporting requirement, or execution requirement. The complete original skill remains intact above. This section is additive and is the canonical control layer for executing the full suite.
+
+## A. Non-Destructive Maintenance Rule
+
+1. Existing test cases are **immutable by default**.
+2. Never delete an existing TC because it appears duplicated, outdated, overly specific, or overlapping.
+3. Never silently weaken an existing expected result.
+4. If an existing test conflicts with another test, execute both and record the conflict as a **test-suite inconsistency**, not as a reason to skip either test.
+5. New coverage must use a new test-case ID and must never recycle an existing ID.
+6. Preserve all application-specific terminology, route names, API names, database table names, storage keys, UI labels, and implementation-specific assertions already present in this skill.
+7. When the application evolves, add a new regression test rather than rewriting historical coverage unless the user explicitly authorizes replacement.
+
+---
+
+## B. Canonical Test Execution Hierarchy
+
+Execute testing in this order:
+
+1. **Environment Gate**
+2. **Application Smoke / P0 Gate**
+3. **Application Shell & Routing**
+4. **Core User Journeys**
+5. **Feature-Level Functional Tests**
+6. **Data Integrity & Backend Contract Tests**
+7. **Authentication / Authorization**
+8. **Security / Abuse Resistance**
+9. **Accessibility**
+10. **Responsive / Device Matrix**
+11. **Resilience / Failure Injection**
+12. **Performance / Resource Tests**
+13. **PWA / Offline / Multi-Tab**
+14. **Admin / Operations**
+15. **Cross-Feature Regression**
+16. **Cleanup & Evidence Verification**
+17. **Final Release Gate**
+
+The existing numbered phases and all their test cases remain mandatory. This hierarchy is an execution-control layer and does not replace them.
+
+---
+
+## C. Mandatory Per-Test Evidence Protocol
+
+For **every** executed test case:
+
+- Record TC ID.
+- Record start and end time.
+- Record viewport size and browser state where relevant.
+- Record authenticated role where relevant: Guest / USER / ADMIN.
+- Record prerequisite state.
+- Execute the test physically through Playwright MCP.
+- Capture the required screenshot(s).
+- Capture console errors/warnings after navigation and after major state changes.
+- Inspect relevant network requests for API-backed behavior.
+- Record the actual observed result.
+- Mark exactly one status:
+  - `PASS`
+  - `FAIL`
+  - `BLOCKED`
+  - `NOT APPLICABLE` — only when the feature genuinely does not exist.
+- **Never** use `ASSUMED PASS`.
+- If blocked, record the exact blocker and do not convert the blocker into a pass.
+- If a test changes application data, record the created entity and cleanup action.
+- If a test changes account state, restore the account to its original state unless the test specifically requires persistence.
+- For security tests, never use destructive payloads against production data or production infrastructure.
+
+### Minimum Evidence Bundle
+
+Each failed or blocked test should have, where technically possible:
+
+1. Screenshot
+2. Console output
+3. Relevant network request/response
+4. URL
+5. Reproduction steps
+6. Expected result
+7. Actual result
+8. Severity
+9. Suggested root-cause area
+10. Cleanup status
+
+---
+
+## D. Severity Model
+
+Use the existing P0-P3 model consistently:
+
+### P0 — Release Blocking
+Examples:
+- Authentication bypass
+- Admin/RBAC bypass
+- Sensitive credential/token disclosure
+- Stored XSS affecting privileged users
+- Data corruption
+- Repository/category counts materially contradict backend truth
+- Core application unavailable or blank
+- Destructive action possible without authorization
+
+### P1 — Critical Functional / Security
+Examples:
+- Major feature unusable
+- Persistent data loss
+- Broken login/session lifecycle
+- Broken ingestion pipeline
+- Severe accessibility barrier
+- API contract failure affecting core journeys
+- Major performance regression
+
+### P2 — Significant
+Examples:
+- Important edge case failure
+- Non-critical workflow failure
+- Moderate responsive issue
+- Degraded performance without outage
+- Incorrect non-critical metadata
+
+### P3 — Cosmetic / Minor
+Examples:
+- Visual polish
+- Minor spacing
+- Non-blocking animation issue
+- Copy inconsistency
+
+---
+
+## E. Coverage Matrix Requirement
+
+Before declaring the suite complete, build a coverage matrix mapping:
+
+| Coverage Domain | Required Evidence |
+|---|---|
+| Public routes | Every route tested |
+| Protected routes | Guest + USER + ADMIN |
+| APIs | Every user-facing API exercised |
+| Forms | Empty + valid + invalid + boundary + abuse |
+| CRUD | Create + read + update + delete + cancellation |
+| Search | Query + filters + sorting + pagination + malformed input |
+| Authentication | Register + login + logout + expiry + reset + OAuth |
+| Authorization | Guest + USER + ADMIN + direct API access |
+| Security | XSS + SQLi + CSRF + SSRF + traversal + IDOR/BOLA + headers |
+| Accessibility | Keyboard + focus + semantics + contrast + zoom + motion |
+| Responsive | 320/360/375/390/412/430/768/1024/1280/1366/1440/1920 |
+| Resilience | Offline + 4xx + 5xx + timeout + malformed payload + retry |
+| Performance | Cold + warm + cache hit + cache miss + stress |
+| Data integrity | DB ↔ API ↔ UI consistency |
+| PWA | Manifest + SW + cache + install + offline |
+| Admin | Every destructive and privileged operation |
+| Cleanup | Test data and artifacts removed |
+
+No release is `10/10` until every applicable row has evidence.
+
+---
+
+# PHASE 25: API CONTRACT, DATA INTEGRITY & PAGINATION GAP CLOSURE
+
+### TC-331: API Response Contract Validation
+
+- Exercise every user-facing `/api/*` endpoint discovered through network inspection.
+- **Verify**: HTTP status matches the documented/expected success or error condition.
+- **Verify**: JSON responses have the expected content type.
+- **Verify**: Required fields are present.
+- **Verify**: Numeric fields are numeric, booleans are booleans, arrays are arrays, and nullable fields are handled consistently.
+- **Verify**: No unexpected HTML error page is returned from an API endpoint.
+- **Verify**: Malformed responses fail gracefully in the UI.
+
+### TC-332: API Error Contract Matrix
+
+For representative API endpoints, test:
+
+- `400`
+- `401`
+- `403`
+- `404`
+- `409`
+- `422`
+- `429`
+- `500`
+- `502`
+- `503`
+- timeout/network failure
+
+- **Verify**: UI displays an appropriate state for each.
+- **Verify**: No raw stack traces, SQL errors, secrets, or internal filesystem paths are exposed.
+
+### TC-333: Pagination Boundary Matrix
+
+For every paginated endpoint/page:
+
+- Test page `1`.
+- Test the final valid page.
+- Test page `0`.
+- Test negative page.
+- Test a page beyond the final page.
+- Test invalid/non-numeric page.
+- Test `perPage=1`.
+- Test maximum supported page size.
+- Test excessive page size.
+- **Verify**: No duplicate or missing records at page boundaries.
+- **Verify**: Total counts remain consistent.
+- **Verify**: UI disables or hides impossible navigation controls.
+
+### TC-334: Sorting Correctness & Stable Ordering
+
+For every supported sort:
+
+- Capture the first N results.
+- Verify values are actually monotonic according to the selected sort.
+- Repeat the same request twice.
+- **Verify**: Equal-valued records have stable deterministic ordering.
+- **Verify**: Sort changes do not silently alter unrelated filters.
+
+### TC-335: Filter Combination Truth Table
+
+Test:
+
+- Category only
+- Language only
+- License only
+- Stars only
+- Category + language
+- Category + license
+- Language + license
+- Category + language + license + stars
+- Search + every filter
+- Search + sort + pagination
+
+- **Verify**: Every result satisfies every active filter.
+- **Verify**: Removing one filter changes only the expected constraint.
+- **Verify**: Clear-all returns to the unfiltered dataset.
+
+### TC-336: API/UI Count Integrity
+
+For every count displayed in the UI:
+
+- Capture the UI count.
+- Capture the corresponding API `total`.
+- Where available, verify the database count.
+- **Verify**: UI → API → DB values are consistent within an explicitly documented live-data tolerance.
+- **Bug**: Any unexplained zero, stale count, negative count, NaN, or impossible value is a data-integrity defect.
+
+### TC-337: Cache Hit/Miss Correctness
+
+- Execute a cold query.
+- Execute the same query again.
+- Mutate the underlying data.
+- Execute the same query again.
+- **Verify**: Cache hit is fast.
+- **Verify**: Mutation invalidates affected cache entries.
+- **Verify**: Unaffected cache entries remain usable.
+- **Verify**: No stale deleted/updated repository is returned after mutation.
+
+### TC-338: Concurrent Mutation Consistency
+
+- Open two sessions.
+- Update the same repository from both sessions.
+- Perform simultaneous bookmark/profile/admin mutations where applicable.
+- **Verify**: No corrupted partial state.
+- **Verify**: Last-write behavior is deterministic or conflict handling is explicit.
+- **Verify**: Database remains internally consistent.
+
+---
+
+# PHASE 26: AUTHENTICATION, SESSION & ACCOUNT SECURITY GAP CLOSURE
+
+### TC-339: Session Cookie Security Attributes
+
+If authentication uses cookies:
+
+- Inspect session/auth cookies.
+- **Verify**: `HttpOnly` is enabled where appropriate.
+- **Verify**: `Secure` is enabled in HTTPS environments.
+- **Verify**: `SameSite` is appropriately restrictive.
+- **Verify**: Cookie path/domain/scope is not broader than necessary.
+- **Verify**: No sensitive session token is duplicated into unsafe client-visible storage without an explicit reason.
+
+### TC-340: Session Fixation Resistance
+
+- Establish a guest session.
+- Authenticate.
+- **Verify**: Authentication establishes a new authenticated session identifier where applicable.
+- Logout.
+- Reuse the old session identifier if technically possible.
+- **Verify**: It cannot restore the authenticated session.
+
+### TC-341: Concurrent Session Logout Semantics
+
+- Authenticate in Tab A and Tab B.
+- Log out from Tab A.
+- **Verify**: Tab B receives the expected session invalidation behavior.
+- Trigger a protected request from Tab B.
+- **Verify**: Access is denied or session is refreshed according to the application's documented policy.
+
+### TC-342: Password Reset Token Replay Protection
+
+- Generate a password reset link.
+- Use it successfully once.
+- Attempt to reuse the same token.
+- **Verify**: Reuse is rejected.
+- **Verify**: Expired tokens are rejected.
+- **Verify**: Invalid tokens do not reveal whether another valid token exists.
+
+### TC-343: Password Reset Token Enumeration Resistance
+
+- Submit valid-looking, invalid, expired, and random reset tokens.
+- **Verify**: Responses do not reveal sensitive token/account state beyond what the UX requires.
+
+### TC-344: Account Enumeration Resistance
+
+- Test registration, login, password reset, and OAuth linking with existing and non-existing accounts.
+- **Verify**: Error responses do not unnecessarily disclose whether a target account exists.
+
+### TC-345: Authentication Rate Limiting
+
+- Repeatedly submit invalid login attempts within a short interval.
+- **Verify**: Rate limiting, progressive delay, CAPTCHA, lockout, or equivalent protection activates according to the application policy.
+- **Verify**: Legitimate users can recover without permanent accidental lockout.
+
+### TC-346: Authorization Enforcement at API Layer
+
+For every protected API endpoint:
+
+- Call endpoint unauthenticated.
+- Call endpoint as USER.
+- Call endpoint as ADMIN where applicable.
+- **Verify**: Authorization is enforced server-side.
+- **Verify**: Hiding a UI control never acts as the sole authorization mechanism.
+
+### TC-347: IDOR/BOLA Repository & User Resource Testing
+
+- Modify repository/user/resource IDs in API requests.
+- **Verify**: A user cannot read or mutate another user's private resource.
+- **Verify**: Sequential IDs, UUIDs, slugs, and alternate identifiers do not bypass authorization.
+
+---
+
+# PHASE 27: SECURITY GAP CLOSURE — SSRF, CORS, INPUT & CONTENT SECURITY
+
+### TC-348: SSRF Protection on URL-Consuming Features
+
+For every feature accepting a URL:
+
+- Test localhost URLs.
+- Test private RFC1918 addresses.
+- Test loopback addresses.
+- Test link-local metadata addresses.
+- Test alternative IP representations.
+- Test redirects to private addresses.
+- **Verify**: Server refuses unauthorized internal-network access.
+- **Verify**: No cloud metadata, internal service, filesystem, or secret content is returned.
+
+### TC-349: CORS Preflight & Origin Matrix
+
+Test:
+
+- Same-origin request.
+- Authorized origin.
+- Unauthorized origin.
+- `null` origin.
+- Malformed Origin header.
+- OPTIONS preflight.
+- Credentialed request.
+
+- **Verify**: Only intended origins are allowed.
+- **Verify**: Credentials are never combined with an unrestricted wildcard origin.
+
+### TC-350: Content-Type Confusion / Request Smuggling Resistance
+
+- Send JSON endpoints with incorrect or ambiguous content types.
+- Send malformed JSON.
+- Send duplicate/conflicting headers where supported by the browser tooling.
+- **Verify**: Server rejects malformed requests cleanly.
+- **Verify**: No unexpected parser disagreement or privilege escalation occurs.
+
+### TC-351: DOM XSS Beyond Search Inputs
+
+Test untrusted data in:
+
+- Repository name
+- Description
+- Topics
+- README
+- User display name
+- Bio
+- Contact message
+- Alternative metadata
+- Admin notes
+- URL parameters
+- Error messages
+
+- **Verify**: No script execution.
+- **Verify**: Dangerous HTML attributes are neutralized.
+- **Verify**: Stored payloads remain inert after reload and in other users' views.
+
+### TC-352: Markdown / README Sanitization Matrix
+
+Test:
+
+- `<script>`
+- `<img onerror>`
+- `<iframe>`
+- `<object>`
+- `<embed>`
+- dangerous links
+- `javascript:` URLs
+- data URLs where applicable
+- SVG payloads
+
+- **Verify**: Markdown remains readable while active content is safely sanitized.
+
+### TC-353: Security Header Completeness
+
+Inspect all relevant document and API responses for applicable:
+
+- CSP
+- HSTS in HTTPS deployment
+- X-Content-Type-Options
+- Referrer-Policy
+- frame protections
+- Permissions-Policy
+- appropriate CORS headers
+
+- **Verify**: Headers are consistent across route types and error responses where applicable.
+
+---
+
+# PHASE 28: ACCESSIBILITY GAP CLOSURE
+
+### TC-354: Browser Zoom 200% / 400% Reflow
+
+- Test 200% and 400% browser zoom.
+- **Verify**: Core content remains readable.
+- **Verify**: No critical controls disappear.
+- **Verify**: No horizontal scrolling is introduced for normal content except intentionally scrollable components.
+
+### TC-355: Reduced Motion Preference
+
+- Enable `prefers-reduced-motion: reduce`.
+- Test navigation, modals, 3D backgrounds, card hover, toasts, drawers, and page transitions.
+- **Verify**: Non-essential motion is reduced or disabled.
+- **Verify**: Functionality remains intact.
+
+### TC-356: Focus Visible & Focus Restoration Matrix
+
+For every modal/drawer/popover:
+
+- Open with keyboard.
+- Verify focus enters the component.
+- Close with Escape or action.
+- Verify focus returns to the initiating control.
+- Verify no hidden element retains focus.
+
+### TC-357: Form Accessibility Matrix
+
+For every form:
+
+- Verify visible labels.
+- Verify programmatic labels.
+- Verify required fields expose required state.
+- Verify invalid fields expose error state.
+- Verify errors are associated with the correct field.
+- Verify submission errors are announced appropriately.
+- Verify keyboard-only completion.
+
+### TC-358: Accessible Name Uniqueness
+
+- Inspect icon-only buttons, links, toggles, and navigation controls.
+- **Verify**: Every interactive control has a meaningful accessible name.
+- **Verify**: Duplicate labels are intentional and distinguishable by context.
+
+### TC-359: Heading Hierarchy & Landmark Integrity Across All Routes
+
+- Inspect every route.
+- **Verify**: Heading levels do not skip arbitrarily.
+- **Verify**: Main landmark is unique.
+- **Verify**: Navigation and complementary landmarks are meaningful.
+- **Verify**: Dialogs are correctly excluded from the normal page landmark hierarchy.
+
+### TC-360: Keyboard Trap / Escape / Tab-Cycle Exhaustion
+
+For every interactive overlay:
+
+- Open with keyboard.
+- Tab forward through every focusable element.
+- Shift+Tab backward.
+- Press Escape.
+- **Verify**: No accidental keyboard trap.
+- **Verify**: No focus escape into obscured background content.
+
+---
+
+# PHASE 29: RESILIENCE, NETWORK FAILURE & RECOVERY
+
+### TC-361: API Timeout Recovery
+
+- Simulate API requests that never resolve or resolve after a long delay.
+- **Verify**: Loading state does not remain indefinitely.
+- **Verify**: Timeout/error state is shown.
+- **Verify**: Retry action works.
+- **Verify**: Retrying does not create duplicate requests.
+
+### TC-362: API 429 Rate-Limit Recovery
+
+- Simulate `429 Too Many Requests`.
+- **Verify**: UI displays rate-limit state.
+- **Verify**: Retry respects server-provided timing when available.
+- **Verify**: No aggressive retry storm occurs.
+
+### TC-363: Partial Dependency Failure
+
+Simulate one dependency failing while others succeed.
+
+Examples:
+
+- GitHub API fails but Neon succeeds.
+- Neon fails but cached data exists.
+- Video service fails but repository data succeeds.
+- Translation service fails but original text exists.
+
+- **Verify**: Working features remain usable.
+- **Verify**: Failure is isolated rather than crashing the entire page.
+
+### TC-364: Retry Idempotency
+
+- Trigger retry after a failed create/update/ingestion operation.
+- **Verify**: Retry does not duplicate records.
+- **Verify**: Idempotency keys or equivalent safeguards work where required.
+
+### TC-365: Browser Refresh During Mutation
+
+- Start ingestion, save profile, update repository, or another long-running mutation.
+- Refresh during the operation.
+- **Verify**: Application recovers to a truthful state.
+- **Verify**: Operation is not silently duplicated.
+- **Verify**: User sees final status when the backend completed successfully.
+
+### TC-366: Navigation During Loading
+
+- Start a slow search/API request.
+- Navigate to another page immediately.
+- **Verify**: Old request cannot overwrite the new page's state.
+- **Verify**: No stale results appear on the destination page.
+- **Verify**: Abort/cancellation behavior is clean where supported.
+
+---
+
+# PHASE 30: PERFORMANCE, CORE WEB VITALS & RESOURCE GOVERNANCE
+
+### TC-367: Warm vs Cold Performance Comparison
+
+- Measure cold load.
+- Measure warm cache load.
+- Compare:
+  - DCL
+  - FCP
+  - LCP where available
+  - request count
+  - transferred bytes
+- **Verify**: Warm-cache behavior improves without serving stale content.
+
+### TC-368: Largest Contentful Paint Stability
+
+- Measure LCP on key routes.
+- Repeat at least 3 times.
+- **Verify**: No single asset causes unpredictable LCP spikes.
+- **Document**: median and worst observed result.
+
+### TC-369: Cumulative Layout Shift Audit
+
+- Load each major route.
+- Observe layout during:
+  - image loading
+  - font loading
+  - repository cards loading
+  - live counters
+  - 3D canvas initialization
+  - ads/external embeds if applicable
+- **Verify**: Major content does not unexpectedly jump.
+
+### TC-370: Long Task / Main Thread Blocking Audit
+
+- Observe long tasks during:
+  - initial load
+  - search
+  - scrolling
+  - opening modals
+  - changing filters
+  - switching themes
+  - 3D interactions
+- **Verify**: No sustained main-thread blocking that makes the UI unresponsive.
+
+### TC-371: Network Request Duplication Audit
+
+- Open each major route.
+- Record API requests.
+- Navigate back and forward.
+- **Verify**: No accidental duplicate requests caused by remount loops.
+- **Verify**: Cache behavior matches the intended TanStack Query strategy.
+
+### TC-372: Asset Failure Fallback
+
+- Block representative images, fonts, video thumbnails, and non-critical assets.
+- **Verify**: Layout remains stable.
+- **Verify**: Alt text/fallback UI appears where applicable.
+- **Verify**: Critical application functionality remains usable.
+
+### TC-373: WebGL Context Loss & Recovery
+
+- Simulate or trigger WebGL context loss where supported.
+- **Verify**: Application does not crash.
+- **Verify**: Non-WebGL UI remains functional.
+- **Verify**: Canvas recovers or falls back gracefully.
+
+---
+
+# PHASE 31: PWA, OFFLINE CACHE & SERVICE-WORKER GAP CLOSURE
+
+### TC-374: Service Worker Update Lifecycle
+
+- Install version A.
+- Deploy/version version B or simulate a changed service worker.
+- **Verify**: New worker installs correctly.
+- **Verify**: Old worker does not permanently block updates.
+- **Verify**: User receives the intended update behavior.
+
+### TC-375: Cache Versioning & Stale Asset Prevention
+
+- Inspect service-worker cache names.
+- Install an updated application build.
+- **Verify**: Old hashed assets do not remain the active source after successful update.
+- **Verify**: No mixed-version JavaScript/CSS causes runtime crashes.
+
+### TC-376: Offline Navigation Matrix
+
+After visiting key routes online:
+
+- Disable network.
+- Reload:
+  - `/`
+  - `/discover`
+  - `/search`
+  - `/alternatives`
+  - `/trending`
+  - `/bookmarks`
+  - `/repo/:owner/:name`
+- **Verify**: Each route follows the intended offline behavior.
+- **Verify**: No blank page or unhandled exception.
+
+### TC-377: Offline Mutation Safety
+
+- Go offline.
+- Attempt bookmark/profile/admin mutation where relevant.
+- **Verify**: App does not falsely claim server persistence.
+- **Verify**: User receives truthful offline feedback.
+- **Verify**: Reconnection does not create duplicate mutations.
+
+### TC-378: Storage Quota Exhaustion
+
+- Simulate near-full local storage/cache where practical.
+- Attempt bookmark/history/settings/cache writes.
+- **Verify**: Application handles quota errors without crashing.
+- **Verify**: Critical state remains recoverable.
+
+---
+
+# PHASE 32: ADMIN OPERATIONS & DESTRUCTIVE ACTION GAP CLOSURE
+
+### TC-379: Admin Destructive Action Double Confirmation
+
+For delete/purge operations:
+
+- Open destructive action.
+- Cancel.
+- Reopen.
+- Attempt rapid confirmation clicks.
+- **Verify**: Exactly one destructive mutation occurs.
+- **Verify**: Confirmation clearly identifies the target.
+
+### TC-380: Admin Bulk Operation Partial Failure
+
+- Select multiple repositories/users.
+- Force one selected item to fail while others succeed.
+- **Verify**: Successful and failed items are separately reported.
+- **Verify**: No false all-success message.
+- **Verify**: Retry can target failed items only where supported.
+
+### TC-381: Admin Audit Log Immutability
+
+- Create an audit event.
+- Attempt to mutate/delete it through the UI/API as ADMIN.
+- **Verify**: Audit record cannot be altered through normal administrative privileges unless an explicit retention mechanism exists.
+- **Verify**: Security-relevant fields remain intact.
+
+### TC-382: Admin Privilege Boundary on Secondary Routes
+
+- Discover every `/admin/*` and admin-related API route.
+- Test direct navigation and direct API access as Guest, USER, and ADMIN.
+- **Verify**: No secondary admin screen/API bypasses the primary guard.
+
+### TC-383: Admin Token Secret Handling
+
+- Inspect token/PAT management UI and API responses.
+- **Verify**: Full secret values are never unnecessarily rendered, logged, or returned to the browser.
+- **Verify**: Masked values cannot be trivially recovered from DOM/source/network responses.
+
+### TC-384: Admin Operation Audit Correlation
+
+For destructive/privileged operations:
+
+- Capture UI action.
+- Capture network request.
+- Capture resulting DB state.
+- Capture audit record.
+- **Verify**: Actor, target, action, timestamp, and outcome correlate correctly.
+
+---
+
+# PHASE 33: SEARCH, URL STATE & DEEP-LINK GAP CLOSURE
+
+### TC-385: URL Encoding Round-Trip Matrix
+
+Test queries containing:
+
+- spaces
+- `+`
+- `%`
+- `&`
+- `=`
+- `#`
+- `?`
+- Unicode
+- emoji
+- slash
+- comma
+
+- **Verify**: Entered state survives URL encoding/decoding without semantic corruption.
+
+### TC-386: Browser Refresh URL State Preservation
+
+- Apply every supported search/filter/sort combination.
+- Refresh the browser.
+- **Verify**: Search input, filters, sort, page, and visible results remain synchronized with the URL.
+
+### TC-387: Shareable Deep Link Integrity
+
+- Create a complex search URL.
+- Copy it.
+- Open in a fresh browser context.
+- **Verify**: The fresh context reconstructs the same search state without relying on previous local state.
+
+### TC-388: Unknown Query Parameter Tolerance
+
+- Add unknown parameters to valid routes.
+- **Verify**: Application ignores harmless unknown parameters without crashing or changing protected behavior.
+
+### TC-389: Duplicate Query Parameter Handling
+
+- Test repeated parameters such as:
+  - `categories=ai&categories=ai`
+  - repeated sort
+  - repeated page
+- **Verify**: Behavior is deterministic and safe.
+- **Verify**: Duplicate parameters cannot bypass filters or authorization.
+
+---
+
+# PHASE 34: CROSS-BROWSER / ENGINE COMPATIBILITY
+
+### TC-390: Chromium Baseline Regression
+
+- Run critical smoke flows in Chromium.
+- **Verify**: All P0/P1 journeys pass.
+
+### TC-391: Firefox Compatibility Matrix
+
+Where browser support is intended:
+
+- Run shell, navigation, search, forms, auth, modals, responsive behavior, and PWA-compatible functionality.
+- **Verify**: No engine-specific breakage.
+
+### TC-392: WebKit / Safari Compatibility Matrix
+
+Where browser support is intended:
+
+- Test mobile viewport behavior, touch scrolling, forms, modals, video, PWA behavior, and CSS viewport units.
+- **Verify**: No Safari-specific layout or interaction failures.
+
+### TC-393: Browser Feature Fallback Audit
+
+- Identify APIs requiring optional browser support.
+- **Verify**: Unsupported APIs have graceful fallbacks.
+- **Verify**: Feature detection is used instead of assuming support.
+
+---
+
+# PHASE 35: FINAL RELEASE GATE & SUITE QUALITY CONTROL
+
+### TC-394: Test Case Numbering Integrity
+
+- Parse all `TC-XXX` identifiers in this skill.
+- **Verify**: No duplicate IDs exist.
+- **Verify**: Newly added tests use unique IDs.
+- **Verify**: Existing historical IDs remain unchanged.
+
+### TC-395: Phase Numbering Integrity
+
+- Parse every `PHASE N`.
+- **Verify**: Duplicate phase numbers are explicitly documented if retained for historical compatibility.
+- **Verify**: The canonical execution hierarchy above is used to resolve execution order.
+- **Verify**: No phase is silently skipped because of numbering inconsistencies.
+
+### TC-396: Requirement-to-Test Traceability
+
+- Extract major application capabilities from the skill:
+  - discovery
+  - search
+  - filters
+  - alternatives
+  - repositories
+  - bookmarks
+  - compare
+  - contact
+  - themes
+  - accessibility
+  - responsive
+  - security
+  - resilience
+  - performance
+  - auth
+  - admin
+  - video
+  - translation
+  - database
+  - ingestion
+  - PWA
+  - profile
+  - OAuth
+  - toasts
+- **Verify**: Every capability has at least one positive test and one negative/boundary test where applicable.
+
+### TC-397: No-Assumption Final Sweep
+
+- Review every test marked PASS.
+- **Verify**: Evidence exists for every PASS.
+- **Verify**: No PASS was inferred from source code alone when physical browser interaction was required.
+- **Verify**: No test was silently skipped because it was inconvenient or repetitive.
+
+### TC-398: Regression Re-Run of Every Previously Failed P0/P1
+
+- Extract all historical P0/P1 failures.
+- Re-run each after fixes.
+- **Verify**: Fixed behavior passes.
+- **Verify**: No adjacent regression is introduced.
+
+### TC-399: Clean-State Re-Run
+
+- Clear appropriate browser state.
+- Start a fresh browser context.
+- Run core smoke suite again.
+- **Verify**: Results do not depend on stale localStorage, cache, session, service-worker state, or prior test data.
+
+### TC-400: Final Release Candidate Gate
+
+The application may be declared **10/10 QA READY** only when:
+
+- All mandatory tests are `PASS`, or explicitly justified `BLOCKED`.
+- No unresolved P0 exists.
+- No unresolved P1 exists without explicit release approval.
+- Authentication and authorization are verified at both UI and API layers.
+- Core user journeys pass on supported device classes.
+- Security regression suite passes.
+- Accessibility suite passes at the application's stated support level.
+- Performance thresholds are met or deviations are explicitly approved.
+- Database/API/UI counts are reconciled.
+- Cache invalidation is verified.
+- Test artifacts are complete.
+- Test data is cleaned.
+- Final screenshots/evidence exist for failures and key release gates.
+- `qa_exhaustive_report.md` contains the final truthful status.
+
+---
+
+# FINAL EXECUTION RULES — 10/10 STANDARD
+
+## Rule A — Never Substitute Inspection for Execution
+
+Source inspection can supplement a test, but it does not replace physical browser execution when the test requires observable UI behavior.
+
+## Rule B — Never Substitute a Screenshot for Functional Verification
+
+A screenshot proves appearance at one moment. It does not prove functionality, state persistence, navigation, network behavior, accessibility, or data correctness.
+
+## Rule C — Never Substitute a Passing API for a Passing UI
+
+A healthy endpoint does not prove that the UI:
+- sends the correct parameters,
+- handles loading,
+- handles errors,
+- renders the response,
+- updates state,
+- preserves state,
+- or provides accessible interaction.
+
+## Rule D — Never Substitute a Passing UI for Authorization
+
+A hidden button or protected route is not sufficient evidence. Direct API authorization must be tested.
+
+## Rule E — Always Test the Negative Path
+
+Every major mutation, query, authentication flow, navigation flow, and external dependency must have an applicable failure/negative test.
+
+## Rule F — Always Test State Transitions
+
+For every feature with state:
+
+`initial → loading → success → failure → retry → persisted → reload → restored`
+
+where applicable.
+
+## Rule G — Always Test Cross-Feature Effects
+
+Examples:
+
+- Bookmark → BottomNav count → Bookmarks page → localStorage → multi-tab sync.
+- Category chip → URL → backend slug mapping → results → count → back navigation.
+- Admin edit → DB → cache invalidation → public Discover → Repo Detail.
+- Login → session → protected route → refresh → second tab → logout.
+- Ingestion → DB → cache → counts → category metrics → public UI.
+
+## Rule H — Treat Data Integrity as a First-Class QA Domain
+
+A visually correct card containing incorrect repository data is a failure.
+
+## Rule I — Treat Security as a First-Class QA Domain
+
+Any evidence of:
+- authorization bypass,
+- secret leakage,
+- XSS,
+- SQL injection,
+- SSRF,
+- IDOR/BOLA,
+- session compromise,
+- insecure cookies,
+- unsafe redirects,
+
+must be escalated immediately.
+
+## Rule J — Final Report Must Be Truthful
+
+Never optimize the pass rate by:
+- skipping tests,
+- redefining expected behavior after failure,
+- converting BLOCKED to PASS,
+- hiding known defects,
+- or claiming execution that did not happen.
+
+---
+
+# FINAL REPORT ENHANCEMENT
+
+In addition to the existing `qa_exhaustive_report.md` template, include:
+
+```markdown
+## Test Execution Metadata
+
+- Application URL:
+- Backend health URL:
+- Test date:
+- Browser / engine:
+- Viewport matrix:
+- Auth roles exercised:
+- GitHub/API environment:
+- Database environment:
+- Build / commit:
+- Test suite version:
+
+## Coverage
+
+- Total test cases:
+- Executed:
+- Passed:
+- Failed:
+- Blocked:
+- Not Applicable:
+- Evidence completeness:
+- P0 open:
+- P1 open:
+- P2 open:
+- P3 open:
+
+## Coverage by Domain
+
+| Domain | Tests | Pass | Fail | Blocked |
+|---|---:|---:|---:|---:|
+| Smoke / Shell | | | | |
+| Routing | | | | |
+| Search | | | | |
+| Filters | | | | |
+| Repository | | | | |
+| Alternatives | | | | |
+| Bookmarks | | | | |
+| Compare | | | | |
+| Forms | | | | |
+| Authentication | | | | |
+| Authorization | | | | |
+| Admin | | | | |
+| Security | | | | |
+| Accessibility | | | | |
+| Responsive | | | | |
+| Resilience | | | | |
+| Performance | | | | |
+| PWA / Offline | | | | |
+| Data Integrity | | | | |
+
+## Release Gate
+
+- [ ] No unresolved P0
+- [ ] No unresolved P1 without explicit approval
+- [ ] Core smoke suite passes
+- [ ] Authentication passes
+- [ ] Authorization passes at API layer
+- [ ] Security regression passes
+- [ ] Accessibility regression passes
+- [ ] Responsive matrix passes
+- [ ] Performance thresholds verified
+- [ ] Data integrity verified
+- [ ] Cache invalidation verified
+- [ ] Test data cleaned
+- [ ] Evidence complete
+- [ ] Final report saved
+- [ ] Browser closed
+- [ ] Final release decision recorded
+
+## Known Test-Suite Inconsistencies
+
+Record, but do not silently alter, historical inconsistencies such as:
+- duplicated reporting-template sections,
+- historical phase-number gaps,
+- historical test-number gaps,
+- feature-specific assertions that may no longer exist,
+- conflicting implementation-specific thresholds.
+
+## Final QA Decision
+
+**RELEASE READY / RELEASE BLOCKED / CONDITIONAL**
+
+Reason:
+[Truthful explanation]
+```
+
+---
+
+# STRUCTURAL REVIEW NOTES — PRESERVE THESE AS MAINTENANCE GUIDANCE
+
+The original skill is exceptionally broad and already contains extensive application-specific coverage. Its principal weakness is **organization and governance rather than lack of raw test volume**.
+
+The preferred long-term structure is:
+
+1. Identity & Mission
+2. Non-Negotiable Browser Protocol
+3. Environment / Prerequisites
+4. Personas
+5. Test Data & Account Matrix
+6. Severity Model
+7. Evidence Rules
+8. Execution Hierarchy
+9. Functional Test Phases
+10. Security Phases
+11. Accessibility Phases
+12. Responsive / Device Phases
+13. Performance Phases
+14. Resilience Phases
+15. Admin / Operations Phases
+16. PWA / Offline Phases
+17. Cross-Feature Regression
+18. Final Release Gate
+19. Reporting
+20. Cleanup
+
+**Important:** This recommendation is structural only. The existing test cases above remain preserved and mandatory.
+
+The most important coverage improvements added by this addendum are:
+
+- API contract/schema validation
+- API error-contract testing
+- pagination boundary testing
+- deterministic sorting verification
+- complete filter truth-table testing
+- API/UI/database count reconciliation
+- cache hit/miss correctness
+- concurrent mutation integrity
+- cookie security
+- session fixation resistance
+- concurrent session invalidation
+- password reset replay protection
+- account enumeration resistance
+- authentication rate limiting
+- API-level authorization
+- IDOR/BOLA
+- SSRF
+- CORS preflight/origin matrix
+- content-type/parser robustness
+- broader stored DOM XSS
+- Markdown/README sanitization
+- browser zoom at 200%/400%
+- reduced-motion accessibility
+- focus restoration and keyboard trap exhaustion
+- accessible form error semantics
+- API timeout/retry
+- 429 handling
+- partial dependency failure
+- mutation idempotency
+- refresh-during-mutation
+- stale-request cancellation
+- LCP/CLS/main-thread performance
+- duplicate network-request detection
+- WebGL context-loss recovery
+- service-worker update lifecycle
+- cache versioning
+- offline mutation safety
+- storage quota exhaustion
+- admin partial-failure handling
+- audit immutability/correlation
+- URL encoding/round-trip integrity
+- cross-browser engine compatibility
+- test-ID integrity
+- requirement-to-test traceability
+- clean-state regression
+- historical P0/P1 revalidation
+- final release-candidate gate
+
+---
+
+# END OF ADDITIVE QA CONTROL LAYER
