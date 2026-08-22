@@ -47,3 +47,4 @@ get-logs.js
 screenshot.png
 migrate_v2.js
 reclassify.js
+.env*
