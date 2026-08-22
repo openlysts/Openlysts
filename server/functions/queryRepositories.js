@@ -40,7 +40,7 @@ export default async function queryRepositories(req, res) {
       });
     }
 
-    let whereConditions = ['hidden = false'];
+    let whereConditions = ['COALESCE(hidden, 0) = 0'];
     let params = [];
     let paramIdx = 1;
 
@@ -111,11 +111,11 @@ export default async function queryRepositories(req, res) {
 
     if (activity) {
       if (activity === 'archived') {
-        whereConditions.push(`archived = true`);
+        whereConditions.push(`COALESCE(archived, 0) = 1`);
       } else if (activity === 'active') {
-        whereConditions.push(`archived = false AND github_updated_at >= NOW() - INTERVAL '90 days'`);
+        whereConditions.push(`COALESCE(archived, 0) = 0 AND github_updated_at >= NOW() - INTERVAL '90 days'`);
       } else if (activity === 'recently-active') {
-        whereConditions.push(`archived = false AND github_updated_at >= NOW() - INTERVAL '365 days'`);
+        whereConditions.push(`COALESCE(archived, 0) = 0 AND github_updated_at >= NOW() - INTERVAL '365 days'`);
       }
     }
 
@@ -186,7 +186,7 @@ export default async function queryRepositories(req, res) {
       const catCountQuery = `
         SELECT jsonb_array_elements_text(COALESCE(NULLIF(categories, ''), '[]')::jsonb) as category, count(*) as count 
         FROM "Repository" 
-        WHERE hidden = false 
+        WHERE COALESCE(hidden, 0) = 0 
         GROUP BY category
       `;
       const { rows: catRows } = await db.query(catCountQuery);

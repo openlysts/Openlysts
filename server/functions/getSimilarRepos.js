@@ -34,7 +34,7 @@ export default async function getSimilarRepos(req, res) {
     // 2. Fetch candidate similar repositories using targeted SQL index filtering
     const candidateQuery = `
       SELECT * FROM "Repository"
-      WHERE hidden = false
+      WHERE COALESCE(hidden, 0) = 0
         AND LOWER(full_name) != LOWER($1)
         AND (
           (language IS NOT NULL AND language != '' AND language = $2)
