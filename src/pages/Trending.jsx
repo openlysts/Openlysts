@@ -17,7 +17,7 @@ export default function Trending() {
     licenses: searchParams.get('licenses')?.split(',').filter(Boolean) || [],
     difficulties: searchParams.get('difficulties')?.split(',').filter(Boolean) || [],
     minStars: parseInt(searchParams.get('minStars') || '0') || 0,
-    updatedWithin: searchParams.get('updatedWithin') || '7d',
+    updatedWithin: searchParams.get('updatedWithin') || '',
     activity: searchParams.get('activity') || '',
     sort: 'trending',
     page: parseInt(searchParams.get('page') || '1') || 1,

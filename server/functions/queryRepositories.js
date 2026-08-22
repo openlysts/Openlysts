@@ -105,7 +105,7 @@ export default async function queryRepositories(req, res) {
     if (updatedWithin) {
       const days = { '24h': 1, '7d': 7, '30d': 30, '6mo': 180, '1yr': 365 }[updatedWithin];
       if (days) {
-        whereConditions.push(`github_updated_at >= NOW() - INTERVAL '${days} days'`);
+        whereConditions.push(`(NULLIF(github_updated_at, '')::timestamptz >= NOW() - INTERVAL '${days} days')`);
       }
     }
 
@@ -113,9 +113,9 @@ export default async function queryRepositories(req, res) {
       if (activity === 'archived') {
         whereConditions.push(`COALESCE(archived, 0) = 1`);
       } else if (activity === 'active') {
-        whereConditions.push(`COALESCE(archived, 0) = 0 AND github_updated_at >= NOW() - INTERVAL '90 days'`);
+        whereConditions.push(`COALESCE(archived, 0) = 0 AND (NULLIF(github_updated_at, '')::timestamptz >= NOW() - INTERVAL '90 days')`);
       } else if (activity === 'recently-active') {
-        whereConditions.push(`COALESCE(archived, 0) = 0 AND github_updated_at >= NOW() - INTERVAL '365 days'`);
+        whereConditions.push(`COALESCE(archived, 0) = 0 AND (NULLIF(github_updated_at, '')::timestamptz >= NOW() - INTERVAL '365 days')`);
       }
     }
 
