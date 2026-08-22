@@ -17,7 +17,7 @@ router.post('/send', async (req, res) => {
     port: parseInt(process.env.SMTP_PORT || '587'),
     secure: process.env.SMTP_SECURE === 'true' || false, // true for 465, false for other ports
     auth: {
-      user: process.env.SMTP_USER, // e.g. reviewzxone@gmail.com
+      user: process.env.SMTP_USER, // e.g. openlysts@gmail.com
       pass: process.env.SMTP_PASS, // App password
     },
   });
@@ -35,7 +35,7 @@ router.post('/send', async (req, res) => {
     // Send email
     await transporter.sendMail({
       from: `"Openlysts Contact" <${process.env.SMTP_USER}>`,
-      to: process.env.CONTACT_EMAIL || process.env.SMTP_USER || 'reviewzxone@gmail.com', // list of receivers
+      to: process.env.CONTACT_EMAIL || process.env.SMTP_USER || 'openlysts@gmail.com', // list of receivers
       replyTo: email,
       subject: `Openlysts Contact Form: Message from ${name}`, // Subject line
       text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`, // plain text body

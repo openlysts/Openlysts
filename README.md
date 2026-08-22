@@ -68,7 +68,7 @@ Ensure you have **Node.js** (v18+) and **npm** installed. You will also need a P
 ### 2. Installation
 Clone the repository and install the required dependencies:
 ```bash
-git clone https://github.com/Adilrafiq001/Openlyst.git
+git clone https://github.com/openlysts/Openlysts.git
 cd Openlyst
 npm install
 ```
@@ -95,7 +95,7 @@ GITHUB_OAUTH_CLIENT_SECRET=your_github_client_secret
 # OPTIONAL: SMTP Credentials for the Contact form email dispatch & Password Resets
 SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
-SMTP_USER=reviewzxone@gmail.com
+SMTP_USER=openlysts@gmail.com
 SMTP_PASS=your_16_letter_app_password
 ```
 

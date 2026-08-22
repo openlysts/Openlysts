@@ -74,22 +74,22 @@ export default function Contact() {
       </div>
 
       <div data-tour="contact-methods" className="grid sm:grid-cols-2 gap-4 mb-10">
-        <a href="mailto:reviewzxone@gmail.com" className="card p-5 flex items-center gap-3 card-hover">
+        <a href="mailto:openlysts@gmail.com" className="card p-5 flex items-center gap-3 card-hover">
           <div className="w-10 h-10 rounded-lg bg-accent-soft flex items-center justify-center flex-shrink-0">
             <Mail className="w-5 h-5 text-accent" />
           </div>
           <div>
             <h3 className="font-semibold text-text text-sm">Email</h3>
-            <p className="text-text-muted text-sm">reviewzxone@gmail.com</p>
+            <p className="text-text-muted text-sm">openlysts@gmail.com</p>
           </div>
         </a>
-        <a href="https://github.com/Adilrafiq001/Openlyst" target="_blank" rel="noopener noreferrer" className="card p-5 flex items-center gap-3 card-hover overflow-hidden">
+        <a href="https://github.com/openlysts/Openlysts" target="_blank" rel="noopener noreferrer" className="card p-5 flex items-center gap-3 card-hover overflow-hidden">
           <div className="w-10 h-10 rounded-lg bg-accent-soft flex items-center justify-center flex-shrink-0">
             <Github className="w-5 h-5 text-accent" />
           </div>
           <div className="min-w-0">
             <h3 className="font-semibold text-text text-sm">GitHub</h3>
-            <p className="text-text-muted text-sm truncate">Adilrafiq001/Openlyst</p>
+            <p className="text-text-muted text-sm truncate">openlysts/Openlysts</p>
           </div>
         </a>
       </div>
