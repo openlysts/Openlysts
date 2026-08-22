@@ -140,24 +140,77 @@ export default async function queryAlternatives(req, res) {
       const mediaScore = (row.youtube_tutorial_url || row.article_tutorial_url) ? 10 : 0;
       const openlystsScore = Math.round(parityScore + starsScore + descScore + mediaScore + 10);
 
+      const resolvedName = row.free_tool_name || (repo ? repo.name : row.free_tool_repo) || 'Alternative';
+      const resolvedDesc = row.alt_description || (repo ? repo.description : '') || '';
+      const resolvedDiff = row.migration_difficulty || (repo ? repo.difficulty : 'Medium') || 'Medium';
+
       return {
         id: row.id,
         created_date: row.created_date,
         paid_tool_name: row.paid_tool_name,
         free_tool_name: row.free_tool_name,
         free_tool_repo: row.free_tool_repo,
-        description: row.alt_description,
+        resolved_name: resolvedName,
+        name: resolvedName,
+        description: resolvedDesc,
         pros_and_cons: row.pros_and_cons,
         youtube_tutorial_url: row.youtube_tutorial_url,
         article_tutorial_url: row.article_tutorial_url,
         why_it_is_better: row.why_it_is_better,
-        migration_difficulty: row.migration_difficulty,
-        feature_parity_score: row.feature_parity_score,
-        category: row.category,
+        migration_difficulty: resolvedDiff,
+        feature_parity_score: row.feature_parity_score || 70,
+        feature_parity: row.feature_parity_score || 70,
+        github_stars: repo ? (repo.stars || 0) : 0,
+        category: row.category || 'Developer Tools',
         openlysts_score: openlystsScore,
         repo: repo
       };
     });
+
+    // Compute categories, grouped data, and stats for the frontend
+    const catMap = {};
+    const paidSet = new Set();
+    let totalScore = 0;
+    const groupedMap = {};
+
+    for (const alt of enriched) {
+      const cat = alt.category || 'Developer Tools';
+      catMap[cat] = (catMap[cat] || 0) + 1;
+
+      if (alt.paid_tool_name) {
+        paidSet.add(alt.paid_tool_name.trim().toLowerCase());
+      }
+      totalScore += alt.openlysts_score || 0;
+
+      if (!groupedMap[cat]) groupedMap[cat] = {};
+      const paid = alt.paid_tool_name || 'Unknown';
+      if (!groupedMap[cat][paid]) groupedMap[cat][paid] = [];
+      groupedMap[cat][paid].push(alt);
+    }
+
+    const categoriesList = Object.entries(catMap)
+      .map(([name, count]) => ({ name, count }))
+      .sort((a, b) => b.count - a.count);
+
+    const groupedArray = Object.entries(groupedMap).map(([categoryName, paidGroups]) => {
+      const paidGroupsArray = Object.entries(paidGroups).map(([paidName, alts]) => ({
+        paid_tool_name: paidName,
+        alternatives: alts,
+        count: alts.length,
+      }));
+      return {
+        category: categoryName,
+        paid_groups: paidGroupsArray,
+        total: paidGroupsArray.reduce((sum, g) => sum + g.count, 0)
+      };
+    }).sort((a, b) => b.total - a.total);
+
+    const stats = {
+      total_tools: enriched.length,
+      total_paid_tools: paidSet.size,
+      total_categories: categoriesList.length,
+      avg_score: enriched.length > 0 ? Math.round(totalScore / enriched.length) : 0
+    };
 
     const total = enriched.length;
     const totalPages = Math.ceil(total / PER_PAGE);
@@ -166,7 +219,17 @@ export default async function queryAlternatives(req, res) {
     
     const results = enriched.slice(offset, offset + PER_PAGE);
 
-    return res.json({ results, total, page: pageNum, totalPages, perPage: PER_PAGE });
+    return res.json({ 
+      alternatives: enriched,
+      categories: categoriesList,
+      grouped: groupedArray,
+      stats,
+      results, 
+      total, 
+      page: pageNum, 
+      totalPages, 
+      perPage: PER_PAGE 
+    });
   } catch (error) {
     console.error('queryAlternatives 500 ERROR:', error);
     return res.status(500).json({ error: true, message: "Internal Server Error" });

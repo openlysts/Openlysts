@@ -323,9 +323,16 @@ export default function Alternatives() {
   // Client-side category filter so sidebar clicks are instant
   const filteredData = useMemo(() => {
     if (!data) return null;
-    if (activeCategory === 'All') return data;
+    const allAlts = Array.isArray(data.alternatives) ? data.alternatives : (Array.isArray(data.results) ? data.results : []);
+    if (activeCategory === 'All') return {
+      ...data,
+      alternatives: allAlts,
+      categories: data.categories || [],
+      grouped: data.grouped || [],
+      stats: data.stats || { total_tools: allAlts.length, total_paid_tools: 0, total_categories: (data.categories || []).length, avg_score: 75 }
+    };
 
-    const filtered = data.alternatives.filter(a => a.category === activeCategory);
+    const filtered = allAlts.filter(a => a.category === activeCategory);
     const grouped = {};
     for (const alt of filtered) {
       const cat = alt.category || 'Uncategorized';
