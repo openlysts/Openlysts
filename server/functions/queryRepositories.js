@@ -1,53 +1,8 @@
-import { entities } from '../services/entities.js';
-import { slugToLabel, classifyRepo } from '../shared/openlyst.js';
-
-const PER_PAGE = 24;
-
+import { db } from '../db/index.js';
+import { slugToLabel } from '../shared/openlyst.js';
 import { githubFetch, ingestRepoItem } from './runIngestion.js';
 
-let cachedRepos = null;
-let lastCacheTime = 0;
-let inflightFetchPromise = null;
-const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes in-memory cache
-
-export function invalidateRepositoriesCache() {
-  cachedRepos = null;
-  lastCacheTime = 0;
-  inflightFetchPromise = null;
-}
-
-export async function prewarmRepositoriesCache() {
-  if (cachedRepos && Date.now() - lastCacheTime < CACHE_TTL_MS) {
-    return cachedRepos;
-  }
-  if (inflightFetchPromise) {
-    return inflightFetchPromise;
-  }
-
-  inflightFetchPromise = (async () => {
-    try {
-      const rawRepos = await entities.Repository.list('-stars', 5000);
-      const seen = new Set();
-      const deduped = [];
-      for (const r of rawRepos) {
-        const key = (r.full_name || '').toLowerCase();
-        if (key && !seen.has(key)) {
-          seen.add(key);
-          const dynamicCats = classifyRepo(r);
-          r.categories = Array.from(new Set([...(r.categories || []), ...dynamicCats]));
-          deduped.push(r);
-        }
-      }
-      cachedRepos = deduped;
-      lastCacheTime = Date.now();
-      return cachedRepos;
-    } finally {
-      inflightFetchPromise = null;
-    }
-  })();
-
-  return inflightFetchPromise;
-}
+const PER_PAGE = 24;
 
 export default async function queryRepositories(req, res) {
   try {
@@ -69,8 +24,7 @@ export default async function queryRepositories(req, res) {
 
     const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 
-    // Fallback: If page 1, search is active, and we have a token, do an async fetch to github 
-    // to populate the database for this search.
+    // Fallback search trigger for new queries on page 1
     if (page === 1 && q.trim() && GITHUB_TOKEN) {
       const queryStr = q.trim();
       const url = `https://api.github.com/search/repositories?q=${encodeURIComponent(queryStr)}&sort=stars&order=desc&per_page=30`;
@@ -80,138 +34,169 @@ export default async function queryRepositories(req, res) {
           for (const item of data.items) {
             await ingestRepoItem(item);
           }
-          invalidateRepositoriesCache();
         }
       }).catch(err => {
         console.error('GitHub fallback search failed in background:', err.message);
       });
     }
 
-    const now = Date.now();
-    let allRepos = cachedRepos;
-    if (!allRepos || now - lastCacheTime > CACHE_TTL_MS) {
-      allRepos = await prewarmRepositoriesCache();
-    }
-    let repos = (allRepos || []).filter((r) => !r.hidden);
+    let whereConditions = ['hidden = false'];
+    let params = [];
+    let paramIdx = 1;
 
+    // 1. Text Search (ILIKE across name, description, owner, language)
     if (q && q.trim()) {
-      const query = q.trim().toLowerCase();
-      const queryTerms = query.split(/\s+/);
-      
-      repos = repos.filter((r) => {
-        const name = (r.name || '').toLowerCase();
-        const fullName = (r.full_name || '').toLowerCase();
-        const desc = (r.description || '').toLowerCase();
-        const owner = (r.owner || '').toLowerCase();
-        const lang = (r.language || '').toLowerCase();
-        const topics = Array.isArray(r.topics) ? r.topics.map(t => t.toLowerCase()) : [];
-        const cats = Array.isArray(r.categories) ? r.categories.map(c => c.toLowerCase()) : [];
-        
-        const haystack = [name, fullName, desc, owner, lang, ...topics, ...cats].join(' ');
-        
-        // Must contain all terms (basic filtering)
-        if (!queryTerms.every(term => haystack.includes(term))) {
-          return false;
-        }
-        
-        // Calculate hybrid relevance score (BM25-lite + Authority)
-        let textScore = 0;
-        if (name === query) textScore += 100;
-        else if (name.includes(query)) textScore += 50;
-        
-        if (topics.includes(query)) textScore += 40;
-        if (cats.includes(query)) textScore += 40;
-        if (lang === query) textScore += 30;
-        
-        if (desc.includes(query)) textScore += 10;
-        
-        // Combine text relevance with authority and engagement (Hybrid Algorithm)
-        r._hybrid_relevance = textScore * 1.5 + (r.authority_score || 0) * 0.5 + (r.engagement_score || 0) * 0.2 + Math.log10(Math.max(1, r.stars || 0));
-        
-        return true;
-      });
+      const searchStr = `%${q.trim()}%`;
+      whereConditions.push(`(
+        full_name ILIKE $${paramIdx} OR 
+        name ILIKE $${paramIdx} OR 
+        owner ILIKE $${paramIdx} OR 
+        description ILIKE $${paramIdx} OR 
+        language ILIKE $${paramIdx}
+      )`);
+      params.push(searchStr);
+      paramIdx++;
     }
 
+    // 2. JSON Categories Filter (supports slug & label with safe JSONB casting)
     if (categories && categories.length > 0) {
-      const labels = categories.map(slugToLabel);
-      repos = repos.filter((r) =>
-        labels.some((label) => (r.categories || []).includes(label))
-      );
+      const expandedCategories = Array.from(new Set([
+        ...categories,
+        ...categories.map(slugToLabel)
+      ]));
+      whereConditions.push(`COALESCE(NULLIF(categories, ''), '[]')::jsonb ?| $${paramIdx}`);
+      params.push(expandedCategories);
+      paramIdx++;
     }
 
+    // 3. JSON Topics Filter (supports safe JSONB casting)
     if (topics && topics.length > 0) {
-      repos = repos.filter((r) =>
-        topics.every((topic) => (r.topics || []).includes(topic))
-      );
+      whereConditions.push(`COALESCE(NULLIF(topics, ''), '[]')::jsonb ?& $${paramIdx}`);
+      params.push(topics);
+      paramIdx++;
     }
 
+    // 4. Array Filters
     if (languages && languages.length > 0) {
-      // Allow case-insensitive language matching
-      const lowerLangs = languages.map(l => l.toLowerCase());
-      repos = repos.filter((r) => r.language && lowerLangs.includes(r.language.toLowerCase()));
+      whereConditions.push(`lower(language) = ANY($${paramIdx})`);
+      params.push(languages.map(l => l.toLowerCase()));
+      paramIdx++;
     }
 
     if (licenses && licenses.length > 0) {
-      repos = repos.filter((r) => licenses.includes(r.license_status));
+      whereConditions.push(`license_status = ANY($${paramIdx})`);
+      params.push(licenses);
+      paramIdx++;
     }
-    
+
     if (difficulties && difficulties.length > 0) {
-      repos = repos.filter((r) => difficulties.includes(r.difficulty));
+      whereConditions.push(`difficulty = ANY($${paramIdx})`);
+      params.push(difficulties);
+      paramIdx++;
     }
 
     if (minStars && minStars > 0) {
-      repos = repos.filter((r) => (r.stars || 0) >= minStars);
+      whereConditions.push(`stars >= $${paramIdx}`);
+      params.push(minStars);
+      paramIdx++;
     }
 
+    // 5. Date Filters
     if (updatedWithin) {
       const days = { '24h': 1, '7d': 7, '30d': 30, '6mo': 180, '1yr': 365 }[updatedWithin];
       if (days) {
-        const cutoff = Date.now() - days * 86400000;
-        repos = repos.filter((r) => new Date(r.github_updated_at || 0).getTime() >= cutoff);
+        whereConditions.push(`github_updated_at >= NOW() - INTERVAL '${days} days'`);
       }
     }
 
     if (activity) {
       if (activity === 'archived') {
-        repos = repos.filter((r) => r.archived);
+        whereConditions.push(`archived = true`);
       } else if (activity === 'active') {
-        repos = repos.filter((r) => !r.archived && new Date(r.github_updated_at || 0).getTime() >= Date.now() - 90 * 86400000);
+        whereConditions.push(`archived = false AND github_updated_at >= NOW() - INTERVAL '90 days'`);
       } else if (activity === 'recently-active') {
-        repos = repos.filter((r) => !r.archived && new Date(r.github_updated_at || 0).getTime() >= Date.now() - 365 * 86400000);
+        whereConditions.push(`archived = false AND github_updated_at >= NOW() - INTERVAL '365 days'`);
       }
     }
 
-    const sortFns = {
-      trending: (a, b) => (b.trending_score || 0) - (a.trending_score || 0) || String(a.id || '').localeCompare(String(b.id || '')),
-      stars: (a, b) => (b.stars || 0) - (a.stars || 0) || String(a.id || '').localeCompare(String(b.id || '')),
-      updated: (a, b) => new Date(b.github_updated_at || 0).getTime() - new Date(a.github_updated_at || 0).getTime() || String(a.id || '').localeCompare(String(b.id || '')),
-      recent: (a, b) => new Date(b.last_ingested_at || 0).getTime() - new Date(a.last_ingested_at || 0).getTime() || String(a.id || '').localeCompare(String(b.id || '')),
-      engagement: (a, b) => (b.engagement_score || 0) - (a.engagement_score || 0) || (b.stars || 0) - (a.stars || 0),
-      authority: (a, b) => (b.authority_score || 0) - (a.authority_score || 0) || (b.stars || 0) - (a.stars || 0),
-      relevance: (a, b) => (b._hybrid_relevance || 0) - (a._hybrid_relevance || 0) || (b.trending_score || 0) - (a.trending_score || 0),
-    };
-    
-    // If a query was provided and no explicit sort was requested (or if sort is trending which is default), 
-    // we default to our new 'relevance' hybrid sort
-    const effectiveSort = (q && q.trim() && sort === 'trending') ? 'relevance' : sort;
-    repos.sort(sortFns[effectiveSort] || sortFns.trending);
+    const whereClause = 'WHERE ' + whereConditions.join(' AND ');
 
-    const total = repos.length;
+    // 6. Sorting
+    let orderBy = 'ORDER BY trending_score DESC, stars DESC, id DESC';
+    const effectiveSort = (q && q.trim() && sort === 'trending') ? 'relevance' : sort;
+    
+    switch (effectiveSort) {
+      case 'stars':
+        orderBy = 'ORDER BY stars DESC, id DESC';
+        break;
+      case 'updated':
+        orderBy = 'ORDER BY github_updated_at DESC NULLS LAST, id DESC';
+        break;
+      case 'recent':
+        orderBy = 'ORDER BY last_ingested_at DESC NULLS LAST, id DESC';
+        break;
+      case 'engagement':
+        orderBy = 'ORDER BY engagement_score DESC, stars DESC, id DESC';
+        break;
+      case 'authority':
+        orderBy = 'ORDER BY authority_score DESC, stars DESC, id DESC';
+        break;
+      case 'relevance':
+        orderBy = 'ORDER BY trending_score DESC, stars DESC, id DESC';
+        break;
+    }
+
+    // Calculate total count
+    const countResult = await db.query(`SELECT COUNT(*) as total FROM "Repository" ${whereClause}`, params);
+    const total = parseInt(countResult.rows[0]?.total || 0, 10);
     const totalPages = Math.ceil(total / PER_PAGE);
     const pageNum = Math.max(1, Math.min(page, totalPages || 1));
     const offset = (pageNum - 1) * PER_PAGE;
-    const results = repos.slice(offset, offset + PER_PAGE);
 
-    // Compute category counts across all repos
+    // Fetch paginated repository rows
+    const query = `
+      SELECT * FROM "Repository"
+      ${whereClause}
+      ${orderBy}
+      LIMIT ${PER_PAGE} OFFSET ${offset}
+    `;
+    
+    const { rows: rawResults } = await db.query(query, params);
+
+    // Safely parse JSON fields
+    const results = rawResults.map(r => {
+      let parsedTopics = r.topics;
+      if (typeof parsedTopics === 'string') {
+        try { parsedTopics = JSON.parse(parsedTopics); } catch { parsedTopics = []; }
+      }
+      let parsedCats = r.categories;
+      if (typeof parsedCats === 'string') {
+        try { parsedCats = JSON.parse(parsedCats); } catch { parsedCats = []; }
+      }
+      return {
+        ...r,
+        topics: Array.isArray(parsedTopics) ? parsedTopics : [],
+        categories: Array.isArray(parsedCats) ? parsedCats : []
+      };
+    });
+
+    // Compute category counts efficiently via fast SQL aggregation
     const categoryCounts = {};
-    if (allRepos) {
-      allRepos.forEach(r => {
-        if (!r.hidden && r.categories && Array.isArray(r.categories)) {
-          r.categories.forEach(c => {
-            categoryCounts[c] = (categoryCounts[c] || 0) + 1;
-          });
+    try {
+      const catCountQuery = `
+        SELECT jsonb_array_elements_text(COALESCE(NULLIF(categories, ''), '[]')::jsonb) as category, count(*) as count 
+        FROM "Repository" 
+        WHERE hidden = false 
+        GROUP BY category
+      `;
+      const { rows: catRows } = await db.query(catCountQuery);
+      for (const row of catRows) {
+        if (row.category) {
+          categoryCounts[row.category] = parseInt(row.count, 10);
         }
-      });
+      }
+    } catch (e) {
+      console.warn('[DB] Category count calculation warning:', e.message);
     }
 
     return res.json({ results, total, page: pageNum, totalPages, perPage: PER_PAGE, categoryCounts });

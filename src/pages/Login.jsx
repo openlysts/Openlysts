@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useAuth } from '@/lib/AuthContext';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { Mail, Lock, AlertCircle, ArrowRight, Github, Eye, EyeOff, Sparkles, Shield, Compass, KeyRound } from 'lucide-react';
+import { Mail, Lock, AlertCircle, ArrowRight, Github, Eye, EyeOff, Shield, Compass } from 'lucide-react';
 
 export default function Login() {
   const [email, setEmail] = useState('');

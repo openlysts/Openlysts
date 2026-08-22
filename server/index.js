@@ -3,7 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import { db } from './db/index.js';
 import { configureSession } from './auth/session.js';
-import { loadSessionUser } from './auth/middleware.js';
+import { loadSessionUser, csrfProtection } from './auth/middleware.js';
 import { autoBootstrapFromEnv } from './auth/bootstrap.js';
 
 import authRouter from './api/auth.js';
@@ -26,17 +26,28 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+const ALLOWED_ORIGINS = [
+  process.env.APP_URL,
+  'http://localhost:5173',
+  'http://localhost:3001',
+].filter(Boolean).map(u => u.replace(/\/$/, ''));
+
 app.use(cors({
   origin: (origin, callback) => {
-    // Dynamically allow requesting origin to enable credentials with Vercel preview & prod URLs
-    callback(null, true);
+    // Allow requests with no origin (mobile apps, curl, server-to-server)
+    if (!origin || ALLOWED_ORIGINS.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
   },
   credentials: true
 }));
-app.use(express.json({ limit: '50mb' }));
+app.use(express.json({ limit: '2mb' }));
 
 configureSession(app);
 app.use(loadSessionUser);
+app.use(csrfProtection);
 
 app.use((req, res, next) => {
   console.log(`[API] ${req.method} ${req.url}`);
@@ -74,10 +85,10 @@ if (!process.env.VERCEL) {
 // Centralized JSON error handling
 app.use((err, req, res, next) => {
   console.error('[ERROR]', err);
+  const isProd = process.env.NODE_ENV === 'production' || !!process.env.VERCEL;
   res.status(500).json({
     error: true,
-    message: err.message || 'Internal Server Error',
-    details: err.details || null
+    message: isProd ? 'Internal Server Error' : (err.message || 'Internal Server Error'),
   });
 });
 

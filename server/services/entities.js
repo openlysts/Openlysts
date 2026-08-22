@@ -3,6 +3,13 @@ import crypto from 'crypto';
 
 const JSON_FIELDS = ['topics', 'categories', 'settings', 'clarifying_questions', 'pros_and_cons'];
 
+function sanitizeIdentifier(name) {
+  if (typeof name !== 'string' || !/^[a-zA-Z0-9_]+$/.test(name)) {
+    throw new Error(`Invalid SQL identifier: ${name}`);
+  }
+  return name;
+}
+
 function parseRow(row) {
   if (!row) return row;
   const parsed = { ...row };
@@ -42,14 +49,15 @@ function stringifyData(data) {
 
 export class EntityService {
   constructor(entityName) {
-    this.entity = entityName;
+    this.entity = sanitizeIdentifier(entityName);
   }
 
   async list(sort = null, limit = null) {
     let orderClause = '';
     if (sort) {
       const isDesc = sort.startsWith('-');
-      const field = isDesc ? sort.substring(1) : sort;
+      const rawField = isDesc ? sort.substring(1) : sort;
+      const field = sanitizeIdentifier(rawField);
       orderClause = `ORDER BY "${field}" ${isDesc ? 'DESC' : 'ASC'}`;
     }
     let limitClause = '';
@@ -64,11 +72,12 @@ export class EntityService {
     if (where && Object.keys(where).length > 0) {
       const conditions = [];
       for (const [key, val] of Object.entries(where)) {
+        const safeKey = sanitizeIdentifier(key);
         params.push(val);
-        if (typeof val === 'string' && (key === 'full_name' || key === 'name' || key === 'owner' || key === 'email')) {
-          conditions.push(`LOWER("${key}") = LOWER($${params.length})`);
+        if (typeof val === 'string' && (safeKey === 'full_name' || safeKey === 'name' || safeKey === 'owner' || safeKey === 'email')) {
+          conditions.push(`LOWER("${safeKey}") = LOWER($${params.length})`);
         } else {
-          conditions.push(`"${key}" = $${params.length}`);
+          conditions.push(`"${safeKey}" = $${params.length}`);
         }
       }
       whereClause = `WHERE ` + conditions.join(' AND ');
@@ -76,7 +85,8 @@ export class EntityService {
     let orderClause = '';
     if (sort) {
       const isDesc = sort.startsWith('-');
-      const field = isDesc ? sort.substring(1) : sort;
+      const rawField = isDesc ? sort.substring(1) : sort;
+      const field = sanitizeIdentifier(rawField);
       orderClause = `ORDER BY "${field}" ${isDesc ? 'DESC' : 'ASC'}`;
     }
     let limitClause = '';
@@ -91,7 +101,7 @@ export class EntityService {
     if (!payload.created_date) payload.created_date = new Date().toISOString();
     payload = stringifyData(payload);
     
-    const keys = Object.keys(payload);
+    const keys = Object.keys(payload).map(sanitizeIdentifier);
     const cols = keys.map(k => `"${k}"`).join(', ');
     const placeholders = keys.map((_, i) => `$${i + 1}`).join(', ');
     const values = keys.map(k => payload[k]);
@@ -102,7 +112,7 @@ export class EntityService {
 
   async update(id, data) {
     const payload = stringifyData(data);
-    const keys = Object.keys(payload);
+    const keys = Object.keys(payload).map(sanitizeIdentifier);
     if (keys.length === 0) return this.filter({ id }).then(res => res[0]);
     const values = keys.map(k => payload[k]);
     const setClause = keys.map((k, i) => `"${k}" = $${i + 1}`).join(', ');
@@ -121,8 +131,9 @@ export class EntityService {
     const conditions = [];
     const params = [];
     for (const [key, val] of Object.entries(where)) {
+      const safeKey = sanitizeIdentifier(key);
       params.push(val);
-      conditions.push(`"${key}" = $${params.length}`);
+      conditions.push(`"${safeKey}" = $${params.length}`);
     }
     const whereClause = conditions.length > 0 ? `WHERE ` + conditions.join(' AND ') : '';
     if (whereClause) {
@@ -146,7 +157,7 @@ export class EntityService {
     const client = await db.connect();
     try {
       await client.query('BEGIN');
-      const keys = Object.keys(payloadArray[0]);
+      const keys = Object.keys(payloadArray[0]).map(sanitizeIdentifier);
       const cols = keys.map(k => `"${k}"`).join(', ');
       const placeholders = keys.map((_, i) => `$${i + 1}`).join(', ');
       const queryStr = `INSERT INTO "${this.entity}" (${cols}) VALUES (${placeholders})`;

@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
-import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { User, Mail, Lock, AlertCircle, Github, Eye, EyeOff, ArrowRight, CheckCircle2, Shield, Sparkles, Check, X as XIcon } from 'lucide-react';
+import { User, Mail, Lock, AlertCircle, Github, Eye, EyeOff, ArrowRight, Check } from 'lucide-react';
 
 export default function Register() {
   const [name, setName] = useState('');

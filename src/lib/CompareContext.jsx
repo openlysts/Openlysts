@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useToast } from '@/components/ui/use-toast';
 
-const CompareContext = createContext();
+const CompareContext = createContext(null);
 
 export function CompareProvider({ children }) {
   const [selectedForCompare, setSelectedForCompare] = useState(() => {

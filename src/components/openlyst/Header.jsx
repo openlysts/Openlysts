@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Bookmark, Menu, X, Settings as SettingsIcon, Smartphone, Monitor, Search, Sparkles, RefreshCw, TrendingUp, Layers, HelpCircle, Mail, User, LogIn, UserPlus } from 'lucide-react';
+import { Bookmark, Menu, X, Settings as SettingsIcon, Smartphone, Monitor, Search, Sparkles, RefreshCw, TrendingUp, Layers, HelpCircle, Mail, LogIn, UserPlus } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 import { getBookmarks } from '@/lib/bookmarks';
 import { useMobileLayout } from '@/lib/MobileLayoutContext';

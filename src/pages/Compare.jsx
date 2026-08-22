@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { useSearchParams, useNavigate, Link } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { queryRepos } from '@/lib/api';
 import { motion } from 'framer-motion';
-import { Star, GitFork, AlertCircle, X, Plus, Search, Trophy, ArrowRight, Activity, Flame } from 'lucide-react';
+import { Star, GitFork, AlertCircle, X, Plus, Search, Trophy, Activity } from 'lucide-react';
 import LicenseBadge from '@/components/openlyst/LicenseBadge';
 import { getDifficultyColor } from '@/lib/difficultyColors';
 

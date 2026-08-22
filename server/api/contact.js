@@ -34,7 +34,7 @@ router.post('/send', async (req, res) => {
 
     // Send email
     await transporter.sendMail({
-      from: `"${name}" <${email}>`, // sender address
+      from: `"Openlysts Contact" <${process.env.SMTP_USER}>`,
       to: process.env.CONTACT_EMAIL || process.env.SMTP_USER || 'reviewzxone@gmail.com', // list of receivers
       replyTo: email,
       subject: `Openlysts Contact Form: Message from ${name}`, // Subject line

@@ -620,8 +620,8 @@ router.post('/users/:id/suspend', async (req, res) => {
     );
 
     await db.query(
-      `DELETE FROM "session" WHERE sess::text LIKE $1`,
-      [`%"userId":"${targetId}"%`]
+      `DELETE FROM "session" WHERE sess::text LIKE '%"userId":"' || $1 || '"%'`,
+      [targetId]
     );
 
     const meta = getRequestMeta(req);
@@ -684,8 +684,8 @@ router.post('/users/:id/disable', async (req, res) => {
     );
 
     await db.query(
-      `DELETE FROM "session" WHERE sess::text LIKE $1`,
-      [`%"userId":"${targetId}"%`]
+      `DELETE FROM "session" WHERE sess::text LIKE '%"userId":"' || $1 || '"%'`,
+      [targetId]
     );
 
     const meta = getRequestMeta(req);
@@ -728,7 +728,7 @@ router.delete('/users/:id', async (req, res) => {
       db.query('DELETE FROM "Bookmark" WHERE user_id = $1', [targetId]).catch(() => {}),
       db.query('DELETE FROM "AuthAccount" WHERE user_id = $1', [targetId]).catch(() => {}),
       db.query('DELETE FROM "PasswordResetToken" WHERE user_id = $1', [targetId]).catch(() => {}),
-      db.query('DELETE FROM "session" WHERE sess::text LIKE $1', [`%"userId":"${targetId}"%`]).catch(() => {}),
+      db.query(`DELETE FROM "session" WHERE sess::text LIKE '%"userId":"' || $1 || '"%'`, [targetId]).catch(() => {}),
     ]);
 
     // Delete user
@@ -803,7 +803,7 @@ router.get('/audit', async (req, res) => {
 
 // ─── Final-Admin Protection ─────────────────────────────────────────
 
-async function checkFinalAdminProtection(targetUserId) {
+export async function checkFinalAdminProtection(targetUserId) {
   const { rows: target } = await db.query(
     'SELECT role, account_status FROM "User" WHERE id = $1',
     [targetUserId]

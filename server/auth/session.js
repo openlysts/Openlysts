@@ -14,7 +14,10 @@ const PgSession = connectPgSimple(session);
  * @param {import('express').Express} app
  */
 export function configureSession(app) {
-  const sessionSecret = process.env.SESSION_SECRET || 'openlysts_secure_session_secret_fallback_key_2026_min32chars';
+  const sessionSecret = process.env.SESSION_SECRET;
+  if (!sessionSecret && (process.env.NODE_ENV === 'production' || process.env.VERCEL)) {
+    throw new Error('[SESSION] FATAL: SESSION_SECRET environment variable is required in production.');
+  }
 
   const appUrl = process.env.APP_URL || '';
   // Force secure=false for local development to prevent browser dropping the cookie
@@ -30,7 +33,7 @@ export function configureSession(app) {
       createTableIfMissing: false, // We create it in schema.js
       pruneSessionInterval: process.env.VERCEL ? false : 60 * 15, // Don't run background intervals in serverless functions
     }),
-    secret: sessionSecret,
+    secret: sessionSecret || 'local-dev-only-session-secret-do-not-use-in-prod',
     name: 'openlysts.sid',  // Custom cookie name (not the default 'connect.sid')
     resave: false,
     saveUninitialized: false, // Don't create session until user authenticates

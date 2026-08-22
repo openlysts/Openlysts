@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Outlet } from 'react-router-dom';
+import throttle from 'lodash/throttle';
 import { ArrowUp, WifiOff } from 'lucide-react';
 import Header from './Header';
 import Footer from './Footer';
@@ -61,15 +62,18 @@ export default function OpenlystLayout() {
   }, []);
 
   useEffect(() => {
-    const checkScroll = () => {
+    const checkScroll = throttle(() => {
       if (window.scrollY > 400) {
         setShowScroll(true);
       } else {
         setShowScroll(false);
       }
+    }, 100);
+    window.addEventListener('scroll', checkScroll, { passive: true });
+    return () => {
+      checkScroll.cancel();
+      window.removeEventListener('scroll', checkScroll);
     };
-    window.addEventListener('scroll', checkScroll);
-    return () => window.removeEventListener('scroll', checkScroll);
   }, []);
 
   const scrollToTop = () => {

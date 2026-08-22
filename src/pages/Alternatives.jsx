@@ -1,8 +1,7 @@
 import { useState, useMemo, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
-import { 
-  Loader2, Search, ExternalLink, PlayCircle, Info, ChevronRight, ChevronDown, Award, Grid3X3, List, ArrowUpDown, Shield,
+import { Search, ExternalLink, PlayCircle, Info, ChevronRight, ChevronDown, Award, Grid3X3, List, ArrowUpDown, Shield,
   Layers, Filter, X, Sparkles
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -298,12 +297,12 @@ export default function Alternatives() {
 
         if (e.shiftKey) {
           if (document.activeElement === firstElement || document.activeElement === document.body) {
-            lastElement.focus();
+            if (lastElement instanceof HTMLElement) lastElement.focus();
             e.preventDefault();
           }
         } else {
           if (document.activeElement === lastElement || document.activeElement === document.body) {
-            firstElement.focus();
+            if (firstElement instanceof HTMLElement) firstElement.focus();
             e.preventDefault();
           }
         }

@@ -316,11 +316,16 @@ export async function executeIngestion() {
       if (r.full_name) repoMap.set(r.full_name.toLowerCase(), r);
     }
 
-    const existingSnapshots = await entities.MetricSnapshot.list('-snapshot_date', 10000);
+    // Fetch only recent snapshots to conserve serverless memory
+    const { rows: existingSnapshots } = await db.query(
+      'SELECT repository_id, stars, snapshot_date FROM "MetricSnapshot" ORDER BY snapshot_date DESC LIMIT 2000'
+    );
     const snapshotMap = new Map();
     for (const s of existingSnapshots) {
       if (!snapshotMap.has(s.repository_id)) snapshotMap.set(s.repository_id, []);
-      snapshotMap.get(s.repository_id).push(s);
+      if (snapshotMap.get(s.repository_id).length < 30) {
+        snapshotMap.get(s.repository_id).push(s);
+      }
     }
 
     for (const dq of enabledQueries) {

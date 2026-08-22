@@ -129,7 +129,7 @@ router.post('/login', loginRateLimiter, async (req, res) => {
 
     const emailNorm = normalizeEmail(email);
     const { rows } = await db.query(
-      'SELECT * FROM "User" WHERE email_normalized = $1',
+      'SELECT id, name, email, password_hash, role, account_status, email_verified, email_normalized, avatar_url, has_seen_tour FROM "User" WHERE email_normalized = $1',
       [emailNorm]
     );
 
@@ -225,8 +225,6 @@ router.post('/logout', async (req, res) => {
 
 
 // ─── GET /api/auth/me ───────────────────────────────────────────────
-
-router.get('/test', (req, res) => { req.session.userId = 'test'; res.redirect('/admin'); }); 
 
 router.get('/me', async (req, res) => {
   if (!req.session?.userId) {
@@ -436,8 +434,8 @@ router.post('/password/change', requireAuth, async (req, res) => {
     // Invalidate all other sessions
     const currentSid = req.sessionID;
     await db.query(
-      `DELETE FROM "session" WHERE sid != $1 AND sess::text LIKE $2`,
-      [currentSid, `%"userId":"${req.user.id}"%`]
+      `DELETE FROM "session" WHERE sid != $1 AND sess::text LIKE '%"userId":"' || $2 || '"%'`,
+      [currentSid, req.user.id]
     );
 
     const meta = getRequestMeta(req);
@@ -571,8 +569,8 @@ router.post('/password/reset', async (req, res) => {
 
     // Invalidate all sessions
     await db.query(
-      `DELETE FROM "session" WHERE sess::text LIKE $1`,
-      [`%"userId":"${resetToken.user_id}"%`]
+      `DELETE FROM "session" WHERE sess::text LIKE '%"userId":"' || $1 || '"%'`,
+      [resetToken.user_id]
     );
 
     const meta = getRequestMeta(req);

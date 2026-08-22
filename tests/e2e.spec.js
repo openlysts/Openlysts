@@ -3,6 +3,15 @@ import { test, expect } from '@playwright/test';
 test.describe('Openlysts QA Playbook E2E', () => {
   test.use({ viewport: { width: 1920, height: 1080 } });
 
+  test.beforeEach(async ({ page }) => {
+    await page.addInitScript(() => {
+      const tourKeys = ['discover', 'repo', 'compare', 'alternatives', 'search', 'trending', 'bookmarks', 'about', 'contact'];
+      for (const k of tourKeys) {
+        localStorage.setItem(`openlyst_has_seen_tour_${k}`, 'true');
+      }
+    });
+  });
+
   test('Step 1: Initial Load', async ({ page }) => {
     await page.goto('http://localhost:5173');
     await expect(page).toHaveTitle(/Openlysts/i);

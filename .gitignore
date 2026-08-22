@@ -16,34 +16,7 @@ node_modules
 dist
 dist-ssr
 *.local
-
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-#env
-.env
-.env.*
-!.env.example
-
-# Logs
-/logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
-
-node_modules
-dist
-dist-ssr
-*.local
+.vite
 
 # Editor directories and files
 .vscode/*
@@ -56,19 +29,21 @@ dist-ssr
 *.sln
 *.sw?
 
-.env
-.vite
 base44/.app.jsonc
 
 # Local Database
 data/*.db
 data/*.db-shm
 data/*.db-wal
+
+# Vercel & Playwright
+.vercel
+.playwright-mcp/
+
+# Local scripts / binaries
 cloudflared.exe
+cloudflared_running.exe
 get-logs.js
 screenshot.png
 migrate_v2.js
 reclassify.js
-.playwright-mcp/
-.vercel
-.env*

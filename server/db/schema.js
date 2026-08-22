@@ -106,6 +106,16 @@ export async function initSchema(db) {
       category TEXT
     );`,
 
+    // ─── Bookmark Table ─────────────────────────────────────────────────
+
+    `CREATE TABLE IF NOT EXISTS "Bookmark" (
+      id TEXT PRIMARY KEY,
+      user_id TEXT NOT NULL REFERENCES "User"(id) ON DELETE CASCADE,
+      repository_id TEXT NOT NULL REFERENCES "Repository"(id) ON DELETE CASCADE,
+      created_date TEXT NOT NULL,
+      CONSTRAINT uq_bookmark UNIQUE (user_id, repository_id)
+    );`,
+
     // ─── Auth Tables ──────────────────────────────────────────────────
 
     `CREATE TABLE IF NOT EXISTS "AuthAccount" (
@@ -198,7 +208,11 @@ export async function initSchema(db) {
     try {
       await db.query(q);
     } catch (e) {
-      // Column already exists — expected, ignore
+      // Only suppress 'column already exists' (PG error code 42701)
+      if (e.code !== '42701') {
+        errors.push({ query: q.substring(0, 50), error: e.message });
+        console.error('[DB] ALTER TABLE error:', e.message);
+      }
     }
   }
 
@@ -211,6 +225,14 @@ export async function initSchema(db) {
     `CREATE INDEX IF NOT EXISTS idx_repo_trending ON "Repository"(trending_score DESC);`,
     `CREATE INDEX IF NOT EXISTS idx_repo_full_name ON "Repository"(full_name);`,
     `CREATE INDEX IF NOT EXISTS idx_ingestion_run_started ON "IngestionRun"(started_at DESC);`,
+
+    // Bookmark indexes
+    `CREATE INDEX IF NOT EXISTS idx_bookmark_user ON "Bookmark"(user_id);`,
+    `CREATE INDEX IF NOT EXISTS idx_bookmark_repo ON "Bookmark"(repository_id);`,
+    
+    // Performance expression indexes
+    `CREATE INDEX IF NOT EXISTS idx_repo_lower_name ON "Repository"(lower(full_name));`,
+    `CREATE INDEX IF NOT EXISTS idx_alt_lower_repo ON "Alternative"(lower(free_tool_repo));`,
 
     // Auth indexes
     `CREATE UNIQUE INDEX IF NOT EXISTS idx_user_email_normalized ON "User"(email_normalized);`,

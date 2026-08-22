@@ -212,7 +212,7 @@ export async function findOrCreateOAuthUser(providerProfile, provider) {
 
   if (existingAccounts.length > 0) {
     // Returning user — load and return their account
-    const { rows: users } = await db.query('SELECT * FROM "User" WHERE id = $1', [existingAccounts[0].user_id]);
+    const { rows: users } = await db.query('SELECT id, name, email, role, avatar_url, account_status, email_normalized FROM "User" WHERE id = $1', [existingAccounts[0].user_id]);
     if (users.length === 0) {
       throw new Error('Linked user not found');
     }
@@ -233,7 +233,7 @@ export async function findOrCreateOAuthUser(providerProfile, provider) {
   if (normalized && email_verified) {
     // Only auto-link if the provider-verified email matches an existing verified user
     const { rows: emailUsers } = await db.query(
-      'SELECT * FROM "User" WHERE email_normalized = $1',
+      'SELECT id, name, email, role, avatar_url, account_status, email_normalized FROM "User" WHERE email_normalized = $1',
       [normalized]
     );
 
@@ -294,7 +294,7 @@ export async function findOrCreateOAuthUser(providerProfile, provider) {
     [crypto.randomUUID(), userId, provider, providerId, email, name, avatar, now]
   );
 
-  const { rows: newUsers } = await db.query('SELECT * FROM "User" WHERE id = $1', [userId]);
+  const { rows: newUsers } = await db.query('SELECT id, name, email, role, avatar_url, account_status, email_normalized FROM "User" WHERE id = $1', [userId]);
 
   return { user: newUsers[0], isNew: true, linked: false };
 }
@@ -306,7 +306,7 @@ export async function findOrCreateOAuthUser(providerProfile, provider) {
  * @returns {string}
  */
 export function generateOAuthState(redirect = '/discover') {
-  const secret = process.env.SESSION_SECRET || 'openlysts-oauth-secret-fallback-key-32chars';
+  const secret = process.env.SESSION_SECRET || 'local-dev-only-session-secret-do-not-use-in-prod';
   const payload = Buffer.from(JSON.stringify({
     redirect: redirect || '/discover',
     nonce: crypto.randomBytes(16).toString('hex'),
@@ -326,7 +326,7 @@ export function verifyOAuthState(state) {
   if (!state || typeof state !== 'string' || !state.includes('.')) {
     return { valid: false, redirect: '/discover' };
   }
-  const secret = process.env.SESSION_SECRET || 'openlysts-oauth-secret-fallback-key-32chars';
+  const secret = process.env.SESSION_SECRET || 'local-dev-only-session-secret-do-not-use-in-prod';
   const [payload, sig] = state.split('.');
   const expectedSig = crypto.createHmac('sha256', secret).update(payload).digest('base64url');
 

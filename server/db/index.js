@@ -22,7 +22,7 @@ const isNeonOrCloud =
 
 const db = new Pool({
   connectionString,
-  ssl: (isNeonOrCloud && connectionString && !connectionString.includes('localhost')) ? { rejectUnauthorized: false } : undefined,
+  ssl: (isNeonOrCloud && connectionString && !connectionString.includes('localhost')) ? true : undefined,
   max: process.env.VERCEL ? 5 : 10,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 30000,

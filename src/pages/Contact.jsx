@@ -3,7 +3,7 @@ import { Mail, Github, MessageCircle } from 'lucide-react';
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState(null);
   const [loading, setLoading] = useState(false);
   const sendingRef = useRef(false);

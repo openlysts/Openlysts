@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Lock, AlertCircle, CheckCircle2 } from 'lucide-react';
 
 export default function ResetPassword() {

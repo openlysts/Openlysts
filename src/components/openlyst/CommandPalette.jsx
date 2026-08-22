@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Home, LayoutGrid, TrendingUp, Bookmark, Scale, CornerDownLeft } from 'lucide-react';
 
 const STATIC_ACTIONS = [
-  { id: 'home', label: 'Go to Home', icon: Home, path: '/' },
+  { id: 'home', label: 'Go to Discover', icon: Home, path: '/discover' },
   { id: 'alts', label: 'Browse Alternatives', icon: LayoutGrid, path: '/alternatives' },
   { id: 'trending', label: 'View Trending', icon: TrendingUp, path: '/trending' },
   { id: 'bookmarks', label: 'My Bookmarks', icon: Bookmark, path: '/bookmarks' },

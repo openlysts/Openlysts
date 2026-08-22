@@ -7,6 +7,7 @@ import { requireAuth } from '../auth/middleware.js';
 import { hashPassword, validatePasswordStrength } from '../auth/password.js';
 import { AUDIT_ACTIONS, AUTH_PROVIDERS, ACCOUNT_STATUS } from '../auth/constants.js';
 import { logAuditEvent, getRequestMeta } from '../auth/audit.js';
+import { checkFinalAdminProtection } from './admin.js';
 
 const router = Router();
 router.use(requireAuth);
@@ -162,8 +163,15 @@ router.patch('/settings', async (req, res) => {
 
 router.delete('/', async (req, res) => {
   try {
-    // Soft delete: keep the record but anonymize and disable
     const targetId = req.user.id;
+
+    // Prevent sole active admin from deleting their own account and orphaning the system
+    const protectionError = await checkFinalAdminProtection(targetId);
+    if (protectionError) {
+      return res.status(403).json(protectionError);
+    }
+
+    // Soft delete: keep the record but anonymize and disable
     const now = new Date().toISOString();
     const anonEmail = `deleted_${targetId}@deleted.local`;
 

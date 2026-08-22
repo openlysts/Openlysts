@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useEasterEggs } from '@/hooks/useEasterEggs';
 import MatrixRain from '@/components/reactbits/MatrixRain';
 

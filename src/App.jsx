@@ -1,3 +1,4 @@
+import React, { lazy, Suspense } from 'react';
 import { Toaster } from "@/components/ui/toaster"
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
@@ -15,30 +16,30 @@ import ErrorBoundary from './components/openlyst/ErrorBoundary';
 import EasterEggsOverlay from './components/openlyst/EasterEggsOverlay';
 
 // Public Pages
-import Welcome from './pages/Welcome';
-import Home from './pages/Home';
-import Search from './pages/Search';
-import RepoDetail from './pages/RepoDetail';
-import Alternatives from './pages/Alternatives';
-import Trending from './pages/Trending';
-import About from './pages/About';
-import Contact from './pages/Contact';
-import Compare from './pages/Compare';
-import PrivacyPolicy from './pages/PrivacyPolicy';
-import TermsOfService from './pages/TermsOfService';
+const Welcome = lazy(() => import('./pages/Welcome'));
+const Home = lazy(() => import('./pages/Home'));
+const Search = lazy(() => import('./pages/Search'));
+const RepoDetail = lazy(() => import('./pages/RepoDetail'));
+const Alternatives = lazy(() => import('./pages/Alternatives'));
+const Trending = lazy(() => import('./pages/Trending'));
+const About = lazy(() => import('./pages/About'));
+const Contact = lazy(() => import('./pages/Contact'));
+const Compare = lazy(() => import('./pages/Compare'));
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
+const TermsOfService = lazy(() => import('./pages/TermsOfService'));
 
 // Auth Pages
-import Login from './pages/Login';
-import Register from './pages/Register';
-import ForgotPassword from './pages/ForgotPassword';
-import ResetPassword from './pages/ResetPassword';
-import VerifyEmail from './pages/VerifyEmail';
+const Login = lazy(() => import('./pages/Login'));
+const Register = lazy(() => import('./pages/Register'));
+const ForgotPassword = lazy(() => import('./pages/ForgotPassword'));
+const ResetPassword = lazy(() => import('./pages/ResetPassword'));
+const VerifyEmail = lazy(() => import('./pages/VerifyEmail'));
 
 // Protected Pages
-import Bookmarks from './pages/Bookmarks';
-import Settings from './pages/Settings';
-import Profile from './pages/Profile';
-import Admin from './pages/Admin';
+const Bookmarks = lazy(() => import('./pages/Bookmarks'));
+const Settings = lazy(() => import('./pages/Settings'));
+const Profile = lazy(() => import('./pages/Profile'));
+const Admin = lazy(() => import('./pages/Admin'));
 
 function App() {
   return (
@@ -50,7 +51,8 @@ function App() {
             <Router>
               <ErrorBoundary>
                 <EasterEggsOverlay />
-                <Routes>
+                <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="w-8 h-8 border-4 border-accent/30 border-t-accent rounded-full animate-spin" /></div>}>
+                  <Routes>
                   <Route path="/" element={<Welcome />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
@@ -79,7 +81,8 @@ function App() {
                     <Route path="/admin" element={<AdminRoute><Admin /></AdminRoute>} />
                   </Route>
                   <Route path="*" element={<PageNotFound />} />
-                </Routes>
+                  </Routes>
+                </Suspense>
               </ErrorBoundary>
             </Router>
             <Toaster />

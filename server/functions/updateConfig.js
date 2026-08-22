@@ -1,4 +1,5 @@
-import fs from 'fs';
+import fs from 'fs/promises';
+import { existsSync } from 'fs';
 import path from 'path';
 
 export default async function updateConfig(req, res) {
@@ -8,8 +9,8 @@ export default async function updateConfig(req, res) {
     const envPath = path.resolve(process.cwd(), '.env.local');
     
     let envContent = '';
-    if (fs.existsSync(envPath)) {
-      envContent = fs.readFileSync(envPath, 'utf8');
+    if (existsSync(envPath)) {
+      envContent = await fs.readFile(envPath, 'utf8');
     }
 
     // Parse and update token
@@ -29,7 +30,7 @@ export default async function updateConfig(req, res) {
     }
 
     const newContent = lines.join('\n').trim() + '\n';
-    fs.writeFileSync(envPath, newContent);
+    await fs.writeFile(envPath, newContent);
 
     // Update in-memory
     if (githubToken) {

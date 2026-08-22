@@ -1,8 +1,8 @@
-import React, { useState, useRef, useMemo } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { 
-  Sparkles, Database, Layers, ArrowUpRight, Cpu, 
+  Sparkles, Database, ArrowUpRight, Cpu, 
   Wrench, HardDrive, Bot, Package, Cloud, ShieldCheck, Activity
 } from 'lucide-react';
 import { useLiveCounter } from '@/hooks/useLiveCounter';

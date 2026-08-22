@@ -7,7 +7,6 @@ import { useToast } from '@/components/ui/use-toast';
 import { getBookmarks, removeBookmark } from '@/lib/bookmarks';
 import {
   User,
-  Mail,
   Shield,
   ShieldCheck,
   Lock,
@@ -31,7 +30,6 @@ import {
   RefreshCw,
   Palette,
   Terminal,
-  Activity,
   Check,
 } from 'lucide-react';
 

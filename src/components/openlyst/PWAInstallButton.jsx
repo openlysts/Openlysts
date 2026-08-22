@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Download, Check, Share, Smartphone } from 'lucide-react';
+import { Download, Share, Smartphone } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function PWAInstallButton({ className = '', variant = 'compact' }) {

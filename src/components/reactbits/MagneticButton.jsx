@@ -1,5 +1,5 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { motion, useSpring, useTransform } from 'framer-motion';
+import React, { useRef, useState } from 'react';
+import { motion, useSpring } from 'framer-motion';
 
 export default function MagneticButton({
   children,

@@ -2,12 +2,10 @@ import React, { useState, useMemo } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Activity, Database, Server, RefreshCw, Calculator, Tags, Trash2, 
-  Search, Plus, CheckCircle, AlertCircle, Shield, ShieldCheck, 
-  ExternalLink, KeyRound, Copy, Check, Filter, Layers, Users, 
-  UserCheck, UserX, Eye, EyeOff, Star, Sparkles, Terminal, Download, 
-  Radio, Clock, Cpu, HardDrive, Zap, Loader2, Compass, Play,
-  ChevronRight, X, ArrowUpRight, Award, Lock, CheckSquare, Square
+  Activity, Database, RefreshCw, Calculator, Trash2, 
+  Search, Plus, CheckCircle, Shield, KeyRound, Copy, Check, Layers, Users, 
+  UserCheck, UserX, Eye, EyeOff, Star, Sparkles, Download, 
+  Radio, Clock, Cpu, HardDrive, Zap, Loader2, Compass, Play, X, CheckSquare, Square
 } from 'lucide-react';
 import { localClient } from '@/api/localClient';
 import { runIngestion, recalculateScores, reclassifyRepos } from '@/lib/api';
@@ -798,13 +796,13 @@ export default function Admin() {
                 <tbody className="divide-y divide-border/40">
                   {reposLoading ? (
                     <tr>
-                      <td colSpan="8" className="py-8 text-center text-text-muted">
+                      <td colSpan={8} className="py-8 text-center text-text-muted">
                         <Loader2 className="w-5 h-5 animate-spin mx-auto mb-2" /> Loading repositories...
                       </td>
                     </tr>
                   ) : filteredRepos.length === 0 ? (
                     <tr>
-                      <td colSpan="8" className="py-8 text-center text-text-muted">No repositories found.</td>
+                      <td colSpan={8} className="py-8 text-center text-text-muted">No repositories found.</td>
                     </tr>
                   ) : (
                     filteredRepos.slice(0, 100).map((r) => {
@@ -973,7 +971,7 @@ export default function Admin() {
                 </thead>
                 <tbody className="divide-y divide-border/40">
                   {altsLoading ? (
-                    <tr><td colSpan="6" className="py-8 text-center text-text-muted">Loading alternatives...</td></tr>
+                    <tr><td colSpan={6} className="py-8 text-center text-text-muted">Loading alternatives...</td></tr>
                   ) : alternatives.map((alt) => (
                     <tr key={alt.id} className="hover:bg-bg-subtle/30">
                       <td className="py-2.5 pr-4 font-bold text-text">{alt.resolved_name || alt.title}</td>
@@ -1154,7 +1152,7 @@ export default function Admin() {
                 </thead>
                 <tbody className="divide-y divide-border/40">
                   {usersLoading ? (
-                    <tr><td colSpan="5" className="py-8 text-center text-text-muted">Loading users...</td></tr>
+                    <tr><td colSpan={5} className="py-8 text-center text-text-muted">Loading users...</td></tr>
                   ) : users.map((u) => {
                     const isSelf = u.id === currentUser?.id;
                     const isSuspended = u.account_status === 'SUSPENDED';
@@ -1306,9 +1304,9 @@ export default function Admin() {
                 </thead>
                 <tbody className="divide-y divide-border/40">
                   {auditLoading ? (
-                    <tr><td colSpan="5" className="py-8 text-center text-text-muted">Loading audit logs...</td></tr>
+                    <tr><td colSpan={5} className="py-8 text-center text-text-muted">Loading audit logs...</td></tr>
                   ) : auditLogs.length === 0 ? (
-                    <tr><td colSpan="5" className="py-8 text-center text-text-muted">No audit events recorded.</td></tr>
+                    <tr><td colSpan={5} className="py-8 text-center text-text-muted">No audit events recorded.</td></tr>
                   ) : (
                     auditLogs.map((log) => (
                       <tr key={log.id} className="hover:bg-bg-subtle/30 font-mono text-[11px]">

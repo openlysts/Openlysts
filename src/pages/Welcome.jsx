@@ -90,6 +90,7 @@ export default function Welcome() {
                 fontFamily="'Inter', 'Roboto', 'Helvetica Neue', sans-serif"
                 glow={true}
                 className="w-full h-full"
+                style={{}}
               />
             </motion.div>
 
@@ -102,7 +103,7 @@ export default function Welcome() {
               Explore, compare, and discover the highest-quality open-source software, all in one stunning ecosystem.
             </motion.p>
 
-            <MagneticButton magneticPull={0.3}>
+            <MagneticButton magneticPull={0.3} onClick={() => navigate('/discover')}>
               <SpecularButton
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
