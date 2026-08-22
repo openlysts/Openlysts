@@ -172,3 +172,11 @@ export default async function queryAlternatives(req, res) {
     return res.status(500).json({ error: true, message: "Internal Server Error" });
   }
 }
+
+export function invalidateAlternativesCache() {
+  // DB-backed queries always fetch fresh data from Neon
+}
+
+export async function prewarmAlternativesCache() {
+  // Prewarm routine if needed
+}

@@ -205,3 +205,11 @@ export default async function queryRepositories(req, res) {
     return res.status(500).json({ error: true, message: error.message || "Internal Server Error" });
   }
 }
+
+export function invalidateRepositoriesCache() {
+  // DB-backed queries always fetch fresh data from Neon
+}
+
+export async function prewarmRepositoriesCache() {
+  // Prewarm routine if needed
+}
