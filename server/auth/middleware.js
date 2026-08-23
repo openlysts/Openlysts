@@ -133,9 +133,19 @@ export function csrfProtection(req, res, next) {
   const origin = req.get('Origin');
   const appUrl = process.env.APP_URL;
 
-  // In production, verify Origin header matches APP_URL
-  if (appUrl && origin && !origin.startsWith(appUrl)) {
-    return res.status(403).json({ error: true, message: 'Invalid request origin' });
+  const allowedOrigins = [
+    appUrl,
+    'http://localhost:5173',
+    'http://localhost:3001',
+    'http://127.0.0.1:5173',
+    'http://127.0.0.1:3001'
+  ].filter(Boolean);
+
+  if (origin && allowedOrigins.length > 0) {
+    const isAllowed = allowedOrigins.some(allowed => origin === allowed || origin.startsWith(allowed));
+    if (!isAllowed && process.env.NODE_ENV === 'production') {
+      return res.status(403).json({ error: true, message: 'Invalid request origin' });
+    }
   }
 
   next();

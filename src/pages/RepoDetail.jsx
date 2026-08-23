@@ -239,7 +239,7 @@ export default function RepoDetail() {
 
               <div className="flex flex-wrap gap-2 mb-4">
                 {(repo.categories || []).map((cat) => (
-                  <Link key={cat} to={`/category/${cat.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and')}`}>
+                  <Link key={cat} to={`/search?categories=${encodeURIComponent(cat.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and'))}`}>
                     <span className="px-2.5 py-1.5 rounded-lg text-[13px] font-medium bg-accent-soft text-accent hover:opacity-80 cursor-pointer">
                       {cat}
                     </span>

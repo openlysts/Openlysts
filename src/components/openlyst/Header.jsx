@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Bookmark, Menu, X, Settings as SettingsIcon, Smartphone, Monitor, Search, Sparkles, RefreshCw, TrendingUp, Layers, HelpCircle, Mail, LogIn, UserPlus } from 'lucide-react';
+import { Bookmark, Menu, X, Settings as SettingsIcon, Smartphone, Monitor, Search, Sparkles, RefreshCw, TrendingUp, Layers, HelpCircle, Mail, LogIn, UserPlus, Compass } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 import { getBookmarks } from '@/lib/bookmarks';
 import { useMobileLayout } from '@/lib/MobileLayoutContext';
@@ -17,6 +17,7 @@ const NAV = [
   { to: '/alternatives', label: 'Alternatives', icon: RefreshCw },
   { to: '/trending', label: 'Trending', icon: TrendingUp },
   { to: '/compare', label: 'Compare', icon: Layers },
+  { to: '/guide', label: 'Guide', icon: Compass },
   { to: '/bookmarks', label: 'Bookmarks', icon: Bookmark },
   { to: '/about', label: 'About', icon: HelpCircle },
   { to: '/contact', label: 'Contact', icon: Mail },
@@ -204,7 +205,7 @@ export default function Header() {
       {typeof document !== 'undefined' && createPortal(
         <AnimatePresence>
           {mobileOpen && (
-            <div className="fixed inset-0 z-[100] lg:hidden">
+            <div className="fixed inset-0 z-[100] xl:hidden">
               {/* Backdrop */}
               <motion.div
                 initial={{ opacity: 0 }}

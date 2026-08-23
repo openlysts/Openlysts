@@ -196,11 +196,9 @@ export default function Home() {
                 <button 
                   onClick={async () => {
                     setIsRefreshing(true);
-                    toast({ title: 'Refreshing', description: 'Fetching latest repositories from GitHub...', duration: 2000 });
                     try {
-                      await fetch('/api/functions/runIngestion', { method: 'POST' });
                       await refetchTrending();
-                      toast({ title: 'Success', description: 'Trending repositories updated.', duration: 2000 });
+                      toast({ title: 'Refreshed', description: 'Trending repositories updated.', duration: 2000 });
                     } catch (e) {
                       toast({ title: 'Error', description: 'Failed to refresh.', variant: 'destructive', duration: 2000 });
                     } finally {

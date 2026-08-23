@@ -36,28 +36,28 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div className="min-h-screen bg-black flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-white">
+    <div className="min-h-[calc(100vh-4rem)] flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      <div className="sm:mx-auto sm:w-full sm:max-w-md text-center mb-6">
+        <h1 className="text-3xl font-black text-text tracking-tight">
           Reset password
-        </h2>
-        <p className="mt-2 text-center text-sm text-gray-400">
+        </h1>
+        <p className="text-sm text-text-muted mt-1.5">
           Enter your email and we'll send you a reset link
         </p>
       </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-[#1a1a1a] py-8 px-4 shadow sm:rounded-lg sm:px-10 border border-[#333]">
+      <div className="sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="bg-bg-card/90 backdrop-blur-xl py-8 px-6 shadow-2xl rounded-3xl border border-border sm:px-10">
           {success ? (
             <div className="text-center">
-              <CheckCircle2 className="mx-auto h-12 w-12 text-green-500 mb-4" />
-              <h3 className="text-lg font-medium text-white mb-2">Check your email</h3>
-              <p className="text-sm text-gray-400 mb-6">
-                If an account exists for <strong>{email}</strong>, we have sent a password reset link.
+              <CheckCircle2 className="mx-auto h-12 w-12 text-emerald-500 mb-4" />
+              <h2 className="text-xl font-bold text-text mb-2">Check your email</h2>
+              <p className="text-sm text-text-secondary mb-6 leading-relaxed">
+                If an account exists for <strong className="text-text">{email}</strong>, we have sent a password reset link.
               </p>
               <Link
                 to="/login"
-                className="w-full flex justify-center py-2 px-4 border border-[#444] rounded-md shadow-sm text-sm font-medium text-gray-300 bg-[#222] hover:bg-[#333]"
+                className="w-full inline-flex justify-center py-2.5 px-4 rounded-xl shadow-sm text-sm font-bold text-accent-fg bg-accent hover:bg-accent/90 transition-colors"
               >
                 Return to login
               </Link>
@@ -65,27 +65,27 @@ export default function ForgotPassword() {
           ) : (
             <>
               {error && (
-                <div className="mb-4 bg-red-900/50 border border-red-500 rounded-md p-3 flex items-start text-sm text-red-200">
-                  <AlertCircle className="w-5 h-5 mr-2 flex-shrink-0" />
+                <div className="mb-4 bg-nonoss-soft border border-nonoss/30 rounded-xl p-3 flex items-start text-xs font-medium text-nonoss">
+                  <AlertCircle className="w-4 h-4 mr-2 flex-shrink-0 mt-0.5" />
                   <span>{error}</span>
                 </div>
               )}
 
-              <form className="space-y-6" onSubmit={handleSubmit}>
+              <form className="space-y-4" onSubmit={handleSubmit}>
                 <div>
-                  <label className="block text-sm font-medium text-gray-300">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-text-secondary mb-1.5">
                     Email address
                   </label>
-                  <div className="mt-1 relative rounded-md shadow-sm">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <Mail className="h-5 w-5 text-gray-500" />
+                  <div className="relative rounded-xl shadow-sm">
+                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                      <Mail className="h-4 w-4 text-text-muted" />
                     </div>
                     <input
                       type="email"
                       required
                       value={email}
                       onChange={e => setEmail(e.target.value)}
-                      className="bg-[#222] border-[#444] text-white block w-full pl-10 sm:text-sm border rounded-md p-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="bg-bg border border-border text-text block w-full pl-10 sm:text-sm rounded-xl p-2.5 focus:border-accent focus:outline-none transition-colors placeholder:text-text-muted"
                       placeholder="you@example.com"
                     />
                   </div>
@@ -95,14 +95,14 @@ export default function ForgotPassword() {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+                    className="w-full flex justify-center py-2.5 px-4 rounded-xl shadow-md text-sm font-bold text-accent-fg bg-accent hover:bg-accent/90 focus:outline-none disabled:opacity-50 transition-all"
                   >
                     {isLoading ? 'Sending...' : 'Send reset link'}
                   </button>
                 </div>
                 
-                <div className="text-center">
-                  <Link to="/login" className="inline-flex items-center text-sm font-medium text-gray-400 hover:text-white">
+                <div className="text-center pt-2">
+                  <Link to="/login" className="inline-flex items-center text-sm font-medium text-text-secondary hover:text-text transition-colors">
                     <ArrowLeft className="w-4 h-4 mr-1" />
                     Back to login
                   </Link>

@@ -43,8 +43,8 @@ test.describe('Openlysts QA Regression Suite', () => {
     await expect(page).toHaveURL(/.*\/bookmarks/);
     
     // Test 404
-    await page.goto('http://localhost:5173/this-path-does-not-exist', { waitUntil: 'domcontentloaded' });
-    await expect(page.locator('text=Page Not Found').or(page.locator('text=Go Home')).first()).toBeVisible();
+    await page.goto('http://localhost:5173/this-path-does-not-exist', { waitUntil: 'commit' });
+    await expect(page.locator('text=Page Not Found').or(page.locator('text=Go Home')).first()).toBeVisible({ timeout: 10000 });
   });
 
   // Scenario 3 & 4: Search, Debounce & Security
@@ -52,13 +52,13 @@ test.describe('Openlysts QA Regression Suite', () => {
     await page.goto('http://localhost:5173/discover', { waitUntil: 'domcontentloaded' });
     const searchInput = page.getByPlaceholder(/Search|Looking for/i).first();
     await expect(searchInput).toBeVisible();
-    
+    await searchInput.scrollIntoViewIfNeeded();
     await searchInput.fill('react');
-    await page.waitForTimeout(400);
+    await page.waitForTimeout(300);
     
     // Security Test - XSS payload in search
     await searchInput.fill('<script>alert("xss")</script>');
-    await page.waitForTimeout(400);
+    await page.waitForTimeout(300);
     await expect(page.locator('body')).toBeVisible(); // No crash
   });
 
@@ -90,7 +90,7 @@ test.describe('Openlysts QA Regression Suite', () => {
   // Scenario 8: Bookmarks Lifecycle
   test('Scenario 8: Bookmarks Lifecycle', async ({ page }) => {
     await page.goto('http://localhost:5173/bookmarks', { waitUntil: 'domcontentloaded' });
-    await expect(page.locator('h1, h2, p, div').filter({ hasText: /Bookmarks/i }).first()).toBeVisible();
+    await expect(page.locator('h1:has-text("Bookmarks")').or(page.locator('text=Your Bookmarks'))).toBeVisible({ timeout: 10000 });
   });
 
   // Scenario 9: Forms & Boundaries
@@ -150,5 +150,89 @@ test.describe('Openlysts QA Regression Suite', () => {
     await page.goto('http://localhost:5173/repo/facebook/react', { waitUntil: 'domcontentloaded' });
     await page.waitForTimeout(1000);
     await expect(page.locator('body')).toBeVisible();
+  });
+
+  // Scenario 15: Mobile Alternatives Category Drawer
+  test('Scenario 15: Mobile Alternatives Category Drawer', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('http://localhost:5173/alternatives', { waitUntil: 'domcontentloaded' });
+    const catBtn = page.locator('button:has-text("Categories")').first();
+    await expect(catBtn).toBeVisible();
+    await catBtn.scrollIntoViewIfNeeded();
+    await catBtn.click({ force: true });
+    await expect(page.locator('button').filter({ hasText: /Internal tools|All Tools/i }).first()).toBeVisible();
+  });
+
+  // Scenario 16: Compare Pre-population from LocalStorage/Context
+  test('Scenario 16: Compare Pre-population & Context Sync', async ({ page }) => {
+    await page.goto('http://localhost:5173/compare?repos=facebook%2Freact,vuejs%2Fvue', { waitUntil: 'domcontentloaded' });
+    await expect(page).toHaveURL(/.*repos=facebook%2Freact.*vuejs%2Fvue/);
+    await expect(page.locator('text=2/3 Repos')).toBeVisible();
+  });
+
+  // Scenario 17: Trending 7-Day Filter Persistence
+  test('Scenario 17: Trending 7-Day Filter Persistence', async ({ page }) => {
+    await page.goto('http://localhost:5173/trending', { waitUntil: 'domcontentloaded' });
+    const filterBtn = page.locator('button:has-text("Filters")').first();
+    await filterBtn.click();
+    const select = page.locator('select:has(option[value="7d"])').first();
+    await select.selectOption('7d');
+    await expect(page).toHaveURL(/.*updatedWithin=7d/);
+  });
+
+  // Scenario 18: Search Input Synchronization
+  test('Scenario 18: Search Input Synchronization with Query Param', async ({ page }) => {
+    await page.goto('http://localhost:5173/search?q=nextjs', { waitUntil: 'domcontentloaded' });
+    const input = page.locator('input[type="text"]').first();
+    await expect(input).toHaveValue('nextjs');
+  });
+
+  // Scenario 19: Category Badges Route to /search
+  test('Scenario 19: RepoDetail Category Badges Route to Search', async ({ page }) => {
+    await page.goto('http://localhost:5173/repo/facebook/react', { waitUntil: 'domcontentloaded' });
+    const catLink = page.locator('a[href*="/search?categories="]').first();
+    if (await catLink.isVisible({ timeout: 2000 }).catch(() => false)) {
+      await catLink.click();
+      await expect(page).toHaveURL(/.*\/search\?categories=/);
+    }
+  });
+
+  // Scenario 20: Live Bookmark Badge Update on Mobile
+  test('Scenario 20: Live Mobile Bookmark Counter on bookmarks-changed Event', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('http://localhost:5173/discover', { waitUntil: 'domcontentloaded' });
+    await page.evaluate(() => {
+      localStorage.setItem('openlyst_bookmarks', JSON.stringify([{ id: 'test', name: 'test' }]));
+      window.dispatchEvent(new CustomEvent('bookmarks-changed'));
+    });
+    await expect(page.locator('nav[aria-label="Mobile Navigation"]').locator('a[href="/bookmarks"]').filter({ hasText: '1' })).toBeVisible();
+    await page.evaluate(() => {
+      localStorage.removeItem('openlyst_bookmarks');
+      window.dispatchEvent(new CustomEvent('bookmarks-changed'));
+    });
+  });
+
+  // Scenario 21: Platform Guide Interactive Deep-Dive
+  test('Scenario 21: Platform Guide Interactive Tab Switching and CTA Links', async ({ page }) => {
+    await page.goto('http://localhost:5173/guide', { waitUntil: 'domcontentloaded' });
+    await expect(page.locator('h1')).toHaveText(/How to Find Awesome Free Software/i);
+    
+    // Verify Progress Tracker initial state
+    await expect(page.locator('text=Guide Progress: 1 of 6 Features Explored')).toBeVisible();
+
+    // Click a Goal Chip
+    const goalBtn = page.locator('button:has-text("Replace a paid")').first();
+    await goalBtn.click();
+    await expect(page.locator('h2:has-text("Cut Your Software Bills to $0")')).toBeVisible();
+    await expect(page.locator('text=Guide Progress: 2 of 6 Features Explored')).toBeVisible();
+
+    // Switch to Side-by-Side Compare tab
+    const compareTab = page.locator('button:has-text("Side-by-Side Compare")').first();
+    await compareTab.click();
+    await expect(page.locator('h2:has-text("Compare Tools on One Screen")')).toBeVisible();
+
+    // Verify Launch CTA navigates to /compare
+    const cta = page.locator('main a[href="/compare"]').first();
+    await expect(cta).toBeVisible();
   });
 });

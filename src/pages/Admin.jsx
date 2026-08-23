@@ -82,7 +82,7 @@ export default function Admin() {
   // ─── SaaS Alternatives Query ──────────────────────────────────────
   const { data: alternatives = [], isLoading: altsLoading, refetch: refetchAlts } = useQuery({
     queryKey: ['admin-alternatives'],
-    queryFn: () => localClient.entities.Alternative.list('-quality_score', 200),
+    queryFn: () => localClient.entities.Alternative.list('-feature_parity_score', 200),
   });
 
   // ─── Local State for Operations ───────────────────────────────────

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { queryRepos } from '@/lib/api';
@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { Star, GitFork, AlertCircle, X, Plus, Search, Trophy, Activity } from 'lucide-react';
 import LicenseBadge from '@/components/openlyst/LicenseBadge';
 import { getDifficultyColor } from '@/lib/difficultyColors';
+import { useCompare } from '@/lib/CompareContext';
 
 function formatStars(n) {
   if (!n) return '0';
@@ -29,10 +30,20 @@ function timeAgo(dateStr) {
 export default function Compare() {
   const [searchParams, setSearchParams] = useSearchParams();
   const repoNames = searchParams.get('repos')?.split(',').filter(Boolean) || [];
+  const { selectedForCompare } = useCompare();
   
   const [searchInput, setSearchInput] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [showSearch, setShowSearch] = useState(false);
+
+  useEffect(() => {
+    if (repoNames.length === 0 && selectedForCompare.length > 0) {
+      const defaultNames = selectedForCompare.map(r => r.full_name || r.name).filter(Boolean);
+      if (defaultNames.length > 0) {
+        setSearchParams({ repos: defaultNames.join(',') }, { replace: true });
+      }
+    }
+  }, [selectedForCompare, repoNames.length, setSearchParams]);
 
   const { data: repos, isLoading } = useQuery({
     queryKey: ['compareRepos', repoNames],

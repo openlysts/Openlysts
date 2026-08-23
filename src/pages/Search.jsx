@@ -64,9 +64,17 @@ export default function Search() {
   };
 
   useEffect(() => {
+    setInputVal(q);
+  }, [q]);
+
+  useEffect(() => {
     if (debouncedQ !== q) {
       const params = new URLSearchParams(searchParams);
-      params.set('q', debouncedQ);
+      if (debouncedQ) {
+        params.set('q', debouncedQ);
+      } else {
+        params.delete('q');
+      }
       params.delete('page');
       setSearchParams(params, { replace: true });
     }

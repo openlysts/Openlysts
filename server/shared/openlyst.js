@@ -54,7 +54,13 @@ export function classifyRepo(repo, queryHint) {
   const categories = new Set();
   const desc = (repo.description || "").toLowerCase();
   const name = (repo.name || "").toLowerCase();
-  const topics = (repo.topics || []).map((t) => t.toLowerCase());
+  let rawTopics = repo.topics;
+  if (typeof rawTopics === 'string') {
+    try { rawTopics = JSON.parse(rawTopics); } catch { rawTopics = []; }
+  }
+  const topics = (Array.isArray(rawTopics) ? rawTopics : [])
+    .filter(Boolean)
+    .map((t) => String(t).toLowerCase());
   const topicSet = new Set(topics);
   const text = ` ${name} ${desc} ${topics.join(" ")} `;
 

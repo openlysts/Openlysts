@@ -121,7 +121,7 @@ export async function ingestAlternatives() {
     
     // Fetch existing alternative repos to avoid duplicate insertions
     const { rows: existingRows } = await db.query('SELECT free_tool_repo, category FROM "Alternative"');
-    const existingRepos = new Map(existingRows.map(r => [r.free_tool_repo.toLowerCase(), r.category]));
+    const existingRepos = new Map(existingRows.filter(r => r.free_tool_repo).map(r => [r.free_tool_repo.toLowerCase(), r.category]));
     
     let addedCount = 0;
     let updatedCount = 0;

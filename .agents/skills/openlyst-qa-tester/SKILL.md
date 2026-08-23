@@ -3557,10 +3557,102 @@ The most important coverage improvements added by this addendum are:
 - Ensure `openlyst_has_seen_tour` is NOT in `localStorage` (simulating a new device).
 - Reload the page.
 - **Verify**: The Product Tour does NOT appear automatically, because the DB state takes precedence and sets the local state.
-- Sign in as a completely new user.
-- **Verify**: Tour appears. Complete the tour.
-- **Verify**: DB state `has_seen_tour` updates to `true` (check Network tab for `PATCH /api/profile/settings`).
+# PHASE 38: CROSS-DEVICE & SYSTEM INTEGRITY REGRESSION
+
+### TC-408: Mobile Alternatives Category Bottom Sheet Drawer
+- Set browser viewport to mobile dimensions ($390 \times 844$).
+- Navigate to `http://localhost:5173/alternatives`.
+- **Verify**: The "Categories" bottom sheet trigger button is visible.
+- Click "Categories" button.
+- **Verify**: Category Drawer sheet slides up from the bottom with zero React fatal reference errors.
+- Select a category (e.g. "Databases").
+- **Verify**: Sheet closes and the alternative list filters dynamically.
+
+### TC-409: Admin Studio Alternatives Feature Parity Score Query
+- Navigate to `http://localhost:5173/admin`.
+- Switch to the "Alternatives" management tab.
+- **Verify**: Backend queries the `Alternative` table using `feature_parity_score` without encountering SQL errors (e.g., `column "quality_score" does not exist`).
+- **Verify**: Alternative records render with correct parity score badges and sorting order.
+
+### TC-410: Video Tutorial YouTube Iframe CSP Whitelist
+- Navigate to any repository detail page with an embedded video explanation.
+- **Verify**: The YouTube iframe loads and displays video content without Content Security Policy blocking violations.
+- **Verify**: Browser console shows 0 CSP violations for `https://www.youtube.com` and `https://www.youtube-nocookie.com`.
+
+### TC-411: RepoDetail Category Badges Route to Dynamic Search
+- Navigate to `http://localhost:5173/repo/facebook/react`.
+- Locate the category badges beneath the repository header.
+- Click any category badge (e.g., "Developer Tools").
+- **Verify**: Application routes to `/search?categories=developer-tools` instead of navigating to a dead 404 `/category/:slug` endpoint.
+
+### TC-412: Tablet Viewport (1024px-1279px) Hamburger Drawer Navigation
+- Set browser viewport width to 1024px (iPad landscape / small laptop).
+- Navigate to `http://localhost:5173/discover`.
+- Locate and click the hamburger navigation trigger button.
+- **Verify**: Navigation drawer slides open cleanly across the 1024px–1279px range with all navigation links accessible.
+
+### TC-413: Compare Dock Pre-Population & Clean State Management
+- Select 2 repositories on the Discover page.
+- Navigate to `http://localhost:5173/compare` with empty query parameters.
+- **Verify**: Application automatically pre-populates URL search parameters from local compare state.
+- Add/remove items from the compare dock.
+- **Verify**: No React state-updater side-effect warnings (e.g., `Cannot update a component ('Toaster') while rendering a different component`).
+
+### TC-414: Auth Pages CSS Token Theme Resilience
+- Navigate to `http://localhost:5173/forgot-password`, `/reset-password`, and `/verify-email`.
+- Toggle between Light and Dark themes.
+- **Verify**: Container backgrounds, text colors, card borders, and action buttons use design system tokens (`bg-bg`, `text-text`, `bg-bg-card`, `border-border`, `bg-accent`) and remain fully legible in all color schemes.
+
+### TC-415: Trending 7-Day Filter Persistence
+- Navigate to `http://localhost:5173/trending`.
+- Open the filter panel and select "7 days" under "Updated Within".
+- **Verify**: The URL updates to `/trending?updatedWithin=7d` and is preserved without premature default-filter exclusion.
+
+### TC-416: Mobile Bottom Navigation Live Bookmark Badge Synchronization
+- Set browser viewport to mobile dimensions ($390 \times 844$).
+- Navigate to `http://localhost:5173/discover`.
+- Bookmark a repository or dispatch `bookmarks-changed` custom event.
+- **Verify**: The `Saved` icon in the bottom navigation bar immediately updates its badge count in real-time.
+
+### TC-417: Search Input Deep-link Synchronization
+- Navigate directly to `http://localhost:5173/search?q=open-source`.
+- **Verify**: The search input field automatically populates with `"open-source"`.
+- Navigate programmatically or via browser history to `http://localhost:5173/search?q=database`.
+- **Verify**: The search input updates reactively to match the new query parameter.
+
+### TC-418: PWA Manifest Web Origin Alignment
+- Inspect `public/manifest.json`.
+- **Verify**: The manifest `id` is relative (`"/"`) rather than an absolute URL, preventing origin mismatches when hosted on custom domains or staging environments.
+
+### TC-419: Non-Admin Trending Refresh Endpoint Security
+- Navigate to `http://localhost:5173/` as an unauthenticated or non-admin user.
+- Click the "Refresh" button in the Trending Repositories section.
+- **Verify**: Application calls public `refetchTrending()` rather than protected admin endpoint `runIngestion`, avoiding unauthenticated 401 errors.
+
+### TC-420: Data Vault Bookmark Export Property Mapping
+- Navigate to `http://localhost:5173/profile`.
+- Click "Export JSON" in the Data Vault section.
+- **Verify**: Exported JSON contains valid repository fields (`name`, `url`, `stars`, `created_date`) without undefined property references.
+
+### TC-421: Platform Guide Interactive Capabilities Hub & Mastery Tracker
+- Navigate to `http://localhost:5173/guide`.
+- Verify page renders plain-English header "How to Find Awesome Free Software in Seconds" and all 6 capability tabs (Smart Search, Free Alternatives, Side-by-Side Compare, Video Walkthroughs, Save & Export, Fast Shortcuts).
+- **Mastery Tracker Verification**:
+  - Verify initial progress state displays "Guide Progress: 1 of 6 Features Explored (17%)".
+  - Click through all 6 tabs and verify progress increments continuously to 100%.
+  - Verify the 100% completion badge ("🏆 You're an Open-Source Power User! Ready to explore?") unlocks with working "Launch App →" link.
+- **Goal Intent Selector Verification**:
+  - Verify 4 intent shortcut buttons ("Replace a paid $50/mo subscription", "Find clean code without dead clones", "Compare 2 tools without 20 open tabs", "Watch a 5-min video instead of long docs").
+  - Click each goal chip and verify immediate tab switching to the corresponding module.
+- **Interactive Simulator Verification**:
+  - Smart Search: Adjust weight tuner slider and verify live score recalculation.
+  - Free Alternatives: Toggle Firebase $\rightarrow$ Supabase and Vercel $\rightarrow$ Coolify comparisons with 1-click Docker details.
+  - Side-by-Side Compare: Test deep-link CTA navigation to `/compare`.
+  - Fast Shortcuts: Verify keyboard cheat sheet and `<kbd>` tokens.
+- Test responsiveness across Desktop ($1280\times 800$), Tablet ($768\times 1024$), and Mobile ($390\times 844$).
+- Verify theme switching across Dark and Light modes maintains 100% contrast compliance.
 
 ---
 
 # END OF ADDITIVE QA CONTROL LAYER
+

@@ -26,6 +26,7 @@ const Trending = lazyWithRetry(() => import('./pages/Trending'));
 const About = lazyWithRetry(() => import('./pages/About'));
 const Contact = lazyWithRetry(() => import('./pages/Contact'));
 const Compare = lazyWithRetry(() => import('./pages/Compare'));
+const Guide = lazyWithRetry(() => import('./pages/Guide'));
 const PrivacyPolicy = lazyWithRetry(() => import('./pages/PrivacyPolicy'));
 const TermsOfService = lazyWithRetry(() => import('./pages/TermsOfService'));
 
@@ -67,6 +68,7 @@ function App() {
                     <Route path="/repo/:owner/:name" element={<RepoDetail />} />
                     <Route path="/alternatives" element={<Alternatives />} />
                     <Route path="/trending" element={<Trending />} />
+                    <Route path="/guide" element={<Guide />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/compare" element={<Compare />} />

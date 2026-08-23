@@ -22,9 +22,16 @@ export default async function getSimilarRepos(req, res) {
     if (typeof targetCategories === 'string') {
       try { targetCategories = JSON.parse(targetCategories); } catch { targetCategories = []; }
     }
+    if (!Array.isArray(targetCategories)) {
+      targetCategories = [];
+    }
+
     let targetTopics = targetRepo.topics;
     if (typeof targetTopics === 'string') {
       try { targetTopics = JSON.parse(targetTopics); } catch { targetTopics = []; }
+    }
+    if (!Array.isArray(targetTopics)) {
+      targetTopics = [];
     }
 
     const targetLanguage = targetRepo.language || '';

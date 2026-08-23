@@ -247,6 +247,7 @@ export default function Alternatives() {
   const [viewMode, setViewMode] = useState('grid');
   const [expandedCategories, setExpandedCategories] = useState(new Set());
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [categoryDrawerOpen, setCategoryDrawerOpen] = useState(false);
   const navigate = useNavigate();
   const categoryRefs = useRef({});
   const sortRef = useRef(null);
@@ -449,8 +450,6 @@ export default function Alternatives() {
       onSelect={setSelectedAlt}
     />
   );
-
-  const [categoryDrawerOpen, setCategoryDrawerOpen] = useState(false);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 relative">

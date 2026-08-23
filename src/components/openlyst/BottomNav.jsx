@@ -20,9 +20,11 @@ export default function BottomNav() {
     updateCount();
     window.addEventListener('storage', updateCount);
     window.addEventListener('openlyst_bookmarks_updated', updateCount);
+    window.addEventListener('bookmarks-changed', updateCount);
     return () => {
       window.removeEventListener('storage', updateCount);
       window.removeEventListener('openlyst_bookmarks_updated', updateCount);
+      window.removeEventListener('bookmarks-changed', updateCount);
     };
   }, []);
 

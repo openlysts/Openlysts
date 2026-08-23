@@ -1,145 +1,118 @@
-# Openlysts Architecture Document (v1.1.0)
+# Openlysts Architecture Document (v1.2.0)
 
-This document outlines the complete, ground-up architecture of the Openlyst platform. Use this as a reference if you ever need to rebuild the application from scratch or deeply understand its moving parts.
+This document outlines the complete, ground-up architecture of the **Openlysts** platform. Use this as a reference to deeply understand its moving parts, data models, and system flows.
 
 ## 1. System Overview
 
-Openlysts is an open-source discovery platform that continuously monitors GitHub for trending repositories, scores them based on quality and velocity, and presents them in a beautiful, filterable UI. 
+Openlysts is an open-source intelligence and discovery platform that continuously monitors GitHub for trending repositories, evaluates projects via a multi-dimensional scoring engine, maps SaaS alternatives, and presents them through a 60FPS responsive web application.
 
-The application uses a full-stack JavaScript architecture, designed to run both locally for development and on Vercel Serverless Functions in production. It connects to a centralized PostgreSQL (Neon) database.
+The application uses a full-stack JavaScript architecture designed to run seamlessly both locally and on Vercel Serverless Functions in production, backed by a unified PostgreSQL (Neon) database.
+
+---
 
 ## 2. Technology Stack
 
 ### Frontend (Client)
 - **Framework**: React 18 + Vite
 - **Routing**: React Router DOM v6
-- **State Management / Data Fetching**: TanStack React Query (v5)
-- **Styling**: Tailwind CSS + standard CSS (`index.css`)
-- **UI Components**: Shadcn UI (Radix primitives), Framer Motion (animations), Lucide React (icons).
-- **Global State Contexts**: `AuthContext` (user session), `CompareContext` (side-by-side repo comparison up to 3), `BookmarkContext` (local-storage bookmarks).
-- **PWA**: Vite Plugin PWA with Workbox — full offline caching, installable on desktop & mobile, custom icons.
+- **State Management & Caching**: TanStack React Query (v5)
+- **Styling**: Tailwind CSS with CSS Variable token design system (`index.css`)
+- **UI Components & Primitives**: Radix UI primitives, Vaul (drawers/bottom sheets), Lucide React.
+- **Motion & Graphics**: Framer Motion (page animations), Three.js & OGL (interactive 3D particle hero).
+- **Global State Contexts**: `AuthContext` (sessions & profile), `CompareContext` (side-by-side comparison dock & query sync), `BookmarkContext` (cross-device/local storage bookmarking).
+- **PWA**: Workbox service-worker caching with installable application manifests.
 
 ### Backend (Server)
 - **Runtime**: Node.js
-- **Server**: Express.js
-- **Database**: PostgreSQL (via `pg` pool) hosted on Neon.
-- **Execution**: Runs on Vercel Serverless Functions (subject to execution timeouts) or concurrently with Vite locally using `npm-run-all`.
+- **Framework**: Express.js
+- **Database**: PostgreSQL (via `pg` connection pool) hosted on Neon.
+- **Session Management**: `express-session` backed by `connect-pg-simple` table sessions.
+- **Security & Auth**: `bcryptjs` password hashing, Google & GitHub OAuth2, origin CSRF validation, rate limiting.
+- **Email Dispatch**: `nodemailer` SMTP integration for password resets and inquiries.
 
-### Security & Auth Stack
-- **Session Management**: Database-backed sessions via `express-session` and `connect-pg-simple`.
-- **Password Hashing**: `bcryptjs` (Cost factor 12).
-- **Authentication**: Local Email/Password + OAuth2 (Google & GitHub).
-- **Rate Limiting**: `express-rate-limit` to prevent brute force and enumeration attacks.
-- **Email Dispatch**: NodeMailer (SMTP via Gmail for Password Resets and Contact Forms).
+---
 
 ## 3. Directory Structure
 
 ```text
 openlyst/
-├── server/                     # Express Backend
-│   ├── api/                    # Express route definitions
-│   │   ├── admin.js            # Admin user management & audit logs
-│   │   ├── auth.js             # Login, register, oauth, resets
-│   │   ├── contact.js          # SMTP Email dispatch via nodemailer
-│   │   ├── entities.js         # Generic CRUD routes for all tables
-│   │   ├── functions.js        # Custom RPC routes (querying, ingestion)
-│   │   └── profile.js          # Self-service user profile updates
+├── server/                     # Express Backend & API Layer
+│   ├── api/                    # Express route controllers
+│   │   ├── admin.js            # Admin management & audit logs
+│   │   ├── auth.js             # Authentication, OAuth, password reset
+│   │   ├── contact.js          # SMTP email dispatch
+│   │   ├── entities.js         # Generic entity CRUD routes
+│   │   ├── functions.js        # Custom RPC functions
+│   │   └── profile.js          # User profile & Data Vault endpoints
 │   ├── auth/                   # Core Authentication Modules
-│   │   ├── audit.js            # Audit logging system
-│   │   ├── bootstrap.js        # Auto-creation of first admin
-│   │   ├── constants.js        # Roles, statuses, actions
-│   │   ├── email.js            # Verification & Reset emails
-│   │   ├── middleware.js       # Auth guards (requireAuth, requireRole)
-│   │   ├── oauth.js            # OAuth provider logic
-│   │   ├── password.js         # Bcrypt hashing & strength checks
-│   │   └── session.js          # Session store config
-│   ├── db/                     # Database connection and schema
-│   │   ├── index.js            # PostgreSQL connection pool singleton
-│   │   └── schema.js           # CREATE TABLE statements (auto-init)
-│   ├── functions/              # Core Business Logic
-│   │   ├── runIngestion.js     # GitHub API fetching and updating logic
-│   │   └── queryRepositories.js# Advanced filtering and sorting logic
-│   ├── services/               # Database interaction layer
-│   │   └── entities.js         # Dynamic SQL generation for CRUD
-│   └── index.js                # Express app entry point & Background Worker loop
+│   │   ├── audit.js            # Immutable audit logging
+│   │   ├── bootstrap.js        # First admin bootstrapping
+│   │   ├── constants.js        # Roles, statuses, and permissions
+│   │   ├── email.js            # HTML verification & reset emails
+│   │   ├── middleware.js       # requireAuth, requireAdmin, CSRF guards
+│   │   ├── oauth.js            # Google & GitHub OAuth strategies
+│   │   ├── password.js         # Bcrypt hashing & complexity validation
+│   │   └── session.js          # PostgreSQL session store configuration
+│   ├── db/                     # Database layer
+│   │   ├── index.js            # Singleton pg connection pool
+│   │   └── schema.js           # Automated DDL table creation & migrations
+│   ├── functions/              # Core Business Logic & Algorithms
+│   │   ├── queryRepositories.js# Hybrid similarity search & filters
+│   │   ├── queryAlternatives.js# SaaS-to-OSS alternative matching
+│   │   ├── getSimilarRepos.js  # Score & topic-based similarity ranking
+│   │   └── runIngestion.js     # GitHub API ingestion & score evaluation
+│   ├── services/               # Dynamic SQL entity builders
+│   └── index.js                # Express app entrypoint & background scheduler
 ├── src/                        # React Frontend
-│   ├── api/                    # API clients
-│   │   └── localClient.js      # Fetch wrapper for generic entity calls
+│   ├── api/                    # API clients (localClient)
 │   ├── components/
-│   │   ├── openlyst/           # Core discovery UI components
-│   │   │   ├── RepositoryCard.jsx  # Card with Compare & Bookmark actions (top-right absolute, pr-20 clearance)
-│   │   │   ├── LicenseBadge.jsx    # License chip (now in stats row)
-│   │   │   ├── CompareBar.jsx      # Sticky bottom comparison tray
-│   │   │   └── RepoVideoLinks.jsx  # Embedded video explanation links
-│   │   └── ui/                 # Shadcn + custom UI primitives
-│   ├── lib/                    # Utilities and configuration
-│   │   ├── local-runtime/      # Auth client wrapper communicating with Express
-│   │   ├── CompareContext.jsx   # Global context for side-by-side comparison
-│   │   ├── bookmarks.js        # LocalStorage bookmark helpers
-│   │   ├── api.js              # Wrappers around localClient calls
-│   │   └── AuthContext.jsx     # Global authentication state
-│   └── pages/                  # Top-level route components (Home, Search, Admin, etc.)
-├── public/
-│   ├── sw.js                   # Service Worker (Workbox via vite-plugin-pwa)
-│   └── manifest.webmanifest    # PWA manifest (icons, theme, display mode)
-└── package.json
+│   │   ├── openlyst/           # Core product components (Cards, Docks, Nav)
+│   │   └── ui/                 # Reusable UI primitives
+│   ├── lib/                    # Utilities, contexts, and helper hooks
+│   └── pages/                  # Page routes (Home, Discover, Compare, Alternatives, etc.)
+├── tests/                      # Automated Playwright test suites (e2e & regression)
+├── .agents/skills/             # Engineering skills & QA test protocols
+└── vercel.json                 # Vercel deployment, CSP headers & serverless routing
 ```
 
-## 4. Data Model (PostgreSQL Schema)
+---
 
-The application uses a generic entity-based model augmented by dedicated auth tables. Key tables include:
+## 4. PostgreSQL Schema & Data Model
 
-- **`Repository`**: The core entity. Stores GitHub metadata.
-  - Columns: `id`, `github_id`, `full_name`, `description`, `stars`, `language`, `topics`, `trending_score`, `quality_score`, `authority_score`, `engagement_score`, `last_ingested_at`, etc.
-  
-- **`User`**: Core user accounts.
-  - Columns: `id`, `name`, `email`, `password_hash`, `role` (`user`, `admin`), `account_status`, `email_verified`.
-  
-- **`AuthAccount`**: Linked OAuth providers.
-  - Columns: `id`, `user_id`, `provider` (`google`, `github`), `provider_id`.
-  
-- **`session`**: Serverless-compatible session store. Managed by `connect-pg-simple`.
-- **`PasswordResetToken` / `EmailVerificationToken`**: Time-limited cryptographic hashes for secure flows.
-- **`AuditLog`**: Immutable ledger of administrative and sensitive actions (role changes, suspensions).
+The application uses an entity-relational schema initialized dynamically in `server/db/schema.js`:
 
-## 5. Core Workflows
+- **`Repository`**: Core open-source project metadata.
+  - Columns: `id`, `github_id`, `full_name`, `name`, `owner`, `description`, `stars`, `forks`, `open_issues`, `language`, `topics`, `trending_score`, `quality_score`, `authority_score`, `engagement_score`, `license`, `last_ingested_at`, `created_date`.
+- **`Alternative`**: Proprietary SaaS alternatives.
+  - Columns: `id`, `proprietary_tool_name`, `free_tool_repo`, `category`, `feature_parity_score`, `comparison_notes`, `created_date`.
+- **`User`**: User accounts.
+  - Columns: `id`, `name`, `email`, `password_hash`, `role` (`user` / `admin`), `account_status`, `email_verified`, `has_seen_tour`, `created_date`.
+- **`AuthAccount`**: Linked OAuth providers (Google, GitHub).
+- **`session`**: Serverless session storage managed by `connect-pg-simple`.
+- **`AuditLog`**: Immutable security ledger of administrative actions.
 
-### A. Authentication & Session Flow
-1. Users authenticate via `/api/auth/login` (email/password) or `/api/auth/:provider` (OAuth).
-2. The server verifies credentials and establishes a session using `express-session` with the `connect-pg-simple` store.
-3. A `connect.sid` cookie is set (`HttpOnly`, `SameSite=Lax`, `Secure` in production).
-4. The frontend (`AuthContext.jsx`) calls `/api/auth/me` on load to hydrate user state.
-5. Mutating API endpoints in `/api/entities` and `/api/functions` are protected by `requireAdmin` middleware, checking `req.user`.
+---
 
-### B. Autonomous Background Ingestion (Backend)
-1. In `server/index.js`, a `setInterval` is established to run every 10 minutes locally.
-2. It executes `executeIngestion()` (`server/functions/runIngestion.js`).
-3. This function fetches standard queries from the GitHub API, calculates a `trending_score` and `quality_score` for each repository based on activity and completeness, and runs `INSERT ... ON CONFLICT DO UPDATE` into the PostgreSQL database.
-4. *Note: On Vercel, this is typically adapted to a Cron Job due to serverless timeouts.*
+## 5. Core Algorithmic & Architectural Workflows
 
-### C. Hybrid Similarity Engine (Search & Discover)
-1. Instead of pure text search or vector proximity, Openlysts uses a weighted hybrid formula inside `queryRepositories.js` and `getSimilarRepos.js`.
-2. Repositories receive algorithmic scores (`authority_score` and `engagement_score`) during periodic processing.
-3. The engine ranks matches by fusing these heuristics: `(textScore * 1.5) + (authority_score * 0.5) + (engagement_score * 0.2) + log10(stars)`.
-4. This ensures that canonical, highly-adopted projects organically rank higher than obscure projects containing identical keyword terms.
+### A. Hybrid Similarity Engine
+Openlysts computes a hybrid relevance score combining semantic topic matching, authority, and developer activity:
+$$\text{Relevance} = (\text{TextScore} \times 1.5) + (\text{AuthorityScore} \times 0.5) + (\text{EngagementScore} \times 0.2) + \log_{10}(\text{Stars})$$
+This ensures established, production-grade repositories rank naturally above small or unmaintained repositories with overlapping keyword tags.
 
-### D. Backend Email Dispatch (SMTP)
-1. A user triggers a password reset or submits a contact form.
-2. The Express server uses `nodemailer` configured with the SMTP credentials (`SMTP_HOST`, `SMTP_USER`, `SMTP_PASS`) in `.env.local`.
-3. Standardized, professional HTML emails are sent to the user or platform owner securely.
+### B. Background Ingestion & Real-Time Polling
+- **Backend**: Periodic ingestion runs fetch trending projects from GitHub, calculate score attributes, and perform atomic `UPSERT` queries.
+- **Frontend**: TanStack React Query hooks poll on a 60-second window, silently updating cache state when background ingestion runs without requiring user page reloads.
 
-### E. Real-Time UI Syncing (Frontend)
-1. Pages like `Home.jsx` and `Trending.jsx` use `@tanstack/react-query`.
-2. The queries are configured with `refetchInterval: 60000` (1 minute).
-3. If the user leaves the page open, React Query quietly polls the backend every minute. When background ingestion finishes a batch, the frontend instantly reflects the new database state without requiring a page refresh.
+### C. Cross-Device Responsive Layer
+- **Desktop ($\ge 1280\text{px}$)**: Full horizontal navigation bar with inline search triggers and floating compare bar.
+- **Tablet ($768\text{px} - 1279\text{px}$)**: Slide-over navigation drawer portal with touch-optimized target spacing.
+- **Mobile ($< 768\text{px}$)**: Fixed bottom navigation bar with live bookmark badge notifications and Vaul bottom-sheet filter drawers.
 
-## 6. Git Workflow & Branch Architecture (Releases & Environments)
+---
 
-Openlysts strictly follows a 4-branch strategy for stability, rapid experimentation, and isolated production releases:
+## 6. Testing & Quality Assurance Protocols
 
-1. **`experimental`**: The active working branch. Day-to-day development, feature engineering, and UI adjustments happen here.
-2. **`dev`**: The unified staging branch. Merged from `experimental` after passing local validation.
-3. **`main`**: The official production branch. **Vercel production deployments MUST ALWAYS and EXCLUSIVELY be executed while on `main` (`git checkout main`).** Semantic version tags (e.g. `v1.0.0`) are applied here for official releases.
-4. **`backup`**: The disaster recovery / rollback branch. Merged from `main` to serve as an instant rollback snapshot.
-
-All AI interactions, QA, and local features default to `experimental`, and sync across all 4 branches prior to production deployment from `main`.
+- **Static Validation**: `npm run lint`, `npm run typecheck`, `npm run build`.
+- **Physical Browser Verification**: Playwright MCP tool actions verifying live DOM states, network requests, console logs, and visual responsiveness.
+- **Automated Regression Suite**: 50 automated tests in `tests/e2e.spec.js` and `tests/regression.spec.js` covering navigation, search debouncing, security, compare dock sync, theme switches, and mobile drawer flows.

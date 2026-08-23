@@ -7,18 +7,26 @@ export default async function queryAlternatives(req, res) {
     const body = req.body || {};
     const {
       q = '',
+      search = '',
       categories = [],
+      category = '',
       sort = 'relevance',
       page = 1,
     } = body;
+
+    const searchTerm = (q || search || '').trim();
+    let catList = Array.isArray(categories) ? [...categories] : (categories ? [categories] : []);
+    if (category && category !== 'All' && !catList.includes(category)) {
+      catList.push(category);
+    }
 
     let whereConditions = [];
     let params = [];
     let paramIdx = 1;
 
     // 1. Text Search (ILIKE)
-    if (q && q.trim()) {
-      const searchStr = `%${q.trim()}%`;
+    if (searchTerm) {
+      const searchStr = `%${searchTerm}%`;
       whereConditions.push(`(
         a.paid_tool_name ILIKE $${paramIdx} OR 
         a.free_tool_name ILIKE $${paramIdx} OR 
@@ -32,10 +40,10 @@ export default async function queryAlternatives(req, res) {
     }
 
     // 2. Category Filter (Exact match on Alternative's category)
-    if (categories && categories.length > 0) {
+    if (catList.length > 0) {
       // Allow multi-category selection
       whereConditions.push(`a.category = ANY($${paramIdx})`);
-      params.push(categories);
+      params.push(catList);
       paramIdx++;
     }
 

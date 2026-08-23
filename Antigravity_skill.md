@@ -1,78 +1,65 @@
 ---
-name: openlyst-migration-guide
-description: Complete guide and skill for migrating Openlysts from a Base44 backend to an independent local SQLite + Express backend. Includes architecture, gotchas, what worked, and what failed.
+name: openlyst-fullstack-guide
+description: Complete guide and reference skill for Openlysts full-stack architecture, PostgreSQL (Neon) database, autonomous background workers, hybrid scoring engine, and multi-branch release protocol.
 ---
 
-# Openlysts Migration Skill & Guide
+# Openlysts Full-Stack System Guide & Skill
 
-This document serves as a historical record, guide, and agent skill for understanding how Openlysts was migrated from a proprietary cloud backend (Base44) to a completely independent, local-first architecture (Express + SQLite).
+This document serves as a comprehensive technical guide and agent skill for maintaining, debugging, extending, and operating the **Openlysts** full-stack ecosystem.
 
-If you are tasked with rebuilding this project from scratch, debugging it, or extending it, this document outlines the exact path to success and the pitfalls to avoid.
+---
 
-## 🎯 The Objective
-Convert a React/Vite application heavily dependent on a proprietary backend SDK (`@base44/sdk`) into a standalone application that runs entirely locally, without redesigning the UI or throwing away the existing React components.
+## 1. System Overview
 
-## ✅ What Worked (Best Practices)
+- **Frontend**: React 18 + Vite SPA styled with Tailwind CSS design tokens and animated with Framer Motion.
+- **Backend**: Express.js server on Node.js running on port 3001 (proxied via Vite).
+- **Database**: PostgreSQL on [Neon](https://neon.tech), connected via the `pg` pool singleton in `server/db/index.js`.
+- **Session Layer**: PostgreSQL database-backed sessions with `express-session` and `connect-pg-simple`.
 
-1. **The "SDK Mock" Pattern**
-   - Instead of rewriting every React component to use native `fetch()` calls, we created a local mock (`src/lib/local-runtime/`) that perfectly mirrored the API surface of the original Base44 SDK.
-   - We swapped `import { base44 } from '@base44/sdk'` with `import { localClient } from '@/api/localClient'`.
-   - **Result**: We preserved 100% of the frontend UI and React component logic without having to rewrite the application.
+---
 
-2. **Synchronous SQLite (`better-sqlite3`)**
-   - We used `better-sqlite3` on the Node.js backend. It is synchronous, extremely fast, and drastically simplified the backend database logic. No async/await overhead for simple queries.
+## 2. Core Architectural Patterns
 
-3. **Autonomous Background Workers**
-   - Instead of relying on Admin UI buttons to trigger GitHub API data ingestion, we extracted the ingestion logic (`server/functions/runIngestion.js`) and attached it to a `setInterval` loop in `server/index.js`.
-   - **Result**: The backend became a self-sustaining engine that autonomously updates data every 10 minutes.
+### A. The Direct API Client Pattern
+Frontend components access backend services via `src/api/localClient.js` and `src/lib/api.js`. Custom backend RPC endpoints in `server/functions/*.js` are registered in `server/api/functions.js` and invoked with `localClient.functions.invoke(name, payload)`.
 
-4. **Algorithmic Infrastructure (Hybrid Similarity)**
-   - Instead of simple text matching or relying purely on vector embeddings (which can be too narrow), we introduced calculated heuristic columns (`authority_score` and `engagement_score`) based on stars, forks, and issues during ingestion.
-   - We updated search functions (`queryRepositories` and `getSimilarRepos`) to fuse vector similarity (`_hybrid_relevance`) with these calculated scores: `(textScore * 1.5) + (authority_score * 0.5) + (engagement_score * 0.2) + log10(stars)`.
-   - **Result**: Superior search results where highly-adopted, canonical projects naturally outrank obscure projects with exact keyword matches.
+### B. Algorithmic Infrastructure (Hybrid Similarity)
+The search and similarity engine in `queryRepositories.js` and `getSimilarRepos.js` fuses full-text relevance with computed heuristic scores:
+$$\text{Relevance} = (\text{TextScore} \times 1.5) + (\text{AuthorityScore} \times 0.5) + (\text{EngagementScore} \times 0.2) + \log_{10}(\text{Stars})$$
 
-5. **Real-Time Frontend Syncing**
-   - We added `refetchInterval: 60000` (60 seconds) to the `@tanstack/react-query` hooks on the frontend.
-   - **Result**: The UI updates automatically as the background worker fetches new data, creating a magical "Live" feeling for the user without websockets.
+### C. Real-Time UI Synchronization
+The frontend uses `@tanstack/react-query` with background polling (`refetchInterval: 60000`). When background ingestion updates the PostgreSQL database, the user interface updates seamlessly without requiring a hard refresh.
 
-## ❌ What Failed (What NOT to do next time)
+---
 
-1. **Altering API Response Structures**
-   - **The Mistake**: When rewriting the API wrapper (`api.js`), we assumed the new backend returned data in a wrapped `{ data: ... }` object like Axios did previously, resulting in `return res.data;`. Because the local API returned the JSON directly, `res.data` was `undefined`.
-   - **The Consequence**: The frontend received `undefined` data and was permanently stuck on the "Syncing repositories" loading screen, despite the database being full of data.
-   - **The Fix**: Always `console.log` or strictly verify the exact shape of the JSON response from your local API to ensure it matches what the legacy frontend expects perfectly.
+## 3. Engineering Best Practices & Gotchas
 
-2. **Incomplete Schema Migrations**
-   - **The Mistake**: When we created the SQLite schema for the `User` table, we forgot to include the `name` and `email` columns.
-   - **The Consequence**: The frontend's automatic "Anonymous Login" system attempted to `INSERT INTO User (id, name, email)` and threw a fatal `SQLITE_ERROR: table User has no column named name`.
-   - **The Fix**: Before migrating, do a complete audit of the exact payload the frontend sends. The schema MUST match the payload exactly.
+1. **PostgreSQL Casing & Identifier Safety**:
+   - Table names and column names must remain consistent with `server/db/schema.js`.
+   - The `Alternative` table uses `feature_parity_score` (not `quality_score`).
+2. **React State Reducer Purity**:
+   - Never call external UI side effects (e.g. `toast()`) inside state setter functions (`setState(prev => ...)`). Always call them in the outer event handler to prevent React render-cycle warnings.
+3. **Tailwind Responsive Breakpoints**:
+   - The desktop header uses `xl:flex` ($\ge 1280\text{px}$). Slide-over drawer portals must use `xl:hidden` so that tablet and small laptop viewports ($1024\text{px} - 1279\text{px}$) can trigger and interact with the navigation drawer.
+4. **Content Security Policy (CSP)**:
+   - External embeds (such as YouTube tutorial iframes) must be whitelisted under `frame-src` in `vercel.json`.
 
-3. **Waiting for Cron Jobs on Boot**
-   - **The Mistake**: We set a 10-minute `setInterval` for the GitHub ingestion worker, but forgot to trigger it immediately on server startup.
-   - **The Consequence**: A user booting the app for the first time would stare at an empty screen for 10 full minutes before any data loaded.
-   - **The Fix**: Always use `setTimeout(() => execute(), 2000)` alongside `setInterval` to guarantee immediate execution upon boot.
+---
 
-4. **Port Hijacking Confusion (Vite)**
-   - **The Mistake**: The user had an old `npm run dev` terminal session running in a different folder (`openlysts_main`), which occupied port `5173`. When we started the updated dev server in our working directory (`openlyst`), Vite silently fell back to port `5174`.
-   - **The Consequence**: The user refreshed `localhost:5173` and repeatedly saw the old, unmodified code, leading to immense confusion.
-   - **The Fix**: Always kill stale Node processes (`Stop-Process -Id ...`) or instruct the user to completely close their old terminals before testing new backend changes.
-
-## 5. Branch Architecture & Production Deployment Protocol
+## 4. Multi-Branch Git & Production Release Workflow
 
 Openlysts enforces a strict 4-branch architecture (`experimental` -> `dev` -> `main` -> `backup`):
+
 - **`experimental`**: Working branch where active coding occurs.
 - **`dev`**: Staging sync.
-- **`main`**: Production release branch. **Vercel CLI production deployments MUST ONLY and ALWAYS be triggered while on `main` (`git checkout main`).**
+- **`main`**: Production release branch. **Vercel production deployments MUST ONLY and ALWAYS be executed while checked out to `main` (`git checkout main`).**
 - **`backup`**: Rollback snapshot.
 
-### Production Release Sequence:
-1. `npm run build` (Verify zero errors).
+### Production Release Protocol:
+1. `npm run lint; npm run typecheck; npm run build` (Verify 0 errors).
 2. Commit on `experimental`.
-3. Fast-forward merge `experimental` -> `dev` -> `main` -> `backup` and push all branches.
+3. Fast-forward merge `experimental` -> `dev` -> `main` -> `backup` and push all branches to remote.
 4. `git checkout main`
 5. `npx vercel --prod --yes --force` (or `vercel build --prod` + `vercel deploy --prebuilt --prod --yes`).
-6. Verify live deployment (`https://openlysts.vercel.app`).
+6. Verify live deployment at `https://openlysts.vercel.app`.
 7. `git checkout experimental`
-
----
-*Created by Antigravity IDE during the Openlysts Migration.*

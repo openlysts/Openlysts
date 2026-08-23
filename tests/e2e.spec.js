@@ -13,7 +13,7 @@ test.describe('Openlysts QA Playbook E2E', () => {
   });
 
   test('Step 1: Initial Load', async ({ page }) => {
-    await page.goto('http://localhost:5173');
+    await page.goto('http://localhost:5173', { waitUntil: 'domcontentloaded' });
     await expect(page).toHaveTitle(/Openlysts/i);
     // Ensure no horizontal scroll
     const scrollWidth = await page.evaluate(() => document.documentElement.scrollWidth);
@@ -22,27 +22,27 @@ test.describe('Openlysts QA Playbook E2E', () => {
   });
 
   test('Step 2: Global Nav & Active States', async ({ page }) => {
-    await page.goto('http://localhost:5173');
-    // We will use page.goto for all of these to test routes instead of clicking,
-    // since clicking might be obscured by a side panel or mobile menu
-    await page.goto('http://localhost:5173/alternatives');
+    await page.goto('http://localhost:5173', { waitUntil: 'commit' });
+    await page.goto('http://localhost:5173/alternatives', { waitUntil: 'commit' });
     await expect(page).toHaveURL(/.*alternatives/);
-    await page.goto('http://localhost:5173/trending');
+    await page.goto('http://localhost:5173/trending', { waitUntil: 'commit' });
     await expect(page).toHaveURL(/.*trending/);
-    await page.goto('http://localhost:5173/bookmarks');
+    await page.goto('http://localhost:5173/guide', { waitUntil: 'commit' });
+    await expect(page).toHaveURL(/.*guide/);
+    await page.goto('http://localhost:5173/bookmarks', { waitUntil: 'commit' });
     await expect(page).toHaveURL(/.*bookmarks/);
-    await page.goto('http://localhost:5173/about');
+    await page.goto('http://localhost:5173/about', { waitUntil: 'commit' });
     await expect(page).toHaveURL(/.*about/);
-    await page.goto('http://localhost:5173/contact');
+    await page.goto('http://localhost:5173/contact', { waitUntil: 'commit' });
     await expect(page).toHaveURL(/.*contact/);
     
     // 404 test
-    await page.goto('http://localhost:5173/random-gibberish-path');
+    await page.goto('http://localhost:5173/random-gibberish-path', { waitUntil: 'commit' });
     await expect(page.locator('text=Go Home').first()).toBeVisible();
   });
 
   test('Step 3: Search Bar Debounce', async ({ page }) => {
-    await page.goto('http://localhost:5173');
+    await page.goto('http://localhost:5173', { waitUntil: 'domcontentloaded' });
     const searchInput = page.getByPlaceholder('Search').first();
     if (await searchInput.isVisible()) {
         await searchInput.fill('react');
@@ -53,7 +53,7 @@ test.describe('Openlysts QA Playbook E2E', () => {
   });
 
   test('Step 4: Security (XSS / SQLi)', async ({ page }) => {
-    await page.goto('http://localhost:5173');
+    await page.goto('http://localhost:5173', { waitUntil: 'domcontentloaded' });
     const searchInput = page.getByPlaceholder('Search').first();
     if (await searchInput.isVisible()) {
         await searchInput.fill('<script>alert(1)</script>');
@@ -68,13 +68,13 @@ test.describe('Openlysts QA Playbook E2E', () => {
   });
 
   test('Step 8: Bookmarks Page Empty State', async ({ page }) => {
-    await page.goto('http://localhost:5173/bookmarks');
+    await page.goto('http://localhost:5173/bookmarks', { waitUntil: 'domcontentloaded' });
     await expect(page.locator('h1', { hasText: /Bookmarks/i })).toBeVisible();
     await expect(page.locator('body')).toBeVisible();
   });
 
   test('Step 10: Theming', async ({ page }) => {
-    await page.goto('http://localhost:5173/settings');
+    await page.goto('http://localhost:5173/settings', { waitUntil: 'domcontentloaded' });
     // Toggle dark mode or light mode if visible
     const themeToggle = page.locator('button', { hasText: /theme|dark|light/i }).first();
     if (await themeToggle.isVisible()) {

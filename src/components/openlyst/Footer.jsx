@@ -12,6 +12,7 @@ export default function Footer() {
             <span className="text-text-muted text-sm ml-1">— Discover. Filter. Build.</span>
           </div>
           <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4 sm:gap-5 text-sm text-text-muted">
+            <Link to="/guide" className="hover:text-text touch-target inline-flex">Platform Guide</Link>
             <Link to="/about" className="hover:text-text touch-target inline-flex">About</Link>
             <Link to="/contact" className="hover:text-text touch-target inline-flex">Contact</Link>
             <Link to="/trending" className="hover:text-text touch-target inline-flex">Trending</Link>

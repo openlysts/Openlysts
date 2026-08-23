@@ -36,7 +36,7 @@ export default function Trending() {
     if (newFilters.licenses?.length) params.set('licenses', newFilters.licenses.join(','));
     if (newFilters.difficulties?.length) params.set('difficulties', newFilters.difficulties.join(','));
     if (newFilters.minStars > 0) params.set('minStars', String(newFilters.minStars));
-    if (newFilters.updatedWithin && newFilters.updatedWithin !== '7d') params.set('updatedWithin', newFilters.updatedWithin);
+    if (newFilters.updatedWithin) params.set('updatedWithin', newFilters.updatedWithin);
     if (newFilters.activity) params.set('activity', newFilters.activity);
     if (newFilters.page > 1) params.set('page', String(newFilters.page));
     setSearchParams(params);

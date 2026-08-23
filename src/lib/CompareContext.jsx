@@ -19,26 +19,24 @@ export function CompareProvider({ children }) {
   }, [selectedForCompare]);
 
   const toggleCompare = (repo) => {
-    setSelectedForCompare(prev => {
-      const exists = prev.find(r => r.id === repo.id);
-      if (exists) {
-        return prev.filter(r => r.id !== repo.id);
-      } else {
-        if (prev.length >= 3) {
-          toast({
-            title: "Limit Reached",
-            description: "You can only compare up to 3 repositories at a time.",
-            variant: "destructive"
-          });
-          return prev;
-        }
+    const exists = selectedForCompare.some(r => r.id === repo.id);
+    if (exists) {
+      setSelectedForCompare(prev => prev.filter(r => r.id !== repo.id));
+    } else {
+      if (selectedForCompare.length >= 3) {
         toast({
-          title: "Added to Compare",
-          description: `${repo.name} added to comparison.`,
+          title: "Limit Reached",
+          description: "You can only compare up to 3 repositories at a time.",
+          variant: "destructive"
         });
-        return [...prev, { id: repo.id, name: repo.name, full_name: repo.full_name, stars: repo.stars }];
+        return;
       }
-    });
+      setSelectedForCompare(prev => [...prev, { id: repo.id, name: repo.name, full_name: repo.full_name, stars: repo.stars }]);
+      toast({
+        title: "Added to Compare",
+        description: `${repo.name} added to comparison.`,
+      });
+    }
   };
 
   const clearCompare = () => {
@@ -58,7 +56,7 @@ export function CompareProvider({ children }) {
 
 export function useCompare() {
   const context = useContext(CompareContext);
-  if (context === undefined) {
+  if (!context) {
     throw new Error('useCompare must be used within a CompareProvider');
   }
   return context;

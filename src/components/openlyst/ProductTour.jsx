@@ -416,6 +416,7 @@ const ProductTour = () => {
             await fetch('/api/profile/settings', {
               method: 'PATCH',
               headers: { 'Content-Type': 'application/json' },
+              credentials: 'include',
               body: JSON.stringify({ has_seen_tour: true })
             });
             user.has_seen_tour = 1;

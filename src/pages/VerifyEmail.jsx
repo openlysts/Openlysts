@@ -57,36 +57,36 @@ export default function VerifyEmail() {
   }, [location, navigate, checkUserAuth]);
 
   return (
-    <div className="min-h-screen bg-black flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="min-h-[calc(100vh-4rem)] flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-[#1a1a1a] py-12 px-4 shadow sm:rounded-lg sm:px-10 border border-[#333] text-center">
+        <div className="bg-bg-card/90 backdrop-blur-xl py-12 px-6 shadow-2xl rounded-3xl border border-border sm:px-10 text-center">
           
           {status === 'loading' && (
             <div className="flex flex-col items-center">
-              <Loader2 className="h-12 w-12 text-blue-500 animate-spin mb-4" />
-              <h2 className="text-xl font-bold text-white mb-2">Verifying your email...</h2>
-              <p className="text-gray-400">Please wait a moment.</p>
+              <Loader2 className="h-12 w-12 text-accent animate-spin mb-4" />
+              <h2 className="text-xl font-bold text-text mb-2">Verifying your email...</h2>
+              <p className="text-sm text-text-muted">Please wait a moment.</p>
             </div>
           )}
 
           {status === 'success' && (
             <div className="flex flex-col items-center">
-              <CheckCircle2 className="h-12 w-12 text-green-500 mb-4" />
-              <h2 className="text-xl font-bold text-white mb-2">Verification Successful</h2>
-              <p className="text-gray-400 mb-6">{message}</p>
-              <p className="text-sm text-gray-500">Redirecting you to the app...</p>
+              <CheckCircle2 className="h-12 w-12 text-emerald-500 mb-4" />
+              <h2 className="text-xl font-bold text-text mb-2">Verification Successful</h2>
+              <p className="text-sm text-text-secondary mb-6">{message}</p>
+              <p className="text-xs text-text-muted">Redirecting you to the app...</p>
             </div>
           )}
 
           {status === 'error' && (
             <div className="flex flex-col items-center">
-              <XCircle className="h-12 w-12 text-red-500 mb-4" />
-              <h2 className="text-xl font-bold text-white mb-2">Verification Failed</h2>
-              <p className="text-gray-400 mb-6">{message}</p>
+              <XCircle className="h-12 w-12 text-nonoss mb-4" />
+              <h2 className="text-xl font-bold text-text mb-2">Verification Failed</h2>
+              <p className="text-sm text-text-secondary mb-6">{message}</p>
               
               <Link
                 to="/login"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
+                className="w-full inline-flex justify-center py-2.5 px-4 rounded-xl shadow-md text-sm font-bold text-accent-fg bg-accent hover:bg-accent/90 transition-colors"
               >
                 Go to Login
               </Link>

@@ -20,14 +20,13 @@ export default function Settings() {
   const handleSaveToken = async () => {
     const updated = saveSettings({ githubToken: tokenInput.trim() });
     setSettings(updated);
+    setSavedFlag(true);
     try {
       await updateConfig(tokenInput.trim());
+      toast({ title: 'GitHub token saved', description: 'Stored locally and synced with backend.' });
     } catch (e) {
-      toast({ title: 'Error', description: 'Failed to sync with backend', variant: 'destructive' });
-      return;
+      toast({ title: 'GitHub token saved locally', description: 'Stored in your browser for client-side API requests.' });
     }
-    setSavedFlag(true);
-    toast({ title: 'GitHub token saved', description: 'Stored locally and synced with backend.' });
     setTimeout(() => setSavedFlag(false), 2000);
   };
 

@@ -1,63 +1,80 @@
 # Local Runtime Architecture
 
-This document describes the new standalone local backend for Openlysts.
+This document describes the unified local and production backend architecture for **Openlysts**.
 
-## Architecture
+## Architecture Overview
 
-The application has been migrated from a Base44-hosted backend to a local Express API with a SQLite database.
-- **Frontend**: React/Vite application. The `@base44/sdk` has been replaced with a compatibility layer in `src/lib/local-runtime/` that provides the exact same programmatic API (e.g., `base44.entities`, `base44.auth`, `base44.functions`) but routes requests to the local Express backend.
-- **Backend**: Express API running on port 3001 (proxied via Vite). Found in the `server/` directory.
-- **Database**: `better-sqlite3` storing data in `data/openlyst.db`.
+Openlysts utilizes a full-stack, standalone architecture designed for unified local development and production deployment on Vercel:
 
-## Getting Started
+- **Frontend**: React 18 + Vite SPA located in `src/`. API requests are routed through `src/api/localClient.js` and `src/lib/api.js`.
+- **Backend API**: Node.js Express server located in `server/` (running on port `3001` and proxied via Vite locally).
+- **Database**: PostgreSQL hosted on [Neon](https://neon.tech), utilizing the `pg` connection pool with automatic table schema initialization on boot.
+- **Session & Auth**: Serverless-compatible database sessions via `connect-pg-simple` and `express-session`, with bcrypt password hashing and OAuth2 providers (Google & GitHub).
 
-To run the application locally:
-1. Ensure dependencies are installed: `npm install`
-2. Add a `.env.local` file with your `GITHUB_TOKEN` for the ingestion functions.
-3. Start the dev server: `npm run dev`
-This uses `concurrently` to run both the Vite dev server and the Express API server at the same time.
+## Getting Started Locally
 
-## Database
+To run the full-stack application locally:
 
-The database is powered by SQLite.
+1. **Install Dependencies**:
+   ```bash
+   npm install
+   ```
 
-### Seeding & Resetting
-- **Reset**: Run `npm run db:reset` to delete the `data/openlyst.db` database entirely. On the next start, the tables will be automatically recreated.
-- **Initialization**: The schema is automatically initialized when the backend starts up (via `server/db/schema.js`).
+2. **Configure Environment Variables**:
+   Create a `.env.local` file with the required credentials:
+   ```env
+   DATABASE_URL="postgres://user:password@hostname/dbname?sslmode=require"
+   GITHUB_TOKEN=your_github_personal_access_token
+   SESSION_SECRET=your_super_secret_session_key_min_32_chars
+   ```
+
+3. **Start the Unified Development Environment**:
+   ```bash
+   npm run dev
+   ```
+   This concurrently runs the Express API server (`http://localhost:3001`) and the Vite development server (`http://localhost:5173`).
+
+## Database Management & Schema
+
+The application uses PostgreSQL with automatic table creation and migrations defined in `server/db/schema.js`.
+
+### Core Tables & Entities
+- **`Repository`**: Stores GitHub project metrics, stars, velocity, `authority_score`, `engagement_score`, `trending_score`, and categorization.
+- **`Alternative`**: Stores SaaS-to-open-source mappings with `feature_parity_score` and comparison data.
+- **`User`** & **`AuthAccount`**: Stores authenticated user profiles, credentials, and OAuth accounts.
+- **`session`**: Database-persisted user sessions managed by `connect-pg-simple`.
+- **`AuditLog`**: Ledger for administrative changes and security audit events.
 
 ### Modifying Schema
-To add new tables or indices, edit `server/db/schema.js`. The next time you start the backend, it will execute the updated `CREATE TABLE IF NOT EXISTS` statements. If you modify existing columns, you may need to reset the database (`npm run db:reset`) because SQLite doesn't automatically migrate existing table structures without `ALTER TABLE` commands.
+To add new tables or alter schema definitions, update `server/db/schema.js`. On startup, `server/db/schema.js` executes `CREATE TABLE IF NOT EXISTS` and index migrations against the PostgreSQL connection pool.
 
-## Functions
+## Backend RPC Functions & Endpoints
 
-All backend functions from Base44 have been ported to `server/functions/*.js`.
+All custom RPC actions are located in `server/functions/*.js`:
+- `queryRepositories.js`: Hybrid similarity filtering and search.
+- `queryAlternatives.js`: Category and keyword-based alternative search.
+- `getSimilarRepos.js`: High-precision topic and score similarity matching.
+- `runIngestion.js`: Automated GitHub API data fetching and score computation.
 
-### Adding a New Function
-1. Create a new file in `server/functions/` (e.g., `myNewFunction.js`).
-2. Export a default asynchronous function that takes `(req, res)` as arguments:
-   ```js
-   import { entities } from '../services/entities.js';
+### Adding a New Backend Function
+1. Create a function file in `server/functions/` (e.g., `myNewFunction.js`):
+   ```javascript
    export default async function myNewFunction(req, res) {
      try {
-       // logic here
-       return res.json({ success: true });
+       const { param } = req.body;
+       // Execute logic, db query, or external API fetch
+       return res.json({ success: true, data: [] });
      } catch (err) {
        return res.status(500).json({ error: true, message: err.message });
      }
    }
    ```
-3. Register the function in `server/api/functions.js` by importing it and adding it to the `fns` map.
-4. The frontend can now invoke it using `await base44.functions.invoke('myNewFunction', { params })`.
+2. Register the function in `server/api/functions.js`.
+3. Invoke from frontend via `localClient.functions.invoke('myNewFunction', { param })`.
 
-## Entities
+## Quality Assurance & Automated Testing
 
-The `server/api/entities.js` provides a generic CRUD router mapped to SQLite.
-- `base44.entities.Model.list()`
-- `base44.entities.Model.filter()`
-- `base44.entities.Model.create()`
-- `base44.entities.Model.update()`
-- `base44.entities.Model.delete()`
-- `base44.entities.Model.deleteMany()`
-- `base44.entities.Model.bulkCreate()`
-
-JSON fields like `topics` and `categories` are automatically stringified on write and parsed on read by the `EntityService`.
+- **Linting**: `npm run lint`
+- **Type Checking**: `npm run typecheck`
+- **Production Build**: `npm run build`
+- **Playwright Regression Suite**: `npx playwright test`

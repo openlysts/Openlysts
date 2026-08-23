@@ -1,10 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Home, LayoutGrid, TrendingUp, Bookmark, Scale, CornerDownLeft } from 'lucide-react';
+import { Search, Home, LayoutGrid, TrendingUp, Bookmark, Scale, CornerDownLeft, Compass } from 'lucide-react';
 
 const STATIC_ACTIONS = [
   { id: 'home', label: 'Go to Discover', icon: Home, path: '/discover' },
+  { id: 'guide', label: 'Platform Guide & Capabilities', icon: Compass, path: '/guide' },
   { id: 'alts', label: 'Browse Alternatives', icon: LayoutGrid, path: '/alternatives' },
   { id: 'trending', label: 'View Trending', icon: TrendingUp, path: '/trending' },
   { id: 'bookmarks', label: 'My Bookmarks', icon: Bookmark, path: '/bookmarks' },
@@ -109,6 +110,7 @@ export default function CommandPalette() {
   };
 
   const onKeyDown = (e) => {
+    if (filteredActions.length === 0) return;
     if (e.key === 'ArrowDown') {
       e.preventDefault();
       setSelectedIndex((prev) => (prev + 1) % filteredActions.length);
