@@ -25,9 +25,6 @@ export default defineConfig({
         manualChunks(id) {
           if (id.includes('node_modules')) {
             if (id.includes('three')) return 'vendor-three';
-            if (id.includes('framer-motion')) return 'vendor-framer-motion';
-            if (id.includes('lucide-react')) return 'vendor-lucide';
-            if (id.includes('@radix-ui')) return 'vendor-radix';
             return 'vendor';
           }
         }
