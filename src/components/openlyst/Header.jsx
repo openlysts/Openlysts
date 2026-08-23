@@ -218,40 +218,31 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Modern Slide-Over Mobile & Tablet Navigation Drawer via Portal */}
+      {/* Mobile & Tablet Navigation Drawer via Portal */}
       {typeof document !== 'undefined' && createPortal(
         <AnimatePresence>
           {mobileOpen && (
             <div className="fixed inset-0 z-[100] lg:hidden pointer-events-auto">
-              {/* Backdrop with immediate tap-to-dismiss */}
+              {/* Backdrop — onClick only, no onPointerDown to avoid double-fire */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.18 }}
                 onClick={closeDrawer}
-                onPointerDown={closeDrawer}
                 className="fixed inset-0 bg-black/70 backdrop-blur-md cursor-pointer"
                 aria-hidden="true"
               />
 
-              {/* Drawer Container with Swipe-to-Dismiss Gesture */}
+              {/* Drawer Container — NO drag prop (drag was capturing all touch events on children) */}
               <motion.div
                 initial={{ x: '100%' }}
                 animate={{ x: 0 }}
                 exit={{ x: '100%' }}
                 transition={{ type: 'spring', damping: 28, stiffness: 320 }}
-                drag="x"
-                dragConstraints={{ left: 0, right: 300 }}
-                dragElastic={0.15}
-                onDragEnd={(e, { offset, velocity }) => {
-                  if (offset.x > 80 || velocity.x > 250) {
-                    closeDrawer();
-                  }
-                }}
-                className="fixed top-0 right-0 bottom-0 w-full max-w-[300px] sm:max-w-xs bg-bg-card border-l border-border flex flex-col shadow-2xl overflow-hidden pt-safe pb-safe z-10 touch-pan-y"
+                className="fixed top-0 right-0 bottom-0 w-full max-w-[300px] sm:max-w-xs bg-bg-card border-l border-border flex flex-col shadow-2xl overflow-hidden pt-safe pb-safe z-10"
               >
-                {/* Drawer Header with Guaranteed Accessible Close Button */}
+                {/* Drawer Header */}
                 <div className="px-4 py-3.5 border-b border-border flex items-center justify-between bg-bg-subtle/50 flex-shrink-0">
                   <div className="flex items-center gap-2.5">
                     <div className="w-8 h-8 rounded-lg bg-bg border border-border flex items-center justify-center shadow-xs">
@@ -259,12 +250,11 @@ export default function Header() {
                     </div>
                     <span className="font-bold text-base text-text tracking-tight">Openlysts</span>
                   </div>
-                  
-                  {/* High-visibility Close (X) Button */}
+
+                  {/* Close (X) Button — onClick only, no onPointerDown */}
                   <button
                     type="button"
                     onClick={closeDrawer}
-                    onPointerDown={closeDrawer}
                     className="w-9 h-9 rounded-xl bg-bg border border-border text-text-secondary hover:text-text hover:bg-bg-hover active:scale-95 flex items-center justify-center transition-all cursor-pointer z-50 shadow-xs"
                     aria-label="Close navigation"
                   >
@@ -272,7 +262,7 @@ export default function Header() {
                   </button>
                 </div>
 
-                {/* Drawer Navigation Links */}
+                {/* Drawer Navigation Links — no onClick on links (location.pathname useEffect closes drawer on nav) */}
                 <div className="px-3 py-2 space-y-0.5 flex-1 overflow-y-auto custom-scrollbar touch-scroll">
                   <div className="px-2 pt-1.5 pb-1 text-[10px] font-bold uppercase tracking-wider text-text-muted">
                     Explore
@@ -284,7 +274,6 @@ export default function Header() {
                       <Link
                         key={item.to}
                         to={item.to}
-                        onClick={closeDrawer}
                         className={`flex items-center justify-between px-3 py-2 rounded-xl text-sm font-medium transition-all ${
                           active
                             ? 'bg-accent text-accent-fg font-semibold shadow-xs'
@@ -309,7 +298,6 @@ export default function Header() {
                       <Link
                         key={item.to}
                         to={item.to}
-                        onClick={closeDrawer}
                         className={`flex items-center justify-between px-3 py-2 rounded-xl text-sm font-medium transition-all ${
                           active
                             ? 'bg-accent text-accent-fg font-semibold shadow-xs'
@@ -336,7 +324,6 @@ export default function Header() {
 
                   <Link
                     to="/settings"
-                    onClick={closeDrawer}
                     className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-medium transition-all ${
                       location.pathname === '/settings' ? 'bg-accent text-accent-fg font-semibold shadow-xs' : 'text-text-secondary hover:bg-bg-hover hover:text-text'
                     }`}
@@ -347,7 +334,6 @@ export default function Header() {
 
                   <Link
                     to="/"
-                    onClick={closeDrawer}
                     className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-medium text-text-secondary hover:bg-bg-hover hover:text-text transition-all"
                   >
                     <Sparkles className="w-4 h-4 text-accent" />
@@ -360,7 +346,6 @@ export default function Header() {
                   {user ? (
                     <Link
                       to="/profile"
-                      onClick={closeDrawer}
                       className="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-bg border border-border text-text text-sm font-semibold hover:border-accent/40 transition-all shadow-xs"
                     >
                       <div className="w-6 h-6 rounded-full bg-accent/20 text-accent font-bold text-xs flex items-center justify-center">
@@ -372,14 +357,12 @@ export default function Header() {
                     <div className="grid grid-cols-2 gap-2">
                       <Link
                         to="/login"
-                        onClick={closeDrawer}
                         className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-bg border border-border text-text text-xs sm:text-sm font-semibold hover:bg-bg-hover transition-all shadow-xs"
                       >
                         <LogIn className="w-3.5 h-3.5" /> Log In
                       </Link>
                       <Link
                         to="/register"
-                        onClick={closeDrawer}
                         className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-accent text-accent-fg text-xs sm:text-sm font-semibold hover:bg-accent/90 transition-all shadow-xs"
                       >
                         <UserPlus className="w-3.5 h-3.5" /> Sign Up

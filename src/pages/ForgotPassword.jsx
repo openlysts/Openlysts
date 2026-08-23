@@ -83,6 +83,7 @@ export default function ForgotPassword() {
                     <input
                       type="email"
                       required
+                      autoComplete="email"
                       value={email}
                       onChange={e => setEmail(e.target.value)}
                       className="bg-bg border border-border text-text block w-full pl-10 sm:text-sm rounded-xl p-2.5 focus:border-accent focus:outline-none transition-colors placeholder:text-text-muted"

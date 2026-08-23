@@ -467,3 +467,8 @@ button, a, input, select, textarea, [role="button"], [tabindex="0"] {
     opacity: 0.85;
   }
 }
+
+/* Remove default tap highlight (blue/grey flash) on iOS Safari & Android Chrome */
+* {
+  -webkit-tap-highlight-color: transparent;
+}

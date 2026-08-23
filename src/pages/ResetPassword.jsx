@@ -99,6 +99,7 @@ export default function ResetPassword() {
                     <input
                       type="password"
                       required
+                      autoComplete="new-password"
                       disabled={!token}
                       value={password}
                       onChange={e => setPassword(e.target.value)}
@@ -120,6 +121,7 @@ export default function ResetPassword() {
                     <input
                       type="password"
                       required
+                      autoComplete="new-password"
                       disabled={!token}
                       value={confirmPassword}
                       onChange={e => setConfirmPassword(e.target.value)}

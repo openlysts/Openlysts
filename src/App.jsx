@@ -59,7 +59,7 @@ function App() {
         <CompareProvider>
           <MobileLayoutProvider>
             <QueryClientProvider client={queryClientInstance}>
-            <Router>
+            <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
               <ErrorBoundary>
                 <EasterEggsOverlay />
                 <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="w-8 h-8 border-4 border-accent/30 border-t-accent rounded-full animate-spin" /></div>}>
