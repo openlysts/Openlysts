@@ -16,6 +16,15 @@ import ProtectedRoute from './components/openlyst/ProtectedRoute';
 import ErrorBoundary from './components/openlyst/ErrorBoundary';
 import EasterEggsOverlay from './components/openlyst/EasterEggsOverlay';
 
+// Auto-recover if Vite detects a missing preloaded chunk during/after a live deployment
+if (typeof window !== 'undefined') {
+  window.addEventListener('vite:preloadError', (event) => {
+    console.warn('[Vite] Preload error detected for chunk, refreshing application:', event);
+    event.preventDefault();
+    window.location.reload();
+  });
+}
+
 // Public Pages
 const Welcome = lazyWithRetry(() => import('./pages/Welcome'));
 const Home = lazyWithRetry(() => import('./pages/Home'));

@@ -1,5 +1,5 @@
-// Openlysts PWA Service Worker v1.0.1
-const CACHE_NAME = 'openlysts-v1.0.1';
+// Openlysts PWA Service Worker v1.0.2
+const CACHE_NAME = 'openlysts-v1.0.2';
 const OFFLINE_URLS = [
   '/',
   '/discover',
@@ -51,25 +51,46 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  event.respondWith(
-    fetch(event.request)
-      .then((response) => {
-        if (response && response.status === 200 && response.type === 'basic') {
-          const responseClone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, responseClone).catch(() => {});
+  // Network-First for HTML navigation to guarantee fresh deployment bundles
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request)
+        .catch(() => {
+          return caches.match(event.request).then((cachedResponse) => {
+            return cachedResponse || caches.match('/discover') || caches.match('/') || new Response('Offline', { status: 503, statusText: 'Service Unavailable' });
           });
+        })
+    );
+    return;
+  }
+
+  // Cache-First with Network Revalidation for static icons / offline manifest
+  event.respondWith(
+    caches.match(event.request).then((cachedResponse) => {
+      if (cachedResponse) {
+        // Revalidate in background if not an immutable hashed asset
+        if (!event.request.url.includes('/assets/')) {
+          fetch(event.request).then((networkRes) => {
+            if (networkRes && networkRes.status === 200) {
+              caches.open(CACHE_NAME).then((cache) => cache.put(event.request, networkRes.clone()));
+            }
+          }).catch(() => {});
+        }
+        return cachedResponse;
+      }
+
+      return fetch(event.request).then((response) => {
+        if (response && response.status === 200 && response.type === 'basic') {
+          // Cache non-asset static files (icons, logo, manifest)
+          if (!event.request.url.includes('/assets/')) {
+            const responseClone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(event.request, responseClone).catch(() => {});
+            });
+          }
         }
         return response;
-      })
-      .catch(() => {
-        return caches.match(event.request).then((cachedResponse) => {
-          if (cachedResponse) return cachedResponse;
-          if (event.request.mode === 'navigate') {
-            return caches.match('/discover') || caches.match('/');
-          }
-          return new Response('Offline', { status: 503, statusText: 'Service Unavailable' });
-        });
-      })
+      });
+    })
   );
 });

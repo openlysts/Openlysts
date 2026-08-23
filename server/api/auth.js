@@ -264,7 +264,10 @@ router.get('/me', async (req, res) => {
 // ─── OAuth: Google ──────────────────────────────────────────────────
 
 const handleGoogleAuth = (req, res) => {
-  const appUrl = (process.env.APP_URL || `${req.protocol}://${req.get('host')}`).replace('3001', '5173').replace(/\/$/, '');
+  const host = req.headers['x-forwarded-host'] || req.headers.host || req.get?.('host') || 'openlysts.vercel.app';
+  const proto = req.headers['x-forwarded-proto'] || (req.secure ? 'https' : 'http');
+  const cleanHost = host.replace(':3001', ':5173');
+  const appUrl = (process.env.APP_URL || `${proto}://${cleanHost}`).replace(/\/$/, '');
   const returnTo = req.query.redirect || (req.headers.referer?.includes('/profile') ? '/profile' : '/discover');
 
   if (!process.env.GOOGLE_CLIENT_ID || process.env.GOOGLE_CLIENT_ID === '[SENSITIVE]') {
@@ -275,7 +278,7 @@ const handleGoogleAuth = (req, res) => {
   }
 
   const state = generateOAuthState(returnTo);
-  const url = getGoogleAuthUrl(state);
+  const url = getGoogleAuthUrl(state, req);
   return res.redirect(url);
 };
 
@@ -283,7 +286,10 @@ router.get('/google', handleGoogleAuth);
 router.get('/oauth/google', handleGoogleAuth);
 
 router.get('/google/callback', async (req, res) => {
-  const appUrl = (process.env.APP_URL || 'http://localhost:5173').replace(/\/$/, '');
+  const host = req.headers['x-forwarded-host'] || req.headers.host || req.get?.('host') || 'openlysts.vercel.app';
+  const proto = req.headers['x-forwarded-proto'] || (req.secure ? 'https' : 'http');
+  const cleanHost = host.replace(':3001', ':5173');
+  const appUrl = (process.env.APP_URL || `${proto}://${cleanHost}`).replace(/\/$/, '');
   try {
     const { code, state, error, error_description } = req.query;
 
@@ -298,7 +304,7 @@ router.get('/google/callback', async (req, res) => {
       return res.redirect(`${appUrl}/login?error=invalid_state`);
     }
 
-    const profile = await exchangeGoogleCode(code);
+    const profile = await exchangeGoogleCode(code, req);
     console.log('[AUTH] Google profile exchanged successfully:', profile.email);
 
     const { user } = await findOrCreateOAuthUser(profile, AUTH_PROVIDERS.GOOGLE);
@@ -332,7 +338,10 @@ router.get('/google/callback', async (req, res) => {
 // ─── OAuth: GitHub ──────────────────────────────────────────────────
 
 const handleGithubAuth = (req, res) => {
-  const appUrl = (process.env.APP_URL || `${req.protocol}://${req.get('host')}`).replace('3001', '5173').replace(/\/$/, '');
+  const host = req.headers['x-forwarded-host'] || req.headers.host || req.get?.('host') || 'openlysts.vercel.app';
+  const proto = req.headers['x-forwarded-proto'] || (req.secure ? 'https' : 'http');
+  const cleanHost = host.replace(':3001', ':5173');
+  const appUrl = (process.env.APP_URL || `${proto}://${cleanHost}`).replace(/\/$/, '');
   const returnTo = req.query.redirect || (req.headers.referer?.includes('/profile') ? '/profile' : '/discover');
 
   if (!process.env.GITHUB_CLIENT_ID || process.env.GITHUB_CLIENT_ID === '[SENSITIVE]') {
@@ -343,7 +352,7 @@ const handleGithubAuth = (req, res) => {
   }
 
   const state = generateOAuthState(returnTo);
-  const url = getGithubAuthUrl(state);
+  const url = getGithubAuthUrl(state, req);
   return res.redirect(url);
 };
 
@@ -351,7 +360,10 @@ router.get('/github', handleGithubAuth);
 router.get('/oauth/github', handleGithubAuth);
 
 router.get('/github/callback', async (req, res) => {
-  const appUrl = (process.env.APP_URL || 'http://localhost:5173').replace(/\/$/, '');
+  const host = req.headers['x-forwarded-host'] || req.headers.host || req.get?.('host') || 'openlysts.vercel.app';
+  const proto = req.headers['x-forwarded-proto'] || (req.secure ? 'https' : 'http');
+  const cleanHost = host.replace(':3001', ':5173');
+  const appUrl = (process.env.APP_URL || `${proto}://${cleanHost}`).replace(/\/$/, '');
   try {
     const { code, state, error, error_description } = req.query;
 
@@ -366,7 +378,7 @@ router.get('/github/callback', async (req, res) => {
       return res.redirect(`${appUrl}/login?error=invalid_state`);
     }
 
-    const profile = await exchangeGithubCode(code);
+    const profile = await exchangeGithubCode(code, req);
     console.log('[AUTH] GitHub profile exchanged successfully:', profile.email);
     
     const { user } = await findOrCreateOAuthUser(profile, AUTH_PROVIDERS.GITHUB);

@@ -18,10 +18,20 @@ const GOOGLE_USERINFO_URL = 'https://www.googleapis.com/oauth2/v2/userinfo';
  * @param {string} state - Cryptographic random state for CSRF protection
  * @returns {string}
  */
-export function getGoogleAuthUrl(state) {
+/**
+ * Build Google authorization URL.
+ * @param {string} state - Cryptographic random state for CSRF protection
+ * @param {string|object} [reqOrRedirectUri]
+ * @returns {string}
+ */
+export function getGoogleAuthUrl(state, reqOrRedirectUri) {
+  const redirectUri = typeof reqOrRedirectUri === 'string' && reqOrRedirectUri.includes('/callback')
+    ? reqOrRedirectUri
+    : getGoogleCallbackUrl(reqOrRedirectUri);
+
   const params = new URLSearchParams({
     client_id: process.env.GOOGLE_CLIENT_ID,
-    redirect_uri: getGoogleCallbackUrl(),
+    redirect_uri: redirectUri,
     response_type: 'code',
     scope: 'openid email profile',
     state,
@@ -34,9 +44,14 @@ export function getGoogleAuthUrl(state) {
 /**
  * Exchange Google authorization code for user info.
  * @param {string} code
+ * @param {string|object} [reqOrRedirectUri]
  * @returns {Promise<{ id: string, email: string, name: string, avatar: string, email_verified: boolean }>}
  */
-export async function exchangeGoogleCode(code) {
+export async function exchangeGoogleCode(code, reqOrRedirectUri) {
+  const redirectUri = typeof reqOrRedirectUri === 'string' && reqOrRedirectUri.includes('/callback')
+    ? reqOrRedirectUri
+    : getGoogleCallbackUrl(reqOrRedirectUri);
+
   // Exchange code for tokens
   const tokenRes = await fetch(GOOGLE_TOKEN_URL, {
     method: 'POST',
@@ -45,7 +60,7 @@ export async function exchangeGoogleCode(code) {
       code,
       client_id: process.env.GOOGLE_CLIENT_ID,
       client_secret: process.env.GOOGLE_CLIENT_SECRET,
-      redirect_uri: getGoogleCallbackUrl(),
+      redirect_uri: redirectUri,
       grant_type: 'authorization_code',
     }),
   });
@@ -77,8 +92,19 @@ export async function exchangeGoogleCode(code) {
   };
 }
 
-function getGoogleCallbackUrl() {
-  const base = (process.env.APP_URL || 'http://localhost:5173').replace(/\/$/, '');
+export function getGoogleCallbackUrl(reqOrBase) {
+  if (typeof reqOrBase === 'string' && reqOrBase.startsWith('http')) {
+    return `${reqOrBase.replace(/\/$/, '')}/api/auth/google/callback`;
+  }
+  if (reqOrBase && typeof reqOrBase === 'object') {
+    const proto = reqOrBase.headers?.['x-forwarded-proto'] || (reqOrBase.secure ? 'https' : 'http');
+    const host = reqOrBase.headers?.['x-forwarded-host'] || reqOrBase.headers?.host || reqOrBase.get?.('host');
+    if (host) {
+      const cleanHost = host.replace(':3001', ':5173');
+      return `${proto}://${cleanHost}/api/auth/google/callback`;
+    }
+  }
+  const base = (process.env.APP_URL || 'https://openlysts.vercel.app').replace(/\/$/, '');
   return `${base}/api/auth/google/callback`;
 }
 
@@ -93,12 +119,17 @@ const GITHUB_EMAILS_URL = 'https://api.github.com/user/emails';
 /**
  * Build GitHub authorization URL.
  * @param {string} state
+ * @param {string|object} [reqOrRedirectUri]
  * @returns {string}
  */
-export function getGithubAuthUrl(state) {
+export function getGithubAuthUrl(state, reqOrRedirectUri) {
+  const redirectUri = typeof reqOrRedirectUri === 'string' && reqOrRedirectUri.includes('/callback')
+    ? reqOrRedirectUri
+    : getGithubCallbackUrl(reqOrRedirectUri);
+
   const params = new URLSearchParams({
     client_id: process.env.GITHUB_CLIENT_ID,
-    redirect_uri: getGithubCallbackUrl(),
+    redirect_uri: redirectUri,
     scope: 'user:email',
     state,
   });
@@ -108,9 +139,14 @@ export function getGithubAuthUrl(state) {
 /**
  * Exchange GitHub authorization code for user info.
  * @param {string} code
+ * @param {string|object} [reqOrRedirectUri]
  * @returns {Promise<{ id: string, email: string, name: string, avatar: string, email_verified: boolean }>}
  */
-export async function exchangeGithubCode(code) {
+export async function exchangeGithubCode(code, reqOrRedirectUri) {
+  const redirectUri = typeof reqOrRedirectUri === 'string' && reqOrRedirectUri.includes('/callback')
+    ? reqOrRedirectUri
+    : getGithubCallbackUrl(reqOrRedirectUri);
+
   // Exchange code for access token
   const tokenRes = await fetch(GITHUB_TOKEN_URL, {
     method: 'POST',
@@ -122,7 +158,7 @@ export async function exchangeGithubCode(code) {
       client_id: process.env.GITHUB_CLIENT_ID,
       client_secret: process.env.GITHUB_CLIENT_SECRET,
       code,
-      redirect_uri: getGithubCallbackUrl(),
+      redirect_uri: redirectUri,
     }),
   });
 
@@ -183,8 +219,19 @@ export async function exchangeGithubCode(code) {
   };
 }
 
-function getGithubCallbackUrl() {
-  const base = (process.env.APP_URL || 'http://localhost:5173').replace(/\/$/, '');
+export function getGithubCallbackUrl(reqOrBase) {
+  if (typeof reqOrBase === 'string' && reqOrBase.startsWith('http')) {
+    return `${reqOrBase.replace(/\/$/, '')}/api/auth/github/callback`;
+  }
+  if (reqOrBase && typeof reqOrBase === 'object') {
+    const proto = reqOrBase.headers?.['x-forwarded-proto'] || (reqOrBase.secure ? 'https' : 'http');
+    const host = reqOrBase.headers?.['x-forwarded-host'] || reqOrBase.headers?.host || reqOrBase.get?.('host');
+    if (host) {
+      const cleanHost = host.replace(':3001', ':5173');
+      return `${proto}://${cleanHost}/api/auth/github/callback`;
+    }
+  }
+  const base = (process.env.APP_URL || 'https://openlysts.vercel.app').replace(/\/$/, '');
   return `${base}/api/auth/github/callback`;
 }
 

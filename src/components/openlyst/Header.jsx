@@ -12,16 +12,21 @@ import MagneticButton from '@/components/ui/MagneticButton';
 
 import PWAInstallButton from './PWAInstallButton';
 
-const NAV = [
+const PRIMARY_NAV = [
   { to: '/discover', label: 'Discover', icon: Sparkles },
   { to: '/alternatives', label: 'Alternatives', icon: RefreshCw },
   { to: '/trending', label: 'Trending', icon: TrendingUp },
   { to: '/compare', label: 'Compare', icon: Layers },
   { to: '/guide', label: 'Guide', icon: Compass },
+];
+
+const SECONDARY_NAV = [
   { to: '/bookmarks', label: 'Bookmarks', icon: Bookmark },
   { to: '/about', label: 'About', icon: HelpCircle },
   { to: '/contact', label: 'Contact', icon: Mail },
 ];
+
+const ALL_NAV = [...PRIMARY_NAV, ...SECONDARY_NAV];
 
 export default function Header() {
   const location = useLocation();
@@ -46,7 +51,7 @@ export default function Header() {
     setMobileOpen(false);
   }, [location.pathname]);
 
-  // Lock body scroll when mobile navigation drawer is open and handle ESC key
+  // Lock body scroll safely when mobile navigation drawer is open
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape' && mobileOpen) {
@@ -56,12 +61,15 @@ export default function Header() {
 
     if (mobileOpen) {
       document.body.style.overflow = 'hidden';
+      document.body.style.touchAction = 'none';
       window.addEventListener('keydown', handleKeyDown);
     } else {
       document.body.style.overflow = '';
+      document.body.style.touchAction = '';
     }
     return () => {
       document.body.style.overflow = '';
+      document.body.style.touchAction = '';
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [mobileOpen]);
@@ -70,76 +78,84 @@ export default function Header() {
     window.dispatchEvent(new CustomEvent('open-command-palette'));
   };
 
+  const closeDrawer = () => {
+    setMobileOpen(false);
+  };
+
   return (
-    <header role="banner" className="sticky top-0 z-40 backdrop-blur-2xl bg-bg/90 border-b border-border shadow-sm transition-colors pt-safe">
+    <header role="banner" className="sticky top-0 z-40 backdrop-blur-2xl bg-bg/90 border-b border-border shadow-xs transition-colors pt-safe w-full">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex items-center justify-between h-16 gap-3">
-          {/* Logo */}
-          <Link data-tour="easter-eggs" to="/discover" onClick={triggerConfetti} className="flex items-center gap-2 flex-shrink-0 group touch-target" aria-label="Openlysts Home">
-            <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-bg-card border border-border shadow-sm overflow-hidden flex items-center justify-center backdrop-blur-md group-hover:scale-105 group-hover:border-accent/40 transition-all duration-300">
-              <img src="/logo.png" alt="Openlysts Logo" className="w-7 h-7 sm:w-8 sm:h-8 object-contain animate-logo-enter filter drop-shadow-sm" />
-            </div>
-            <span className="text-lg sm:text-xl font-black tracking-tight text-text hidden sm:block">Openlysts</span>
-          </Link>
-
-          {/* Desktop nav (visible on xl: >= 1280px) */}
-          <nav className="hidden xl:flex items-center gap-1">
-            {NAV.map((item) => {
-              const active = location.pathname === item.to;
-              return (
-                <Link
-                  key={item.to}
-                  to={item.to}
-                  className={`relative px-3 py-1.5 text-sm transition-all duration-200 whitespace-nowrap ${
-                    active ? 'text-text font-bold' : 'text-text-secondary hover:text-text font-medium'
-                  }`}
-                >
-                  {active && (
-                    <span className="absolute bottom-0 left-3 right-3 h-0.5 bg-accent rounded-t-full shadow-[0_-2px_10px_rgba(var(--accent-rgb),0.5)]" />
-                  )}
-                  {item.label}
-                </Link>
-              );
-            })}
-          </nav>
-
-          {/* Search Button (Desktop) */}
-          {location.pathname !== '/discover' && (
-            <div 
-              data-tour="search-bar"
-              className="relative hidden xl:block w-48 2xl:w-64 group cursor-text flex-shrink"
-              onClick={openSearch}
-            >
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted group-hover:text-accent transition-colors flex-shrink-0" />
-              <div className="w-full bg-bg-subtle border border-border rounded-xl pl-9 pr-3 py-1.5 text-sm text-text-secondary flex items-center justify-between transition-colors group-hover:border-accent/50 group-hover:bg-bg-hover">
-                <span className="truncate whitespace-nowrap text-xs font-medium">Search openlysts...</span>
-                <kbd className="inline-flex items-center gap-0.5 font-mono text-[10px] bg-bg-card border border-border px-1.5 py-0.5 rounded text-text-secondary font-semibold ml-2 flex-shrink-0">
-                  <span className="text-xs">⌘</span>K
-                </kbd>
+        <div className="flex items-center justify-between h-16 gap-4 w-full min-w-0">
+          {/* Left Group: Logo + Navigation Links */}
+          <div className="flex items-center gap-4 xl:gap-6 flex-shrink-0">
+            {/* Logo */}
+            <Link data-tour="easter-eggs" to="/discover" onClick={triggerConfetti} className="flex items-center gap-2 flex-shrink-0 group touch-target" aria-label="Openlysts Home">
+              <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-bg-card border border-border shadow-xs overflow-hidden flex items-center justify-center backdrop-blur-md group-hover:scale-105 group-hover:border-accent/40 transition-all duration-300">
+                <img src="/logo.png" alt="Openlysts Logo" className="w-7 h-7 sm:w-8 sm:h-8 object-contain animate-logo-enter filter drop-shadow-xs" />
               </div>
-            </div>
-          )}
+              <span className="text-lg sm:text-xl font-black tracking-tight text-text hidden sm:block">Openlysts</span>
+            </Link>
 
-          {/* Right actions */}
-          <div data-tour="auth-menu" className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
-            {/* Quick Search trigger icon for mobile/tablet */}
-            <button
-              onClick={openSearch}
-              className="xl:hidden p-2.5 rounded-xl text-text-secondary hover:bg-bg-hover hover:text-text transition-colors touch-target"
-              aria-label="Open Search"
-              title="Search (⌘K)"
-            >
-              <Search className="w-5 h-5" />
-            </button>
+            {/* Desktop Nav (Core 5 product links on >= 1024px) */}
+            <nav className="hidden lg:flex items-center gap-1 flex-shrink-0">
+              {PRIMARY_NAV.map((item) => {
+                const active = location.pathname === item.to;
+                return (
+                  <Link
+                    key={item.to}
+                    to={item.to}
+                    className={`relative px-2.5 xl:px-3 py-1.5 text-xs xl:text-sm transition-all duration-200 whitespace-nowrap rounded-lg ${
+                      active ? 'text-text font-bold' : 'text-text-secondary hover:text-text hover:bg-bg-hover/60 font-medium'
+                    }`}
+                  >
+                    {active && (
+                      <span className="absolute bottom-0 left-2.5 right-2.5 xl:left-3 xl:right-3 h-0.5 bg-accent rounded-t-full shadow-[0_-2px_8px_rgba(var(--accent-rgb),0.5)]" />
+                    )}
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </nav>
+          </div>
+
+          {/* Right Group: Search Box + Toolbar Actions + Auth */}
+          <div data-tour="auth-menu" className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
+            {/* Search Trigger Button (Desktop >= 1536px) */}
+            {location.pathname !== '/discover' && (
+              <div 
+                data-tour="search-bar"
+                className="relative hidden 2xl:block w-40 group cursor-text flex-shrink-0"
+                onClick={openSearch}
+              >
+                <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-text-muted group-hover:text-accent transition-colors flex-shrink-0" />
+                <div className="w-full bg-bg-subtle/80 border border-border rounded-xl pl-8 pr-2 py-1.5 text-xs text-text-secondary flex items-center justify-between transition-colors group-hover:border-accent/50 group-hover:bg-bg-hover">
+                  <span className="truncate whitespace-nowrap font-medium">Search...</span>
+                  <kbd className="inline-flex items-center gap-0.5 font-mono text-[9px] bg-bg-card border border-border px-1.5 py-0.5 rounded text-text-secondary font-semibold ml-1.5 flex-shrink-0">
+                    <span>⌘</span>K
+                  </kbd>
+                </div>
+              </div>
+            )}
+
+            {/* Quick Search trigger icon for screens < 2xl */}
+            {location.pathname !== '/discover' && (
+              <button
+                onClick={openSearch}
+                className="2xl:hidden p-2 rounded-xl text-text-secondary hover:bg-bg-hover hover:text-text transition-colors touch-target"
+                aria-label="Open Search"
+                title="Search (⌘K)"
+              >
+                <Search className="w-4 h-4 sm:w-5 sm:h-5" />
+              </button>
+            )}
 
             {/* Welcome Screen Warp Button */}
             <Link 
               to="/" 
-              className="relative group hidden sm:flex items-center justify-center p-2 rounded-xl bg-gradient-to-br from-bg-subtle to-bg border border-border hover:border-accent/50 overflow-hidden transition-all duration-500 hover:shadow-[0_0_15px_rgba(var(--accent-rgb),0.3)] touch-target"
+              className="relative group hidden sm:flex items-center justify-center p-2 rounded-xl bg-bg-subtle/70 border border-border hover:border-accent/50 overflow-hidden transition-all duration-300 hover:shadow-[0_0_12px_rgba(var(--accent-rgb),0.25)] touch-target"
               aria-label="Warp to Welcome Screen"
               title="Welcome Screen"
             >
-              <div className="absolute inset-0 bg-accent/10 translate-y-[100%] group-hover:translate-y-0 transition-transform duration-300 ease-out" />
               <Sparkles className="w-4 h-4 text-text-secondary group-hover:text-accent transition-colors relative z-10" />
             </Link>
 
@@ -147,7 +163,7 @@ export default function Header() {
             <Link to="/bookmarks" className="relative hidden sm:flex p-2 rounded-xl text-text-secondary hover:bg-bg-hover transition-colors touch-target" aria-label="View Bookmarks">
               <Bookmark className="w-4 h-4" />
               {bookmarkCount > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-accent text-accent-fg text-[10px] font-bold flex items-center justify-center">
+                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-accent text-accent-fg text-[9px] font-black flex items-center justify-center shadow-xs">
                   {bookmarkCount > 9 ? '9+' : bookmarkCount}
                 </span>
               )}
@@ -176,26 +192,27 @@ export default function Header() {
             
             {/* Auth Buttons */}
             {user ? (
-              <Link to="/profile" className="ml-1 flex items-center justify-center w-8 h-8 rounded-full bg-accent/20 text-accent font-bold text-sm hover:bg-accent/30 transition-colors touch-target" title="Profile">
+              <Link to="/profile" className="ml-1 flex items-center justify-center w-8 h-8 rounded-full bg-accent/20 text-accent font-bold text-xs sm:text-sm hover:bg-accent/30 transition-colors touch-target flex-shrink-0" title="Profile">
                 {(user.name || user.email || 'U')[0].toUpperCase()}
               </Link>
             ) : (
-              <div className="hidden sm:flex items-center gap-2 ml-1 pl-2 border-l border-border/50">
-                <Link to="/login" className="text-xs sm:text-sm font-medium text-text-secondary hover:text-text transition-colors">Log in</Link>
+              <div className="hidden sm:flex items-center gap-1.5 ml-1 pl-1.5 border-l border-border/50 flex-shrink-0">
+                <Link to="/login" className="text-xs sm:text-sm font-medium text-text-secondary hover:text-text transition-colors px-2 py-1.5 rounded-lg whitespace-nowrap">Log in</Link>
                 <MagneticButton>
-                  <Link to="/register" className="text-xs sm:text-sm font-medium bg-accent text-accent-fg px-3 py-1.5 rounded-lg hover:bg-accent/90 transition-colors shadow-sm block">Sign up</Link>
+                  <Link to="/register" className="text-xs sm:text-sm font-semibold bg-accent text-accent-fg px-3 py-1.5 rounded-lg hover:bg-accent/90 transition-colors shadow-xs block whitespace-nowrap">Sign up</Link>
                 </MagneticButton>
               </div>
             )}
 
             {/* Mobile / Tablet Hamburger Toggle */}
             <button
+              type="button"
               onClick={() => setMobileOpen((v) => !v)}
-              className="xl:hidden p-2 rounded-xl text-text-secondary hover:bg-bg-hover hover:text-text transition-colors touch-target"
+              className="lg:hidden p-2 rounded-xl text-text-secondary hover:bg-bg-hover hover:text-text transition-colors touch-target flex-shrink-0 ml-0.5"
               aria-expanded={mobileOpen}
               aria-label="Toggle Navigation Menu"
             >
-              {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {mobileOpen ? <X className="w-5 h-5 text-accent" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>
@@ -205,64 +222,106 @@ export default function Header() {
       {typeof document !== 'undefined' && createPortal(
         <AnimatePresence>
           {mobileOpen && (
-            <div className="fixed inset-0 z-[100] xl:hidden">
-              {/* Backdrop */}
+            <div className="fixed inset-0 z-[100] lg:hidden pointer-events-auto">
+              {/* Backdrop with immediate tap-to-dismiss */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                onClick={() => setMobileOpen(false)}
-                className="fixed inset-0 bg-black/60 backdrop-blur-sm"
+                transition={{ duration: 0.18 }}
+                onClick={closeDrawer}
+                onPointerDown={closeDrawer}
+                className="fixed inset-0 bg-black/70 backdrop-blur-md cursor-pointer"
+                aria-hidden="true"
               />
 
-              {/* Drawer */}
+              {/* Drawer Container with Swipe-to-Dismiss Gesture */}
               <motion.div
                 initial={{ x: '100%' }}
                 animate={{ x: 0 }}
                 exit={{ x: '100%' }}
-                transition={{ type: 'spring', damping: 28, stiffness: 300 }}
-                className="fixed top-0 right-0 bottom-0 w-full max-w-xs bg-bg-card border-l border-border flex flex-col shadow-2xl overflow-y-auto custom-scrollbar pt-safe pb-safe z-10"
+                transition={{ type: 'spring', damping: 28, stiffness: 320 }}
+                drag="x"
+                dragConstraints={{ left: 0, right: 300 }}
+                dragElastic={0.15}
+                onDragEnd={(e, { offset, velocity }) => {
+                  if (offset.x > 80 || velocity.x > 250) {
+                    closeDrawer();
+                  }
+                }}
+                className="fixed top-0 right-0 bottom-0 w-full max-w-[300px] sm:max-w-xs bg-bg-card border-l border-border flex flex-col shadow-2xl overflow-hidden pt-safe pb-safe z-10 touch-pan-y"
               >
-                {/* Drawer Header */}
-                <div className="p-5 border-b border-border flex items-center justify-between">
+                {/* Drawer Header with Guaranteed Accessible Close Button */}
+                <div className="px-4 py-3.5 border-b border-border flex items-center justify-between bg-bg-subtle/50 flex-shrink-0">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-lg bg-bg border border-border flex items-center justify-center">
+                    <div className="w-8 h-8 rounded-lg bg-bg border border-border flex items-center justify-center shadow-xs">
                       <img src="/logo.png" alt="Openlysts Logo" className="w-6 h-6 object-contain" />
                     </div>
-                    <span className="font-bold text-base text-text">Openlysts</span>
+                    <span className="font-bold text-base text-text tracking-tight">Openlysts</span>
                   </div>
+                  
+                  {/* High-visibility Close (X) Button */}
                   <button
-                    onClick={() => setMobileOpen(false)}
-                    className="p-2 rounded-lg text-text-muted hover:text-text hover:bg-bg-hover transition-colors touch-target"
+                    type="button"
+                    onClick={closeDrawer}
+                    onPointerDown={closeDrawer}
+                    className="w-9 h-9 rounded-xl bg-bg border border-border text-text-secondary hover:text-text hover:bg-bg-hover active:scale-95 flex items-center justify-center transition-all cursor-pointer z-50 shadow-xs"
                     aria-label="Close navigation"
                   >
-                    <X className="w-5 h-5" />
+                    <X className="w-4 h-4" />
                   </button>
                 </div>
 
                 {/* Drawer Navigation Links */}
-                <div className="p-4 space-y-1 flex-1">
-                  {NAV.map((item) => {
+                <div className="px-3 py-2 space-y-0.5 flex-1 overflow-y-auto custom-scrollbar touch-scroll">
+                  <div className="px-2 pt-1.5 pb-1 text-[10px] font-bold uppercase tracking-wider text-text-muted">
+                    Explore
+                  </div>
+                  {PRIMARY_NAV.map((item) => {
                     const Icon = item.icon;
                     const active = location.pathname === item.to;
                     return (
                       <Link
                         key={item.to}
                         to={item.to}
-                        onClick={() => setMobileOpen(false)}
-                        className={`flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-semibold transition-colors touch-target ${
+                        onClick={closeDrawer}
+                        className={`flex items-center justify-between px-3 py-2 rounded-xl text-sm font-medium transition-all ${
                           active
-                            ? 'bg-accent text-accent-fg'
+                            ? 'bg-accent text-accent-fg font-semibold shadow-xs'
                             : 'text-text-secondary hover:bg-bg-hover hover:text-text active:bg-bg-subtle'
                         }`}
                       >
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-2.5">
+                          <Icon className={`w-4 h-4 ${active ? 'text-accent-fg' : 'text-accent'}`} />
+                          <span>{item.label}</span>
+                        </div>
+                      </Link>
+                    );
+                  })}
+
+                  <div className="px-2 pt-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-text-muted">
+                    Community & Tools
+                  </div>
+                  {SECONDARY_NAV.map((item) => {
+                    const Icon = item.icon;
+                    const active = location.pathname === item.to;
+                    return (
+                      <Link
+                        key={item.to}
+                        to={item.to}
+                        onClick={closeDrawer}
+                        className={`flex items-center justify-between px-3 py-2 rounded-xl text-sm font-medium transition-all ${
+                          active
+                            ? 'bg-accent text-accent-fg font-semibold shadow-xs'
+                            : 'text-text-secondary hover:bg-bg-hover hover:text-text active:bg-bg-subtle'
+                        }`}
+                      >
+                        <div className="flex items-center gap-2.5">
                           <Icon className={`w-4 h-4 ${active ? 'text-accent-fg' : 'text-text-muted'}`} />
                           <span>{item.label}</span>
                         </div>
                         {item.to === '/bookmarks' && bookmarkCount > 0 && (
-                          <span className={`text-xs px-2 py-0.5 rounded-full font-bold ${active ? 'bg-black/20 text-white' : 'bg-accent/10 text-accent'}`}>
+                          <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${active ? 'bg-black/20 text-white' : 'bg-accent/15 text-accent'}`}>
                             {bookmarkCount}
                           </span>
                         )}
@@ -270,16 +329,16 @@ export default function Header() {
                     );
                   })}
 
-                  <div className="h-px bg-border/60 my-3" />
+                  <div className="h-px bg-border/60 my-2" />
 
                   {/* PWA Install in Mobile Drawer */}
-                  <PWAInstallButton variant="drawer" className="mb-2" />
+                  <PWAInstallButton variant="drawer" className="mb-1.5" />
 
                   <Link
                     to="/settings"
-                    onClick={() => setMobileOpen(false)}
-                    className={`flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-semibold transition-colors touch-target ${
-                      location.pathname === '/settings' ? 'bg-accent text-accent-fg' : 'text-text-secondary hover:bg-bg-hover hover:text-text'
+                    onClick={closeDrawer}
+                    className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-medium transition-all ${
+                      location.pathname === '/settings' ? 'bg-accent text-accent-fg font-semibold shadow-xs' : 'text-text-secondary hover:bg-bg-hover hover:text-text'
                     }`}
                   >
                     <SettingsIcon className="w-4 h-4 text-text-muted" />
@@ -288,8 +347,8 @@ export default function Header() {
 
                   <Link
                     to="/"
-                    onClick={() => setMobileOpen(false)}
-                    className="flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-semibold text-text-secondary hover:bg-bg-hover hover:text-text transition-colors touch-target"
+                    onClick={closeDrawer}
+                    className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-medium text-text-secondary hover:bg-bg-hover hover:text-text transition-all"
                   >
                     <Sparkles className="w-4 h-4 text-accent" />
                     <span>Welcome Screen</span>
@@ -297,33 +356,33 @@ export default function Header() {
                 </div>
 
                 {/* Drawer Auth Footer */}
-                <div className="p-4 border-t border-border bg-bg-subtle/40 space-y-2">
+                <div className="p-3 border-t border-border bg-bg-subtle/50 space-y-2 flex-shrink-0">
                   {user ? (
                     <Link
                       to="/profile"
-                      onClick={() => setMobileOpen(false)}
-                      className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-bg border border-border text-text text-sm font-bold hover:border-accent/40 transition-colors touch-target"
+                      onClick={closeDrawer}
+                      className="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-bg border border-border text-text text-sm font-semibold hover:border-accent/40 transition-all shadow-xs"
                     >
-                      <div className="w-7 h-7 rounded-full bg-accent/20 text-accent font-bold text-xs flex items-center justify-center">
+                      <div className="w-6 h-6 rounded-full bg-accent/20 text-accent font-bold text-xs flex items-center justify-center">
                         {(user.name || user.email || 'U')[0].toUpperCase()}
                       </div>
-                      <span className="truncate">{user.name || user.email || 'My Profile'}</span>
+                      <span className="truncate flex-1">{user.name || user.email || 'My Profile'}</span>
                     </Link>
                   ) : (
                     <div className="grid grid-cols-2 gap-2">
                       <Link
                         to="/login"
-                        onClick={() => setMobileOpen(false)}
-                        className="flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-bg border border-border text-text text-sm font-bold hover:bg-bg-hover transition-colors touch-target"
+                        onClick={closeDrawer}
+                        className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-bg border border-border text-text text-xs sm:text-sm font-semibold hover:bg-bg-hover transition-all shadow-xs"
                       >
-                        <LogIn className="w-4 h-4" /> Log In
+                        <LogIn className="w-3.5 h-3.5" /> Log In
                       </Link>
                       <Link
                         to="/register"
-                        onClick={() => setMobileOpen(false)}
-                        className="flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-accent text-accent-fg text-sm font-bold hover:bg-accent/90 transition-colors shadow-sm touch-target"
+                        onClick={closeDrawer}
+                        className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-accent text-accent-fg text-xs sm:text-sm font-semibold hover:bg-accent/90 transition-all shadow-xs"
                       >
-                        <UserPlus className="w-4 h-4" /> Sign Up
+                        <UserPlus className="w-3.5 h-3.5" /> Sign Up
                       </Link>
                     </div>
                   )}

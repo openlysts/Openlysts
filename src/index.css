@@ -450,10 +450,6 @@ button, a, input, select, textarea, [role="button"], [tabindex="0"] {
   min-width: 44px;
   min-height: 44px;
 }
-.touch-target:not(.hidden):not([style*="display: none"]) {
-  align-items: center;
-  justify-content: center;
-}
 
 /* Touch-specific feedback: replace stuck hover states with crisp active touch feedback */
 @media (hover: none) and (pointer: coarse) {

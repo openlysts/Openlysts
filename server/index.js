@@ -30,12 +30,14 @@ const ALLOWED_ORIGINS = [
   process.env.APP_URL,
   'http://localhost:5173',
   'http://localhost:3001',
+  'https://openlysts.vercel.app',
+  'https://openlyst.vercel.app',
 ].filter(Boolean).map(u => u.replace(/\/$/, ''));
 
 app.use(cors({
   origin: (origin, callback) => {
-    // Allow requests with no origin (mobile apps, curl, server-to-server)
-    if (!origin || ALLOWED_ORIGINS.includes(origin)) {
+    // Allow requests with no origin (mobile apps, curl, server-to-server) or valid origins
+    if (!origin || ALLOWED_ORIGINS.includes(origin) || origin.endsWith('.vercel.app')) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
