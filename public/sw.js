@@ -1,5 +1,5 @@
-// Openlysts PWA Service Worker v1.0.0
-const CACHE_NAME = 'openlysts-v1.0.0';
+// Openlysts PWA Service Worker v1.0.1
+const CACHE_NAME = 'openlysts-v1.0.1';
 const OFFLINE_URLS = [
   '/',
   '/discover',

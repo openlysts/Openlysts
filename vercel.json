@@ -1,5 +1,7 @@
 {
   "version": 2,
+  "buildCommand": "vite build",
+  "outputDirectory": "dist",
   "functions": {
     "api/index.js": {
       "maxDuration": 60
