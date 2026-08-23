@@ -58,7 +58,7 @@ app.use((req, res, next) => {
 
 import { initSchema } from './db/schema.js';
 
-app.get('/api/health', async (req, res) => {
+const healthHandler = async (req, res) => {
   try {
     const schemaErrors = await initSchema(db);
     await autoBootstrapFromEnv(); // Bootstrap admin if env vars are present
@@ -67,14 +67,23 @@ app.get('/api/health', async (req, res) => {
   } catch (error) {
     res.status(500).json({ status: 'error', database: 'disconnected', error: error.message });
   }
-});
+};
+
+app.get('/api/health', healthHandler);
+app.get('/health', healthHandler);
 
 app.use('/api/auth', authRouter);
+app.use('/auth', authRouter);
 app.use('/api/admin', adminRouter);
+app.use('/admin', adminRouter);
 app.use('/api/profile', profileRouter);
+app.use('/profile', profileRouter);
 app.use('/api/entities', entitiesRouter);
+app.use('/entities', entitiesRouter);
 app.use('/api/functions', functionsRouter);
+app.use('/functions', functionsRouter);
 app.use('/api/contact', contactRouter);
+app.use('/contact', contactRouter);
 
 // Serve static frontend files (used only in self-hosted standalone server)
 if (!process.env.VERCEL) {
