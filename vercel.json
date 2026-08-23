@@ -88,6 +88,6 @@
   ],
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/index.js" },
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/((?!assets/|icons/|logo.png|favicon.ico|manifest.json|sw.js|.*\\..*).*)", "destination": "/index.html" }
   ]
 }
