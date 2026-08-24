@@ -9,7 +9,6 @@ import { useMobileLayout } from '@/lib/MobileLayoutContext';
 import { useAuth } from '@/lib/AuthContext';
 import { useLogoEasterEgg } from '@/hooks/useLogoEasterEgg';
 import MagneticButton from '@/components/ui/MagneticButton';
-
 import PWAInstallButton from './PWAInstallButton';
 
 const PRIMARY_NAV = [
@@ -25,8 +24,6 @@ const SECONDARY_NAV = [
   { to: '/about', label: 'About', icon: HelpCircle },
   { to: '/contact', label: 'Contact', icon: Mail },
 ];
-
-const ALL_NAV = [...PRIMARY_NAV, ...SECONDARY_NAV];
 
 export default function Header() {
   const location = useLocation();
@@ -85,13 +82,14 @@ export default function Header() {
   return (
     <header role="banner" className="sticky top-0 z-40 backdrop-blur-2xl bg-bg/90 border-b border-border shadow-xs transition-colors pt-safe w-full">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex items-center justify-between h-16 gap-4 w-full min-w-0">
+        <div className="flex items-center justify-between h-16 gap-3 sm:gap-4 w-full min-w-0">
+          
           {/* Left Group: Logo + Navigation Links */}
-          <div className="flex items-center gap-4 xl:gap-6 flex-shrink-0">
+          <div className="flex items-center gap-3 xl:gap-6 flex-shrink-0">
             {/* Logo */}
             <Link data-tour="easter-eggs" to="/discover" onClick={triggerConfetti} className="flex items-center gap-2 flex-shrink-0 group touch-target" aria-label="Openlysts Home">
-              <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-bg-card border border-border shadow-xs overflow-hidden flex items-center justify-center backdrop-blur-md group-hover:scale-105 group-hover:border-accent/40 transition-all duration-300">
-                <img src="/logo.png" alt="Openlysts Logo" className="w-7 h-7 sm:w-8 sm:h-8 object-contain animate-logo-enter filter drop-shadow-xs" />
+              <div className="relative w-9 h-9 rounded-xl bg-bg-card border border-border shadow-xs overflow-hidden flex items-center justify-center backdrop-blur-md group-hover:scale-105 group-hover:border-accent/40 transition-all duration-300">
+                <img src="/logo.png" alt="Openlysts Logo" className="w-7 h-7 object-contain animate-logo-enter filter drop-shadow-xs" />
               </div>
               <span className="text-lg sm:text-xl font-black tracking-tight text-text hidden sm:block">Openlysts</span>
             </Link>
@@ -104,12 +102,12 @@ export default function Header() {
                   <Link
                     key={item.to}
                     to={item.to}
-                    className={`relative px-2.5 xl:px-3 py-1.5 text-xs xl:text-sm transition-all duration-200 whitespace-nowrap rounded-lg ${
+                    className={`relative px-3 py-1.5 text-xs xl:text-sm transition-all duration-200 whitespace-nowrap rounded-lg ${
                       active ? 'text-text font-bold' : 'text-text-secondary hover:text-text hover:bg-bg-hover/60 font-medium'
                     }`}
                   >
                     {active && (
-                      <span className="absolute bottom-0 left-2.5 right-2.5 xl:left-3 xl:right-3 h-0.5 bg-accent rounded-t-full shadow-[0_-2px_8px_rgba(var(--accent-rgb),0.5)]" />
+                      <span className="absolute bottom-0 left-3 right-3 h-0.5 bg-accent rounded-t-full shadow-[0_-2px_8px_rgba(var(--accent-rgb),0.5)]" />
                     )}
                     {item.label}
                   </Link>
@@ -118,17 +116,18 @@ export default function Header() {
             </nav>
           </div>
 
-          {/* Right Group: Search Box + Toolbar Actions + Auth */}
-          <div data-tour="auth-menu" className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
+          {/* Right Group: Harmonized Action Icons Cluster & Auth */}
+          <div data-tour="auth-menu" className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
+            
             {/* Search Trigger Button (Desktop >= 1536px) */}
             {location.pathname !== '/discover' && (
               <div 
                 data-tour="search-bar"
-                className="relative hidden 2xl:block w-40 group cursor-text flex-shrink-0"
+                className="relative hidden 2xl:block w-36 group cursor-text flex-shrink-0"
                 onClick={openSearch}
               >
                 <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-text-muted group-hover:text-accent transition-colors flex-shrink-0" />
-                <div className="w-full bg-bg-subtle/80 border border-border rounded-xl pl-8 pr-2 py-1.5 text-xs text-text-secondary flex items-center justify-between transition-colors group-hover:border-accent/50 group-hover:bg-bg-hover">
+                <div className="w-full h-9 bg-bg-card/70 border border-border/70 rounded-xl pl-8 pr-2 py-1.5 text-xs text-text-secondary flex items-center justify-between transition-colors group-hover:border-accent/40 group-hover:bg-bg-hover shadow-xs">
                   <span className="truncate whitespace-nowrap font-medium">Search...</span>
                   <kbd className="inline-flex items-center gap-0.5 font-mono text-[9px] bg-bg-card border border-border px-1.5 py-0.5 rounded text-text-secondary font-semibold ml-1.5 flex-shrink-0">
                     <span>⌘</span>K
@@ -141,36 +140,46 @@ export default function Header() {
             {location.pathname !== '/discover' && (
               <button
                 onClick={openSearch}
-                className="2xl:hidden p-2 rounded-xl text-text-secondary hover:bg-bg-hover hover:text-text transition-colors touch-target"
+                className="2xl:hidden w-9 h-9 rounded-xl border border-border/70 bg-bg-card/70 flex items-center justify-center text-text-secondary hover:bg-bg-hover hover:border-accent/40 hover:text-text transition-all shadow-xs touch-target flex-shrink-0"
                 aria-label="Open Search"
                 title="Search (⌘K)"
               >
-                <Search className="w-4 h-4 sm:w-5 sm:h-5" />
+                <Search className="w-4 h-4" />
               </button>
             )}
 
             {/* Welcome Screen Warp Button */}
             <Link 
               to="/" 
-              className="relative group hidden sm:flex items-center justify-center p-2 rounded-xl bg-bg-subtle/70 border border-border hover:border-accent/50 overflow-hidden transition-all duration-300 hover:shadow-[0_0_12px_rgba(var(--accent-rgb),0.25)] touch-target"
+              className="relative group hidden sm:flex items-center justify-center w-9 h-9 rounded-xl border border-border/70 bg-bg-card/70 hover:bg-bg-hover hover:border-accent/40 text-text-secondary hover:text-accent transition-all shadow-xs touch-target flex-shrink-0"
               aria-label="Warp to Welcome Screen"
               title="Welcome Screen"
             >
-              <Sparkles className="w-4 h-4 text-text-secondary group-hover:text-accent transition-colors relative z-10" />
+              <Sparkles className="w-4 h-4" />
             </Link>
 
             {/* Bookmarks Icon Button (Desktop/Tablet) */}
-            <Link to="/bookmarks" className="relative hidden sm:flex p-2 rounded-xl text-text-secondary hover:bg-bg-hover transition-colors touch-target" aria-label="View Bookmarks">
+            <Link 
+              to="/bookmarks" 
+              className="relative hidden sm:flex items-center justify-center w-9 h-9 rounded-xl border border-border/70 bg-bg-card/70 hover:bg-bg-hover hover:border-accent/40 text-text-secondary hover:text-text transition-all shadow-xs touch-target flex-shrink-0" 
+              aria-label="View Bookmarks"
+              title="Bookmarks"
+            >
               <Bookmark className="w-4 h-4" />
               {bookmarkCount > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-accent text-accent-fg text-[9px] font-black flex items-center justify-center shadow-xs">
+                <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-accent text-accent-fg text-[9px] font-black flex items-center justify-center shadow-xs">
                   {bookmarkCount > 9 ? '9+' : bookmarkCount}
                 </span>
               )}
             </Link>
 
             {/* Settings */}
-            <Link to="/settings" className="hidden sm:flex p-2 rounded-xl text-text-secondary hover:bg-bg-hover transition-colors touch-target" aria-label="Settings">
+            <Link 
+              to="/settings" 
+              className="hidden sm:flex items-center justify-center w-9 h-9 rounded-xl border border-border/70 bg-bg-card/70 hover:bg-bg-hover hover:border-accent/40 text-text-secondary hover:text-text transition-all shadow-xs touch-target flex-shrink-0" 
+              aria-label="Settings"
+              title="Settings"
+            >
               <SettingsIcon className="w-4 h-4" />
             </Link>
 
@@ -180,7 +189,7 @@ export default function Header() {
             {/* Mobile Layout Simulator Toggle (Desktop only) */}
             <button
               onClick={toggleMobileLayout}
-              className="p-2 rounded-xl text-text-secondary hover:bg-bg-hover transition-colors hidden xl:block touch-target"
+              className="hidden xl:flex items-center justify-center w-9 h-9 rounded-xl border border-border/70 bg-bg-card/70 hover:bg-bg-hover hover:border-accent/40 text-text-secondary hover:text-text transition-all shadow-xs touch-target flex-shrink-0"
               title={isMobileLayout ? "Switch to Desktop Layout" : "Switch to Mobile Layout"}
               aria-label={isMobileLayout ? "Switch to Desktop Layout" : "Switch to Mobile Layout"}
             >
@@ -192,14 +201,18 @@ export default function Header() {
             
             {/* Auth Buttons */}
             {user ? (
-              <Link to="/profile" className="ml-1 flex items-center justify-center w-8 h-8 rounded-full bg-accent/20 text-accent font-bold text-xs sm:text-sm hover:bg-accent/30 transition-colors touch-target flex-shrink-0" title="Profile">
+              <Link to="/profile" className="ml-1 flex items-center justify-center w-9 h-9 rounded-full bg-accent/20 text-accent font-bold text-xs sm:text-sm hover:bg-accent/30 transition-colors touch-target flex-shrink-0 border border-accent/30" title="Profile">
                 {(user.name || user.email || 'U')[0].toUpperCase()}
               </Link>
             ) : (
-              <div className="hidden sm:flex items-center gap-1.5 ml-1 pl-1.5 border-l border-border/50 flex-shrink-0">
-                <Link to="/login" className="text-xs sm:text-sm font-medium text-text-secondary hover:text-text transition-colors px-2 py-1.5 rounded-lg whitespace-nowrap">Log in</Link>
+              <div className="hidden sm:flex items-center gap-1.5 ml-1 pl-2 border-l border-border/70 flex-shrink-0">
+                <Link to="/login" className="h-9 px-2.5 flex items-center justify-center text-xs sm:text-sm font-medium text-text-secondary hover:text-text transition-colors rounded-xl whitespace-nowrap">
+                  Log in
+                </Link>
                 <MagneticButton>
-                  <Link to="/register" className="text-xs sm:text-sm font-semibold bg-accent text-accent-fg px-3 py-1.5 rounded-lg hover:bg-accent/90 transition-colors shadow-xs block whitespace-nowrap">Sign up</Link>
+                  <Link to="/register" className="h-9 px-3.5 flex items-center justify-center text-xs sm:text-sm font-semibold bg-accent text-accent-fg rounded-xl hover:bg-accent/90 transition-colors shadow-xs whitespace-nowrap">
+                    Sign up
+                  </Link>
                 </MagneticButton>
               </div>
             )}
@@ -208,11 +221,11 @@ export default function Header() {
             <button
               type="button"
               onClick={() => setMobileOpen((v) => !v)}
-              className="xl:hidden p-2 rounded-xl text-text-secondary hover:bg-bg-hover hover:text-text transition-colors touch-target flex-shrink-0 ml-0.5"
+              className="xl:hidden w-9 h-9 rounded-xl border border-border/70 bg-bg-card/70 hover:bg-bg-hover hover:text-text flex items-center justify-center text-text-secondary transition-all shadow-xs touch-target flex-shrink-0 ml-0.5"
               aria-expanded={mobileOpen}
               aria-label="Toggle Navigation Menu"
             >
-              {mobileOpen ? <X className="w-5 h-5 text-accent" /> : <Menu className="w-5 h-5" />}
+              {mobileOpen ? <X className="w-4 h-4 text-accent" /> : <Menu className="w-4 h-4" />}
             </button>
           </div>
         </div>
@@ -223,7 +236,6 @@ export default function Header() {
         <AnimatePresence>
           {mobileOpen && (
             <div className="fixed inset-0 z-[100] xl:hidden pointer-events-auto">
-              {/* Backdrop — onClick only, no onPointerDown to avoid double-fire */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -234,7 +246,6 @@ export default function Header() {
                 aria-hidden="true"
               />
 
-              {/* Drawer Container — NO drag prop (drag was capturing all touch events on children) */}
               <motion.div
                 initial={{ x: '100%' }}
                 animate={{ x: 0 }}
@@ -251,121 +262,86 @@ export default function Header() {
                     <span className="font-bold text-base text-text tracking-tight">Openlysts</span>
                   </div>
 
-                  {/* Close (X) Button — onClick only, no onPointerDown */}
                   <button
                     type="button"
                     onClick={closeDrawer}
                     className="w-9 h-9 rounded-xl bg-bg border border-border text-text-secondary hover:text-text hover:bg-bg-hover active:scale-95 flex items-center justify-center transition-all cursor-pointer z-50 shadow-xs"
                     aria-label="Close navigation"
                   >
-                    <X className="w-4 h-4" />
+                    <X className="w-5 h-5" />
                   </button>
                 </div>
 
-                {/* Drawer Navigation Links — no onClick on links (location.pathname useEffect closes drawer on nav) */}
-                <div className="px-3 py-2 space-y-0.5 flex-1 overflow-y-auto custom-scrollbar touch-scroll">
-                  <div className="px-2 pt-1.5 pb-1 text-[10px] font-bold uppercase tracking-wider text-text-muted">
-                    Explore
+                {/* Drawer Body */}
+                <div className="flex-1 overflow-y-auto px-4 py-4 space-y-5 custom-scrollbar touch-scroll">
+                  {/* Primary Nav Links */}
+                  <div className="space-y-1">
+                    <p className="text-[10px] font-bold text-text-muted uppercase tracking-wider px-3 mb-1.5">
+                      Navigation
+                    </p>
+                    {ALL_NAV.map((item) => {
+                      const Icon = item.icon;
+                      const active = location.pathname === item.to;
+                      return (
+                        <Link
+                          key={item.to}
+                          to={item.to}
+                          onClick={closeDrawer}
+                          className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                            active
+                              ? 'bg-accent text-accent-fg font-semibold shadow-xs'
+                              : 'text-text-secondary hover:bg-bg-hover hover:text-text'
+                          }`}
+                        >
+                          <div className="flex items-center gap-3">
+                            <Icon className="w-4 h-4 flex-shrink-0" />
+                            <span>{item.label}</span>
+                          </div>
+                          {item.to === '/bookmarks' && bookmarkCount > 0 && (
+                            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-accent-soft text-accent">
+                              {bookmarkCount}
+                            </span>
+                          )}
+                        </Link>
+                      );
+                    })}
                   </div>
-                  {PRIMARY_NAV.map((item) => {
-                    const Icon = item.icon;
-                    const active = location.pathname === item.to;
-                    return (
-                      <Link
-                        key={item.to}
-                        to={item.to}
-                        className={`flex items-center justify-between px-3 py-2 rounded-xl text-sm font-medium transition-all ${
-                          active
-                            ? 'bg-accent text-accent-fg font-semibold shadow-xs'
-                            : 'text-text-secondary hover:bg-bg-hover hover:text-text active:bg-bg-subtle'
-                        }`}
-                      >
-                        <div className="flex items-center gap-2.5">
-                          <Icon className={`w-4 h-4 ${active ? 'text-accent-fg' : 'text-accent'}`} />
-                          <span>{item.label}</span>
-                        </div>
-                      </Link>
-                    );
-                  })}
 
-                  <div className="px-2 pt-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-text-muted">
-                    Community & Tools
+                  {/* PWA Install Button in Drawer */}
+                  <div className="pt-1">
+                    <PWAInstallButton variant="drawer" />
                   </div>
-                  {SECONDARY_NAV.map((item) => {
-                    const Icon = item.icon;
-                    const active = location.pathname === item.to;
-                    return (
-                      <Link
-                        key={item.to}
-                        to={item.to}
-                        className={`flex items-center justify-between px-3 py-2 rounded-xl text-sm font-medium transition-all ${
-                          active
-                            ? 'bg-accent text-accent-fg font-semibold shadow-xs'
-                            : 'text-text-secondary hover:bg-bg-hover hover:text-text active:bg-bg-subtle'
-                        }`}
-                      >
-                        <div className="flex items-center gap-2.5">
-                          <Icon className={`w-4 h-4 ${active ? 'text-accent-fg' : 'text-text-muted'}`} />
-                          <span>{item.label}</span>
-                        </div>
-                        {item.to === '/bookmarks' && bookmarkCount > 0 && (
-                          <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${active ? 'bg-black/20 text-white' : 'bg-accent/15 text-accent'}`}>
-                            {bookmarkCount}
-                          </span>
-                        )}
-                      </Link>
-                    );
-                  })}
-
-                  <div className="h-px bg-border/60 my-2" />
-
-                  {/* PWA Install in Mobile Drawer */}
-                  <PWAInstallButton variant="drawer" className="mb-1.5" />
-
-                  <Link
-                    to="/settings"
-                    className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-medium transition-all ${
-                      location.pathname === '/settings' ? 'bg-accent text-accent-fg font-semibold shadow-xs' : 'text-text-secondary hover:bg-bg-hover hover:text-text'
-                    }`}
-                  >
-                    <SettingsIcon className="w-4 h-4 text-text-muted" />
-                    <span>Settings</span>
-                  </Link>
-
-                  <Link
-                    to="/"
-                    className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-medium text-text-secondary hover:bg-bg-hover hover:text-text transition-all"
-                  >
-                    <Sparkles className="w-4 h-4 text-accent" />
-                    <span>Welcome Screen</span>
-                  </Link>
                 </div>
 
-                {/* Drawer Auth Footer */}
-                <div className="p-3 border-t border-border bg-bg-subtle/50 space-y-2 flex-shrink-0">
+                {/* Drawer Footer Auth Section */}
+                <div className="p-4 border-t border-border bg-bg-subtle/30 flex-shrink-0 space-y-2">
                   {user ? (
-                    <Link
-                      to="/profile"
-                      className="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-bg border border-border text-text text-sm font-semibold hover:border-accent/40 transition-all shadow-xs"
-                    >
-                      <div className="w-6 h-6 rounded-full bg-accent/20 text-accent font-bold text-xs flex items-center justify-center">
+                    <div className="flex items-center gap-3 px-2 py-1.5">
+                      <div className="w-8 h-8 rounded-full bg-accent/20 text-accent font-bold text-xs flex items-center justify-center">
                         {(user.name || user.email || 'U')[0].toUpperCase()}
                       </div>
-                      <span className="truncate flex-1">{user.name || user.email || 'My Profile'}</span>
-                    </Link>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs font-bold text-text truncate">{user.name || 'User'}</p>
+                        <p className="text-[10px] text-text-muted truncate">{user.email}</p>
+                      </div>
+                    </div>
                   ) : (
                     <div className="grid grid-cols-2 gap-2">
                       <Link
                         to="/login"
-                        className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-bg border border-border text-text text-xs sm:text-sm font-semibold hover:bg-bg-hover transition-all shadow-xs"
+                        onClick={closeDrawer}
+                        className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl border border-border bg-bg text-xs font-semibold text-text hover:bg-bg-hover transition-colors"
                       >
-                        <LogIn className="w-3.5 h-3.5" /> Log In
+                        <LogIn className="w-3.5 h-3.5" />
+                        <span>Log in</span>
                       </Link>
                       <Link
                         to="/register"
-                        className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-accent text-accent-fg text-xs sm:text-sm font-semibold hover:bg-accent/90 transition-all shadow-xs"
+                        onClick={closeDrawer}
+                        className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-accent text-accent-fg text-xs font-semibold hover:bg-accent/90 transition-colors shadow-xs"
                       >
-                        <UserPlus className="w-3.5 h-3.5" /> Sign Up
+                        <UserPlus className="w-3.5 h-3.5" />
+                        <span>Sign up</span>
                       </Link>
                     </div>
                   )}
