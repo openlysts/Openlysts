@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { 
   Sparkles, Database, ArrowUpRight, Cpu, 
-  Wrench, HardDrive, Bot, Package, Cloud, ShieldCheck, Activity
+  Wrench, HardDrive, Bot, Package, Cloud, ShieldCheck, Activity, Radio
 } from 'lucide-react';
 import { useLiveCounter } from '@/hooks/useLiveCounter';
 
@@ -58,7 +58,7 @@ export default function DiscoverLiveMetrics({ totalRepos = 0, categoryCounts = {
         {/* Ambient Top Glow Line */}
         <div className="absolute top-0 left-1/4 right-1/4 h-[1px] bg-gradient-to-r from-transparent via-accent/40 to-transparent" />
 
-        {/* Header Bar with Live Indicator */}
+        {/* Header Bar with Organic Live Telemetry Pulse */}
         <div className="flex flex-wrap items-center justify-between gap-3 pb-4 mb-4 border-b border-border/70">
           <div className="flex items-center gap-3">
             <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-accent-soft border border-accent/30 text-accent flex-shrink-0 shadow-xs">
@@ -73,8 +73,13 @@ export default function DiscoverLiveMetrics({ totalRepos = 0, categoryCounts = {
                 <span className="text-base sm:text-lg font-extrabold text-text tracking-tight">
                   {liveTotalRepos.toLocaleString()} Repositories
                 </span>
-                <span className="inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30">
-                  <Activity className="w-3 h-3 animate-pulse" /> Live Neon Sync
+                <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30 shadow-xs">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                  </span>
+                  <Activity className="w-3 h-3 text-emerald-500 animate-pulse" />
+                  <span>Live Telemetry Pulse</span>
                 </span>
               </div>
               <p className="text-xs text-text-muted font-medium mt-0.5">

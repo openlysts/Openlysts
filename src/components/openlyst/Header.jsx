@@ -2,10 +2,9 @@ import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Bookmark, Menu, X, Settings as SettingsIcon, Smartphone, Monitor, Search, Sparkles, RefreshCw, TrendingUp, Layers, HelpCircle, Mail, LogIn, UserPlus, Compass } from 'lucide-react';
+import { Bookmark, Menu, X, Settings as SettingsIcon, Search, Sparkles, RefreshCw, TrendingUp, Layers, HelpCircle, Mail, LogIn, UserPlus, Compass } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 import { getBookmarks } from '@/lib/bookmarks';
-import { useMobileLayout } from '@/lib/MobileLayoutContext';
 import { useAuth } from '@/lib/AuthContext';
 import { useLogoEasterEgg } from '@/hooks/useLogoEasterEgg';
 import MagneticButton from '@/components/ui/MagneticButton';
@@ -25,11 +24,12 @@ const SECONDARY_NAV = [
   { to: '/contact', label: 'Contact', icon: Mail },
 ];
 
+const ALL_NAV = [...PRIMARY_NAV, ...SECONDARY_NAV];
+
 export default function Header() {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [bookmarkCount, setBookmarkCount] = useState(0);
-  const { isMobileLayout, toggleMobileLayout } = useMobileLayout();
   const { user } = useAuth();
   const triggerConfetti = useLogoEasterEgg();
 
@@ -86,31 +86,45 @@ export default function Header() {
           
           {/* Left Group: Logo + Navigation Links */}
           <div className="flex items-center gap-3 xl:gap-6 flex-shrink-0">
-            {/* Logo */}
+            {/* Logo with Fluid React Bits Micro-Physics */}
             <Link data-tour="easter-eggs" to="/discover" onClick={triggerConfetti} className="flex items-center gap-2 flex-shrink-0 group touch-target" aria-label="Openlysts Home">
-              <div className="relative w-9 h-9 rounded-xl bg-bg-card border border-border shadow-xs overflow-hidden flex items-center justify-center backdrop-blur-md group-hover:scale-105 group-hover:border-accent/40 transition-all duration-300">
-                <img src="/logo.png" alt="Openlysts Logo" className="w-7 h-7 object-contain animate-logo-enter filter drop-shadow-xs" />
-              </div>
+              <motion.div 
+                whileHover={{ scale: 1.06, rotate: [0, -4, 4, 0] }}
+                whileTap={{ scale: 0.94 }}
+                transition={{ type: 'spring', stiffness: 450, damping: 18 }}
+                className="relative w-9 h-9 rounded-xl bg-bg-card border border-border shadow-xs overflow-hidden flex items-center justify-center backdrop-blur-md group-hover:border-accent/40"
+              >
+                <img src="/logo.png" alt="Openlysts Logo" className="w-7 h-7 object-contain filter drop-shadow-xs" />
+              </motion.div>
               <span className="text-lg sm:text-xl font-black tracking-tight text-text hidden sm:block">Openlysts</span>
             </Link>
 
-            {/* Desktop Nav (Core 5 product links on >= 1280px) */}
+            {/* Desktop Nav (Core 5 product links with Water-like Spring Glide) */}
             <nav className="hidden xl:flex items-center gap-1 flex-shrink-0">
               {PRIMARY_NAV.map((item) => {
                 const active = location.pathname === item.to;
                 return (
-                  <Link
+                  <motion.div
                     key={item.to}
-                    to={item.to}
-                    className={`relative px-3 py-1.5 text-xs xl:text-sm transition-all duration-200 whitespace-nowrap rounded-lg ${
-                      active ? 'text-text font-bold' : 'text-text-secondary hover:text-text hover:bg-bg-hover/60 font-medium'
-                    }`}
+                    whileHover={{ y: -2, scale: 1.04 }}
+                    whileTap={{ scale: 0.96 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 20 }}
                   >
-                    {active && (
-                      <span className="absolute bottom-0 left-3 right-3 h-0.5 bg-accent rounded-t-full shadow-[0_-2px_8px_rgba(var(--accent-rgb),0.5)]" />
-                    )}
-                    {item.label}
-                  </Link>
+                    <Link
+                      to={item.to}
+                      className={`relative px-3 py-1.5 text-xs xl:text-sm transition-colors whitespace-nowrap rounded-lg ${
+                        active ? 'text-text font-bold' : 'text-text-secondary hover:text-text hover:bg-bg-hover/60 font-medium'
+                      }`}
+                    >
+                      {active && (
+                        <motion.span 
+                          layoutId="header-active-nav-glow"
+                          className="absolute bottom-0 left-3 right-3 h-0.5 bg-accent rounded-t-full shadow-[0_-2px_8px_rgba(var(--accent-rgb),0.6)]" 
+                        />
+                      )}
+                      {item.label}
+                    </Link>
+                  </motion.div>
                 );
               })}
             </nav>
@@ -121,8 +135,10 @@ export default function Header() {
             
             {/* Search Trigger Button (Desktop >= 1536px) */}
             {location.pathname !== '/discover' && (
-              <div 
+              <motion.div 
                 data-tour="search-bar"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 className="relative hidden 2xl:block w-36 group cursor-text flex-shrink-0"
                 onClick={openSearch}
               >
@@ -133,77 +149,90 @@ export default function Header() {
                     <span>⌘</span>K
                   </kbd>
                 </div>
-              </div>
+              </motion.div>
             )}
 
             {/* Quick Search trigger icon for screens < 2xl */}
             {location.pathname !== '/discover' && (
-              <button
+              <motion.button
+                whileHover={{ y: -2, scale: 1.06 }}
+                whileTap={{ scale: 0.94 }}
+                transition={{ type: 'spring', stiffness: 450, damping: 18 }}
                 onClick={openSearch}
                 className="2xl:hidden w-9 h-9 rounded-xl border border-border/70 bg-bg-card/70 flex items-center justify-center text-text-secondary hover:bg-bg-hover hover:border-accent/40 hover:text-text transition-all shadow-xs touch-target flex-shrink-0"
                 aria-label="Open Search"
                 title="Search (⌘K)"
               >
                 <Search className="w-4 h-4" />
-              </button>
+              </motion.button>
             )}
 
             {/* Welcome Screen Warp Button */}
-            <Link 
-              to="/" 
-              className="relative group hidden sm:flex items-center justify-center w-9 h-9 rounded-xl border border-border/70 bg-bg-card/70 hover:bg-bg-hover hover:border-accent/40 text-text-secondary hover:text-accent transition-all shadow-xs touch-target flex-shrink-0"
-              aria-label="Warp to Welcome Screen"
-              title="Welcome Screen"
+            <motion.div
+              whileHover={{ y: -2, scale: 1.06 }}
+              whileTap={{ scale: 0.94 }}
+              transition={{ type: 'spring', stiffness: 450, damping: 18 }}
             >
-              <Sparkles className="w-4 h-4" />
-            </Link>
+              <Link 
+                to="/" 
+                className="relative group hidden sm:flex items-center justify-center w-9 h-9 rounded-xl border border-border/70 bg-bg-card/70 hover:bg-bg-hover hover:border-accent/40 text-text-secondary hover:text-accent transition-all shadow-xs touch-target flex-shrink-0"
+                aria-label="Warp to Welcome Screen"
+                title="Welcome Screen"
+              >
+                <Sparkles className="w-4 h-4" />
+              </Link>
+            </motion.div>
 
             {/* Bookmarks Icon Button (Desktop/Tablet) */}
-            <Link 
-              to="/bookmarks" 
-              className="relative hidden sm:flex items-center justify-center w-9 h-9 rounded-xl border border-border/70 bg-bg-card/70 hover:bg-bg-hover hover:border-accent/40 text-text-secondary hover:text-text transition-all shadow-xs touch-target flex-shrink-0" 
-              aria-label="View Bookmarks"
-              title="Bookmarks"
+            <motion.div
+              whileHover={{ y: -2, scale: 1.06 }}
+              whileTap={{ scale: 0.94 }}
+              transition={{ type: 'spring', stiffness: 450, damping: 18 }}
             >
-              <Bookmark className="w-4 h-4" />
-              {bookmarkCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-accent text-accent-fg text-[9px] font-black flex items-center justify-center shadow-xs">
-                  {bookmarkCount > 9 ? '9+' : bookmarkCount}
-                </span>
-              )}
-            </Link>
+              <Link 
+                to="/bookmarks" 
+                className="relative hidden sm:flex items-center justify-center w-9 h-9 rounded-xl border border-border/70 bg-bg-card/70 hover:bg-bg-hover hover:border-accent/40 text-text-secondary hover:text-text transition-all shadow-xs touch-target flex-shrink-0" 
+                aria-label="View Bookmarks"
+                title="Bookmarks"
+              >
+                <Bookmark className="w-4 h-4" />
+                {bookmarkCount > 0 && (
+                  <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-accent text-accent-fg text-[9px] font-black flex items-center justify-center shadow-xs">
+                    {bookmarkCount > 9 ? '9+' : bookmarkCount}
+                  </span>
+                )}
+              </Link>
+            </motion.div>
 
             {/* Settings */}
-            <Link 
-              to="/settings" 
-              className="hidden sm:flex items-center justify-center w-9 h-9 rounded-xl border border-border/70 bg-bg-card/70 hover:bg-bg-hover hover:border-accent/40 text-text-secondary hover:text-text transition-all shadow-xs touch-target flex-shrink-0" 
-              aria-label="Settings"
-              title="Settings"
+            <motion.div
+              whileHover={{ y: -2, scale: 1.06 }}
+              whileTap={{ scale: 0.94 }}
+              transition={{ type: 'spring', stiffness: 450, damping: 18 }}
             >
-              <SettingsIcon className="w-4 h-4" />
-            </Link>
+              <Link 
+                to="/settings" 
+                className="hidden sm:flex items-center justify-center w-9 h-9 rounded-xl border border-border/70 bg-bg-card/70 hover:bg-bg-hover hover:border-accent/40 text-text-secondary hover:text-text transition-all shadow-xs touch-target flex-shrink-0" 
+                aria-label="Settings"
+                title="Settings"
+              >
+                <SettingsIcon className="w-4 h-4" />
+              </Link>
+            </motion.div>
 
             {/* PWA Install Button (Mobile, Tablet & Desktop) */}
             <PWAInstallButton className="flex" />
-
-            {/* Mobile Layout Simulator Toggle (Desktop only) */}
-            <button
-              onClick={toggleMobileLayout}
-              className="hidden xl:flex items-center justify-center w-9 h-9 rounded-xl border border-border/70 bg-bg-card/70 hover:bg-bg-hover hover:border-accent/40 text-text-secondary hover:text-text transition-all shadow-xs touch-target flex-shrink-0"
-              title={isMobileLayout ? "Switch to Desktop Layout" : "Switch to Mobile Layout"}
-              aria-label={isMobileLayout ? "Switch to Desktop Layout" : "Switch to Mobile Layout"}
-            >
-              {isMobileLayout ? <Monitor className="w-4 h-4" /> : <Smartphone className="w-4 h-4" />}
-            </button>
 
             {/* Theme Toggle */}
             <ThemeToggle />
             
             {/* Auth Buttons */}
             {user ? (
-              <Link to="/profile" className="ml-1 flex items-center justify-center w-9 h-9 rounded-full bg-accent/20 text-accent font-bold text-xs sm:text-sm hover:bg-accent/30 transition-colors touch-target flex-shrink-0 border border-accent/30" title="Profile">
-                {(user.name || user.email || 'U')[0].toUpperCase()}
-              </Link>
+              <motion.div whileHover={{ scale: 1.06 }} whileTap={{ scale: 0.94 }}>
+                <Link to="/profile" className="ml-1 flex items-center justify-center w-9 h-9 rounded-full bg-accent/20 text-accent font-bold text-xs sm:text-sm hover:bg-accent/30 transition-colors touch-target flex-shrink-0 border border-accent/30" title="Profile">
+                  {(user.name || user.email || 'U')[0].toUpperCase()}
+                </Link>
+              </motion.div>
             ) : (
               <div className="hidden sm:flex items-center gap-1.5 ml-1 pl-2 border-l border-border/70 flex-shrink-0">
                 <Link to="/login" className="h-9 px-2.5 flex items-center justify-center text-xs sm:text-sm font-medium text-text-secondary hover:text-text transition-colors rounded-xl whitespace-nowrap">
@@ -218,7 +247,8 @@ export default function Header() {
             )}
 
             {/* Mobile / Tablet Hamburger Toggle */}
-            <button
+            <motion.button
+              whileTap={{ scale: 0.92 }}
               type="button"
               onClick={() => setMobileOpen((v) => !v)}
               className="xl:hidden w-9 h-9 rounded-xl border border-border/70 bg-bg-card/70 hover:bg-bg-hover hover:text-text flex items-center justify-center text-text-secondary transition-all shadow-xs touch-target flex-shrink-0 ml-0.5"
@@ -226,7 +256,7 @@ export default function Header() {
               aria-label="Toggle Navigation Menu"
             >
               {mobileOpen ? <X className="w-4 h-4 text-accent" /> : <Menu className="w-4 h-4" />}
-            </button>
+            </motion.button>
           </div>
         </div>
       </div>

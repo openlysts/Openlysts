@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useQuery } from '@tanstack/react-query';
@@ -10,6 +10,7 @@ import RepositoryGrid from '@/components/openlyst/RepositoryGrid';
 import AnimatedSearch from '@/components/openlyst/AnimatedSearch';
 import FilterBar from '@/components/openlyst/FilterBar';
 import DiscoverLiveMetrics from '@/components/openlyst/DiscoverLiveMetrics';
+import VariableProximity from '@/components/ui/VariableProximity';
 import { useToast } from '@/components/ui/use-toast';
 
 const LANGUAGES = ['Python', 'JavaScript', 'TypeScript', 'Go', 'Rust', 'Java', 'C++', 'C', 'Ruby', 'PHP', 'Swift', 'Kotlin', 'Shell', 'Vue', 'HTML', 'Dart'];
@@ -28,6 +29,7 @@ export default function Home() {
   usePageTitle('Discover');
   const navigate = useNavigate();
   const { toast } = useToast();
+  const heroRef = useRef(null);
   const [viewHistory, setViewHistory] = useState([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [historyPaused, setHistoryPaused] = useState(false);
@@ -74,7 +76,6 @@ export default function Home() {
     refetchInterval: 60000
   });
 
-
   const hasData = (trending?.results?.length || 0) > 0 || (recent?.results?.length || 0) > 0;
 
   const emptyFilters = {
@@ -99,7 +100,6 @@ export default function Home() {
     if (newFilters.activity) params.set('activity', newFilters.activity);
     if (newFilters.sort && newFilters.sort !== 'trending') params.set('sort', newFilters.sort);
     
-    // Navigate to search with the updated filter matrix or sort
     navigate(`/search?${params.toString()}`);
   };
 
@@ -132,8 +132,8 @@ export default function Home() {
         )}
       </AnimatePresence>
 
-      {/* Hero */}
-      <section className="pt-10 sm:pt-16 pb-6 text-center max-w-5xl mx-auto px-4">
+      {/* Hero Section with React Bits Variable Proximity Typography */}
+      <section ref={heroRef} className="pt-10 sm:pt-16 pb-6 text-center max-w-5xl mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
@@ -143,11 +143,29 @@ export default function Home() {
             <Sparkles className="w-3.5 h-3.5" />
             Discover. Filter. Build.
           </div>
+          
           <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-text leading-tight mb-3">
-            Discover everything on GitHub.
+            <VariableProximity
+              label="Discover Everything on GitHub. Without the Noise."
+              className="text-4xl sm:text-6xl font-black tracking-tight text-text leading-tight"
+              fromFontVariationSettings="'wght' 700, 'opsz' 20"
+              toFontVariationSettings="'wght' 900, 'opsz' 40"
+              containerRef={heroRef}
+              radius={140}
+              falloff="gaussian"
+            />
           </h1>
+          
           <p className="text-text-secondary text-base sm:text-lg leading-relaxed mb-7 max-w-2xl mx-auto">
-            Explore and search high-quality open-source software across AI, developer tools, self-hosting, and the vast expanse of GitHub.
+            <VariableProximity
+              label="Surgical filtering, instant SaaS alternatives, and curated intelligence across AI, systems, and open-source."
+              className="text-text-secondary text-base sm:text-lg leading-relaxed"
+              fromFontVariationSettings="'wght' 400, 'opsz' 14"
+              toFontVariationSettings="'wght' 650, 'opsz' 24"
+              containerRef={heroRef}
+              radius={110}
+              falloff="gaussian"
+            />
           </p>
         </motion.div>
 
@@ -181,113 +199,88 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {!hasData && !tLoading && !rLoading ?
-      <div className="flex flex-col items-center justify-center py-20 text-center animate-pulse">
-          <Database className="w-10 h-10 text-text-muted mb-3 animate-bounce" />
-          <p className="text-text-secondary text-lg font-medium mb-1">Syncing repositories from GitHub...</p>
-          <p className="text-text-muted text-sm mb-4">Please wait a few moments while the background worker processes the initial data.</p>
-        </div> :
-
-      <div className="space-y-12 pb-12">
-          {/* Trending This Week */}
-          <section>
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="flex items-center gap-2 text-xl font-bold text-text">
-                <TrendingUp className="w-5 h-5 text-trending" />
-                Trending This Week
-                <button 
-                  onClick={async () => {
-                    setIsRefreshing(true);
-                    try {
-                      await refetchTrending();
-                      toast({ title: 'Refreshed', description: 'Trending repositories updated.', duration: 2000 });
-                    } catch (e) {
-                      toast({ title: 'Error', description: 'Failed to refresh.', variant: 'destructive', duration: 2000 });
-                    } finally {
-                      setIsRefreshing(false);
-                    }
-                  }} 
-                  disabled={tRefetching || isRefreshing}
-                  className="ml-2 p-1 text-text-muted hover:text-text rounded-md hover:bg-bg-subtle transition-colors"
-                  title="Refresh Trending"
-                  aria-label="Refresh trending repositories"
-                >
-                  <RefreshCw className={`w-4 h-4 ${tRefetching || isRefreshing ? 'animate-spin' : ''}`} />
-                </button>
-              </h2>
-              <Link to="/trending" className="text-sm text-text-muted hover:text-text flex items-center gap-1">
-                View all <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
+      {/* Main Grid: Trending + Recent Tabs */}
+      <section className="mb-14">
+        <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
+              <TrendingUp className="w-5 h-5 text-trending" />
+              <h2 className="text-xl sm:text-2xl font-black text-text tracking-tight">Trending This Week</h2>
             </div>
-            <RepositoryGrid repos={trending?.results?.slice(0, 6) || []} loading={tLoading} />
-          </section>
-
-          {/* Recently Discovered */}
-          <section>
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="flex items-center gap-2 text-xl font-bold text-text">
-                <Clock className="w-5 h-5 text-accent" />
-                Recently Discovered
-              </h2>
-            </div>
-            <RepositoryGrid repos={recent?.results?.slice(0, 6) || []} loading={rLoading} />
-          </section>
-
-          {/* Recently Viewed History */}
-          {(viewHistory.length > 0 || historyPaused) && (
-            <section>
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="flex items-center gap-2 text-xl font-bold text-text">
-                  <Clock className="w-5 h-5 text-accent" />
-                  Your Viewing History
-                </h2>
-                <div className="flex items-center gap-4">
-                  <button
-                    onClick={() => {
-                      const newState = !historyPaused;
-                      setHistoryPaused(newState);
-                      localStorage.setItem('openlyst_history_paused', String(newState));
-                    }}
-                    className={`text-sm flex items-center gap-1 transition-colors ${historyPaused ? 'text-accent hover:text-accent/80' : 'text-text-muted hover:text-text'}`}
-                  >
-                    {historyPaused ? 'Resume History' : 'Pause History'}
-                  </button>
-                  <button
-                    onClick={() => {
-                      localStorage.removeItem('openlyst_history');
-                      setViewHistory([]);
-                    }}
-                    className="text-sm text-text-muted hover:text-red-400 flex items-center gap-1 transition-colors"
-                  >
-                    Clear History
-                  </button>
-                </div>
-              </div>
-              {viewHistory.length > 0 ? (
-                <RepositoryGrid repos={viewHistory.slice(0, 4)} loading={false} />
-              ) : (
-                <div className="flex flex-col items-center justify-center py-8 text-center rounded-2xl border border-dashed border-border/50 bg-surface/20">
-                  <p className="text-text-muted text-sm max-w-sm">Your viewing history is currently paused and empty.</p>
-                </div>
-              )}
-            </section>
-          )}
-
-          {/* Popular in AI */}
-          <section>
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="flex items-center gap-2 text-xl font-bold text-text">
-                <Sparkles className="w-5 h-5 text-accent" />
-                Popular in AI
-              </h2>
-              <Link to="/search?categories=ai" className="text-sm text-text-muted hover:text-text flex items-center gap-1">
-                View all <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-            </div>
-            <RepositoryGrid repos={aiPopular?.results?.slice(0, 6) || []} loading={aLoading} />
-          </section>
+            <button
+              onClick={() => {
+                setIsRefreshing(true);
+                refetchTrending().finally(() => setIsRefreshing(false));
+              }}
+              className={`p-1.5 rounded-lg border border-border bg-bg-card text-text-secondary hover:text-accent transition-all ${
+                isRefreshing || tRefetching ? 'animate-spin text-accent' : ''
+              }`}
+              title="Refresh Trending"
+            >
+              <RefreshCw className="w-3.5 h-3.5" />
+            </button>
+          </div>
+          <Link
+            to="/trending"
+            className="group flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-accent hover:text-accent/80 transition-colors"
+          >
+            <span>View all trending</span>
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </Link>
         </div>
-      }
-    </div>);
 
+        <RepositoryGrid
+          repos={trending?.results || []}
+          isLoading={tLoading}
+          emptyMessage="No trending repositories found."
+        />
+      </section>
+
+      {/* Popular in AI & Machine Learning */}
+      <section className="mb-14">
+        <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
+          <div className="flex items-center gap-2">
+            <Cpu className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+            <h2 className="text-xl sm:text-2xl font-black text-text tracking-tight">Top AI & Machine Learning</h2>
+          </div>
+          <Link
+            to="/search?categories=ai"
+            className="group flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-accent hover:text-accent/80 transition-colors"
+          >
+            <span>Explore AI Repos</span>
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </Link>
+        </div>
+
+        <RepositoryGrid
+          repos={aiPopular?.results || []}
+          isLoading={aLoading}
+          emptyMessage="No AI repositories found."
+        />
+      </section>
+
+      {/* Recently Added Section */}
+      <section className="mb-16">
+        <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
+          <div className="flex items-center gap-2">
+            <Clock className="w-5 h-5 text-accent" />
+            <h2 className="text-xl sm:text-2xl font-black text-text tracking-tight">Recently Added</h2>
+          </div>
+          <Link
+            to="/search?sort=recent"
+            className="group flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-accent hover:text-accent/80 transition-colors"
+          >
+            <span>View all recent</span>
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </Link>
+        </div>
+
+        <RepositoryGrid
+          repos={recent?.results || []}
+          isLoading={rLoading}
+          emptyMessage="No recent repositories found."
+        />
+      </section>
+    </div>
+  );
 }
