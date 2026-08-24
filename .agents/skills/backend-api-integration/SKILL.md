@@ -55,5 +55,23 @@ export async function exampleFunction(params) {
 }
 ```
 
+## 4. In-Memory Caching & Performance
+For expensive database computations (such as category count aggregations or static lists), use the singleton cache manager in `server/services/cache.js`:
+
+```javascript
+import cache from '../services/cache.js';
+
+export default async function getFastAggregations(req, res) {
+  const cacheKey = 'aggregations_summary';
+  const cached = cache.get(cacheKey);
+  if (cached) return res.json(cached);
+
+  const data = await queryFromDatabase();
+  cache.set(cacheKey, data, 5 * 60 * 1000); // 5 min TTL
+  return res.json(data);
+}
+```
+
 > [!CAUTION]
-> **NEVER** write frontend-only mock implementations. Always build the full pipeline from the frontend to a real backend handler.
+> **NEVER** write frontend-only mock implementations. Always build the full pipeline from the frontend to a real backend handler with proper in-memory caching and database persistence.
+
