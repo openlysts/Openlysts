@@ -30,10 +30,10 @@ export default function About() {
   const [openFaq, setOpenFaq] = useState(0);
 
   const founderChips = [
-    { label: 'Tech BA & Project Manager', icon: Workflow, color: 'from-blue-500/20 to-cyan-500/20 text-blue-400 border-blue-500/30' },
-    { label: 'AI Enthusiast & Systems Architect', icon: Cpu, color: 'from-purple-500/20 to-pink-500/20 text-purple-400 border-purple-500/30' },
-    { label: 'Relentless OSS Hobbyist & Builder', icon: Code2, color: 'from-amber-500/20 to-orange-500/20 text-amber-400 border-amber-500/30' },
-    { label: 'Fuelled by High-Roast Coffee ☕', icon: Coffee, color: 'from-emerald-500/20 to-teal-500/20 text-emerald-400 border-emerald-500/30' },
+    { label: 'Tech BA & Project Manager', icon: Workflow, color: 'from-blue-500/15 to-cyan-500/15 text-blue-700 dark:text-blue-300 border-blue-500/30 dark:border-blue-500/40' },
+    { label: 'AI Enthusiast & Systems Architect', icon: Cpu, color: 'from-purple-500/15 to-pink-500/15 text-purple-700 dark:text-purple-300 border-purple-500/30 dark:border-purple-500/40' },
+    { label: 'Relentless OSS Hobbyist & Builder', icon: Code2, color: 'from-amber-500/15 to-orange-500/15 text-amber-800 dark:text-amber-300 border-amber-500/30 dark:border-amber-500/40' },
+    { label: 'Fuelled by High-Roast Coffee ☕', icon: Coffee, color: 'from-emerald-500/15 to-teal-500/15 text-emerald-800 dark:text-emerald-300 border-emerald-500/30 dark:border-emerald-500/40' },
   ];
 
   const corePillars = [
@@ -133,7 +133,7 @@ export default function About() {
           <div className="p-4 rounded-2xl bg-bg-card/70 border border-border/60 backdrop-blur-md text-center shadow-sm">
             <div className="text-2xl sm:text-3xl font-black text-text flex items-center justify-center gap-0.5">
               <AnimateDigits value={1280} />
-              <span className="text-purple-400">+</span>
+              <span className="text-purple-600 dark:text-purple-400">+</span>
             </div>
             <div className="text-xs text-text-secondary font-medium mt-1">Free Alternatives</div>
           </div>
@@ -141,7 +141,7 @@ export default function About() {
           <div className="p-4 rounded-2xl bg-bg-card/70 border border-border/60 backdrop-blur-md text-center shadow-sm">
             <div className="text-2xl sm:text-3xl font-black text-text flex items-center justify-center gap-0.5">
               <AnimateDigits value={100} />
-              <span className="text-emerald-400">%</span>
+              <span className="text-emerald-600 dark:text-emerald-400">%</span>
             </div>
             <div className="text-xs text-text-secondary font-medium mt-1">Free & Open Access</div>
           </div>
@@ -178,7 +178,7 @@ export default function About() {
                   Creator & Architect
                 </span>
               </div>
-              <p className="text-accent font-semibold text-sm sm:text-base flex items-center justify-center lg:justify-start gap-1.5">
+              <p className="text-accent dark:text-purple-400 font-semibold text-sm sm:text-base flex items-center justify-center lg:justify-start gap-1.5">
                 <Terminal className="w-4 h-4" />
                 <span>Tech BA & Project Manager • Systems Architect • AI Craftsman</span>
               </p>
@@ -216,7 +216,7 @@ export default function About() {
                 href="https://www.linkedin.com/in/adil-rafiq-dar"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600/10 hover:bg-blue-600/20 text-blue-400 font-semibold text-sm border border-blue-500/30 transition-all hover:scale-105 active:scale-95 shadow-sm"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-500/10 hover:bg-blue-500/20 text-blue-700 dark:text-blue-300 font-semibold text-sm border border-blue-500/30 dark:border-blue-500/40 transition-all hover:scale-105 active:scale-95 shadow-sm"
               >
                 <Linkedin className="w-4 h-4" />
                 <span>Connect on LinkedIn</span>

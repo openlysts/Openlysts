@@ -237,7 +237,7 @@ export default function ReactiveAvatar() {
       </motion.div>
 
       {/* Interactive Micro Tip */}
-      <span className="text-[11px] text-text-secondary/70 mt-5 tracking-tight flex items-center gap-1">
+      <span className="text-[11px] text-text-secondary font-medium mt-5 tracking-tight flex items-center gap-1">
         <Sparkles className="w-3 h-3 text-accent" />
         Natural almond gaze • Pupils track cursor
       </span>
