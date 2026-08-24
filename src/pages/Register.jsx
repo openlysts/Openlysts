@@ -1,13 +1,26 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { User, Mail, Lock, AlertCircle, Github, Eye, EyeOff, ArrowRight, ArrowLeft, Check, ShieldCheck } from 'lucide-react';
+import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from 'framer-motion';
+import { 
+  User, Mail, Lock, AlertCircle, Github, Eye, EyeOff, ArrowRight, ArrowLeft, 
+  Check, Sparkles, Zap, Shield, Bookmark, Terminal, Code, Cpu, Layers, Rocket
+} from 'lucide-react';
+import AnimateDigits from '@/components/openlyst/AnimateDigits';
 import SocialHoverCards from '@/components/openlyst/SocialHoverCards';
+
+const DEVELOPER_ROLES = [
+  { id: 'fullstack', label: 'Fullstack', icon: Layers, color: 'from-blue-500 to-cyan-400' },
+  { id: 'ai', label: 'AI / ML', icon: Cpu, color: 'from-purple-500 to-pink-500' },
+  { id: 'devops', label: 'DevOps / Cloud', icon: Terminal, color: 'from-emerald-500 to-teal-400' },
+  { id: 'systems', label: 'Systems & Backend', icon: Code, color: 'from-amber-500 to-orange-400' },
+  { id: 'creator', label: 'OSS Builder', icon: Rocket, color: 'from-accent to-trending' },
+];
 
 export default function Register() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [selectedRole, setSelectedRole] = useState('fullstack');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
@@ -18,6 +31,7 @@ export default function Register() {
   const queryParams = new URLSearchParams(location.search);
   const redirect = queryParams.get('redirect') || '/discover';
 
+  // Keyboard shortcut Esc to navigate back to Discover
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
@@ -28,7 +42,7 @@ export default function Register() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [navigate]);
 
-  // 3D Card Physics
+  // 3D Card Physics for Register Card
   const cardRef = useRef(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -56,6 +70,7 @@ export default function Register() {
   const hasUppercase = /[A-Z]/.test(password);
   const hasLowercase = /[a-z]/.test(password);
   const hasNumberOrSymbol = /[0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password);
+  const strengthScore = [hasMinLength, hasUppercase, hasLowercase, hasNumberOrSymbol].filter(Boolean).length;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -67,7 +82,7 @@ export default function Register() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
-        body: JSON.stringify({ name, email, password })
+        body: JSON.stringify({ name, email, password, role: selectedRole })
       });
       
       const data = await res.json();
@@ -84,12 +99,8 @@ export default function Register() {
     }
   };
 
-  const handleGoogleLogin = () => {
-    window.location.href = `/api/auth/google?redirect=${encodeURIComponent(redirect)}`;
-  };
-  
-  const handleGithubLogin = () => {
-    window.location.href = `/api/auth/github?redirect=${encodeURIComponent(redirect)}`;
+  const handleOAuthLogin = (provider) => {
+    window.location.href = `/api/auth/${provider}?redirect=${encodeURIComponent(redirect)}`;
   };
 
   if (success) {
@@ -109,14 +120,15 @@ export default function Register() {
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="bg-bg-card/90 backdrop-blur-2xl py-10 px-6 sm:px-10 shadow-2xl rounded-3xl border border-border text-center"
+            className="bg-bg-card/95 backdrop-blur-2xl py-10 px-6 sm:px-10 shadow-2xl rounded-3xl border border-accent/30 text-center relative overflow-hidden"
           >
+            <div className="absolute -top-24 -left-24 w-48 h-48 bg-accent/20 rounded-full blur-3xl pointer-events-none" />
             <div className="w-16 h-16 rounded-2xl bg-oss-soft border border-oss/30 flex items-center justify-center mx-auto mb-4 text-oss">
               <Mail className="w-8 h-8" />
             </div>
             <h2 className="text-2xl font-black text-text mb-2">Check your email</h2>
             <p className="text-text-secondary text-sm mb-6 leading-relaxed">
-              We've dispatched a confirmation link to <strong className="text-text">{email}</strong>. Click the link inside to activate your Openlysts account.
+              We've dispatched a confirmation link to <strong className="text-text font-mono">{email}</strong>. Click the link inside to activate your Openlysts Pass.
             </p>
             <Link
               to="/login"
@@ -136,11 +148,11 @@ export default function Register() {
 
   return (
     <div className="min-h-screen flex flex-col justify-between py-6 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-bg">
-      {/* Dynamic Background Mesh & Glow Orbs */}
+      {/* Dynamic Ambient Background Mesh & Glowing Orbs */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden -z-10">
-        <div className="absolute -top-32 -right-32 w-[32rem] h-[32rem] bg-accent/15 rounded-full blur-[120px] animate-pulse" />
-        <div className="absolute top-1/2 -left-32 w-[30rem] h-[30rem] bg-oss/10 rounded-full blur-[140px]" />
-        <div className="absolute -bottom-32 right-1/3 w-[28rem] h-[28rem] bg-blue-500/10 rounded-full blur-[120px]" />
+        <div className="absolute -top-40 -left-40 w-[36rem] h-[36rem] bg-accent/15 rounded-full blur-[140px] animate-pulse" />
+        <div className="absolute top-1/2 -right-40 w-[34rem] h-[34rem] bg-purple-500/10 rounded-full blur-[160px]" />
+        <div className="absolute -bottom-40 left-1/3 w-[30rem] h-[30rem] bg-blue-500/10 rounded-full blur-[140px]" />
         <div className="absolute inset-0 bg-[radial-gradient(#ffffff0a_1px,transparent_1px)] [background-size:24px_24px] opacity-60" />
       </div>
 
@@ -166,30 +178,141 @@ export default function Register() {
         </Link>
       </div>
 
-      {/* Main Form Area */}
-      <div className="sm:mx-auto sm:w-full sm:max-w-md my-auto py-6 z-10">
-        <div className="text-center mb-6">
-          <h1 className="text-3xl font-black text-text tracking-tight">
-            Join Openlysts
-          </h1>
-          <p className="text-sm text-text-muted mt-1.5">
-            Curate collections, bookmark top OSS, and join the developer community
-          </p>
+      {/* Main Content: 2-Column High-Converting Layout */}
+      <div className="w-full max-w-6xl mx-auto my-auto py-6 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center z-10">
+        
+        {/* Left Column: Interactive Holographic Dev Pass & Unlocks (Psychological Hook) */}
+        <div className="lg:col-span-6 flex flex-col justify-center space-y-6">
+          
+          <div className="space-y-2">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/10 border border-accent/20 text-accent text-xs font-bold w-fit">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Genesis Member Access • Free Forever</span>
+            </div>
+
+            <h1 className="text-4xl sm:text-5xl font-black text-text tracking-tight leading-[1.12]">
+              Claim your <br />
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-accent via-cyan-400 to-purple-400">
+                Openlysts Dev Pass.
+              </span>
+            </h1>
+
+            <p className="text-sm text-text-secondary leading-relaxed max-w-md">
+              Join over 100,000+ developers discovering, comparing, and deploying cutting-edge open-source software before it hits mainstream.
+            </p>
+          </div>
+
+          {/* Interactive 3D Holographic Member Pass */}
+          <motion.div 
+            whileHover={{ scale: 1.02 }}
+            transition={{ type: 'spring', stiffness: 200, damping: 15 }}
+            className="relative rounded-3xl p-6 bg-gradient-to-br from-bg-card/90 via-bg-card/70 to-bg-subtle/80 border border-border/80 shadow-2xl backdrop-blur-2xl overflow-hidden group max-w-md"
+          >
+            {/* Iridescent Ambient Gradient Flare */}
+            <div className="absolute -top-20 -right-20 w-48 h-48 bg-accent/20 rounded-full blur-3xl group-hover:bg-accent/30 transition-all" />
+            <div className="absolute -bottom-20 -left-20 w-48 h-48 bg-purple-500/20 rounded-full blur-3xl" />
+
+            <div className="relative z-10 flex items-start justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-accent to-cyan-400 p-[2px] shadow-lg">
+                  <div className="w-full h-full bg-bg-card rounded-[14px] flex items-center justify-center font-black text-lg text-accent">
+                    {name ? name.charAt(0).toUpperCase() : '⚡'}
+                  </div>
+                </div>
+                <div>
+                  <div className="font-bold text-sm text-text flex items-center gap-1.5">
+                    {name || 'Your Developer Name'}
+                    <span className="inline-block w-2 h-2 rounded-full bg-oss animate-pulse" />
+                  </div>
+                  <div className="text-xs font-mono text-text-muted">
+                    {email ? email : 'dev@openlysts.network'}
+                  </div>
+                </div>
+              </div>
+
+              <div className="text-right">
+                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-accent/15 text-accent border border-accent/30">
+                  Genesis Pioneer
+                </span>
+                <div className="text-[11px] font-mono text-text-muted mt-1">
+                  Pass #35,477
+                </div>
+              </div>
+            </div>
+
+            {/* Selected Role Badge on Pass */}
+            <div className="flex items-center justify-between pt-3 border-t border-border/50 text-xs">
+              <span className="text-text-muted font-medium">Active Track:</span>
+              <span className="font-bold text-text bg-bg-subtle px-2.5 py-1 rounded-lg border border-border/60 flex items-center gap-1.5">
+                <Zap className="w-3.5 h-3.5 text-accent" />
+                {DEVELOPER_ROLES.find(r => r.id === selectedRole)?.label || 'Fullstack'}
+              </span>
+            </div>
+
+            {/* Instant Member Perks Preview */}
+            <div className="mt-4 grid grid-cols-2 gap-2 text-[11px] text-text-secondary">
+              <div className="flex items-center gap-1.5 font-medium">
+                <Check className="w-3.5 h-3.5 text-oss" />
+                <span>Star Spike Alerts</span>
+              </div>
+              <div className="flex items-center gap-1.5 font-medium">
+                <Check className="w-3.5 h-3.5 text-oss" />
+                <span>Unlimited Docks</span>
+              </div>
+              <div className="flex items-center gap-1.5 font-medium">
+                <Check className="w-3.5 h-3.5 text-oss" />
+                <span>1-Click Docker JIT</span>
+              </div>
+              <div className="flex items-center gap-1.5 font-medium">
+                <Check className="w-3.5 h-3.5 text-oss" />
+                <span>Cloud Sync Everywhere</span>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Live Platform Scale Counters */}
+          <div className="grid grid-cols-3 gap-3 max-w-md">
+            <div className="p-3 rounded-2xl bg-bg-card/70 border border-border/70 backdrop-blur-md">
+              <div className="text-lg font-black text-text">
+                <AnimateDigits value="35,476" />
+              </div>
+              <div className="text-[10px] font-semibold text-text-muted mt-0.5">Projects Rated</div>
+            </div>
+            <div className="p-3 rounded-2xl bg-bg-card/70 border border-border/70 backdrop-blur-md">
+              <div className="text-lg font-black text-accent">
+                <AnimateDigits value="1,280" />+
+              </div>
+              <div className="text-[10px] font-semibold text-text-muted mt-0.5">Free Alternatives</div>
+            </div>
+            <div className="p-3 rounded-2xl bg-bg-card/70 border border-border/70 backdrop-blur-md">
+              <div className="text-lg font-black text-trending">100%</div>
+              <div className="text-[10px] font-semibold text-text-muted mt-0.5">Verified OSS</div>
+            </div>
+          </div>
         </div>
 
-        {/* 3D Interactive Card Container */}
+        {/* Right Column: 3D Glassmorphic Signup Form */}
         <div 
-          className="[perspective:1200px]"
+          className="lg:col-span-6 [perspective:1200px] w-full max-w-md mx-auto"
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
         >
           <motion.div
             ref={cardRef}
             style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
-            className="relative bg-bg-card/90 backdrop-blur-2xl p-7 sm:p-9 rounded-3xl border border-border/80 shadow-2xl transition-shadow duration-300"
+            className="relative bg-bg-card/95 backdrop-blur-2xl p-7 sm:p-9 rounded-3xl border border-border/80 shadow-2xl transition-shadow duration-300"
           >
-            {/* Subtle Specular Sheen */}
+            {/* Specular Light Sheen */}
             <div className="absolute inset-0 rounded-3xl bg-gradient-to-tr from-white/[0.04] to-transparent pointer-events-none" />
+
+            <div className="mb-5">
+              <h2 className="text-2xl font-black text-text tracking-tight">
+                Create your account
+              </h2>
+              <p className="text-xs text-text-muted mt-1">
+                Start discovering high-velocity open-source tools in seconds
+              </p>
+            </div>
 
             {error && (
               <motion.div 
@@ -203,6 +326,35 @@ export default function Register() {
             )}
 
             <form className="space-y-4" onSubmit={handleSubmit}>
+              
+              {/* Primary Developer Role Track Selector */}
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-text-secondary mb-1.5">
+                  Select Primary Track
+                </label>
+                <div className="flex flex-wrap gap-1.5">
+                  {DEVELOPER_ROLES.map((r) => {
+                    const isSelected = selectedRole === r.id;
+                    const Icon = r.icon;
+                    return (
+                      <button
+                        key={r.id}
+                        type="button"
+                        onClick={() => setSelectedRole(r.id)}
+                        className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 ${
+                          isSelected
+                            ? 'bg-accent text-accent-fg shadow-sm scale-[1.02]'
+                            : 'bg-bg/70 hover:bg-bg border border-border/70 text-text-secondary hover:text-text'
+                        }`}
+                      >
+                        <Icon className="w-3 h-3" />
+                        <span>{r.label}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-text-secondary mb-1.5">
                   Full Name
@@ -216,9 +368,9 @@ export default function Register() {
                     required
                     autoComplete="name"
                     value={name}
-                    onChange={e => setName(e.target.value)}
-                    className="w-full bg-bg/80 border border-border rounded-xl pl-10 pr-4 py-2.5 text-sm text-text placeholder:text-text-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20 transition-all"
-                    placeholder="Ada Lovelace"
+                    onChange={(e) => setName(e.target.value)}
+                    className="block w-full pl-10 pr-3.5 py-2.5 bg-bg/80 border border-border rounded-xl text-sm text-text placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all duration-200"
+                    placeholder="Linus Torvalds"
                   />
                 </div>
               </div>
@@ -236,9 +388,9 @@ export default function Register() {
                     required
                     autoComplete="email"
                     value={email}
-                    onChange={e => setEmail(e.target.value)}
-                    className="w-full bg-bg/80 border border-border rounded-xl pl-10 pr-4 py-2.5 text-sm text-text placeholder:text-text-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20 transition-all"
-                    placeholder="you@example.com"
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="block w-full pl-10 pr-3.5 py-2.5 bg-bg/80 border border-border rounded-xl text-sm text-text placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all duration-200"
+                    placeholder="you@domain.com"
                   />
                 </div>
               </div>
@@ -256,8 +408,8 @@ export default function Register() {
                     required
                     autoComplete="new-password"
                     value={password}
-                    onChange={e => setPassword(e.target.value)}
-                    className="w-full bg-bg/80 border border-border rounded-xl pl-10 pr-10 py-2.5 text-sm text-text placeholder:text-text-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20 transition-all"
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="block w-full pl-10 pr-10 py-2.5 bg-bg/80 border border-border rounded-xl text-sm text-text placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all duration-200"
                     placeholder="••••••••"
                   />
                   <button
@@ -269,24 +421,32 @@ export default function Register() {
                   </button>
                 </div>
 
-                {/* Password strength indicator */}
+                {/* Progressive Strength Milestone Indicator */}
                 {password.length > 0 && (
-                  <div className="mt-2.5 grid grid-cols-2 gap-2 text-[11px] text-text-muted">
-                    <div className={`flex items-center gap-1.5 ${hasMinLength ? 'text-oss font-semibold' : ''}`}>
-                      <Check className={`w-3 h-3 ${hasMinLength ? 'opacity-100' : 'opacity-30'}`} />
-                      <span>8+ chars</span>
+                  <div className="mt-2.5 space-y-1.5">
+                    <div className="flex gap-1 h-1.5 w-full bg-bg/80 rounded-full overflow-hidden">
+                      <div className={`h-full transition-all duration-300 ${strengthScore >= 1 ? 'w-1/4 bg-red-500' : 'w-0'}`} />
+                      <div className={`h-full transition-all duration-300 ${strengthScore >= 2 ? 'w-1/4 bg-amber-500' : 'w-0'}`} />
+                      <div className={`h-full transition-all duration-300 ${strengthScore >= 3 ? 'w-1/4 bg-blue-500' : 'w-0'}`} />
+                      <div className={`h-full transition-all duration-300 ${strengthScore >= 4 ? 'w-1/4 bg-oss' : 'w-0'}`} />
                     </div>
-                    <div className={`flex items-center gap-1.5 ${hasUppercase ? 'text-oss font-semibold' : ''}`}>
-                      <Check className={`w-3 h-3 ${hasUppercase ? 'opacity-100' : 'opacity-30'}`} />
-                      <span>Uppercase</span>
-                    </div>
-                    <div className={`flex items-center gap-1.5 ${hasLowercase ? 'text-oss font-semibold' : ''}`}>
-                      <Check className={`w-3 h-3 ${hasLowercase ? 'opacity-100' : 'opacity-30'}`} />
-                      <span>Lowercase</span>
-                    </div>
-                    <div className={`flex items-center gap-1.5 ${hasNumberOrSymbol ? 'text-oss font-semibold' : ''}`}>
-                      <Check className={`w-3 h-3 ${hasNumberOrSymbol ? 'opacity-100' : 'opacity-30'}`} />
-                      <span>Number / symbol</span>
+                    <div className="grid grid-cols-2 gap-1.5 text-[11px] text-text-muted pt-0.5">
+                      <div className={`flex items-center gap-1 ${hasMinLength ? 'text-oss font-bold' : ''}`}>
+                        <Check className={`w-3 h-3 ${hasMinLength ? 'opacity-100' : 'opacity-30'}`} />
+                        <span>8+ characters</span>
+                      </div>
+                      <div className={`flex items-center gap-1 ${hasUppercase ? 'text-oss font-bold' : ''}`}>
+                        <Check className={`w-3 h-3 ${hasUppercase ? 'opacity-100' : 'opacity-30'}`} />
+                        <span>Uppercase letter</span>
+                      </div>
+                      <div className={`flex items-center gap-1 ${hasLowercase ? 'text-oss font-bold' : ''}`}>
+                        <Check className={`w-3 h-3 ${hasLowercase ? 'opacity-100' : 'opacity-30'}`} />
+                        <span>Lowercase letter</span>
+                      </div>
+                      <div className={`flex items-center gap-1 ${hasNumberOrSymbol ? 'text-oss font-bold' : ''}`}>
+                        <Check className={`w-3 h-3 ${hasNumberOrSymbol ? 'opacity-100' : 'opacity-30'}`} />
+                        <span>Number / symbol</span>
+                      </div>
                     </div>
                   </div>
                 )}
@@ -295,26 +455,26 @@ export default function Register() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-accent text-accent-fg font-bold text-sm shadow-lg hover:shadow-accent/25 hover:brightness-110 active:scale-[0.99] disabled:opacity-50 transition-all duration-200 mt-3"
+                className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-accent text-accent-fg font-bold text-sm shadow-lg hover:shadow-accent/25 hover:brightness-110 active:scale-[0.99] disabled:opacity-50 transition-all duration-200 mt-2"
               >
                 {isLoading ? (
                   <div className="w-5 h-5 border-2 border-accent-fg border-t-transparent rounded-full animate-spin" />
                 ) : (
                   <>
-                    <span>Create Account</span>
+                    <span>Claim Openlysts Pass</span>
                     <ArrowRight className="w-4 h-4" />
                   </>
                 )}
               </button>
             </form>
 
-            <div className="relative my-6">
+            <div className="relative my-5">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-border" />
               </div>
               <div className="relative flex justify-center text-xs uppercase">
                 <span className="bg-bg-card px-3 text-text-muted font-bold tracking-widest text-[10px]">
-                  Or join with
+                  Or register with
                 </span>
               </div>
             </div>
@@ -322,7 +482,7 @@ export default function Register() {
             <div className="grid grid-cols-2 gap-3">
               <button
                 type="button"
-                onClick={handleGoogleLogin}
+                onClick={() => handleOAuthLogin('google')}
                 className="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl border border-border bg-bg/60 hover:bg-bg hover:border-accent/40 text-xs font-bold text-text transition-all duration-200"
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24">
@@ -336,7 +496,7 @@ export default function Register() {
 
               <button
                 type="button"
-                onClick={handleGithubLogin}
+                onClick={() => handleOAuthLogin('github')}
                 className="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl border border-border bg-bg/60 hover:bg-bg hover:border-accent/40 text-xs font-bold text-text transition-all duration-200"
               >
                 <Github className="w-4 h-4 text-text" />
@@ -344,7 +504,7 @@ export default function Register() {
               </button>
             </div>
 
-            <div className="mt-6 text-center text-xs text-text-secondary">
+            <div className="mt-5 text-center text-xs text-text-secondary">
               Already have an account?{' '}
               <Link to={`/login?redirect=${encodeURIComponent(redirect)}`} className="font-bold text-accent hover:underline">
                 Sign in
@@ -354,6 +514,7 @@ export default function Register() {
         </div>
       </div>
 
+      {/* Bottom Interactive Social Hover Cards Bar */}
       <div className="w-full flex justify-center py-2 z-20">
         <SocialHoverCards />
       </div>

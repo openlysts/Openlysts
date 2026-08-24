@@ -3673,9 +3673,17 @@ The most important coverage improvements added by this addendum are:
 - **Verify**: `SocialHoverCards` morphing preview cards display on hover (GitHub, Guide, Community).
 - **Verify**: Navigating to `/alternatives` renders instantly in $<50\text{ms}$ without 30s polling thrash.
 
+### TC-425: Register Page 3D Holographic Dev Pass, Role Tracks & Psychology Hooks
+- Navigate to `http://localhost:5173/register`.
+- **Verify**: Interactive Holographic "Openlysts Dev Pass" renders in 3D with live initial, name, and Genesis Pioneer badge.
+- **Verify**: Selecting primary developer track chips (`Fullstack`, `AI / ML`, `DevOps`, `Systems`, `OSS Builder`) dynamically updates the active track on the Dev Pass preview.
+- **Verify**: Live password milestone progress bar fills with green checkmarks as requirements (`8+ chars`, `Uppercase`, `Lowercase`, `Number/Symbol`) are satisfied.
+- **Verify**: `SocialHoverCards` at the bottom and `← Back to Discover` in header function accurately.
+
 ---
 
 # END OF ADDITIVE QA CONTROL LAYER
+
 
 
 
