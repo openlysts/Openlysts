@@ -3680,9 +3680,18 @@ The most important coverage improvements added by this addendum are:
 - **Verify**: Live password milestone progress bar fills with green checkmarks as requirements (`8+ chars`, `Uppercase`, `Lowercase`, `Number/Symbol`) are satisfied.
 - **Verify**: `SocialHoverCards` at the bottom and `← Back to Discover` in header function accurately.
 
+### TC-426: About Page 10/10 Overhaul, Reactive Avatar & Founder Manifesto
+- Navigate to `http://localhost:5173/about`.
+- **Verify**: Dynamic release version badge (`✨ The Open Source Telescope • v1.3.0`) renders accurately from `APP_VERSION`.
+- **Verify**: Interactive Mouse-Reactive Avatar (`ReactiveAvatar`) tracks cursor coordinates dynamically in 3D with eye tracking and click-to-wink.
+- **Verify**: High-energy founder manifesto for **Adil Rafiq Dar** renders with custom role track chips (`Tech BA & Project Manager`, `AI Enthusiast & Systems Architect`, `Relentless OSS Hobbyist & Builder`, `Fuelled by High-Roast Coffee ☕`).
+- **Verify**: Direct social connect buttons (LinkedIn, Email, Openlysts OSS Repo) work accurately.
+- **Verify**: The 3 Core Signal Pillars and interactive conversational FAQ accordion expand and collapse smoothly.
+
 ---
 
 # END OF ADDITIVE QA CONTROL LAYER
+
 
 
 
