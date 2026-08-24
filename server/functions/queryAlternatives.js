@@ -1,4 +1,5 @@
 import { db } from '../db/index.js';
+import { serverCache } from '../services/cache.js';
 
 const PER_PAGE = 24;
 
@@ -14,87 +15,47 @@ export default async function queryAlternatives(req, res) {
       page = 1,
     } = body;
 
-    const searchTerm = (q || search || '').trim();
+    const searchTerm = (q || search || '').trim().toLowerCase();
     let catList = Array.isArray(categories) ? [...categories] : (categories ? [categories] : []);
     if (category && category !== 'All' && !catList.includes(category)) {
       catList.push(category);
     }
 
-    let whereConditions = [];
-    let params = [];
-    let paramIdx = 1;
-
-    // 1. Text Search (ILIKE)
-    if (searchTerm) {
-      const searchStr = `%${searchTerm}%`;
-      whereConditions.push(`(
-        a.paid_tool_name ILIKE $${paramIdx} OR 
-        a.free_tool_name ILIKE $${paramIdx} OR 
-        a.description ILIKE $${paramIdx} OR 
-        a.category ILIKE $${paramIdx} OR
-        r.name ILIKE $${paramIdx} OR
-        r.description ILIKE $${paramIdx}
-      )`);
-      params.push(searchStr);
-      paramIdx++;
+    // 1. Fetch from In-Memory Cache or Neon DB
+    let baseRows = serverCache.get('alts_base_dataset');
+    if (!baseRows) {
+      const query = `
+        SELECT 
+          a.id, a.created_date, a.paid_tool_name, a.free_tool_name, a.free_tool_repo,
+          a.description as alt_description, a.pros_and_cons, a.youtube_tutorial_url,
+          a.article_tutorial_url, a.why_it_is_better, a.migration_difficulty,
+          a.feature_parity_score, a.category,
+          r.id as repo_id, r.github_id, r.full_name as repo_full_name, r.owner as repo_owner,
+          r.name as repo_name, r.description as repo_description, r.html_url as repo_html_url,
+          r.homepage_url as repo_homepage_url, r.default_branch as repo_default_branch,
+          r.language as repo_language, r.license_key as repo_license_key,
+          r.license_name as repo_license_name, r.license_url as repo_license_url,
+          r.license_status as repo_license_status, r.stars as repo_stars,
+          r.forks as repo_forks, r.open_issues as repo_open_issues,
+          r.topics as repo_topics, r.categories as repo_categories,
+          r.quality_score as repo_quality_score, r.trending_score as repo_trending_score,
+          r.difficulty as repo_difficulty
+        FROM "Alternative" a
+        LEFT JOIN "Repository" r ON lower(a.free_tool_repo) = lower(r.full_name)
+      `;
+      const { rows } = await db.query(query);
+      baseRows = rows;
+      // Cache base rows for 15 minutes
+      serverCache.set('alts_base_dataset', baseRows, 15 * 60 * 1000);
     }
 
-    // 2. Category Filter (Exact match on Alternative's category)
-    if (catList.length > 0) {
-      // Allow multi-category selection
-      whereConditions.push(`a.category = ANY($${paramIdx})`);
-      params.push(catList);
-      paramIdx++;
-    }
+    // Find max stars for normalization across entire dataset
+    const maxStars = Math.max(1, ...baseRows.map(r => r.repo_stars || 0));
 
-    const whereClause = whereConditions.length > 0 ? 'WHERE ' + whereConditions.join(' AND ') : '';
-
-    // 3. Sorting
-    let orderBy = 'ORDER BY a.feature_parity_score DESC, a.id DESC';
-    switch (sort) {
-      case 'stars':
-        orderBy = 'ORDER BY r.stars DESC NULLS LAST, a.id DESC';
-        break;
-      case 'recent':
-        orderBy = 'ORDER BY a.created_date DESC NULLS LAST, a.id DESC';
-        break;
-      case 'relevance':
-        orderBy = 'ORDER BY a.feature_parity_score DESC NULLS LAST, r.stars DESC NULLS LAST, a.id DESC';
-        break;
-    }
-
-    const query = `
-      SELECT 
-        a.id, a.created_date, a.paid_tool_name, a.free_tool_name, a.free_tool_repo,
-        a.description as alt_description, a.pros_and_cons, a.youtube_tutorial_url,
-        a.article_tutorial_url, a.why_it_is_better, a.migration_difficulty,
-        a.feature_parity_score, a.category,
-        r.id as repo_id, r.github_id, r.full_name as repo_full_name, r.owner as repo_owner,
-        r.name as repo_name, r.description as repo_description, r.html_url as repo_html_url,
-        r.homepage_url as repo_homepage_url, r.default_branch as repo_default_branch,
-        r.language as repo_language, r.license_key as repo_license_key,
-        r.license_name as repo_license_name, r.license_url as repo_license_url,
-        r.license_status as repo_license_status, r.stars as repo_stars,
-        r.forks as repo_forks, r.open_issues as repo_open_issues,
-        r.topics as repo_topics, r.categories as repo_categories,
-        r.quality_score as repo_quality_score, r.trending_score as repo_trending_score,
-        r.difficulty as repo_difficulty
-      FROM "Alternative" a
-      LEFT JOIN "Repository" r ON lower(a.free_tool_repo) = lower(r.full_name)
-      ${whereClause}
-      ${orderBy}
-    `;
-
-    // Fetch all for pagination calculation (could use COUNT but we also deduplicate below)
-    const { rows } = await db.query(query, params);
-
-    // Find max stars for normalization (calculated across all filtered results)
-    const maxStars = Math.max(1, ...rows.map(r => r.repo_stars || 0));
-
-    // Deduplicate (since the old code deduplicates on paid_tool_name + free_tool_repo)
+    // Deduplicate on paid_tool_name + free_tool_repo
     const seenKeys = new Set();
     const dedupedRows = [];
-    for (const row of rows) {
+    for (const row of baseRows) {
       const uniqueKey = `${(row.paid_tool_name || '').trim().toLowerCase()}::${(row.free_tool_repo || row.free_tool_name || '').trim().toLowerCase()}`;
       if (!seenKeys.has(uniqueKey)) {
         seenKeys.add(uniqueKey);
@@ -102,6 +63,7 @@ export default async function queryAlternatives(req, res) {
       }
     }
 
+    // Enrich and map rows
     const enriched = dedupedRows.map(row => {
       let repo = null;
       if (row.repo_id) {
@@ -150,7 +112,6 @@ export default async function queryAlternatives(req, res) {
 
       const resolvedName = row.free_tool_name || (repo ? repo.name : row.free_tool_repo) || 'Alternative';
       const rawDesc = row.alt_description || (repo ? repo.description : '') || '';
-      // Regex to strip markdown links at the beginning like "[Name](https://url) - "
       const resolvedDesc = rawDesc.replace(/^\[.*?\]\(.*?\)[\s-]*\s*/, '').trim();
       const resolvedDiff = row.migration_difficulty || (repo ? repo.difficulty : 'Medium') || 'Medium';
 
@@ -177,13 +138,53 @@ export default async function queryAlternatives(req, res) {
       };
     });
 
+    // 2. Filter dataset in-memory
+    let filtered = enriched.filter(alt => {
+      // Text search match
+      if (searchTerm) {
+        const matchesSearch = 
+          (alt.paid_tool_name && alt.paid_tool_name.toLowerCase().includes(searchTerm)) ||
+          (alt.free_tool_name && alt.free_tool_name.toLowerCase().includes(searchTerm)) ||
+          (alt.free_tool_repo && alt.free_tool_repo.toLowerCase().includes(searchTerm)) ||
+          (alt.description && alt.description.toLowerCase().includes(searchTerm)) ||
+          (alt.category && alt.category.toLowerCase().includes(searchTerm));
+        if (!matchesSearch) return false;
+      }
+
+      // Category filter match
+      if (catList.length > 0) {
+        if (!catList.includes(alt.category)) return false;
+      }
+
+      return true;
+    });
+
+    // 3. Sorting
+    switch (sort) {
+      case 'stars':
+        filtered.sort((a, b) => (b.github_stars || 0) - (a.github_stars || 0));
+        break;
+      case 'recent':
+        filtered.sort((a, b) => new Date(b.created_date || 0) - new Date(a.created_date || 0));
+        break;
+      case 'relevance':
+      default:
+        filtered.sort((a, b) => {
+          if ((b.feature_parity || 0) !== (a.feature_parity || 0)) {
+            return (b.feature_parity || 0) - (a.feature_parity || 0);
+          }
+          return (b.github_stars || 0) - (a.github_stars || 0);
+        });
+        break;
+    }
+
     // Compute categories, grouped data, and stats for the frontend
     const catMap = {};
     const paidSet = new Set();
     let totalScore = 0;
     const groupedMap = {};
 
-    for (const alt of enriched) {
+    for (const alt of filtered) {
       const cat = alt.category || 'Developer Tools';
       catMap[cat] = (catMap[cat] || 0) + 1;
 
@@ -216,22 +217,22 @@ export default async function queryAlternatives(req, res) {
     }).sort((a, b) => b.total - a.total);
 
     const stats = {
-      total_tools: enriched.length,
+      total_tools: filtered.length,
       total_paid_tools: paidSet.size,
       total_categories: categoriesList.length,
-      avg_score: enriched.length > 0 ? Math.round(totalScore / enriched.length) : 0
+      avg_score: filtered.length > 0 ? Math.round(totalScore / filtered.length) : 0
     };
 
-    const total = enriched.length;
+    const total = filtered.length;
     const totalPages = Math.ceil(total / PER_PAGE);
     const pageNum = Math.max(1, Math.min(page, totalPages || 1));
     const offset = (pageNum - 1) * PER_PAGE;
     
-    const results = enriched.slice(offset, offset + PER_PAGE);
+    const results = filtered.slice(offset, offset + PER_PAGE);
 
     res.setHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400');
     return res.json({ 
-      alternatives: enriched,
+      alternatives: filtered,
       categories: categoriesList,
       grouped: groupedArray,
       stats,
@@ -248,9 +249,33 @@ export default async function queryAlternatives(req, res) {
 }
 
 export function invalidateAlternativesCache() {
-  // DB-backed queries always fetch fresh data from Neon
+  serverCache.invalidate('alts_');
 }
 
 export async function prewarmAlternativesCache() {
-  // Prewarm routine if needed
+  try {
+    const query = `
+      SELECT 
+        a.id, a.created_date, a.paid_tool_name, a.free_tool_name, a.free_tool_repo,
+        a.description as alt_description, a.pros_and_cons, a.youtube_tutorial_url,
+        a.article_tutorial_url, a.why_it_is_better, a.migration_difficulty,
+        a.feature_parity_score, a.category,
+        r.id as repo_id, r.github_id, r.full_name as repo_full_name, r.owner as repo_owner,
+        r.name as repo_name, r.description as repo_description, r.html_url as repo_html_url,
+        r.homepage_url as repo_homepage_url, r.default_branch as repo_default_branch,
+        r.language as repo_language, r.license_key as repo_license_key,
+        r.license_name as repo_license_name, r.license_url as repo_license_url,
+        r.license_status as repo_license_status, r.stars as repo_stars,
+        r.forks as repo_forks, r.open_issues as repo_open_issues,
+        r.topics as repo_topics, r.categories as repo_categories,
+        r.quality_score as repo_quality_score, r.trending_score as repo_trending_score,
+        r.difficulty as repo_difficulty
+      FROM "Alternative" a
+      LEFT JOIN "Repository" r ON lower(a.free_tool_repo) = lower(r.full_name)
+    `;
+    const { rows } = await db.query(query);
+    serverCache.set('alts_base_dataset', rows, 15 * 60 * 1000);
+  } catch (e) {
+    console.warn('[CACHE] Prewarm alternatives cache error:', e.message);
+  }
 }

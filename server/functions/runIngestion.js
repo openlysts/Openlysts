@@ -7,7 +7,9 @@ import {
 } from '../shared/openlyst.js';
 import { ingestAlternatives } from './ingestAlternatives.js';
 import { invalidateRepositoriesCache } from './queryRepositories.js';
+import { invalidateAlternativesCache } from './queryAlternatives.js';
 
+const INGESTION_LOCK_ID = 987654321;
 const GITHUB_API = 'https://api.github.com';
 const PER_PAGE = 30;
 
@@ -264,7 +266,28 @@ export async function ingestRepoItem(item, categoryHint = '', repoMap = new Map(
 }
 
 export async function executeIngestion() {
+  let acquiredLock = false;
   try {
+    // Acquire PostgreSQL distributed advisory lock to guarantee only 1 worker runs across the globe
+    try {
+      const lockRes = await db.query('SELECT pg_try_advisory_lock($1) as locked', [INGESTION_LOCK_ID]);
+      acquiredLock = !!lockRes.rows[0]?.locked;
+    } catch (lockErr) {
+      console.warn('[INGESTION] Could not check advisory lock:', lockErr.message);
+      acquiredLock = true; // Fallback to proceed if locks unsupported
+    }
+
+    if (!acquiredLock) {
+      console.log('[INGESTION] Another ingestion worker is already active across the distributed cluster. Yielding.');
+      return {
+        status: 'skipped',
+        message: 'Ingestion currently locked by another active distributed worker',
+        repos_processed: 0,
+        repos_added: 0,
+        repos_updated: 0,
+      };
+    }
+
     if (!process.env.GITHUB_TOKEN) {
       console.warn('[INGESTION] WARNING: GITHUB_TOKEN is not set. Requests will be unauthenticated and severely rate-limited (60 req/hr).');
     }
@@ -393,6 +416,7 @@ export async function executeIngestion() {
 
     console.log(`[INGESTION] completed (Processed: ${reposProcessed})`);
     invalidateRepositoriesCache();
+    invalidateAlternativesCache();
 
     return {
       status,
@@ -404,6 +428,14 @@ export async function executeIngestion() {
   } catch (error) {
     console.error('[INGESTION] failed:', error);
     throw error;
+  } finally {
+    if (acquiredLock) {
+      try {
+        await db.query('SELECT pg_advisory_unlock($1)', [INGESTION_LOCK_ID]);
+      } catch (unlockErr) {
+        console.warn('[INGESTION] Advisory unlock warning:', unlockErr.message);
+      }
+    }
   }
 }
 

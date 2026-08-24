@@ -1,8 +1,19 @@
 import { db } from '../db/index.js';
 import { slugToLabel } from '../shared/openlyst.js';
 import { githubFetch, ingestRepoItem } from './runIngestion.js';
+import { serverCache } from '../services/cache.js';
 
 const PER_PAGE = 24;
+
+const REPO_LIST_COLUMNS = `
+  id, created_date, github_id, full_name, owner, name, description,
+  html_url, homepage_url, default_branch, language, license_key, license_name,
+  license_url, license_status, stars, forks, open_issues, watchers, topics,
+  categories, github_created_at, github_updated_at, last_ingested_at,
+  archived, hidden, featured, quality_score, trending_score, stars_gained_24h,
+  stars_gained_7d, stars_gained_30d, difficulty, engagement_score, authority_score,
+  staff_pick, openlysts_score_boost, updated_at, tags
+`;
 
 export default async function queryRepositories(req, res) {
   try {
@@ -160,9 +171,9 @@ export default async function queryRepositories(req, res) {
     const pageNum = Math.max(1, Math.min(page, totalPages || 1));
     const offset = (pageNum - 1) * PER_PAGE;
 
-    // Fetch paginated repository rows
+    // Fetch paginated repository rows with surgical column projection
     const query = `
-      SELECT * FROM "Repository"
+      SELECT ${REPO_LIST_COLUMNS} FROM "Repository"
       ${whereClause}
       ${orderBy}
       LIMIT ${PER_PAGE} OFFSET ${offset}
@@ -187,23 +198,28 @@ export default async function queryRepositories(req, res) {
       };
     });
 
-    // Compute category counts efficiently via fast SQL aggregation
-    const categoryCounts = {};
-    try {
-      const catCountQuery = `
-        SELECT jsonb_array_elements_text(COALESCE(NULLIF(categories, ''), '[]')::jsonb) as category, count(*) as count 
-        FROM "Repository" 
-        WHERE COALESCE(hidden, 0) = 0 
-        GROUP BY category
-      `;
-      const { rows: catRows } = await db.query(catCountQuery);
-      for (const row of catRows) {
-        if (row.category) {
-          categoryCounts[row.category] = parseInt(row.count, 10);
+    // Compute category counts efficiently with In-Memory LRU & TTL cache
+    let categoryCounts = serverCache.get('category_counts');
+    if (!categoryCounts) {
+      categoryCounts = {};
+      try {
+        const catCountQuery = `
+          SELECT jsonb_array_elements_text(COALESCE(NULLIF(categories, ''), '[]')::jsonb) as category, count(*) as count 
+          FROM "Repository" 
+          WHERE COALESCE(hidden, 0) = 0 
+          GROUP BY category
+        `;
+        const { rows: catRows } = await db.query(catCountQuery);
+        for (const row of catRows) {
+          if (row.category) {
+            categoryCounts[row.category] = parseInt(row.count, 10);
+          }
         }
+        // Cache for 15 minutes
+        serverCache.set('category_counts', categoryCounts, 15 * 60 * 1000);
+      } catch (e) {
+        console.warn('[DB] Category count calculation warning:', e.message);
       }
-    } catch (e) {
-      console.warn('[DB] Category count calculation warning:', e.message);
     }
 
     return res.json({ results, total, page: pageNum, totalPages, perPage: PER_PAGE, categoryCounts });
@@ -214,9 +230,26 @@ export default async function queryRepositories(req, res) {
 }
 
 export function invalidateRepositoriesCache() {
-  // DB-backed queries always fetch fresh data from Neon
+  serverCache.invalidate('category_counts');
 }
 
 export async function prewarmRepositoriesCache() {
-  // Prewarm routine if needed
+  try {
+    const catCountQuery = `
+      SELECT jsonb_array_elements_text(COALESCE(NULLIF(categories, ''), '[]')::jsonb) as category, count(*) as count 
+      FROM "Repository" 
+      WHERE COALESCE(hidden, 0) = 0 
+      GROUP BY category
+    `;
+    const { rows: catRows } = await db.query(catCountQuery);
+    const categoryCounts = {};
+    for (const row of catRows) {
+      if (row.category) {
+        categoryCounts[row.category] = parseInt(row.count, 10);
+      }
+    }
+    serverCache.set('category_counts', categoryCounts, 15 * 60 * 1000);
+  } catch (e) {
+    console.warn('[CACHE] Prewarm repository cache error:', e.message);
+  }
 }

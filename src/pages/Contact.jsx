@@ -96,7 +96,7 @@ export default function Contact() {
         </a>
       </div>
 
-      <div data-tour="contact-form" className="card p-6 space-y-4">
+      <form onSubmit={(e) => { e.preventDefault(); handleEmail(); }} data-tour="contact-form" className="card p-6 space-y-4">
         <div>
           <label className="block text-sm font-medium text-text mb-1.5">Name <span className="text-red-500">*</span></label>
           <input
@@ -140,8 +140,7 @@ export default function Contact() {
         
         <div className="flex gap-4 pt-2">
           <button
-            type="button"
-            onClick={handleEmail}
+            type="submit"
             disabled={loading}
             className={`flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-accent text-accent-fg font-medium text-sm transition-opacity ${loading ? 'opacity-50 cursor-not-allowed' : 'hover:opacity-90'}`}>
             <Mail className="w-4 h-4" />
@@ -162,7 +161,7 @@ export default function Contact() {
             {status.message}
           </div>
         )}
-      </div>
+      </form>
     </div>
   );
 }

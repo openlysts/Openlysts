@@ -321,8 +321,9 @@ export default function Alternatives() {
   const { data, isLoading, error } = useQuery({
     queryKey: ['alternatives', debouncedSearch, sortBy],
     queryFn: () => fetchAlternatives('All', debouncedSearch, sortBy),
-    staleTime: 5 * 60 * 1000,
-    refetchInterval: 30000, // Make it fetch periodically as well
+    staleTime: 15 * 60 * 1000,
+    gcTime: 60 * 60 * 1000,
+    placeholderData: (previousData) => previousData,
   });
 
   // Client-side category filter so sidebar clicks are instant

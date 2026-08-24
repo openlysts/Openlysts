@@ -3657,7 +3657,25 @@ The most important coverage improvements added by this addendum are:
 - Navigate across `/discover`, `/alternatives`, `/trending`, `/compare`, `/bookmarks`, `/about`, and `/contact`.
 - **Verify**: The tour modal NEVER auto-triggers or interrupts the user on ANY page navigation or browser reload.
 
+### TC-423: Resilient In-Memory LRU Cache & Distributed Advisory Lock Validation
+- Query `/api/functions/queryRepositories` twice with different filter parameters.
+- **Verify**: Initial query populates `serverCache` with category count aggregates; second query serves category counts directly from memory in $<20\text{ms}$ without scanning the entire table over the wire.
+- Query `/api/functions/queryAlternatives` and verify the base dataset is cached in memory with fast sub-millisecond in-memory filtering.
+- Trigger `executeIngestion()` and verify PostgreSQL advisory lock (`pg_try_advisory_lock(987654321)`) prevents parallel execution collisions and auto-releases safely.
+- Verify client outbox queue (`src/lib/syncOutbox.js`) handles optimistic writes with zero maintenance blocking banners.
+
+### TC-424: Login Page 3D Aesthetics, Human Psychology Hooks & Navigation Back Control
+- Navigate to `http://localhost:5173/login`.
+- **Verify**: Header includes intuitive `← Back to Discover` navigation button that returns to `/discover` on click or `Esc` key press.
+- **Verify**: Clean removal of isolated floating badges and dev test widgets.
+- **Verify**: 3D card tilt physics with dynamic specular sheen tracking mouse movement.
+- **Verify**: Rolling numbers (`AnimateDigits`) display 35,476+ rated repos.
+- **Verify**: `SocialHoverCards` morphing preview cards display on hover (GitHub, Guide, Community).
+- **Verify**: Navigating to `/alternatives` renders instantly in $<50\text{ms}$ without 30s polling thrash.
+
 ---
 
 # END OF ADDITIVE QA CONTROL LAYER
+
+
 
