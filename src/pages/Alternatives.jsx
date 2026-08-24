@@ -1,5 +1,6 @@
 import { useState, useMemo, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { usePageTitle } from '@/hooks/usePageTitle';
 import { useQuery } from '@tanstack/react-query';
 import { Search, ExternalLink, PlayCircle, Info, ChevronRight, ChevronDown, Award, Grid3X3, List, ArrowUpDown, Shield,
   Layers, Filter, X, Sparkles
@@ -237,6 +238,7 @@ function LiveStatBlock({ label, value, minIncrement = 1, maxIncrement = 1, inter
 }
 
 export default function Alternatives() {
+  usePageTitle('Alternatives');
   const [activeCategory, setActiveCategory] = useState('All');
   const [search, setSearch] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');

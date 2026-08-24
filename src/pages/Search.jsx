@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { usePageTitle } from '@/hooks/usePageTitle';
 import { useQuery } from '@tanstack/react-query';
 import { Search as SearchIcon, Share2, Download } from 'lucide-react';
 import { queryRepos } from '@/lib/api';
@@ -12,6 +13,7 @@ import Pagination from '@/components/openlyst/Pagination';
 const LANGUAGES = ['Python', 'JavaScript', 'TypeScript', 'Go', 'Rust', 'Java', 'C++', 'C', 'Ruby', 'PHP', 'Swift', 'Kotlin', 'Shell', 'Vue', 'HTML', 'Dart'];
 
 export default function Search() {
+  usePageTitle('Search');
   const [searchParams, setSearchParams] = useSearchParams();
   const q = searchParams.get('q') || '';
   const [inputVal, setInputVal] = useState(q);

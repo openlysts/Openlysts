@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
@@ -23,6 +23,7 @@ import {
   CheckCircle,
   Users
 } from 'lucide-react';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 // 6 Beginner-Friendly Capability Modules
 const MODULES = [
@@ -174,9 +175,7 @@ export default function Guide() {
   const progressPercentage = Math.round((exploredTabs.size / MODULES.length) * 100);
   const isAllExplored = exploredTabs.size === MODULES.length;
 
-  useEffect(() => {
-    document.title = 'Platform Guide — Everything Openlysts Can Do | Openlysts';
-  }, []);
+  usePageTitle('Platform Guide');
 
   const copyFormula = (text) => {
     navigator.clipboard.writeText(text);

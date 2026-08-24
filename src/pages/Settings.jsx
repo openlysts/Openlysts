@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
   Settings as SettingsIcon, Github, Eye, EyeOff, Save, Trash2,
   Check, BookmarkX, RotateCcw, SlidersHorizontal, KeyRound, Info,
@@ -7,6 +7,7 @@ import { getSettings, saveSettings, clearSettings } from '@/lib/settings';
 import { updateConfig } from '@/lib/api';
 import { clearBookmarks } from '@/lib/bookmarks';
 import { useToast } from '@/components/ui/use-toast';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default function Settings() {
   const { toast } = useToast();
@@ -15,7 +16,7 @@ export default function Settings() {
   const [showToken, setShowToken] = useState(false);
   const [savedFlag, setSavedFlag] = useState(false);
 
-  useEffect(() => { document.title = 'Settings — Openlysts'; }, []);
+  usePageTitle('Settings');
 
   const handleSaveToken = async () => {
     const updated = saveSettings({ githubToken: tokenInput.trim() });

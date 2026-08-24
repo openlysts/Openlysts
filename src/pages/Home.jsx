@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { usePageTitle } from '@/hooks/usePageTitle';
 import { useQuery } from '@tanstack/react-query';
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion';
 import { Sparkles, Clock, TrendingUp, ArrowRight, Database, RefreshCw, Cpu, Wrench, HardDrive, Bot, Package, Cloud, ShieldCheck } from 'lucide-react';
@@ -24,6 +25,7 @@ const QUICK_CATEGORIES = [
 ];
 
 export default function Home() {
+  usePageTitle('Discover');
   const navigate = useNavigate();
   const { toast } = useToast();
   const [viewHistory, setViewHistory] = useState([]);

@@ -1,5 +1,6 @@
 import { useSearchParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+import { usePageTitle } from '@/hooks/usePageTitle';
 import { queryRepos } from '@/lib/api';
 import FilterBar from '@/components/openlyst/FilterBar';
 import RepositoryGrid from '@/components/openlyst/RepositoryGrid';
@@ -9,6 +10,7 @@ import { Flame } from 'lucide-react';
 const LANGUAGES = ['Python', 'JavaScript', 'TypeScript', 'Go', 'Rust', 'Java', 'C++', 'C', 'Ruby', 'PHP', 'Swift', 'Kotlin', 'Shell'];
 
 export default function Trending() {
+  usePageTitle('Trending');
   const [searchParams, setSearchParams] = useSearchParams();
 
   const filters = {

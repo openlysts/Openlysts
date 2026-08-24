@@ -1,8 +1,10 @@
 import { Search, ShieldCheck, TrendingUp, Database, Sparkles, Heart, Code2, Cpu, Briefcase, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default function About() {
+  usePageTitle('About');
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12 lg:py-20">
       

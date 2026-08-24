@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
+import { usePageTitle } from '@/hooks/usePageTitle';
 import { useQuery } from '@tanstack/react-query';
 import { queryRepos } from '@/lib/api';
 import { motion } from 'framer-motion';
@@ -28,6 +29,7 @@ function timeAgo(dateStr) {
 }
 
 export default function Compare() {
+  usePageTitle('Compare');
   const [searchParams, setSearchParams] = useSearchParams();
   const repoNames = searchParams.get('repos')?.split(',').filter(Boolean) || [];
   const { selectedForCompare } = useCompare();

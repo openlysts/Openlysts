@@ -1,7 +1,9 @@
 import { useState, useRef } from 'react';
 import { Mail, Github, MessageCircle } from 'lucide-react';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default function Contact() {
+  usePageTitle('Contact');
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [errors, setErrors] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState(null);

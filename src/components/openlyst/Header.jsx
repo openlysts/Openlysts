@@ -96,8 +96,8 @@ export default function Header() {
               <span className="text-lg sm:text-xl font-black tracking-tight text-text hidden sm:block">Openlysts</span>
             </Link>
 
-            {/* Desktop Nav (Core 5 product links on >= 1024px) */}
-            <nav className="hidden lg:flex items-center gap-1 flex-shrink-0">
+            {/* Desktop Nav (Core 5 product links on >= 1280px) */}
+            <nav className="hidden xl:flex items-center gap-1 flex-shrink-0">
               {PRIMARY_NAV.map((item) => {
                 const active = location.pathname === item.to;
                 return (
@@ -208,7 +208,7 @@ export default function Header() {
             <button
               type="button"
               onClick={() => setMobileOpen((v) => !v)}
-              className="lg:hidden p-2 rounded-xl text-text-secondary hover:bg-bg-hover hover:text-text transition-colors touch-target flex-shrink-0 ml-0.5"
+              className="xl:hidden p-2 rounded-xl text-text-secondary hover:bg-bg-hover hover:text-text transition-colors touch-target flex-shrink-0 ml-0.5"
               aria-expanded={mobileOpen}
               aria-label="Toggle Navigation Menu"
             >
@@ -222,7 +222,7 @@ export default function Header() {
       {typeof document !== 'undefined' && createPortal(
         <AnimatePresence>
           {mobileOpen && (
-            <div className="fixed inset-0 z-[100] lg:hidden pointer-events-auto">
+            <div className="fixed inset-0 z-[100] xl:hidden pointer-events-auto">
               {/* Backdrop — onClick only, no onPointerDown to avoid double-fire */}
               <motion.div
                 initial={{ opacity: 0 }}

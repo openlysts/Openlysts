@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { usePageTitle } from '@/hooks/usePageTitle';
 import { localClient } from '@/api/localClient';
 import { Bookmark, Trash2, X } from 'lucide-react';
 import RepositoryCard from '@/components/openlyst/RepositoryCard';
 import { getBookmarks, removeBookmark } from '@/lib/bookmarks';
 
 export default function Bookmarks() {
+  usePageTitle('Bookmarks');
   const [bookmarkIds, setBookmarkIds] = useState([]);
 
   useEffect(() => {
