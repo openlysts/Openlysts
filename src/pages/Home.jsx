@@ -144,11 +144,11 @@ export default function Home() {
             Discover. Filter. Build.
           </div>
           
-          <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-text leading-tight mb-3">
+          <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-text leading-tight mb-3">
             <VariableProximity
               label="Discover Everything on GitHub. Without the Noise."
-              className="text-4xl sm:text-6xl font-extrabold tracking-tight text-text leading-tight"
-              fromFontVariationSettings="'wght' 400"
+              className="text-4xl sm:text-6xl font-black tracking-tight text-text leading-tight"
+              fromFontVariationSettings="'wght' 900"
               toFontVariationSettings="'wght' 900"
               containerRef={heroRef}
               radius={160}
@@ -160,8 +160,8 @@ export default function Home() {
             <VariableProximity
               label="Surgical filtering, instant SaaS alternatives, and curated intelligence across AI, systems, and open-source."
               className="text-text-secondary text-base sm:text-lg leading-relaxed"
-              fromFontVariationSettings="'wght' 350"
-              toFontVariationSettings="'wght' 750"
+              fromFontVariationSettings="'wght' 400"
+              toFontVariationSettings="'wght' 600"
               containerRef={heroRef}
               radius={130}
               falloff="gaussian"
