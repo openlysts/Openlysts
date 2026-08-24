@@ -91,8 +91,10 @@ function App() {
                     
                     {/* Admin Routes */}
                     <Route path="/admin" element={<AdminRoute><Admin /></AdminRoute>} />
+                    
+                    {/* 404 Route inside layout */}
+                    <Route path="*" element={<PageNotFound />} />
                   </Route>
-                  <Route path="*" element={<PageNotFound />} />
                   </Routes>
                 </Suspense>
               </ErrorBoundary>

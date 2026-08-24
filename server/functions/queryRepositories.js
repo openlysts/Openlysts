@@ -58,11 +58,18 @@ export default async function queryRepositories(req, res) {
       paramIdx++;
     }
 
+    let categoriesArray = categories || [];
+    if (typeof categoriesArray === 'string') {
+      categoriesArray = [categoriesArray];
+    } else if (!Array.isArray(categoriesArray)) {
+      categoriesArray = [];
+    }
+
     // 2. JSON Categories Filter (supports slug & label with safe JSONB casting)
-    if (categories && categories.length > 0) {
+    if (categoriesArray.length > 0) {
       const expandedCategories = Array.from(new Set([
-        ...categories,
-        ...categories.map(slugToLabel)
+        ...categoriesArray,
+        ...categoriesArray.map(slugToLabel)
       ]));
       whereConditions.push(`COALESCE(NULLIF(categories, ''), '[]')::jsonb ?| $${paramIdx}`);
       params.push(expandedCategories);

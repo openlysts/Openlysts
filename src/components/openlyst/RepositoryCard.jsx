@@ -29,7 +29,7 @@ function timeAgo(dateStr) {
   return `${Math.floor(months / 12)}y ago`;
 }
 
-export default function RepositoryCard({ repo, index = 0 }) {
+export default function RepositoryCard({ repo, index = 0, view = 'grid' }) {
   const [bookmarked, setBookmarked] = useState(() => isBookmarked(repo?.id));
   const isTrending = (repo?.trending_score || 0) > 10;
   const isAuthority = (repo?.authority_score || 0) > 40;
@@ -134,14 +134,16 @@ export default function RepositoryCard({ repo, index = 0 }) {
           transition: { duration: 0.22, ease: [0.25, 1, 0.5, 1] } 
         }}
         whileTap={{ scale: 0.985, transition: { duration: 0.1 } }}
-        className="card h-full flex flex-col justify-between p-4 relative rounded-xl border border-border bg-bg-card transition-[border-color,box-shadow,background-color] duration-200 hover:border-accent/60 hover:shadow-[0_16px_36px_rgba(0,0,0,0.18),0_0_24px_rgba(var(--accent-rgb),0.2)] cursor-pointer group touch-active overflow-hidden select-none"
+        whileTap={{ scale: 0.985, transition: { duration: 0.1 } }}
+        className={`card h-full flex p-4 relative rounded-xl border border-border bg-bg-card transition-[border-color,box-shadow,background-color] duration-200 hover:border-accent/60 hover:shadow-[0_16px_36px_rgba(0,0,0,0.18),0_0_24px_rgba(var(--accent-rgb),0.2)] cursor-pointer group touch-active overflow-hidden select-none ${view === 'list' ? 'flex-row items-start gap-6' : 'flex-col justify-between'}`}
       >
         <motion.div 
           className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"
           style={{ background }}
         />
-        <div className="relative z-10 flex-1 flex flex-col justify-between pointer-events-auto">
-          <div className="flex justify-between items-start mb-1.5 gap-2">
+        <div className={`relative z-10 flex-1 flex pointer-events-auto ${view === 'list' ? 'flex-row justify-between w-full' : 'flex-col justify-between'}`}>
+          <div className={view === 'list' ? 'flex-1 min-w-0 pr-6 flex flex-col' : 'w-full'}>
+            <div className={`flex justify-between items-start mb-1.5 gap-2 ${view === 'list' ? 'flex-col sm:flex-row' : ''}`}>
             <div className="min-w-0 flex-1">
               <div className="flex flex-wrap gap-1.5 mb-2">
                 {/* Trending badge */}
@@ -179,28 +181,30 @@ export default function RepositoryCard({ repo, index = 0 }) {
             </div>
 
             {/* Bookmark & Compare Actions */}
-            <div className="flex items-center gap-1 z-20 flex-shrink-0 relative -top-1 -right-1">
-              <button
-                onClick={handleCompareClick}
-                className={`p-2 rounded-xl transition-colors touch-target ${
-                  isCompared ? 'text-accent bg-accent-soft' : 'text-text-muted hover:text-text hover:bg-bg-hover active:bg-bg-subtle'
-                }`}
-                aria-label="Add to compare"
-                title="Compare"
-              >
-                <GitCompare className="w-4 h-4" />
-              </button>
-              <button
-                onClick={handleBookmark}
-                className={`p-2 rounded-xl transition-colors touch-target ${
-                  bookmarked ? 'text-accent bg-accent-soft' : 'text-text-muted hover:text-text hover:bg-bg-hover active:bg-bg-subtle'
-                }`}
-                aria-label="Bookmark"
-                title="Bookmark"
-              >
-                <Bookmark className="w-4 h-4" fill={bookmarked ? 'currentColor' : 'none'} />
-              </button>
-            </div>
+            {view !== 'list' && (
+              <div className="flex items-center gap-1 z-20 flex-shrink-0 relative -top-1 -right-1">
+                <button
+                  onClick={handleCompareClick}
+                  className={`p-2 rounded-xl transition-colors touch-target ${
+                    isCompared ? 'text-accent bg-accent-soft' : 'text-text-muted hover:text-text hover:bg-bg-hover active:bg-bg-subtle'
+                  }`}
+                  aria-label="Add to compare"
+                  title="Compare"
+                >
+                  <GitCompare className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={handleBookmark}
+                  className={`p-2 rounded-xl transition-colors touch-target ${
+                    bookmarked ? 'text-accent bg-accent-soft' : 'text-text-muted hover:text-text hover:bg-bg-hover active:bg-bg-subtle'
+                  }`}
+                  aria-label="Bookmark"
+                  title="Bookmark"
+                >
+                  <Bookmark className="w-4 h-4" fill={bookmarked ? 'currentColor' : 'none'} />
+                </button>
+              </div>
+            )}
           </div>
 
           {/* Description */}
@@ -269,7 +273,7 @@ export default function RepositoryCard({ repo, index = 0 }) {
           </div>
 
           {/* Footer: updated */}
-          <div className="flex items-center justify-end gap-2 pt-2.5 border-t border-border">
+          <div className={`flex items-center justify-end gap-2 border-border ${view === 'list' ? 'mt-auto' : 'pt-2.5 border-t'}`}>
             <span className="text-[11px] text-text-muted">
               {repo?.archived && <AlertCircle className="w-3 h-3 inline mr-1 text-nonoss" />}
               {timeAgo(repo?.github_updated_at)}
@@ -281,6 +285,32 @@ export default function RepositoryCard({ repo, index = 0 }) {
             <RepoVideoLinks repo={repo} />
           </div>
         </div>
+
+        {view === 'list' && (
+          <div className="flex flex-col gap-2 items-end justify-start ml-4 border-l border-border pl-4">
+            <button
+              onClick={handleCompareClick}
+              className={`p-2.5 rounded-xl transition-colors touch-target flex items-center justify-center border w-10 h-10 ${
+                isCompared ? 'text-accent bg-accent-soft border-accent' : 'text-text-muted hover:text-text hover:bg-bg-hover active:bg-bg-subtle border-border'
+              }`}
+              aria-label="Add to compare"
+              title="Compare"
+            >
+              <GitCompare className="w-5 h-5" />
+            </button>
+            <button
+              onClick={handleBookmark}
+              className={`p-2.5 rounded-xl transition-colors touch-target flex items-center justify-center border w-10 h-10 ${
+                bookmarked ? 'text-accent bg-accent-soft border-accent' : 'text-text-muted hover:text-text hover:bg-bg-hover active:bg-bg-subtle border-border'
+              }`}
+              aria-label="Bookmark"
+              title="Bookmark"
+            >
+              <Bookmark className="w-5 h-5" fill={bookmarked ? 'currentColor' : 'none'} />
+            </button>
+          </div>
+        )}
+      </div>
       </motion.div>
     </motion.div>
   );

@@ -149,7 +149,9 @@ export default async function queryAlternatives(req, res) {
       const openlystsScore = Math.round(parityScore + starsScore + descScore + mediaScore + 10);
 
       const resolvedName = row.free_tool_name || (repo ? repo.name : row.free_tool_repo) || 'Alternative';
-      const resolvedDesc = row.alt_description || (repo ? repo.description : '') || '';
+      const rawDesc = row.alt_description || (repo ? repo.description : '') || '';
+      // Regex to strip markdown links at the beginning like "[Name](https://url) - "
+      const resolvedDesc = rawDesc.replace(/^\[.*?\]\(.*?\)[\s-]*\s*/, '').trim();
       const resolvedDiff = row.migration_difficulty || (repo ? repo.difficulty : 'Medium') || 'Medium';
 
       return {
@@ -227,6 +229,7 @@ export default async function queryAlternatives(req, res) {
     
     const results = enriched.slice(offset, offset + PER_PAGE);
 
+    res.setHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400');
     return res.json({ 
       alternatives: enriched,
       categories: categoriesList,

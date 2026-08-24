@@ -75,40 +75,56 @@ export async function ingestAlternatives() {
     const mappings = [...CURATED_MODERN_ALTERNATIVES];
 
     try {
-      const res = await fetch('https://raw.githubusercontent.com/btw-so/open-source-alternatives/main/README.md', {
-        signal: AbortSignal.timeout(10000)
+      const res = await fetch('https://raw.githubusercontent.com/RunaCapital/awesome-oss-alternatives/master/README.md', {
+        signal: AbortSignal.timeout(15000)
       });
       if (res.ok) {
         const text = await res.text();
         const lines = text.split('\n');
 
-        let currentPaid = null;
-        let currentCategory = null;
+        let isParsingTable = false;
 
         for (let line of lines) {
           line = line.trim();
-          if (line.startsWith('### ')) {
-            const header = line.replace('### ', '').trim();
-            const altMatch = header.match(/(.*?)\s*\((.*?)\s+alternatives?\)/i);
-            if (altMatch) {
-              currentCategory = altMatch[1].trim();
-              currentPaid = altMatch[2].trim();
-            } else {
-              currentPaid = header.split(' alternatives')[0].replace(':', '').trim();
-              currentCategory = currentPaid;
-            }
-          } else if (currentPaid && line.includes('|') && !line.includes('Company|') && !line.includes(':---')) {
-            const match = line.match(/github\.com\/([^/]+)\/([^\/|)>"]+)/i);
-            if (match) {
-              let owner = match[1];
-              let repo = match[2];
-              if (repo.endsWith('.git')) repo = repo.slice(0, -4);
+          
+          if (line.startsWith('|Category|Company|')) {
+            isParsingTable = true;
+            continue;
+          }
+          
+          if (isParsingTable && line.startsWith('|') && !line.includes('|:---')) {
+            const parts = line.split('|').map(p => p.trim());
+            // parts[0] is empty because line starts with '|'
+            // parts[1] is Category
+            // parts[2] is Company [Name](url)
+            // parts[3] is Description
+            // parts[4] is Stars
+            // parts[5] is Alternative to [Name](url)
+            
+            if (parts.length >= 6) {
+              const category = parts[1];
               
-              mappings.push({
-                paid: currentPaid,
-                repoFullName: `${owner}/${repo}`,
-                category: currentCategory
-              });
+              // Extract repo from Company cell
+              const companyCell = parts[2];
+              const repoMatch = companyCell.match(/github\.com\/([^/]+)\/([^\/|)>"]+)/i);
+              
+              // Extract paid tool from Alternative to cell
+              const altCell = parts[5];
+              const altMatch = altCell.match(/\[([^\]]+)\]/);
+              let paid = altMatch ? altMatch[1] : altCell.replace(/<[^>]*>?/gm, '').trim();
+              if (paid.toLowerCase() === 'n/a' || !paid) paid = category;
+
+              if (repoMatch) {
+                let owner = repoMatch[1];
+                let repo = repoMatch[2];
+                if (repo.endsWith('.git')) repo = repo.slice(0, -4);
+                
+                mappings.push({
+                  paid: paid,
+                  repoFullName: `${owner}/${repo}`,
+                  category: category
+                });
+              }
             }
           }
         }

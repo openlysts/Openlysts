@@ -219,7 +219,7 @@ export default function Home() {
                 View all <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
-            <RepositoryGrid repos={trending?.results?.slice(0, 12) || []} loading={tLoading} />
+            <RepositoryGrid repos={trending?.results?.slice(0, 6) || []} loading={tLoading} />
           </section>
 
           {/* Recently Discovered */}
@@ -230,7 +230,7 @@ export default function Home() {
                 Recently Discovered
               </h2>
             </div>
-            <RepositoryGrid repos={recent?.results?.slice(0, 12) || []} loading={rLoading} />
+            <RepositoryGrid repos={recent?.results?.slice(0, 6) || []} loading={rLoading} />
           </section>
 
           {/* Recently Viewed History */}
@@ -284,7 +284,7 @@ export default function Home() {
                 View all <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
-            <RepositoryGrid repos={aiPopular?.results?.slice(0, 12) || []} loading={aLoading} />
+            <RepositoryGrid repos={aiPopular?.results?.slice(0, 6) || []} loading={aLoading} />
           </section>
         </div>
       }

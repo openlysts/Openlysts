@@ -50,7 +50,19 @@ router.all('/:name', async (req, res, next) => {
 
   // If GET, merge query parameters into body so functions receiving params can access them uniformly
   if (req.method === 'GET' && (!req.body || Object.keys(req.body).length === 0)) {
-    req.body = { ...req.query };
+    req.body = {};
+    for (const [key, value] of Object.entries(req.query)) {
+      try {
+        if (typeof value === 'string') {
+          req.body[key] = JSON.parse(value);
+        } else {
+          req.body[key] = value;
+        }
+      } catch (e) {
+        // If it fails to parse (e.g. normal string), keep it as is
+        req.body[key] = value;
+      }
+    }
   }
   
   // Authorize admin-only functions
@@ -60,6 +72,9 @@ router.all('/:name', async (req, res, next) => {
       const err = await new Promise((resolve) => mw(req, res, resolve));
       if (err) return; // Response was already sent by middleware
     }
+  } else if (req.method === 'GET') {
+    // Apply Vercel Edge Caching for public GET functions (5 mins cache, 10 mins stale-while-revalidate)
+    res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=600');
   }
   
   try {

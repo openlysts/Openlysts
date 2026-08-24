@@ -8,6 +8,43 @@ const router = express.Router();
 // Middleware for protecting mutating actions
 const requireAdmin = [requireAuth, requireRole(ROLES.ADMIN)];
 
+router.get('/:entity/:action', async (req, res, next) => {
+  const { entity, action } = req.params;
+  const service = entities[entity];
+  
+  if (!service) {
+    return res.status(400).json({ error: true, message: `Unknown entity: ${entity}` });
+  }
+
+  // Only allow list and filter on GET
+  if (!['list', 'filter'].includes(action)) {
+    return res.status(405).json({ error: true, message: `Method not allowed for action: ${action}` });
+  }
+
+  // Apply Vercel Edge Caching (5 mins cache, 10 mins stale-while-revalidate)
+  res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=600');
+
+  try {
+    let result;
+    if (action === 'list') {
+      result = await service.list(req.query.sort, req.query.limit);
+    } else if (action === 'filter') {
+      let where = {};
+      if (req.query.where) {
+        try {
+          where = JSON.parse(req.query.where);
+        } catch (e) {
+          return res.status(400).json({ error: true, message: 'Invalid where parameter' });
+        }
+      }
+      result = await service.filter(where, req.query.sort, req.query.limit);
+    }
+    return res.json(result);
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.post('/:entity/:action', async (req, res, next) => {
   const { entity, action } = req.params;
   const service = entities[entity];

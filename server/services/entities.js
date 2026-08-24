@@ -52,6 +52,13 @@ export class EntityService {
     this.entity = sanitizeIdentifier(entityName);
   }
 
+  getColumnList() {
+    if (this.entity === 'Repository') {
+      return 'id, created_date, github_id, full_name, owner, name, description, html_url, homepage_url, default_branch, language, license_key, license_name, license_url, license_status, stars, forks, open_issues, watchers, topics, categories, github_created_at, github_updated_at, last_ingested_at, archived, hidden, featured, quality_score, trending_score, stars_gained_24h, stars_gained_7d, stars_gained_30d, difficulty, engagement_score, authority_score, staff_pick, openlysts_score_boost, updated_at, tags';
+    }
+    return '*';
+  }
+
   async list(sort = null, limit = null) {
     let orderClause = '';
     if (sort) {
@@ -62,7 +69,7 @@ export class EntityService {
     }
     let limitClause = '';
     if (limit) limitClause = `LIMIT ${parseInt(limit, 10)}`;
-    const { rows } = await db.query(`SELECT * FROM "${this.entity}" ${orderClause} ${limitClause}`);
+    const { rows } = await db.query(`SELECT ${this.getColumnList()} FROM "${this.entity}" ${orderClause} ${limitClause}`);
     return rows.map(parseRow);
   }
 
@@ -91,7 +98,7 @@ export class EntityService {
     }
     let limitClause = '';
     if (limit) limitClause = `LIMIT ${parseInt(limit, 10)}`;
-    const { rows } = await db.query(`SELECT * FROM "${this.entity}" ${whereClause} ${orderClause} ${limitClause}`, params);
+    const { rows } = await db.query(`SELECT ${this.getColumnList()} FROM "${this.entity}" ${whereClause} ${orderClause} ${limitClause}`, params);
     return rows.map(parseRow);
   }
 

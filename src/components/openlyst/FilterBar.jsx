@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { ChevronDown, SlidersHorizontal, X } from 'lucide-react';
+import { ChevronDown, SlidersHorizontal, X, LayoutGrid, List } from 'lucide-react';
 import { CATEGORIES } from '@/lib/categories';
+import { useViewMode } from '@/hooks/useViewMode';
 
 const LICENSES = [
   { value: 'verified_oss', label: 'Verified OSS' },
@@ -40,6 +41,7 @@ const SORTS = [
 export default function FilterBar({ filters, onChange, languages = [] }) {
   const [expanded, setExpanded] = useState(false);
   const [categoriesExpanded, setCategoriesExpanded] = useState(false);
+  const [view, toggleView] = useViewMode();
 
   const update = (key, value) => onChange({ ...filters, [key]: value, page: 1 });
 
@@ -142,6 +144,25 @@ export default function FilterBar({ filters, onChange, languages = [] }) {
             <X className="w-3.5 h-3.5" /> Clear
           </button>
         )}
+
+        <div className="flex-1 hidden sm:block"></div>
+        {/* Layout toggle */}
+        <div className="flex bg-bg-card border border-border p-0.5 rounded-xl self-center shrink-0">
+          <button 
+            onClick={() => toggleView('grid')}
+            title="Grid View"
+            className={`p-1.5 rounded-lg transition-colors ${view !== 'list' ? 'bg-bg-subtle text-text shadow-sm' : 'text-text-muted hover:text-text hover:bg-bg-hover'}`}
+          >
+            <LayoutGrid className="w-4 h-4" />
+          </button>
+          <button 
+            onClick={() => toggleView('list')}
+            title="List View"
+            className={`p-1.5 rounded-lg transition-colors ${view === 'list' ? 'bg-bg-subtle text-text shadow-sm' : 'text-text-muted hover:text-text hover:bg-bg-hover'}`}
+          >
+            <List className="w-4 h-4" />
+          </button>
+        </div>
       </div>
 
       {expanded && (

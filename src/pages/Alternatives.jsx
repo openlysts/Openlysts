@@ -250,6 +250,8 @@ export default function Alternatives() {
   const [expandedCategories, setExpandedCategories] = useState(new Set());
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [categoryDrawerOpen, setCategoryDrawerOpen] = useState(false);
+  const [visibleMainGroups, setVisibleMainGroups] = useState(20);
+  const [visibleSidebarCategories, setVisibleSidebarCategories] = useState(20);
   const navigate = useNavigate();
   const categoryRefs = useRef({});
   const sortRef = useRef(null);
@@ -406,10 +408,10 @@ export default function Alternatives() {
     };
   }, [data, activeCategory, sortBy]);
 
-  // Auto-expand all categories on load
+  // Auto-expand top 5 categories on load to prevent rendering thousands of DOM nodes
   useEffect(() => {
     if (data?.grouped) {
-      setExpandedCategories(new Set(data.grouped.map(g => g.category)));
+      setExpandedCategories(new Set(data.grouped.slice(0, 5).map(g => g.category)));
     }
   }, [data?.grouped]);
 
@@ -612,7 +614,7 @@ export default function Alternatives() {
               {filteredData?.stats?.total_tools || 0}
             </span>
           </button>
-          {filteredData?.categories?.map((cat) => (
+          {filteredData?.categories?.slice(0, visibleSidebarCategories).map((cat) => (
             <button
               key={cat.name}
               onClick={() => setActiveCategory(cat.name)}
@@ -662,7 +664,7 @@ export default function Alternatives() {
                       <span>All Tools</span>
                       <span className={`text-[10px] px-1.5 py-0.5 rounded font-bold ${activeCategory === 'All' ? 'bg-black/20 text-white' : 'bg-bg-subtle text-text-muted'}`}>{filteredData?.stats?.total_tools || 0}</span>
                     </button>
-                    {filteredData?.categories?.map((cat) => (
+                    {filteredData?.categories?.slice(0, visibleSidebarCategories).map((cat) => (
                       <button
                         key={cat.name}
                         onClick={() => setActiveCategory(cat.name)}
@@ -679,6 +681,14 @@ export default function Alternatives() {
                         <span className={`text-[10px] px-1.5 py-0.5 rounded font-bold flex-shrink-0 ${activeCategory === cat.name ? 'bg-black/20 text-white' : 'bg-bg-subtle text-text-muted'}`}>{cat.count}</span>
                       </button>
                     ))}
+                    {filteredData?.categories && filteredData.categories.length > visibleSidebarCategories && (
+                      <button 
+                        onClick={() => setVisibleSidebarCategories(prev => prev + 20)}
+                        className="w-full text-center py-2 text-xs text-accent hover:text-accent-hover mt-2 font-medium"
+                      >
+                        Show more categories ({filteredData.categories.length - visibleSidebarCategories})
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
@@ -722,7 +732,7 @@ export default function Alternatives() {
           {/* Grouped view (default: All categories, no search) */}
           {filteredData?.grouped && activeCategory === 'All' && !debouncedSearch && (
             <div className="space-y-4">
-              {filteredData.grouped.map((group) => (
+              {filteredData.grouped.slice(0, visibleMainGroups).map((group) => (
                 <div 
                   key={group.category} 
                   ref={el => categoryRefs.current[group.category] = el}
@@ -1080,7 +1090,7 @@ export default function Alternatives() {
                     {data?.stats?.total_tools || 0}
                   </span>
                 </button>
-                {data?.categories?.map((cat) => (
+                {data?.categories?.slice(0, visibleSidebarCategories).map((cat) => (
                   <button
                     key={cat.name}
                     onClick={() => {
@@ -1102,6 +1112,14 @@ export default function Alternatives() {
                     </span>
                   </button>
                 ))}
+                {data?.categories && data.categories.length > visibleSidebarCategories && (
+                  <button 
+                    onClick={() => setVisibleSidebarCategories(prev => prev + 20)}
+                    className="w-full text-center py-3 px-4 rounded-xl text-sm text-accent hover:bg-accent/10 mt-2 font-bold touch-target"
+                  >
+                    Show more categories ({data.categories.length - visibleSidebarCategories})
+                  </button>
+                )}
               </div>
             </motion.div>
           </div>
