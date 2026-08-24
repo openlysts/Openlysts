@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
-import { Outlet } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
+import { Outlet, useLocation } from 'react-router-dom';
 import throttle from 'lodash/throttle';
-import { ArrowUp, WifiOff } from 'lucide-react';
+import { ArrowUp, WifiOff, Sparkles } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import Header from './Header';
 import Footer from './Footer';
 import BottomNav from './BottomNav';
@@ -13,6 +14,7 @@ import { useMobileLayout } from '@/lib/MobileLayoutContext';
 
 export default function OpenlystLayout() {
   const { isMobileLayout } = useMobileLayout();
+  const location = useLocation();
   const [showScroll, setShowScroll] = useState(false);
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
   const glowRef = useRef(null);
@@ -102,9 +104,28 @@ export default function OpenlystLayout() {
           </div>
         )}
         <Header />
+        
+        {/* Main Content with Spring Bounce Page Transition */}
         <main id="main-content" role="main" tabIndex="-1" className={`flex-1 transition-all duration-300 ease-in-out pb-16 sm:pb-0 ${isMobileLayout ? 'max-w-md w-full mx-auto shadow-2xl border-x border-border bg-bg/50' : ''}`}>
-          <Outlet />
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={location.pathname}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{
+                type: 'spring',
+                stiffness: 300,
+                damping: 24,
+                mass: 0.8
+              }}
+              className="w-full h-full"
+            >
+              <Outlet />
+            </motion.div>
+          </AnimatePresence>
         </main>
+
         <footer role="contentinfo" className={`${isMobileLayout ? 'max-w-md w-full mx-auto' : ''}`}>
           <Footer />
         </footer>
@@ -116,14 +137,23 @@ export default function OpenlystLayout() {
       
       <ProductTour />
 
-      {/* Floating Scroll to Top */}
-      <button
+      {/* Floating Spring Bounce Scroll to Top Button */}
+      <motion.button
         onClick={scrollToTop}
         aria-label="Scroll to top"
-        className={`fixed bottom-20 sm:bottom-6 right-4 sm:right-6 p-3 rounded-full bg-accent text-accent-fg shadow-xl z-30 transition-all duration-300 hover:scale-110 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent touch-target ${showScroll ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'}`}
+        initial={false}
+        animate={{
+          scale: showScroll ? 1 : 0,
+          opacity: showScroll ? 1 : 0,
+          y: showScroll ? 0 : 20,
+        }}
+        whileHover={{ scale: 1.15, y: -4 }}
+        whileTap={{ scale: 0.9 }}
+        transition={{ type: 'spring', stiffness: 420, damping: 18 }}
+        className="fixed bottom-20 sm:bottom-6 right-4 sm:right-6 p-3 rounded-full bg-accent text-accent-fg shadow-2xl shadow-accent/40 z-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent touch-target border border-white/20"
       >
-        <ArrowUp className="w-5 h-5" />
-      </button>
+        <ArrowUp className="w-5 h-5 stroke-[2.5]" />
+      </motion.button>
     </div>
   );
-}
+}
