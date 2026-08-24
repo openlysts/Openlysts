@@ -11,6 +11,7 @@ import getRepoHistory from '../functions/getRepoHistory.js';
 import translateText from '../functions/translateText.js';
 import updateConfig from '../functions/updateConfig.js';
 import queryAlternatives from '../functions/queryAlternatives.js';
+import getGlobalStats from '../functions/getGlobalStats.js';
 import { requireAuth, requireRole } from '../auth/middleware.js';
 import { ROLES } from '../auth/constants.js';
 
@@ -28,7 +29,8 @@ const fns = {
   getRepoHistory,
   translateText,
   updateConfig,
-  queryAlternatives
+  queryAlternatives,
+  getGlobalStats
 };
 
 const adminOnlyFunctions = [

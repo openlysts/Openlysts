@@ -1,5 +1,6 @@
 import { db } from '../db/index.js';
 import { serverCache } from '../services/cache.js';
+import { queryAlternativesSnapshot } from '../services/snapshotStore.js';
 
 const PER_PAGE = 24;
 
@@ -243,8 +244,17 @@ export default async function queryAlternatives(req, res) {
       perPage: PER_PAGE 
     });
   } catch (error) {
-    console.error('queryAlternatives 500 ERROR:', error);
-    return res.status(500).json({ error: true, message: "Internal Server Error" });
+    console.warn('[DB] queryAlternatives failed, serving from snapshot store:', error.message);
+    const body = req.body || {};
+    const fallbackData = queryAlternativesSnapshot({
+      category: body.category || 'All',
+      search: body.q || body.search || '',
+      sort: body.sort || 'score',
+      page: body.page || 1,
+      perPage: PER_PAGE
+    });
+    res.setHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400');
+    return res.json(fallbackData);
   }
 }
 

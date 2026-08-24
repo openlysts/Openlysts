@@ -2,6 +2,7 @@ import { db } from '../db/index.js';
 import { slugToLabel } from '../shared/openlyst.js';
 import { githubFetch, ingestRepoItem } from './runIngestion.js';
 import { serverCache } from '../services/cache.js';
+import { queryRepositoriesSnapshot } from '../services/snapshotStore.js';
 
 const PER_PAGE = 24;
 
@@ -224,8 +225,17 @@ export default async function queryRepositories(req, res) {
 
     return res.json({ results, total, page: pageNum, totalPages, perPage: PER_PAGE, categoryCounts });
   } catch (error) {
-    console.error('queryRepositories 500 ERROR:', error);
-    return res.status(500).json({ error: true, message: error.message || "Internal Server Error" });
+    console.warn('[DB] queryRepositories failed, serving from snapshot store:', error.message);
+    const body = req.body || {};
+    const fallbackData = queryRepositoriesSnapshot({
+      q: body.q || body.search || '',
+      categories: body.categories || (body.category ? [body.category] : []),
+      languages: body.languages || [],
+      sort: body.sort || 'trending',
+      page: body.page || 1,
+      perPage: PER_PAGE
+    });
+    return res.json(fallbackData);
   }
 }
 

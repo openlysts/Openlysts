@@ -24,9 +24,11 @@ import { usePageTitle } from '@/hooks/usePageTitle';
 import { APP_VERSION } from '@/config/version';
 import ReactiveAvatar from '@/components/openlyst/ReactiveAvatar';
 import AnimateDigits from '@/components/openlyst/AnimateDigits';
+import { usePlatformStats } from '@/hooks/usePlatformStats';
 
 export default function About() {
   usePageTitle('About & Manifesto');
+  const { totalRepositories, totalAlternatives, totalAlternativesFormatted } = usePlatformStats();
   const [openFaq, setOpenFaq] = useState(0);
 
   const founderChips = [
@@ -79,29 +81,35 @@ export default function About() {
     }
   ];
 
+  const missionPoints = [
+    { label: 'Signal-to-Noise Ratio', val: '99.4%', desc: 'Strict filtering against abandoned repos, spam, and toy projects.' },
+    { label: 'Evaluation Velocity', val: '< 50ms', desc: 'Instant search, category filters, and live preview benchmarks.' },
+    { label: 'Community Sourced', val: '100% Free', desc: 'No paywalls, sponsored rankings, or hidden vendor endorsements.' }
+  ];
+
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12 lg:py-16 space-y-16">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 py-10 sm:py-16 space-y-16">
       
       {/* 1. HERO SECTION & MANIFESTO */}
-      <div className="text-center space-y-6">
-        <motion.div 
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-accent/10 border border-accent/30 text-accent text-xs font-bold tracking-wide uppercase shadow-sm"
+      <div className="text-center space-y-5 max-w-3xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-soft border border-accent/30 text-accent text-xs font-semibold"
         >
-          <Sparkles className="w-3.5 h-3.5 animate-spin-slow" />
-          <span>The Open Source Telescope • {APP_VERSION}</span>
+          <Sparkles className="w-3.5 h-3.5" />
+          The Open-Source Compass — v{APP_VERSION}
         </motion.div>
 
         <motion.h1 
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="text-4xl sm:text-5xl lg:text-6xl font-black text-text tracking-tight leading-[1.15]"
+          className="text-4xl sm:text-5xl font-black text-text tracking-tight leading-[1.15]"
         >
-          The best software in the world isn’t behind a paywall.{' '}
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-accent via-purple-400 to-pink-500">
-            It’s hiding on GitHub.
+          Built to Cure <br />
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-accent via-emerald-400 to-trending">
+            GitHub Fatigue.
           </span>
         </motion.h1>
 
@@ -109,13 +117,13 @@ export default function About() {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-text-secondary text-lg sm:text-xl leading-relaxed max-w-3xl mx-auto"
+          className="text-base sm:text-lg text-text-secondary leading-relaxed"
         >
-          Over 300 million repositories exist today. 99% of them are abandoned experiments, tutorials, or star-farmed hype. 
+          Every day, thousands of new repositories are pushed to GitHub. Most are dead within 3 months, bloated with hype, or poorly licensed.
           <strong className="text-text font-semibold"> Openlysts</strong> is the high-velocity telescope engineered to cut through the noise, surfacing living code, verified alternatives, and pure engineering craft in milliseconds.
         </motion.p>
 
-        {/* Rolling Telemetry Odometer */}
+        {/* Dynamic Live Rolling Stat Badges */}
         <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -124,7 +132,7 @@ export default function About() {
         >
           <div className="p-4 rounded-2xl bg-bg-card/70 border border-border/60 backdrop-blur-md text-center shadow-sm">
             <div className="text-2xl sm:text-3xl font-black text-text flex items-center justify-center gap-0.5">
-              <AnimateDigits value={35476} />
+              <AnimateDigits value={totalRepositories} />
               <span className="text-accent">+</span>
             </div>
             <div className="text-xs text-text-secondary font-medium mt-1">Repositories Scored</div>
@@ -132,7 +140,7 @@ export default function About() {
 
           <div className="p-4 rounded-2xl bg-bg-card/70 border border-border/60 backdrop-blur-md text-center shadow-sm">
             <div className="text-2xl sm:text-3xl font-black text-text flex items-center justify-center gap-0.5">
-              <AnimateDigits value={1280} />
+              <AnimateDigits value={totalAlternatives} />
               <span className="text-purple-600 dark:text-purple-400">+</span>
             </div>
             <div className="text-xs text-text-secondary font-medium mt-1">Free Alternatives</div>

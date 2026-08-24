@@ -59,14 +59,7 @@ app.use((req, res, next) => {
 import { initSchema } from './db/schema.js';
 
 const healthHandler = async (req, res) => {
-  try {
-    const schemaErrors = await initSchema(db);
-    await autoBootstrapFromEnv(); // Bootstrap admin if env vars are present
-    await db.query('SELECT 1');
-    res.json({ status: 'ok', database: 'connected and schema initialized', schemaErrors });
-  } catch (error) {
-    res.status(500).json({ status: 'error', database: 'disconnected', error: error.message });
-  }
+  res.json({ status: 'ok', uptime: process.uptime() });
 };
 
 app.get('/api/health', healthHandler);

@@ -9,9 +9,11 @@ import {
 } from 'lucide-react';
 import AnimateDigits from '@/components/openlyst/AnimateDigits';
 import SocialHoverCards from '@/components/openlyst/SocialHoverCards';
+import { usePlatformStats } from '@/hooks/usePlatformStats';
 
 export default function Login() {
   usePageTitle('Login');
+  const { totalRepositoriesFormatted, totalAlternativesFormatted } = usePlatformStats();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -150,13 +152,13 @@ export default function Login() {
           <div className="grid grid-cols-3 gap-3 pt-2">
             <div className="p-3.5 rounded-2xl bg-bg-card/70 border border-border/70 backdrop-blur-md">
               <div className="text-xl font-black text-text">
-                <AnimateDigits value="35,476" />
+                <AnimateDigits value={totalRepositoriesFormatted} />
               </div>
               <div className="text-[11px] font-semibold text-text-muted mt-0.5">Projects Rated</div>
             </div>
             <div className="p-3.5 rounded-2xl bg-bg-card/70 border border-border/70 backdrop-blur-md">
               <div className="text-xl font-black text-accent">
-                <AnimateDigits value="1,280" />+
+                <AnimateDigits value={totalAlternativesFormatted} />+
               </div>
               <div className="text-[11px] font-semibold text-text-muted mt-0.5">Free Alternatives</div>
             </div>

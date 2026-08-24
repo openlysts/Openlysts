@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import AnimateDigits from '@/components/openlyst/AnimateDigits';
 import SocialHoverCards from '@/components/openlyst/SocialHoverCards';
+import { usePlatformStats } from '@/hooks/usePlatformStats';
 
 const DEVELOPER_ROLES = [
   { id: 'fullstack', label: 'Fullstack', icon: Layers, color: 'from-blue-500 to-cyan-400' },
@@ -19,6 +20,7 @@ const DEVELOPER_ROLES = [
 
 export default function Register() {
   usePageTitle('Register — Dev Pass');
+  const { totalRepositoriesFormatted, totalAlternativesFormatted } = usePlatformStats();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -276,13 +278,13 @@ export default function Register() {
           <div className="grid grid-cols-3 gap-3 max-w-md">
             <div className="p-3 rounded-2xl bg-bg-card/70 border border-border/70 backdrop-blur-md">
               <div className="text-lg font-black text-text">
-                <AnimateDigits value="35,476" />
+                <AnimateDigits value={totalRepositoriesFormatted} />
               </div>
               <div className="text-[10px] font-semibold text-text-muted mt-0.5">Projects Rated</div>
             </div>
             <div className="p-3 rounded-2xl bg-bg-card/70 border border-border/70 backdrop-blur-md">
               <div className="text-lg font-black text-accent">
-                <AnimateDigits value="1,280" />+
+                <AnimateDigits value={totalAlternativesFormatted} />+
               </div>
               <div className="text-[10px] font-semibold text-text-muted mt-0.5">Free Alternatives</div>
             </div>

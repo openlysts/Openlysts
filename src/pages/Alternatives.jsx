@@ -227,12 +227,12 @@ function AlternativeCard({ alt, idx, viewMode, isSelected, onToggleCompare, onSe
   );
 }
 
-function LiveStatBlock({ label, value, minIncrement = 1, maxIncrement = 1, interval = 10000, valueClass = "text-text" }) {
-  const liveValue = useLiveCounter(value || 0, minIncrement, maxIncrement, interval, interval * 1.5);
+function LiveStatBlock({ label, value, valueClass = "text-text" }) {
+  const displayValue = typeof value === 'number' ? value.toLocaleString() : (value || '0');
   return (
-    <div className="bg-bg-subtle/80 border border-border rounded-xl px-4 py-2.5 text-center min-w-[90px]">
-      <div className={`text-xl font-black ${valueClass}`}>{liveValue}</div>
-      <div className="text-[10px] font-bold text-text-muted uppercase tracking-wider">{label}</div>
+    <div className="bg-bg-subtle/80 border border-border rounded-xl px-3 sm:px-4 py-2 sm:py-2.5 text-center min-w-[75px] sm:min-w-[90px]">
+      <div className={`text-lg sm:text-xl font-black ${valueClass}`}>{displayValue}</div>
+      <div className="text-[9px] sm:text-[10px] font-bold text-text-muted uppercase tracking-wider">{label}</div>
     </div>
   );
 }
