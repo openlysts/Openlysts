@@ -13,13 +13,85 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="Openlysts" />
-    <meta name="description" content="Openlysts — Discover high-quality free and open-source GitHub repositories across AI, local models, developer tools, self-hosting, and more." />
-    <meta property="og:title" content="Openlysts — Discover Open-Source Projects" />
-    <meta property="og:description" content="Openlysts — Discover high-quality free and open-source GitHub repositories across AI, local models, developer tools, self-hosting, and more." />
-    <meta property="og:image" content="/logo.png" />
-    <link rel="manifest" href="/manifest.json?v=1.0.0" />
+
+    <!-- Core SEO & Search Indexing -->
     <title>Openlysts — Discover Open-Source Projects</title>
-  <script>!function(){try{var t=localStorage.getItem('openlyst_theme')||'light';document.documentElement.setAttribute('data-theme',t),document.documentElement.style.colorScheme=['dark','slate','dracula','ocean','forest'].includes(t)?'dark':'light'}catch(t){}}();</script></head>
+    <meta name="description" content="Openlysts is a high-velocity discovery engine for curated open-source software, 1,280+ SaaS alternatives, and developer tools." />
+    <meta name="keywords" content="open source, github, open source alternatives, free software, developer tools, saas alternatives, AI repositories, self-hosted" />
+    <meta name="author" content="Adil Rafiq Dar" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://openlysts.vercel.app" />
+
+    <!-- Open Graph / Facebook / LinkedIn -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Openlysts" />
+    <meta property="og:url" content="https://openlysts.vercel.app" />
+    <meta property="og:title" content="Openlysts — Discover Open-Source Projects" />
+    <meta property="og:description" content="Openlysts is a high-velocity discovery engine for curated open-source software, 1,280+ SaaS alternatives, and developer tools." />
+    <meta property="og:image" content="https://openlysts.vercel.app/banner.jpg" />
+    <meta property="og:image:alt" content="Openlysts — The Open Source Telescope" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://openlysts.vercel.app" />
+    <meta name="twitter:title" content="Openlysts — Discover Open-Source Projects" />
+    <meta name="twitter:description" content="Openlysts is a high-velocity discovery engine for curated open-source software, 1,280+ SaaS alternatives, and developer tools." />
+    <meta name="twitter:image" content="https://openlysts.vercel.app/banner.jpg" />
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/manifest.json?v=1.0.0" />
+
+    <!-- Structured Data: JSON-LD Schema -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://openlysts.vercel.app/#website",
+            "url": "https://openlysts.vercel.app/",
+            "name": "Openlysts",
+            "description": "Discover high-quality free and open-source GitHub repositories across AI, developer tools, and SaaS alternatives.",
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "https://openlysts.vercel.app/discover?q={search_term_string}"
+              },
+              "query-input": "required name=search_term_string"
+            }
+          },
+          {
+            "@type": "SoftwareApplication",
+            "@id": "https://openlysts.vercel.app/#application",
+            "name": "Openlysts",
+            "applicationCategory": "DeveloperApplication",
+            "operatingSystem": "All",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD"
+            }
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://openlysts.vercel.app/#organization",
+            "name": "Openlysts",
+            "url": "https://openlysts.vercel.app/",
+            "logo": "https://openlysts.vercel.app/logo.png",
+            "founder": {
+              "@type": "Person",
+              "name": "Adil Rafiq Dar",
+              "sameAs": "https://www.linkedin.com/in/adil-rafiq-dar"
+            }
+          }
+        ]
+      }
+    </script>
+
+    <!-- Instant Theme Loader (Zero Flash) -->
+    <script>!function(){try{var t=localStorage.getItem('openlyst_theme')||'light';document.documentElement.setAttribute('data-theme',t),document.documentElement.style.colorScheme=['dark','slate','dracula','ocean','forest'].includes(t)?'dark':'light'}catch(t){}}();</script>
+  </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
@@ -34,4 +106,3 @@
     </script>
   </body>
 </html>
-
