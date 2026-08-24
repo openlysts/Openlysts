@@ -3650,7 +3650,12 @@ The most important coverage improvements added by this addendum are:
   - Side-by-Side Compare: Test deep-link CTA navigation to `/compare`.
   - Fast Shortcuts: Verify keyboard cheat sheet and `<kbd>` tokens.
 - Test responsiveness across Desktop ($1280\times 800$), Tablet ($768\times 1024$), and Mobile ($390\times 844$).
-- Verify theme switching across Dark and Light modes maintains 100% contrast compliance.
+### TC-422: Product Tour Global Dismissal & Multi-Page Suppression
+- Navigate to `http://localhost:5173/discover` as a first-time visitor.
+- Click "Skip tour" or "Finish" on the welcome tour popup.
+- **Verify**: `openlyst_has_seen_tour` and `openlyst_tour_dismissed` are immediately set in `localStorage`.
+- Navigate across `/discover`, `/alternatives`, `/trending`, `/compare`, `/bookmarks`, `/about`, and `/contact`.
+- **Verify**: The tour modal NEVER auto-triggers or interrupts the user on ANY page navigation or browser reload.
 
 ---
 

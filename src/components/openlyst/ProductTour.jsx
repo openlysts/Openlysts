@@ -83,6 +83,16 @@ const CustomTooltip = ({
           {!isLastStep ? (
             <button
               {...skipProps}
+              onClick={(e) => {
+                try {
+                  localStorage.setItem('openlyst_has_seen_tour', 'true');
+                  localStorage.setItem('openlyst_tour_dismissed', 'true');
+                  ['discover', 'repo', 'compare', 'alternatives', 'search', 'trending', 'bookmarks', 'about', 'contact'].forEach(k => {
+                    localStorage.setItem(`openlyst_has_seen_tour_${k}`, 'true');
+                  });
+                } catch (err) {}
+                if (skipProps?.onClick) skipProps.onClick(e);
+              }}
               className="text-sm font-semibold text-text-muted hover:text-text transition-colors"
             >
               Skip tour
@@ -102,6 +112,18 @@ const CustomTooltip = ({
             )}
             <button
               {...primaryProps}
+              onClick={(e) => {
+                if (isLastStep) {
+                  try {
+                    localStorage.setItem('openlyst_has_seen_tour', 'true');
+                    localStorage.setItem('openlyst_tour_dismissed', 'true');
+                    ['discover', 'repo', 'compare', 'alternatives', 'search', 'trending', 'bookmarks', 'about', 'contact'].forEach(k => {
+                      localStorage.setItem(`openlyst_has_seen_tour_${k}`, 'true');
+                    });
+                  } catch (err) {}
+                }
+                if (primaryProps?.onClick) primaryProps.onClick(e);
+              }}
               className={`text-sm font-bold px-6 py-2.5 rounded-xl transition-all ${
                 index === 0 
                   ? 'bg-gradient-to-r from-accent to-trending text-white shadow-lg shadow-accent/30 hover:shadow-accent/50 hover:scale-105 active:scale-95' 
@@ -350,81 +372,90 @@ const ProductTour = () => {
   }, []);
 
   useEffect(() => {
-    // Determine which tour to show based on the route
-    const path = location.pathname;
-    let selectedTourKey = null;
+    // Check if user has already dismissed or completed the tour globally
+    const hasSeenGlobal = 
+      localStorage.getItem('openlyst_has_seen_tour') === 'true' ||
+      localStorage.getItem('openlyst_tour_dismissed') === 'true' ||
+      localStorage.getItem('openlyst_has_seen_tour_discover') === 'true' ||
+      Boolean(user?.has_seen_tour);
 
-    if (path === '/' || path === '/discover') {
-      selectedTourKey = 'discover';
-    } else if (path.startsWith('/repo/')) {
-      selectedTourKey = 'repo';
-    } else if (path.startsWith('/compare')) {
-      selectedTourKey = 'compare';
-    } else if (path.startsWith('/alternatives')) {
-      selectedTourKey = 'alternatives';
-    } else if (path.startsWith('/search')) {
-      selectedTourKey = 'search';
-    } else if (path.startsWith('/trending')) {
-      selectedTourKey = 'trending';
-    } else if (path.startsWith('/bookmarks')) {
-      selectedTourKey = 'bookmarks';
-    } else if (path.startsWith('/about')) {
-      selectedTourKey = 'about';
-    } else if (path.startsWith('/contact')) {
-      selectedTourKey = 'contact';
+    if (hasSeenGlobal) {
+      setRun(false);
+      return;
     }
 
-    if (selectedTourKey) {
-      setTourKey(selectedTourKey);
+    // Only auto-trigger the initial welcome tour on the homepage/discover for brand new users
+    const path = location.pathname;
+    if (path === '/' || path === '/discover') {
+      setTourKey('discover');
+      setCurrentSteps(tours.discover);
       
-      const localKey = `openlyst_has_seen_tour_${selectedTourKey}`;
-      const hasSeenTourLocal = localStorage.getItem(localKey);
-      
-      // For discover tour, we also check DB status if logged in
-      const isDiscover = selectedTourKey === 'discover';
-      const hasSeenTourDB = isDiscover ? user?.has_seen_tour : false;
-
-      if (!hasSeenTourLocal && !hasSeenTourDB) {
-        setCurrentSteps(tours[selectedTourKey]);
-        // Delay to allow DOM to render components before targeting them
-        const timer = setTimeout(() => {
+      const timer = setTimeout(() => {
+        // Double check before starting in case user navigated or dismissed
+        const isStillNew = 
+          localStorage.getItem('openlyst_has_seen_tour') !== 'true' &&
+          localStorage.getItem('openlyst_tour_dismissed') !== 'true';
+        if (isStillNew) {
           setRun(true);
-        }, 1500);
-        return () => clearTimeout(timer);
-      } else {
-        setRun(false);
-      }
+        }
+      }, 1200);
+
+      return () => clearTimeout(timer);
     } else {
+      // If user navigates to any other page without seeing discover tour, mark as dismissed so they aren't bothered
+      localStorage.setItem('openlyst_has_seen_tour', 'true');
+      localStorage.setItem('openlyst_tour_dismissed', 'true');
       setRun(false);
     }
   }, [location.pathname, user, tours]);
+
+  // Support manual tour triggers (e.g. from Help/Settings)
+  useEffect(() => {
+    const handleManualTour = (e) => {
+      const requestedKey = e?.detail?.tourKey || 'discover';
+      if (tours[requestedKey]) {
+        setTourKey(requestedKey);
+        setCurrentSteps(tours[requestedKey]);
+        setRun(true);
+      }
+    };
+
+    window.addEventListener('openlyst:start-tour', handleManualTour);
+    return () => window.removeEventListener('openlyst:start-tour', handleManualTour);
+  }, [tours]);
+
+  const markTourDismissedGlobally = async () => {
+    setRun(false);
+    localStorage.setItem('openlyst_has_seen_tour', 'true');
+    localStorage.setItem('openlyst_tour_dismissed', 'true');
+    
+    // Mark all individual page keys as seen
+    ['discover', 'repo', 'compare', 'alternatives', 'search', 'trending', 'bookmarks', 'about', 'contact'].forEach(k => {
+      localStorage.setItem(`openlyst_has_seen_tour_${k}`, 'true');
+    });
+
+    // Sync with DB if user is logged in
+    if (user && !user.has_seen_tour) {
+      try {
+        await fetch('/api/profile/settings', {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ has_seen_tour: true })
+        });
+        user.has_seen_tour = 1;
+      } catch (err) {
+        console.error('Failed to sync tour status to DB', err);
+      }
+    }
+  };
 
   const handleJoyrideCallback = async (data) => {
     const { status, action } = data;
     const finishedStatuses = [STATUS.FINISHED, STATUS.SKIPPED];
 
-    if (finishedStatuses.includes(status) || action === 'close') {
-      setRun(false);
-      
-      if (tourKey) {
-        const localKey = `openlyst_has_seen_tour_${tourKey}`;
-        localStorage.setItem(localKey, 'true');
-
-        // Sync with DB only for the main discover tour if logged in
-        if (tourKey === 'discover' && user && !user.has_seen_tour) {
-          try {
-            await fetch('/api/profile/settings', {
-              method: 'PATCH',
-              headers: { 'Content-Type': 'application/json' },
-              credentials: 'include',
-              body: JSON.stringify({ has_seen_tour: true })
-            });
-            user.has_seen_tour = 1;
-          } catch (err) {
-            console.error('Failed to sync tour status to DB', err);
-          }
-        }
-      }
+    if (finishedStatuses.includes(status) || action === 'close' || action === 'reset' || action === 'skip') {
+      await markTourDismissedGlobally();
     }
   };
 

@@ -32,13 +32,7 @@ export default function AnimatedSearch({ className = '', size = 'default' }) {
       if (wrapRef.current && !wrapRef.current.contains(e.target)) setFocused(false);
     };
     const onKeyDown = (e) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-        e.preventDefault();
-        // Prevent CommandPalette from opening
-        e.stopPropagation();
-        inputRef.current?.focus();
-        setFocused(true);
-      }
+      // Allow global CommandPalette to handle Ctrl+K instead of intercepting
     };
     document.addEventListener('mousedown', onClick);
     window.addEventListener('keydown', onKeyDown, { capture: true });
@@ -108,9 +102,6 @@ export default function AnimatedSearch({ className = '', size = 'default' }) {
           style={{ boxShadow: focused ? '0 0 15px 0px hsl(var(--accent) / 0.4), 0 0 0 2px hsl(var(--accent-soft))' : 'none' }}
         />
         <div className={`absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none ${focused ? 'opacity-0' : 'opacity-100'} transition-opacity`}>
-          <kbd className="hidden sm:inline-flex items-center gap-1 font-mono text-[10px] bg-bg border border-border px-1.5 py-0.5 rounded text-text-muted font-medium">
-            <span className="text-xs">⌘</span>K
-          </kbd>
         </div>
       </motion.div>
 
