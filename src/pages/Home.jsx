@@ -12,6 +12,7 @@ import FilterBar from '@/components/openlyst/FilterBar';
 import DiscoverLiveMetrics from '@/components/openlyst/DiscoverLiveMetrics';
 import VariableProximity from '@/components/ui/VariableProximity';
 import { useToast } from '@/components/ui/use-toast';
+import { usePlatformStats } from '@/hooks/usePlatformStats';
 
 const LANGUAGES = ['Python', 'JavaScript', 'TypeScript', 'Go', 'Rust', 'Java', 'C++', 'C', 'Ruby', 'PHP', 'Swift', 'Kotlin', 'Shell', 'Vue', 'HTML', 'Dart'];
 
@@ -29,6 +30,7 @@ export default function Home() {
   usePageTitle('Discover');
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { totalRepositories } = usePlatformStats();
   const heroRef = useRef(null);
   const [viewHistory, setViewHistory] = useState([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -195,7 +197,7 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, delay: 0.2 }}
         >
-          <DiscoverLiveMetrics totalRepos={trending?.total || 3000} categoryCounts={trending?.categoryCounts || {}} />
+          <DiscoverLiveMetrics totalRepos={totalRepositories || 35476} categoryCounts={trending?.categoryCounts || {}} />
         </motion.div>
       </section>
 
