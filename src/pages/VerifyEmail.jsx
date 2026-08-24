@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useAuth } from '@/lib/AuthContext';
 import { CheckCircle2, XCircle, Loader2 } from 'lucide-react';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default function VerifyEmail() {
+  usePageTitle('Verify Email');
   const [status, setStatus] = useState('loading'); // loading, success, error
   const [message, setMessage] = useState('');
   

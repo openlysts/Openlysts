@@ -1,4 +1,8 @@
+import React from 'react';
+import { usePageTitle } from '@/hooks/usePageTitle';
+
 export default function PrivacyPolicy() {
+  usePageTitle('Privacy Policy');
   return (
     <div className="max-w-4xl mx-auto px-4 py-12 text-text">
       <h1 className="text-3xl font-bold mb-6">Privacy Policy</h1>

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '@/lib/AuthContext';
+import { usePageTitle } from '@/hooks/usePageTitle';
 import { localClient } from '@/api/localClient';
 import { useToast } from '@/components/ui/use-toast';
 import { getBookmarks, removeBookmark } from '@/lib/bookmarks';
@@ -49,6 +50,7 @@ const POPULAR_STACKS = [
 ];
 
 export default function Profile() {
+  usePageTitle('Developer Profile');
   const { user, logout, authChecked, isAuthenticated, refreshUser } = useAuth();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();

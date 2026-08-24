@@ -82,7 +82,10 @@ function App() {
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/compare" element={<Compare />} />
                     <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                    <Route path="/privacy" element={<Navigate to="/privacy-policy" replace />} />
                     <Route path="/terms-of-service" element={<TermsOfService />} />
+                    <Route path="/terms" element={<Navigate to="/terms-of-service" replace />} />
+                    <Route path="/manifesto" element={<Navigate to="/about" replace />} />
                     <Route path="/bookmarks" element={<Bookmarks />} />
                     
                     {/* Protected Routes */}

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { usePageTitle } from '@/hooks/usePageTitle';
 import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from 'framer-motion';
 import { 
   User, Mail, Lock, AlertCircle, Github, Eye, EyeOff, ArrowRight, ArrowLeft, 
@@ -17,6 +18,7 @@ const DEVELOPER_ROLES = [
 ];
 
 export default function Register() {
+  usePageTitle('Register — Dev Pass');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

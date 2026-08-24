@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useAuth } from '@/lib/AuthContext';
+import { usePageTitle } from '@/hooks/usePageTitle';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { 
   Mail, Lock, AlertCircle, ArrowRight, ArrowLeft, Github, Eye, EyeOff, 
@@ -10,6 +11,7 @@ import AnimateDigits from '@/components/openlyst/AnimateDigits';
 import SocialHoverCards from '@/components/openlyst/SocialHoverCards';
 
 export default function Login() {
+  usePageTitle('Login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
