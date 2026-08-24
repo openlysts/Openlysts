@@ -21,9 +21,9 @@ export default function ReactiveAvatar() {
   const cardSmoothX = useSpring(mouseX, cardSpringConfig);
   const cardSmoothY = useSpring(mouseY, cardSpringConfig);
 
-  // Pupil movement (scaled within eye aperture)
-  const pupilX = useTransform(smoothMouseX, [-400, 400], [-5.5, 5.5]);
-  const pupilY = useTransform(smoothMouseY, [-400, 400], [-4.5, 4.5]);
+  // Pupil movement (subtle & natural travel within almond eye sockets)
+  const pupilX = useTransform(smoothMouseX, [-400, 400], [-3.8, 3.8]);
+  const pupilY = useTransform(smoothMouseY, [-400, 400], [-2.8, 2.8]);
 
   // 3D Card tilt
   const rotateX = useTransform(cardSmoothY, [-350, 350], [10, -10]);
@@ -53,15 +53,15 @@ export default function ReactiveAvatar() {
   useEffect(() => {
     const blinkInterval = setInterval(() => {
       setIsBlinking(true);
-      setTimeout(() => setIsBlinking(false), 160);
-    }, 3800);
+      setTimeout(() => setIsBlinking(false), 140);
+    }, 4000);
     return () => clearInterval(blinkInterval);
   }, []);
 
   const handleAvatarClick = () => {
     setIsBlinking(true);
     setShowHeart(true);
-    setTimeout(() => setIsBlinking(false), 240);
+    setTimeout(() => setIsBlinking(false), 220);
     setTimeout(() => setShowHeart(false), 900);
   };
 
@@ -99,7 +99,7 @@ export default function ReactiveAvatar() {
             }}
             transition={{
               repeat: Infinity,
-              duration: 4.0,
+              duration: 4.2,
               ease: 'easeInOut',
             }}
             className="relative w-full h-full flex items-center justify-center overflow-hidden"
@@ -111,70 +111,76 @@ export default function ReactiveAvatar() {
               className="w-full h-full object-cover object-top filter contrast-[1.03] brightness-[1.01] pointer-events-none"
             />
 
-            {/* ================= LEFT EYE TRACKING RIG ================= */}
+            {/* ================= LEFT EYE TRACKING RIG (NATURAL ALMOND SHAPE) ================= */}
             <div
               className="absolute pointer-events-none overflow-hidden flex items-center justify-center"
               style={{
-                top: '48.2%',
-                left: '36.6%',
+                top: '47.8%',
+                left: '36.2%',
                 width: '8.8%',
-                height: '4.8%',
-                borderRadius: '50% 50% 45% 45% / 60% 60% 40% 40%',
+                height: '3.8%',
+                borderRadius: '50% 50% 40% 40% / 60% 60% 30% 30%',
               }}
             >
-              {/* Sclera White Background */}
-              <div className="absolute inset-0 bg-[#f8fafc] rounded-full shadow-inner" />
+              {/* Sclera White Background with Natural Corner Shading */}
+              <div className="absolute inset-0 bg-gradient-to-r from-[#e2e8f0] via-[#f8fafc] to-[#e2e8f0] rounded-full" />
 
-              {/* Moving Hazel/Dark Brown Iris & Pupil */}
+              {/* Moving Natural Iris & Pupil */}
               <motion.div
                 style={{ x: pupilX, y: pupilY }}
-                className="relative w-4.5 h-4.5 sm:w-5 sm:h-5 rounded-full bg-gradient-to-br from-[#451a03] via-[#241206] to-[#09090b] flex items-center justify-center shadow-md"
+                className="relative w-4.5 h-4.5 rounded-full bg-gradient-to-br from-[#381a08] via-[#1f0d04] to-[#09090b] flex items-center justify-center shadow-sm"
               >
                 {/* Pupil Center */}
-                <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[#050507]" />
-                {/* Specular Catchlight Sparkle */}
-                <div className="absolute top-0.5 left-0.5 w-1 h-1 rounded-full bg-white opacity-95" />
+                <div className="w-2 h-2 rounded-full bg-[#050507]" />
+                {/* Crisp Natural Catchlight */}
+                <div className="absolute top-0.5 left-0.5 w-0.9 h-0.9 rounded-full bg-white opacity-95" />
               </motion.div>
+
+              {/* Natural Upper Eyelid Hood Shadow */}
+              <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/10 to-transparent pointer-events-none" />
 
               {/* Organic Eyelid Blink Layer */}
               <motion.div
                 initial={false}
                 animate={{ height: isBlinking ? '100%' : '0%' }}
-                transition={{ duration: 0.08, ease: 'easeInOut' }}
+                transition={{ duration: 0.07, ease: 'easeInOut' }}
                 className="absolute top-0 left-0 right-0 bg-[#c99569] z-10 origin-top shadow-sm"
               />
             </div>
 
-            {/* ================= RIGHT EYE TRACKING RIG ================= */}
+            {/* ================= RIGHT EYE TRACKING RIG (NATURAL ALMOND SHAPE) ================= */}
             <div
               className="absolute pointer-events-none overflow-hidden flex items-center justify-center"
               style={{
-                top: '48.2%',
-                left: '55.8%',
+                top: '47.8%',
+                left: '55.6%',
                 width: '8.8%',
-                height: '4.8%',
-                borderRadius: '50% 50% 45% 45% / 60% 60% 40% 40%',
+                height: '3.8%',
+                borderRadius: '50% 50% 40% 40% / 60% 60% 30% 30%',
               }}
             >
-              {/* Sclera White Background */}
-              <div className="absolute inset-0 bg-[#f8fafc] rounded-full shadow-inner" />
+              {/* Sclera White Background with Natural Corner Shading */}
+              <div className="absolute inset-0 bg-gradient-to-r from-[#e2e8f0] via-[#f8fafc] to-[#e2e8f0] rounded-full" />
 
-              {/* Moving Hazel/Dark Brown Iris & Pupil */}
+              {/* Moving Natural Iris & Pupil */}
               <motion.div
                 style={{ x: pupilX, y: pupilY }}
-                className="relative w-4.5 h-4.5 sm:w-5 sm:h-5 rounded-full bg-gradient-to-br from-[#451a03] via-[#241206] to-[#09090b] flex items-center justify-center shadow-md"
+                className="relative w-4.5 h-4.5 rounded-full bg-gradient-to-br from-[#381a08] via-[#1f0d04] to-[#09090b] flex items-center justify-center shadow-sm"
               >
                 {/* Pupil Center */}
-                <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[#050507]" />
-                {/* Specular Catchlight Sparkle */}
-                <div className="absolute top-0.5 left-0.5 w-1 h-1 rounded-full bg-white opacity-95" />
+                <div className="w-2 h-2 rounded-full bg-[#050507]" />
+                {/* Crisp Natural Catchlight */}
+                <div className="absolute top-0.5 left-0.5 w-0.9 h-0.9 rounded-full bg-white opacity-95" />
               </motion.div>
+
+              {/* Natural Upper Eyelid Hood Shadow */}
+              <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/10 to-transparent pointer-events-none" />
 
               {/* Organic Eyelid Blink Layer */}
               <motion.div
                 initial={false}
                 animate={{ height: isBlinking ? '100%' : '0%' }}
-                transition={{ duration: 0.08, ease: 'easeInOut' }}
+                transition={{ duration: 0.07, ease: 'easeInOut' }}
                 className="absolute top-0 left-0 right-0 bg-[#c99569] z-10 origin-top shadow-sm"
               />
             </div>
@@ -233,7 +239,7 @@ export default function ReactiveAvatar() {
       {/* Interactive Micro Tip */}
       <span className="text-[11px] text-text-secondary/70 mt-5 tracking-tight flex items-center gap-1">
         <Sparkles className="w-3 h-3 text-accent" />
-        Pupils track cursor • Natural breathing & blinking
+        Natural almond gaze • Pupils track cursor
       </span>
     </div>
   );
