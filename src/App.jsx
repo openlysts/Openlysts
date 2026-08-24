@@ -15,6 +15,7 @@ import AdminRoute from './components/openlyst/AdminRoute';
 import ProtectedRoute from './components/openlyst/ProtectedRoute';
 import ErrorBoundary from './components/openlyst/ErrorBoundary';
 import EasterEggsOverlay from './components/openlyst/EasterEggsOverlay';
+import ScrollToTop from './components/openlyst/ScrollToTop';
 
 // Auto-recover if Vite detects a missing preloaded chunk during/after a live deployment
 if (typeof window !== 'undefined') {
@@ -60,6 +61,7 @@ function App() {
           <MobileLayoutProvider>
             <QueryClientProvider client={queryClientInstance}>
             <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+              <ScrollToTop />
               <ErrorBoundary>
                 <EasterEggsOverlay />
                 <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="w-8 h-8 border-4 border-accent/30 border-t-accent rounded-full animate-spin" /></div>}>
