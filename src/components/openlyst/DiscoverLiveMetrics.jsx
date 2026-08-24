@@ -6,6 +6,7 @@ import {
   Wrench, HardDrive, Bot, Package, Cloud, ShieldCheck, Activity, Radio
 } from 'lucide-react';
 import { usePlatformStats } from '@/hooks/usePlatformStats';
+import { useLiveCounter } from '@/hooks/useLiveCounter';
 
 const CATEGORIES = [
   { id: 'ai', name: 'AI & LLMs', label: 'AI', fallbackCount: 14280, icon: Cpu, color: 'from-purple-500/10 to-indigo-500/10 dark:from-purple-500/20 dark:to-indigo-500/20', border: 'border-purple-500/30 dark:border-purple-500/30', text: 'text-purple-700 dark:text-purple-300' },
