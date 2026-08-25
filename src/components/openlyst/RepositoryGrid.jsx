@@ -37,7 +37,7 @@ export default function RepositoryGrid({ repos, loading, emptyMessage = 'No repo
   return (
     <div className={view === 'list' 
       ? "flex flex-col gap-4" 
-      : "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 items-start"}
+      : "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"}
     >
       {repos.map((repo, i) => (
         <RepositoryCard key={repo.id} repo={repo} index={i} view={view} showTrendingBadge={showTrendingBadge} />

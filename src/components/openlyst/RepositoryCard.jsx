@@ -130,7 +130,7 @@ export default function RepositoryCard({ repo, index = 0, view = 'grid', showTre
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: Math.min(index * 0.04, 0.4) }}
-      className="h-fit"
+      className="h-full"
       style={{ perspective: 1000 }}
     >
       <motion.div 
@@ -148,14 +148,14 @@ export default function RepositoryCard({ repo, index = 0, view = 'grid', showTre
           transition: { duration: 0.22, ease: [0.25, 1, 0.5, 1] } 
         }}
         whileTap={{ scale: 0.985, transition: { duration: 0.1 } }}
-        className={`card h-fit flex p-4 pt-4.5 relative rounded-xl border border-border bg-bg-card transition-[border-color,box-shadow,background-color] duration-200 hover:border-accent/60 hover:shadow-[0_16px_36px_rgba(0,0,0,0.18),0_0_24px_rgba(var(--accent-rgb),0.2)] cursor-pointer group touch-active overflow-hidden select-none ${view === 'list' ? 'flex-col md:flex-row items-start gap-4 md:gap-6' : 'flex-col justify-between'}`}
+        className={`card h-full flex p-4 pt-4.5 relative rounded-xl border border-border bg-bg-card transition-[border-color,box-shadow,background-color] duration-200 hover:border-accent/60 hover:shadow-[0_16px_36px_rgba(0,0,0,0.18),0_0_24px_rgba(var(--accent-rgb),0.2)] cursor-pointer group touch-active overflow-hidden select-none ${view === 'list' ? 'flex-col md:flex-row items-start gap-4 md:gap-6' : 'flex-col justify-between'}`}
       >
         <motion.div 
           className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"
           style={{ background }}
         />
         <div className={`relative z-10 flex-1 flex pointer-events-auto ${view === 'list' ? 'flex-col md:flex-row justify-between w-full gap-4 md:gap-0' : 'flex-col justify-between'}`}>
-          <div className={view === 'list' ? 'flex-1 min-w-0 md:pr-6 flex flex-col' : 'w-full flex-1 flex flex-col'}>
+          <div className={view === 'list' ? 'flex-1 min-w-0 md:pr-6 flex flex-col' : 'w-full flex-1 flex flex-col justify-start'}>
             <div className={`flex justify-between items-start mb-1.5 gap-2 ${view === 'list' ? 'flex-col sm:flex-row' : ''}`}>
             <div className="min-w-0 flex-1">
               <div className="flex flex-wrap gap-1.5 mb-2">
@@ -218,7 +218,7 @@ export default function RepositoryCard({ repo, index = 0, view = 'grid', showTre
           </div>
 
           {/* Description */}
-          <p className="text-text-secondary text-sm leading-relaxed line-clamp-2 mb-3">
+          <p className="text-text-secondary text-sm leading-relaxed line-clamp-2 min-h-[40px] mb-3">
             {repo?.description || 'No description available.'}
           </p>
 
