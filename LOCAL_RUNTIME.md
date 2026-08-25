@@ -54,10 +54,12 @@ All custom RPC actions are located in `server/functions/*.js`:
 - `queryRepositories.js`: Hybrid similarity filtering and search.
 - `queryAlternatives.js`: Category and keyword-based alternative search with in-memory caching.
 - `getSimilarRepos.js`: High-precision topic and score similarity matching.
+- `getRepoVideos.js`: Multi-tier persistent YouTube video tutorial cache (`server/data/video_cache.json`) with sub-millisecond retrieval.
 - `runIngestion.js`: Automated GitHub API data fetching and score computation with PostgreSQL advisory locks.
 
 ### In-Memory Cache & Client Outbox Architecture
 - **In-Memory Cache Layer (`server/services/cache.js`)**: Provides ultra-fast LRU/TTL caching for expensive queries (category counts, base alternatives) reducing response times to $<1\text{ms}$.
+- **Persistent Video Cache (`server/data/video_cache.json`)**: Pre-populated disk cache for repository educational video links, eliminating external scraping delays.
 - **Client Outbox Sync Engine (`src/lib/syncOutbox.js`)**: Ensures all client modifications (bookmarks, profile, feedback) commit in 0ms locally and synchronize in the background with automatic retry.
 
 ### Adding a New Backend Function

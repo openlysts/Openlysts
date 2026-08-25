@@ -1,7 +1,49 @@
 import ytSearch from 'yt-search';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const CACHE_FILE = path.resolve(__dirname, '../data/video_cache.json');
+const CACHE_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 
 const videoCache = new Map();
-const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
+
+// Load persistent disk cache on startup
+try {
+  if (fs.existsSync(CACHE_FILE)) {
+    const raw = fs.readFileSync(CACHE_FILE, 'utf-8');
+    const data = JSON.parse(raw);
+    for (const [key, val] of Object.entries(data)) {
+      if (val && val.videos && Array.isArray(val.videos)) {
+        videoCache.set(key.toLowerCase(), val);
+      }
+    }
+    console.log(`[getRepoVideos] Loaded ${videoCache.size} cached repo video entries.`);
+  }
+} catch (e) {
+  console.warn('[getRepoVideos] Could not load video_cache.json:', e.message);
+}
+
+function saveDiskCache() {
+  try {
+    const obj = {};
+    for (const [k, v] of videoCache.entries()) {
+      obj[k] = v;
+    }
+    fs.writeFileSync(CACHE_FILE, JSON.stringify(obj, null, 2), 'utf-8');
+  } catch (e) {
+    // Non-blocking in serverless/read-only environments
+  }
+}
+
+function normalizeSearchQuery(repoName) {
+  if (!repoName) return '';
+  // Clean 'owner/repo' into 'repo'
+  const cleanName = repoName.includes('/') ? repoName.split('/')[1] : repoName;
+  const sanitized = cleanName.replace(/[-_]/g, ' ').trim();
+  return `${sanitized} tutorial`;
+}
 
 export default async function getRepoVideos(req, res) {
   const repoName = req.query?.repoName || req.body?.repoName || '';
@@ -10,26 +52,46 @@ export default async function getRepoVideos(req, res) {
     return res.status(400).json({ error: true, message: 'repoName is required' });
   }
 
-  const cached = videoCache.get(repoName.toLowerCase());
-  if (cached && (Date.now() - cached.timestamp < CACHE_TTL_MS)) {
-    return res.json({ videos: cached.videos });
+  const cacheKey = repoName.toLowerCase().trim();
+  const cached = videoCache.get(cacheKey);
+  
+  if (cached && cached.videos && (Date.now() - (cached.timestamp || 0) < CACHE_TTL_MS)) {
+    return res.json({ videos: cached.videos, cached: true });
   }
 
   try {
-    const searchResult = await ytSearch(`${repoName} programming tutorial`);
+    const query = normalizeSearchQuery(repoName);
     
-    // Take the top 3 videos
-    const videos = searchResult.videos.slice(0, 3).map(v => ({
+    // Strict 3-second timeout protection
+    const searchPromise = ytSearch(query);
+    const timeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('YouTube search timeout')), 3200)
+    );
+
+    const searchResult = await Promise.race([searchPromise, timeoutPromise]);
+    
+    const videos = (searchResult?.videos || []).slice(0, 3).map(v => ({
       video_id: v.videoId,
       title: v.title,
-      channel: v.author.name,
+      channel: v.author?.name || 'YouTube',
       url: v.url
     }));
 
-    videoCache.set(repoName.toLowerCase(), { videos, timestamp: Date.now() });
-    res.json({ videos });
+    videoCache.set(cacheKey, { videos, timestamp: Date.now() });
+    
+    // Asynchronously persist to disk without blocking response
+    setTimeout(saveDiskCache, 100);
+
+    res.json({ videos, cached: false });
   } catch (err) {
-    console.warn('[getRepoVideos] Warning: YouTube search fetch failed:', err.message);
+    console.warn(`[getRepoVideos] Notice: YouTube search for "${repoName}" (${err.message})`);
+    
+    // If expired cache exists, return it on network failure as resilient fallback
+    if (cached && cached.videos) {
+      return res.json({ videos: cached.videos, fallback: true });
+    }
+    
     res.json({ videos: [] });
   }
 }
+

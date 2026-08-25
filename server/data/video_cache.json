@@ -1,0 +1,1060 @@
+{
+  "parlant/parlant": {
+    "videos": [
+      {
+        "video_id": "25T7vhHsB90",
+        "title": "Parlant V3 Tutorial: Getting Started And Tools",
+        "channel": "Maria Sukhareva",
+        "url": "https://youtube.com/watch?v=25T7vhHsB90"
+      },
+      {
+        "video_id": "FdW4qld9E4M",
+        "title": "Parlant Setup Guide: Build a Deterministic AI Agent Beyond Fragile System Prompts",
+        "channel": "Alex Hitt",
+        "url": "https://youtube.com/watch?v=FdW4qld9E4M"
+      },
+      {
+        "video_id": "4HjSrLKzqjI",
+        "title": "Stop Hardcoding Chatbots: Agent Modeling with Parlant",
+        "channel": "Strawberry Labs",
+        "url": "https://youtube.com/watch?v=4HjSrLKzqjI"
+      }
+    ],
+    "timestamp": 1787664487961
+  },
+  "parlant": {
+    "videos": [
+      {
+        "video_id": "25T7vhHsB90",
+        "title": "Parlant V3 Tutorial: Getting Started And Tools",
+        "channel": "Maria Sukhareva",
+        "url": "https://youtube.com/watch?v=25T7vhHsB90"
+      },
+      {
+        "video_id": "FdW4qld9E4M",
+        "title": "Parlant Setup Guide: Build a Deterministic AI Agent Beyond Fragile System Prompts",
+        "channel": "Alex Hitt",
+        "url": "https://youtube.com/watch?v=FdW4qld9E4M"
+      },
+      {
+        "video_id": "4HjSrLKzqjI",
+        "title": "Stop Hardcoding Chatbots: Agent Modeling with Parlant",
+        "channel": "Strawberry Labs",
+        "url": "https://youtube.com/watch?v=4HjSrLKzqjI"
+      }
+    ],
+    "timestamp": 1787664487961
+  },
+  "acidev/acidev": {
+    "videos": [
+      {
+        "video_id": "qybS5aMmhq8",
+        "title": "ACI.dev VibeOps Demo: Let Cursor Build and Deploy an Personality Test Web Application",
+        "channel": "ACI",
+        "url": "https://youtube.com/watch?v=qybS5aMmhq8"
+      },
+      {
+        "video_id": "iYNtp5TSAqw",
+        "title": "ACI.dev Gate22 Getting Started (September 2025)",
+        "channel": "ACI",
+        "url": "https://youtube.com/watch?v=iYNtp5TSAqw"
+      },
+      {
+        "video_id": "GSR9P53-_7E",
+        "title": "ACI.dev Unified MCP Server Demo (with Cursor) (April 2025)",
+        "channel": "ACI",
+        "url": "https://youtube.com/watch?v=GSR9P53-_7E"
+      }
+    ],
+    "timestamp": 1787664489148
+  },
+  "acidev": {
+    "videos": [
+      {
+        "video_id": "qybS5aMmhq8",
+        "title": "ACI.dev VibeOps Demo: Let Cursor Build and Deploy an Personality Test Web Application",
+        "channel": "ACI",
+        "url": "https://youtube.com/watch?v=qybS5aMmhq8"
+      },
+      {
+        "video_id": "iYNtp5TSAqw",
+        "title": "ACI.dev Gate22 Getting Started (September 2025)",
+        "channel": "ACI",
+        "url": "https://youtube.com/watch?v=iYNtp5TSAqw"
+      },
+      {
+        "video_id": "GSR9P53-_7E",
+        "title": "ACI.dev Unified MCP Server Demo (with Cursor) (April 2025)",
+        "channel": "ACI",
+        "url": "https://youtube.com/watch?v=GSR9P53-_7E"
+      }
+    ],
+    "timestamp": 1787664489148
+  },
+  "agentos/agentos": {
+    "videos": [
+      {
+        "video_id": "0rK4-8TryBo",
+        "title": "Time to UPGRADE... Agent OS Replaces 95% of AI Coding",
+        "channel": "AI LABS",
+        "url": "https://youtube.com/watch?v=0rK4-8TryBo"
+      },
+      {
+        "video_id": "4PlVnrliN3Q",
+        "title": "Agent OS: The System for Spec-Driven Development",
+        "channel": "Brian Casel",
+        "url": "https://youtube.com/watch?v=4PlVnrliN3Q"
+      },
+      {
+        "video_id": "WoAFrlCjWyQ",
+        "title": "Exploring AgentOS from Agno: Beginner's Guide",
+        "channel": "Data Science Basics",
+        "url": "https://youtube.com/watch?v=WoAFrlCjWyQ"
+      }
+    ],
+    "timestamp": 1787664490406
+  },
+  "agentos": {
+    "videos": [
+      {
+        "video_id": "0rK4-8TryBo",
+        "title": "Time to UPGRADE... Agent OS Replaces 95% of AI Coding",
+        "channel": "AI LABS",
+        "url": "https://youtube.com/watch?v=0rK4-8TryBo"
+      },
+      {
+        "video_id": "4PlVnrliN3Q",
+        "title": "Agent OS: The System for Spec-Driven Development",
+        "channel": "Brian Casel",
+        "url": "https://youtube.com/watch?v=4PlVnrliN3Q"
+      },
+      {
+        "video_id": "WoAFrlCjWyQ",
+        "title": "Exploring AgentOS from Agno: Beginner's Guide",
+        "channel": "Data Science Basics",
+        "url": "https://youtube.com/watch?v=WoAFrlCjWyQ"
+      }
+    ],
+    "timestamp": 1787664490406
+  },
+  "agno/agno": {
+    "videos": [
+      {
+        "video_id": "Kk4ukdWqKPM",
+        "title": "Agentic AI Tutorial One shot Using Agno(Phidata)",
+        "channel": "Krish Naik",
+        "url": "https://youtube.com/watch?v=Kk4ukdWqKPM"
+      },
+      {
+        "video_id": "Y8nbC_Uj6LI",
+        "title": "Building your first AI agent with Agno - Complete tutorial!",
+        "channel": "Code The Web",
+        "url": "https://youtube.com/watch?v=Y8nbC_Uj6LI"
+      },
+      {
+        "video_id": "EUey9L9sgzE",
+        "title": "AI Agents Tutorial For Beginners | Agno Tutorial",
+        "channel": "codebasics",
+        "url": "https://youtube.com/watch?v=EUey9L9sgzE"
+      }
+    ],
+    "timestamp": 1787664491585
+  },
+  "agno": {
+    "videos": [
+      {
+        "video_id": "Kk4ukdWqKPM",
+        "title": "Agentic AI Tutorial One shot Using Agno(Phidata)",
+        "channel": "Krish Naik",
+        "url": "https://youtube.com/watch?v=Kk4ukdWqKPM"
+      },
+      {
+        "video_id": "Y8nbC_Uj6LI",
+        "title": "Building your first AI agent with Agno - Complete tutorial!",
+        "channel": "Code The Web",
+        "url": "https://youtube.com/watch?v=Y8nbC_Uj6LI"
+      },
+      {
+        "video_id": "EUey9L9sgzE",
+        "title": "AI Agents Tutorial For Beginners | Agno Tutorial",
+        "channel": "codebasics",
+        "url": "https://youtube.com/watch?v=EUey9L9sgzE"
+      }
+    ],
+    "timestamp": 1787664491585
+  },
+  "beam/beam": {
+    "videos": [
+      {
+        "video_id": "O8BRl0xLlJw",
+        "title": "How to Calculate Support Reaction Forces for a Beam With Multiple Point Loads",
+        "channel": "TheEngineeringExecutive",
+        "url": "https://youtube.com/watch?v=O8BRl0xLlJw"
+      },
+      {
+        "video_id": "nGJqMsQQSKg",
+        "title": "How to calculate the depth and width of a beam? | How to design a beam by thumb rule? | Civil Tutor",
+        "channel": "Civil Tutor",
+        "url": "https://youtube.com/watch?v=nGJqMsQQSKg"
+      },
+      {
+        "video_id": "bwjgxR04VUY",
+        "title": "Reinforcement arrangement in a concrete beam with 3d animation | Beam reinforcement details | Civil",
+        "channel": "Civil Tutor",
+        "url": "https://youtube.com/watch?v=bwjgxR04VUY"
+      }
+    ],
+    "timestamp": 1787664492999
+  },
+  "beam": {
+    "videos": [
+      {
+        "video_id": "O8BRl0xLlJw",
+        "title": "How to Calculate Support Reaction Forces for a Beam With Multiple Point Loads",
+        "channel": "TheEngineeringExecutive",
+        "url": "https://youtube.com/watch?v=O8BRl0xLlJw"
+      },
+      {
+        "video_id": "nGJqMsQQSKg",
+        "title": "How to calculate the depth and width of a beam? | How to design a beam by thumb rule? | Civil Tutor",
+        "channel": "Civil Tutor",
+        "url": "https://youtube.com/watch?v=nGJqMsQQSKg"
+      },
+      {
+        "video_id": "bwjgxR04VUY",
+        "title": "Reinforcement arrangement in a concrete beam with 3d animation | Beam reinforcement details | Civil",
+        "channel": "Civil Tutor",
+        "url": "https://youtube.com/watch?v=bwjgxR04VUY"
+      }
+    ],
+    "timestamp": 1787664492999
+  },
+  "bifrost/bifrost": {
+    "videos": [
+      {
+        "video_id": "xPdAOvvxtLs",
+        "title": "Bifrost: High-Speed Open Source AI Gateway",
+        "channel": "NeuralNine",
+        "url": "https://youtube.com/watch?v=xPdAOvvxtLs"
+      },
+      {
+        "video_id": "kC-DrePvWn4",
+        "title": "Autodesk Maya Bifrost tutorial | Create liquid chocolate animation in Maya | Autodesk Maya |CGVISION",
+        "channel": "CGVISION",
+        "url": "https://youtube.com/watch?v=kC-DrePvWn4"
+      },
+      {
+        "video_id": "qZKoDrw_EBA",
+        "title": "Introducing Bifrost for Maya",
+        "channel": "Autodesk",
+        "url": "https://youtube.com/watch?v=qZKoDrw_EBA"
+      }
+    ],
+    "timestamp": 1787664496184
+  },
+  "bifrost": {
+    "videos": [
+      {
+        "video_id": "xPdAOvvxtLs",
+        "title": "Bifrost: High-Speed Open Source AI Gateway",
+        "channel": "NeuralNine",
+        "url": "https://youtube.com/watch?v=xPdAOvvxtLs"
+      },
+      {
+        "video_id": "kC-DrePvWn4",
+        "title": "Autodesk Maya Bifrost tutorial | Create liquid chocolate animation in Maya | Autodesk Maya |CGVISION",
+        "channel": "CGVISION",
+        "url": "https://youtube.com/watch?v=kC-DrePvWn4"
+      },
+      {
+        "video_id": "qZKoDrw_EBA",
+        "title": "Introducing Bifrost for Maya",
+        "channel": "Autodesk",
+        "url": "https://youtube.com/watch?v=qZKoDrw_EBA"
+      }
+    ],
+    "timestamp": 1787664496184
+  },
+  "botpress/botpress": {
+    "videos": [
+      {
+        "video_id": "1EVE2jlFgOc",
+        "title": "FREE AI Chatbot Builder! How to Use Botpress Chatbot Tutorial for Beginners",
+        "channel": "Tim Harris AI",
+        "url": "https://youtube.com/watch?v=1EVE2jlFgOc"
+      },
+      {
+        "video_id": "qDufkFpw-V8",
+        "title": "Build a Customer Support Chatbot in 10 Minutes (Botpress Tutorial)",
+        "channel": "Botpress",
+        "url": "https://youtube.com/watch?v=qDufkFpw-V8"
+      },
+      {
+        "video_id": "m4tGdv5QP1A",
+        "title": "Botpress Tutorial for Beginners (2026) | How to Use Botpress to Build AI Chatbot",
+        "channel": "Mindly Nova",
+        "url": "https://youtube.com/watch?v=m4tGdv5QP1A"
+      }
+    ],
+    "timestamp": 1787664497326
+  },
+  "botpress": {
+    "videos": [
+      {
+        "video_id": "1EVE2jlFgOc",
+        "title": "FREE AI Chatbot Builder! How to Use Botpress Chatbot Tutorial for Beginners",
+        "channel": "Tim Harris AI",
+        "url": "https://youtube.com/watch?v=1EVE2jlFgOc"
+      },
+      {
+        "video_id": "qDufkFpw-V8",
+        "title": "Build a Customer Support Chatbot in 10 Minutes (Botpress Tutorial)",
+        "channel": "Botpress",
+        "url": "https://youtube.com/watch?v=qDufkFpw-V8"
+      },
+      {
+        "video_id": "m4tGdv5QP1A",
+        "title": "Botpress Tutorial for Beginners (2026) | How to Use Botpress to Build AI Chatbot",
+        "channel": "Mindly Nova",
+        "url": "https://youtube.com/watch?v=m4tGdv5QP1A"
+      }
+    ],
+    "timestamp": 1787664497326
+  },
+  "bytechef/bytechef": {
+    "videos": [
+      {
+        "video_id": "xqNXrmNeUyY",
+        "title": "How to use ByteChef for Authentic Kaapi in Minutes",
+        "channel": "ByteChef",
+        "url": "https://youtube.com/watch?v=xqNXrmNeUyY"
+      },
+      {
+        "video_id": "Bs_AnyxmcEk",
+        "title": "I just built a Gmail → LLM (Anthropic) → Slack automation using ByteChef. 🔥",
+        "channel": "Opemipo's Thoughts",
+        "url": "https://youtube.com/watch?v=Bs_AnyxmcEk"
+      },
+      {
+        "video_id": "cu6zPKKTxsc",
+        "title": "ByteChef Liferay DXP Connector for Headless",
+        "channel": "Igor Bešlić",
+        "url": "https://youtube.com/watch?v=cu6zPKKTxsc"
+      }
+    ],
+    "timestamp": 1787664498242
+  },
+  "bytechef": {
+    "videos": [
+      {
+        "video_id": "xqNXrmNeUyY",
+        "title": "How to use ByteChef for Authentic Kaapi in Minutes",
+        "channel": "ByteChef",
+        "url": "https://youtube.com/watch?v=xqNXrmNeUyY"
+      },
+      {
+        "video_id": "Bs_AnyxmcEk",
+        "title": "I just built a Gmail → LLM (Anthropic) → Slack automation using ByteChef. 🔥",
+        "channel": "Opemipo's Thoughts",
+        "url": "https://youtube.com/watch?v=Bs_AnyxmcEk"
+      },
+      {
+        "video_id": "cu6zPKKTxsc",
+        "title": "ByteChef Liferay DXP Connector for Headless",
+        "channel": "Igor Bešlić",
+        "url": "https://youtube.com/watch?v=cu6zPKKTxsc"
+      }
+    ],
+    "timestamp": 1787664498242
+  },
+  "codezero/codezero": {
+    "videos": [
+      {
+        "video_id": "8CvLdxwqD40",
+        "title": "Setting up and Flying a Code Zero",
+        "channel": "UK Sailmakers",
+        "url": "https://youtube.com/watch?v=8CvLdxwqD40"
+      },
+      {
+        "video_id": "bt5lQqRJxlE",
+        "title": "Teleporting And Intercepting Microservices With CodeZero",
+        "channel": "DevOps & AI Toolkit",
+        "url": "https://youtube.com/watch?v=bt5lQqRJxlE"
+      },
+      {
+        "video_id": "fhMopMdpyCo",
+        "title": "Cordon by Codezero: Stop Your AI Agent From Holding Real Credentials (Full Install Walkthrough)",
+        "channel": "Codezero",
+        "url": "https://youtube.com/watch?v=fhMopMdpyCo"
+      }
+    ],
+    "timestamp": 1787664499715
+  },
+  "codezero": {
+    "videos": [
+      {
+        "video_id": "8CvLdxwqD40",
+        "title": "Setting up and Flying a Code Zero",
+        "channel": "UK Sailmakers",
+        "url": "https://youtube.com/watch?v=8CvLdxwqD40"
+      },
+      {
+        "video_id": "bt5lQqRJxlE",
+        "title": "Teleporting And Intercepting Microservices With CodeZero",
+        "channel": "DevOps & AI Toolkit",
+        "url": "https://youtube.com/watch?v=bt5lQqRJxlE"
+      },
+      {
+        "video_id": "fhMopMdpyCo",
+        "title": "Cordon by Codezero: Stop Your AI Agent From Holding Real Credentials (Full Install Walkthrough)",
+        "channel": "Codezero",
+        "url": "https://youtube.com/watch?v=fhMopMdpyCo"
+      }
+    ],
+    "timestamp": 1787664499715
+  },
+  "copilotkit/copilotkit": {
+    "videos": [
+      {
+        "video_id": "n1lJyaLam7g",
+        "title": "CopilotKit Tutorial - Todos App AI Copilot",
+        "channel": "CopilotKit",
+        "url": "https://youtube.com/watch?v=n1lJyaLam7g"
+      },
+      {
+        "video_id": "C5-K-Z6Ubac",
+        "title": "How to Integrate AI in your Backend using CopilotKit | CopilotKit Backend Actions Tutorial 🔥",
+        "channel": "CodeWithHarry",
+        "url": "https://youtube.com/watch?v=C5-K-Z6Ubac"
+      },
+      {
+        "video_id": "rYVbw1wSnMk",
+        "title": "Copilot Kit Made My React App Think For Itself Using AI",
+        "channel": "Better Stack",
+        "url": "https://youtube.com/watch?v=rYVbw1wSnMk"
+      }
+    ],
+    "timestamp": 1787664500832
+  },
+  "copilotkit": {
+    "videos": [
+      {
+        "video_id": "n1lJyaLam7g",
+        "title": "CopilotKit Tutorial - Todos App AI Copilot",
+        "channel": "CopilotKit",
+        "url": "https://youtube.com/watch?v=n1lJyaLam7g"
+      },
+      {
+        "video_id": "C5-K-Z6Ubac",
+        "title": "How to Integrate AI in your Backend using CopilotKit | CopilotKit Backend Actions Tutorial 🔥",
+        "channel": "CodeWithHarry",
+        "url": "https://youtube.com/watch?v=C5-K-Z6Ubac"
+      },
+      {
+        "video_id": "rYVbw1wSnMk",
+        "title": "Copilot Kit Made My React App Think For Itself Using AI",
+        "channel": "Better Stack",
+        "url": "https://youtube.com/watch?v=rYVbw1wSnMk"
+      }
+    ],
+    "timestamp": 1787664500832
+  },
+  "dify/dify": {
+    "videos": [
+      {
+        "video_id": "f-rvwoywUgM",
+        "title": "Master Dify AI in 1 Hour: Complete Beginner's Guide for 2026",
+        "channel": "Eddie Chen | AI Automation",
+        "url": "https://youtube.com/watch?v=f-rvwoywUgM"
+      },
+      {
+        "video_id": "CpZdaE5QmI8",
+        "title": "Dify AI Tutorial For Beginners (2026) | How to Use Dify to Build AI Apps",
+        "channel": "Mindly Nova",
+        "url": "https://youtube.com/watch?v=CpZdaE5QmI8"
+      },
+      {
+        "video_id": "dJ34OU_JY7Y",
+        "title": "Dify Quickstart Guide: Build Your First AI Workflow",
+        "channel": "Dify",
+        "url": "https://youtube.com/watch?v=dJ34OU_JY7Y"
+      }
+    ],
+    "timestamp": 1787664503635
+  },
+  "dify": {
+    "videos": [
+      {
+        "video_id": "f-rvwoywUgM",
+        "title": "Master Dify AI in 1 Hour: Complete Beginner's Guide for 2026",
+        "channel": "Eddie Chen | AI Automation",
+        "url": "https://youtube.com/watch?v=f-rvwoywUgM"
+      },
+      {
+        "video_id": "CpZdaE5QmI8",
+        "title": "Dify AI Tutorial For Beginners (2026) | How to Use Dify to Build AI Apps",
+        "channel": "Mindly Nova",
+        "url": "https://youtube.com/watch?v=CpZdaE5QmI8"
+      },
+      {
+        "video_id": "dJ34OU_JY7Y",
+        "title": "Dify Quickstart Guide: Build Your First AI Workflow",
+        "channel": "Dify",
+        "url": "https://youtube.com/watch?v=dJ34OU_JY7Y"
+      }
+    ],
+    "timestamp": 1787664503635
+  },
+  "e2b/e2b": {
+    "videos": [
+      {
+        "video_id": "_N0kcJ2kZpk",
+        "title": "E2B Launches Build System 2.0",
+        "channel": "E2B | The AI Agent Cloud",
+        "url": "https://youtube.com/watch?v=_N0kcJ2kZpk"
+      },
+      {
+        "video_id": "EJNQWpqS8aI",
+        "title": "E2B Explained: The Secure Sandbox That STOPS Dangerous AI Code Execution (Code Interpreter SDK)",
+        "channel": "STARP AI",
+        "url": "https://youtube.com/watch?v=EJNQWpqS8aI"
+      },
+      {
+        "video_id": "1ECn5zrVUB4",
+        "title": "E2B Agent Sandboxes: The Space to Place your Claude Agents",
+        "channel": "IndyDevDan",
+        "url": "https://youtube.com/watch?v=1ECn5zrVUB4"
+      }
+    ],
+    "timestamp": 1787664505137
+  },
+  "e2b": {
+    "videos": [
+      {
+        "video_id": "_N0kcJ2kZpk",
+        "title": "E2B Launches Build System 2.0",
+        "channel": "E2B | The AI Agent Cloud",
+        "url": "https://youtube.com/watch?v=_N0kcJ2kZpk"
+      },
+      {
+        "video_id": "EJNQWpqS8aI",
+        "title": "E2B Explained: The Secure Sandbox That STOPS Dangerous AI Code Execution (Code Interpreter SDK)",
+        "channel": "STARP AI",
+        "url": "https://youtube.com/watch?v=EJNQWpqS8aI"
+      },
+      {
+        "video_id": "1ECn5zrVUB4",
+        "title": "E2B Agent Sandboxes: The Space to Place your Claude Agents",
+        "channel": "IndyDevDan",
+        "url": "https://youtube.com/watch?v=1ECn5zrVUB4"
+      }
+    ],
+    "timestamp": 1787664505137
+  },
+  "envoyaigateway/envoyaigateway": {
+    "videos": [
+      {
+        "video_id": "xqh6tr8R0Qs",
+        "title": "Model Name Virtualization in Envoy AI Gateway",
+        "channel": "IMESH",
+        "url": "https://youtube.com/watch?v=xqh6tr8R0Qs"
+      },
+      {
+        "video_id": "Opg3fiWwlPQ",
+        "title": "Envoy AI Gateway Usage-Based Rate Limiting Explained | Control AI Costs & Protect LLM APIs",
+        "channel": "IMESH",
+        "url": "https://youtube.com/watch?v=Opg3fiWwlPQ"
+      },
+      {
+        "video_id": "3VxAAvaiFNo",
+        "title": "Provider Fallback in Envoy AI Gateway",
+        "channel": "IMESH",
+        "url": "https://youtube.com/watch?v=3VxAAvaiFNo"
+      }
+    ],
+    "timestamp": 1787664506192
+  },
+  "envoyaigateway": {
+    "videos": [
+      {
+        "video_id": "xqh6tr8R0Qs",
+        "title": "Model Name Virtualization in Envoy AI Gateway",
+        "channel": "IMESH",
+        "url": "https://youtube.com/watch?v=xqh6tr8R0Qs"
+      },
+      {
+        "video_id": "Opg3fiWwlPQ",
+        "title": "Envoy AI Gateway Usage-Based Rate Limiting Explained | Control AI Costs & Protect LLM APIs",
+        "channel": "IMESH",
+        "url": "https://youtube.com/watch?v=Opg3fiWwlPQ"
+      },
+      {
+        "video_id": "3VxAAvaiFNo",
+        "title": "Provider Fallback in Envoy AI Gateway",
+        "channel": "IMESH",
+        "url": "https://youtube.com/watch?v=3VxAAvaiFNo"
+      }
+    ],
+    "timestamp": 1787664506192
+  },
+  "giselle/giselle": {
+    "videos": [
+      {
+        "video_id": "Sv_BqXsgUmM",
+        "title": "Intermediate Gisselle Act 1 Variation Tutorial | Ballet For All Variation Tutorial 2021",
+        "channel": "Ballet For All",
+        "url": "https://youtube.com/watch?v=Sv_BqXsgUmM"
+      },
+      {
+        "video_id": "ZUFC7Aix3No",
+        "title": "Giselle Aespa Hairstyle tutorial ✨🙌🏻",
+        "channel": "Krista Hair Diary",
+        "url": "https://youtube.com/watch?v=ZUFC7Aix3No"
+      },
+      {
+        "video_id": "gORTND_Ioq0",
+        "title": "Giselle from Enchanted hair tutorial for Halloween! Who should I do next? Love the half-up hairstyle",
+        "channel": "Geena Hunt",
+        "url": "https://youtube.com/watch?v=gORTND_Ioq0"
+      }
+    ],
+    "timestamp": 1787664507095
+  },
+  "giselle": {
+    "videos": [
+      {
+        "video_id": "Sv_BqXsgUmM",
+        "title": "Intermediate Gisselle Act 1 Variation Tutorial | Ballet For All Variation Tutorial 2021",
+        "channel": "Ballet For All",
+        "url": "https://youtube.com/watch?v=Sv_BqXsgUmM"
+      },
+      {
+        "video_id": "ZUFC7Aix3No",
+        "title": "Giselle Aespa Hairstyle tutorial ✨🙌🏻",
+        "channel": "Krista Hair Diary",
+        "url": "https://youtube.com/watch?v=ZUFC7Aix3No"
+      },
+      {
+        "video_id": "gORTND_Ioq0",
+        "title": "Giselle from Enchanted hair tutorial for Halloween! Who should I do next? Love the half-up hairstyle",
+        "channel": "Geena Hunt",
+        "url": "https://youtube.com/watch?v=gORTND_Ioq0"
+      }
+    ],
+    "timestamp": 1787664507095
+  },
+  "hermesagent/hermesagent": {
+    "videos": [
+      {
+        "video_id": "mTYxpIRK7xA",
+        "title": "Hermes Agent - Full Course & Setup Guide - For COMPLETE Beginners",
+        "channel": "Tech With Tim",
+        "url": "https://youtube.com/watch?v=mTYxpIRK7xA"
+      },
+      {
+        "video_id": "1ve4Atbqmoo",
+        "title": "Hermes Agent Full Tutorial for Beginners | Setup Guide",
+        "channel": "Tech With Tim",
+        "url": "https://youtube.com/watch?v=1ve4Atbqmoo"
+      },
+      {
+        "video_id": "8yE6G1Lup1s",
+        "title": "HERMES AGENT FULL COURSE 3 HOURS: Build & Sell (2026)",
+        "channel": "Samin Yasar",
+        "url": "https://youtube.com/watch?v=8yE6G1Lup1s"
+      }
+    ],
+    "timestamp": 1787664508694
+  },
+  "hermesagent": {
+    "videos": [
+      {
+        "video_id": "mTYxpIRK7xA",
+        "title": "Hermes Agent - Full Course & Setup Guide - For COMPLETE Beginners",
+        "channel": "Tech With Tim",
+        "url": "https://youtube.com/watch?v=mTYxpIRK7xA"
+      },
+      {
+        "video_id": "1ve4Atbqmoo",
+        "title": "Hermes Agent Full Tutorial for Beginners | Setup Guide",
+        "channel": "Tech With Tim",
+        "url": "https://youtube.com/watch?v=1ve4Atbqmoo"
+      },
+      {
+        "video_id": "8yE6G1Lup1s",
+        "title": "HERMES AGENT FULL COURSE 3 HOURS: Build & Sell (2026)",
+        "channel": "Samin Yasar",
+        "url": "https://youtube.com/watch?v=8yE6G1Lup1s"
+      }
+    ],
+    "timestamp": 1787664508694
+  },
+  "langflow/langflow": {
+    "videos": [
+      {
+        "video_id": "knPg4KdKU6w",
+        "title": "Getting started with Langflow in under 3 minutes",
+        "channel": "Langflow",
+        "url": "https://youtube.com/watch?v=knPg4KdKU6w"
+      },
+      {
+        "video_id": "rz40ukZ3krQ",
+        "title": "Build a RAG Based LLM App in 20 Minutes! | Full Langflow Tutorial",
+        "channel": "Tech With Tim",
+        "url": "https://youtube.com/watch?v=rz40ukZ3krQ"
+      },
+      {
+        "video_id": "ldBsvhjEREc",
+        "title": "LangGraph vs LangChain vs LangFlow vs LangSmith : Which One To Use & Why?",
+        "channel": "FuturMinds",
+        "url": "https://youtube.com/watch?v=ldBsvhjEREc"
+      }
+    ],
+    "timestamp": 1787664511529
+  },
+  "langflow": {
+    "videos": [
+      {
+        "video_id": "knPg4KdKU6w",
+        "title": "Getting started with Langflow in under 3 minutes",
+        "channel": "Langflow",
+        "url": "https://youtube.com/watch?v=knPg4KdKU6w"
+      },
+      {
+        "video_id": "rz40ukZ3krQ",
+        "title": "Build a RAG Based LLM App in 20 Minutes! | Full Langflow Tutorial",
+        "channel": "Tech With Tim",
+        "url": "https://youtube.com/watch?v=rz40ukZ3krQ"
+      },
+      {
+        "video_id": "ldBsvhjEREc",
+        "title": "LangGraph vs LangChain vs LangFlow vs LangSmith : Which One To Use & Why?",
+        "channel": "FuturMinds",
+        "url": "https://youtube.com/watch?v=ldBsvhjEREc"
+      }
+    ],
+    "timestamp": 1787664511529
+  },
+  "letta/letta": {
+    "videos": [
+      {
+        "video_id": "BroTeuvX0es",
+        "title": "LettaBot Tutorial: create a personal AI assistant with memory",
+        "channel": "Letta",
+        "url": "https://youtube.com/watch?v=BroTeuvX0es"
+      },
+      {
+        "video_id": "TC-Q2ulTPhw",
+        "title": "Letta Code: A Memory-First Coding Agent (#1 OSS on Terminal-Bench)",
+        "channel": "Letta",
+        "url": "https://youtube.com/watch?v=TC-Q2ulTPhw"
+      },
+      {
+        "video_id": "UYShAvuKX_8",
+        "title": "How to build a personal AI agent that actually knows you",
+        "channel": "Letta",
+        "url": "https://youtube.com/watch?v=UYShAvuKX_8"
+      }
+    ],
+    "timestamp": 1787664512878
+  },
+  "letta": {
+    "videos": [
+      {
+        "video_id": "BroTeuvX0es",
+        "title": "LettaBot Tutorial: create a personal AI assistant with memory",
+        "channel": "Letta",
+        "url": "https://youtube.com/watch?v=BroTeuvX0es"
+      },
+      {
+        "video_id": "TC-Q2ulTPhw",
+        "title": "Letta Code: A Memory-First Coding Agent (#1 OSS on Terminal-Bench)",
+        "channel": "Letta",
+        "url": "https://youtube.com/watch?v=TC-Q2ulTPhw"
+      },
+      {
+        "video_id": "UYShAvuKX_8",
+        "title": "How to build a personal AI agent that actually knows you",
+        "channel": "Letta",
+        "url": "https://youtube.com/watch?v=UYShAvuKX_8"
+      }
+    ],
+    "timestamp": 1787664512878
+  },
+  "librechat/librechat": {
+    "videos": [
+      {
+        "video_id": "q_yCWQChQUY",
+        "title": "How to Set Up Librechat as MCP Client and Chatbot | MCP Clickhouse | Ollama | Local AI | Open Source",
+        "channel": "CloudOpsDirect",
+        "url": "https://youtube.com/watch?v=q_yCWQChQUY"
+      },
+      {
+        "video_id": "aEc2GDXIFHc",
+        "title": "Intro to LibreChat",
+        "channel": "Dominik Fretz - AI in Software Engineering",
+        "url": "https://youtube.com/watch?v=aEc2GDXIFHc"
+      },
+      {
+        "video_id": "mQ01jC6yP5Q",
+        "title": "Build the Ultimate Local AI Workspace (LibreChat)",
+        "channel": "RM Logic",
+        "url": "https://youtube.com/watch?v=mQ01jC6yP5Q"
+      }
+    ],
+    "timestamp": 1787664514146
+  },
+  "librechat": {
+    "videos": [
+      {
+        "video_id": "q_yCWQChQUY",
+        "title": "How to Set Up Librechat as MCP Client and Chatbot | MCP Clickhouse | Ollama | Local AI | Open Source",
+        "channel": "CloudOpsDirect",
+        "url": "https://youtube.com/watch?v=q_yCWQChQUY"
+      },
+      {
+        "video_id": "aEc2GDXIFHc",
+        "title": "Intro to LibreChat",
+        "channel": "Dominik Fretz - AI in Software Engineering",
+        "url": "https://youtube.com/watch?v=aEc2GDXIFHc"
+      },
+      {
+        "video_id": "mQ01jC6yP5Q",
+        "title": "Build the Ultimate Local AI Workspace (LibreChat)",
+        "channel": "RM Logic",
+        "url": "https://youtube.com/watch?v=mQ01jC6yP5Q"
+      }
+    ],
+    "timestamp": 1787664514146
+  },
+  "litellm/litellm": {
+    "videos": [
+      {
+        "video_id": "WyW4Ifu4rSo",
+        "title": "LiteLLM Crash Course | For Complete Beginners",
+        "channel": "Data Science Basics",
+        "url": "https://youtube.com/watch?v=WyW4Ifu4rSo"
+      },
+      {
+        "video_id": "5jdpRv-WE2A",
+        "title": "LiteLLM - Simplify AI API Management With One Library",
+        "channel": "Better Stack",
+        "url": "https://youtube.com/watch?v=5jdpRv-WE2A"
+      },
+      {
+        "video_id": "nQCOTzS5oU0",
+        "title": "I’m changing how I use AI (Open WebUI + LiteLLM)",
+        "channel": "NetworkChuck",
+        "url": "https://youtube.com/watch?v=nQCOTzS5oU0"
+      }
+    ],
+    "timestamp": 1787664515448
+  },
+  "litellm": {
+    "videos": [
+      {
+        "video_id": "WyW4Ifu4rSo",
+        "title": "LiteLLM Crash Course | For Complete Beginners",
+        "channel": "Data Science Basics",
+        "url": "https://youtube.com/watch?v=WyW4Ifu4rSo"
+      },
+      {
+        "video_id": "5jdpRv-WE2A",
+        "title": "LiteLLM - Simplify AI API Management With One Library",
+        "channel": "Better Stack",
+        "url": "https://youtube.com/watch?v=5jdpRv-WE2A"
+      },
+      {
+        "video_id": "nQCOTzS5oU0",
+        "title": "I’m changing how I use AI (Open WebUI + LiteLLM)",
+        "channel": "NetworkChuck",
+        "url": "https://youtube.com/watch?v=nQCOTzS5oU0"
+      }
+    ],
+    "timestamp": 1787664515448
+  },
+  "livekit/livekit": {
+    "videos": [
+      {
+        "video_id": "n-hCOsVQQgA",
+        "title": "Master Voice AI Agents with LiveKit: Full Course",
+        "channel": "LiveKit and codeSTACKr",
+        "url": "https://youtube.com/watch?v=n-hCOsVQQgA"
+      },
+      {
+        "video_id": "eMaLOQbj4GE",
+        "title": "Master LiveKit Voice Agents in 10 Minutes! (Full Tutorial)",
+        "channel": "Brendan Jowett",
+        "url": "https://youtube.com/watch?v=eMaLOQbj4GE"
+      },
+      {
+        "video_id": "vG215N-mIs0",
+        "title": "Master WebRTC & LiveKIT Before SPENDING HOURS Building AI AGENT",
+        "channel": "Kno2gether",
+        "url": "https://youtube.com/watch?v=vG215N-mIs0"
+      }
+    ],
+    "timestamp": 1787664516878
+  },
+  "livekit": {
+    "videos": [
+      {
+        "video_id": "n-hCOsVQQgA",
+        "title": "Master Voice AI Agents with LiveKit: Full Course",
+        "channel": "LiveKit and codeSTACKr",
+        "url": "https://youtube.com/watch?v=n-hCOsVQQgA"
+      },
+      {
+        "video_id": "eMaLOQbj4GE",
+        "title": "Master LiveKit Voice Agents in 10 Minutes! (Full Tutorial)",
+        "channel": "Brendan Jowett",
+        "url": "https://youtube.com/watch?v=eMaLOQbj4GE"
+      },
+      {
+        "video_id": "vG215N-mIs0",
+        "title": "Master WebRTC & LiveKIT Before SPENDING HOURS Building AI AGENT",
+        "channel": "Kno2gether",
+        "url": "https://youtube.com/watch?v=vG215N-mIs0"
+      }
+    ],
+    "timestamp": 1787664516878
+  },
+  "sentry": {
+    "videos": [
+      {
+        "video_id": "4djseRVSan8",
+        "title": "Sentry in Six Minutes",
+        "channel": "Sentry",
+        "url": "https://youtube.com/watch?v=4djseRVSan8"
+      },
+      {
+        "video_id": "8nZOsYm9Xzs",
+        "title": "How Sentry.io Saved Me From Disaster",
+        "channel": "Kodaps Academy",
+        "url": "https://youtube.com/watch?v=8nZOsYm9Xzs"
+      },
+      {
+        "video_id": "561iVCoysr8",
+        "title": "Sentry Tutorial: Track Errors in Production #webdevelopment #screenrecoder #developer #coding #jobs",
+        "channel": "Code With Naveen",
+        "url": "https://youtube.com/watch?v=561iVCoysr8"
+      }
+    ],
+    "timestamp": 1787664800305
+  },
+  "turso/turso": {
+    "videos": [
+      {
+        "video_id": "14bFL4cUhWM",
+        "title": "Turso has a feature called embedded replicas, which let SQLite databases work locally within apps",
+        "channel": "Syntax",
+        "url": "https://youtube.com/watch?v=14bFL4cUhWM"
+      },
+      {
+        "video_id": "-Zz3mVi55wg",
+        "title": "Turso Makes Local-First & Multi-Tenant Apps Easier Than Ever",
+        "channel": "ByteGrad",
+        "url": "https://youtube.com/watch?v=-Zz3mVi55wg"
+      },
+      {
+        "video_id": "FUPLQXBHTIc",
+        "title": "Turso Install Guide Tutorial: Create a Global libSQL Database in Minutes",
+        "channel": "Alex Hitt",
+        "url": "https://youtube.com/watch?v=FUPLQXBHTIc"
+      }
+    ],
+    "timestamp": 1787664992760
+  },
+  "twenty/twenty": {
+    "videos": [
+      {
+        "video_id": "vPm8glMIkI8",
+        "title": "Twenty CRM Tutorial | Step-by-Step Guide",
+        "channel": "Phylux Express",
+        "url": "https://youtube.com/watch?v=vPm8glMIkI8"
+      },
+      {
+        "video_id": "n4OiVp-NWMo",
+        "title": "Twenty: Free Open Source CRM",
+        "channel": "Elestio",
+        "url": "https://youtube.com/watch?v=n4OiVp-NWMo"
+      },
+      {
+        "video_id": "L4XnyFKbW84",
+        "title": "Twenty Crm Tutorial & Review ( 2026 )",
+        "channel": "Steven Digital ",
+        "url": "https://youtube.com/watch?v=L4XnyFKbW84"
+      }
+    ],
+    "timestamp": 1787665036958
+  },
+  "cap/cap": {
+    "videos": [
+      {
+        "video_id": "naEDpe58vbA",
+        "title": "Hijab Without Hijab Pins and Hijab Cap | Hacks | Tutorials By Areeba_Tahir_ #tutorial#viral#hack",
+        "channel": "Areeba Tahir",
+        "url": "https://youtube.com/watch?v=naEDpe58vbA"
+      },
+      {
+        "video_id": "4dNXGv-LSzM",
+        "title": "Captricks Tutorial | Easy Cap Magic Trick Learn In Two Steps #Vishalcapking",
+        "channel": "Vishal CapKing",
+        "url": "https://youtube.com/watch?v=4dNXGv-LSzM"
+      },
+      {
+        "video_id": "u67nf3arA-o",
+        "title": "Cap Trick Tutorial For Beginners 🧢 #shorts#dance#captricks#youtubeshorts#trending",
+        "channel": "Non Employee",
+        "url": "https://youtube.com/watch?v=u67nf3arA-o"
+      }
+    ],
+    "timestamp": 1787665038491
+  },
+  "privatecaptcha/privatecaptcha": {
+    "videos": [
+      {
+        "video_id": "we7vfk9aGyQ",
+        "title": "Bypass reCAPTCHA in Seconds Using Python & Selenium #tutorial #techtutorial #webscrapingtool",
+        "channel": "Scraping Lab",
+        "url": "https://youtube.com/watch?v=we7vfk9aGyQ"
+      },
+      {
+        "video_id": "Ej7et5hkQUA",
+        "title": "Captcha  1/16 | 2captcha Training Mode Completed | 2023 #rjahidali1 #shorts #viral #shortvideo",
+        "channel": "R Jahid Ali",
+        "url": "https://youtube.com/watch?v=Ej7et5hkQUA"
+      },
+      {
+        "video_id": "RGR5Xj0Qqfs",
+        "title": "Playwright Web Scraping + CAPTCHA Bypass Tutorial",
+        "channel": "Python Simplified",
+        "url": "https://youtube.com/watch?v=RGR5Xj0Qqfs"
+      }
+    ],
+    "timestamp": 1787665205002
+  },
+  "signal/signal": {
+    "videos": [
+      {
+        "video_id": "IYCG89ijY64",
+        "title": "How to use Signal App - Beginner Tutorial",
+        "channel": "Kevin Stratvert",
+        "url": "https://youtube.com/watch?v=IYCG89ijY64"
+      },
+      {
+        "video_id": "DPjg3651oJM",
+        "title": "Lock Down Signal Messenger: Ultimate Hardening Guide",
+        "channel": "Techlore",
+        "url": "https://youtube.com/watch?v=DPjg3651oJM"
+      },
+      {
+        "video_id": "JhO265PjBF0",
+        "title": "if you use Signal, do this NOW",
+        "channel": "All Things Secured",
+        "url": "https://youtube.com/watch?v=JhO265PjBF0"
+      }
+    ],
+    "timestamp": 1787665209068
+  }
+}

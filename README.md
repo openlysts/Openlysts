@@ -38,7 +38,9 @@ Openlysts is a complete intelligence platform for developers, tech leads, and op
 - 🔢 **Live AnimateDigits Rolling Tickers & Unlumen Social Hover Bar**: Real-time odometer telemetry tracking `35,476` rated projects and interactive morphing popovers.
 - 🆚 **SaaS-to-Open-Source Alternatives**: Curated directory of self-hosted alternatives with real-world feature parity scoring, cost breakdowns, and active community benchmarks with sub-50ms instant switching.
 - ⚖️ **Side-by-Side Comparison Matrix**: Compare up to 5 repositories simultaneously across stars, velocity, commit frequency, licenses, dependencies, and health metrics with shareable URL links.
-- 🎬 **Video Tutorials & Walkthroughs**: Embedded YouTube explainer videos and deep architectural breakdowns for popular open-source packages.
+- 🎬 **Ultra-Fast Video Tutorials & Walkthroughs Engine**: Multi-tier persistent caching, client hover pre-fetching, and query normalization for instantaneous sub-millisecond YouTube explainer popovers.
+- 📐 **Pixel-Uniform Equal-Height Discovery Grid**: Flexbox-equalized grid rows ensuring deterministic card heights, uniform descriptions, and pinned metrics across responsive breakpoints.
+- 🧑‍💻 **Interactive 3D Reactive Founder Avatar & Support Desk**: Cursor-tracking 3D avatar with eyelid winks, cheek smiles, particle reactions, and seamless Contact Portal routing.
 - 📊 **Deep Health & Maintenance Insights**: Direct GitHub integration inspecting release cadences, license legitimacy, community health, and full rendered markdown READMEs.
 - 🎨 **Multi-Theme Design Engine**: Dynamic theme switching with 3D WebGL shader syncing and pure tokenized contrast across all devices.
 - 💾 **Local & Cloud Bookmarking**: Instant offline bookmarking with real-time mobile badge synchronization and JSON export in the user Data Vault.

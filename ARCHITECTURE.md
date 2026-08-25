@@ -108,10 +108,23 @@ This ensures established, production-grade repositories rank naturally above sma
 ### B. Self-Sufficient Edge Caching & Resilient Outbox (SRA-Engine)
 - **In-Memory LRU/TTL Cache**: Aggregates category counts and alternatives base datasets in memory, delivering $<1\text{ms}$ query responses.
 - **Lean Column Projections**: Eliminates heavy columns from index queries, dropping bandwidth overhead by 96%.
-- **Distributed Advisory Lock**: Uses PostgreSQL session-level locks (`pg_try_advisory_lock`) to guarantee exactly-once background execution without duplicate worker overhead.
-- **Client Outbox Sync**: Mutations commit locally in 0ms and sync asynchronously with automatic exponential retry.
+- **Distributed Session Lock**: Uses `pg_try_advisory_lock` to coordinate single-worker background ingestion cycles across serverless environments.
+- **Optimistic Client Outbox**: Writes occur with 0ms UI latency via `syncOutbox.js` and queue replay.
 
-### C. 3D Psychological UI & Gamified Onboarding
+### C. Multi-Tier Persistent Video Cache Engine (`getRepoVideos`)
+To eliminate the 4,000ms–6,000ms latency of cold YouTube search scraping, Openlysts employs a four-tier retrieval pipeline:
+1. **Tier 1 (Instant In-Memory & Disk Cache)**: Loads `server/data/video_cache.json` on startup. Serves cached videos in **$< 1\text{ms}$** with zero network roundtrips.
+2. **Tier 2 (Query Normalization)**: Converts structured repo identifiers (`owner/repo`) into sanitized contextual search queries (`repo tutorial`), dramatically improving YouTube matching speed and accuracy.
+3. **Tier 3 (Timeout Guard)**: Enforces a strict 3.2s `Promise.race` timeout to prevent hanging connections during upstream network degradation.
+4. **Tier 4 (Client Hover Pre-Fetching)**: `RepoVideoLinks` triggers speculative background pre-fetching on `onMouseEnter`, so videos are already resident in `clientVideoCache` when clicked.
+
+### D. Equal-Height Responsive Card Grid Architecture
+The repository discovery matrix utilizes full-height flexbox stretch rows (`h-full flex flex-col justify-between` on outer cards, coupled with `RepositoryGrid` column inheritance) and a standardized `min-h-[40px]` 2-line description clamp, ensuring 100% pixel-uniform vertical baselines across every grid row.
+
+### E. Reactive 3D Avatar & Creator Contact Routing
+`ReactiveAvatar.jsx` computes normalized mouse vector coordinates relative to center-origin, driving real-time 3D pupil tracking, organic periodic eyelid winks (`#dcb18c` fair complexional tones), smile cheek glows, and particle reaction bursts, while linking direct creator inquiries to the built-in Contact Portal.
+
+### F. 3D Psychological UI & Gamified Onboarding
 - **Live 3D Holographic Dev Pass**: Real-time rendering of developer identity credentials with dynamic role track stamping.
 - **Progressive Password Milestone Ring**: Instant 4-step visual reinforcement for secure credentials.
 - **Rolling Odometer Telemetry**: Spring-animated live statistics for community scale.

@@ -1,26 +1,52 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { Play, Loader2, ChevronDown, ChevronUp, Youtube } from 'lucide-react';
 import { getRepoVideos } from '@/lib/api';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
+// Module-level client-side memory cache for instantaneous 0ms reopening
+const clientVideoCache = new Map();
+
 export default function RepoVideoLinks({ repo }) {
-  const [videos, setVideos] = useState(null);
+  const repoIdentifier = repo?.full_name || repo?.name || '';
+  const cacheKey = repoIdentifier.toLowerCase();
+  
+  const [videos, setVideos] = useState(() => clientVideoCache.get(cacheKey) || null);
   const [loading, setLoading] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const [error, setError] = useState(null);
+
+  // Background pre-fetch as soon as user hovers near button
+  const handleMouseEnter = useCallback(() => {
+    if (!cacheKey || clientVideoCache.has(cacheKey)) return;
+    getRepoVideos(repoIdentifier)
+      .then(data => {
+        if (data?.videos) {
+          clientVideoCache.set(cacheKey, data.videos);
+          setVideos(data.videos);
+        }
+      })
+      .catch(() => {});
+  }, [repoIdentifier, cacheKey]);
 
   if (!repo) return null;
 
   const handleOpenChange = async (open) => {
     setExpanded(open);
-    if (open && !videos) {
+    if (open) {
+      const cached = clientVideoCache.get(cacheKey);
+      if (cached) {
+        setVideos(cached);
+        return;
+      }
+
       setLoading(true);
       setError(null);
       try {
-        const repoIdentifier = repo?.full_name || repo?.name;
         if (!repoIdentifier) throw new Error('Invalid repo');
         const data = await getRepoVideos(repoIdentifier);
-        setVideos(data.videos || []);
+        const fetchedVideos = data?.videos || [];
+        clientVideoCache.set(cacheKey, fetchedVideos);
+        setVideos(fetchedVideos);
       } catch (err) {
         setError('Could not load videos');
       } finally {
@@ -41,6 +67,8 @@ export default function RepoVideoLinks({ repo }) {
         <PopoverTrigger asChild>
           <button
             type="button"
+            onClick={(e) => e.stopPropagation()}
+            onMouseEnter={handleMouseEnter}
             className="w-full flex items-center justify-center gap-1.5 py-1 rounded-lg border border-transparent hover:border-border bg-transparent hover:bg-bg-subtle text-xs font-medium text-text-muted hover:text-accent transition-all touch-target"
           >
             {loading ? (

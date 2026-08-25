@@ -55,23 +55,37 @@ export async function exampleFunction(params) {
 }
 ```
 
-## 4. In-Memory Caching & Performance
-For expensive database computations (such as category count aggregations or static lists), use the singleton cache manager in `server/services/cache.js`:
+## 4. In-Memory & Persistent Disk Caching
+For expensive external API requests (such as YouTube searches or web scraping), implement a multi-tier cache pattern combining persistent JSON disk cache (`server/data/*.json`) with in-memory Maps and frontend hover prefetching:
 
 ```javascript
-import cache from '../services/cache.js';
+import fs from 'fs';
+import path from 'path';
 
-export default async function getFastAggregations(req, res) {
-  const cacheKey = 'aggregations_summary';
-  const cached = cache.get(cacheKey);
-  if (cached) return res.json(cached);
+const CACHE_FILE = path.resolve(__dirname, '../data/video_cache.json');
+const memoryCache = new Map();
 
-  const data = await queryFromDatabase();
-  cache.set(cacheKey, data, 5 * 60 * 1000); // 5 min TTL
-  return res.json(data);
+// Load persistent disk cache on startup
+try {
+  if (fs.existsSync(CACHE_FILE)) {
+    const raw = JSON.parse(fs.readFileSync(CACHE_FILE, 'utf-8'));
+    for (const [k, v] of Object.entries(raw)) memoryCache.set(k, v);
+  }
+} catch (e) {}
+
+export default async function getFastExternalData(req, res) {
+  const { key } = req.query;
+  const cached = memoryCache.get(key);
+  if (cached) return res.json({ data: cached, cached: true });
+
+  const fresh = await fetchExternalData(key);
+  memoryCache.set(key, fresh);
+  setTimeout(() => fs.writeFileSync(CACHE_FILE, JSON.stringify(Object.fromEntries(memoryCache))), 100);
+  return res.json({ data: fresh, cached: false });
 }
 ```
 
 > [!CAUTION]
 > **NEVER** write frontend-only mock implementations. Always build the full pipeline from the frontend to a real backend handler with proper in-memory caching and database persistence.
+
 

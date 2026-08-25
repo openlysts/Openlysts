@@ -3688,6 +3688,37 @@ The most important coverage improvements added by this addendum are:
 - **Verify**: Direct social connect buttons (LinkedIn, Email, Openlysts OSS Repo) work accurately.
 - **Verify**: The 3 Core Signal Pillars and interactive conversational FAQ accordion expand and collapse smoothly.
 
+### TC-427: 3D Reactive Avatar Refinement, Studio Slate Gradient & Multi-Reaction Bursts
+- Navigate to `http://localhost:5173/about`.
+- **Verify**: Avatar features smooth fair complexional aesthetics with complementary studio slate-cyan ambient background.
+- **Verify**: Eyelids perform organic autonomous winking (right eyelid winks periodically with realistic eyelid skin tones `#dcb18c`).
+- **Verify**: Hovering over the avatar triggers a subtle smile and warm cheek illumination.
+- **Verify**: Clicking on the avatar launches dynamic multi-reaction particle bursts cycling through ❤️, ✨, 😉, ☕, and 🚀 with upward velocity and fade.
+- **Verify**: Mouse vector tracking remains 100% responsive across full 360-degree viewport coordinates.
+
+### TC-428: Creator Section Support Desk Contact Portal Routing
+- Navigate to `http://localhost:5173/about`.
+- Scroll to the Creator / Founder section.
+- Click the "Openlysts Support Desk" button.
+- **Verify**: Seamless client-side navigation occurs to `/contact` without triggering external email client popups or exposing raw email strings in DOM links.
+- **Verify**: The Contact portal form loads with active message inputs and backend dispatch handlers.
+
+### TC-429: Pixel-Uniform Equal-Height Grid Row Layout
+- Navigate to `http://localhost:5173/discover`.
+- Inspect repository cards across grid rows in both Desktop and Mobile views.
+- **Verify**: Every repository card within a row stretches to 100% equal pixel height (`h-full` flex-column hierarchy).
+- **Verify**: Description containers maintain consistent 2-line baseline height (`min-h-[40px]`).
+- **Verify**: Stats footer and "Video Breakdown" button remain pinned cleanly to the bottom edge (`mt-auto`) across all cards regardless of badge or topic pill counts.
+
+### TC-430: Multi-Tier Persistent Video Cache & Hover Pre-Fetching Engine
+- Navigate to `http://localhost:5173/discover`.
+- Hover cursor over the "Video Breakdown" button on any repository card.
+- **Verify**: Speculative background pre-fetch initiates via `onMouseEnter`.
+- Click "Video Breakdown".
+- **Verify**: Educational YouTube video popover renders in $<1\text{ms}$ when cached, displaying video thumbnails, titles, and channels.
+- Click any video entry in the popover and verify external link opens the YouTube tutorial with `noopener,noreferrer` security attributes.
+- **Verify**: Querying `/api/functions/getRepoVideos` for cached repositories completes in $<1\text{ms}$ on the backend server.
+
 ---
 
 # END OF ADDITIVE QA CONTROL LAYER
