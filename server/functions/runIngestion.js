@@ -10,6 +10,7 @@ import { invalidateRepositoriesCache } from './queryRepositories.js';
 import { invalidateAlternativesCache } from './queryAlternatives.js';
 import { scrapeTrending } from './scrapeTrending.js';
 import { ingestCatalogRepository } from '../services/catalogEngine.js';
+import { serverCache } from '../services/cache.js';
 
 const INGESTION_LOCK_ID = 987654321;
 const GITHUB_API = 'https://api.github.com';
@@ -19,6 +20,31 @@ import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
 const RATE_LIMIT_FILE = path.join(process.cwd(), 'server', 'data', 'rate_limit.json');
+const QUERY_STATE_FILE = path.join(process.cwd(), 'server', 'data', 'query_state.json');
+
+function loadLocalQueryState() {
+  try {
+    if (fs.existsSync(QUERY_STATE_FILE)) {
+      const raw = fs.readFileSync(QUERY_STATE_FILE, 'utf8');
+      const data = JSON.parse(raw);
+      if (Array.isArray(data) && data.length > 0) return data;
+    }
+  } catch (e) {}
+  return SEED_QUERIES.map((sq, i) => ({
+    id: `local-q-${i}`,
+    query_string: sq.query_string,
+    category_hint: sq.category_hint,
+    enabled: true,
+    current_page: 1,
+    last_run_at: null
+  }));
+}
+
+function saveLocalQueryState(queries) {
+  try {
+    fs.writeFileSync(QUERY_STATE_FILE, JSON.stringify(queries, null, 2), 'utf8');
+  } catch (e) {}
+}
 
 const SEED_QUERIES = [
   // AI & Machine Learning
@@ -108,19 +134,21 @@ export async function githubFetch(url, token, retries = 3) {
         signal: AbortSignal.timeout(15000),
       });
       if (res.status === 403 || res.status === 429) {
+        const resetHeader = res.headers.get('X-RateLimit-Reset');
+        const remaining = res.headers.get('X-RateLimit-Remaining');
+        const waitMs = resetHeader ? Math.min(120000, Math.max(2000, (parseInt(resetHeader) * 1000) - Date.now())) : 60000;
+        
         try {
           const dir = path.dirname(RATE_LIMIT_FILE);
           if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-          fs.writeFileSync(RATE_LIMIT_FILE, JSON.stringify({ backoffUntil: Date.now() + 3600000 }));
+          fs.writeFileSync(RATE_LIMIT_FILE, JSON.stringify({ backoffUntil: Date.now() + waitMs }));
         } catch(e) {}
 
         if (retries === 1 || attempt === retries - 1) {
           throw new Error(`GitHub API rate limit or access denied (${res.status})`);
         }
-        const remaining = res.headers.get('X-RateLimit-Remaining');
-        const reset = res.headers.get('X-RateLimit-Reset');
-        if (remaining === '0' && reset) {
-          const waitSec = Math.min(60, Math.max(1, parseInt(reset) - Math.floor(Date.now() / 1000)));
+        if (remaining === '0' && resetHeader) {
+          const waitSec = Math.min(60, Math.max(1, Math.ceil(waitMs / 1000)));
           await new Promise((r) => setTimeout(r, waitSec * 1000));
           continue;
         }
@@ -343,18 +371,19 @@ export async function executeIngestion() {
         queries = await entities.DiscoveryQuery.list('-created_date', 100);
       }
     } catch (queryErr) {
-      console.warn('[INGESTION] DiscoveryQuery DB fetch warning, using seed queries:', queryErr.message);
-      queries = SEED_QUERIES.map(sq => ({ ...sq, enabled: true, current_page: 1 }));
+      console.warn('[INGESTION] DiscoveryQuery DB fetch warning, using local query rotation state:', queryErr.message);
+      queries = loadLocalQueryState();
     }
 
-    const enabledQueries = (queries.length > 0 ? queries : SEED_QUERIES)
+    const allQueries = (queries.length > 0 ? queries : loadLocalQueryState());
+    const enabledQueries = allQueries
       .filter((q) => q.enabled !== false)
       .sort((a, b) => {
         if (!a.last_run_at) return -1;
         if (!b.last_run_at) return 1;
         return new Date(a.last_run_at) - new Date(b.last_run_at);
       })
-      .slice(0, 5);
+      .slice(0, 10);
     const errors = [];
     let reposProcessed = 0, reposAdded = 0, reposUpdated = 0;
 
@@ -448,12 +477,16 @@ export async function executeIngestion() {
            next_qStr = next_qStr.replace(/\s?created:<[\d-]+/, '');
         }
 
-        if (dq.id) {
+        dq.last_run_at = new Date().toISOString();
+        dq.current_page = next_page;
+        dq.query_string = next_qStr;
+
+        if (dq.id && !dq.id.startsWith('local-q-')) {
           try {
             await entities.DiscoveryQuery.update(dq.id, {
-              last_run_at: new Date().toISOString(),
-              current_page: next_page,
-              query_string: next_qStr
+              last_run_at: dq.last_run_at,
+              current_page: dq.current_page,
+              query_string: dq.query_string
             });
           } catch (updateErr) {
             // Handled gracefully
@@ -463,6 +496,9 @@ export async function executeIngestion() {
         errors.push(`Query "${dq.query_string}": ${queryErr.message}`);
       }
     }
+
+    // Persist updated query rotation positions to local state
+    saveLocalQueryState(allQueries);
 
     try {
       const trendingResult = await scrapeTrending();
@@ -494,6 +530,7 @@ export async function executeIngestion() {
     console.log(`[INGESTION] completed (Processed: ${reposProcessed})`);
     invalidateRepositoriesCache();
     invalidateAlternativesCache();
+    serverCache.delete('global_platform_stats');
 
     return {
       status,

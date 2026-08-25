@@ -1056,5 +1056,74 @@
       }
     ],
     "timestamp": 1787665209068
+  },
+  "pi/pi": {
+    "videos": [
+      {
+        "video_id": "cC0fZ_lkFpQ",
+        "title": "Math Antics - Circles, What Is PI?",
+        "channel": "mathantics",
+        "url": "https://youtube.com/watch?v=cC0fZ_lkFpQ"
+      },
+      {
+        "video_id": "WzNNc0UABWE",
+        "title": "Setting Up a Raspberry Pi 4 | Vilros",
+        "channel": "Vilros",
+        "url": "https://youtube.com/watch?v=WzNNc0UABWE"
+      },
+      {
+        "video_id": "8Dt0HM8HIq4",
+        "title": "Learn 90% Of Pi Agent in Under 17 Minutes",
+        "channel": "Brandon Melville",
+        "url": "https://youtube.com/watch?v=8Dt0HM8HIq4"
+      }
+    ],
+    "timestamp": 1787667413493
+  },
+  "zitadel/zitadel": {
+    "videos": [
+      {
+        "video_id": "POxkxGdDJyo",
+        "title": "Zitadel Quick Start Guide",
+        "channel": "ZITADEL",
+        "url": "https://youtube.com/watch?v=POxkxGdDJyo"
+      },
+      {
+        "video_id": "1T1uxKW06Vs",
+        "title": "Zitadel, Single Sign On, and OAuth. It's Impressive!",
+        "channel": "Jim's Garage",
+        "url": "https://youtube.com/watch?v=1T1uxKW06Vs"
+      },
+      {
+        "video_id": "aDJWiTiejm8",
+        "title": "Zitadel: Free Open-source Identity Infrastructure Platform",
+        "channel": "Elestio",
+        "url": "https://youtube.com/watch?v=aDJWiTiejm8"
+      }
+    ],
+    "timestamp": 1787667449445
+  },
+  "ollama/ollama": {
+    "videos": [
+      {
+        "video_id": "onrvYqir_mQ",
+        "title": "Ollama Tutorial: Run AI Models on Your Own Computer",
+        "channel": "Teacher's Tech",
+        "url": "https://youtube.com/watch?v=onrvYqir_mQ"
+      },
+      {
+        "video_id": "UtSSMs6ObqY",
+        "title": "Learn Ollama in 15 Minutes - Run LLM Models Locally for FREE",
+        "channel": "Tech With Tim",
+        "url": "https://youtube.com/watch?v=UtSSMs6ObqY"
+      },
+      {
+        "video_id": "GWB9ApTPTv4",
+        "title": "Ollama Course – Build AI Apps Locally",
+        "channel": "freeCodeCamp.org",
+        "url": "https://youtube.com/watch?v=GWB9ApTPTv4"
+      }
+    ],
+    "timestamp": 1787669540476
   }
 }

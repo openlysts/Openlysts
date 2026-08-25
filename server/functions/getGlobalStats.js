@@ -60,12 +60,13 @@ export default async function getGlobalStats(req, res) {
     const fallback = getCatalogGlobalStats();
     const stats = {
       ...fallback,
-      totalRepositories: permanentDbCountCache || fallback.totalRepositories,
-      totalRepositoriesFormatted: (permanentDbCountCache || fallback.totalRepositories).toLocaleString(),
+      totalRepositories: fallback.totalRepositories,
+      totalRepositoriesFormatted: fallback.totalRepositories.toLocaleString(),
       totalAlternativesFormatted: fallback.totalAlternativesFormatted,
       timestamp: new Date().toISOString()
     };
-    res.setHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400');
+    serverCache.set('global_platform_stats', stats, 60 * 1000);
+    res.setHeader('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=120');
     return res.json(stats);
   }
 }

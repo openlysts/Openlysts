@@ -1,9 +1,0 @@
-- generic [ref=f15e5]:
-  - heading "404" [level=1] [ref=f15e7]
-  - generic [ref=f15e9]:
-    - heading "Page Not Found" [level=2] [ref=f15e10]
-    - paragraph [ref=f15e11]:
-      - text: The page
-      - generic [ref=f15e12]: "\"invalid-path\""
-      - text: could not be found in this application.
-  - button "Go Home" [ref=f15e14] [cursor=pointer]
