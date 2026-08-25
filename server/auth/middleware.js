@@ -142,7 +142,7 @@ export function csrfProtection(req, res, next) {
   ].filter(Boolean);
 
   if (origin && allowedOrigins.length > 0) {
-    const isAllowed = allowedOrigins.some(allowed => origin === allowed || origin.startsWith(allowed));
+    const isAllowed = allowedOrigins.some(allowed => origin === allowed || origin === allowed.replace(/\/$/, ''));
     if (!isAllowed && process.env.NODE_ENV === 'production') {
       return res.status(403).json({ error: true, message: 'Invalid request origin' });
     }

@@ -1,10 +1,24 @@
 import React, { forwardRef, useMemo, useRef, useEffect, useCallback } from 'react';
 
 /**
+ * @typedef {Object} VariableProximityProps
+ * @property {string} label
+ * @property {string} [fromFontVariationSettings]
+ * @property {string} [toFontVariationSettings]
+ * @property {any} [containerRef]
+ * @property {number} [radius]
+ * @property {string} [falloff]
+ * @property {string} [className]
+ * @property {any} [onClick]
+ * @property {React.CSSProperties} [style]
+ */
+
+/**
  * VariableProximity Component (React Bits - 60FPS Butter-Smooth Fluid Edition)
  * Zero-layout-thrashing proximity typography with smooth damping physics and fluid letter wave.
+ * @type {React.ForwardRefExoticComponent<VariableProximityProps & React.RefAttributes<any>>}
  */
-const VariableProximity = forwardRef((props, ref) => {
+const VariableProximity = forwardRef((/** @type {any} */ props, ref) => {
   const {
     label,
     fromFontVariationSettings = "'wght' 400",

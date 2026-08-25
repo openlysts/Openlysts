@@ -1,4 +1,4 @@
-name: Ingestion Cron
+name: Git-Ops Edge Catalog Sync
 
 on:
   schedule:
@@ -7,23 +7,39 @@ on:
   workflow_dispatch: # Allows manual triggering from GitHub UI
 
 jobs:
-  run-ingestion:
+  run-gitops-ingestion:
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger Ingestion API
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          
+      - name: Install Dependencies
+        run: npm ci
+        
+      - name: Run Edge Catalog Hydration Sync
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: node server/scripts/githubActionIngest.js
+        
+      - name: Commit and Push Changes (Zero-Cost Persistence)
         run: |
-          URL="${{ secrets.PRODUCTION_URL || 'https://openlysts.vercel.app' }}/api/functions/runIngestion"
-          echo "Triggering ingestion at $URL"
-          
-          if [ -z "${{ secrets.CRON_SECRET }}" ]; then
-            echo "CRON_SECRET is not configured in GitHub Secrets. Skipping cron trigger."
-            exit 0
-          fi
-          
-          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" "$URL")
-          
-          if [ "$HTTP_STATUS" -eq 200 ]; then
-            echo "Ingestion triggered successfully (HTTP 200)."
+          git config --global user.name "Openlysts Sync Bot"
+          git config --global user.email "bot@openlysts.app"
+          git add server/data/*.json
+          # Only commit and push if there are changes
+          if ! git diff --staged --quiet; then
+            git commit -m "chore(catalog): automated edge catalog hydration sync [skip ci]"
+            git push
+            echo "Edge Catalog successfully synced and pushed to repository."
           else
-            echo "Ingestion endpoint returned HTTP Status: $HTTP_STATUS"
+            echo "No new data to sync. Edge Catalog is up-to-date."
           fi

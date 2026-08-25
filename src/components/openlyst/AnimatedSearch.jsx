@@ -101,7 +101,14 @@ export default function AnimatedSearch({ className = '', size = 'default' }) {
           } text-text placeholder:text-text-muted`}
           style={{ boxShadow: focused ? '0 0 15px 0px hsl(var(--accent) / 0.4), 0 0 0 2px hsl(var(--accent-soft))' : 'none' }}
         />
-        <div className={`absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none ${focused ? 'opacity-0' : 'opacity-100'} transition-opacity`}>
+        <div className={`absolute right-3 top-1/2 -translate-y-1/2 ${focused ? 'opacity-0 pointer-events-none' : 'opacity-100'} transition-opacity`}>
+          <button 
+            type="button"
+            onClick={(e) => { e.preventDefault(); window.dispatchEvent(new CustomEvent('open-command-palette')); }}
+            className="flex items-center gap-1 bg-bg-subtle border border-border px-1.5 py-0.5 rounded text-[10px] font-mono text-text-muted hover:text-text hover:bg-bg-hover transition-colors shadow-sm cursor-pointer pointer-events-auto"
+          >
+            ⌘K
+          </button>
         </div>
       </motion.div>
 

@@ -31,7 +31,11 @@ function timeAgo(dateStr) {
 export default function Compare() {
   usePageTitle('Compare');
   const [searchParams, setSearchParams] = useSearchParams();
-  const repoNames = searchParams.get('repos')?.split(',').filter(Boolean) || [];
+  const reposQuery = searchParams.get('repos');
+  const repoNames = React.useMemo(
+    () => reposQuery?.split(',').filter(Boolean) || [],
+    [reposQuery]
+  );
   const { selectedForCompare } = useCompare();
   
   const [searchInput, setSearchInput] = useState('');
@@ -123,7 +127,7 @@ export default function Compare() {
               {searchResults.map(r => (
                 <button 
                   key={r.id} 
-                  onClick={() => addRepo(r.full_name)}
+                  onMouseDown={(e) => { e.preventDefault(); addRepo(r.full_name); }}
                   className="w-full text-left px-4 py-3 hover:bg-bg-hover flex items-center justify-between transition-colors border-b border-border last:border-0"
                 >
                   <div className="min-w-0 pr-2">
@@ -193,7 +197,7 @@ export default function Compare() {
                     {searchResults.map(r => (
                       <button 
                         key={r.id} 
-                        onMouseDown={() => addRepo(r.full_name)}
+                        onMouseDown={(e) => { e.preventDefault(); addRepo(r.full_name); }}
                         className="w-full text-left px-3.5 py-2.5 hover:bg-bg-hover flex items-center justify-between transition-colors border-b border-border last:border-0 text-sm"
                       >
                         <span className="truncate pr-2 font-medium text-text">{r.full_name}</span>

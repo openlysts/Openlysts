@@ -49,3 +49,8 @@ export async function updateConfig(githubToken) {
   const res = await localClient.functions.invoke('updateConfig', { githubToken });
   return res;
 }
+
+export async function syncCatalogToNeon() {
+  const res = await localClient.functions.invoke('syncCatalogToNeon', {});
+  return res;
+}

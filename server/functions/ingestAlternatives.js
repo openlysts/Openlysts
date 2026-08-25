@@ -3,6 +3,7 @@ import crypto from 'crypto';
 import { githubFetch, ingestRepoItem } from './runIngestion.js';
 import { invalidateAlternativesCache } from './queryAlternatives.js';
 import { invalidateRepositoriesCache } from './queryRepositories.js';
+import { ingestCatalogAlternative } from '../services/catalogEngine.js';
 
 const CURATED_MODERN_ALTERNATIVES = [
   // AI & Chatbots
@@ -135,61 +136,80 @@ export async function ingestAlternatives() {
 
     console.log(`[Ingest] Total alternative mappings to synchronize: ${mappings.length}`);
     
-    // Fetch existing alternative repos to avoid duplicate insertions
-    const { rows: existingRows } = await db.query('SELECT free_tool_repo, category FROM "Alternative"');
-    const existingRepos = new Map(existingRows.filter(r => r.free_tool_repo).map(r => [r.free_tool_repo.toLowerCase(), r.category]));
-    
-    let addedCount = 0;
-    let updatedCount = 0;
-
-    for (const m of mappings) {
-      const lowerRepo = m.repoFullName.toLowerCase();
-      let toolName = m.repoFullName.split('/').pop() || m.repoFullName;
-      if (toolName === toolName.toLowerCase()) {
-        toolName = toolName.charAt(0).toUpperCase() + toolName.slice(1);
+    try {
+      let existingRepos = new Set();
+      try {
+        // Fetch existing alternative repos to avoid duplicate insertions
+        const { rows: existingRows } = await db.query('SELECT free_tool_repo, paid_tool_name, category FROM "Alternative"');
+        existingRepos = new Set(existingRows.filter(r => r.free_tool_repo).map(r => `${(r.paid_tool_name || 'Proprietary Tool').trim().toLowerCase()}::${r.free_tool_repo.toLowerCase()}`));
+      } catch (e) {
+        console.warn('[Ingest] Could not fetch existing alternatives from DB. Continuing with Edge Catalog sync only.', e.message);
       }
+      
+      let addedCount = 0;
+      let updatedCount = 0;
 
-      if (!existingRepos.has(lowerRepo)) {
-        await db.query(
-          'INSERT INTO "Alternative" (id, created_date, paid_tool_name, free_tool_name, free_tool_repo, category) VALUES ($1, $2, $3, $4, $5, $6)',
-          [crypto.randomUUID(), new Date().toISOString(), m.paid, toolName, m.repoFullName, m.category]
-        );
-        existingRepos.set(lowerRepo, m.category);
-        addedCount++;
-      } else if (existingRepos.get(lowerRepo) !== m.category) {
-        await db.query(
-          'UPDATE "Alternative" SET category = $1, paid_tool_name = $2 WHERE LOWER(free_tool_repo) = $3',
-          [m.category, m.paid, lowerRepo]
-        );
-        updatedCount++;
-      }
-    }
+      for (const m of mappings) {
+        const lowerRepo = m.repoFullName.toLowerCase();
+        const paidLower = (m.paid || 'Proprietary Tool').trim().toLowerCase();
+        const compKey = `${paidLower}::${lowerRepo}`;
+        let toolName = m.repoFullName.split('/').pop() || m.repoFullName;
+        if (toolName === toolName.toLowerCase()) {
+          toolName = toolName.charAt(0).toUpperCase() + toolName.slice(1);
+        }
 
-    console.log(`[Ingest] Alternatives sync: +${addedCount} added, ~${updatedCount} updated.`);
+        // Live Ingest into in-memory edge catalog & inverted index
+        ingestCatalogAlternative({
+          paid_tool_name: m.paid,
+          free_tool_name: toolName,
+          free_tool_repo: m.repoFullName,
+          category: m.category,
+        });
 
-    // Auto-enrich repository metadata for all alternatives lacking Repository entries
-    const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-    const { rows: missingRepoRows } = await db.query(`
-      SELECT DISTINCT a.free_tool_repo 
-      FROM "Alternative" a 
-      LEFT JOIN "Repository" r ON LOWER(a.free_tool_repo) = LOWER(r.full_name) 
-      WHERE r.id IS NULL AND a.free_tool_repo LIKE '%/%'
-      LIMIT 60
-    `);
-
-    if (missingRepoRows.length > 0) {
-      console.log(`[Ingest] Enriching metadata for ${missingRepoRows.length} alternative repositories...`);
-      for (const row of missingRepoRows) {
-        try {
-          const url = `https://api.github.com/repos/${row.free_tool_repo}`;
-          const repoData = await githubFetch(url, GITHUB_TOKEN, 1);
-          if (repoData && repoData.id) {
-            await ingestRepoItem(repoData);
+        if (!existingRepos.has(compKey)) {
+          try {
+            await db.query(
+              'INSERT INTO "Alternative" (id, created_date, paid_tool_name, free_tool_name, free_tool_repo, category) VALUES ($1, $2, $3, $4, $5, $6)',
+              [crypto.randomUUID(), new Date().toISOString(), m.paid, toolName, m.repoFullName, m.category]
+            );
+            existingRepos.add(compKey);
+            addedCount++;
+          } catch (insertErr) {
+            // Silently ignore insert errors (e.g. quota limit) so we still sync the edge catalog
           }
-        } catch (err) {
-          // Ignore individual repo fetch errors gracefully
         }
       }
+
+      console.log(`[Ingest] Alternatives sync: +${addedCount} added, ~${updatedCount} updated.`);
+
+      // Auto-enrich repository metadata for all alternatives lacking Repository entries
+      const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+      const { rows: missingRepoRows } = await db.query(`
+        SELECT DISTINCT a.free_tool_repo 
+        FROM "Alternative" a 
+        LEFT JOIN "Repository" r ON LOWER(a.free_tool_repo) = LOWER(r.full_name) 
+        WHERE r.id IS NULL AND a.free_tool_repo LIKE '%/%'
+        LIMIT 60
+      `);
+
+      if (missingRepoRows.length > 0) {
+        console.log(`[Ingest] Enriching metadata for ${missingRepoRows.length} alternative repositories...`);
+        for (const row of missingRepoRows) {
+          const [owner, name] = row.free_tool_repo.split('/');
+          if (owner && name) {
+            try {
+              const repoData = await fetchRepoWithFallback(owner, name, GITHUB_TOKEN);
+              if (repoData && repoData.name) {
+                await ingestRepoItem(repoData, 'Alternatives');
+              }
+            } catch (enrichErr) {
+              // Silently handle rate limits during batch enrichment
+            }
+          }
+        }
+      }
+    } catch (dbErr) {
+      console.warn('[Ingest] Database persistence warning during alternatives sync:', dbErr.message);
     }
 
     invalidateAlternativesCache();

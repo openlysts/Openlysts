@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 
+/**
+ * @returns {[string, (newView: string) => void]}
+ */
 export function useViewMode() {
   const [view, setView] = useState(() => {
     return localStorage.getItem('openlyst_view') || 'grid';

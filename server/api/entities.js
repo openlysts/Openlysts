@@ -57,10 +57,20 @@ router.post('/:entity/:action', async (req, res, next) => {
   const isMutating = ['create', 'update', 'delete', 'deleteMany', 'bulkCreate'].includes(action);
   
   if (isMutating) {
-    // Manually run middleware stack
     for (let mw of requireAdmin) {
-      const err = await new Promise((resolve) => mw(req, res, resolve));
-      if (err) return; // Response was already sent by middleware
+      if (res.headersSent) return;
+      await new Promise((resolve) => {
+        let done = false;
+        const complete = (err) => {
+          if (!done) {
+            done = true;
+            resolve(err);
+          }
+        };
+        res.once('finish', complete);
+        mw(req, res, complete);
+      });
+      if (res.headersSent) return;
     }
   }
 

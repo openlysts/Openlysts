@@ -19,9 +19,9 @@ export function CompareProvider({ children }) {
   }, [selectedForCompare]);
 
   const toggleCompare = (repo) => {
-    const exists = selectedForCompare.some(r => r.id === repo.id);
+    const exists = selectedForCompare.some(r => (r.id && repo.id && r.id === repo.id) || r.full_name === repo.full_name);
     if (exists) {
-      setSelectedForCompare(prev => prev.filter(r => r.id !== repo.id));
+      setSelectedForCompare(prev => prev.filter(r => !((r.id && repo.id && r.id === repo.id) || r.full_name === repo.full_name)));
     } else {
       if (selectedForCompare.length >= 3) {
         toast({
@@ -47,8 +47,15 @@ export function CompareProvider({ children }) {
     setSelectedForCompare(prev => prev.filter(r => r.id !== repoId));
   };
 
+  const value = React.useMemo(() => ({
+    selectedForCompare,
+    toggleCompare,
+    clearCompare,
+    removeFromCompare
+  }), [selectedForCompare]);
+
   return (
-    <CompareContext.Provider value={{ selectedForCompare, toggleCompare, clearCompare, removeFromCompare }}>
+    <CompareContext.Provider value={value}>
       {children}
     </CompareContext.Provider>
   );

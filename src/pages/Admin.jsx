@@ -8,7 +8,7 @@ import {
   Radio, Clock, Cpu, HardDrive, Zap, Loader2, Compass, Play, X, CheckSquare, Square
 } from 'lucide-react';
 import { localClient } from '@/api/localClient';
-import { runIngestion, recalculateScores, reclassifyRepos } from '@/lib/api';
+import { runIngestion, recalculateScores, reclassifyRepos, syncCatalogToNeon } from '@/lib/api';
 import { CATEGORIES } from '@/lib/categories';
 import { useAuth } from '@/lib/AuthContext';
 import { useToast } from '@/components/ui/use-toast';
@@ -493,6 +493,16 @@ export default function Admin() {
           >
             {runningAction === 'Reclassify Categories' ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Layers className="w-3.5 h-3.5" />}
             <span>Reclassify Categories</span>
+          </button>
+
+          <button
+            onClick={() => handleGlobalAction('Sync Catalog to Neon', syncCatalogToNeon)}
+            disabled={!!runningAction}
+            className="px-3.5 py-2 rounded-xl bg-bg-card border border-border text-text hover:text-accent hover:border-accent/40 text-xs font-semibold shadow-sm active:scale-95 transition-all flex items-center gap-1.5 touch-target disabled:opacity-50"
+            title="Push local JSON catalog to Neon PostgreSQL when DB is online"
+          >
+            {runningAction === 'Sync Catalog to Neon' ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Zap className="w-3.5 h-3.5 text-accent" />}
+            <span>Sync to Neon</span>
           </button>
 
           <button

@@ -1,8 +1,8 @@
+import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { localClient } from '@/api/localClient';
 import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
 import { Star, GitFork, AlertCircle, Calendar, Clock, ExternalLink, ArrowLeft, Bookmark, Flame, TrendingUp, Activity, ShieldCheck, CopyPlus, Sparkles } from 'lucide-react';
 import { getLanguageColor } from '@/lib/languageColors';
 import { isBookmarked, toggleBookmark } from '@/lib/bookmarks';
@@ -285,7 +285,7 @@ export default function RepoDetail() {
           <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: 0.2 }}>
             <div className="card p-6 md:p-8" data-tour="repo-readme">
               <h2 className="text-xl font-bold text-text mb-6">README</h2>
-              <div className="prose prose-sm sm:prose-base dark:prose-invert max-w-none break-words text-text-secondary overflow-hidden">
+              <div className="prose prose-sm sm:prose-base dark:prose-invert max-w-none break-words text-text-secondary max-h-[800px] overflow-y-auto">
                 {isReadmeLoading ? (
                   <div className="animate-pulse space-y-4">
                     <div className="h-5 bg-bg-subtle rounded w-3/4"></div>

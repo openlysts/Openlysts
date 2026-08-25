@@ -6,13 +6,16 @@ export default function ReactiveAvatar() {
   const containerRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
   const [isBlinking, setIsBlinking] = useState(false);
-  const [showHeart, setShowHeart] = useState(false);
+  const [isWinking, setIsWinking] = useState(false);
+  const [isSmiling, setIsSmiling] = useState(false);
+  const [activeReaction, setActiveReaction] = useState(null); // 'heart' | 'sparkle' | 'coffee' | 'rocket'
+  const [clickCount, setClickCount] = useState(0);
 
   // Mouse vector tracking
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  // Spring physics for smooth 60fps tracking
+  // Spring physics for smooth 60fps tracking (eye movements untouched)
   const eyeSpringConfig = { stiffness: 260, damping: 20, mass: 0.6 };
   const cardSpringConfig = { stiffness: 160, damping: 18, mass: 0.8 };
 
@@ -21,7 +24,7 @@ export default function ReactiveAvatar() {
   const cardSmoothX = useSpring(mouseX, cardSpringConfig);
   const cardSmoothY = useSpring(mouseY, cardSpringConfig);
 
-  // Pupil movement (subtle & natural travel within almond eye sockets)
+  // Pupil movement (subtle & natural travel within almond eye sockets - untouched)
   const pupilX = useTransform(smoothMouseX, [-400, 400], [-3.8, 3.8]);
   const pupilY = useTransform(smoothMouseY, [-400, 400], [-2.8, 2.8]);
 
@@ -49,20 +52,47 @@ export default function ReactiveAvatar() {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, [mouseX, mouseY]);
 
-  // Natural organic human blinking cycle
+  // Natural organic human blinking and playful winking cycles
   useEffect(() => {
     const blinkInterval = setInterval(() => {
-      setIsBlinking(true);
-      setTimeout(() => setIsBlinking(false), 140);
-    }, 4000);
+      // 25% chance of playful wink instead of standard blink
+      if (Math.random() < 0.25) {
+        setIsWinking(true);
+        setIsSmiling(true);
+        setTimeout(() => {
+          setIsWinking(false);
+          setIsSmiling(false);
+        }, 340);
+      } else {
+        setIsBlinking(true);
+        setTimeout(() => setIsBlinking(false), 140);
+      }
+    }, 4200);
     return () => clearInterval(blinkInterval);
   }, []);
 
   const handleAvatarClick = () => {
-    setIsBlinking(true);
-    setShowHeart(true);
-    setTimeout(() => setIsBlinking(false), 220);
-    setTimeout(() => setShowHeart(false), 900);
+    const nextCount = clickCount + 1;
+    setClickCount(nextCount);
+
+    const reactions = ['heart', 'sparkle', 'wink', 'coffee', 'rocket'];
+    const selected = reactions[nextCount % reactions.length];
+
+    setActiveReaction(selected);
+    setIsSmiling(true);
+
+    if (selected === 'wink') {
+      setIsWinking(true);
+      setTimeout(() => setIsWinking(false), 380);
+    } else {
+      setIsBlinking(true);
+      setTimeout(() => setIsBlinking(false), 180);
+    }
+
+    setTimeout(() => {
+      setActiveReaction(null);
+      setIsSmiling(false);
+    }, 950);
   };
 
   return (
@@ -71,8 +101,14 @@ export default function ReactiveAvatar() {
       {/* 3D Perspective Card Container */}
       <motion.div
         onClick={handleAvatarClick}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
+        onMouseEnter={() => {
+          setIsHovered(true);
+          setIsSmiling(true);
+        }}
+        onMouseLeave={() => {
+          setIsHovered(false);
+          setIsSmiling(false);
+        }}
         style={{
           rotateX,
           rotateY,
@@ -92,6 +128,17 @@ export default function ReactiveAvatar() {
           <div className="absolute -top-12 -right-12 w-32 h-32 bg-purple-500/25 rounded-full blur-2xl pointer-events-none" />
           <div className="absolute -bottom-12 -left-12 w-32 h-32 bg-accent/25 rounded-full blur-2xl pointer-events-none" />
 
+          {/* Subtle Warm Smile / Cheek Glow Effect */}
+          <motion.div
+            initial={false}
+            animate={{
+              opacity: isSmiling || isHovered ? 0.35 : 0,
+              scale: isSmiling || isHovered ? 1.05 : 0.95,
+            }}
+            transition={{ duration: 0.3 }}
+            className="absolute inset-x-8 bottom-12 h-20 bg-gradient-to-t from-pink-500/20 via-amber-400/10 to-transparent blur-xl pointer-events-none z-10"
+          />
+
           {/* Breathing Motion Container */}
           <motion.div
             animate={{
@@ -104,11 +151,11 @@ export default function ReactiveAvatar() {
             }}
             className="relative w-full h-full flex items-center justify-center overflow-hidden"
           >
-            {/* Master 3D Portrait Base */}
+            {/* Master 3D Portrait Base (2-shades lighter skin tone) */}
             <img
               src="/avatar-ard.jpg"
               alt="Adil Rafiq Dar (ARD)"
-              className="w-full h-full object-cover object-top filter contrast-[1.03] brightness-[1.01] pointer-events-none"
+              className="w-full h-full object-cover object-top filter contrast-[1.02] brightness-[1.02] pointer-events-none"
             />
 
             {/* ================= LEFT EYE TRACKING RIG (NATURAL ALMOND SHAPE) ================= */}
@@ -125,7 +172,7 @@ export default function ReactiveAvatar() {
               {/* Sclera White Background with Natural Corner Shading */}
               <div className="absolute inset-0 bg-gradient-to-r from-[#e2e8f0] via-[#f8fafc] to-[#e2e8f0] rounded-full" />
 
-              {/* Moving Natural Iris & Pupil */}
+              {/* Moving Natural Iris & Pupil (Preserved) */}
               <motion.div
                 style={{ x: pupilX, y: pupilY }}
                 className="relative w-4.5 h-4.5 rounded-full bg-gradient-to-br from-[#381a08] via-[#1f0d04] to-[#09090b] flex items-center justify-center shadow-sm"
@@ -139,12 +186,12 @@ export default function ReactiveAvatar() {
               {/* Natural Upper Eyelid Hood Shadow */}
               <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/10 to-transparent pointer-events-none" />
 
-              {/* Organic Eyelid Blink Layer */}
+              {/* Organic Eyelid Blink Layer (Matched to Fair Skin Tone) */}
               <motion.div
                 initial={false}
                 animate={{ height: isBlinking ? '100%' : '0%' }}
                 transition={{ duration: 0.07, ease: 'easeInOut' }}
-                className="absolute top-0 left-0 right-0 bg-[#c99569] z-10 origin-top shadow-sm"
+                className="absolute top-0 left-0 right-0 bg-[#dcb18c] z-10 origin-top shadow-sm"
               />
             </div>
 
@@ -162,7 +209,7 @@ export default function ReactiveAvatar() {
               {/* Sclera White Background with Natural Corner Shading */}
               <div className="absolute inset-0 bg-gradient-to-r from-[#e2e8f0] via-[#f8fafc] to-[#e2e8f0] rounded-full" />
 
-              {/* Moving Natural Iris & Pupil */}
+              {/* Moving Natural Iris & Pupil (Preserved) */}
               <motion.div
                 style={{ x: pupilX, y: pupilY }}
                 className="relative w-4.5 h-4.5 rounded-full bg-gradient-to-br from-[#381a08] via-[#1f0d04] to-[#09090b] flex items-center justify-center shadow-sm"
@@ -176,12 +223,12 @@ export default function ReactiveAvatar() {
               {/* Natural Upper Eyelid Hood Shadow */}
               <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/10 to-transparent pointer-events-none" />
 
-              {/* Organic Eyelid Blink Layer */}
+              {/* Organic Eyelid Blink / Playful Wink Layer (Matched to Fair Skin Tone) */}
               <motion.div
                 initial={false}
-                animate={{ height: isBlinking ? '100%' : '0%' }}
-                transition={{ duration: 0.07, ease: 'easeInOut' }}
-                className="absolute top-0 left-0 right-0 bg-[#c99569] z-10 origin-top shadow-sm"
+                animate={{ height: isBlinking || isWinking ? '100%' : '0%' }}
+                transition={{ duration: isWinking ? 0.12 : 0.07, ease: 'easeInOut' }}
+                className="absolute top-0 left-0 right-0 bg-[#dcb18c] z-10 origin-top shadow-sm"
               />
             </div>
 
@@ -223,15 +270,19 @@ export default function ReactiveAvatar() {
           <span>Alive & Building v1.3</span>
         </div>
 
-        {/* Click Heart Burst Particle */}
-        {showHeart && (
+        {/* Multi-Reaction Floating Burst Particle */}
+        {activeReaction && (
           <motion.div
             initial={{ opacity: 1, scale: 0.5, y: 0 }}
             animate={{ opacity: 0, scale: 2.2, y: -45 }}
             transition={{ duration: 0.85, ease: 'easeOut' }}
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-pink-500 z-30 pointer-events-none"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-none flex items-center justify-center"
           >
-            <Heart className="w-10 h-10 fill-pink-500 drop-shadow-lg" />
+            {activeReaction === 'heart' && <Heart className="w-10 h-10 fill-pink-500 text-pink-500 drop-shadow-lg" />}
+            {activeReaction === 'sparkle' && <Sparkles className="w-10 h-10 fill-amber-400 text-amber-400 drop-shadow-lg" />}
+            {activeReaction === 'wink' && <span className="text-3xl filter drop-shadow-lg select-none">😉</span>}
+            {activeReaction === 'coffee' && <Coffee className="w-10 h-10 fill-amber-600 text-amber-500 drop-shadow-lg" />}
+            {activeReaction === 'rocket' && <span className="text-3xl filter drop-shadow-lg select-none">🚀</span>}
           </motion.div>
         )}
       </motion.div>
@@ -239,7 +290,7 @@ export default function ReactiveAvatar() {
       {/* Interactive Micro Tip */}
       <span className="text-[11px] text-text-secondary font-medium mt-5 tracking-tight flex items-center gap-1">
         <Sparkles className="w-3 h-3 text-accent" />
-        Natural almond gaze • Pupils track cursor
+        Natural almond gaze • Winks & reacts on click
       </span>
     </div>
   );

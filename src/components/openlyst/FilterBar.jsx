@@ -145,20 +145,21 @@ export default function FilterBar({ filters, onChange, languages = [] }) {
           </button>
         )}
 
-        <div className="flex-1 hidden sm:block"></div>
-        {/* Layout toggle */}
-        <div className="flex bg-bg-card border border-border p-0.5 rounded-xl self-center shrink-0">
+        {/* Layout toggle - standardized to 36px (h-9) */}
+        <div className="flex items-center h-10 sm:h-9 bg-bg-card border border-border p-0.5 rounded-xl ml-auto shrink-0 shadow-xs">
           <button 
             onClick={() => toggleView('grid')}
             title="Grid View"
-            className={`p-1.5 rounded-lg transition-colors ${view !== 'list' ? 'bg-bg-subtle text-text shadow-sm' : 'text-text-muted hover:text-text hover:bg-bg-hover'}`}
+            aria-label="Grid View"
+            className={`h-full px-2.5 rounded-lg flex items-center justify-center transition-colors ${view !== 'list' ? 'bg-bg-subtle text-text shadow-sm' : 'text-text-muted hover:text-text hover:bg-bg-hover'}`}
           >
             <LayoutGrid className="w-4 h-4" />
           </button>
           <button 
             onClick={() => toggleView('list')}
             title="List View"
-            className={`p-1.5 rounded-lg transition-colors ${view === 'list' ? 'bg-bg-subtle text-text shadow-sm' : 'text-text-muted hover:text-text hover:bg-bg-hover'}`}
+            aria-label="List View"
+            className={`h-full px-2.5 rounded-lg flex items-center justify-center transition-colors ${view === 'list' ? 'bg-bg-subtle text-text shadow-sm' : 'text-text-muted hover:text-text hover:bg-bg-hover'}`}
           >
             <List className="w-4 h-4" />
           </button>

@@ -16,13 +16,14 @@ export default function Pagination({ page, totalPages, onChange }) {
       <button
         onClick={() => onChange(page - 1)}
         disabled={page <= 1}
-        className="flex items-center gap-1 px-3 py-2 rounded-lg text-sm border border-border bg-bg-card text-text-secondary hover:bg-bg-hover disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+        aria-label="Previous Page"
+        className="w-9 h-9 flex items-center justify-center rounded-xl text-sm border border-border bg-bg-card text-text-secondary hover:bg-bg-hover disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
       >
         <ChevronLeft className="w-4 h-4" />
       </button>
       {start > 1 && (
         <>
-          <button onClick={() => onChange(1)} className="px-3 py-2 rounded-lg text-sm border border-border bg-bg-card text-text-secondary hover:bg-bg-hover">1</button>
+          <button onClick={() => onChange(1)} className="min-w-[36px] h-9 px-3 flex items-center justify-center rounded-xl text-sm border border-border bg-bg-card text-text-secondary hover:bg-bg-hover transition-colors font-medium">1</button>
           {start > 2 && <span className="px-1 text-text-muted">…</span>}
         </>
       )}
@@ -30,9 +31,9 @@ export default function Pagination({ page, totalPages, onChange }) {
         <button
           key={p}
           onClick={() => onChange(p)}
-          className={`px-3.5 py-2 rounded-lg text-sm font-medium border transition-colors ${
+          className={`min-w-[36px] h-9 px-3 flex items-center justify-center rounded-xl text-sm font-medium border transition-colors ${
             p === page
-              ? 'bg-accent text-accent-fg border-accent'
+              ? 'bg-accent text-accent-fg border-accent shadow-xs'
               : 'bg-bg-card text-text-secondary border-border hover:bg-bg-hover'
           }`}
         >
@@ -42,13 +43,14 @@ export default function Pagination({ page, totalPages, onChange }) {
       {end < totalPages && (
         <>
           {end < totalPages - 1 && <span className="px-1 text-text-muted">…</span>}
-          <button onClick={() => onChange(totalPages)} className="px-3 py-2 rounded-lg text-sm border border-border bg-bg-card text-text-secondary hover:bg-bg-hover">{totalPages}</button>
+          <button onClick={() => onChange(totalPages)} className="min-w-[36px] h-9 px-3 flex items-center justify-center rounded-xl text-sm border border-border bg-bg-card text-text-secondary hover:bg-bg-hover transition-colors font-medium">{totalPages}</button>
         </>
       )}
       <button
         onClick={() => onChange(page + 1)}
         disabled={page >= totalPages}
-        className="flex items-center gap-1 px-3 py-2 rounded-lg text-sm border border-border bg-bg-card text-text-secondary hover:bg-bg-hover disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+        aria-label="Next Page"
+        className="w-9 h-9 flex items-center justify-center rounded-xl text-sm border border-border bg-bg-card text-text-secondary hover:bg-bg-hover disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
       >
         <ChevronRight className="w-4 h-4" />
       </button>

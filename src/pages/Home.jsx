@@ -1,9 +1,9 @@
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useQuery } from '@tanstack/react-query';
-import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion';
-import { Sparkles, Clock, TrendingUp, ArrowRight, Database, RefreshCw, Cpu, Wrench, HardDrive, Bot, Package, Cloud, ShieldCheck } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Sparkles, Clock, TrendingUp, ArrowRight, RefreshCw, Cpu, Wrench, HardDrive, Bot, Package, Cloud, ShieldCheck } from 'lucide-react';
 import { queryRepos } from '@/lib/api';
 
 import RepositoryGrid from '@/components/openlyst/RepositoryGrid';
@@ -36,16 +36,15 @@ export default function Home() {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [historyPaused, setHistoryPaused] = useState(false);
   
-  const { scrollY } = useScroll();
   const [showStickyFilters, setShowStickyFilters] = useState(false);
 
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    if (latest > 450 && !showStickyFilters) {
-      setShowStickyFilters(true);
-    } else if (latest <= 450 && showStickyFilters) {
-      setShowStickyFilters(false);
-    }
-  });
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowStickyFilters(window.scrollY > 450);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     try {
@@ -78,7 +77,6 @@ export default function Home() {
     refetchInterval: 60000
   });
 
-  const hasData = (trending?.results?.length || 0) > 0 || (recent?.results?.length || 0) > 0;
 
   const emptyFilters = {
     categories: [],
@@ -100,7 +98,7 @@ export default function Home() {
     if (newFilters.minStars > 0) params.set('minStars', String(newFilters.minStars));
     if (newFilters.updatedWithin) params.set('updatedWithin', newFilters.updatedWithin);
     if (newFilters.activity) params.set('activity', newFilters.activity);
-    if (newFilters.sort && newFilters.sort !== 'trending') params.set('sort', newFilters.sort);
+    if (newFilters.sort) params.set('sort', newFilters.sort);
     
     navigate(`/search?${params.toString()}`);
   };
@@ -177,7 +175,7 @@ export default function Home() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.08 }}
-          className="max-w-2xl mx-auto z-30 relative mb-4">
+          className="max-w-3xl mx-auto z-30 relative mb-4">
           <AnimatedSearch size="lg" />
         </motion.div>
 
@@ -197,7 +195,7 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, delay: 0.2 }}
         >
-          <DiscoverLiveMetrics totalRepos={totalRepositories || 35476} categoryCounts={trending?.categoryCounts || {}} />
+          <DiscoverLiveMetrics totalRepos={totalRepositories || 0} categoryCounts={trending?.categoryCounts || {}} />
         </motion.div>
       </section>
 
@@ -233,7 +231,7 @@ export default function Home() {
 
         <RepositoryGrid
           repos={trending?.results || []}
-          isLoading={tLoading}
+          loading={tLoading}
           emptyMessage="No trending repositories found."
         />
       </section>
@@ -256,7 +254,7 @@ export default function Home() {
 
         <RepositoryGrid
           repos={aiPopular?.results || []}
-          isLoading={aLoading}
+          loading={aLoading}
           emptyMessage="No AI repositories found."
         />
       </section>
@@ -279,7 +277,7 @@ export default function Home() {
 
         <RepositoryGrid
           repos={recent?.results || []}
-          isLoading={rLoading}
+          loading={rLoading}
           emptyMessage="No recent repositories found."
         />
       </section>

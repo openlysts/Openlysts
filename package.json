@@ -5,14 +5,17 @@
   "type": "module",
   "scripts": {
     "start": "vite build && node server/index.js",
-    "dev": "concurrently \"node server/index.js\" \"vite\"",
+    "dev": "concurrently \"node server/index.js\" \"vite --force\"",
     "build": "vite build",
     "lint": "eslint . --quiet",
     "lint:fix": "eslint . --fix",
     "typecheck": "tsc -p ./jsconfig.json",
     "preview": "vite preview",
+    "test": "node server/tests/catalog_invariants.test.js && node server/tests/edge_chaos.test.js",
     "db:reset": "node -e \"const fs=require('fs'); fs.rmSync('data/openlyst.db', {force:true}); fs.rmSync('data/openlyst.db-wal', {force:true}); fs.rmSync('data/openlyst.db-shm', {force:true}); console.log('Database reset');\"",
-    "db:seed": "node server/db/seed.js"
+    "db:seed": "node server/db/seed.js",
+    "db:build-catalogs": "node server/scripts/buildMegaCatalogs.js",
+    "db:sync-neon": "node server/scripts/syncNeon.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.2",

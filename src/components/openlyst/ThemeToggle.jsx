@@ -20,7 +20,7 @@ export default function ThemeToggle() {
   const CurrentIcon = ICONS[THEMES.find((t) => t.id === theme)?.icon] || Sun;
 
   return (
-    <div className="relative flex-shrink-0" ref={ref}>
+    <div className="relative flex-shrink-0" ref={ref} data-tour="theme-toggle">
       <button
         onClick={() => setOpen((v) => !v)}
         className="flex items-center justify-center w-9 h-9 rounded-xl border border-border/70 bg-bg-card/70 hover:bg-bg-hover hover:border-accent/40 text-text-secondary hover:text-text transition-all duration-200 shadow-xs touch-target"

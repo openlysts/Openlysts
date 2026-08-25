@@ -1,10 +1,18 @@
 import ytSearch from 'yt-search';
 
+const videoCache = new Map();
+const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
+
 export default async function getRepoVideos(req, res) {
-  const { repoName } = req.body;
+  const repoName = req.query?.repoName || req.body?.repoName || '';
   
   if (!repoName) {
     return res.status(400).json({ error: true, message: 'repoName is required' });
+  }
+
+  const cached = videoCache.get(repoName.toLowerCase());
+  if (cached && (Date.now() - cached.timestamp < CACHE_TTL_MS)) {
+    return res.json({ videos: cached.videos });
   }
 
   try {
@@ -18,9 +26,10 @@ export default async function getRepoVideos(req, res) {
       url: v.url
     }));
 
+    videoCache.set(repoName.toLowerCase(), { videos, timestamp: Date.now() });
     res.json({ videos });
   } catch (err) {
-    console.error('[getRepoVideos] Error fetching YouTube videos:', err);
-    res.status(500).json({ error: true, message: 'Failed to fetch YouTube videos' });
+    console.warn('[getRepoVideos] Warning: YouTube search fetch failed:', err.message);
+    res.json({ videos: [] });
   }
 }

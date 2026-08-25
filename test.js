@@ -1,25 +1,25 @@
-import * as cheerio from 'cheerio';
-fetch('https://openalternative.co/parlant')
-  .then(r => r.text())
-  .then(t => {
-    const $ = cheerio.load(t);
-    const githubLink = $('a[href*="github.com"]').attr('href');
-    let githubRepo = null;
-    if (githubLink) {
-        const match = githubLink.match(/github\.com\/([^\/]+)\/([^\/]+)/);
-        if (match) {
-            githubRepo = `${match[1]}/${match[2]}`;
-        }
-    }
-    const title = $('title').text();
-    let alternatives = [];
-    if (title.includes('Alternative to')) {
-        const altText = title.split('Alternative to')[1].trim();
-        alternatives = altText.split(', ').flatMap(s => s.split(' and ')).map(s => s.trim());
-    }
-    
-    console.log({
-        githubRepo,
-        alternatives
-    });
-  });
+async function run() {
+  for (let i = 0; i < 5; i++) {
+    const res = await Promise.all([
+      fetch('http://localhost:3001/api/functions/getGlobalStats').then(r => r.json()),
+      fetch('http://localhost:3001/api/functions/queryRepositories', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sort: 'trending', page: 1 })
+      }).then(r => r.json()),
+      fetch('http://localhost:3001/api/functions/queryRepositories', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sort: 'recent', page: 1 })
+      }).then(r => r.json()),
+      fetch('http://localhost:3001/api/functions/queryRepositories', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ categories: ['ai'], sort: 'stars', page: 1 })
+      }).then(r => r.json())
+    ]);
+    console.log(`Run ${i + 1}: Global: ${res[0].totalRepositories}, Trending: ${res[1].total}, Recent: ${res[2].total}, AI: ${res[3].total}`);
+  }
+}
+
+run();

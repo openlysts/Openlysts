@@ -2,7 +2,7 @@ import { db } from '../db/index.js';
 import { slugToLabel } from '../shared/openlyst.js';
 import { githubFetch, ingestRepoItem } from './runIngestion.js';
 import { serverCache } from '../services/cache.js';
-import { queryRepositoriesSnapshot } from '../services/snapshotStore.js';
+import { queryRepositoriesCatalog } from '../services/catalogEngine.js';
 
 const PER_PAGE = 24;
 
@@ -35,6 +35,10 @@ export default async function queryRepositories(req, res) {
     } = body;
 
     const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+
+    if (serverCache.get('neon_incomplete')) {
+      throw new Error('Neon database is flagged as incomplete (quota limit). Bypassing to JSON catalog.');
+    }
 
     // Fallback search trigger for new queries on page 1
     if (page === 1 && q.trim() && GITHUB_TOKEN) {
@@ -225,22 +229,31 @@ export default async function queryRepositories(req, res) {
 
     return res.json({ results, total, page: pageNum, totalPages, perPage: PER_PAGE, categoryCounts });
   } catch (error) {
-    console.warn('[DB] queryRepositories failed, serving from snapshot store:', error.message);
+    console.warn('[DB] queryRepositories failed, serving from catalog engine:', error.message);
     const body = req.body || {};
-    const fallbackData = queryRepositoriesSnapshot({
-      q: body.q || body.search || '',
-      categories: body.categories || (body.category ? [body.category] : []),
-      languages: body.languages || [],
-      sort: body.sort || 'trending',
-      page: body.page || 1,
+    const query = req.query || {};
+    const fallbackData = queryRepositoriesCatalog({
+      search: body.q || body.search || query.q || query.search || '',
+      categories: body.categories || (body.category ? [body.category] : (query.categories || (query.category ? [query.category] : []))),
+      languages: body.languages || query.languages || [],
+      licenses: body.licenses || query.licenses || [],
+      sort: body.sort || query.sort || 'trending',
+      page: body.page || query.page || 1,
       perPage: PER_PAGE
     });
-    return res.json(fallbackData);
+
+    const cachedCategoryCounts = serverCache.get('category_counts');
+    const finalCategoryCounts = (cachedCategoryCounts && Object.keys(cachedCategoryCounts).length > 0) 
+      ? cachedCategoryCounts 
+      : (fallbackData.categoryCounts || {});
+
+    return res.json({ ...fallbackData, categoryCounts: finalCategoryCounts });
   }
 }
 
 export function invalidateRepositoriesCache() {
   serverCache.invalidate('category_counts');
+  serverCache.invalidate('global_platform_stats');
 }
 
 export async function prewarmRepositoriesCache() {

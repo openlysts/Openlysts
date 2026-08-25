@@ -1,5 +1,6 @@
 import { db } from '../db/index.js';
 import crypto from 'crypto';
+import { getCatalogRepositories, getCatalogAlternatives } from './catalogEngine.js';
 
 const JSON_FIELDS = ['topics', 'categories', 'settings', 'clarifying_questions', 'pros_and_cons'];
 
@@ -60,46 +61,112 @@ export class EntityService {
   }
 
   async list(sort = null, limit = null) {
-    let orderClause = '';
-    if (sort) {
-      const isDesc = sort.startsWith('-');
-      const rawField = isDesc ? sort.substring(1) : sort;
-      const field = sanitizeIdentifier(rawField);
-      orderClause = `ORDER BY "${field}" ${isDesc ? 'DESC' : 'ASC'}`;
+    try {
+      let orderClause = '';
+      if (sort) {
+        const isDesc = sort.startsWith('-');
+        const rawField = isDesc ? sort.substring(1) : sort;
+        const field = sanitizeIdentifier(rawField);
+        orderClause = `ORDER BY "${field}" ${isDesc ? 'DESC' : 'ASC'}`;
+      }
+      let limitClause = '';
+      if (limit) limitClause = `LIMIT ${parseInt(limit, 10)}`;
+      const { rows } = await db.query(`SELECT ${this.getColumnList()} FROM "${this.entity}" ${orderClause} ${limitClause}`);
+      return rows.map(parseRow);
+    } catch (err) {
+      if (this.entity === 'Repository') {
+        let repos = [...getCatalogRepositories()];
+        if (sort) {
+          const isDesc = sort.startsWith('-');
+          const field = isDesc ? sort.substring(1) : sort;
+          repos.sort((a, b) => {
+            const valA = a[field] || 0;
+            const valB = b[field] || 0;
+            return isDesc ? (valB > valA ? 1 : -1) : (valA > valB ? 1 : -1);
+          });
+        }
+        if (limit) repos = repos.slice(0, parseInt(limit, 10));
+        return repos;
+      }
+      if (this.entity === 'Alternative') {
+        let alts = [...getCatalogAlternatives()];
+        if (limit) alts = alts.slice(0, parseInt(limit, 10));
+        return alts;
+      }
+      return [];
     }
-    let limitClause = '';
-    if (limit) limitClause = `LIMIT ${parseInt(limit, 10)}`;
-    const { rows } = await db.query(`SELECT ${this.getColumnList()} FROM "${this.entity}" ${orderClause} ${limitClause}`);
-    return rows.map(parseRow);
   }
 
   async filter(where = {}, sort = null, limit = null) {
-    let whereClause = '';
-    const params = [];
-    if (where && Object.keys(where).length > 0) {
-      const conditions = [];
-      for (const [key, val] of Object.entries(where)) {
-        const safeKey = sanitizeIdentifier(key);
-        params.push(val);
-        if (typeof val === 'string' && (safeKey === 'full_name' || safeKey === 'name' || safeKey === 'owner' || safeKey === 'email')) {
-          conditions.push(`LOWER("${safeKey}") = LOWER($${params.length})`);
-        } else {
-          conditions.push(`"${safeKey}" = $${params.length}`);
+    try {
+      let whereClause = '';
+      const params = [];
+      if (where && Object.keys(where).length > 0) {
+        const conditions = [];
+        for (const [key, val] of Object.entries(where)) {
+          const safeKey = sanitizeIdentifier(key);
+          params.push(val);
+          if (typeof val === 'string' && (safeKey === 'full_name' || safeKey === 'name' || safeKey === 'owner' || safeKey === 'email')) {
+            conditions.push(`LOWER("${safeKey}") = LOWER($${params.length})`);
+          } else {
+            conditions.push(`"${safeKey}" = $${params.length}`);
+          }
         }
+        whereClause = `WHERE ` + conditions.join(' AND ');
       }
-      whereClause = `WHERE ` + conditions.join(' AND ');
+      let orderClause = '';
+      if (sort) {
+        const isDesc = sort.startsWith('-');
+        const rawField = isDesc ? sort.substring(1) : sort;
+        const field = sanitizeIdentifier(rawField);
+        orderClause = `ORDER BY "${field}" ${isDesc ? 'DESC' : 'ASC'}`;
+      }
+      let limitClause = '';
+      if (limit) limitClause = `LIMIT ${parseInt(limit, 10)}`;
+      const { rows } = await db.query(`SELECT ${this.getColumnList()} FROM "${this.entity}" ${whereClause} ${orderClause} ${limitClause}`, params);
+      return rows.map(parseRow);
+    } catch (err) {
+      if (this.entity === 'Repository') {
+        const repos = getCatalogRepositories();
+        let filtered = repos.filter(r => {
+          for (const [k, v] of Object.entries(where)) {
+            if (typeof v === 'string') {
+              if ((r[k] || '').toLowerCase() !== v.toLowerCase()) return false;
+            } else if (r[k] !== v) {
+              return false;
+            }
+          }
+          return true;
+        });
+        if (sort) {
+          const isDesc = sort.startsWith('-');
+          const field = isDesc ? sort.substring(1) : sort;
+          filtered.sort((a, b) => {
+            const valA = a[field] || 0;
+            const valB = b[field] || 0;
+            return isDesc ? (valB > valA ? 1 : -1) : (valA > valB ? 1 : -1);
+          });
+        }
+        if (limit) filtered = filtered.slice(0, parseInt(limit, 10));
+        return filtered;
+      }
+      if (this.entity === 'Alternative') {
+        const alts = getCatalogAlternatives();
+        let filtered = alts.filter(a => {
+          for (const [k, v] of Object.entries(where)) {
+            if (typeof v === 'string') {
+              if ((a[k] || '').toLowerCase() !== v.toLowerCase()) return false;
+            } else if (a[k] !== v) {
+              return false;
+            }
+          }
+          return true;
+        });
+        if (limit) filtered = filtered.slice(0, parseInt(limit, 10));
+        return filtered;
+      }
+      return [];
     }
-    let orderClause = '';
-    if (sort) {
-      const isDesc = sort.startsWith('-');
-      const rawField = isDesc ? sort.substring(1) : sort;
-      const field = sanitizeIdentifier(rawField);
-      orderClause = `ORDER BY "${field}" ${isDesc ? 'DESC' : 'ASC'}`;
-    }
-    let limitClause = '';
-    if (limit) limitClause = `LIMIT ${parseInt(limit, 10)}`;
-    const { rows } = await db.query(`SELECT ${this.getColumnList()} FROM "${this.entity}" ${whereClause} ${orderClause} ${limitClause}`, params);
-    return rows.map(parseRow);
   }
 
   async create(data) {
@@ -168,6 +235,40 @@ export class EntityService {
       const cols = keys.map(k => `"${k}"`).join(', ');
       const placeholders = keys.map((_, i) => `$${i + 1}`).join(', ');
       const queryStr = `INSERT INTO "${this.entity}" (${cols}) VALUES (${placeholders})`;
+
+      for (const item of payloadArray) {
+        const values = keys.map(k => item[k]);
+        await client.query(queryStr, values);
+      }
+      await client.query('COMMIT');
+    } catch (e) {
+      await client.query('ROLLBACK');
+      throw e;
+    } finally {
+      client.release();
+    }
+    return payloadArray.map(parseRow);
+  }
+
+  async bulkUpsert(dataArray) {
+    const payloadArray = dataArray.map(item => {
+      let cloned = { ...item };
+      if (!cloned.id) cloned.id = crypto.randomUUID();
+      if (!cloned.created_date) cloned.created_date = new Date().toISOString();
+      return stringifyData(cloned);
+    });
+    
+    if (payloadArray.length === 0) return [];
+    
+    const client = await db.connect();
+    try {
+      await client.query('BEGIN');
+      const keys = Object.keys(payloadArray[0]).map(sanitizeIdentifier);
+      const cols = keys.map(k => `"${k}"`).join(', ');
+      const placeholders = keys.map((_, i) => `$${i + 1}`).join(', ');
+      
+      const updateSet = keys.filter(k => k !== 'id' && k !== 'created_date').map(k => `"${k}" = EXCLUDED."${k}"`).join(', ');
+      const queryStr = `INSERT INTO "${this.entity}" (${cols}) VALUES (${placeholders}) ON CONFLICT (id) DO UPDATE SET ${updateSet}`;
 
       for (const item of payloadArray) {
         const values = keys.map(k => item[k]);

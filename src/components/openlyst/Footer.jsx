@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Heart, Sparkles, Github, Compass } from 'lucide-react';
+import { Heart } from 'lucide-react';
 import { APP_VERSION } from '@/config/version';
 
 export default function Footer() {
@@ -34,7 +34,7 @@ export default function Footer() {
             />
             <div className="flex items-center gap-2">
               <span className="font-extrabold text-base text-text tracking-tight">Openlysts</span>
-              <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-accent/10 border border-accent/25 text-accent shadow-sm">
+              <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-accent/10 border border-accent/25 text-accent shadow-sm">
                 {APP_VERSION}
               </span>
             </div>

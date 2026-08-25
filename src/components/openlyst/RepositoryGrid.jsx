@@ -2,7 +2,7 @@ import RepositoryCard from './RepositoryCard';
 import SkeletonCard from './SkeletonCard';
 import { useViewMode } from '@/hooks/useViewMode';
 
-export default function RepositoryGrid({ repos, loading, emptyMessage = 'No repositories found.' }) {
+export default function RepositoryGrid({ repos, loading, emptyMessage = 'No repositories found.', showTrendingBadge = true }) {
   const [view] = useViewMode();
   if (loading) {
     return (
@@ -14,7 +14,7 @@ export default function RepositoryGrid({ repos, loading, emptyMessage = 'No repo
           : "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"}
       >
         {Array.from({ length: 8 }).map((_, i) => (
-          <SkeletonCard key={i} />
+          <SkeletonCard key={i} view={view} />
         ))}
       </div>
     );
@@ -37,10 +37,10 @@ export default function RepositoryGrid({ repos, loading, emptyMessage = 'No repo
   return (
     <div className={view === 'list' 
       ? "flex flex-col gap-4" 
-      : "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"}
+      : "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 items-start"}
     >
       {repos.map((repo, i) => (
-        <RepositoryCard key={repo.id} repo={repo} index={i} view={view} />
+        <RepositoryCard key={repo.id} repo={repo} index={i} view={view} showTrendingBadge={showTrendingBadge} />
       ))}
     </div>
   );

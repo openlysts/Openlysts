@@ -7,12 +7,12 @@ async function fetchGlobalStats() {
     return await res.json();
   } catch (e) {
     return {
-      totalRepositories: 35476,
-      totalAlternatives: 1480,
-      totalCategories: 208,
-      totalPaidTools: 380,
-      totalRepositoriesFormatted: '35,476',
-      totalAlternativesFormatted: '1,480'
+      totalRepositories: 758,
+      totalAlternatives: 876,
+      totalCategories: 9,
+      totalPaidTools: 250,
+      totalRepositoriesFormatted: '758',
+      totalAlternativesFormatted: '876+'
     };
   }
 }
@@ -23,24 +23,24 @@ export function usePlatformStats() {
     queryFn: fetchGlobalStats,
     staleTime: 10 * 60 * 1000,
     gcTime: 60 * 60 * 1000,
-    initialData: {
-      totalRepositories: 35476,
-      totalAlternatives: 1480,
-      totalCategories: 208,
-      totalPaidTools: 380,
-      totalRepositoriesFormatted: '35,476',
-      totalAlternativesFormatted: '1,480'
+    placeholderData: {
+      totalRepositories: 758,
+      totalAlternatives: 876,
+      totalCategories: 9,
+      totalPaidTools: 250,
+      totalRepositoriesFormatted: '758',
+      totalAlternativesFormatted: '876+'
     }
   });
 
   return {
     stats: data,
     isLoading,
-    totalRepositories: data?.totalRepositories || 35476,
-    totalAlternatives: data?.totalAlternatives || 1480,
-    totalCategories: data?.totalCategories || 208,
-    totalPaidTools: data?.totalPaidTools || 380,
-    totalRepositoriesFormatted: data?.totalRepositoriesFormatted || (data?.totalRepositories ? data.totalRepositories.toLocaleString() : '35,476'),
-    totalAlternativesFormatted: data?.totalAlternativesFormatted || (data?.totalAlternatives ? data.totalAlternatives.toLocaleString() : '1,480')
+    totalRepositories: data?.totalRepositories || 758,
+    totalAlternatives: data?.totalAlternatives || 876,
+    totalCategories: data?.totalCategories || 9,
+    totalPaidTools: data?.totalPaidTools || 250,
+    totalRepositoriesFormatted: data?.totalRepositoriesFormatted || (data?.totalRepositories ? data.totalRepositories.toLocaleString() : '758'),
+    totalAlternativesFormatted: data?.totalAlternativesFormatted || (data?.totalAlternatives ? `${data.totalAlternatives.toLocaleString()}+` : '876+')
   };
 }

@@ -1,9 +1,10 @@
 import express from 'express';
 import nodemailer from 'nodemailer';
+import { generalRateLimiter } from '../auth/middleware.js';
 
 const router = express.Router();
 
-router.post('/send', async (req, res) => {
+router.post('/send', generalRateLimiter, async (req, res) => {
   const { name, email, message } = req.body;
 
   if (!name || !email || !message) {
@@ -34,7 +35,7 @@ router.post('/send', async (req, res) => {
 
     // Send email
     await transporter.sendMail({
-      from: `"Openlysts Contact" <${process.env.SMTP_USER}>`,
+      from: `"Openlysts Support Desk" <${process.env.SMTP_FROM || process.env.SMTP_USER || 'openlysts@gmail.com'}>`,
       to: process.env.CONTACT_EMAIL || process.env.SMTP_USER || 'openlysts@gmail.com', // list of receivers
       replyTo: email,
       subject: `Openlysts Contact Form: Message from ${name}`, // Subject line

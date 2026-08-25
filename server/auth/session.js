@@ -18,28 +18,68 @@ export function configureSession(app) {
   const isLocalhost = appUrl.includes('localhost') || appUrl.includes('127.0.0.1');
   const isSecure = isLocalhost ? false : (appUrl.startsWith('https://') || process.env.NODE_ENV === 'production' || !!process.env.VERCEL);
 
-  app.set('trust proxy', 1); // Required for Vercel/reverse proxy (secure cookies)
+  app.set('trust proxy', 1);
 
-  // Resilient session store with error suppression & fallback
-  let store;
+  const memStore = new session.MemoryStore();
+  let pgStore;
   try {
-    store = new PgSession({
+    pgStore = new PgSession({
       pool: db,
       tableName: 'session',
       createTableIfMissing: false,
       pruneSessionInterval: false,
-      errorLog: (err) => {
-        // Suppress noisy fatal aborts when DB quota limit is reached
-        console.warn('[SESSION] DB session warning:', err.message);
-      }
+      errorLog: () => {}
     });
   } catch (e) {
-    console.warn('[SESSION] Using MemoryStore fallback:', e.message);
-    store = new session.MemoryStore();
+    // fallback to memStore
+  }
+
+  // Resilient Hybrid Store that never lets DB errors abort the HTTP pipeline
+  class ResilientStore extends session.Store {
+    get(sid, callback) {
+      if (pgStore) {
+        pgStore.get(sid, (err, sessionData) => {
+          if (err) {
+            return memStore.get(sid, callback);
+          }
+          return callback(null, sessionData);
+        });
+      } else {
+        memStore.get(sid, callback);
+      }
+    }
+
+    set(sid, sessionData, callback) {
+      memStore.set(sid, sessionData, () => {});
+      if (pgStore) {
+        pgStore.set(sid, sessionData, () => {
+          if (typeof callback === 'function') callback();
+        });
+      } else if (typeof callback === 'function') {
+        callback();
+      }
+    }
+
+    destroy(sid, callback) {
+      if (pgStore) {
+        pgStore.destroy(sid, () => {});
+      }
+      memStore.destroy(sid, callback || (() => {}));
+    }
+
+    touch(sid, sessionData, callback) {
+      if (pgStore && typeof pgStore.touch === 'function') {
+        pgStore.touch(sid, sessionData, () => {
+          if (typeof callback === 'function') callback();
+        });
+      } else if (typeof callback === 'function') {
+        callback();
+      }
+    }
   }
 
   app.use(session({
-    store,
+    store: new ResilientStore(),
     secret: sessionSecret || 'local-dev-only-session-secret-do-not-use-in-prod',
     name: 'openlysts.sid',
     resave: false,

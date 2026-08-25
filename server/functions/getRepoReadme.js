@@ -1,5 +1,6 @@
 export default async function getRepoReadme(req, res) {
-  const { fullName, defaultBranch = 'main' } = req.body;
+  const fullName = req.query?.fullName || req.body?.fullName || '';
+  const defaultBranch = req.query?.defaultBranch || req.body?.defaultBranch || 'main';
   if (!fullName) {
     return res.status(400).json({ error: true, message: 'Missing fullName' });
   }
@@ -26,12 +27,20 @@ export default async function getRepoReadme(req, res) {
     console.warn(`[getRepoReadme] GitHub API failed (${response.status}) for ${fullName}, falling back to raw...`);
     const possibleNames = ['README.md', 'README.mdx', 'README.rst', 'README.txt', 'readme.md', 'README'];
     
-    for (const file of possibleNames) {
-      const rawUrl = `https://raw.githubusercontent.com/${fullName}/${defaultBranch}/${file}`;
-      const rawRes = await fetch(rawUrl);
-      if (rawRes.ok) {
-        const readme = await rawRes.text();
-        return res.json({ readme });
+    const branches = Array.from(new Set([defaultBranch, 'main', 'master', 'trunk']));
+
+    for (const branch of branches) {
+      for (const file of possibleNames) {
+        const rawUrl = `https://raw.githubusercontent.com/${fullName}/${branch}/${file}`;
+        try {
+          const rawRes = await fetch(rawUrl);
+          if (rawRes.ok) {
+            const readme = await rawRes.text();
+            return res.json({ readme });
+          }
+        } catch (e) {
+          // ignore network errors for individual fallback URLs
+        }
       }
     }
 

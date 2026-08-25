@@ -1,6 +1,6 @@
 import { db } from '../db/index.js';
 import { serverCache } from '../services/cache.js';
-import { queryAlternativesSnapshot } from '../services/snapshotStore.js';
+import { queryAlternativesCatalog } from '../services/catalogEngine.js';
 
 const PER_PAGE = 24;
 
@@ -23,6 +23,10 @@ export default async function queryAlternatives(req, res) {
     }
 
     // 1. Fetch from In-Memory Cache or Neon DB
+    if (serverCache.get('neon_incomplete')) {
+      throw new Error('Neon database is flagged as incomplete (quota limit). Bypassing to JSON catalog.');
+    }
+
     let baseRows = serverCache.get('alts_base_dataset');
     if (!baseRows) {
       const query = `
@@ -244,22 +248,27 @@ export default async function queryAlternatives(req, res) {
       perPage: PER_PAGE 
     });
   } catch (error) {
-    console.warn('[DB] queryAlternatives failed, serving from snapshot store:', error.message);
-    const body = req.body || {};
-    const fallbackData = queryAlternativesSnapshot({
-      category: body.category || 'All',
-      search: body.q || body.search || '',
-      sort: body.sort || 'score',
-      page: body.page || 1,
+    console.warn('[DB] queryAlternatives failed, serving from catalog engine:', error.message);
+    const body = (req && req.body) || {};
+    const query = (req && req.query) || {};
+    const fallbackData = queryAlternativesCatalog({
+      category: body.category || query.category || (body.categories && body.categories[0]) || (query.categories && query.categories[0]) || 'All',
+      search: body.q || body.search || query.q || query.search || '',
+      sort: body.sort || query.sort || 'stars',
+      page: body.page || query.page || 1,
       perPage: PER_PAGE
     });
-    res.setHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400');
-    return res.json(fallbackData);
+    if (res && typeof res.setHeader === 'function') {
+      res.setHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400');
+      return res.json(fallbackData);
+    }
+    return fallbackData;
   }
 }
 
 export function invalidateAlternativesCache() {
   serverCache.invalidate('alts_');
+  serverCache.invalidate('global_platform_stats');
 }
 
 export async function prewarmAlternativesCache() {

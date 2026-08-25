@@ -1,4 +1,5 @@
-import { useSearchParams } from 'react-router-dom';
+import React from 'react';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { queryRepos } from '@/lib/api';
@@ -11,6 +12,7 @@ const LANGUAGES = ['Python', 'JavaScript', 'TypeScript', 'Go', 'Rust', 'Java', '
 
 export default function Trending() {
   usePageTitle('Trending');
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const filters = {
@@ -41,6 +43,12 @@ export default function Trending() {
     if (newFilters.updatedWithin) params.set('updatedWithin', newFilters.updatedWithin);
     if (newFilters.activity) params.set('activity', newFilters.activity);
     if (newFilters.page > 1) params.set('page', String(newFilters.page));
+    if (newFilters.sort && newFilters.sort !== 'trending') {
+      const sp = new URLSearchParams(params);
+      sp.set('sort', newFilters.sort);
+      navigate(`/search?${sp.toString()}`);
+      return;
+    }
     setSearchParams(params);
   };
 
@@ -63,7 +71,7 @@ export default function Trending() {
         <FilterBar filters={filters} onChange={updateFilters} languages={LANGUAGES} />
       </div>
 
-      <RepositoryGrid repos={data?.results || []} loading={isLoading} emptyMessage="No trending repositories found." />
+      <RepositoryGrid repos={data?.results || []} loading={isLoading} emptyMessage="No trending repositories found." showTrendingBadge={false} />
 
       {data && data.totalPages > 1 && (
         <Pagination page={data.page} totalPages={data.totalPages} onChange={onPageChange} />

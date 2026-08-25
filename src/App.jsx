@@ -27,90 +27,90 @@ if (typeof window !== 'undefined') {
 }
 
 // Public Pages
-const Welcome = lazyWithRetry(() => import('./pages/Welcome'));
-const Home = lazyWithRetry(() => import('./pages/Home'));
-const Search = lazyWithRetry(() => import('./pages/Search'));
-const RepoDetail = lazyWithRetry(() => import('./pages/RepoDetail'));
-const Alternatives = lazyWithRetry(() => import('./pages/Alternatives'));
-const Trending = lazyWithRetry(() => import('./pages/Trending'));
-const About = lazyWithRetry(() => import('./pages/About'));
-const Contact = lazyWithRetry(() => import('./pages/Contact'));
-const Compare = lazyWithRetry(() => import('./pages/Compare'));
-const Guide = lazyWithRetry(() => import('./pages/Guide'));
-const PrivacyPolicy = lazyWithRetry(() => import('./pages/PrivacyPolicy'));
-const TermsOfService = lazyWithRetry(() => import('./pages/TermsOfService'));
+import Welcome from './pages/Welcome';
+import Home from './pages/Home';
+import Search from './pages/Search';
+import RepoDetail from './pages/RepoDetail';
+import Alternatives from './pages/Alternatives';
+import Trending from './pages/Trending';
+import About from './pages/About';
+import Contact from './pages/Contact';
+import Compare from './pages/Compare';
+import Guide from './pages/Guide';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
 
 // Auth Pages
-const Login = lazyWithRetry(() => import('./pages/Login'));
-const Register = lazyWithRetry(() => import('./pages/Register'));
-const ForgotPassword = lazyWithRetry(() => import('./pages/ForgotPassword'));
-const ResetPassword = lazyWithRetry(() => import('./pages/ResetPassword'));
-const VerifyEmail = lazyWithRetry(() => import('./pages/VerifyEmail'));
+import Login from './pages/Login';
+import Register from './pages/Register';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
+import VerifyEmail from './pages/VerifyEmail';
 
 // Protected Pages
-const Bookmarks = lazyWithRetry(() => import('./pages/Bookmarks'));
-const Settings = lazyWithRetry(() => import('./pages/Settings'));
-const Profile = lazyWithRetry(() => import('./pages/Profile'));
-const Admin = lazyWithRetry(() => import('./pages/Admin'));
+import Bookmarks from './pages/Bookmarks';
+import Settings from './pages/Settings';
+import Profile from './pages/Profile';
+import Admin from './pages/Admin';
 
 function App() {
   return (
-    <AuthProvider>
-      <ThemeProvider>
-        <CompareProvider>
-          <MobileLayoutProvider>
-            <QueryClientProvider client={queryClientInstance}>
-            <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
-              <ScrollToTop />
-              <ErrorBoundary>
-                <EasterEggsOverlay />
-                <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="w-8 h-8 border-4 border-accent/30 border-t-accent rounded-full animate-spin" /></div>}>
-                  <Routes>
-                  <Route path="/" element={<Welcome />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/register" element={<Register />} />
-                  <Route path="/forgot-password" element={<ForgotPassword />} />
-                  <Route path="/reset-password" element={<ResetPassword />} />
-                  <Route path="/verify-email" element={<VerifyEmail />} />
-                  
-                  <Route element={<OpenlystLayout />}>
-                    <Route path="/discover" element={<Home />} />
-                    <Route path="/search" element={<Search />} />
-                    <Route path="/repo/:owner/:name" element={<RepoDetail />} />
-                    <Route path="/alternatives" element={<Alternatives />} />
-                    <Route path="/trending" element={<Trending />} />
-                    <Route path="/guide" element={<Guide />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/contact" element={<Contact />} />
-                    <Route path="/compare" element={<Compare />} />
-                    <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                    <Route path="/privacy" element={<Navigate to="/privacy-policy" replace />} />
-                    <Route path="/terms-of-service" element={<TermsOfService />} />
-                    <Route path="/terms" element={<Navigate to="/terms-of-service" replace />} />
-                    <Route path="/manifesto" element={<Navigate to="/about" replace />} />
-                    <Route path="/bookmarks" element={<Bookmarks />} />
-                    
-                    {/* Protected Routes */}
-                    <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
-                    <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-                    
-                    {/* Admin Routes */}
-                    <Route path="/admin" element={<AdminRoute><Admin /></AdminRoute>} />
-                    
-                    {/* 404 Route inside layout */}
-                    <Route path="*" element={<PageNotFound />} />
-                  </Route>
-                  </Routes>
-                </Suspense>
-              </ErrorBoundary>
-            </Router>
-            <Toaster />
-          </QueryClientProvider>
-          </MobileLayoutProvider>
-        </CompareProvider>
-      </ThemeProvider>
-    </AuthProvider>
-  )
+    <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+      <QueryClientProvider client={queryClientInstance}>
+        <AuthProvider>
+          <ThemeProvider>
+            <CompareProvider>
+              <MobileLayoutProvider>
+                <ScrollToTop />
+                <ErrorBoundary>
+                  <EasterEggsOverlay />
+                  <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="w-8 h-8 border-4 border-accent/30 border-t-accent rounded-full animate-spin" /></div>}>
+                    <Routes>
+                      <Route path="/" element={<Welcome />} />
+                      <Route path="/login" element={<Login />} />
+                      <Route path="/register" element={<Register />} />
+                      <Route path="/forgot-password" element={<ForgotPassword />} />
+                      <Route path="/reset-password" element={<ResetPassword />} />
+                      <Route path="/verify-email" element={<VerifyEmail />} />
+                      
+                      <Route element={<OpenlystLayout />}>
+                        <Route path="/discover" element={<Home />} />
+                        <Route path="/search" element={<Search />} />
+                        <Route path="/repo/:owner/:name" element={<RepoDetail />} />
+                        <Route path="/alternatives" element={<Alternatives />} />
+                        <Route path="/trending" element={<Trending />} />
+                        <Route path="/guide" element={<Guide />} />
+                        <Route path="/about" element={<About />} />
+                        <Route path="/contact" element={<Contact />} />
+                        <Route path="/compare" element={<Compare />} />
+                        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                        <Route path="/privacy" element={<Navigate to="/privacy-policy" replace />} />
+                        <Route path="/terms-of-service" element={<TermsOfService />} />
+                        <Route path="/terms" element={<Navigate to="/terms-of-service" replace />} />
+                        <Route path="/manifesto" element={<Navigate to="/about" replace />} />
+                        <Route path="/bookmarks" element={<Bookmarks />} />
+                        
+                        {/* Protected Routes */}
+                        <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+                        <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+                        
+                        {/* Admin Routes */}
+                        <Route path="/admin" element={<AdminRoute><Admin /></AdminRoute>} />
+                        
+                        {/* 404 Route inside layout */}
+                        <Route path="*" element={<PageNotFound />} />
+                      </Route>
+                    </Routes>
+                  </Suspense>
+                </ErrorBoundary>
+                <Toaster />
+              </MobileLayoutProvider>
+            </CompareProvider>
+          </ThemeProvider>
+        </AuthProvider>
+      </QueryClientProvider>
+    </Router>
+  );
 }
 
 export default App

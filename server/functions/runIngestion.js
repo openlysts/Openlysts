@@ -8,10 +8,17 @@ import {
 import { ingestAlternatives } from './ingestAlternatives.js';
 import { invalidateRepositoriesCache } from './queryRepositories.js';
 import { invalidateAlternativesCache } from './queryAlternatives.js';
+import { scrapeTrending } from './scrapeTrending.js';
+import { ingestCatalogRepository } from '../services/catalogEngine.js';
 
 const INGESTION_LOCK_ID = 987654321;
 const GITHUB_API = 'https://api.github.com';
-const PER_PAGE = 30;
+const PER_PAGE = 100;
+
+import fs from 'fs';
+import path from 'path';
+import crypto from 'crypto';
+const RATE_LIMIT_FILE = path.join(process.cwd(), 'server', 'data', 'rate_limit.json');
 
 const SEED_QUERIES = [
   // AI & Machine Learning
@@ -76,6 +83,15 @@ const SEED_QUERIES = [
 ];
 
 export async function githubFetch(url, token, retries = 3) {
+  try {
+    if (fs.existsSync(RATE_LIMIT_FILE)) {
+      const data = JSON.parse(fs.readFileSync(RATE_LIMIT_FILE, 'utf8'));
+      if (data.backoffUntil && Date.now() < data.backoffUntil) {
+        throw new Error('GitHub API globally rate limited (backoff active)');
+      }
+    }
+  } catch(e) { if (e.message.includes('globally')) throw e; }
+
   for (let attempt = 0; attempt < retries; attempt++) {
     try {
       const headers = {
@@ -92,6 +108,12 @@ export async function githubFetch(url, token, retries = 3) {
         signal: AbortSignal.timeout(15000),
       });
       if (res.status === 403 || res.status === 429) {
+        try {
+          const dir = path.dirname(RATE_LIMIT_FILE);
+          if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+          fs.writeFileSync(RATE_LIMIT_FILE, JSON.stringify({ backoffUntil: Date.now() + 3600000 }));
+        } catch(e) {}
+
         if (retries === 1 || attempt === retries - 1) {
           throw new Error(`GitHub API rate limit or access denied (${res.status})`);
         }
@@ -187,6 +209,8 @@ export async function fetchRepoWithFallback(owner, name, token = '') {
 }
 
 export async function ingestRepoItem(item, categoryHint = '', repoMap = new Map(), snapshotMap = new Map()) {
+  const repoKey = String(item.id);
+  const existing = repoMap.get(repoKey);
   const licenseInfo = verifyLicense(item.license);
   const repoData = {
     github_id: item.id,
@@ -221,11 +245,14 @@ export async function ingestRepoItem(item, categoryHint = '', repoMap = new Map(
     authority_score: 0,
   };
   
+  // Set ID explicitly
+  repoData.id = existing ? existing.id : crypto.randomUUID();
+  repoData.hidden = existing ? existing.hidden : false;
+  repoData.featured = existing ? existing.featured : false;
+
   repoData.difficulty = autoClassifyDifficulty(repoData);
 
-  const repoKey = String(item.id);
-  const existing = repoMap.get(repoKey);
-  const snapshots = snapshotMap.get(existing?.id) || [];
+  const snapshots = snapshotMap.get(repoData.id) || [];
   const { g24, g7, g30 } = computeStarsGained(snapshots, repoData.stars);
   repoData.stars_gained_24h = g24;
   repoData.stars_gained_7d = g7;
@@ -235,45 +262,33 @@ export async function ingestRepoItem(item, categoryHint = '', repoMap = new Map(
   repoData.engagement_score = calculateEngagementScore(repoData, g30);
   repoData.authority_score = calculateAuthorityScore(repoData);
 
-  // Note: Semantic embedding vector generation requires an external API (like OpenAI)
-  // For now we will leave the vector empty unless an embedding system is integrated.
-  // pgvector allows us to store the array directly if we had it.
+  // Always update in-memory catalog and inverted index first for 0ms discovery availability
+  const catalogRepo = ingestCatalogRepository(repoData);
 
-  let resultEntity;
-  if (existing) {
-    resultEntity = await entities.Repository.update(existing.id, {
-      ...repoData,
-      hidden: existing.hidden,
-      featured: existing.featured,
-    });
-  } else {
-    resultEntity = await entities.Repository.create({
-      ...repoData,
-      hidden: false,
-      featured: false,
-    });
-  }
-
-  await entities.MetricSnapshot.create({
-    repository_id: resultEntity.id,
+  const snapshotData = {
+    repository_id: repoData.id,
     stars: repoData.stars,
     forks: repoData.forks,
     open_issues: repoData.open_issues,
     snapshot_date: new Date().toISOString(),
-  });
-  
-  return resultEntity;
+  };
+
+  return { repoData: catalogRepo, snapshotData };
 }
 
 export async function executeIngestion() {
   let acquiredLock = false;
+  let client = null;
   try {
     // Acquire PostgreSQL distributed advisory lock to guarantee only 1 worker runs across the globe
     try {
-      const lockRes = await db.query('SELECT pg_try_advisory_lock($1) as locked', [INGESTION_LOCK_ID]);
+      client = await db.connect();
+      const lockRes = await client.query('SELECT pg_try_advisory_lock($1) as locked', [INGESTION_LOCK_ID]);
       acquiredLock = !!lockRes.rows[0]?.locked;
     } catch (lockErr) {
-      console.warn('[INGESTION] Could not check advisory lock:', lockErr.message);
+      if (process.env.NODE_ENV !== 'test') {
+        console.warn('[INGESTION] Could not check advisory lock:', lockErr.message);
+      }
       acquiredLock = true; // Fallback to proceed if locks unsupported
     }
 
@@ -298,57 +313,75 @@ export async function executeIngestion() {
     // Make sure alternatives are ingested!
     await ingestAlternatives();
 
-    const runRecord = await entities.IngestionRun.create({
-      started_at: startedAt,
-      status: 'running',
-      repos_processed: 0,
-      repos_added: 0,
-      repos_updated: 0,
-      error_log: '',
-      query_used: '',
-    });
-
-    let queries = await entities.DiscoveryQuery.list('-created_date', 100);
-    
-    // Check for missing seed queries and add them dynamically
-    const existingQueryStrings = new Set(queries.map(q => q.query_string));
-    const newQueriesToAdd = SEED_QUERIES.filter(sq => !existingQueryStrings.has(sq.query_string));
-    
-    if (newQueriesToAdd.length > 0) {
-      await entities.DiscoveryQuery.bulkCreate(
-        newQueriesToAdd.map((q) => ({ ...q, enabled: true }))
-      );
-      queries = await entities.DiscoveryQuery.list('-created_date', 100);
+    let runRecord = { id: 'local-run' };
+    try {
+      runRecord = await entities.IngestionRun.create({
+        started_at: startedAt,
+        status: 'running',
+        repos_processed: 0,
+        repos_added: 0,
+        repos_updated: 0,
+        error_log: '',
+        query_used: '',
+      });
+    } catch (runErr) {
+      console.warn('[INGESTION] IngestionRun DB log warning:', runErr.message);
     }
 
-    const enabledQueries = queries
-      .filter((q) => q.enabled)
+    let queries = [];
+    try {
+      queries = await entities.DiscoveryQuery.list('-created_date', 100);
+      
+      // Check for missing seed queries and add them dynamically
+      const existingQueryStrings = new Set(queries.map(q => q.query_string));
+      const newQueriesToAdd = SEED_QUERIES.filter(sq => !existingQueryStrings.has(sq.query_string));
+      
+      if (newQueriesToAdd.length > 0) {
+        await entities.DiscoveryQuery.bulkCreate(
+          newQueriesToAdd.map((q) => ({ ...q, enabled: true }))
+        );
+        queries = await entities.DiscoveryQuery.list('-created_date', 100);
+      }
+    } catch (queryErr) {
+      console.warn('[INGESTION] DiscoveryQuery DB fetch warning, using seed queries:', queryErr.message);
+      queries = SEED_QUERIES.map(sq => ({ ...sq, enabled: true, current_page: 1 }));
+    }
+
+    const enabledQueries = (queries.length > 0 ? queries : SEED_QUERIES)
+      .filter((q) => q.enabled !== false)
       .sort((a, b) => {
         if (!a.last_run_at) return -1;
         if (!b.last_run_at) return 1;
         return new Date(a.last_run_at) - new Date(b.last_run_at);
       })
-      .slice(0, 3);
+      .slice(0, 5);
     const errors = [];
     let reposProcessed = 0, reposAdded = 0, reposUpdated = 0;
 
-    const { rows: existingRows } = await db.query('SELECT id, github_id, full_name, hidden, featured FROM "Repository"');
     const repoMap = new Map();
-    for (const r of existingRows) {
-      if (r.github_id) repoMap.set(String(r.github_id), r);
-      if (r.full_name) repoMap.set(r.full_name.toLowerCase(), r);
+    try {
+      const { rows: existingRows } = await db.query('SELECT id, github_id, full_name, hidden, featured FROM "Repository"');
+      for (const r of existingRows) {
+        if (r.github_id) repoMap.set(String(r.github_id), r);
+        if (r.full_name) repoMap.set(r.full_name.toLowerCase(), r);
+      }
+    } catch (repoErr) {
+      console.warn('[INGESTION] Repository DB read warning (using in-memory indices):', repoErr.message);
     }
 
-    // Fetch only recent snapshots to conserve serverless memory
-    const { rows: existingSnapshots } = await db.query(
-      'SELECT repository_id, stars, snapshot_date FROM "MetricSnapshot" ORDER BY snapshot_date DESC LIMIT 2000'
-    );
     const snapshotMap = new Map();
-    for (const s of existingSnapshots) {
-      if (!snapshotMap.has(s.repository_id)) snapshotMap.set(s.repository_id, []);
-      if (snapshotMap.get(s.repository_id).length < 30) {
-        snapshotMap.get(s.repository_id).push(s);
+    try {
+      const { rows: existingSnapshots } = await db.query(
+        'SELECT repository_id, stars, snapshot_date FROM "MetricSnapshot" ORDER BY snapshot_date DESC LIMIT 2000'
+      );
+      for (const s of existingSnapshots) {
+        if (!snapshotMap.has(s.repository_id)) snapshotMap.set(s.repository_id, []);
+        if (snapshotMap.get(s.repository_id).length < 30) {
+          snapshotMap.get(s.repository_id).push(s);
+        }
       }
+    } catch (snapErr) {
+      // MetricSnapshot query handled gracefully
     }
 
     for (const dq of enabledQueries) {
@@ -356,13 +389,8 @@ export async function executeIngestion() {
         const page = dq.current_page || 1;
         
         let qStr = dq.query_string;
-        // Interleave fresh discovery: on even pages, fetch repos created in the last year
-        if (page % 2 === 0) {
-           const oneYearAgo = new Date();
-           oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
-           const dateStr = oneYearAgo.toISOString().split('T')[0];
-           qStr += ` created:>${dateStr}`;
-        }
+        // Deep Pagination Date-Slicing: 
+        // We no longer arbitrarily interleave dates. We process sequentially.
 
         // Fetch repositories using GitHub search API with pagination
         const url = `${GITHUB_API}/search/repositories?q=${encodeURIComponent(qStr)}&sort=stars&order=desc&per_page=${PER_PAGE}&page=${page}`;
@@ -372,47 +400,96 @@ export async function executeIngestion() {
         if (data.items && data.items.length > 0) {
           hasMore = data.items.length === PER_PAGE;
           
-          // Process in parallel batches of 10 to speed up DB inserts and prevent 60s timeout
+          // Process items and batch insert
           const items = data.items;
-          const batchSize = 10;
-          for (let i = 0; i < items.length; i += batchSize) {
-            const batch = items.slice(i, i + batchSize);
-            await Promise.all(
-              batch.map(async (item) => {
-                try {
-                  await ingestRepoItem(item, dq.category_hint, repoMap, snapshotMap);
-                  reposProcessed++;
-                } catch (repoErr) {
-                  errors.push(`Repo ${item.full_name}: ${repoErr.message}`);
-                }
-              })
-            );
+          const processedBatch = [];
+          for (const item of items) {
+             try {
+               const res = await ingestRepoItem(item, dq.category_hint, repoMap, snapshotMap);
+               processedBatch.push(res);
+               reposProcessed++;
+             } catch (repoErr) {
+               errors.push(`Repo ${item.full_name}: ${repoErr.message}`);
+             }
+          }
+          if (processedBatch.length > 0) {
+             try {
+               await entities.Repository.bulkUpsert(processedBatch.map(p => p.repoData));
+               await entities.MetricSnapshot.bulkCreate(processedBatch.map(p => p.snapshotData));
+             } catch (dbErr) {
+               console.warn('[INGESTION] DB persistence warning (batch):', dbErr.message);
+             }
           }
         }
 
         // Deep Pagination logic
-        // GitHub search limits results to the first 1000 items. (1000 / 30 = 33 pages)
-        const next_page = (hasMore && page < 33) ? page + 1 : 1;
+        // GitHub search limits results to the first 1000 items. (1000 / 100 = 10 pages)
+        let next_page = (hasMore && page < 10) ? page + 1 : 1;
+        let next_qStr = dq.query_string;
 
-        await entities.DiscoveryQuery.update(dq.id, {
-          last_run_at: new Date().toISOString(),
-          current_page: next_page
-        });
+        if (page >= 10 && data.items && data.items.length > 0) {
+          // We hit the 1000-result wall. Find the oldest created_at in this batch to slice backwards.
+          const oldestItem = data.items.reduce((oldest, current) => {
+            return new Date(current.created_at) < new Date(oldest.created_at) ? current : oldest;
+          }, data.items[0]);
+          
+          const oldestDateStr = oldestItem.created_at.split('T')[0];
+          
+          // Replace any existing created:<... bound with the new one
+          if (next_qStr.match(/created:<[\d-]+/)) {
+            next_qStr = next_qStr.replace(/created:<[\d-]+/, `created:<${oldestDateStr}`);
+          } else {
+            next_qStr += ` created:<${oldestDateStr}`;
+          }
+          console.log(`[INGESTION] Slice exhausted for "${dq.query_string}". Moving window to ${oldestDateStr}`);
+        } else if (!hasMore) {
+           // We finished all historical data for this query!
+           // Reset the created bound so it starts fresh at the top next time it runs (fetching new things).
+           next_qStr = next_qStr.replace(/\s?created:<[\d-]+/, '');
+        }
+
+        if (dq.id) {
+          try {
+            await entities.DiscoveryQuery.update(dq.id, {
+              last_run_at: new Date().toISOString(),
+              current_page: next_page,
+              query_string: next_qStr
+            });
+          } catch (updateErr) {
+            // Handled gracefully
+          }
+        }
       } catch (queryErr) {
         errors.push(`Query "${dq.query_string}": ${queryErr.message}`);
       }
     }
 
+    try {
+      const trendingResult = await scrapeTrending();
+      if (trendingResult && trendingResult.count) {
+         reposProcessed += trendingResult.count;
+         reposUpdated += trendingResult.count; // Assuming they were at least updated
+      }
+    } catch (trendErr) {
+      errors.push(`Trending Scraper Failed: ${trendErr.message}`);
+    }
+
     const status = errors.length === 0 ? 'success' : (reposProcessed > 0 ? 'partial' : 'failed');
-    await entities.IngestionRun.update(runRecord.id, {
-      finished_at: new Date().toISOString(),
-      status,
-      repos_processed: reposProcessed,
-      repos_added: reposAdded,
-      repos_updated: reposUpdated,
-      error_log: errors.slice(0, 50).join('\n'),
-      query_used: enabledQueries.map((q) => q.query_string).join(', '),
-    });
+    if (runRecord.id && runRecord.id !== 'local-run') {
+      try {
+        await entities.IngestionRun.update(runRecord.id, {
+          finished_at: new Date().toISOString(),
+          status,
+          repos_processed: reposProcessed,
+          repos_added: reposAdded,
+          repos_updated: reposUpdated,
+          error_log: errors.slice(0, 50).join('\n'),
+          query_used: enabledQueries.map((q) => q.query_string).join(', '),
+        });
+      } catch (finalizeErr) {
+        // Handled gracefully
+      }
+    }
 
     console.log(`[INGESTION] completed (Processed: ${reposProcessed})`);
     invalidateRepositoriesCache();
@@ -429,12 +506,15 @@ export async function executeIngestion() {
     console.error('[INGESTION] failed:', error);
     throw error;
   } finally {
-    if (acquiredLock) {
+    if (acquiredLock && client) {
       try {
-        await db.query('SELECT pg_advisory_unlock($1)', [INGESTION_LOCK_ID]);
+        await client.query('SELECT pg_advisory_unlock($1)', [INGESTION_LOCK_ID]);
       } catch (unlockErr) {
         console.warn('[INGESTION] Advisory unlock warning:', unlockErr.message);
       }
+    }
+    if (client) {
+      client.release();
     }
   }
 }

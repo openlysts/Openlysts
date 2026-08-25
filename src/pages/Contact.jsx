@@ -81,8 +81,8 @@ export default function Contact() {
             <Mail className="w-5 h-5 text-accent" />
           </div>
           <div>
-            <h3 className="font-semibold text-text text-sm">Email</h3>
-            <p className="text-text-muted text-sm">openlysts@gmail.com</p>
+            <h3 className="font-semibold text-text text-sm">Openlysts Support Desk</h3>
+            <p className="text-text-muted text-sm">Support & Inquiries</p>
           </div>
         </a>
         <a href="https://github.com/openlysts/Openlysts" target="_blank" rel="noopener noreferrer" className="card p-5 flex items-center gap-3 card-hover overflow-hidden">

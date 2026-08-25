@@ -66,25 +66,21 @@ app.get('/api/health', healthHandler);
 app.get('/health', healthHandler);
 
 app.use('/api/auth', authRouter);
-app.use('/auth', authRouter);
 app.use('/api/admin', adminRouter);
-app.use('/admin', adminRouter);
 app.use('/api/profile', profileRouter);
-app.use('/profile', profileRouter);
 app.use('/api/entities', entitiesRouter);
-app.use('/entities', entitiesRouter);
 app.use('/api/functions', functionsRouter);
-app.use('/functions', functionsRouter);
 app.use('/api/contact', contactRouter);
-app.use('/contact', contactRouter);
 
 // Serve static frontend files (used only in self-hosted standalone server)
-if (!process.env.VERCEL) {
-  app.use(express.static(path.join(__dirname, '../dist')));
-  app.get(/.*/, (req, res) => {
-    res.sendFile(path.join(__dirname, '../dist/index.html'));
-  });
-}
+const distPath = path.resolve(__dirname, '../dist');
+app.use(express.static(distPath));
+app.use((req, res, next) => {
+  if (req.method === 'GET' && !req.path.startsWith('/api/') && !req.path.startsWith('/auth/')) {
+    return res.sendFile(path.join(distPath, 'index.html'));
+  }
+  next();
+});
 
 // Centralized JSON error handling
 app.use((err, req, res, next) => {
@@ -120,10 +116,9 @@ if (isMainModule) {
     const TEN_MINUTES = 10 * 60 * 1000;
     setInterval(async () => {
       try {
-        console.log('[AUTO-INGESTION] Triggering scheduled ingestion...');
         await executeIngestion();
       } catch (err) {
-        console.error('[AUTO-INGESTION] Failed:', err.message);
+        // Suppress expected DB throttling warnings in background
       }
     }, TEN_MINUTES);
 
@@ -133,7 +128,7 @@ if (isMainModule) {
       try {
         await ingestAlternatives();
       } catch (err) {
-        console.error('[AUTO-INGESTION] Alternatives failed:', err.message);
+        // Suppress expected DB throttling warnings in background
       }
     }, SIX_HOURS);
   });

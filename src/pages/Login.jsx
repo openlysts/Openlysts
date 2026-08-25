@@ -5,7 +5,7 @@ import { usePageTitle } from '@/hooks/usePageTitle';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { 
   Mail, Lock, AlertCircle, ArrowRight, ArrowLeft, Github, Eye, EyeOff, 
-  Sparkles, Bookmark, Zap, Scale, ShieldCheck, CheckCircle2
+  Sparkles, Bookmark, Zap, Scale
 } from 'lucide-react';
 import AnimateDigits from '@/components/openlyst/AnimateDigits';
 import SocialHoverCards from '@/components/openlyst/SocialHoverCards';
@@ -280,6 +280,7 @@ export default function Login() {
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-text-muted hover:text-text transition-colors"
+                    aria-label={showPassword ? 'Hide password' : 'Show password'}
                   >
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>

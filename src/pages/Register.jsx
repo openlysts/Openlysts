@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { usePageTitle } from '@/hooks/usePageTitle';
-import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from 'framer-motion';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { 
   User, Mail, Lock, AlertCircle, Github, Eye, EyeOff, ArrowRight, ArrowLeft, 
-  Check, Sparkles, Zap, Shield, Bookmark, Terminal, Code, Cpu, Layers, Rocket
+  Check, Sparkles, Zap, Terminal, Code, Cpu, Layers, Rocket
 } from 'lucide-react';
 import AnimateDigits from '@/components/openlyst/AnimateDigits';
 import SocialHoverCards from '@/components/openlyst/SocialHoverCards';
@@ -420,6 +420,7 @@ export default function Register() {
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-text-muted hover:text-text transition-colors"
+                    aria-label={showPassword ? 'Hide password' : 'Show password'}
                   >
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>

@@ -8,13 +8,29 @@ export default defineConfig({
   plugins: [
     react(),
   ],
+  optimizeDeps: {
+    include: [
+      'react',
+      'react-dom',
+      'react-router-dom',
+      '@tanstack/react-query',
+      'framer-motion',
+      'lucide-react',
+      'recharts',
+      'react-markdown',
+      'canvas-confetti'
+    ],
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
+    dedupe: ['react', 'react-dom', 'react-router-dom', '@tanstack/react-query', 'framer-motion'],
   },
   server: {
-    allowedHosts: true,
+    host: 'localhost',
+    port: 5173,
+    strictPort: true,
     proxy: {
       '/api': 'http://localhost:3001'
     }

@@ -32,7 +32,7 @@ export async function sendPasswordResetEmail(toEmail, token, appUrl) {
   const transporter = createTransporter();
 
   await transporter.sendMail({
-    from: `"Openlysts" <${process.env.SMTP_USER}>`,
+    from: `"Openlysts Support Desk" <${process.env.SMTP_FROM || process.env.SMTP_USER || 'openlysts@gmail.com'}>`,
     to: toEmail,
     subject: 'Openlysts — Reset Your Password',
     text: `You requested a password reset for your Openlysts account.\n\nClick this link to reset your password (expires in 1 hour):\n${resetUrl}\n\nIf you did not request this, please ignore this email.\n\n— Openlysts`,
@@ -66,7 +66,7 @@ export async function sendVerificationEmail(toEmail, token, appUrl) {
   const transporter = createTransporter();
 
   await transporter.sendMail({
-    from: `"Openlysts" <${process.env.SMTP_USER}>`,
+    from: `"Openlysts Support Desk" <${process.env.SMTP_FROM || process.env.SMTP_USER || 'openlysts@gmail.com'}>`,
     to: toEmail,
     subject: 'Openlysts — Verify Your Email',
     text: `Welcome to Openlysts!\n\nPlease verify your email by clicking this link (expires in 24 hours):\n${verifyUrl}\n\n— Openlysts`,

@@ -6,7 +6,6 @@ import {
   Github, 
   Coffee, 
   Compass, 
-  ShieldCheck, 
   Zap, 
   Layers, 
   ChevronDown, 
@@ -49,7 +48,7 @@ export default function About() {
     {
       icon: Layers,
       title: 'Zero-BS SaaS Alternatives',
-      badge: '1,280+ Curated Mappings',
+      badge: '876+ Curated Mappings',
       desc: 'Why pay $200/mo per seat when battle-tested open-source alternatives exist? We provide honest feature parity scores, deployment guides, and community health benchmarks for tools like Supabase, PostHog, and Ollama.',
       gradient: 'from-purple-500/10 via-pink-500/5 to-transparent'
     },
@@ -77,7 +76,7 @@ export default function About() {
     },
     {
       q: 'How can I connect, give feedback, or suggest a project?',
-      a: 'You can reach out directly via LinkedIn (Adil Rafiq Dar), shoot an email to adilrafiqdar@gmail.com, or submit repositories and feedback via the in-app forms!'
+      a: 'You can reach out directly via LinkedIn (Adil Rafiq Dar), reach the Openlysts Support Desk, or submit repositories and feedback via the in-app forms!'
     }
   ];
 
@@ -98,7 +97,7 @@ export default function About() {
           className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-soft border border-accent/30 text-accent text-xs font-semibold"
         >
           <Sparkles className="w-3.5 h-3.5" />
-          The Open-Source Compass — v{APP_VERSION}
+          The Open-Source Telescope — v{APP_VERSION}
         </motion.div>
 
         <motion.h1 
@@ -107,9 +106,9 @@ export default function About() {
           transition={{ delay: 0.1 }}
           className="text-4xl sm:text-5xl font-black text-text tracking-tight leading-[1.15]"
         >
-          Built to Cure <br />
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-accent via-emerald-400 to-trending">
-            GitHub Fatigue.
+          The best software in the world isn't behind a paywall. <br />
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-accent via-purple-400 to-pink-400">
+            It's hiding on GitHub.
           </span>
         </motion.h1>
 
@@ -119,8 +118,7 @@ export default function About() {
           transition={{ delay: 0.2 }}
           className="text-base sm:text-lg text-text-secondary leading-relaxed"
         >
-          Every day, thousands of new repositories are pushed to GitHub. Most are dead within 3 months, bloated with hype, or poorly licensed.
-          <strong className="text-text font-semibold"> Openlysts</strong> is the high-velocity telescope engineered to cut through the noise, surfacing living code, verified alternatives, and pure engineering craft in milliseconds.
+          Over 300 million repositories exist today; 90% of them are abandoned experiments, tutorials, or star-farmed hype. <strong className="text-text font-semibold">Openlysts</strong> is the high-velocity telescope engineered to cut through the noise, surfacing living code, verified alternatives, and pure engineering craft in milliseconds.
         </motion.p>
 
         {/* Dynamic Live Rolling Stat Badges */}
@@ -135,7 +133,7 @@ export default function About() {
               <AnimateDigits value={totalRepositories} />
               <span className="text-accent">+</span>
             </div>
-            <div className="text-xs text-text-secondary font-medium mt-1">Repositories Scored</div>
+            <div className="text-xs text-text-secondary font-medium mt-1">Repositories Scanned</div>
           </div>
 
           <div className="p-4 rounded-2xl bg-bg-card/70 border border-border/60 backdrop-blur-md text-center shadow-sm">
@@ -231,13 +229,13 @@ export default function About() {
                 <ExternalLink className="w-3 h-3 opacity-60" />
               </a>
 
-              <a
-                href="mailto:adilrafiqdar@gmail.com"
+              <Link
+                to="/contact"
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-bg-hover hover:bg-bg-hover/80 text-text font-semibold text-sm border border-border/80 transition-all hover:scale-105 active:scale-95 shadow-sm"
               >
                 <Mail className="w-4 h-4 text-accent" />
-                <span>adilrafiqdar@gmail.com</span>
-              </a>
+                <span>Openlysts Support Desk</span>
+              </Link>
 
               <a
                 href="https://github.com/openlysts/Openlysts"

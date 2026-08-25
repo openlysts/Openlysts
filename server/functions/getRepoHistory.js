@@ -2,7 +2,7 @@ import { entities } from '../services/entities.js';
 
 export default async function getRepoHistory(req, res) {
   try {
-    const { id } = req.body || {};
+    const id = req.query?.id || req.body?.id || '';
     if (!id) {
       return res.status(400).json({ error: true, message: 'Missing repo id' });
     }

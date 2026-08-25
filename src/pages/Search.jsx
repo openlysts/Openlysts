@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useQuery } from '@tanstack/react-query';
@@ -51,7 +51,7 @@ export default function Search() {
 
   const parsedSyntax = parseSearchQuery(debouncedQ);
 
-  const filters = {
+  const queryFilters = {
     q: parsedSyntax.q,
     topics: parsedSyntax.topics,
     categories: searchParams.get('categories')?.split(',').filter(Boolean) || [],
@@ -59,6 +59,19 @@ export default function Search() {
     licenses: Array.from(new Set([...(searchParams.get('licenses')?.split(',').filter(Boolean) || []), ...parsedSyntax.licenses])),
     difficulties: searchParams.get('difficulties')?.split(',').filter(Boolean) || [],
     minStars: Math.max(parseInt(searchParams.get('minStars') || '0') || 0, parsedSyntax.minStars),
+    updatedWithin: searchParams.get('updatedWithin') || '',
+    activity: searchParams.get('activity') || '',
+    sort: searchParams.get('sort') || 'trending',
+    page: parseInt(searchParams.get('page') || '1') || 1,
+  };
+
+  const uiFilters = {
+    q: q,
+    categories: searchParams.get('categories')?.split(',').filter(Boolean) || [],
+    languages: searchParams.get('languages')?.split(',').filter(Boolean) || [],
+    licenses: searchParams.get('licenses')?.split(',').filter(Boolean) || [],
+    difficulties: searchParams.get('difficulties')?.split(',').filter(Boolean) || [],
+    minStars: parseInt(searchParams.get('minStars') || '0') || 0,
     updatedWithin: searchParams.get('updatedWithin') || '',
     activity: searchParams.get('activity') || '',
     sort: searchParams.get('sort') || 'trending',
@@ -83,28 +96,23 @@ export default function Search() {
   }, [debouncedQ]);
 
   const { data, isLoading } = useQuery({
-    queryKey: ['search', filters],
-    queryFn: ({ signal }) => queryRepos(filters, { signal }),
+    queryKey: ['search', queryFilters],
+    queryFn: ({ signal }) => queryRepos(queryFilters, { signal }),
     staleTime: 300000,
     refetchInterval: 60000,
   });
 
   const updateFilters = (newFilters) => {
     const params = new URLSearchParams();
-    // Only update non-syntax fields, keep q the same
-    if (newFilters.q !== undefined) params.set('q', newFilters.q);
-    else if (q) params.set('q', q);
-    
+    if (newFilters.q) params.set('q', newFilters.q);
     if (newFilters.categories?.length) params.set('categories', newFilters.categories.join(','));
-    // Do not overwrite syntax-extracted languages if they were passed via filter bar, but we can't easily distinguish.
-    // Usually FilterBar gives the full array. Let's just set it.
     if (newFilters.languages?.length) params.set('languages', newFilters.languages.join(','));
     if (newFilters.licenses?.length) params.set('licenses', newFilters.licenses.join(','));
     if (newFilters.difficulties?.length) params.set('difficulties', newFilters.difficulties.join(','));
     if (newFilters.minStars > 0) params.set('minStars', String(newFilters.minStars));
     if (newFilters.updatedWithin) params.set('updatedWithin', newFilters.updatedWithin);
     if (newFilters.activity) params.set('activity', newFilters.activity);
-    if (newFilters.sort && newFilters.sort !== 'trending') params.set('sort', newFilters.sort);
+    if (newFilters.sort) params.set('sort', newFilters.sort);
     if (newFilters.page > 1) params.set('page', String(newFilters.page));
     setSearchParams(params, { replace: false });
   };
@@ -151,7 +159,15 @@ export default function Search() {
         <input
           type="text"
           value={inputVal}
-          onChange={(e) => setInputVal(e.target.value)}
+          onChange={(e) => {
+            setInputVal(e.target.value);
+            if (!e.target.value) {
+              const params = new URLSearchParams(searchParams);
+              params.delete('q');
+              params.delete('page');
+              setSearchParams(params, { replace: true });
+            }
+          }}
           placeholder="Search open-source projects (e.g. language:python stars:>1000 topic:ai)..."
           className="w-full bg-bg-card border border-border rounded-xl pl-11 pr-4 py-3 text-base text-text placeholder:text-text-muted focus:border-accent focus:outline-none shadow-sm"
         />
@@ -182,13 +198,13 @@ export default function Search() {
       )}
 
       <div data-tour="search-filters">
-        <FilterBar filters={filters} onChange={updateFilters} languages={LANGUAGES} />
+        <FilterBar filters={uiFilters} onChange={updateFilters} languages={LANGUAGES} />
       </div>
 
       <RepositoryGrid
         repos={data?.results || []}
         loading={isLoading}
-        emptyMessage={q ? `No repositories found for "${q}"` : (filters.categories?.length > 0 ? 'No matches found. Try adjusting your filters, searching for something else, or contributing a new project.' : 'Start typing to search')}
+        emptyMessage={q ? `No repositories found for "${q}"` : (uiFilters.categories?.length > 0 ? 'No matches found. Try adjusting your filters, searching for something else, or contributing a new project.' : 'Start typing to search')}
       />
 
       {data && data.totalPages > 1 && (

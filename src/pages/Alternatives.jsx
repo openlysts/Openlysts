@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef, useEffect } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useQuery } from '@tanstack/react-query';
@@ -8,7 +8,6 @@ import { Search, ExternalLink, PlayCircle, Info, ChevronRight, ChevronDown, Awar
 import { useNavigate } from 'react-router-dom';
 import RepositoryCard from '@/components/openlyst/RepositoryCard';
 import SkeletonCard from '@/components/openlyst/SkeletonCard';
-import { useLiveCounter } from '@/hooks/useLiveCounter';
 
 async function fetchAlternatives(category, search, sort) {
   const res = await fetch('/api/functions/queryAlternatives', {
@@ -165,8 +164,8 @@ function AlternativeCard({ alt, idx, viewMode, isSelected, onToggleCompare, onSe
                 <h3 className="text-sm font-bold text-text group-hover:text-accent transition-colors truncate">
                   {alt.resolved_name}
                 </h3>
-                <p className="text-[10px] font-medium text-text-muted mt-0.5 flex items-center gap-1">
-                  replaces <span className="text-text-secondary bg-bg-subtle px-1.5 py-0.5 rounded border border-border text-[10px]">{alt.paid_tool_name}</span>
+                <p className="text-xs font-medium text-text-muted mt-0.5 flex items-center gap-1.5">
+                  replaces <span className="text-text-secondary bg-bg-subtle px-2 py-0.5 rounded-md border border-border text-xs font-medium">{alt.paid_tool_name}</span>
                 </p>
               </div>
               <ScoreRing score={alt.openlysts_score} size={40} strokeWidth={3} />
@@ -176,21 +175,21 @@ function AlternativeCard({ alt, idx, viewMode, isSelected, onToggleCompare, onSe
 
             <div className="flex items-center justify-between mt-auto pt-2.5 border-t border-border/40">
               <div className="flex items-center gap-1.5 flex-wrap">
-                <span className={`text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded border ${getDifficultyColor(alt.migration_difficulty)}`}>
+                <span className={`text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded border ${getDifficultyColor(alt.migration_difficulty)}`}>
                   {alt.migration_difficulty || 'Medium'}
                 </span>
-                <span className="text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded border bg-accent/10 text-accent border-accent/20">
+                <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded border bg-accent/10 text-accent border-accent/20">
                   {alt.feature_parity_score || 70}% Match
                 </span>
                 {alt.repo && (
-                  <span className="text-[9px] font-bold px-1.5 py-0.5 rounded border bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-500/30 flex items-center gap-0.5">
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded border bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-500/30 flex items-center gap-0.5">
                     ★ {alt.repo.stars >= 1000 ? (alt.repo.stars / 1000).toFixed(1) + 'k' : alt.repo.stars || 0}
                   </span>
                 )}
               </div>
               {alt.openlysts_score >= 80 && alt.repo?.stars >= 5000 && (
-                <div title="Top Pick" className="flex items-center gap-0.5 text-accent text-[9px] font-bold">
-                  <Award className="w-3 h-3" /> Top Pick
+                <div title="Top Pick" className="flex items-center gap-0.5 text-accent text-xs font-bold">
+                  <Award className="w-3.5 h-3.5" /> Top Pick
                 </div>
               )}
             </div>
@@ -201,8 +200,8 @@ function AlternativeCard({ alt, idx, viewMode, isSelected, onToggleCompare, onSe
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2">
                 <h3 className="text-sm font-bold text-text group-hover:text-accent transition-colors truncate">{alt.resolved_name}</h3>
-                <span className="text-[10px] text-text-muted">replaces</span>
-                <span className="text-[10px] text-text-secondary bg-bg-subtle px-1.5 py-0.5 rounded border border-border font-medium">{alt.paid_tool_name}</span>
+                <span className="text-xs text-text-muted">replaces</span>
+                <span className="text-xs text-text-secondary bg-bg-subtle px-2 py-0.5 rounded-md border border-border font-medium">{alt.paid_tool_name}</span>
               </div>
               <p className="text-xs text-text-secondary line-clamp-1 mt-0.5">{alt.description}</p>
             </div>
@@ -320,25 +319,33 @@ export default function Alternatives() {
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['alternatives', debouncedSearch, sortBy],
-    queryFn: () => fetchAlternatives('All', debouncedSearch, sortBy),
-    staleTime: 15 * 60 * 1000,
-    gcTime: 60 * 60 * 1000,
-    placeholderData: (previousData) => previousData,
+    queryFn: () => fetchAlternatives('All', '', sortBy),
+    staleTime: 60 * 1000,
+    refetchOnMount: true,
   });
 
-  // Client-side category filter so sidebar clicks are instant
+  // Client-side category & search filter so sidebar clicks and typing are instant
   const filteredData = useMemo(() => {
     if (!data) return null;
-    const allAlts = Array.isArray(data.alternatives) ? data.alternatives : (Array.isArray(data.results) ? data.results : []);
-    if (activeCategory === 'All') return {
-      ...data,
-      alternatives: allAlts,
-      categories: data.categories || [],
-      grouped: data.grouped || [],
-      stats: data.stats || { total_tools: allAlts.length, total_paid_tools: 0, total_categories: (data.categories || []).length, avg_score: 75 }
-    };
+    let allAlts = Array.isArray(data.alternatives) ? data.alternatives : (Array.isArray(data.results) ? data.results : []);
+    
+    // 1. Search Filter
+    if (debouncedSearch && debouncedSearch.trim()) {
+      const s = debouncedSearch.toLowerCase().trim();
+      allAlts = allAlts.filter(a => 
+        (a.resolved_name || a.free_tool_name || a.name || '').toLowerCase().includes(s) ||
+        (a.paid_tool_name || '').toLowerCase().includes(s) ||
+        (a.description || '').toLowerCase().includes(s) ||
+        (a.category || '').toLowerCase().includes(s) ||
+        (a.subcategory || '').toLowerCase().includes(s)
+      );
+    }
 
-    const filtered = allAlts.filter(a => a.category === activeCategory);
+    // 2. Category Filter
+    const filtered = activeCategory === 'All' 
+      ? allAlts 
+      : allAlts.filter(a => (a.category || '').toLowerCase() === activeCategory.toLowerCase());
+
     const grouped = {};
     for (const alt of filtered) {
       const cat = alt.category || 'Uncategorized';
@@ -351,12 +358,12 @@ export default function Alternatives() {
     // Helper to get the value to sort by
     const getSortValue = (alt) => {
       switch (sortBy) {
-        case 'score': return alt.openlysts_score || 0;
-        case 'stars': return alt.github_stars || 0;
-        case 'parity': return alt.feature_parity || 0;
+        case 'score': return alt.openlysts_score || alt.quality_score || 0;
+        case 'stars': return (alt.repo?.stars || alt.stars || alt.github_stars || 0);
+        case 'parity': return alt.feature_parity_score || alt.feature_parity || 0;
         case 'difficulty': return alt.migration_difficulty === 'Easy' ? 3 : alt.migration_difficulty === 'Medium' ? 2 : 1;
-        case 'name': return (alt.free_tool_name || alt.name || '').toLowerCase();
-        default: return alt.openlysts_score || 0;
+        case 'name': return (alt.resolved_name || alt.free_tool_name || alt.name || '').toLowerCase();
+        default: return alt.openlysts_score || alt.quality_score || 0;
       }
     };
     
@@ -383,16 +390,10 @@ export default function Alternatives() {
               paid_tool_name: paidName,
               alternatives: sortedAlts,
               count: sortedAlts.length,
-              best_sort_value: getSortValue(sortedAlts[0])
             };
           })
-          .sort((a, b) => {
-             if (typeof a.best_sort_value === 'string' && typeof b.best_sort_value === 'string') {
-               return a.best_sort_value.localeCompare(b.best_sort_value);
-             }
-             return isAscending ? a.best_sort_value - b.best_sort_value : b.best_sort_value - a.best_sort_value;
-          });
-          
+          .sort((a, b) => b.count - a.count);
+
         return {
           category: categoryName,
           paid_groups: paidGroupsArray,
@@ -401,20 +402,30 @@ export default function Alternatives() {
       })
       .sort((a, b) => b.total - a.total);
 
+    const sortedFiltered = sortAlts(filtered);
+
     return {
       ...data,
-      alternatives: filtered,
+      alternatives: sortedFiltered,
+      results: sortedFiltered,
+      total: sortedFiltered.length,
+      categories: data.categories || [],
       grouped: groupedArray,
-      stats: { ...data.stats, total_tools: filtered.length }
+      stats: {
+        total_tools: sortedFiltered.length,
+        total_paid_tools: Object.values(grouped).reduce((acc, p) => acc + Object.keys(p).length, 0),
+        total_categories: Object.keys(grouped).length,
+        avg_score: sortedFiltered.length > 0 ? Math.round(sortedFiltered.reduce((sum, a) => sum + (a.openlysts_score || a.quality_score || 90), 0) / sortedFiltered.length) : 95
+      }
     };
-  }, [data, activeCategory, sortBy]);
+  }, [data, activeCategory, sortBy, debouncedSearch]);
 
-  // Auto-expand top 5 categories on load to prevent rendering thousands of DOM nodes
+  // Auto-expand top 10 categories on load to show rich cards immediately
   useEffect(() => {
-    if (data?.grouped) {
-      setExpandedCategories(new Set(data.grouped.slice(0, 5).map(g => g.category)));
+    if (filteredData?.grouped && filteredData.grouped.length > 0) {
+      setExpandedCategories(new Set(filteredData.grouped.slice(0, 10).map(g => g.category)));
     }
-  }, [data?.grouped]);
+  }, [filteredData?.grouped]);
 
   const toggleCategory = (cat) => {
     setExpandedCategories(prev => {
@@ -479,8 +490,8 @@ export default function Alternatives() {
           {/* Stats Pills */}
           {filteredData?.stats && (
             <div className="flex items-center gap-2 sm:gap-3 flex-wrap sm:flex-nowrap">
-              <LiveStatBlock label="Tools" value={filteredData.stats.total_tools} valueClass="text-accent" minIncrement={1} maxIncrement={2} interval={8000} />
-              <LiveStatBlock label="Categories" value={filteredData.stats.total_categories} valueClass="text-text" minIncrement={0} maxIncrement={1} interval={20000} />
+              <LiveStatBlock label="Tools" value={filteredData.stats.total_tools} valueClass="text-accent" />
+              <LiveStatBlock label="Categories" value={filteredData.stats.total_categories} valueClass="text-text" />
               <div className="bg-bg-subtle/80 border border-border rounded-xl px-3 sm:px-4 py-2 sm:py-2.5 text-center min-w-[75px] sm:min-w-[90px]">
                 <div className="text-lg sm:text-xl font-black text-amber-400">{filteredData.stats.avg_score}</div>
                 <div className="text-[9px] sm:text-[10px] font-bold text-text-muted uppercase tracking-wider">Avg Score</div>
@@ -643,17 +654,17 @@ export default function Alternatives() {
           {sidebarOpen && (
             <motion.aside 
               initial={{ width: 0, opacity: 0 }}
-              animate={{ width: 230, opacity: 1 }}
+              animate={{ width: 260, opacity: 1 }}
               exit={{ width: 0, opacity: 0 }}
               transition={{ duration: 0.2 }}
               className="hidden lg:block flex-shrink-0 overflow-hidden"
             >
-              <div className="w-[230px] sticky top-20">
+              <div className="w-[260px] sticky top-20">
                 <div className="bg-bg-card border border-border rounded-xl overflow-hidden shadow-sm">
                   <div className="p-3.5 border-b border-border bg-bg-subtle/50">
-                    <h3 className="text-xs font-bold text-text uppercase tracking-wider flex items-center gap-1.5">
+                    <h2 className="text-xs font-bold text-text uppercase tracking-wider flex items-center gap-1.5">
                       <Layers className="w-3.5 h-3.5 text-accent" /> Categories
-                    </h3>
+                    </h2>
                   </div>
                   <div className="max-h-[calc(100vh-220px)] overflow-y-auto custom-scrollbar p-1.5 space-y-0.5">
                     <button
@@ -663,13 +674,14 @@ export default function Alternatives() {
                       }`}
                     >
                       <span>All Tools</span>
-                      <span className={`text-[10px] px-1.5 py-0.5 rounded font-bold ${activeCategory === 'All' ? 'bg-black/20 text-white' : 'bg-bg-subtle text-text-muted'}`}>{filteredData?.stats?.total_tools || 0}</span>
+                      <span className={`text-xs px-1.5 py-0.5 rounded font-bold ${activeCategory === 'All' ? 'bg-black/20 text-white' : 'bg-bg-subtle text-text-muted'}`}>{filteredData?.stats?.total_tools || 0}</span>
                     </button>
                     {filteredData?.categories?.slice(0, visibleSidebarCategories).map((cat) => (
                       <button
                         key={cat.name}
                         onClick={() => setActiveCategory(cat.name)}
-                        className={`w-full text-left px-3 py-2 text-xs rounded-lg transition-colors flex items-center justify-between gap-1 ${
+                        title={cat.name}
+                        className={`w-full text-left px-3 py-2 text-xs rounded-lg transition-colors flex items-center justify-between gap-1.5 ${
                           activeCategory === cat.name 
                             ? 'bg-accent text-accent-fg font-bold' 
                             : 'text-text-secondary hover:bg-bg-subtle hover:text-text'
@@ -679,7 +691,7 @@ export default function Alternatives() {
                           <span className="text-sm">{categoryIcons[cat.name] || '📂'}</span>
                           {cat.name}
                         </span>
-                        <span className={`text-[10px] px-1.5 py-0.5 rounded font-bold flex-shrink-0 ${activeCategory === cat.name ? 'bg-black/20 text-white' : 'bg-bg-subtle text-text-muted'}`}>{cat.count}</span>
+                        <span className={`text-xs px-1.5 py-0.5 rounded font-bold flex-shrink-0 ${activeCategory === cat.name ? 'bg-black/20 text-white' : 'bg-bg-subtle text-text-muted'}`}>{cat.count}</span>
                       </button>
                     ))}
                     {filteredData?.categories && filteredData.categories.length > visibleSidebarCategories && (
@@ -700,7 +712,7 @@ export default function Alternatives() {
         {/* ─── Main Content (Takes 100% on mobile & tablet, flex-1 on desktop) ─── */}
         <main className="flex-1 w-full min-w-0" data-tour="alts-grid">
           {isLoading && (
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 items-start">
               {[...Array(6)].map((_, i) => (
                 <SkeletonCard key={i} />
               ))}
@@ -716,7 +728,7 @@ export default function Alternatives() {
           {/* Flat view when searching or specific category */}
           {filteredData?.alternatives && (activeCategory !== 'All' || debouncedSearch) && (
             <div className={viewMode === 'grid' 
-              ? 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4' 
+              ? 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 items-start' 
               : 'flex flex-col gap-2.5'
             }>
               {filteredData.alternatives.map((alt, idx) => renderCard(alt, idx))}
@@ -778,18 +790,18 @@ export default function Alternatives() {
                           {group.paid_groups.map((pg) => (
                             <div key={pg.paid_tool_name}>
                               {/* Paid Tool Subheader */}
-                              <div className="flex items-center gap-2.5 mb-3">
-                                <span className="text-xs font-bold text-text-secondary bg-bg-subtle/80 px-2.5 py-1 rounded-lg border border-border flex items-center gap-1.5">
-                                  <Shield className="w-3.5 h-3.5 text-accent" />
-                                  Replaces <span className="text-text font-extrabold">{pg.paid_tool_name}</span>
-                                  <span className="text-accent font-bold">({pg.count})</span>
+                              <div className="flex items-center gap-2.5 mb-3 flex-wrap">
+                                <span className="text-xs font-bold text-text-secondary bg-bg-subtle/80 px-2.5 py-1 rounded-lg border border-border flex items-center gap-1.5 max-w-full">
+                                  <Shield className="w-3.5 h-3.5 text-accent flex-shrink-0" />
+                                  <span className="flex-shrink-0">Replaces</span> <span className="text-text font-extrabold truncate max-w-[150px] sm:max-w-sm" title={pg.paid_tool_name}>{pg.paid_tool_name}</span>
+                                  <span className="text-accent font-bold flex-shrink-0">({pg.count})</span>
                                 </span>
                                 <div className="h-px flex-1 bg-border/40" />
                               </div>
 
                               {/* Cards */}
                               <div className={viewMode === 'grid'
-                                ? 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3.5'
+                                ? 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3.5 items-start'
                                 : 'flex flex-col gap-2.5'
                               }>
                                 {pg.alternatives.map((alt, idx) => renderCard(alt, idx))}

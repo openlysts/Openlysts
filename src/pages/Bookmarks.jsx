@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { localClient } from '@/api/localClient';
@@ -21,9 +21,17 @@ export default function Bookmarks() {
     queryKey: ['bookmarks', bookmarkIds],
     queryFn: async () => {
       if (bookmarkIds.length === 0) return [];
-      const all = await localClient.entities.Repository.list('-stars', 3000);
-      const map = new Map(all.map((r) => [r.id, r]));
-      return bookmarkIds.map((id) => map.get(id) || { id, _missing: true });
+      const results = await Promise.all(
+        bookmarkIds.map(async (id) => {
+          try {
+            const matches = await localClient.entities.Repository.filter({ id });
+            return matches[0] || { id, _missing: true };
+          } catch (e) {
+            return { id, _missing: true };
+          }
+        })
+      );
+      return results;
     },
     enabled: bookmarkIds.length > 0,
   });
@@ -49,7 +57,7 @@ export default function Bookmarks() {
           <p className="text-text-muted text-sm">Click the bookmark icon on any repository to save it here.</p>
         </div>
       ) : isLoading ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 items-start">
           {Array.from({ length: 4 }).map((_, i) => (
             <div key={i} className="card p-4 h-52 animate-pulse">
               <div className="h-4 bg-bg-subtle rounded w-2/3 mb-2" />
@@ -59,7 +67,7 @@ export default function Bookmarks() {
           ))}
         </div>
       ) : (
-        <div data-tour="bookmarks-list" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <div data-tour="bookmarks-list" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 items-start">
           {repos.map((repo) =>
             repo._missing ? (
               <div key={repo.id} className="card p-4 flex flex-col">

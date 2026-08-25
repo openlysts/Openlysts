@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 const DEFAULT_TITLE = 'Openlysts — Discover Open-Source Projects';
-const DEFAULT_DESCRIPTION = 'Openlysts — Discover high-quality free and open-source GitHub repositories across AI, local models, developer tools, self-hosting, and 1,280+ SaaS alternatives.';
+const DEFAULT_DESCRIPTION = 'Openlysts — Discover high-quality free and open-source GitHub repositories across AI, local models, developer tools, self-hosting, and 876+ SaaS alternatives.';
 
 export function usePageTitle(title, description) {
   const fullTitle = title ? `Openlysts — ${title}` : DEFAULT_TITLE;

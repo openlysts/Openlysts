@@ -12,6 +12,7 @@ import translateText from '../functions/translateText.js';
 import updateConfig from '../functions/updateConfig.js';
 import queryAlternatives from '../functions/queryAlternatives.js';
 import getGlobalStats from '../functions/getGlobalStats.js';
+import syncCatalogToNeon from '../functions/syncCatalogToNeon.js';
 import { requireAuth, requireRole } from '../auth/middleware.js';
 import { ROLES } from '../auth/constants.js';
 
@@ -30,7 +31,8 @@ const fns = {
   translateText,
   updateConfig,
   queryAlternatives,
-  getGlobalStats
+  getGlobalStats,
+  syncCatalogToNeon
 };
 
 const adminOnlyFunctions = [
@@ -38,7 +40,8 @@ const adminOnlyFunctions = [
   'recalculateScores',
   'reclassifyRepos',
   'updateConfig',
-  'inviteUser'
+  'inviteUser',
+  'syncCatalogToNeon'
 ];
 
 const requireAdmin = [requireAuth, requireRole(ROLES.ADMIN)];
@@ -69,10 +72,20 @@ router.all('/:name', async (req, res, next) => {
   
   // Authorize admin-only functions
   if (adminOnlyFunctions.includes(name)) {
-    // Manually run middleware stack
     for (let mw of requireAdmin) {
-      const err = await new Promise((resolve) => mw(req, res, resolve));
-      if (err) return; // Response was already sent by middleware
+      if (res.headersSent) return;
+      await new Promise((resolve) => {
+        let done = false;
+        const complete = (err) => {
+          if (!done) {
+            done = true;
+            resolve(err);
+          }
+        };
+        res.once('finish', complete);
+        mw(req, res, complete);
+      });
+      if (res.headersSent) return;
     }
   } else if (req.method === 'GET') {
     // Apply Vercel Edge Caching for public GET functions (5 mins cache, 10 mins stale-while-revalidate)

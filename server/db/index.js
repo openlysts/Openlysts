@@ -24,17 +24,17 @@ const db = new Pool({
   connectionString,
   ssl: (isNeonOrCloud && connectionString && !connectionString.includes('localhost')) ? true : undefined,
   max: process.env.VERCEL ? 5 : 10,
-  idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 30000,
+  idleTimeoutMillis: 5000,
+  connectionTimeoutMillis: 5000,
   keepAlive: true
 });
 
 if (connectionString && connectionString !== '[SENSITIVE]') {
-  initSchema(db).then(() => {
-    console.log('[DB] connected to PostgreSQL & schema initialized');
-  }).catch(err => {
-    console.error('[DB] Schema init failed:', err.message);
-  });
+  // CRITICAL FIX: DO NOT run initSchema(db) on every module load.
+  // In Vercel serverless environments, this runs on every single API request,
+  // exhausting Neon's data transfer limits and causing 504 timeouts.
+  // Schema initialization should only be done via explicit CLI scripts (e.g., db:reset).
+  console.log('[DB] PostgreSQL pool initialized (skipping auto-schema creation to save quota).');
 }
 
 export { db };

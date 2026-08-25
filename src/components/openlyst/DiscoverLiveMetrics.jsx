@@ -3,25 +3,23 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { 
   Sparkles, Database, ArrowUpRight, Cpu, 
-  Wrench, HardDrive, Bot, Package, Cloud, ShieldCheck, Activity, Radio
+  Wrench, HardDrive, Bot, Package, Cloud, ShieldCheck, Activity
 } from 'lucide-react';
 import { usePlatformStats } from '@/hooks/usePlatformStats';
-import { useLiveCounter } from '@/hooks/useLiveCounter';
 
 const CATEGORIES = [
-  { id: 'ai', name: 'AI & LLMs', label: 'AI', fallbackCount: 14280, icon: Cpu, color: 'from-purple-500/10 to-indigo-500/10 dark:from-purple-500/20 dark:to-indigo-500/20', border: 'border-purple-500/30 dark:border-purple-500/30', text: 'text-purple-700 dark:text-purple-300' },
-  { id: 'developer-tools', name: 'Dev Tools', label: 'Developer Tools', fallbackCount: 8450, icon: Wrench, color: 'from-blue-500/10 to-cyan-500/10 dark:from-blue-500/20 dark:to-cyan-500/20', border: 'border-blue-500/30 dark:border-blue-500/30', text: 'text-blue-700 dark:text-blue-300' },
-  { id: 'databases', name: 'Databases', label: 'Databases', fallbackCount: 3920, icon: HardDrive, color: 'from-emerald-500/10 to-teal-500/10 dark:from-emerald-500/20 dark:to-teal-500/20', border: 'border-emerald-500/30 dark:border-emerald-500/30', text: 'text-emerald-700 dark:text-emerald-300' },
-  { id: 'ai-agents', name: 'AI Agents', label: 'AI Agents', fallbackCount: 2840, icon: Bot, color: 'from-amber-500/10 to-orange-500/10 dark:from-amber-500/20 dark:to-orange-500/20', border: 'border-amber-500/30 dark:border-amber-500/30', text: 'text-amber-800 dark:text-amber-300' },
-  { id: 'libraries-frameworks', name: 'Libraries', label: 'Libraries & Frameworks', fallbackCount: 2150, icon: Package, color: 'from-pink-500/10 to-rose-500/10 dark:from-pink-500/20 dark:to-rose-500/20', border: 'border-pink-500/30 dark:border-pink-500/30', text: 'text-pink-700 dark:text-pink-300' },
-  { id: 'cloud-devops', name: 'Cloud & DevOps', label: 'Cloud & DevOps', fallbackCount: 1680, icon: Cloud, color: 'from-sky-500/10 to-blue-500/10 dark:from-sky-500/20 dark:to-blue-500/20', border: 'border-sky-500/30 dark:border-sky-500/30', text: 'text-sky-700 dark:text-sky-300' },
-  { id: 'security-auth', name: 'Security & Auth', label: 'Security', fallbackCount: 1120, icon: ShieldCheck, color: 'from-rose-500/10 to-amber-500/10 dark:from-rose-500/20 dark:to-amber-500/20', border: 'border-rose-500/30 dark:border-rose-500/30', text: 'text-rose-700 dark:text-rose-300' },
+  { id: 'ai', name: 'AI & LLMs', label: 'AI', fallbackCount: 168, icon: Cpu, color: 'from-purple-500/10 to-indigo-500/10 dark:from-purple-500/20 dark:to-indigo-500/20', border: 'border-purple-500/30 dark:border-purple-500/30', text: 'text-purple-700 dark:text-purple-300' },
+  { id: 'developer-tools', name: 'Dev Tools', label: 'Developer Tools', fallbackCount: 428, icon: Wrench, color: 'from-blue-500/10 to-cyan-500/10 dark:from-blue-500/20 dark:to-cyan-500/20', border: 'border-blue-500/30 dark:border-blue-500/30', text: 'text-blue-700 dark:text-blue-300' },
+  { id: 'databases', name: 'Databases', label: 'Databases', fallbackCount: 84, icon: HardDrive, color: 'from-emerald-500/10 to-teal-500/10 dark:from-emerald-500/20 dark:to-teal-500/20', border: 'border-emerald-500/30 dark:border-emerald-500/30', text: 'text-emerald-700 dark:text-emerald-300' },
+  { id: 'ai-agents', name: 'AI Agents', label: 'AI Agents', fallbackCount: 65, icon: Bot, color: 'from-amber-500/10 to-orange-500/10 dark:from-amber-500/20 dark:to-orange-500/20', border: 'border-amber-500/30 dark:border-amber-500/30', text: 'text-amber-800 dark:text-amber-300' },
+  { id: 'libraries-frameworks', name: 'Libraries', label: 'Libraries & Frameworks', fallbackCount: 72, icon: Package, color: 'from-pink-500/10 to-rose-500/10 dark:from-pink-500/20 dark:to-rose-500/20', border: 'border-pink-500/30 dark:border-pink-500/30', text: 'text-pink-700 dark:text-pink-300' },
+  { id: 'cloud-devops', name: 'Cloud & DevOps', label: 'Cloud & DevOps', fallbackCount: 94, icon: Cloud, color: 'from-sky-500/10 to-blue-500/10 dark:from-sky-500/20 dark:to-blue-500/20', border: 'border-sky-500/30 dark:border-sky-500/30', text: 'text-sky-700 dark:text-sky-300' },
+  { id: 'security-auth', name: 'Security & Auth', label: 'Security', fallbackCount: 48, icon: ShieldCheck, color: 'from-rose-500/10 to-amber-500/10 dark:from-rose-500/20 dark:to-amber-500/20', border: 'border-rose-500/30 dark:border-rose-500/30', text: 'text-rose-700 dark:text-rose-300' },
 ];
 
 function CategoryChip({ cat, actualCount }) {
   const navigate = useNavigate();
-  const initialCount = actualCount > 50 ? actualCount : cat.fallbackCount; 
-  const liveCount = useLiveCounter(initialCount, 1, 3, 4000, 10000);
+  const count = actualCount > 0 ? actualCount : cat.fallbackCount; 
   const Icon = cat.icon;
 
   return (
@@ -42,7 +40,7 @@ function CategoryChip({ cat, actualCount }) {
           {cat.name}
         </span>
         <span className={`text-xs font-bold ${cat.text} block mt-0.5`}>
-          {liveCount.toLocaleString()}
+          {count.toLocaleString()}
         </span>
       </div>
     </motion.button>
@@ -51,8 +49,7 @@ function CategoryChip({ cat, actualCount }) {
 
 export default function DiscoverLiveMetrics({ totalRepos = 0, categoryCounts = {} }) {
   const { totalRepositories } = usePlatformStats();
-  const initialTotal = totalRepos > 5000 ? totalRepos : totalRepositories;
-  const liveTotalRepos = useLiveCounter(initialTotal, 1, 5, 2000, 6000);
+  const displayTotal = totalRepos > 0 ? totalRepos : (totalRepositories || 758);
 
   return (
     <div className="w-full max-w-5xl mx-auto my-6 px-2 sm:px-4">
@@ -73,7 +70,7 @@ export default function DiscoverLiveMetrics({ totalRepos = 0, categoryCounts = {
             <div>
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="text-base sm:text-lg font-extrabold text-text tracking-tight">
-                  {liveTotalRepos.toLocaleString()} Repositories
+                  {displayTotal.toLocaleString()} Repositories
                 </span>
                 <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30 shadow-xs">
                   <span className="relative flex h-2 w-2">
@@ -81,7 +78,7 @@ export default function DiscoverLiveMetrics({ totalRepos = 0, categoryCounts = {
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                   </span>
                   <Activity className="w-3 h-3 text-emerald-500 animate-pulse" />
-                  <span>Live Telemetry Pulse</span>
+                  <span>Synchronized</span>
                 </span>
               </div>
               <p className="text-xs text-text-muted font-medium mt-0.5">
