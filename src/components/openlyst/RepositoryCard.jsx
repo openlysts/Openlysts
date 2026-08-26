@@ -283,6 +283,20 @@ export default function RepositoryCard({ repo, index = 0, view = 'grid', showTre
                 </span>
               )}
               <LicenseBadge repo={repo} />
+              {!isWebsite && repo?.html_url && (
+                <a
+                  href={repo.html_url.replace('github.com', 'gitingest.com')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-md transition-all group/ingest overflow-hidden relative shadow-[0_0_8px_rgba(236,72,153,0.2)] hover:shadow-[0_0_12px_rgba(236,72,153,0.4)] pointer-events-auto border border-pink-500/20 hover:border-pink-500/40"
+                  title="Food for AI (Gitingest)"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-indigo-500/10 group-hover/ingest:opacity-100 opacity-50 transition-opacity"></div>
+                  <Sparkles className="w-3 h-3 text-pink-400 relative z-10" />
+                  <span className="relative z-10 bg-gradient-to-r from-pink-400 to-indigo-400 bg-clip-text text-transparent">Food for AI</span>
+                </a>
+              )}
             </div>
             <span className="text-[11px] text-text-muted">
               {repo?.archived && <AlertCircle className="w-3 h-3 inline mr-1 text-nonoss" />}

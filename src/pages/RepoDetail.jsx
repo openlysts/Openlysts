@@ -270,6 +270,21 @@ export default function RepoDetail() {
                     Homepage
                   </a>
                 )}
+                {isGithub && (
+                  <a 
+                    href={repo.html_url.replace('github.com', 'gitingest.com')} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="relative group flex items-center justify-center px-6 h-11 sm:h-10 rounded-xl overflow-hidden font-bold text-sm shadow-[0_0_15px_rgba(236,72,153,0.3)] hover:shadow-[0_0_25px_rgba(236,72,153,0.6)] transition-all"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 opacity-80 group-hover:opacity-100 transition-opacity"></div>
+                    <div className="absolute inset-[1px] bg-bg rounded-xl"></div>
+                    <span className="relative z-10 bg-gradient-to-r from-pink-400 to-indigo-400 bg-clip-text text-transparent group-hover:from-pink-300 group-hover:to-indigo-300 flex items-center gap-2 transition-colors">
+                      <Sparkles className="w-4 h-4 text-pink-400 group-hover:text-pink-300" />
+                      Food for AI
+                    </span>
+                  </a>
+                )}
               </div>
             </div>
           </motion.div>
