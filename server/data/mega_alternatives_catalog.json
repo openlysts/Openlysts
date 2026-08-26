@@ -20504,7 +20504,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-25T19:05:57.621Z",
+    "updated_at": "2026-08-26T10:47:02.881Z",
     "resolved_name": "Open-webui",
     "repo": {
       "id": "repo-open-webui",
@@ -20527,7 +20527,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-25T19:05:59.192Z",
+    "updated_at": "2026-08-26T10:47:04.869Z",
     "resolved_name": "LibreChat",
     "repo": {
       "id": "repo-librechat",
@@ -20550,7 +20550,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-25T19:06:00.721Z",
+    "updated_at": "2026-08-26T10:47:06.640Z",
     "resolved_name": "Ollama",
     "repo": {
       "id": "repo-ollama",
@@ -20573,7 +20573,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-25T19:06:02.506Z",
+    "updated_at": "2026-08-26T10:47:08.728Z",
     "resolved_name": "Aider",
     "repo": {
       "id": "repo-aider",
@@ -20596,7 +20596,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-25T18:56:03.862Z",
+    "updated_at": "2026-08-26T10:47:10.249Z",
     "resolved_name": "Continue",
     "repo": {
       "id": "repo-continue",
@@ -20619,7 +20619,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-25T18:56:05.358Z",
+    "updated_at": "2026-08-26T10:47:12.050Z",
     "resolved_name": "Roo-Code",
     "repo": {
       "id": "repo-roo-code",
@@ -20642,7 +20642,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-25T18:56:07.980Z",
+    "updated_at": "2026-08-26T10:47:14.132Z",
     "resolved_name": "AppFlowy",
     "repo": {
       "id": "repo-appflowy",
@@ -20665,7 +20665,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-25T18:56:10.014Z",
+    "updated_at": "2026-08-26T10:47:16.226Z",
     "resolved_name": "AFFiNE",
     "repo": {
       "id": "repo-affine",
@@ -20688,7 +20688,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-25T18:56:11.509Z",
+    "updated_at": "2026-08-26T10:47:18.045Z",
     "resolved_name": "Logseq",
     "repo": {
       "id": "repo-logseq",
@@ -20711,7 +20711,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-25T18:56:13.023Z",
+    "updated_at": "2026-08-26T10:47:19.582Z",
     "resolved_name": "Mattermost",
     "repo": {
       "id": "repo-mattermost",
@@ -20734,7 +20734,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-25T18:56:14.550Z",
+    "updated_at": "2026-08-26T10:47:21.386Z",
     "resolved_name": "Zulip",
     "repo": {
       "id": "repo-zulip",
@@ -20757,7 +20757,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-25T18:56:16.339Z",
+    "updated_at": "2026-08-26T10:47:22.978Z",
     "resolved_name": "Element-web",
     "repo": {
       "id": "repo-element-web",
@@ -20780,7 +20780,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-25T18:56:18.156Z",
+    "updated_at": "2026-08-26T10:47:25.045Z",
     "resolved_name": "Coolify",
     "repo": {
       "id": "repo-coolify",
@@ -20803,7 +20803,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-25T18:56:19.948Z",
+    "updated_at": "2026-08-26T10:47:26.550Z",
     "resolved_name": "Dokku",
     "repo": {
       "id": "repo-dokku",
@@ -20826,7 +20826,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-25T18:56:21.523Z",
+    "updated_at": "2026-08-26T10:47:28.217Z",
     "resolved_name": "Caprover",
     "repo": {
       "id": "repo-caprover",
@@ -20849,7 +20849,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-25T18:56:23.050Z",
+    "updated_at": "2026-08-26T10:47:29.776Z",
     "resolved_name": "Posthog",
     "repo": {
       "id": "repo-posthog",
@@ -20872,7 +20872,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-25T18:56:24.626Z",
+    "updated_at": "2026-08-26T10:47:31.286Z",
     "resolved_name": "Umami",
     "repo": {
       "id": "repo-umami",
@@ -20895,7 +20895,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-25T18:56:26.662Z",
+    "updated_at": "2026-08-26T10:47:33.069Z",
     "resolved_name": "Analytics",
     "repo": {
       "id": "repo-analytics",
@@ -20918,7 +20918,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-25T18:56:28.171Z",
+    "updated_at": "2026-08-26T10:37:37.195Z",
     "resolved_name": "Nocodb",
     "repo": {
       "id": "repo-nocodb",
@@ -20941,7 +20941,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-25T18:56:30.020Z",
+    "updated_at": "2026-08-26T10:37:39.695Z",
     "resolved_name": "Baserow",
     "repo": {
       "id": "repo-baserow",
@@ -20964,7 +20964,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-25T18:56:31.768Z",
+    "updated_at": "2026-08-26T10:37:41.234Z",
     "resolved_name": "Grist-core",
     "repo": {
       "id": "repo-grist-core",
@@ -20987,7 +20987,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-25T18:56:33.782Z",
+    "updated_at": "2026-08-26T10:37:42.768Z",
     "resolved_name": "Plane",
     "repo": {
       "id": "repo-plane",
@@ -21010,7 +21010,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-25T18:56:35.343Z",
+    "updated_at": "2026-08-26T10:37:44.303Z",
     "resolved_name": "Focalboard",
     "repo": {
       "id": "repo-focalboard",
@@ -21033,7 +21033,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-25T18:56:37.151Z",
+    "updated_at": "2026-08-26T10:37:45.775Z",
     "resolved_name": "Leantime",
     "repo": {
       "id": "repo-leantime",
@@ -21056,7 +21056,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-25T18:56:38.672Z",
+    "updated_at": "2026-08-26T10:37:47.291Z",
     "resolved_name": "Cal.com",
     "repo": {
       "id": "repo-cal-com",
@@ -21079,7 +21079,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-25T18:56:40.243Z",
+    "updated_at": "2026-08-26T10:37:50.141Z",
     "resolved_name": "Dub",
     "repo": {
       "id": "repo-dub",
@@ -21102,7 +21102,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-25T18:56:41.765Z",
+    "updated_at": "2026-08-26T10:37:51.945Z",
     "resolved_name": "Documenso",
     "repo": {
       "id": "repo-documenso",
@@ -21125,7 +21125,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-25T18:56:44.050Z",
+    "updated_at": "2026-08-26T10:37:54.004Z",
     "resolved_name": "Supabase",
     "repo": {
       "id": "repo-supabase",
@@ -21148,7 +21148,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-25T18:56:47.262Z",
+    "updated_at": "2026-08-26T10:37:55.531Z",
     "resolved_name": "Pocketbase",
     "repo": {
       "id": "repo-pocketbase",
@@ -21171,7 +21171,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-25T18:56:49.260Z",
+    "updated_at": "2026-08-26T10:37:58.423Z",
     "resolved_name": "Appwrite",
     "repo": {
       "id": "repo-appwrite",
@@ -21194,7 +21194,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-25T18:56:51.049Z",
+    "updated_at": "2026-08-26T10:38:03.436Z",
     "resolved_name": "Minio",
     "repo": {
       "id": "repo-minio",
@@ -21217,7 +21217,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-25T18:56:52.758Z",
+    "updated_at": "2026-08-26T10:38:04.964Z",
     "resolved_name": "N8n",
     "repo": {
       "id": "repo-n8n",
@@ -21240,7 +21240,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-25T18:56:54.309Z",
+    "updated_at": "2026-08-26T10:38:07.308Z",
     "resolved_name": "Activepieces",
     "repo": {
       "id": "repo-activepieces",
@@ -21263,7 +21263,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-25T18:56:56.129Z",
+    "updated_at": "2026-08-26T10:38:08.897Z",
     "resolved_name": "Server",
     "repo": {
       "id": "repo-server",
@@ -21286,7 +21286,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-25T18:56:57.918Z",
+    "updated_at": "2026-08-26T10:38:10.506Z",
     "resolved_name": "Keepassxc",
     "repo": {
       "id": "repo-keepassxc",

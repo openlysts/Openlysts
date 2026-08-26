@@ -89,6 +89,38 @@ export async function sendVerificationEmail(toEmail, token, appUrl) {
 }
 
 /**
+ * Send duplicate registration warning email.
+ * @param {string} toEmail
+ * @param {string} appUrl - Base application URL
+ */
+export async function sendDuplicateRegistrationEmail(toEmail, appUrl) {
+  const loginUrl = `${appUrl}/login`;
+  const transporter = createTransporter();
+
+  await transporter.sendMail({
+    from: `"Openlysts Support Desk" <${process.env.SMTP_FROM || process.env.SMTP_USER || 'openlysts@gmail.com'}>`,
+    to: toEmail,
+    subject: 'Openlysts — Registration Attempt',
+    text: `Hello,\n\nSomeone recently tried to create an Openlysts account using this email address. Since you already have an account with us, we wanted to let you know.\n\nIf this was you, you can simply log in here:\n${loginUrl}\n\nIf this wasn't you, you can safely ignore this email.\n\n— Openlysts`,
+    html: `
+      <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 500px; margin: 0 auto; padding: 32px 24px; background: #0a0a0a; color: #e0e0e0; border-radius: 12px;">
+        <div style="text-align: center; margin-bottom: 24px;">
+          <h1 style="font-size: 24px; font-weight: 800; color: #f8fafc; margin: 0;">Openlysts</h1>
+        </div>
+        <h2 style="font-size: 18px; color: #f8fafc; margin-bottom: 8px;">Registration Attempt</h2>
+        <p style="color: #a0a0a0; font-size: 14px; line-height: 1.6;">Someone recently tried to create a new Openlysts account using your email address. Since you already have an account, no new account was created.</p>
+        <div style="text-align: center; margin: 32px 0;">
+          <a href="${loginUrl}" style="display: inline-block; padding: 12px 32px; background: #8b5cf6; color: #ffffff; font-weight: 600; font-size: 14px; text-decoration: none; border-radius: 8px;">Log In to Your Account</a>
+        </div>
+        <p style="color: #666; font-size: 12px;">If this wasn't you, you can safely ignore this email.</p>
+        <hr style="border: none; border-top: 1px solid #222; margin: 24px 0;" />
+        <p style="color: #555; font-size: 11px; text-align: center;">Openlysts — Open Source Discovery</p>
+      </div>
+    `,
+  });
+}
+
+/**
  * Check if SMTP is configured.
  * @returns {boolean}
  */

@@ -51,6 +51,15 @@ export default function Welcome() {
       </div>
 
       {/* Content */}
+      <motion.div 
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        className="absolute top-8 left-8 md:top-12 md:left-12 z-20 pointer-events-none"
+      >
+        <img src="/logo.png" alt="Openlysts" className="w-20 h-20 md:w-28 md:h-28 object-contain drop-shadow-[0_0_15px_rgba(139,92,246,0.3)] opacity-90" />
+      </motion.div>
+
       <main id="main-content" role="main" className="relative z-10 flex flex-col items-center justify-center text-center px-4 max-w-4xl mx-auto w-full">
         <h1 className="sr-only">Openlysts — Discover Open-Source Projects</h1>
         {mounted && (
@@ -74,7 +83,7 @@ export default function Welcome() {
             >
               <ParticleText
                 text="Openlysts"
-                particleSize={2}
+                particleSize={2.5}
                 density={4}
                 color="#f8fafc"
                 highlightColor="#8b5cf6"
@@ -98,9 +107,9 @@ export default function Welcome() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="text-lg md:text-2xl text-white/70 mb-12 max-w-2xl font-light leading-relaxed mt-4"
+              className="text-lg md:text-xl text-white/80 mb-12 max-w-2xl font-light leading-relaxed mt-4 tracking-wide text-center mx-auto"
             >
-              Explore, compare, and discover the highest-quality open-source software, all in one stunning ecosystem.
+              The definitive discovery engine for open-source. Uncover the highest-quality projects shaping the future of software.
             </motion.p>
 
             <MagneticButton magneticPull={0.3} onClick={() => navigate('/discover')}>

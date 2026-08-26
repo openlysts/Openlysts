@@ -1,20 +1,22 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import AnimateDigits from './AnimateDigits';
 import { 
   Sparkles, Database, ArrowUpRight, Cpu, 
-  Wrench, HardDrive, Bot, Package, Cloud, ShieldCheck, Activity
+  Wrench, ShieldCheck, Activity, Server, Zap
 } from 'lucide-react';
 import { usePlatformStats } from '@/hooks/usePlatformStats';
 
 const CATEGORIES = [
-  { id: 'ai', name: 'AI & LLMs', label: 'AI', fallbackCount: 168, icon: Cpu, color: 'from-purple-500/10 to-indigo-500/10 dark:from-purple-500/20 dark:to-indigo-500/20', border: 'border-purple-500/30 dark:border-purple-500/30', text: 'text-purple-700 dark:text-purple-300' },
-  { id: 'developer-tools', name: 'Dev Tools', label: 'Developer Tools', fallbackCount: 428, icon: Wrench, color: 'from-blue-500/10 to-cyan-500/10 dark:from-blue-500/20 dark:to-cyan-500/20', border: 'border-blue-500/30 dark:border-blue-500/30', text: 'text-blue-700 dark:text-blue-300' },
-  { id: 'databases', name: 'Databases', label: 'Databases', fallbackCount: 84, icon: HardDrive, color: 'from-emerald-500/10 to-teal-500/10 dark:from-emerald-500/20 dark:to-teal-500/20', border: 'border-emerald-500/30 dark:border-emerald-500/30', text: 'text-emerald-700 dark:text-emerald-300' },
-  { id: 'ai-agents', name: 'AI Agents', label: 'AI Agents', fallbackCount: 65, icon: Bot, color: 'from-amber-500/10 to-orange-500/10 dark:from-amber-500/20 dark:to-orange-500/20', border: 'border-amber-500/30 dark:border-amber-500/30', text: 'text-amber-800 dark:text-amber-300' },
-  { id: 'libraries-frameworks', name: 'Libraries', label: 'Libraries & Frameworks', fallbackCount: 72, icon: Package, color: 'from-pink-500/10 to-rose-500/10 dark:from-pink-500/20 dark:to-rose-500/20', border: 'border-pink-500/30 dark:border-pink-500/30', text: 'text-pink-700 dark:text-pink-300' },
-  { id: 'cloud-devops', name: 'Cloud & DevOps', label: 'Cloud & DevOps', fallbackCount: 94, icon: Cloud, color: 'from-sky-500/10 to-blue-500/10 dark:from-sky-500/20 dark:to-blue-500/20', border: 'border-sky-500/30 dark:border-sky-500/30', text: 'text-sky-700 dark:text-sky-300' },
-  { id: 'security-auth', name: 'Security & Auth', label: 'Security', fallbackCount: 48, icon: ShieldCheck, color: 'from-rose-500/10 to-amber-500/10 dark:from-rose-500/20 dark:to-amber-500/20', border: 'border-rose-500/30 dark:border-rose-500/30', text: 'text-rose-700 dark:text-rose-300' },
+  { id: 'local-ai', name: 'Local AI & Agents', label: 'Local AI', fallbackCount: 214, icon: Cpu, color: 'from-violet-500/10 to-purple-600/10 dark:from-violet-500/20 dark:to-purple-600/20', border: 'border-violet-500/30', text: 'text-violet-700 dark:text-violet-300' },
+  { id: 'sovereign-infra', name: 'Sovereign Infra', label: 'Sovereign Infra', fallbackCount: 187, icon: Server, color: 'from-sky-500/10 to-blue-600/10 dark:from-sky-500/20 dark:to-blue-600/20', border: 'border-sky-500/30', text: 'text-sky-700 dark:text-sky-300' },
+  { id: 'observability', name: 'Observability', label: 'Observability', fallbackCount: 96, icon: Activity, color: 'from-emerald-500/10 to-teal-600/10 dark:from-emerald-500/20 dark:to-teal-600/20', border: 'border-emerald-500/30', text: 'text-emerald-700 dark:text-emerald-300' },
+  { id: 'developer-tools', name: 'Dev Tools', label: 'Developer Tools', fallbackCount: 428, icon: Wrench, color: 'from-blue-500/10 to-cyan-500/10 dark:from-blue-500/20 dark:to-cyan-500/20', border: 'border-blue-500/30', text: 'text-blue-700 dark:text-blue-300' },
+  { id: 'workflow-automation', name: 'Automation', label: 'Workflow & Automation', fallbackCount: 142, icon: Zap, color: 'from-amber-500/10 to-orange-500/10 dark:from-amber-500/20 dark:to-orange-500/20', border: 'border-amber-500/30', text: 'text-amber-700 dark:text-amber-300' },
+  { id: 'data-lakehouse', name: 'Data & Lakehouse', label: 'Data & Lakehouse', fallbackCount: 118, icon: Database, color: 'from-indigo-500/10 to-blue-600/10 dark:from-indigo-500/20 dark:to-blue-600/20', border: 'border-indigo-500/30', text: 'text-indigo-700 dark:text-indigo-300' },
+  { id: 'security-auth', name: 'Security & Trust', label: 'Security', fallbackCount: 163, icon: ShieldCheck, color: 'from-rose-500/10 to-red-600/10 dark:from-rose-500/20 dark:to-red-600/20', border: 'border-rose-500/30', text: 'text-rose-700 dark:text-rose-300' },
+  { id: 'wasm-runtimes', name: 'Wasm & Runtimes', label: 'Wasm & Runtimes', fallbackCount: 72, icon: Cpu, color: 'from-fuchsia-500/10 to-pink-600/10 dark:from-fuchsia-500/20 dark:to-pink-600/20', border: 'border-fuchsia-500/30', text: 'text-fuchsia-700 dark:text-fuchsia-300' },
 ];
 
 function CategoryChip({ cat, actualCount }) {
@@ -69,8 +71,9 @@ export default function DiscoverLiveMetrics({ totalRepos = 0, categoryCounts = {
             </div>
             <div>
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-base sm:text-lg font-extrabold text-text tracking-tight">
-                  {displayTotal.toLocaleString()} Repositories
+                <span className="text-base sm:text-lg font-extrabold text-text tracking-tight inline-flex items-center gap-1.5">
+                  <AnimateDigits value={displayTotal.toLocaleString()} />
+                  <span>Open Systems</span>
                 </span>
                 <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30 shadow-xs">
                   <span className="relative flex h-2 w-2">
@@ -82,7 +85,7 @@ export default function DiscoverLiveMetrics({ totalRepos = 0, categoryCounts = {
                 </span>
               </div>
               <p className="text-xs text-text-muted font-medium mt-0.5">
-                Continuously synchronized and rated across 60+ open-source categories
+                Live-ranked across 60+ sovereign open-source categories — updated continuously.
               </p>
             </div>
           </div>
@@ -90,13 +93,14 @@ export default function DiscoverLiveMetrics({ totalRepos = 0, categoryCounts = {
           <div className="hidden sm:flex items-center gap-4 text-xs text-text-secondary">
             <div className="flex items-center gap-1.5 font-mono font-medium bg-bg-card px-2.5 py-1 rounded-lg border border-border/60 shadow-xs">
               <Sparkles className="w-3.5 h-3.5 text-accent" />
-              <span>Auto-Ingestion: <strong className="text-text">Active</strong></span>
+              <span>Intelligence Feed: <strong className="text-text">Live</strong></span>
             </div>
           </div>
         </div>
 
-        {/* Category Breakdown: Smooth Horizontal Scroll on Mobile/Tablet, 7-col on Desktop */}
-        <div className="flex lg:grid lg:grid-cols-7 gap-2.5 overflow-x-auto no-scrollbar touch-scroll py-1 -mx-1 px-1 items-stretch">
+        <div 
+          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5 py-1 -mx-1 px-1 items-stretch"
+        >
           {CATEGORIES.map((cat) => (
             <div key={cat.id} className="min-w-[125px] sm:min-w-[140px] lg:min-w-0 flex-1 flex-shrink-0 flex flex-col">
               <CategoryChip cat={cat} actualCount={categoryCounts[cat.label] || 0} />

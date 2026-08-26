@@ -2,7 +2,7 @@ import RepositoryCard from './RepositoryCard';
 import SkeletonCard from './SkeletonCard';
 import { useViewMode } from '@/hooks/useViewMode';
 
-export default function RepositoryGrid({ repos, loading, emptyMessage = 'No repositories found.', showTrendingBadge = true }) {
+export default function RepositoryGrid({ repos, loading, emptyMessage = 'No systems found.', showTrendingBadge = true }) {
   const [view] = useViewMode();
   if (loading) {
     return (

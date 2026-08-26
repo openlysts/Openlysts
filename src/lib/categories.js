@@ -13,6 +13,11 @@ export const CATEGORIES = [
   { slug: 'libraries-frameworks', label: 'Libraries & Frameworks', description: 'Reusable libraries and frameworks.' },
   { slug: 'cloud-devops', label: 'Cloud & DevOps', description: 'Cloud infrastructure, containers, and DevOps tooling.' },
   { slug: 'security-auth', label: 'Security', description: 'Security, authentication, and authorization tools.' },
+  { slug: 'observability', label: 'Observability', description: 'Logging, metrics, tracing, and OpenTelemetry.' },
+  { slug: 'workflow-automation', label: 'Workflow & Automation', description: 'Self-hosted Zapier/n8n alternatives and orchestration.' },
+  { slug: 'data-lakehouse', label: 'Data & Lakehouse', description: 'Modern data stacks, DuckDB, Iceberg, and lakehouses.' },
+  { slug: 'wasm-runtimes', label: 'Wasm & Runtimes', description: 'WebAssembly, Bun, Deno, and next-gen runtimes.' },
+  { slug: 'sovereign-infra', label: 'Sovereign Infra', description: 'Self-hostable infrastructure and BaaS platforms.' },
 ];
 
 export function getCategory(slug) {

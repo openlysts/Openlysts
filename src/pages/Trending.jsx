@@ -63,15 +63,15 @@ export default function Trending() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
       <h1 className="flex items-center gap-2 text-2xl font-bold text-text mb-1">
         <Flame className="w-6 h-6 text-trending" />
-        Trending Repositories
+        Surging Open Systems
       </h1>
-      <p className="text-text-secondary text-sm mb-6">Repositories gaining the most stars recently.</p>
+      <p className="text-text-secondary text-sm mb-6">Open-source systems gaining the most traction recently.</p>
 
       <div data-tour="trending-filters">
         <FilterBar filters={filters} onChange={updateFilters} languages={LANGUAGES} />
       </div>
 
-      <RepositoryGrid repos={data?.results || []} loading={isLoading} emptyMessage="No trending repositories found." showTrendingBadge={false} />
+      <RepositoryGrid repos={data?.results || []} loading={isLoading} emptyMessage="No surging systems found." showTrendingBadge={false} />
 
       {data && data.totalPages > 1 && (
         <Pagination page={data.page} totalPages={data.totalPages} onChange={onPageChange} />

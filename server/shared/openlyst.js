@@ -34,11 +34,16 @@ const CATEGORY_RULES = [
   { category: "Web Applications", keywords: ["web app", "web application", "self-hosted app", "full stack", "fullstack", "saas"], topics: ["web-app", "web-application", "self-hosted", "fullstack", "saas", "dashboard"] },
   { category: "Developer Tools", keywords: ["developer tool", "devtool", "command-line", "cli tool", "terminal", "developer productivity", "ide", "linter"], topics: ["developer-tools", "devtools", "cli", "command-line", "terminal", "ide", "linter", "developer-productivity"] },
   { category: "Self-Hosted", keywords: ["self-hosted", "selfhosted", "self hosted", "homelab", "host your own", "self host"], topics: ["self-hosted", "selfhosted", "homelab", "self-hosting"] },
+  { category: "Sovereign Infra", keywords: ["infrastructure", "baas", "backend as a service", "self-hosted infrastructure"], topics: ["infrastructure", "baas", "backend-as-a-service"] },
   { category: "Databases", keywords: ["database", "sql", "nosql", "datastore", "storage engine", "key-value store", "vector database"], topics: ["database", "sql", "nosql", "db", "datastore", "key-value", "vector-database"] },
+  { category: "Data & Lakehouse", keywords: ["lakehouse", "data lake", "duckdb", "iceberg", "data stack", "modern data stack"], topics: ["lakehouse", "data-lake", "duckdb", "iceberg", "data-engineering"] },
   { category: "Automation", keywords: ["automation", "workflow", "automate", "pipeline", "ci/cd", "orchestration", "scheduler"], topics: ["automation", "workflow", "ci-cd", "orchestration", "pipeline", "scheduler", "automation-tool"] },
+  { category: "Workflow & Automation", keywords: ["zapier alternative", "n8n", "workflow automation"], topics: ["workflow-automation", "zapier-alternative", "n8n"] },
   { category: "Libraries & Frameworks", keywords: ["library", "framework", "sdk", "package", "module", "toolkit"], topics: ["library", "framework", "sdk", "package", "module", "toolkit"] },
   { category: "Cloud & DevOps", keywords: ["cloud", "devops", "kubernetes", "docker", "container", "infrastructure", "terraform", "ansible", "helm", "serverless", "microservice"], topics: ["cloud", "devops", "kubernetes", "docker", "containers", "infrastructure", "terraform", "ansible", "helm", "serverless", "cloud-native", "iaas", "paas", "k8s"] },
   { category: "Security", keywords: ["security", "authentication", "authorization", "auth", "sso", "oauth", "encryption", "firewall", "vulnerability", "pentest", "cybersecurity"], topics: ["security", "authentication", "authorization", "auth", "sso", "oauth", "encryption", "cybersecurity", "vulnerability", "pentesting", "identity"] },
+  { category: "Observability", keywords: ["observability", "opentelemetry", "metrics", "tracing", "logging", "monitoring"], topics: ["observability", "opentelemetry", "monitoring", "tracing", "logging", "metrics"] },
+  { category: "Wasm & Runtimes", keywords: ["wasm", "webassembly", "runtime", "bun", "deno"], topics: ["wasm", "webassembly", "runtime", "bun", "deno"] },
 ];
 
 const QUERY_HINT_MAP = {
@@ -181,11 +186,16 @@ export const CATEGORIES = [
   { slug: "web-applications", label: "Web Applications", description: "Open-source web apps you can self-host." },
   { slug: "developer-tools", label: "Developer Tools", description: "Tools that make developers more productive." },
   { slug: "self-hosted", label: "Self-Hosted", description: "Software you can host on your own infrastructure." },
+  { slug: "sovereign-infra", label: "Sovereign Infra", description: "Self-hostable infrastructure and BaaS platforms." },
   { slug: "databases", label: "Databases", description: "Open-source databases and data stores." },
+  { slug: "data-lakehouse", label: "Data & Lakehouse", description: "Modern data stacks, DuckDB, Iceberg, and lakehouses." },
   { slug: "automation", label: "Automation", description: "Workflow automation and orchestration tools." },
+  { slug: "workflow-automation", label: "Workflow & Automation", description: "Self-hosted Zapier/n8n alternatives and orchestration." },
   { slug: "libraries-frameworks", label: "Libraries & Frameworks", description: "Reusable libraries and frameworks." },
   { slug: "cloud-devops", label: "Cloud & DevOps", description: "Cloud infrastructure, containers, and DevOps tooling." },
   { slug: "security-auth", label: "Security", description: "Security, authentication, and authorization tools." },
+  { slug: "observability", label: "Observability", description: "Logging, metrics, tracing, and OpenTelemetry." },
+  { slug: "wasm-runtimes", label: "Wasm & Runtimes", description: "WebAssembly, Bun, Deno, and next-gen runtimes." },
 ];
 
 export function slugToLabel(slug) {

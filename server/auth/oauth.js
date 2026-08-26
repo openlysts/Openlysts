@@ -353,7 +353,8 @@ export async function findOrCreateOAuthUser(providerProfile, provider) {
  * @returns {string}
  */
 export function generateOAuthState(redirect = '/discover') {
-  const secret = process.env.SESSION_SECRET || 'local-dev-only-session-secret-do-not-use-in-prod';
+  const secret = process.env.SESSION_SECRET;
+  if (!secret) throw new Error("FATAL: SESSION_SECRET is missing.");
   const payload = Buffer.from(JSON.stringify({
     redirect: redirect || '/discover',
     nonce: crypto.randomBytes(16).toString('hex'),
@@ -373,7 +374,8 @@ export function verifyOAuthState(state) {
   if (!state || typeof state !== 'string' || !state.includes('.')) {
     return { valid: false, redirect: '/discover' };
   }
-  const secret = process.env.SESSION_SECRET || 'local-dev-only-session-secret-do-not-use-in-prod';
+  const secret = process.env.SESSION_SECRET;
+  if (!secret) throw new Error("FATAL: SESSION_SECRET is missing.");
   const [payload, sig] = state.split('.');
   const expectedSig = crypto.createHmac('sha256', secret).update(payload).digest('base64url');
 

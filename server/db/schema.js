@@ -248,6 +248,10 @@ export async function initSchema(db) {
     `CREATE INDEX IF NOT EXISTS idx_audit_created ON "AuditLog"(created_date DESC);`,
     `CREATE INDEX IF NOT EXISTS idx_audit_actor ON "AuditLog"(actor_id);`,
     `CREATE INDEX IF NOT EXISTS idx_audit_action ON "AuditLog"(action);`,
+    
+    // GIN Expression Indexes for JSONB queries
+    `CREATE INDEX IF NOT EXISTS idx_repo_categories_gin ON "Repository" USING GIN ((COALESCE(NULLIF(categories, ''), '[]')::jsonb));`,
+    `CREATE INDEX IF NOT EXISTS idx_repo_topics_gin ON "Repository" USING GIN ((COALESCE(NULLIF(topics, ''), '[]')::jsonb));`,
   ];
 
   for (const q of indexQueries) {

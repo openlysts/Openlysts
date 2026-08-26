@@ -1,24 +1,22 @@
 /**
  * InfiniteDiscoveryFeed.jsx
  * An infinite-scroll, algorithmically-ordered discovery feed.
- * Implements the "variable reward" mechanism — mixing trending, authority, and recently-added
- * repos in an unpredictable but weighted order to maximize engagement and retention.
+ * 2-Row Horizontal Grid with Premium Header Navigation.
  */
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Flame, Sparkles, TrendingUp, Zap } from 'lucide-react';
+import { Flame, Sparkles, TrendingUp, ChevronLeft, ChevronRight, RefreshCw, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import RepositoryCard from './RepositoryCard';
 import SkeletonCard from './SkeletonCard';
 import { queryRepos } from '@/lib/api';
-import { useViewMode } from '@/hooks/useViewMode';
 
 // Weighted shuffle: injects variety into the feed order for variable reward effect
 function weightedShuffle(repos) {
   if (!repos || repos.length === 0) return [];
   return [...repos].sort((a, b) => {
-    // Score: trending_score (60%) + authority_score (30%) + random noise (10%)
     const scoreA = (a.trending_score || 0) * 0.6 + (a.authority_score || 0) * 0.3 + Math.random() * 15;
     const scoreB = (b.trending_score || 0) * 0.6 + (b.authority_score || 0) * 0.3 + Math.random() * 15;
     return scoreB - scoreA;
@@ -34,43 +32,19 @@ function getHookBadge(repo) {
   const multiSource = (repo.authority_score || 0) > 30;
 
   if (hotToday) return { label: '🔥 Hot Today', color: 'text-orange-400 border-orange-500/40 bg-orange-500/10' };
-  if (hnBoosted) return { label: '⚡ Top Tier Tool', color: 'text-yellow-400 border-yellow-500/40 bg-yellow-500/10' };
+  if (hnBoosted) return { label: '⚡ Top Tier System', color: 'text-yellow-400 border-yellow-500/40 bg-yellow-500/10' };
   if (risingFast) return { label: '📈 Rising Fast', color: 'text-emerald-400 border-emerald-500/40 bg-emerald-500/10' };
   if (multiSource) return { label: '✨ Community Pick', color: 'text-blue-400 border-blue-500/40 bg-blue-500/10' };
   return null;
 }
 
-// Section header dividers injected between feed items for rhythm and visual variety
-const SECTION_DIVIDERS = [
-  { after: 8, icon: TrendingUp, label: 'Rising in the Community', color: 'text-emerald-400' },
-  { after: 16, icon: Sparkles, label: 'Hand-Curated Picks', color: 'text-purple-400' },
-  { after: 24, icon: Zap, label: 'High Velocity Picks', color: 'text-yellow-400' },
-];
-
-function FeedDivider({ icon: Icon, label, color }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, x: -20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.4 }}
-      className="col-span-full flex items-center gap-3 py-2 px-1"
-    >
-      <div className="flex items-center gap-2">
-        <Icon className={`w-4 h-4 ${color}`} />
-        <span className={`text-sm font-bold tracking-wide uppercase ${color}`}>{label}</span>
-      </div>
-      <div className="flex-1 h-px bg-gradient-to-r from-border/80 to-transparent" />
-    </motion.div>
-  );
-}
-
-export default function InfiniteDiscoveryFeed({ initialFilters = {} }) {
-  const [view] = useViewMode();
+export default function InfiniteDiscoveryFeed({ initialFilters = {}, onRefresh, isRefreshing }) {
   const [allRepos, setAllRepos] = useState([]);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [isFetchingMore, setIsFetchingMore] = useState(false);
   const loaderRef = useRef(null);
+  const scrollContainerRef = useRef(null);
 
   // Initial fetch
   const { data: initialData, isLoading } = useQuery({
@@ -95,7 +69,6 @@ export default function InfiniteDiscoveryFeed({ initialFilters = {} }) {
     try {
       const data = await queryRepos({ sort: 'trending', page, ...initialFilters });
       if (data?.results && data.results.length > 0) {
-        // Interleave new results with random noise for variable reward
         const shuffled = weightedShuffle(data.results);
         setAllRepos(prev => {
           const existingIds = new Set(prev.map(r => r.id));
@@ -108,7 +81,7 @@ export default function InfiniteDiscoveryFeed({ initialFilters = {} }) {
         setHasMore(false);
       }
     } catch (e) {
-      // Silently fail — feed continues to show existing items
+      // Silently fail
     } finally {
       setIsFetchingMore(false);
     }
@@ -123,99 +96,161 @@ export default function InfiniteDiscoveryFeed({ initialFilters = {} }) {
           fetchMore();
         }
       },
-      { rootMargin: '400px' } // Pre-fetch 400px before the user hits the bottom
+      { 
+        root: loaderRef.current.closest('.grid'),
+        rootMargin: '400px' 
+      } 
     );
     observer.observe(loaderRef.current);
     return () => observer.disconnect();
   }, [fetchMore, hasMore, isFetchingMore]);
 
+  const handleScrollLeft = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: -800, behavior: 'smooth' });
+    }
+  };
+
+  const handleScrollRight = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: 800, behavior: 'smooth' });
+    }
+  };
+
+  const renderHeader = () => (
+    <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
+      <div className="flex items-center gap-3">
+        <TrendingUp className="w-6 h-6 text-trending" />
+        <h2 className="text-xl sm:text-2xl font-black text-text tracking-tight">Trending Now</h2>
+        
+        {onRefresh && (
+          <button
+            onClick={onRefresh}
+            className={`p-1.5 rounded-md text-text-muted hover:text-accent transition-all touch-target ${
+              isRefreshing ? 'animate-spin text-accent' : ''
+            }`}
+            title="Refresh Trending"
+          >
+            <RefreshCw className="w-4 h-4" />
+          </button>
+        )}
+      </div>
+      
+      <div className="flex items-center gap-4 sm:gap-6">
+        <Link
+          to="/trending"
+          className="group flex items-center gap-1 text-sm font-semibold text-text-secondary hover:text-accent transition-colors touch-target"
+        >
+          <span>View all trending</span>
+          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+        </Link>
+
+        {/* Premium Navigation Arrows */}
+        <div className="hidden md:flex items-center gap-2">
+          <button 
+            onClick={handleScrollLeft}
+            className="w-9 h-9 rounded-full border border-border bg-bg-card/50 flex items-center justify-center text-text-muted hover:text-accent hover:border-accent hover:bg-bg-hover transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-accent/20"
+            aria-label="Scroll left"
+          >
+            <ChevronLeft className="w-4.5 h-4.5" />
+          </button>
+          <button 
+            onClick={handleScrollRight}
+            className="w-9 h-9 rounded-full border border-border bg-bg-card/50 flex items-center justify-center text-text-muted hover:text-accent hover:border-accent hover:bg-bg-hover transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-accent/20"
+            aria-label="Scroll right"
+          >
+            <ChevronRight className="w-4.5 h-4.5" />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
   if (isLoading) {
     return (
-      <div className={view === 'list' ? 'flex flex-col gap-4' : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'}>
-        {Array.from({ length: 8 }).map((_, i) => <SkeletonCard key={i} view={view} />)}
-      </div>
+      <>
+        {renderHeader()}
+        <div className="-mx-4 px-4 sm:-mx-6 sm:px-6 relative">
+          <div className="grid grid-rows-2 grid-flow-col gap-4 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory pb-4" role="region" aria-label="Loading Feed">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <div key={i} className="w-[300px] sm:w-[340px] snap-start">
+                <SkeletonCard view="grid" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </>
     );
   }
 
   if (!allRepos.length) {
     return (
-      <div className="flex flex-col items-center justify-center py-16 text-center">
-        <Sparkles className="w-8 h-8 text-text-muted mb-3" />
-        <p className="text-text font-semibold">No projects found.</p>
-        <p className="text-text-muted text-sm mt-1">Try adjusting your filters.</p>
-      </div>
+      <>
+        {renderHeader()}
+        <div className="flex flex-col items-center justify-center py-16 text-center">
+          <Sparkles className="w-8 h-8 text-text-muted mb-3" />
+          <p className="text-text font-semibold">No projects found.</p>
+          <p className="text-text-muted text-sm mt-1">Try adjusting your filters.</p>
+        </div>
+      </>
     );
   }
 
-  // Build feed items with section dividers injected at correct positions
-  const feedItems = [];
-  for (let i = 0; i < allRepos.length; i++) {
-    const divider = SECTION_DIVIDERS.find(d => d.after === i);
-    if (divider) {
-      feedItems.push({ type: 'divider', key: `divider-${i}`, ...divider });
-    }
-    feedItems.push({ type: 'repo', key: allRepos[i].id, repo: allRepos[i], index: i });
-  }
-
   return (
-    <div>
-      <div className={view === 'list' ? 'flex flex-col gap-4' : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'}>
-        <AnimatePresence>
-          {feedItems.map((item) => {
-            if (item.type === 'divider') {
+    <>
+      {renderHeader()}
+      <div className="-mx-4 px-4 sm:-mx-6 sm:px-6 relative">
+        {/* 2-Row Horizontal Grid */}
+        <div 
+          ref={scrollContainerRef} 
+          className="grid grid-rows-2 grid-flow-col gap-4 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory pb-8 pt-2 [mask-image:linear-gradient(to_right,white_85%,transparent_100%)] md:[mask-image:linear-gradient(to_right,white_90%,transparent_100%)]" 
+          role="region" 
+          aria-label="Discovery Feed"
+        >
+          <AnimatePresence>
+            {allRepos.map((repo, index) => {
+              const hookBadge = getHookBadge(repo);
+
               return (
-                <FeedDivider
-                  key={item.key}
-                  icon={item.icon}
-                  label={item.label}
-                  color={item.color}
-                />
+                <motion.div
+                  key={repo.id}
+                  layout
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3, delay: Math.min(index * 0.02, 0.3) }}
+                  className="w-[300px] sm:w-[340px] snap-start relative h-full"
+                >
+                  {/* FOMO Hook Badge */}
+                  {hookBadge && (
+                    <div className={`absolute -top-2 left-3 z-20 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold tracking-wide border backdrop-blur-md shadow-sm ${hookBadge.color}`}>
+                      {hookBadge.label}
+                    </div>
+                  )}
+                  <RepositoryCard repo={repo} index={index} view="grid" showTrendingBadge />
+                </motion.div>
               );
-            }
-            const hookBadge = getHookBadge(item.repo);
-            const isFeatured = hookBadge?.label === '⚡ Top Tier Tool' || hookBadge?.label === '🔥 Hot Today';
-            // In grid view, featured items take up 2 cols/rows for a staggered bento-box rhythm
-            const spanClass = (view === 'list' || !isFeatured) ? '' : 'md:col-span-2 md:row-span-2';
+            })}
+          </AnimatePresence>
 
-            return (
-              <motion.div
-                key={item.key}
-                layout
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: Math.min(item.index * 0.03, 0.3) }}
-                className={`relative ${spanClass}`}
-              >
-                {/* FOMO Hook Badge — floats above the card */}
-                {hookBadge && (
-                  <div className={`absolute -top-2 left-3 z-20 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold tracking-wide border backdrop-blur-md shadow-sm ${hookBadge.color}`}>
-                    {hookBadge.label}
-                  </div>
-                )}
-                <RepositoryCard repo={item.repo} index={item.index} view={view} showTrendingBadge />
-              </motion.div>
-            );
-          })}
-        </AnimatePresence>
-      </div>
-
-      {/* Infinite scroll trigger + loading indicator */}
-      <div ref={loaderRef} className="mt-8 flex justify-center">
-        {isFetchingMore && (
-          <div className="flex items-center gap-2 text-text-muted text-sm py-4">
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-            >
-              <Flame className="w-4 h-4 text-trending" />
-            </motion.div>
-            Discovering more...
+          {/* Infinite scroll trigger inside grid */}
+          <div ref={loaderRef} className="row-span-2 flex flex-col items-center justify-center w-[200px] px-8 snap-start">
+            {isFetchingMore && (
+              <div className="flex flex-col items-center gap-2 text-text-muted text-sm py-4">
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                >
+                  <Flame className="w-6 h-6 text-trending" />
+                </motion.div>
+                <span>Discovering...</span>
+              </div>
+            )}
+            {!hasMore && allRepos.length > 0 && (
+              <p className="text-text-muted text-sm py-4 max-w-[150px] text-center">You've seen it all.</p>
+            )}
           </div>
-        )}
-        {!hasMore && allRepos.length > 0 && (
-          <p className="text-text-muted text-sm py-4">You've seen it all — for now. Check back soon!</p>
-        )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }

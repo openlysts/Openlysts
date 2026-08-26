@@ -2,6 +2,32 @@ import express from 'express';
 import { entities } from '../services/entities.js';
 import { requireAuth, requireRole } from '../auth/middleware.js';
 import { ROLES } from '../auth/constants.js';
+import { z } from 'zod';
+
+const repoFilterSchema = z.object({
+  id: z.string().uuid().optional(),
+  name: z.string().optional(),
+  owner: z.string().optional(),
+  full_name: z.string().optional(),
+  language: z.string().optional(),
+  license_key: z.string().optional(),
+  featured: z.boolean().optional(),
+  archived: z.boolean().optional(),
+  hidden: z.boolean().optional(),
+  staff_pick: z.boolean().optional(),
+}).strict();
+
+const altFilterSchema = z.object({
+  id: z.string().uuid().optional(),
+  repo_id: z.string().optional(),
+  alternative_repo_id: z.string().optional(),
+}).strict();
+
+const validateWhere = (entity, whereObj) => {
+  if (entity === 'Repository') return repoFilterSchema.parse(whereObj);
+  if (entity === 'Alternative') return altFilterSchema.parse(whereObj);
+  return z.record(z.string(), z.union([z.string(), z.number(), z.boolean()])).parse(whereObj);
+};
 
 const router = express.Router();
 
@@ -32,9 +58,10 @@ router.get('/:entity/:action', async (req, res, next) => {
       let where = {};
       if (req.query.where) {
         try {
-          where = JSON.parse(req.query.where);
+          const rawWhere = JSON.parse(req.query.where);
+          where = validateWhere(entity, rawWhere);
         } catch (e) {
-          return res.status(400).json({ error: true, message: 'Invalid where parameter' });
+          return res.status(400).json({ error: true, message: 'Invalid where parameter', details: e.errors || e.message });
         }
       }
       result = await service.filter(where, req.query.sort, req.query.limit);
@@ -79,7 +106,13 @@ router.post('/:entity/:action', async (req, res, next) => {
     if (action === 'list') {
       result = await service.list(req.body.sort, req.body.limit);
     } else if (action === 'filter') {
-      result = await service.filter(req.body.where, req.body.sort, req.body.limit);
+      try {
+        console.log('[DEBUG req.body]', req.body);
+        const validatedWhere = validateWhere(entity, req.body.where || {});
+        result = await service.filter(validatedWhere, req.body.sort, req.body.limit);
+      } catch (e) {
+        return res.status(400).json({ error: true, message: 'Invalid where parameter', details: e.errors || e.message });
+      }
     } else if (action === 'create') {
       result = await service.create(req.body.data);
     } else if (action === 'update') {

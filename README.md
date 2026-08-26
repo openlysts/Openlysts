@@ -8,7 +8,7 @@
   <p align="center">
     <img src="https://img.shields.io/badge/Version-v1.3.0-8b5cf6?style=for-the-badge" alt="Version" />
     <img src="https://img.shields.io/badge/Build-Passing-3b82f6?style=for-the-badge" alt="Build" />
-    <img src="https://img.shields.io/badge/Tests-81%2F81%20Pass-10b981?style=for-the-badge" alt="Tests" />
+    <img src="https://img.shields.io/badge/Tests-9%2F9%20Pass-10b981?style=for-the-badge" alt="Tests" />
     <img src="https://img.shields.io/badge/Status-Production%20Ready-f59e0b?style=for-the-badge" alt="Status" />
     <img src="https://img.shields.io/badge/License-MIT-10b981?style=for-the-badge" alt="License" />
   </p>

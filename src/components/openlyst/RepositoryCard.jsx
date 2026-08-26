@@ -1,10 +1,10 @@
 import { useNavigate, Link } from 'react-router-dom';
-import { Heart, Eye, Bookmark, Flame, AlertCircle, GitCompare, ShieldCheck, Activity, Sparkles } from 'lucide-react';
+import { Heart, Eye, AlertCircle, GitCompare, ShieldCheck, Activity, Github, Globe, Flame, Sparkles } from 'lucide-react';
 import { motion, useMotionValue, useSpring, useTransform, useMotionTemplate } from 'framer-motion';
 import { getLanguageColor } from '@/lib/languageColors';
 import { getDifficultyColor } from '@/lib/difficultyColors';
 import { isBookmarked, toggleBookmark } from '@/lib/bookmarks';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useCompare } from '@/lib/CompareContext';
 import LicenseBadge from './LicenseBadge';
 import RepoVideoLinks from './RepoVideoLinks';
@@ -41,6 +41,8 @@ function formatTag(tag) {
 
 export default function RepositoryCard({ repo, index = 0, view = 'grid', showTrendingBadge = true }) {
   const [bookmarked, setBookmarked] = useState(() => isBookmarked(repo?.id));
+  const cardRef = useRef(null);
+  
   const isTrending = showTrendingBadge && (repo?.trending_score || 0) > 80;
   const isAuthority = (repo?.authority_score || 0) > 40;
   const isEngaged = (repo?.engagement_score || 0) > 60;
@@ -53,11 +55,19 @@ export default function RepositoryCard({ repo, index = 0, view = 'grid', showTre
   // Safe owner and name extraction
   const owner = (typeof repo?.owner === 'string' && repo.owner)
     ? repo.owner
-    : (repo?.full_name?.includes('/') ? repo.full_name.split('/')[0] : (repo?.owner?.login || ''));
+    : (repo?.full_name?.includes('/') ? repo.full_name.split('/')[0] : (repo?.owner?.login || 'unknown'));
   const name = repo?.name
     ? repo.name
     : (repo?.full_name?.includes('/') ? repo.full_name.split('/')[1] : (repo?.full_name || ''));
-  const repoUrl = (owner && name) ? `/repo/${encodeURIComponent(owner)}/${encodeURIComponent(name)}` : '/discover';
+
+  const isRealGit = repo?.html_url && (repo.html_url.includes('github.com') || repo.html_url.includes('gitlab.com') || repo.html_url.includes('bitbucket.org'));
+  const isCatalogItem = (repo?.github_id != null) || (repo?.full_name?.includes('/'));
+  const isOpenSourceProduct = !isRealGit && isCatalogItem;
+  const isWebsite = !isRealGit && !isOpenSourceProduct;
+
+  const repoUrl = (isOpenSourceProduct || isRealGit) 
+    ? ((owner && name && owner !== 'unknown') ? `/repo/${encodeURIComponent(owner)}/${encodeURIComponent(name)}` : '/discover')
+    : (repo?.html_url || `https://openalternative.co/${repo?.full_name || ''}`);
 
   // 3D Parallax logic for desktop
   const x = useMotionValue(0);
@@ -103,16 +113,6 @@ export default function RepositoryCard({ repo, index = 0, view = 'grid', showTre
     }
   };
 
-  const handleCardClick = (e) => {
-    // Prevent navigation if clicking interactive child elements
-    if (e.target.closest('button') || e.target.closest('a') || e.target.closest('.no-card-nav')) {
-      return;
-    }
-    if (owner && name) {
-      navigate(repoUrl);
-    }
-  };
-
   const handleCompareClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -121,7 +121,6 @@ export default function RepositoryCard({ repo, index = 0, view = 'grid', showTre
     }
   };
 
-  // Clean deduplicated topics against categories
   const categoriesList = repo?.categories || [];
   const cleanTopics = (repo?.topics || [])
     .filter(t => !categoriesList.some(c => c.toLowerCase() === t.toLowerCase().replace(/[-_]/g, ' ')))
@@ -136,46 +135,55 @@ export default function RepositoryCard({ repo, index = 0, view = 'grid', showTre
       style={{ perspective: 1000 }}
     >
       <motion.div 
+        ref={cardRef}
         data-tour="repo-card"
-        onClick={handleCardClick} 
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        style={{
-          rotateX,
-          rotateY,
-        }}
-        whileHover={{ 
-          y: -6, 
-          scale: 1.012,
-          transition: { duration: 0.22, ease: [0.25, 1, 0.5, 1] } 
-        }}
-        whileTap={{ scale: 0.985, transition: { duration: 0.1 } }}
-        className={`card h-full flex p-4 pt-4.5 relative rounded-xl border bg-bg-card transition-[border-color,box-shadow,background-color] duration-200 cursor-pointer group touch-active overflow-hidden select-none ${isTrending ? 'border-trending/40 shadow-[0_0_15px_rgba(255,100,50,0.15)] hover:border-trending/60 hover:shadow-[0_0_25px_rgba(255,100,50,0.3)]' : 'border-border hover:border-accent/60 hover:shadow-[0_16px_36px_rgba(0,0,0,0.18),0_0_24px_rgba(var(--accent-rgb),0.2)]'} ${view === 'list' ? 'flex-col md:flex-row items-start gap-4 md:gap-6' : 'flex-col justify-between'}`}
+        style={{ rotateX, rotateY }}
+        className={`card h-full flex p-4 pt-4.5 relative rounded-xl border bg-bg-card transition-[border-color,box-shadow,background-color] duration-200 group touch-active overflow-hidden select-none ${isTrending ? 'border-trending/40 shadow-[0_0_15px_rgba(255,100,50,0.15)]' : 'border-border'} ${view === 'list' ? 'flex-col md:flex-row items-start gap-4 md:gap-6' : 'flex-col justify-between'}`}
       >
         <motion.div 
           className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"
           style={{ background }}
         />
-        <div className={`relative z-10 flex-1 flex pointer-events-auto ${view === 'list' ? 'flex-col md:flex-row justify-between w-full gap-4 md:gap-0' : 'flex-col justify-between'}`}>
+        {isWebsite ? (
+          <a href={repoUrl} target="_blank" rel="noopener noreferrer" className="absolute inset-0 z-10 cursor-pointer" aria-label={`Visit ${repo?.name}`} />
+        ) : (
+          <Link to={repoUrl} className="absolute inset-0 z-10 cursor-pointer" aria-label={`View ${repo?.name}`} />
+        )}
+        <div className={`relative z-10 flex-1 flex pointer-events-none ${view === 'list' ? 'flex-col md:flex-row justify-between w-full gap-4 md:gap-0' : 'flex-col justify-between'}`}>
           <div className={view === 'list' ? 'flex-1 min-w-0 md:pr-6 flex flex-col' : 'w-full flex-1 flex flex-col justify-start'}>
             <div className={`flex justify-between items-start mb-1.5 gap-2 ${view === 'list' ? 'flex-col sm:flex-row' : ''}`}>
             <div className="min-w-0 flex-1">
-              <div className="flex flex-wrap gap-1.5 mb-2">
-                {/* Trending badge */}
+              <div className="flex flex-wrap gap-1.5 mb-2 pointer-events-auto">
+                {isWebsite ? (
+                  <div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-purple-500/30 bg-purple-500/10 text-purple-500 backdrop-blur-md w-fit">
+                    <Globe className="w-3 h-3" />
+                    Website
+                  </div>
+                ) : isOpenSourceProduct ? (
+                  <div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-emerald-500/30 bg-emerald-500/10 text-emerald-500 backdrop-blur-md w-fit shadow-[0_0_10px_rgba(16,185,129,0.15)]">
+                    <Sparkles className="w-3 h-3" />
+                    Open Source
+                  </div>
+                ) : (
+                  <div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-zinc-500/30 bg-zinc-500/10 text-text-secondary backdrop-blur-md w-fit">
+                    <Github className="w-3 h-3" />
+                    Git
+                  </div>
+                )}
                 {isTrending && (
                   <div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold tracking-wide border border-trending/40 bg-trending/10 text-trending backdrop-blur-md w-fit shadow-[0_0_8px_rgba(255,100,50,0.3)] animate-pulse">
                     <Flame className="w-3 h-3" />
                     Trending
                   </div>
                 )}
-                {/* Authority badge */}
                 {isAuthority && (
                   <div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold tracking-wide border border-blue-500/40 bg-blue-500/10 text-blue-500 backdrop-blur-md w-fit shadow-[0_0_8px_rgba(59,130,246,0.3)]">
                     <ShieldCheck className="w-3 h-3" />
                     Core
                   </div>
                 )}
-                {/* Engagement badge */}
                 {isEngaged && (
                   <div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold tracking-wide border border-green-500/40 bg-green-500/10 text-green-500 backdrop-blur-md w-fit shadow-[0_0_8px_rgba(34,197,94,0.3)]">
                     <Activity className="w-3 h-3" />
@@ -184,18 +192,15 @@ export default function RepositoryCard({ repo, index = 0, view = 'grid', showTre
                 )}
               </div>
 
-              {/* Name + owner */}
-              <Link 
-                to={repoUrl}
-                onClick={(e) => e.stopPropagation()}
-                className="font-semibold text-text text-[15px] leading-snug hover:text-accent transition-colors truncate block focus:outline-none focus:underline after:absolute after:inset-0 after:z-10"
-              >
-                {name || repo?.name || 'Repository'}
-              </Link>
-              <p className="text-text-muted text-xs mt-0.5 truncate">{owner || repo?.owner}</p>
+              <h3 className="font-semibold text-text text-[15px] leading-snug group-hover:text-accent transition-colors truncate block">
+                {name || 'Project'}
+              </h3>
+              <p className="text-text-muted text-xs mt-0.5 truncate pointer-events-auto cursor-pointer hover:underline" onClick={(e) => { e.preventDefault(); e.stopPropagation(); navigate(`/search?q=${encodeURIComponent(owner)}`); }}>
+                {owner}
+              </p>
             </div>
 
-            <div className={`flex items-center gap-2 z-20 flex-shrink-0 relative top-0 right-0 ${view === 'list' ? 'flex md:hidden' : ''}`}>
+            <div className={`flex items-center gap-2 z-20 flex-shrink-0 relative top-0 right-0 pointer-events-auto ${view === 'list' ? 'flex md:hidden' : ''}`}>
                 <button
                   onClick={handleCompareClick}
                   className={`p-2 rounded-xl transition-colors touch-target ${
@@ -221,20 +226,15 @@ export default function RepositoryCard({ repo, index = 0, view = 'grid', showTre
               </div>
           </div>
 
-          {/* Description */}
           <p className="text-text-secondary text-sm leading-relaxed line-clamp-2 min-h-[40px] mb-3">
             {repo?.description || 'No description available.'}
           </p>
 
-          {/* Difficulty and Categories */}
-          <div className="flex flex-wrap gap-1.5 mb-2.5 no-card-nav relative z-20" data-tour="repo-tags">
+          <div className="flex flex-wrap gap-1.5 mb-2.5 relative z-30 pointer-events-auto" data-tour="repo-tags">
             {repo?.difficulty && (
               <span
-                onClick={(e) => {
-                  e.stopPropagation();
-                  navigate(`/search?difficulties=${repo.difficulty}`);
-                }}
-                className={`px-2.5 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wider backdrop-blur-md border hover:opacity-80 transition-opacity shadow-sm ${getDifficultyColor(repo.difficulty)}`}
+                onClick={(e) => { e.preventDefault(); e.stopPropagation(); navigate(`/search?difficulties=${repo.difficulty}`); }}
+                className={`px-2.5 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wider backdrop-blur-md border hover:opacity-80 transition-opacity shadow-sm cursor-pointer ${getDifficultyColor(repo.difficulty)}`}
               >
                 {repo.difficulty}
               </span>
@@ -244,11 +244,8 @@ export default function RepositoryCard({ repo, index = 0, view = 'grid', showTre
               return (
                 <span
                   key={cat}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    navigate(`/search?categories=${slug}`);
-                  }}
-                  className="px-2.5 py-0.5 rounded-full text-xs font-semibold tracking-wide border border-border/50 bg-bg-subtle/50 text-text-secondary backdrop-blur-md hover:bg-bg-hover transition-colors shadow-sm truncate max-w-full"
+                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); navigate(`/search?categories=${slug}`); }}
+                  className="px-2.5 py-0.5 rounded-full text-xs font-semibold tracking-wide border border-border/50 bg-bg-subtle/50 text-text-secondary backdrop-blur-md hover:bg-bg-hover transition-colors shadow-sm truncate max-w-full cursor-pointer"
                   title={cat}
                 >
                   {cat}
@@ -257,11 +254,10 @@ export default function RepositoryCard({ repo, index = 0, view = 'grid', showTre
             })}
           </div>
 
-          {/* Topics with title case & deduplication */}
           {cleanTopics.length > 0 && (
-            <div className="flex flex-wrap gap-1.5 mb-3 no-card-nav relative z-20">
+            <div className="flex flex-wrap gap-1.5 mb-3 relative z-30 pointer-events-none">
               {cleanTopics.map((t) => (
-                <span key={t} className="px-2.5 py-0.5 rounded-full text-xs font-medium tracking-wide border border-border/30 bg-bg-card/50 text-text-muted backdrop-blur-md shadow-sm truncate max-w-full" title={formatTag(t)}>
+                <span key={t} className="px-2.5 py-0.5 rounded-full text-xs font-medium tracking-wide border border-border/30 bg-bg-card/50 text-text-muted backdrop-blur-md shadow-sm truncate max-w-full">
                   {formatTag(t)}
                 </span>
               ))}
@@ -269,9 +265,7 @@ export default function RepositoryCard({ repo, index = 0, view = 'grid', showTre
           )}
         </div>
 
-        {/* Bottom Section - Strictly pinned to the bottom */}
-        <div className={`mt-auto pt-3 border-t border-border/50 flex flex-col gap-2 ${view === 'list' ? 'md:border-none md:pt-0 md:mt-0 w-full md:w-auto flex-shrink-0 items-start md:items-end md:justify-center md:min-w-[200px]' : 'w-full'}`}>
-          {/* Stats row */}
+        <div className={`mt-auto pt-3 border-t border-border/50 flex flex-col gap-2 relative z-30 ${view === 'list' ? 'md:border-none md:pt-0 md:mt-0 w-full md:w-auto flex-shrink-0 items-start md:items-end md:justify-center md:min-w-[200px]' : 'w-full'}`}>
           <div className={`flex text-xs text-text-muted gap-2 ${view === 'list' ? 'flex-row md:flex-col items-center md:items-end w-full md:w-auto justify-between md:justify-end' : 'items-center justify-between flex-wrap'}`} data-tour="repo-stats">
             <div className={`flex items-center flex-wrap gap-x-3 gap-y-1.5 ${view === 'list' ? 'md:justify-end' : ''}`}>
               <span className="flex items-center gap-1">
@@ -296,22 +290,14 @@ export default function RepositoryCard({ repo, index = 0, view = 'grid', showTre
             </span>
           </div>
 
-          {/* Video explanation links */}
-          <div className="no-card-nav relative z-20" data-tour="repo-video">
+          <div className="relative z-30 pointer-events-auto" data-tour="repo-video">
             <RepoVideoLinks repo={repo} />
           </div>
         </div>
 
         {view === 'list' && (
-          <div className="hidden md:flex flex-col gap-2 items-end justify-start ml-4 border-l border-border pl-4 relative z-20">
-            <button
-              onClick={handleCompareClick}
-              className={`p-2.5 rounded-xl transition-colors touch-target flex items-center justify-center border w-10 h-10 ${
-                isCompared ? 'text-accent bg-accent-soft border-accent' : 'text-text-muted hover:text-text hover:bg-bg-hover active:bg-bg-subtle border-border'
-              }`}
-              aria-label="Add to compare"
-              title="Compare"
-            >
+          <div className="hidden md:flex flex-col gap-2 items-end justify-start ml-4 border-l border-border pl-4 relative z-30 pointer-events-auto">
+            <button onClick={handleCompareClick} className={`p-2.5 rounded-xl transition-colors touch-target flex items-center justify-center border w-10 h-10 ${isCompared ? 'text-accent bg-accent-soft border-accent' : 'text-text-muted hover:text-text hover:bg-bg-hover active:bg-bg-subtle border-border'}`} aria-label="Add to compare" title="Compare">
               <GitCompare className="w-5 h-5" />
             </button>
             <ParticleExplosion active={bookmarked}>

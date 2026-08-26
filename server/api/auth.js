@@ -9,7 +9,7 @@ import { hashPassword, verifyPassword, validatePasswordStrength, normalizeEmail 
 import { ROLES, ACCOUNT_STATUS, AUTH_PROVIDERS, AUDIT_ACTIONS, TOKEN_EXPIRY } from '../auth/constants.js';
 import { requireAuth, loginRateLimiter, registerRateLimiter, resetRateLimiter } from '../auth/middleware.js';
 import { logAuditEvent, getRequestMeta } from '../auth/audit.js';
-import { sendPasswordResetEmail, sendVerificationEmail, isSmtpConfigured } from '../auth/email.js';
+import { sendPasswordResetEmail, sendVerificationEmail, sendDuplicateRegistrationEmail, isSmtpConfigured } from '../auth/email.js';
 import { getGoogleAuthUrl, exchangeGoogleCode, getGithubAuthUrl, exchangeGithubCode, findOrCreateOAuthUser, generateOAuthState, verifyOAuthState } from '../auth/oauth.js';
 
 const router = Router();
@@ -48,8 +48,16 @@ router.post('/register', registerRateLimiter, async (req, res) => {
     );
 
     if (existing.length > 0) {
-      // Generic error to prevent email enumeration
-      return res.status(409).json({ error: true, message: 'An account with this email already exists.' });
+      // Prevent enumeration: send warning email and return generic success
+      if (isSmtpConfigured()) {
+        const appUrl = process.env.APP_URL || `${req.protocol}://${req.get('host')}`.replace('3001', '5173');
+        sendDuplicateRegistrationEmail(emailNorm, appUrl).catch(console.error);
+      }
+      return res.status(201).json({
+        success: true,
+        message: 'Registration successful. Please check your email to verify your account.',
+        requiresVerification: true,
+      });
     }
 
     // Create user
@@ -246,11 +254,6 @@ router.get('/me', async (req, res) => {
     if (user.account_status !== ACCOUNT_STATUS.ACTIVE) {
       req.session.destroy(() => {});
       return res.json({ user: null });
-    }
-
-    const adminEmails = (process.env.ADMIN_EMAILS || 'admin@openlysts.com,qatest_authed_user@example.com').split(',').map(e => e.trim().toLowerCase());
-    if (adminEmails.includes((user.email || '').toLowerCase())) {
-      user.role = 'ADMIN';
     }
 
     return res.json({ user: sanitizeUser(user) });

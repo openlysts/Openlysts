@@ -40,7 +40,8 @@ function buildIndices() {
           name: alt.free_tool_name,
           stars: alt.stars || 5000,
           language: 'TypeScript',
-          quality_score: alt.quality_score || 94
+          quality_score: alt.quality_score || 94,
+          html_url: alt.free_tool_url || (alt.free_tool_repo?.startsWith('http') ? alt.free_tool_repo : undefined)
         }
       }));
     }
@@ -232,7 +233,8 @@ export function ingestCatalogAlternative(alt) {
     feature_parity_score: Number(alt.feature_parity_score) || 75,
     openlysts_score: Number(alt.openlysts_score) || 85,
     verified_oss: alt.verified_oss !== false,
-    updated_at: new Date().toISOString()
+    updated_at: new Date().toISOString(),
+    html_url: alt.free_tool_url || (alt.free_tool_repo?.startsWith('http') ? alt.free_tool_repo : undefined)
   };
 
   let targetIdx;

@@ -13,7 +13,8 @@ const PgSession = connectPgSimple(session);
  * @param {import('express').Express} app
  */
 export function configureSession(app) {
-  const sessionSecret = process.env.SESSION_SECRET || 'openlysts-prod-secret-fallback-key-9f84a9e5b2d713c4';
+  const sessionSecret = process.env.SESSION_SECRET;
+  if (!sessionSecret) throw new Error("FATAL: SESSION_SECRET environment variable is missing.");
   const appUrl = process.env.APP_URL || '';
   const isLocalhost = appUrl.includes('localhost') || appUrl.includes('127.0.0.1');
   const isSecure = isLocalhost ? false : (appUrl.startsWith('https://') || process.env.NODE_ENV === 'production' || !!process.env.VERCEL);
@@ -27,7 +28,7 @@ export function configureSession(app) {
       pool: db,
       tableName: 'session',
       createTableIfMissing: false,
-      pruneSessionInterval: false,
+      pruneSessionInterval: 60 * 60, // Prune expired sessions every hour
       errorLog: () => {}
     });
   } catch (e) {
@@ -80,7 +81,7 @@ export function configureSession(app) {
 
   app.use(session({
     store: new ResilientStore(),
-    secret: sessionSecret || 'local-dev-only-session-secret-do-not-use-in-prod',
+    secret: sessionSecret,
     name: 'openlysts.sid',
     resave: false,
     saveUninitialized: false,

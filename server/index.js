@@ -45,7 +45,9 @@ app.use(cors({
   },
   credentials: true
 }));
-app.use(express.json({ limit: '2mb' }));
+app.use('/api/entities', express.json({ limit: '2mb' }));
+app.use('/api/admin', express.json({ limit: '2mb' }));
+app.use(express.json({ limit: '100kb' }));
 
 configureSession(app);
 app.use(loadSessionUser);

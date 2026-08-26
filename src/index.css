@@ -472,3 +472,30 @@ button, a, input, select, textarea, [role="button"], [tabindex="0"] {
 * {
   -webkit-tap-highlight-color: transparent;
 }
+
+/* Discovery Rail — Cinematic Horizontal Scroll */
+.discovery-rail {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-behavior: smooth;
+  padding-bottom: 1rem;
+  align-items: stretch;
+}
+.discovery-rail::-webkit-scrollbar {
+  display: none;
+}
+.discovery-rail-card {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+  width: 300px;
+}
+@media (min-width: 640px) {
+  .discovery-rail-card { width: 340px; }
+}
+@media (min-width: 1024px) {
+  .discovery-rail-card { width: 360px; }
+}

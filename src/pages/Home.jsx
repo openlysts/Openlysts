@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useQuery } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, Clock, TrendingUp, ArrowRight, RefreshCw, Cpu, Wrench, HardDrive, Bot, Package, Cloud, ShieldCheck } from 'lucide-react';
+import { ArrowRight, Cpu, Wrench, ShieldCheck, Activity, Server, Zap, Database, Clock } from 'lucide-react';
 import { queryRepos } from '@/lib/api';
 
 import RepositoryGrid from '@/components/openlyst/RepositoryGrid';
@@ -18,13 +18,13 @@ import { usePlatformStats } from '@/hooks/usePlatformStats';
 const LANGUAGES = ['Python', 'JavaScript', 'TypeScript', 'Go', 'Rust', 'Java', 'C++', 'C', 'Ruby', 'PHP', 'Swift', 'Kotlin', 'Shell', 'Vue', 'HTML', 'Dart'];
 
 const QUICK_CATEGORIES = [
-  { id: 'ai', name: 'AI & LLMs', icon: Cpu },
-  { id: 'developer-tools', name: 'Developer Tools', icon: Wrench },
-  { id: 'databases', name: 'Databases & RAG', icon: HardDrive },
-  { id: 'ai-agents', name: 'AI Agents', icon: Bot },
-  { id: 'libraries-frameworks', name: 'Libraries', icon: Package },
-  { id: 'cloud-devops', name: 'Cloud & DevOps', icon: Cloud },
-  { id: 'security-auth', name: 'Security & Auth', icon: ShieldCheck },
+  { id: 'local-ai',            name: 'Local AI',         icon: Cpu },
+  { id: 'sovereign-infra',     name: 'Sovereign Infra',  icon: Server },
+  { id: 'observability',       name: 'Observability',    icon: Activity },
+  { id: 'developer-tools',     name: 'Dev Tools',        icon: Wrench },
+  { id: 'workflow-automation', name: 'Automation',       icon: Zap },
+  { id: 'data-lakehouse',      name: 'Data & Lakehouse', icon: Database },
+  { id: 'security-auth',       name: 'Security',         icon: ShieldCheck },
 ];
 
 export default function Home() {
@@ -140,15 +140,10 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}>
           
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent-soft text-accent text-xs font-semibold mb-4 border border-accent/20">
-            <Sparkles className="w-3.5 h-3.5" />
-            Discover. Filter. Build.
-          </div>
-          
-          <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-text leading-tight mb-3">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-text leading-tight mb-4 w-full flex justify-center sm:whitespace-nowrap">
             <VariableProximity
-              label="Discover Open Source. Without the Noise."
-              className="text-4xl sm:text-6xl font-black tracking-tight text-text leading-tight"
+              label="Uncover what the top 1% ship with."
+              className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-text leading-tight"
               fromFontVariationSettings="'wght' 900"
               toFontVariationSettings="'wght' 900"
               containerRef={heroRef}
@@ -157,16 +152,8 @@ export default function Home() {
             />
           </h1>
           
-          <p className="text-text-secondary text-base sm:text-lg leading-relaxed mb-7 max-w-2xl mx-auto">
-            <VariableProximity
-              label="Surgical filtering, instant SaaS alternatives, and curated intelligence across AI, systems, and open-source."
-              className="text-text-secondary text-base sm:text-lg leading-relaxed"
-              fromFontVariationSettings="'wght' 400"
-              toFontVariationSettings="'wght' 600"
-              containerRef={heroRef}
-              radius={130}
-              falloff="gaussian"
-            />
+          <p className="text-text-secondary text-base sm:text-lg leading-relaxed mb-8 max-w-2xl mx-auto">
+            Stop guessing. We track, rank, and surface explosive open-source systems before they go mainstream.
           </p>
         </motion.div>
 
@@ -202,49 +189,27 @@ export default function Home() {
 
       {/* Main Grid: Trending + Recent Tabs */}
       <section className="mb-14">
-        <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2">
-              <TrendingUp className="w-5 h-5 text-trending" />
-              <h2 className="text-xl sm:text-2xl font-black text-text tracking-tight">Trending This Week</h2>
-            </div>
-            <button
-              onClick={() => {
-                setIsRefreshing(true);
-                refetchTrending().finally(() => setIsRefreshing(false));
-              }}
-              className={`p-2 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg border border-border bg-bg-card text-text-secondary hover:text-accent transition-all touch-target ${
-                isRefreshing || tRefetching ? 'animate-spin text-accent' : ''
-              }`}
-              title="Refresh Trending"
-            >
-              <RefreshCw className="w-3.5 h-3.5" />
-            </button>
-          </div>
-          <Link
-            to="/trending"
-            className="group flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-accent hover:text-accent/80 transition-colors min-h-[44px] px-2 -mr-2 touch-target"
-          >
-            <span>View all trending</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </Link>
-        </div>
-
-        <InfiniteDiscoveryFeed />
+        <InfiniteDiscoveryFeed 
+          onRefresh={() => {
+            setIsRefreshing(true);
+            refetchTrending().finally(() => setIsRefreshing(false));
+          }}
+          isRefreshing={isRefreshing || tRefetching}
+        />
       </section>
 
       {/* Popular in AI & Machine Learning */}
       <section className="mb-14">
         <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
           <div className="flex items-center gap-2">
-            <Cpu className="w-5 h-5 text-purple-600 dark:text-purple-400" />
-            <h2 className="text-xl sm:text-2xl font-black text-text tracking-tight">Top AI & Machine Learning</h2>
+            <Cpu className="w-5 h-5 text-text" />
+            <h2 className="text-xl sm:text-2xl font-black text-text tracking-tight">AI & Agentic Systems</h2>
           </div>
           <Link
             to="/search?categories=ai"
             className="group flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-accent hover:text-accent/80 transition-colors min-h-[44px] px-2 -mr-2 touch-target"
           >
-            <span>Explore AI Tools</span>
+            <span>Explore AI Systems</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
@@ -252,7 +217,7 @@ export default function Home() {
         <RepositoryGrid
           repos={aiPopular?.results || []}
           loading={aLoading}
-          emptyMessage="No AI repositories found."
+          emptyMessage="No AI systems found."
         />
       </section>
 
@@ -261,7 +226,7 @@ export default function Home() {
         <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
           <div className="flex items-center gap-2">
             <Clock className="w-5 h-5 text-accent" />
-            <h2 className="text-xl sm:text-2xl font-black text-text tracking-tight">Recently Added</h2>
+            <h2 className="text-xl sm:text-2xl font-black text-text tracking-tight">Fresh Drops</h2>
           </div>
           <Link
             to="/search?sort=recent"
@@ -275,7 +240,7 @@ export default function Home() {
         <RepositoryGrid
           repos={recent?.results || []}
           loading={rLoading}
-          emptyMessage="No recent repositories found."
+          emptyMessage="No recent systems found."
         />
       </section>
     </div>

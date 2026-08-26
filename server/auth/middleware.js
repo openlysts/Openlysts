@@ -22,12 +22,6 @@ export async function loadSessionUser(req, res, next) {
         [req.session.userId]
       );
       req.user = rows[0] || null;
-      if (req.user) {
-        const adminEmails = (process.env.ADMIN_EMAILS || 'admin@openlysts.com,qatest_authed_user@example.com').split(',').map(e => e.trim().toLowerCase());
-        if (adminEmails.includes((req.user.email || '').toLowerCase())) {
-          req.user.role = 'ADMIN';
-        }
-      }
     } catch (err) {
       console.error('[AUTH] Failed to load session user:', err.message);
       req.user = null;
@@ -157,7 +151,6 @@ export function csrfProtection(req, res, next) {
 export const loginRateLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 5,
-  skip: () => process.env.NODE_ENV !== 'production',
   standardHeaders: true,
   legacyHeaders: false,
   message: { error: true, message: 'Too many login attempts. Please try again later.' },
@@ -167,7 +160,6 @@ export const loginRateLimiter = rateLimit({
 export const registerRateLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 3,
-  skip: () => process.env.NODE_ENV !== 'production',
   standardHeaders: true,
   legacyHeaders: false,
   message: { error: true, message: 'Too many registration attempts. Please try again later.' },
@@ -177,7 +169,6 @@ export const registerRateLimiter = rateLimit({
 export const resetRateLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 3,
-  skip: () => process.env.NODE_ENV !== 'production',
   standardHeaders: true,
   legacyHeaders: false,
   message: { error: true, message: 'Too many reset requests. Please try again later.' },
