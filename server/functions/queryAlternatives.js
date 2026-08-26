@@ -230,7 +230,9 @@ export default async function queryAlternatives(req, res) {
 
     const total = filtered.length;
     const totalPages = Math.ceil(total / PER_PAGE);
-    const pageNum = Math.max(1, Math.min(page, totalPages || 1));
+    let safePage = parseInt(page, 10);
+    if (isNaN(safePage)) safePage = 1;
+    const pageNum = Math.max(1, Math.min(safePage, totalPages || 1));
     const offset = (pageNum - 1) * PER_PAGE;
     
     const results = filtered.slice(offset, offset + PER_PAGE);

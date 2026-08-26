@@ -206,6 +206,9 @@ export async function initSchema(db) {
     `ALTER TABLE "Repository" ADD COLUMN external_url TEXT`,
     `ALTER TABLE "Repository" ADD COLUMN source_site TEXT DEFAULT 'github'`,
     `ALTER TABLE "Repository" ADD COLUMN embedding vector(768)`,
+    
+    // Add missing FK for referential integrity
+    `DO $$ BEGIN IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_metricsnapshot_repo') THEN ALTER TABLE "MetricSnapshot" ADD CONSTRAINT fk_metricsnapshot_repo FOREIGN KEY (repository_id) REFERENCES "Repository"(id) ON DELETE CASCADE; END IF; END $$;`
   ];
 
   for (const q of alterQueries) {
@@ -237,6 +240,7 @@ export async function initSchema(db) {
     // Performance expression indexes
     `CREATE INDEX IF NOT EXISTS idx_repo_lower_name ON "Repository"(lower(full_name));`,
     `CREATE INDEX IF NOT EXISTS idx_alt_lower_repo ON "Alternative"(lower(free_tool_repo));`,
+    `CREATE INDEX IF NOT EXISTS idx_repo_github_updated_at ON "Repository"((NULLIF(github_updated_at, '')::timestamptz));`,
 
     // Auth indexes
     `CREATE UNIQUE INDEX IF NOT EXISTS idx_user_email_normalized ON "User"(email_normalized);`,

@@ -10,7 +10,7 @@ const connectionString =
   process.env.NEON_DATABASE_URL || '';
 
 if (!connectionString || connectionString === '[SENSITIVE]') {
-  console.warn('[DB] WARNING: DATABASE_URL is missing or set to [SENSITIVE].');
+  throw new Error("FATAL: DATABASE_URL is missing or set to [SENSITIVE]. Cannot safely connect to database.");
 }
 
 const isNeonOrCloud = 

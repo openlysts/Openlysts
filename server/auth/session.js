@@ -82,7 +82,7 @@ export function configureSession(app) {
   app.use(session({
     store: new ResilientStore(),
     secret: sessionSecret,
-    name: 'openlysts.sid',
+    name: isSecure ? '__Host-openlysts.sid' : 'openlysts.sid',
     resave: false,
     saveUninitialized: false,
     rolling: true,

@@ -124,6 +124,8 @@ export function csrfProtection(req, res, next) {
     return next();
   }
 
+  // Require custom header for strict CSRF protection on SPA requests
+  const isXHR = req.get('x-requested-with') === 'XMLHttpRequest';
   const origin = req.get('Origin');
   const appUrl = process.env.APP_URL;
 
@@ -134,6 +136,10 @@ export function csrfProtection(req, res, next) {
     'http://127.0.0.1:5173',
     'http://127.0.0.1:3001'
   ].filter(Boolean);
+
+  if (!isXHR && process.env.NODE_ENV === 'production') {
+    return res.status(403).json({ error: true, message: 'Missing CSRF protection header' });
+  }
 
   if (origin && allowedOrigins.length > 0) {
     const isAllowed = allowedOrigins.some(allowed => origin === allowed || origin === allowed.replace(/\/$/, ''));

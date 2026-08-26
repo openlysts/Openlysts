@@ -6,7 +6,7 @@ export class EntityClient {
   async _request(action, body) {
     const res = await fetch(`/api/entities/${this.entity}/${action}`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
       body: JSON.stringify(body)
     });
     const data = await res.json();

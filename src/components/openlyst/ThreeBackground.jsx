@@ -368,6 +368,9 @@ export default function ThreeBackground() {
       }
       geometries.forEach(g => g.dispose());
       materials.forEach(m => m.dispose());
+      if (renderer.getContext() && typeof renderer.forceContextLoss === 'function') {
+        renderer.forceContextLoss();
+      }
       renderer.dispose();
     };
   }, [theme, bgType]);

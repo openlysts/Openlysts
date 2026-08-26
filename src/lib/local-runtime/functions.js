@@ -8,7 +8,7 @@ export const functions = {
     let method = 'POST';
     let url = `/api/functions/${name}`;
     let fetchOptions = {
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
       signal: options.signal
     };
 

@@ -902,7 +902,7 @@ export default function Alternatives() {
                       <a 
                         href={selectedAlt.free_tool_repo?.startsWith('http') ? selectedAlt.free_tool_repo : `https://github.com/${selectedAlt.free_tool_repo}`} 
                         target="_blank" 
-                        rel="noreferrer" 
+                        rel="noopener noreferrer" 
                         className="text-xs flex items-center gap-1 text-accent hover:underline bg-accent/10 px-2 py-1 rounded-lg border border-accent/20 transition-colors hover:bg-accent/20"
                       >
                         {selectedAlt.free_tool_repo?.startsWith('http') ? 'Visit Website' : 'View Repository'} <ExternalLink className="w-3 h-3" />
@@ -1029,7 +1029,7 @@ export default function Alternatives() {
                         <a 
                           href={selectedAlt.youtube_tutorial_url || `https://www.youtube.com/results?search_query=${encodeURIComponent(selectedAlt.resolved_name + ' tutorial')}`} 
                           target="_blank" 
-                          rel="noreferrer"
+                          rel="noopener noreferrer"
                           className="flex items-center gap-3 p-3 bg-bg rounded-xl border border-border hover:border-red-500/50 hover:bg-red-500/5 transition-all group touch-target"
                         >
                           <div className="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center flex-shrink-0">

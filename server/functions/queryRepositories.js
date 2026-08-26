@@ -173,7 +173,9 @@ export default async function queryRepositories(req, res) {
     const countResult = await db.query(`SELECT COUNT(*) as total FROM "Repository" ${whereClause}`, params);
     const total = parseInt(countResult.rows[0]?.total || 0, 10);
     const totalPages = Math.ceil(total / PER_PAGE);
-    const pageNum = Math.max(1, Math.min(page, totalPages || 1));
+    let safePage = parseInt(page, 10);
+    if (isNaN(safePage)) safePage = 1;
+    const pageNum = Math.max(1, Math.min(safePage, totalPages || 1));
     const offset = (pageNum - 1) * PER_PAGE;
 
     // Fetch paginated repository rows with surgical column projection
