@@ -201,6 +201,10 @@ export async function initSchema(db) {
     `ALTER TABLE "Repository" ADD COLUMN tags TEXT`,
     `ALTER TABLE "Repository" ADD COLUMN engagement_score INTEGER DEFAULT 0`,
     `ALTER TABLE "Repository" ADD COLUMN authority_score REAL DEFAULT 0`,
+    `ALTER TABLE "Repository" ADD COLUMN upvotes INTEGER DEFAULT 0`,
+    `ALTER TABLE "Repository" ADD COLUMN views INTEGER DEFAULT 0`,
+    `ALTER TABLE "Repository" ADD COLUMN external_url TEXT`,
+    `ALTER TABLE "Repository" ADD COLUMN source_site TEXT DEFAULT 'github'`,
     `ALTER TABLE "Repository" ADD COLUMN embedding vector(768)`,
   ];
 

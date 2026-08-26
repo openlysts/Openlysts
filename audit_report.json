@@ -1,0 +1,671 @@
+[
+  {
+    "route": "/",
+    "viewport": "Desktop",
+    "defects": [],
+    "screenshot": "D:\\AI\\Openlyst\\openlyst\\audit___Desktop.png"
+  },
+  {
+    "route": "/",
+    "viewport": "Mobile",
+    "defects": [],
+    "screenshot": "D:\\AI\\Openlyst\\openlyst\\audit___Mobile.png"
+  },
+  {
+    "route": "/discover",
+    "viewport": "Desktop",
+    "defects": [],
+    "screenshot": "D:\\AI\\Openlyst\\openlyst\\audit__discover_Desktop.png"
+  },
+  {
+    "route": "/discover",
+    "viewport": "Mobile",
+    "defects": [
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (1x1px): \"Skip to main content\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (31x21px): \"⌘K\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (40x38px): \"h-full w-10 sm:w-8 rounded-lg flex items-center justify-center transition-colors bg-bg-subtle text-text shadow-sm\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (40x38px): \"h-full w-10 sm:w-8 rounded-lg flex items-center justify-center transition-colors text-text-muted hover:text-text hover:bg-bg-hover\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (28x28px): \"p-1.5 rounded-lg border border-border bg-bg-card text-text-secondary hover:text-accent transition-all \""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (119x16px): \"View all trending\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"turso\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"latitude\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"pi\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"ladybird\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"parlant\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"suream\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"gitbutler\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"tolgee\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"gatus\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"skyvern\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"quickwit\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"voiceink\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"sentry\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"chat2db\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"lago\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"llmgateway\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"ballerine\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"evidence\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"frappehelpdesk\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"flarum\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"beavernotes\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"inboxzero\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"twenty\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"cap\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (120x16px): \"Explore AI Repos\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"openclaw\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"superpowers\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"ECC\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"hermes-agent\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"hermesagent\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"n8n\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"n8n\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"opencode\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"tensorflow\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"AutoGPT\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"ollama\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"firecrawl\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"prompts.chat\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"stable-diffusion-web\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"transformers\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"JavaGuide\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"langflow\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"langflow\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"dify\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"dify\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"openwebui\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"open-webui\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"agency-agents\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"langchain\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (107x16px): \"View all recent\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"werbot\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"tirreno\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"supertokens\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"signal\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"procaptcha\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"privatecaptcha\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"phase\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"marble\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"keyshade\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"friendlycaptcha\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"flipt\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"featurevisor\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"altcha\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"abby\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"infisical\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"zitadel\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"mCaptcha\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"ziit\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"zenbrowser\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"zen\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"yaffa\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"wakapi\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"voicetypr\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"voiceink\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (60x20px): \"Skip tour\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (116x40px): \"Start Tour\""
+      }
+    ],
+    "screenshot": "D:\\AI\\Openlyst\\openlyst\\audit__discover_Mobile.png"
+  },
+  {
+    "route": "/compare",
+    "viewport": "Desktop",
+    "defects": [],
+    "screenshot": "D:\\AI\\Openlyst\\openlyst\\audit__compare_Desktop.png"
+  },
+  {
+    "route": "/compare",
+    "viewport": "Mobile",
+    "defects": [
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (1x1px): \"Skip to main content\""
+      }
+    ],
+    "screenshot": "D:\\AI\\Openlyst\\openlyst\\audit__compare_Mobile.png"
+  },
+  {
+    "route": "/repo/facebook/react",
+    "viewport": "Desktop",
+    "defects": [],
+    "screenshot": "D:\\AI\\Openlyst\\openlyst\\audit__repo_facebook_react_Desktop.png"
+  },
+  {
+    "route": "/repo/facebook/react",
+    "viewport": "Mobile",
+    "defects": [
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (1x1px): \"Skip to main content\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (78x36px): \"React\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (36x17px): \"Node\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (85x17px): \"React Native\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (257x17px): \"Learn how to use Rea\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (75x17px): \"Quick Start\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (213x17px): \"Add React to an Exis\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (163x17px): \"Create a New React A\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (273x41px): \"on the website\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (102x17px): \"Getting Started\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (75x17px): \"Quick Start\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (50x17px): \"Tutorial\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (115x17px): \"Thinking in React\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (73x17px): \"Installation\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (115x17px): \"Describing the UI\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (131x17px): \"Adding Interactivity\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (105x17px): \"Managing State\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (118x17px): \"Advanced Guides\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (95x17px): \"API Reference\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (145x17px): \"Where to Get Support\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (126x17px): \"Contributing Guide\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (96x17px): \"this repository\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (98x17px): \"on the website\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (89x17px): \"we call it JSX\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (140x21px): \"Code of Conduct\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (75x17px): \"the full text\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (154x21px): \"Contributing Guide\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (122x17px): \"contributing guide\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (142x21px): \"Good First Issues\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (111x17px): \"good first issues\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (86x17px): \"MIT licensed\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"freeCodeCamp\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"react\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"awesome-python\""
+      }
+    ],
+    "screenshot": "D:\\AI\\Openlyst\\openlyst\\audit__repo_facebook_react_Mobile.png"
+  },
+  {
+    "route": "/repo/sentry/sentry",
+    "viewport": "Desktop",
+    "defects": [],
+    "screenshot": "D:\\AI\\Openlyst\\openlyst\\audit__repo_sentry_sentry_Desktop.png"
+  },
+  {
+    "route": "/repo/sentry/sentry",
+    "viewport": "Mobile",
+    "defects": [
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (1x1px): \"Skip to main content\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"freeCodeCamp\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"uptimekuma\""
+      },
+      {
+        "type": "A11y",
+        "severity": "Medium",
+        "msg": "Touch target too small (205x21px): \"elasticsearch\""
+      }
+    ],
+    "screenshot": "D:\\AI\\Openlyst\\openlyst\\audit__repo_sentry_sentry_Mobile.png"
+  }
+]

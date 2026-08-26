@@ -1,18 +1,33 @@
-import dotenv from 'dotenv';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import { ingestHackerNews } from '../functions/ingestHackerNews.js';
+import { ingestAwesomeLists } from '../functions/ingestAwesomeLists.js';
+import { ingestFeeds } from '../functions/ingestFeeds.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-dotenv.config({ path: path.join(__dirname, '..', '..', '.env.local') });
+async function runTests() {
+  console.log('--- Testing ingestHackerNews ---');
+  try {
+    const hnResult = await ingestHackerNews();
+    console.log('HN Result:', hnResult);
+  } catch (e) {
+    console.error('HN Error:', e);
+  }
 
-import { executeIngestion } from '../functions/runIngestion.js';
+  console.log('\n--- Testing ingestAwesomeLists ---');
+  try {
+    const alResult = await ingestAwesomeLists();
+    console.log('AwesomeLists Result:', alResult);
+  } catch (e) {
+    console.error('AwesomeLists Error:', e);
+  }
 
-async function main() {
-  console.time('Ingestion');
-  const res = await executeIngestion();
-  console.timeEnd('Ingestion');
-  console.log(JSON.stringify(res, null, 2));
+  console.log('\n--- Testing ingestFeeds ---');
+  try {
+    const fResult = await ingestFeeds();
+    console.log('Feeds Result:', fResult);
+  } catch (e) {
+    console.error('Feeds Error:', e);
+  }
+  
   process.exit(0);
 }
-main();
+
+runTests();

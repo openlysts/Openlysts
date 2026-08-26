@@ -1,5 +1,5 @@
 import { useNavigate, Link } from 'react-router-dom';
-import { Star, GitFork, Bookmark, Flame, AlertCircle, GitCompare, ShieldCheck, Activity } from 'lucide-react';
+import { Heart, Eye, Bookmark, Flame, AlertCircle, GitCompare, ShieldCheck, Activity, Sparkles } from 'lucide-react';
 import { motion, useMotionValue, useSpring, useTransform, useMotionTemplate } from 'framer-motion';
 import { getLanguageColor } from '@/lib/languageColors';
 import { getDifficultyColor } from '@/lib/difficultyColors';
@@ -8,6 +8,8 @@ import { useState } from 'react';
 import { useCompare } from '@/lib/CompareContext';
 import LicenseBadge from './LicenseBadge';
 import RepoVideoLinks from './RepoVideoLinks';
+import ParticleExplosion from './ParticleExplosion';
+import AnimateDigits from './AnimateDigits';
 import { CATEGORIES } from '@/lib/categories';
 
 function formatStars(n) {
@@ -148,7 +150,7 @@ export default function RepositoryCard({ repo, index = 0, view = 'grid', showTre
           transition: { duration: 0.22, ease: [0.25, 1, 0.5, 1] } 
         }}
         whileTap={{ scale: 0.985, transition: { duration: 0.1 } }}
-        className={`card h-full flex p-4 pt-4.5 relative rounded-xl border border-border bg-bg-card transition-[border-color,box-shadow,background-color] duration-200 hover:border-accent/60 hover:shadow-[0_16px_36px_rgba(0,0,0,0.18),0_0_24px_rgba(var(--accent-rgb),0.2)] cursor-pointer group touch-active overflow-hidden select-none ${view === 'list' ? 'flex-col md:flex-row items-start gap-4 md:gap-6' : 'flex-col justify-between'}`}
+        className={`card h-full flex p-4 pt-4.5 relative rounded-xl border bg-bg-card transition-[border-color,box-shadow,background-color] duration-200 cursor-pointer group touch-active overflow-hidden select-none ${isTrending ? 'border-trending/40 shadow-[0_0_15px_rgba(255,100,50,0.15)] hover:border-trending/60 hover:shadow-[0_0_25px_rgba(255,100,50,0.3)]' : 'border-border hover:border-accent/60 hover:shadow-[0_16px_36px_rgba(0,0,0,0.18),0_0_24px_rgba(var(--accent-rgb),0.2)]'} ${view === 'list' ? 'flex-col md:flex-row items-start gap-4 md:gap-6' : 'flex-col justify-between'}`}
       >
         <motion.div 
           className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"
@@ -186,7 +188,7 @@ export default function RepositoryCard({ repo, index = 0, view = 'grid', showTre
               <Link 
                 to={repoUrl}
                 onClick={(e) => e.stopPropagation()}
-                className="font-semibold text-text text-[15px] leading-snug hover:text-accent transition-colors truncate block focus:outline-none focus:underline"
+                className="font-semibold text-text text-[15px] leading-snug hover:text-accent transition-colors truncate block focus:outline-none focus:underline after:absolute after:inset-0 after:z-10"
               >
                 {name || repo?.name || 'Repository'}
               </Link>
@@ -204,16 +206,18 @@ export default function RepositoryCard({ repo, index = 0, view = 'grid', showTre
                 >
                   <GitCompare className="w-4 h-4" />
                 </button>
-                <button
-                  onClick={handleBookmark}
-                  className={`p-2 rounded-xl transition-colors touch-target ${
-                    bookmarked ? 'text-accent bg-accent-soft' : 'text-text-muted hover:text-text hover:bg-bg-hover active:bg-bg-subtle'
-                  }`}
-                  aria-label="Bookmark"
-                  title="Bookmark"
-                >
-                  <Bookmark className="w-4 h-4" fill={bookmarked ? 'currentColor' : 'none'} />
-                </button>
+                <ParticleExplosion active={bookmarked}>
+                  <button
+                    onClick={handleBookmark}
+                    className={`p-2 rounded-xl transition-colors touch-target ${
+                      bookmarked ? 'text-[#F43F5E] bg-[#F43F5E]/10' : 'text-text-muted hover:text-text hover:bg-bg-hover active:bg-bg-subtle'
+                    }`}
+                    aria-label="Save"
+                    title="Save"
+                  >
+                    <Heart className="w-4 h-4" fill={bookmarked ? 'currentColor' : 'none'} />
+                  </button>
+                </ParticleExplosion>
               </div>
           </div>
 
@@ -223,7 +227,7 @@ export default function RepositoryCard({ repo, index = 0, view = 'grid', showTre
           </p>
 
           {/* Difficulty and Categories */}
-          <div className="flex flex-wrap gap-1.5 mb-2.5 no-card-nav" data-tour="repo-tags">
+          <div className="flex flex-wrap gap-1.5 mb-2.5 no-card-nav relative z-20" data-tour="repo-tags">
             {repo?.difficulty && (
               <span
                 onClick={(e) => {
@@ -255,7 +259,7 @@ export default function RepositoryCard({ repo, index = 0, view = 'grid', showTre
 
           {/* Topics with title case & deduplication */}
           {cleanTopics.length > 0 && (
-            <div className="flex flex-wrap gap-1.5 mb-3 no-card-nav">
+            <div className="flex flex-wrap gap-1.5 mb-3 no-card-nav relative z-20">
               {cleanTopics.map((t) => (
                 <span key={t} className="px-2.5 py-0.5 rounded-full text-xs font-medium tracking-wide border border-border/30 bg-bg-card/50 text-text-muted backdrop-blur-md shadow-sm truncate max-w-full" title={formatTag(t)}>
                   {formatTag(t)}
@@ -271,12 +275,12 @@ export default function RepositoryCard({ repo, index = 0, view = 'grid', showTre
           <div className={`flex text-xs text-text-muted gap-2 ${view === 'list' ? 'flex-row md:flex-col items-center md:items-end w-full md:w-auto justify-between md:justify-end' : 'items-center justify-between flex-wrap'}`} data-tour="repo-stats">
             <div className={`flex items-center flex-wrap gap-x-3 gap-y-1.5 ${view === 'list' ? 'md:justify-end' : ''}`}>
               <span className="flex items-center gap-1">
-                <Star className="w-3.5 h-3.5" />
-                {formatStars(repo?.stars)}
+                <Heart className="w-3.5 h-3.5" />
+                <AnimateDigits value={formatStars(repo?.stars || repo?.upvotes)} />
               </span>
               <span className="flex items-center gap-1">
-                <GitFork className="w-3.5 h-3.5" />
-                {formatStars(repo?.forks)}
+                <Eye className="w-3.5 h-3.5" />
+                <AnimateDigits value={formatStars(repo?.views || repo?.forks)} />
               </span>
               {repo?.language && (
                 <span className="flex items-center gap-1.5">
@@ -293,13 +297,13 @@ export default function RepositoryCard({ repo, index = 0, view = 'grid', showTre
           </div>
 
           {/* Video explanation links */}
-          <div className="no-card-nav" data-tour="repo-video">
+          <div className="no-card-nav relative z-20" data-tour="repo-video">
             <RepoVideoLinks repo={repo} />
           </div>
         </div>
 
         {view === 'list' && (
-          <div className="hidden md:flex flex-col gap-2 items-end justify-start ml-4 border-l border-border pl-4">
+          <div className="hidden md:flex flex-col gap-2 items-end justify-start ml-4 border-l border-border pl-4 relative z-20">
             <button
               onClick={handleCompareClick}
               className={`p-2.5 rounded-xl transition-colors touch-target flex items-center justify-center border w-10 h-10 ${
@@ -310,16 +314,18 @@ export default function RepositoryCard({ repo, index = 0, view = 'grid', showTre
             >
               <GitCompare className="w-5 h-5" />
             </button>
-            <button
-              onClick={handleBookmark}
-              className={`p-2.5 rounded-xl transition-colors touch-target flex items-center justify-center border w-10 h-10 ${
-                bookmarked ? 'text-accent bg-accent-soft border-accent' : 'text-text-muted hover:text-text hover:bg-bg-hover active:bg-bg-subtle border-border'
-              }`}
-              aria-label="Bookmark"
-              title="Bookmark"
-            >
-              <Bookmark className="w-5 h-5" fill={bookmarked ? 'currentColor' : 'none'} />
-            </button>
+            <ParticleExplosion active={bookmarked}>
+              <button
+                onClick={handleBookmark}
+                className={`p-2.5 rounded-xl transition-colors touch-target flex items-center justify-center border w-10 h-10 ${
+                  bookmarked ? 'text-[#F43F5E] bg-[#F43F5E]/10 border-[#F43F5E]/20' : 'text-text-muted hover:text-text hover:bg-bg-hover active:bg-bg-subtle border-border'
+                }`}
+                aria-label="Save"
+                title="Save"
+              >
+                <Heart className="w-5 h-5" fill={bookmarked ? 'currentColor' : 'none'} />
+              </button>
+            </ParticleExplosion>
           </div>
         )}
       </div>

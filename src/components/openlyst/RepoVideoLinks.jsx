@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { Play, Loader2, ChevronDown, ChevronUp, Youtube } from 'lucide-react';
 import { getRepoVideos } from '@/lib/api';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -14,19 +14,29 @@ export default function RepoVideoLinks({ repo }) {
   const [loading, setLoading] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const [error, setError] = useState(null);
+  const hoverTimeoutRef = useRef(null);
 
-  // Background pre-fetch as soon as user hovers near button
+  // Background pre-fetch with 250ms debounce to prevent hover spam
   const handleMouseEnter = useCallback(() => {
     if (!cacheKey || clientVideoCache.has(cacheKey)) return;
-    getRepoVideos(repoIdentifier)
-      .then(data => {
-        if (data?.videos) {
-          clientVideoCache.set(cacheKey, data.videos);
-          setVideos(data.videos);
-        }
-      })
-      .catch(() => {});
+    
+    hoverTimeoutRef.current = setTimeout(() => {
+      getRepoVideos(repoIdentifier)
+        .then(data => {
+          if (data?.videos) {
+            clientVideoCache.set(cacheKey, data.videos);
+            setVideos(data.videos);
+          }
+        })
+        .catch(() => {});
+    }, 250);
   }, [repoIdentifier, cacheKey]);
+
+  const handleMouseLeave = useCallback(() => {
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+    }
+  }, []);
 
   if (!repo) return null;
 
@@ -69,6 +79,7 @@ export default function RepoVideoLinks({ repo }) {
             type="button"
             onClick={(e) => e.stopPropagation()}
             onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
             className="w-full flex items-center justify-center gap-1.5 py-1 rounded-lg border border-transparent hover:border-border bg-transparent hover:bg-bg-subtle text-xs font-medium text-text-muted hover:text-accent transition-all touch-target"
           >
             {loading ? (

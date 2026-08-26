@@ -249,7 +249,7 @@ export default function Settings() {
         </div>
         <div className="mt-12 text-center text-text-muted text-sm space-y-4 max-w-xl mx-auto border-t border-border pt-8">
           <p>
-            Openlysts is an open-source discovery engine for GitHub repositories. All settings are stored locally in your browser — no data is sent to any server except when you explicitly trigger an action (like running ingestion).
+            Openlysts is an open-source discovery engine for developers. All settings are stored locally in your browser — no data is sent to any server except when you explicitly trigger an action (like running ingestion).
           </p>
         </div>
       </section>

@@ -25,13 +25,13 @@ try {
   console.warn('[getRepoVideos] Could not load video_cache.json:', e.message);
 }
 
-function saveDiskCache() {
+async function saveDiskCache() {
   try {
     const obj = {};
     for (const [k, v] of videoCache.entries()) {
       obj[k] = v;
     }
-    fs.writeFileSync(CACHE_FILE, JSON.stringify(obj, null, 2), 'utf-8');
+    await fs.promises.writeFile(CACHE_FILE, JSON.stringify(obj, null, 2), 'utf-8');
   } catch (e) {
     // Non-blocking in serverless/read-only environments
   }
@@ -90,6 +90,11 @@ export default async function getRepoVideos(req, res) {
     if (cached && cached.videos) {
       return res.json({ videos: cached.videos, fallback: true });
     }
+    
+    // Cache the failure for 1 hour to prevent zombie spam loop on repeated hovers
+    const ONE_HOUR_MS = 60 * 60 * 1000;
+    videoCache.set(cacheKey, { videos: [], timestamp: Date.now() - CACHE_TTL_MS + ONE_HOUR_MS });
+    setTimeout(saveDiskCache, 100);
     
     res.json({ videos: [] });
   }

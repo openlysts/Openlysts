@@ -7,6 +7,7 @@ import { Sparkles, Clock, TrendingUp, ArrowRight, RefreshCw, Cpu, Wrench, HardDr
 import { queryRepos } from '@/lib/api';
 
 import RepositoryGrid from '@/components/openlyst/RepositoryGrid';
+import InfiniteDiscoveryFeed from '@/components/openlyst/InfiniteDiscoveryFeed';
 import AnimatedSearch from '@/components/openlyst/AnimatedSearch';
 import FilterBar from '@/components/openlyst/FilterBar';
 import DiscoverLiveMetrics from '@/components/openlyst/DiscoverLiveMetrics';
@@ -146,7 +147,7 @@ export default function Home() {
           
           <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-text leading-tight mb-3">
             <VariableProximity
-              label="Discover Everything on GitHub. Without the Noise."
+              label="Discover Open Source. Without the Noise."
               className="text-4xl sm:text-6xl font-black tracking-tight text-text leading-tight"
               fromFontVariationSettings="'wght' 900"
               toFontVariationSettings="'wght' 900"
@@ -212,7 +213,7 @@ export default function Home() {
                 setIsRefreshing(true);
                 refetchTrending().finally(() => setIsRefreshing(false));
               }}
-              className={`p-1.5 rounded-lg border border-border bg-bg-card text-text-secondary hover:text-accent transition-all ${
+              className={`p-2 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg border border-border bg-bg-card text-text-secondary hover:text-accent transition-all touch-target ${
                 isRefreshing || tRefetching ? 'animate-spin text-accent' : ''
               }`}
               title="Refresh Trending"
@@ -222,18 +223,14 @@ export default function Home() {
           </div>
           <Link
             to="/trending"
-            className="group flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-accent hover:text-accent/80 transition-colors"
+            className="group flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-accent hover:text-accent/80 transition-colors min-h-[44px] px-2 -mr-2 touch-target"
           >
             <span>View all trending</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
 
-        <RepositoryGrid
-          repos={trending?.results || []}
-          loading={tLoading}
-          emptyMessage="No trending repositories found."
-        />
+        <InfiniteDiscoveryFeed />
       </section>
 
       {/* Popular in AI & Machine Learning */}
@@ -245,9 +242,9 @@ export default function Home() {
           </div>
           <Link
             to="/search?categories=ai"
-            className="group flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-accent hover:text-accent/80 transition-colors"
+            className="group flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-accent hover:text-accent/80 transition-colors min-h-[44px] px-2 -mr-2 touch-target"
           >
-            <span>Explore AI Repos</span>
+            <span>Explore AI Tools</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>

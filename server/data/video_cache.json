@@ -1125,5 +1125,74 @@
       }
     ],
     "timestamp": 1787669540476
+  },
+  "ladybird/ladybird": {
+    "videos": [
+      {
+        "video_id": "whvkm9f7Vqk",
+        "title": "Ladybug Laboratory - Blanket Tutorial 2: Connecting Squares",
+        "channel": "Ladybug Laboratory",
+        "url": "https://youtube.com/watch?v=whvkm9f7Vqk"
+      },
+      {
+        "video_id": "xoafSR2tsoY",
+        "title": "ladybug drawing 🐞 // how to draw ladybug 🐞😄 #shorts #ladybug #drawing",
+        "channel": "mimi art & craft",
+        "url": "https://youtube.com/watch?v=xoafSR2tsoY"
+      },
+      {
+        "video_id": "VQtdZmFxEVo",
+        "title": "Step-by-step Watercolour Ladybug Tutorial | Watercolor Tips #watercolortutorial #painting #ladybug",
+        "channel": "Watercolor Tips",
+        "url": "https://youtube.com/watch?v=VQtdZmFxEVo"
+      }
+    ],
+    "timestamp": 1787678377706
+  },
+  "sentry/sentry": {
+    "videos": [
+      {
+        "video_id": "4djseRVSan8",
+        "title": "Sentry in Six Minutes",
+        "channel": "Sentry",
+        "url": "https://youtube.com/watch?v=4djseRVSan8"
+      },
+      {
+        "video_id": "8nZOsYm9Xzs",
+        "title": "How Sentry.io Saved Me From Disaster",
+        "channel": "Kodaps Academy",
+        "url": "https://youtube.com/watch?v=8nZOsYm9Xzs"
+      },
+      {
+        "video_id": "561iVCoysr8",
+        "title": "Sentry Tutorial: Track Errors in Production #webdevelopment #screenrecoder #developer #coding #jobs",
+        "channel": "Code With Naveen",
+        "url": "https://youtube.com/watch?v=561iVCoysr8"
+      }
+    ],
+    "timestamp": 1787678399641
+  },
+  "gitbutler/gitbutler": {
+    "videos": [
+      {
+        "video_id": "DhJtNNhCNLM",
+        "title": "GitButler Product Demo Overview (Summer 2025)",
+        "channel": "GitButler",
+        "url": "https://youtube.com/watch?v=DhJtNNhCNLM"
+      },
+      {
+        "video_id": "3BAhV2xpzZ8",
+        "title": "Is This A Better Way to Use Git?",
+        "channel": "Better Stack",
+        "url": "https://youtube.com/watch?v=3BAhV2xpzZ8"
+      },
+      {
+        "video_id": "Jg8L3SbgZ3o",
+        "title": "Intro to the GitButler CLI",
+        "channel": "GitButler",
+        "url": "https://youtube.com/watch?v=Jg8L3SbgZ3o"
+      }
+    ],
+    "timestamp": 1787683349468
   }
 }

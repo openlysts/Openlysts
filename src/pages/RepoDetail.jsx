@@ -105,7 +105,7 @@ export default function RepoDetail() {
         return '';
       }
     },
-    enabled: !!repo
+    enabled: !!repo && (repo.source_type !== 'oss_project') && (repo.html_url?.includes('github.com') ?? true)
   });
 
   const { data: similarRepos } = useQuery({
@@ -198,10 +198,11 @@ export default function RepoDetail() {
 
   const langColor = getLanguageColor(repo.language);
   const isTrending = (repo.trending_score || 0) > 10;
+  const isGithub = (repo.source_type !== 'oss_project') && (repo.html_url?.includes('github.com') ?? true);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 lg:py-8">
-      <button onClick={() => navigate(-1)} className="inline-flex items-center gap-1.5 text-sm text-text-muted hover:text-text mb-5">
+      <button onClick={() => navigate(-1)} className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] gap-1.5 text-sm text-text-muted hover:text-text mb-5 -ml-3 px-3 touch-target">
         <ArrowLeft className="w-4 h-4" /> Back
       </button>
 
@@ -219,7 +220,7 @@ export default function RepoDetail() {
                 </div>
                 <button
                   onClick={handleBookmark}
-                  className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium border transition-colors ${
+                  className={`flex items-center justify-center gap-1.5 px-4 h-11 sm:h-10 rounded-lg text-sm font-medium border transition-colors ${
                     bookmarked ? 'bg-accent-soft text-accent border-accent' : 'bg-bg-card text-text-secondary border-border hover:bg-bg-hover'
                   }`}
                 >
@@ -240,7 +241,7 @@ export default function RepoDetail() {
               <div className="flex flex-wrap gap-2 mb-4">
                 {(repo.categories || []).map((cat) => (
                   <Link key={cat} to={`/search?categories=${encodeURIComponent(cat.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and'))}`}>
-                    <span className="px-2.5 py-1.5 rounded-lg text-[13px] font-medium bg-accent-soft text-accent hover:opacity-80 cursor-pointer">
+                    <span className="flex items-center justify-center px-3 min-h-[44px] sm:min-h-[32px] rounded-lg text-[13px] font-medium bg-accent-soft text-accent hover:opacity-80 cursor-pointer">
                       {cat}
                     </span>
                   </Link>
@@ -249,22 +250,22 @@ export default function RepoDetail() {
 
               <div className="flex flex-wrap gap-1.5 mb-6">
                 {(repo.topics || []).map((t) => (
-                  <span key={t} className="px-2 py-1 rounded-md text-[11px] bg-bg-subtle text-text-muted font-mono tracking-wide">
+                  <span key={t} className="px-2 py-1 rounded-md text-[11px] bg-bg-subtle text-text-muted font-mono tracking-wide pointer-events-none">
                     {t}
                   </span>
                 ))}
               </div>
 
               <div className="flex flex-wrap items-center gap-3" data-tour="repo-links">
-                <Link to={`/compare?repos=${repo.full_name}`} className="flex items-center gap-2 px-5 py-2.5 rounded-xl border border-border text-text-secondary font-medium text-sm hover:bg-bg-hover transition-colors shadow-sm">
+                <Link to={`/compare?repos=${repo.full_name}`} className="flex items-center justify-center gap-2 px-5 h-11 sm:h-10 rounded-xl border border-border text-text-secondary font-medium text-sm hover:bg-bg-hover transition-colors shadow-sm">
                   <CopyPlus className="w-4 h-4" /> Compare
                 </Link>
-                <a href={repo.html_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-accent text-accent-fg font-bold text-sm hover:opacity-90 transition-opacity shadow-md">
+                <a href={repo.html_url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 px-6 h-11 sm:h-10 rounded-xl bg-accent text-accent-fg font-bold text-sm hover:opacity-90 transition-opacity shadow-md">
                   <ExternalLink className="w-4 h-4" />
-                  Open on GitHub
+                  {isGithub ? 'Open on GitHub' : 'Visit Website'}
                 </a>
                 {repo.homepage_url && (
-                  <a href={repo.homepage_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-5 py-2.5 rounded-xl border border-border text-text-secondary font-medium text-sm hover:bg-bg-hover transition-colors shadow-sm">
+                  <a href={repo.homepage_url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 px-5 h-11 sm:h-10 rounded-xl border border-border text-text-secondary font-medium text-sm hover:bg-bg-hover transition-colors shadow-sm">
                     <ExternalLink className="w-4 h-4" />
                     Homepage
                   </a>
@@ -281,7 +282,8 @@ export default function RepoDetail() {
             </div>
           </motion.div>
 
-          {/* README Section */}
+          {/* README Section — only shown for GitHub repos */}
+          {isGithub && (
           <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: 0.2 }}>
             <div className="card p-6 md:p-8" data-tour="repo-readme">
               <h2 className="text-xl font-bold text-text mb-6">README</h2>
@@ -301,6 +303,7 @@ export default function RepoDetail() {
               </div>
             </div>
           </motion.div>
+          )}
         </div>
 
         {/* Sidebar Column (Right) */}

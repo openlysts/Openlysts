@@ -83,6 +83,7 @@ export async function scrapeTrending() {
         const item = await fetchRepoWithFallback(owner, name, process.env.GITHUB_TOKEN);
         if (item && item.full_name) {
           const res = await ingestRepoItem(item, 'Trending', repoMap, snapshotMap);
+          if (res?.repoData) res.repoData.source_type = 'github';
           processedBatch.push(res);
           successCount++;
         }

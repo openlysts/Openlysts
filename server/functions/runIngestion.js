@@ -9,6 +9,9 @@ import { ingestAlternatives } from './ingestAlternatives.js';
 import { invalidateRepositoriesCache } from './queryRepositories.js';
 import { invalidateAlternativesCache } from './queryAlternatives.js';
 import { scrapeTrending } from './scrapeTrending.js';
+import { ingestHackerNews } from './ingestHackerNews.js';
+import { ingestAwesomeLists } from './ingestAwesomeLists.js';
+import { ingestFeeds } from './ingestFeeds.js';
 import { ingestCatalogRepository } from '../services/catalogEngine.js';
 import { serverCache } from '../services/cache.js';
 
@@ -277,6 +280,7 @@ export async function ingestRepoItem(item, categoryHint = '', repoMap = new Map(
   repoData.id = existing ? existing.id : crypto.randomUUID();
   repoData.hidden = existing ? existing.hidden : false;
   repoData.featured = existing ? existing.featured : false;
+  repoData.source_type = existing?.source_type || 'github';
 
   repoData.difficulty = autoClassifyDifficulty(repoData);
 
@@ -504,11 +508,18 @@ export async function executeIngestion() {
       const trendingResult = await scrapeTrending();
       if (trendingResult && trendingResult.count) {
          reposProcessed += trendingResult.count;
-         reposUpdated += trendingResult.count; // Assuming they were at least updated
+         reposUpdated += trendingResult.count;
       }
     } catch (trendErr) {
       errors.push(`Trending Scraper Failed: ${trendErr.message}`);
     }
+
+    // Global multi-source ingestion (non-blocking — failures are tolerated)
+    await Promise.allSettled([
+      ingestHackerNews().then(r => { if (r?.count) reposProcessed += r.count; }).catch(e => errors.push(`HN Ingestion: ${e.message}`)),
+      ingestAwesomeLists().then(r => { if (r?.count) reposProcessed += r.count; }).catch(e => errors.push(`AwesomeLists Ingestion: ${e.message}`)),
+      ingestFeeds().then(r => { if (r?.count) reposProcessed += r.count; }).catch(e => errors.push(`Feeds Ingestion: ${e.message}`)),
+    ]);
 
     const status = errors.length === 0 ? 'success' : (reposProcessed > 0 ? 'partial' : 'failed');
     if (runRecord.id && runRecord.id !== 'local-run') {
@@ -530,7 +541,7 @@ export async function executeIngestion() {
     console.log(`[INGESTION] completed (Processed: ${reposProcessed})`);
     invalidateRepositoriesCache();
     invalidateAlternativesCache();
-    serverCache.delete('global_platform_stats');
+    serverCache.invalidate('global_platform_stats');
 
     return {
       status,

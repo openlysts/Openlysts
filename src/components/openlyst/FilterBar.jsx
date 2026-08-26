@@ -72,7 +72,7 @@ export default function FilterBar({ filters, onChange, languages = [] }) {
               value={filters.sort || 'trending'}
               onChange={(e) => update('sort', e.target.value)}
               aria-label="Sort repositories"
-              className="w-full h-10 sm:h-9 text-sm bg-bg-card border border-border rounded-xl px-3 pr-8 text-text-secondary font-medium cursor-pointer hover:border-border-strong focus:outline-none focus:border-accent appearance-none transition-colors"
+              className="w-full h-11 sm:h-9 text-sm bg-bg-card border border-border rounded-xl px-3 pr-8 text-text-secondary font-medium cursor-pointer hover:border-border-strong focus:outline-none focus:border-accent appearance-none transition-colors"
             >
               {SORTS.map((s) => <option key={s.value} value={s.value}>Sort: {s.label}</option>)}
             </select>
@@ -84,7 +84,7 @@ export default function FilterBar({ filters, onChange, languages = [] }) {
         <div className="relative flex-1 sm:flex-initial">
           <button
             onClick={() => { setCategoriesExpanded((v) => !v); setExpanded(false); }}
-            className={`w-full h-10 sm:h-9 flex items-center justify-center gap-1.5 px-3 rounded-xl text-sm font-medium border transition-all ${
+            className={`w-full h-11 sm:h-9 flex items-center justify-center gap-1.5 px-3 rounded-xl text-sm font-medium border transition-all ${
               categoriesExpanded || (filters.categories?.length || 0) > 0
                 ? 'bg-accent-soft text-accent border-accent shadow-sm'
                 : 'bg-bg-card text-text-secondary border-border hover:border-border-strong'
@@ -124,7 +124,7 @@ export default function FilterBar({ filters, onChange, languages = [] }) {
         {/* Filters button */}
         <button
           onClick={() => { setExpanded((v) => !v); setCategoriesExpanded(false); }}
-          className={`flex-1 sm:flex-initial h-10 sm:h-9 flex items-center justify-center gap-1.5 px-3 rounded-xl text-sm font-medium border transition-all ${
+          className={`flex-1 sm:flex-initial h-11 sm:h-9 flex items-center justify-center gap-1.5 px-3 rounded-xl text-sm font-medium border transition-all ${
             expanded || activeCount > 0
               ? 'bg-accent-soft text-accent border-accent shadow-sm'
               : 'bg-bg-card text-text-secondary border-border hover:border-border-strong'
@@ -140,18 +140,18 @@ export default function FilterBar({ filters, onChange, languages = [] }) {
 
         {/* Clear button */}
         {activeCount > 0 && (
-          <button onClick={reset} className="h-10 sm:h-9 flex items-center gap-1 text-xs font-semibold text-text-muted hover:text-text px-2.5 rounded-xl border border-transparent hover:border-border transition-colors">
+          <button onClick={reset} className="h-11 sm:h-9 flex items-center gap-1 text-xs font-semibold text-text-muted hover:text-text px-2.5 rounded-xl border border-transparent hover:border-border transition-colors">
             <X className="w-3.5 h-3.5" /> Clear
           </button>
         )}
 
-        {/* Layout toggle - standardized to 36px (h-9) */}
-        <div className="flex items-center h-10 sm:h-9 bg-bg-card border border-border p-0.5 rounded-xl ml-auto shrink-0 shadow-xs">
+        {/* Layout toggle - standardized to 44px (h-11) on mobile */}
+        <div className="flex items-center h-11 sm:h-9 bg-bg-card border border-border p-0.5 rounded-xl ml-auto shrink-0 shadow-xs">
           <button 
             onClick={() => toggleView('grid')}
             title="Grid View"
             aria-label="Grid View"
-            className={`h-full px-2.5 rounded-lg flex items-center justify-center transition-colors ${view !== 'list' ? 'bg-bg-subtle text-text shadow-sm' : 'text-text-muted hover:text-text hover:bg-bg-hover'}`}
+            className={`h-full w-10 sm:w-8 rounded-lg flex items-center justify-center transition-colors ${view !== 'list' ? 'bg-bg-subtle text-text shadow-sm' : 'text-text-muted hover:text-text hover:bg-bg-hover'}`}
           >
             <LayoutGrid className="w-4 h-4" />
           </button>
@@ -159,7 +159,7 @@ export default function FilterBar({ filters, onChange, languages = [] }) {
             onClick={() => toggleView('list')}
             title="List View"
             aria-label="List View"
-            className={`h-full px-2.5 rounded-lg flex items-center justify-center transition-colors ${view === 'list' ? 'bg-bg-subtle text-text shadow-sm' : 'text-text-muted hover:text-text hover:bg-bg-hover'}`}
+            className={`h-full w-10 sm:w-8 rounded-lg flex items-center justify-center transition-colors ${view === 'list' ? 'bg-bg-subtle text-text shadow-sm' : 'text-text-muted hover:text-text hover:bg-bg-hover'}`}
           >
             <List className="w-4 h-4" />
           </button>
