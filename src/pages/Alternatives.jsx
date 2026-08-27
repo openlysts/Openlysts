@@ -182,9 +182,16 @@ function AlternativeCard({ alt, idx, viewMode, isSelected, onToggleCompare, onSe
                   {alt.feature_parity_score || 70}% Match
                 </span>
                 {alt.repo && (
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded border bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-500/30 flex items-center gap-0.5">
-                    ★ {alt.repo.stars >= 1000 ? (alt.repo.stars / 1000).toFixed(1) + 'k' : alt.repo.stars || 0}
-                  </span>
+                  <>
+                    {alt.repo.language && alt.repo.language !== 'Unknown' && (
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded border bg-blue-500/10 text-blue-700 dark:text-blue-300 border-blue-500/30">
+                        {alt.repo.language}
+                      </span>
+                    )}
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded border bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-500/30 flex items-center gap-0.5">
+                      ★ {alt.repo.stars >= 1000 ? (alt.repo.stars / 1000).toFixed(1) + 'k' : alt.repo.stars || 0}
+                    </span>
+                  </>
                 )}
               </div>
               {alt.openlysts_score >= 80 && alt.repo?.stars >= 5000 && (
@@ -483,7 +490,7 @@ export default function Alternatives() {
               </h1>
             </div>
             <p className="text-xs sm:text-sm text-text-secondary leading-relaxed">
-              Discover {filteredData?.stats?.total_tools || '160+'} curated open-source replacements for {filteredData?.stats?.total_paid_tools || '70+'} SaaS products — scored by code quality, community health, and feature parity.
+              Discover {filteredData?.stats?.total_tools?.toLocaleString() || '500+'} curated open-source replacements for {filteredData?.stats?.total_paid_tools?.toLocaleString() || '100+'} SaaS products — scored by code quality, community health, and feature parity.
             </p>
           </div>
 

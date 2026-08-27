@@ -28,22 +28,55 @@ function buildIndices() {
   try {
     if (fs.existsSync(ALTS_PATH)) {
       const rawAlts = JSON.parse(fs.readFileSync(ALTS_PATH, 'utf-8'));
-      ALTERNATIVES = rawAlts.map(alt => ({
-        ...alt,
-        resolved_name: alt.free_tool_name || alt.name,
-        openlysts_score: alt.quality_score || 94,
-        feature_parity_score: alt.feature_parity_score || Math.min(99, Math.max(75, Math.round((alt.quality_score || 90) * 0.95))),
-        migration_difficulty: alt.migration_difficulty || (alt.stars > 25000 ? 'Easy' : alt.stars > 8000 ? 'Medium' : 'Advanced'),
-        repo: {
-          id: `repo-${(alt.free_tool_name || '').toLowerCase().replace(/[^a-z0-9]/g, '-')}`,
-          full_name: alt.free_tool_repo || `${(alt.free_tool_name || '').toLowerCase()}/${(alt.free_tool_name || '').toLowerCase()}`,
-          name: alt.free_tool_name,
-          stars: alt.stars || 5000,
-          language: 'TypeScript',
-          quality_score: alt.quality_score || 94,
-          html_url: alt.free_tool_url || (alt.free_tool_repo?.startsWith('http') ? alt.free_tool_repo : undefined)
-        }
-      }));
+      ALTERNATIVES = rawAlts.map(alt => {
+        const stars = Number(alt.stars) || 0;
+        const hasFpScore = alt.feature_parity_score && alt.feature_parity_score !== 75;
+        const hasDesc = alt.description && alt.description.length > 30;
+        const hasLicense = !!alt.license_key;
+        const hasUrl = !!alt.html_url || !!alt.free_tool_url;
+     
+        // Stars component (0-40 points) — logarithmic scale
+        const starsComponent = stars > 0 ? Math.min(40, Math.round(Math.log10(stars + 1) * 8)) : 5;
+        // Feature parity (0-25 points)
+        const parityComponent = hasFpScore ? Math.round((alt.feature_parity_score / 100) * 25) : 12;
+        // Data completeness (0-20 points)
+        const completeness = (hasDesc ? 7 : 0) + (hasLicense ? 5 : 0) + (hasUrl ? 4 : 0) + (hasFpScore ? 4 : 0);
+        // Base (15 points for being in the catalog at all)
+        const score = Math.max(30, Math.min(99, 15 + starsComponent + parityComponent + completeness));
+     
+        const fpScore = hasFpScore ? alt.feature_parity_score : Math.min(95, Math.max(50, Math.round(score * 0.85)));
+        const difficulty = alt.migration_difficulty || (stars > 25000 ? 'Easy' : stars > 8000 ? 'Medium' : 'Advanced');
+     
+        // Cross-reference with repository catalog for real data
+        const repoFullName = alt.free_tool_repo || '';
+        const catalogMatch = repoFullName.includes('/') ? REPOSITORIES.find(r => (r.full_name || '').toLowerCase() === repoFullName.toLowerCase()) : null;
+     
+        return {
+          ...alt,
+          resolved_name: alt.free_tool_name || alt.name,
+          openlysts_score: score,
+          feature_parity_score: fpScore,
+          migration_difficulty: difficulty,
+          repo: catalogMatch ? {
+            id: catalogMatch.id,
+            full_name: catalogMatch.full_name,
+            name: catalogMatch.name,
+            stars: catalogMatch.stars || stars,
+            forks: catalogMatch.forks || 0,
+            language: catalogMatch.language || 'Unknown',
+            quality_score: catalogMatch.quality_score || score,
+            html_url: catalogMatch.html_url || alt.free_tool_url
+          } : {
+            id: `repo-${(alt.free_tool_name || '').toLowerCase().replace(/[^a-z0-9]/g, '-')}`,
+            full_name: repoFullName || `${(alt.free_tool_name || '').toLowerCase()}/${(alt.free_tool_name || '').toLowerCase()}`,
+            name: alt.free_tool_name,
+            stars: stars,
+            language: alt.language || 'Unknown',
+            quality_score: score,
+            html_url: alt.free_tool_url || (repoFullName?.startsWith('http') ? repoFullName : undefined)
+          }
+        };
+      });
     }
   } catch (err) {
     console.error('[CATALOG ENGINE] Failed to load alternatives catalog:', err.message);

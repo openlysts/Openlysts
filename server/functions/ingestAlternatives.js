@@ -3,7 +3,7 @@ import crypto from 'crypto';
 import { githubFetch, ingestRepoItem } from './runIngestion.js';
 import { invalidateAlternativesCache } from './queryAlternatives.js';
 import { invalidateRepositoriesCache } from './queryRepositories.js';
-import { ingestCatalogAlternative } from '../services/catalogEngine.js';
+import { ingestCatalogAlternative, getCatalogRepositories } from '../services/catalogEngine.js';
 
 const CURATED_MODERN_ALTERNATIVES = [
   // AI & Chatbots
@@ -70,6 +70,59 @@ const CURATED_MODERN_ALTERNATIVES = [
   { paid: '1Password, LastPass', repoFullName: 'keepassxreboot/keepassxc', category: 'Password & Secrets Manager' },
 ];
 
+const ADDITIONAL_SOURCES = [
+  {
+    url: 'https://raw.githubusercontent.com/piotrkulpinski/open-source-alternatives/main/README.md',
+    name: 'OpenAlternative',
+    parser: 'openalternative'
+  },
+  {
+    url: 'https://raw.githubusercontent.com/diegoleme/awesome-open-source-alternatives/master/README.md',
+    name: 'DiegoLeme',
+    parser: 'awesomelist'
+  }
+];
+
+function parseOpenAlternativeMarkdown(text) {
+  // Format: - **[Name](url)** - Description `License` `⭐ NNK`
+  // Category is from heading: ### Category Name
+  const results = [];
+  let currentCategory = 'Developer Tools';
+  for (const line of text.split('\n')) {
+    const headingMatch = line.match(/^###?\s+(.+)/);
+    if (headingMatch) { currentCategory = headingMatch[1].trim(); continue; }
+    const entryMatch = line.match(/\[([^\]]+)\]\(https:\/\/openalternative\.co\/([^)]+)\)/);
+    if (entryMatch) {
+      const name = entryMatch[1];
+      const slug = entryMatch[2];
+      const starsMatch = line.match(/⭐\s*([\d.]+)K?/i);
+      const stars = starsMatch ? parseFloat(starsMatch[1]) * (starsMatch[0].includes('K') ? 1000 : 1) : 0;
+      results.push({ name, slug, category: currentCategory, stars: Math.round(stars) });
+    }
+  }
+  return results;
+}
+
+function parseAwesomeListMarkdown(text) {
+  // Format: lines with github.com/owner/repo links, headings for categories
+  const results = [];
+  let currentCategory = 'Developer Tools';
+  for (const line of text.split('\n')) {
+    const headingMatch = line.match(/^###?\s+(.+)/);
+    if (headingMatch) { currentCategory = headingMatch[1].trim(); continue; }
+    const repoMatch = line.match(/github\.com\/([^/]+)\/([^\s/|)>"#]+)/i);
+    if (repoMatch) {
+      let owner = repoMatch[1], repo = repoMatch[2];
+      if (repo.endsWith('.git')) repo = repo.slice(0, -4);
+      // Extract "alternative to X" from surrounding text
+      const altToMatch = line.match(/alternative\s+to\s+([^,.|)\]]+)/i);
+      const paid = altToMatch ? altToMatch[1].trim() : currentCategory;
+      results.push({ repoFullName: `${owner}/${repo}`, paid, category: currentCategory });
+    }
+  }
+  return results;
+}
+
 export async function ingestAlternatives() {
   console.log('[Ingest] Starting alternatives ingestion and repository synchronization...');
   try {
@@ -134,16 +187,57 @@ export async function ingestAlternatives() {
       console.warn('[Ingest] Remote markdown fetch failed, using curated catalog:', e.message);
     }
 
+    // ── Additional Community Sources ──
+    for (const source of ADDITIONAL_SOURCES) {
+      try {
+        const res = await fetch(source.url, { signal: AbortSignal.timeout(15000) });
+        if (!res.ok) continue;
+        const text = await res.text();
+        let parsed = [];
+        if (source.parser === 'openalternative') {
+          parsed = parseOpenAlternativeMarkdown(text);
+          // OpenAlternative entries need slug→repo resolution via catalog cross-reference
+          for (const entry of parsed) {
+            const slugLower = entry.slug.toLowerCase().replace(/-/g, '');
+            // Search existing 47K catalog for matching repo name
+            const catalogRepos = getCatalogRepositories();
+            const match = catalogRepos.find(r =>
+              (r.name || '').toLowerCase().replace(/-/g, '') === slugLower ||
+              (r.full_name || '').toLowerCase().split('/')[1]?.replace(/-/g, '') === slugLower
+            );
+            if (match) {
+              mappings.push({
+                paid: entry.category, // Use category as the "replaces" field
+                repoFullName: match.full_name,
+                category: entry.category,
+                stars: match.stars
+              });
+            }
+          }
+        } else if (source.parser === 'awesomelist') {
+          parsed = parseAwesomeListMarkdown(text);
+          for (const entry of parsed) {
+            mappings.push(entry);
+          }
+        }
+        console.log(`[Ingest] Parsed ${parsed.length} entries from ${source.name}`);
+      } catch (e) {
+        console.warn(`[Ingest] Failed to fetch ${source.name}:`, e.message);
+      }
+    }
+
     console.log(`[Ingest] Total alternative mappings to synchronize: ${mappings.length}`);
     
     try {
       let existingRepos = new Set();
+      let dbAvailable = true;
       try {
         // Fetch existing alternative repos to avoid duplicate insertions
         const { rows: existingRows } = await db.query('SELECT free_tool_repo, paid_tool_name, category FROM "Alternative"');
         existingRepos = new Set(existingRows.filter(r => r.free_tool_repo).map(r => `${(r.paid_tool_name || 'Proprietary Tool').trim().toLowerCase()}::${r.free_tool_repo.toLowerCase()}`));
       } catch (e) {
         console.warn('[Ingest] Could not fetch existing alternatives from DB. Continuing with Edge Catalog sync only.', e.message);
+        dbAvailable = false;
       }
       
       let addedCount = 0;
@@ -166,7 +260,7 @@ export async function ingestAlternatives() {
           category: m.category,
         });
 
-        if (!existingRepos.has(compKey)) {
+        if (dbAvailable && !existingRepos.has(compKey)) {
           try {
             await db.query(
               'INSERT INTO "Alternative" (id, created_date, paid_tool_name, free_tool_name, free_tool_repo, category) VALUES ($1, $2, $3, $4, $5, $6)',

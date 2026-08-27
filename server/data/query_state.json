@@ -4,136 +4,136 @@
     "query_string": "LLM",
     "category_hint": "LLMs",
     "enabled": true,
-    "current_page": 1,
-    "last_run_at": "2026-08-27T05:52:26.556Z"
+    "current_page": 2,
+    "last_run_at": "2026-08-27T07:01:19.975Z"
   },
   {
     "id": "local-q-1",
     "query_string": "AI",
     "category_hint": "AI",
     "enabled": true,
-    "current_page": 2,
-    "last_run_at": "2026-08-27T05:52:23.559Z"
+    "current_page": 3,
+    "last_run_at": "2026-08-27T07:01:14.779Z"
   },
   {
     "id": "local-q-2",
     "query_string": "generative AI",
     "category_hint": "AI",
     "enabled": true,
-    "current_page": 2,
-    "last_run_at": "2026-08-27T05:42:57.775Z"
+    "current_page": 3,
+    "last_run_at": "2026-08-27T07:01:09.371Z"
   },
   {
     "id": "local-q-3",
     "query_string": "AI agents",
     "category_hint": "AI Agents",
     "enabled": true,
-    "current_page": 1,
-    "last_run_at": "2026-08-27T05:42:52.622Z"
+    "current_page": 2,
+    "last_run_at": "2026-08-27T07:01:03.590Z"
   },
   {
     "id": "local-q-4",
-    "query_string": "RAG created:<2012-03-11",
+    "query_string": "RAG",
     "category_hint": "RAG",
     "enabled": true,
     "current_page": 1,
-    "last_run_at": "2026-08-27T05:42:49.655Z"
+    "last_run_at": "2026-08-27T07:00:58.732Z"
   },
   {
     "id": "local-q-5",
     "query_string": "local AI",
     "category_hint": "Local AI",
     "enabled": true,
-    "current_page": 2,
-    "last_run_at": "2026-08-27T05:42:44.445Z"
+    "current_page": 3,
+    "last_run_at": "2026-08-27T07:00:55.724Z"
   },
   {
     "id": "local-q-6",
     "query_string": "local LLM",
     "category_hint": "Local AI",
     "enabled": true,
-    "current_page": 1,
-    "last_run_at": "2026-08-27T05:42:38.705Z"
+    "current_page": 2,
+    "last_run_at": "2026-08-27T07:00:50.777Z"
   },
   {
     "id": "local-q-7",
     "query_string": "Ollama",
     "category_hint": "Local AI",
     "enabled": true,
-    "current_page": 1,
-    "last_run_at": "2026-08-27T05:42:36.447Z"
+    "current_page": 2,
+    "last_run_at": "2026-08-27T07:00:46.000Z"
   },
   {
     "id": "local-q-8",
     "query_string": "llama.cpp",
     "category_hint": "Local AI",
     "enabled": true,
-    "current_page": 1,
-    "last_run_at": "2026-08-27T05:42:32.535Z"
+    "current_page": 2,
+    "last_run_at": "2026-08-27T06:51:31.721Z"
   },
   {
     "id": "local-q-9",
-    "query_string": "machine learning created:<2011-04-28",
+    "query_string": "machine learning",
     "category_hint": "Machine Learning",
     "enabled": true,
     "current_page": 1,
-    "last_run_at": "2026-08-27T05:42:28.737Z"
+    "last_run_at": "2026-08-27T06:51:26.455Z"
   },
   {
     "id": "local-q-10",
     "query_string": "AI framework",
     "category_hint": "Libraries & Frameworks",
     "enabled": true,
-    "current_page": 1,
-    "last_run_at": "2026-08-27T05:42:22.559Z"
+    "current_page": 2,
+    "last_run_at": "2026-08-27T06:51:22.928Z"
   },
   {
     "id": "local-q-11",
-    "query_string": "react created:<2012-01-30",
+    "query_string": "react",
     "category_hint": "Web Frameworks",
     "enabled": true,
     "current_page": 1,
-    "last_run_at": "2026-08-27T05:42:19.445Z"
+    "last_run_at": "2026-08-27T06:51:16.613Z"
   },
   {
     "id": "local-q-12",
     "query_string": "vue",
     "category_hint": "Web Frameworks",
     "enabled": true,
-    "current_page": 1,
-    "last_run_at": "2026-08-27T05:32:55.030Z"
+    "current_page": 2,
+    "last_run_at": "2026-08-27T06:51:11.255Z"
   },
   {
     "id": "local-q-13",
-    "query_string": "nextjs created:<2016-04-01",
+    "query_string": "nextjs",
     "category_hint": "Web Frameworks",
     "enabled": true,
     "current_page": 1,
-    "last_run_at": "2026-08-27T05:32:52.491Z"
+    "last_run_at": "2026-08-27T06:51:04.925Z"
   },
   {
     "id": "local-q-14",
     "query_string": "typescript",
     "category_hint": "Languages",
     "enabled": true,
-    "current_page": 1,
-    "last_run_at": "2026-08-27T05:32:44.551Z"
+    "current_page": 2,
+    "last_run_at": "2026-08-27T06:51:01.170Z"
   },
   {
     "id": "local-q-15",
-    "query_string": "tailwindcss created:<2017-08-08",
+    "query_string": "tailwindcss",
     "category_hint": "Styling",
     "enabled": true,
     "current_page": 1,
-    "last_run_at": "2026-08-27T05:32:40.187Z"
+    "last_run_at": "2026-08-27T06:50:55.864Z"
   },
   {
     "id": "local-q-16",
     "query_string": "static site generator",
     "category_hint": "Static Site Generators",
     "enabled": true,
-    "current_page": 1,
-    "last_run_at": "2026-08-27T05:32:34.381Z"
+    "current_page": 2,
+    "last_run_at": "2026-08-27T06:50:51.998Z"
   },
   {
     "id": "local-q-17",
@@ -141,7 +141,7 @@
     "category_hint": "CMS",
     "enabled": true,
     "current_page": 1,
-    "last_run_at": "2026-08-27T05:32:32.375Z"
+    "last_run_at": "2026-08-27T06:50:46.825Z"
   },
   {
     "id": "local-q-18",
@@ -353,18 +353,18 @@
   },
   {
     "id": "local-q-44",
-    "query_string": "python created:<2008-09-29",
+    "query_string": "python",
     "category_hint": "Languages",
     "enabled": true,
     "current_page": 1,
-    "last_run_at": "2026-08-27T05:52:37.740Z"
+    "last_run_at": "2026-08-27T07:01:28.303Z"
   },
   {
     "id": "local-q-45",
     "query_string": "golang",
     "category_hint": "Languages",
     "enabled": true,
-    "current_page": 2,
-    "last_run_at": "2026-08-27T05:52:31.726Z"
+    "current_page": 3,
+    "last_run_at": "2026-08-27T07:01:24.709Z"
   }
 ]
