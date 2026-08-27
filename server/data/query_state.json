@@ -4,128 +4,128 @@
     "query_string": "LLM",
     "category_hint": "LLMs",
     "enabled": true,
-    "current_page": 4,
-    "last_run_at": "2026-08-27T09:04:36.733Z"
+    "current_page": 5,
+    "last_run_at": "2026-08-27T09:43:53.569Z"
   },
   {
     "id": "local-q-1",
     "query_string": "AI",
     "category_hint": "AI",
     "enabled": true,
-    "current_page": 5,
-    "last_run_at": "2026-08-27T09:04:31.617Z"
+    "current_page": 6,
+    "last_run_at": "2026-08-27T09:43:46.484Z"
   },
   {
     "id": "local-q-2",
     "query_string": "generative AI",
     "category_hint": "AI",
     "enabled": true,
-    "current_page": 1,
-    "last_run_at": "2026-08-27T09:04:24.350Z"
+    "current_page": 2,
+    "last_run_at": "2026-08-27T09:43:40.277Z"
   },
   {
     "id": "local-q-3",
     "query_string": "AI agents",
     "category_hint": "AI Agents",
     "enabled": true,
-    "current_page": 4,
-    "last_run_at": "2026-08-27T09:04:20.776Z"
+    "current_page": 5,
+    "last_run_at": "2026-08-27T09:40:56.664Z"
   },
   {
     "id": "local-q-4",
     "query_string": "RAG",
     "category_hint": "RAG",
     "enabled": true,
-    "current_page": 3,
-    "last_run_at": "2026-08-27T09:04:15.539Z"
+    "current_page": 4,
+    "last_run_at": "2026-08-27T09:40:50.142Z"
   },
   {
     "id": "local-q-5",
     "query_string": "local AI",
     "category_hint": "Local AI",
     "enabled": true,
-    "current_page": 5,
-    "last_run_at": "2026-08-27T09:04:09.477Z"
+    "current_page": 6,
+    "last_run_at": "2026-08-27T09:40:44.345Z"
   },
   {
     "id": "local-q-6",
     "query_string": "local LLM",
     "category_hint": "Local AI",
     "enabled": true,
-    "current_page": 4,
-    "last_run_at": "2026-08-27T09:04:02.239Z"
+    "current_page": 5,
+    "last_run_at": "2026-08-27T09:37:23.074Z"
   },
   {
     "id": "local-q-7",
     "query_string": "Ollama",
     "category_hint": "Local AI",
     "enabled": true,
-    "current_page": 4,
-    "last_run_at": "2026-08-27T09:03:56.080Z"
+    "current_page": 5,
+    "last_run_at": "2026-08-27T09:37:17.923Z"
   },
   {
     "id": "local-q-8",
     "query_string": "llama.cpp",
     "category_hint": "Local AI",
     "enabled": true,
-    "current_page": 2,
-    "last_run_at": "2026-08-27T09:03:50.142Z"
+    "current_page": 1,
+    "last_run_at": "2026-08-27T09:37:12.863Z"
   },
   {
     "id": "local-q-9",
     "query_string": "machine learning",
     "category_hint": "Machine Learning",
     "enabled": true,
-    "current_page": 3,
-    "last_run_at": "2026-08-27T09:03:43.729Z"
+    "current_page": 4,
+    "last_run_at": "2026-08-27T09:37:09.231Z"
   },
   {
     "id": "local-q-10",
     "query_string": "AI framework",
     "category_hint": "Libraries & Frameworks",
     "enabled": true,
-    "current_page": 4,
-    "last_run_at": "2026-08-27T09:01:37.718Z"
+    "current_page": 5,
+    "last_run_at": "2026-08-27T09:37:03.561Z"
   },
   {
     "id": "local-q-11",
     "query_string": "react",
     "category_hint": "Web Frameworks",
     "enabled": true,
-    "current_page": 3,
-    "last_run_at": "2026-08-27T09:01:31.545Z"
+    "current_page": 4,
+    "last_run_at": "2026-08-27T09:36:57.141Z"
   },
   {
     "id": "local-q-12",
     "query_string": "vue",
     "category_hint": "Web Frameworks",
     "enabled": true,
-    "current_page": 4,
-    "last_run_at": "2026-08-27T09:01:25.556Z"
+    "current_page": 5,
+    "last_run_at": "2026-08-27T09:36:51.683Z"
   },
   {
     "id": "local-q-13",
     "query_string": "nextjs",
     "category_hint": "Web Frameworks",
     "enabled": true,
-    "current_page": 3,
-    "last_run_at": "2026-08-27T09:01:20.100Z"
+    "current_page": 4,
+    "last_run_at": "2026-08-27T09:36:43.237Z"
   },
   {
     "id": "local-q-14",
     "query_string": "typescript",
     "category_hint": "Languages",
     "enabled": true,
-    "current_page": 4,
-    "last_run_at": "2026-08-27T09:01:15.091Z"
+    "current_page": 5,
+    "last_run_at": "2026-08-27T09:36:38.002Z"
   },
   {
     "id": "local-q-15",
     "query_string": "tailwindcss",
     "category_hint": "Styling",
     "enabled": true,
-    "current_page": 3,
-    "last_run_at": "2026-08-27T09:01:08.753Z"
+    "current_page": 4,
+    "last_run_at": "2026-08-27T09:36:31.741Z"
   },
   {
     "id": "local-q-16",
@@ -316,55 +316,55 @@
     "query_string": "open-source web application",
     "category_hint": "Web Applications",
     "enabled": true,
-    "current_page": 1,
-    "last_run_at": "2026-08-27T09:11:17.715Z"
+    "current_page": 2,
+    "last_run_at": "2026-08-27T09:44:34.903Z"
   },
   {
     "id": "local-q-40",
     "query_string": "automation",
     "category_hint": "Automation",
     "enabled": true,
-    "current_page": 2,
-    "last_run_at": "2026-08-27T09:11:13.743Z"
+    "current_page": 3,
+    "last_run_at": "2026-08-27T09:44:28.845Z"
   },
   {
     "id": "local-q-41",
     "query_string": "open source alternative",
     "category_hint": "Alternatives",
     "enabled": true,
-    "current_page": 5,
-    "last_run_at": "2026-08-27T09:11:07.638Z"
+    "current_page": 6,
+    "last_run_at": "2026-08-27T09:44:23.030Z"
   },
   {
     "id": "local-q-42",
     "query_string": "low code",
     "category_hint": "Low Code",
     "enabled": true,
-    "current_page": 2,
-    "last_run_at": "2026-08-27T09:11:02.197Z"
+    "current_page": 3,
+    "last_run_at": "2026-08-27T09:44:16.738Z"
   },
   {
     "id": "local-q-43",
     "query_string": "rust",
     "category_hint": "Languages",
     "enabled": true,
-    "current_page": 6,
-    "last_run_at": "2026-08-27T09:10:56.116Z"
+    "current_page": 7,
+    "last_run_at": "2026-08-27T09:44:11.271Z"
   },
   {
     "id": "local-q-44",
     "query_string": "python",
     "category_hint": "Languages",
     "enabled": true,
-    "current_page": 3,
-    "last_run_at": "2026-08-27T09:10:49.817Z"
+    "current_page": 4,
+    "last_run_at": "2026-08-27T09:44:04.721Z"
   },
   {
     "id": "local-q-45",
     "query_string": "golang",
     "category_hint": "Languages",
     "enabled": true,
-    "current_page": 5,
-    "last_run_at": "2026-08-27T09:10:44.225Z"
+    "current_page": 6,
+    "last_run_at": "2026-08-27T09:43:59.173Z"
   }
 ]
