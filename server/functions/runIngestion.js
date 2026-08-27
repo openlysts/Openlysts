@@ -422,6 +422,9 @@ export async function executeIngestion() {
         const page = dq.current_page || 1;
         
         let qStr = dq.query_string;
+        if (!qStr.includes('stars:>')) {
+          qStr += ' stars:>100';
+        }
         // Deep Pagination Date-Slicing: 
         // We no longer arbitrarily interleave dates. We process sequentially.
 

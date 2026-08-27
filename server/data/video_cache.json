@@ -1219,8 +1219,27 @@
     "timestamp": 1787725559930
   },
   "sindresorhus/awesome": {
-    "videos": [],
-    "timestamp": 1787131840365
+    "videos": [
+      {
+        "video_id": "qKtit_B7Keo",
+        "title": "Getting Started With Awesome Window Manager",
+        "channel": "DistroTube",
+        "url": "https://youtube.com/watch?v=qKtit_B7Keo"
+      },
+      {
+        "video_id": "HIKIcGPEq-8",
+        "title": "Awesome - Pastor Charles Jenkins (Breakdown)",
+        "channel": "Jesse Wilson",
+        "url": "https://youtube.com/watch?v=HIKIcGPEq-8"
+      },
+      {
+        "video_id": "xUBIbhPC_rQ",
+        "title": "\"NotImplemented\" is Awesome in Python",
+        "channel": "Indently",
+        "url": "https://youtube.com/watch?v=xUBIbhPC_rQ"
+      }
+    ],
+    "timestamp": 1787744727500
   },
   "gatus/gatus": {
     "videos": [
@@ -1313,5 +1332,28 @@
       }
     ],
     "timestamp": 1787740573367
+  },
+  "openclaw/openclaw": {
+    "videos": [
+      {
+        "video_id": "u4ydH-QvPeg",
+        "title": "OpenClaw Tutorial for Beginners - Crash Course",
+        "channel": "Adrian Twarog",
+        "url": "https://youtube.com/watch?v=u4ydH-QvPeg"
+      },
+      {
+        "video_id": "dgbdyxe435E",
+        "title": "OpenClaw Tutorial",
+        "channel": "codebasics",
+        "url": "https://youtube.com/watch?v=dgbdyxe435E"
+      },
+      {
+        "video_id": "161yAjOIHAw",
+        "title": "OpenClaw Tutorial for Beginners | Automating Email + Calendar forever 🔥",
+        "channel": "CodeWithHarry",
+        "url": "https://youtube.com/watch?v=161yAjOIHAw"
+      }
+    ],
+    "timestamp": 1787745658094
   }
 }

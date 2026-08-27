@@ -268,7 +268,8 @@ export class EntityService {
       const placeholders = keys.map((_, i) => `$${i + 1}`).join(', ');
       
       const updateSet = keys.filter(k => k !== 'id' && k !== 'created_date').map(k => `"${k}" = EXCLUDED."${k}"`).join(', ');
-      const queryStr = `INSERT INTO "${this.entity}" (${cols}) VALUES (${placeholders}) ON CONFLICT (id) DO UPDATE SET ${updateSet}`;
+      const whereDistinctClause = keys.filter(k => k !== 'id' && k !== 'created_date').map(k => `"${this.entity}"."${k}" IS DISTINCT FROM EXCLUDED."${k}"`).join(' OR ');
+      const queryStr = `INSERT INTO "${this.entity}" (${cols}) VALUES (${placeholders}) ON CONFLICT (id) DO UPDATE SET ${updateSet} ${whereDistinctClause ? 'WHERE ' + whereDistinctClause : ''}`;
 
       for (const item of payloadArray) {
         const values = keys.map(k => item[k]);

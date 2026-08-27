@@ -31,8 +31,8 @@
 Openlysts is a complete intelligence platform for developers, tech leads, and open-source enthusiasts:
 
 - 🪪 **Interactive 3D Holographic Dev Pass**: Gamified developer identity pass dynamically customizing in real time as you select your role track (`Fullstack`, `AI / ML`, `DevOps`, `Systems`, `OSS Builder`) with Genesis Pioneer credentials.
-- ⚡ **Self-Sufficient Edge Engine & Resilient Adaptive Persistence (SRA-Engine)**: Sub-millisecond in-memory LRU/TTL caching, distributed PostgreSQL session advisory lock (`pg_try_advisory_lock`), lean SQL list projections (96% bandwidth drop), and 0ms optimistic client outbox sync.
-- 🚀 **Trending & Velocity Feed**: Real-time project momentum tracking with customizable time windows (Daily, 7-Day, 30-Day) and automatic background synchronization.
+- ⚡ **100% Free Autonomous Edge Engine**: Sub-millisecond in-memory JSON catalog engine resolving 47,000+ repositories with zero database queries.
+- 🚀 **Trending & Velocity Feed**: Real-time project momentum tracking with customizable time windows (Daily, 7-Day, 30-Day) and automatic background synchronization via Vercel Cron.
 - 🧠 **Hybrid Similarity Engine**: Algorithmic discovery fusing semantic topic relevance, authority scoring (stars/adoption), and developer engagement (forks/issues) to surface canonical projects.
 - 🔍 **Spotlight Search & Command Palette**: Instant navigation via keyboard (`⌘ + K` / `Ctrl + K`) with deep query parameter synchronization and live debounce.
 - 🔢 **Live AnimateDigits Rolling Tickers & Unlumen Social Hover Bar**: Real-time odometer telemetry tracking `35,476` rated projects and interactive morphing popovers.
@@ -64,7 +64,9 @@ Openlysts is built using modern web standards for 60FPS performance, responsive 
 
 ### Backend & Database
 - **Express.js (Node.js)**: REST APIs, custom RPC functions, and automated background workers.
-- **PostgreSQL (Neon)**: Serverless Postgres with automatic table schema initialization.
+- **In-Memory Catalog Engine**: 100% free, zero-latency custom JSON inverted index engine running entirely in RAM.
+- **Vercel Cron**: Fully autonomous, zero-intervention daily ingestion pipelines.
+- **PostgreSQL (Neon)**: Used strictly for lightweight auxiliary features (Alternatives sync, Users, Bookmarks) to preserve free-tier bandwidth.
 - **GitHub REST API & YouTube Services**: Live repository data feeds and educational video integration.
 
 ---

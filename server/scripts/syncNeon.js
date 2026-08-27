@@ -60,7 +60,16 @@ async function syncToNeon() {
               category = EXCLUDED.category,
               description = EXCLUDED.description,
               quality_score = EXCLUDED.quality_score,
-              verified_oss = EXCLUDED.verified_oss;
+              verified_oss = EXCLUDED.verified_oss
+            WHERE 
+              "Alternative".paid_tool_name IS DISTINCT FROM EXCLUDED.paid_tool_name OR
+              "Alternative".free_tool_name IS DISTINCT FROM EXCLUDED.free_tool_name OR
+              "Alternative".free_tool_repo IS DISTINCT FROM EXCLUDED.free_tool_repo OR
+              "Alternative".free_tool_url IS DISTINCT FROM EXCLUDED.free_tool_url OR
+              "Alternative".category IS DISTINCT FROM EXCLUDED.category OR
+              "Alternative".description IS DISTINCT FROM EXCLUDED.description OR
+              "Alternative".quality_score IS DISTINCT FROM EXCLUDED.quality_score OR
+              "Alternative".verified_oss IS DISTINCT FROM EXCLUDED.verified_oss;
           `;
           await client.query(query, [
             alt.id,
@@ -81,61 +90,13 @@ async function syncToNeon() {
       console.log(`\n[SYNC] Finished syncing ${insertedAlts} alternatives!`);
     }
 
-    // 2. Sync Repositories
+    // 2. Sync Repositories — DISABLED
+    // The in-memory catalog engine (catalogEngine.js) is now the primary source for repository data.
+    // Syncing 47K+ repos to Neon was the #1 cause of "data transfer quota exceeded" errors.
+    // Repository data is served from mega_repositories_catalog.json loaded into RAM at startup.
     if (fs.existsSync(REPOS_PATH)) {
       const repos = JSON.parse(fs.readFileSync(REPOS_PATH, 'utf-8'));
-      console.log(`[SYNC] Upserting ${repos.length} repositories into "Repository" table...`);
-
-      let insertedRepos = 0;
-      const batchSize = 50;
-
-      for (let i = 0; i < repos.length; i += batchSize) {
-        const batch = repos.slice(i, i + batchSize);
-        for (const repo of batch) {
-          const query = `
-            INSERT INTO "Repository" (
-              id, created_date, github_id, full_name, owner, name, description,
-              html_url, homepage_url, language, license_key, license_name,
-              stars, forks, open_issues, topics, categories, quality_score,
-              trending_score, difficulty, hidden
-            ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21)
-            ON CONFLICT (id) DO UPDATE SET
-              stars = EXCLUDED.stars,
-              forks = EXCLUDED.forks,
-              open_issues = EXCLUDED.open_issues,
-              quality_score = EXCLUDED.quality_score,
-              trending_score = EXCLUDED.trending_score,
-              categories = EXCLUDED.categories,
-              topics = EXCLUDED.topics;
-          `;
-          await client.query(query, [
-            repo.id,
-            repo.created_date || new Date().toISOString(),
-            repo.github_id || Math.floor(Math.random() * 90000000),
-            repo.full_name,
-            repo.owner,
-            repo.name,
-            repo.description,
-            repo.html_url,
-            repo.homepage_url,
-            repo.language,
-            repo.license_key,
-            repo.license_name,
-            repo.stars || 0,
-            repo.forks || 0,
-            repo.open_issues || 0,
-            JSON.stringify(repo.topics || []),
-            JSON.stringify(repo.categories || []),
-            repo.quality_score || 90,
-            repo.trending_score || 90,
-            repo.difficulty || 'Intermediate',
-            0
-          ]);
-          insertedRepos++;
-        }
-        process.stdout.write(`[SYNC] Progress: ${insertedRepos}/${repos.length} repositories synced\r`);
-      }
-      console.log(`\n[SYNC] Finished syncing ${insertedRepos} repositories!`);
+      console.log(`[SYNC] Skipping ${repos.length} repository sync to Neon (catalog engine is the primary source).`);
     }
 
     console.log('[SYNC] SUCCESS: Full database synchronization complete!');

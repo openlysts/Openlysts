@@ -23,7 +23,8 @@
       "name": "Parlant",
       "stars": 18000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/parlant"
     }
   },
   {
@@ -50,7 +51,8 @@
       "name": "ACI.dev",
       "stars": 4900,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/aci-dev"
     }
   },
   {
@@ -77,7 +79,8 @@
       "name": "AgentOS",
       "stars": 617,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/agentos"
     }
   },
   {
@@ -104,7 +107,8 @@
       "name": "Agno",
       "stars": 42000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/agno"
     }
   },
   {
@@ -131,7 +135,8 @@
       "name": "Beam",
       "stars": 1800,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/beam"
     }
   },
   {
@@ -158,7 +163,8 @@
       "name": "Bifrost",
       "stars": 7500,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/bifrost"
     }
   },
   {
@@ -185,7 +191,8 @@
       "name": "Botpress",
       "stars": 15000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/botpress"
     }
   },
   {
@@ -212,7 +219,8 @@
       "name": "ByteChef",
       "stars": 992,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/bytechef"
     }
   },
   {
@@ -239,7 +247,8 @@
       "name": "CodeZero",
       "stars": 53,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/codezero"
     }
   },
   {
@@ -266,7 +275,8 @@
       "name": "CopilotKit",
       "stars": 37000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/copilotkit"
     }
   },
   {
@@ -293,7 +303,8 @@
       "name": "Dify",
       "stars": 153000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/dify"
     }
   },
   {
@@ -320,7 +331,8 @@
       "name": "E2B",
       "stars": 14000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/e2b"
     }
   },
   {
@@ -347,7 +359,8 @@
       "name": "Envoy AI Gateway",
       "stars": 2000,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/envoy-ai-gateway"
     }
   },
   {
@@ -374,7 +387,8 @@
       "name": "Giselle",
       "stars": 554,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/giselle"
     }
   },
   {
@@ -401,7 +415,8 @@
       "name": "Hermes Agent",
       "stars": 235000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/hermes-agent"
     }
   },
   {
@@ -428,7 +443,8 @@
       "name": "Langflow",
       "stars": 154000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/langflow"
     }
   },
   {
@@ -455,7 +471,8 @@
       "name": "Letta",
       "stars": 24000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/letta"
     }
   },
   {
@@ -482,7 +499,8 @@
       "name": "LibreChat",
       "stars": 42000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/librechat"
     }
   },
   {
@@ -509,7 +527,8 @@
       "name": "LiteLLM",
       "stars": 57000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/litellm"
     }
   },
   {
@@ -536,7 +555,8 @@
       "name": "LiveKit",
       "stars": 20000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/livekit"
     }
   },
   {
@@ -563,7 +583,8 @@
       "name": "LLM Gateway",
       "stars": 1600,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/llm-gateway"
     }
   },
   {
@@ -590,7 +611,8 @@
       "name": "LobeChat",
       "stars": 82000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/lobechat"
     }
   },
   {
@@ -617,7 +639,8 @@
       "name": "Mem0",
       "stars": 64000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/mem0"
     }
   },
   {
@@ -644,7 +667,8 @@
       "name": "Multica",
       "stars": 47000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/multica"
     }
   },
   {
@@ -671,7 +695,8 @@
       "name": "Nango",
       "stars": 12000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/nango"
     }
   },
   {
@@ -698,7 +723,8 @@
       "name": "OpenComputer",
       "stars": 473,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/opencomputer"
     }
   },
   {
@@ -725,7 +751,8 @@
       "name": "Paperclip",
       "stars": 79000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/paperclip"
     }
   },
   {
@@ -752,7 +779,8 @@
       "name": "Portkey AI Gateway",
       "stars": 13000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/portkey-ai-gateway"
     }
   },
   {
@@ -779,7 +807,8 @@
       "name": "Rivet",
       "stars": 6100,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/rivet"
     }
   },
   {
@@ -806,7 +835,8 @@
       "name": "Suna",
       "stars": 20000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/suna"
     }
   },
   {
@@ -833,7 +863,8 @@
       "name": "Agenta",
       "stars": 4500,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/agenta"
     }
   },
   {
@@ -860,7 +891,8 @@
       "name": "Arize Phoenix",
       "stars": 11000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/arize-phoenix"
     }
   },
   {
@@ -887,7 +919,8 @@
       "name": "Deepnote",
       "stars": 3000,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/deepnote"
     }
   },
   {
@@ -914,7 +947,8 @@
       "name": "dstack",
       "stars": 2200,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/dstack"
     }
   },
   {
@@ -941,7 +975,8 @@
       "name": "GPT4All",
       "stars": 77000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/gpt4all"
     }
   },
   {
@@ -968,7 +1003,8 @@
       "name": "Grepture",
       "stars": 7,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/grepture"
     }
   },
   {
@@ -995,7 +1031,8 @@
       "name": "Helicone",
       "stars": 6100,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/helicone"
     }
   },
   {
@@ -1022,7 +1059,8 @@
       "name": "Jan",
       "stars": 44000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/jan"
     }
   },
   {
@@ -1049,7 +1087,8 @@
       "name": "Laminar",
       "stars": 3200,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/laminar"
     }
   },
   {
@@ -1076,7 +1115,8 @@
       "name": "Langfuse",
       "stars": 34000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/langfuse"
     }
   },
   {
@@ -1103,7 +1143,8 @@
       "name": "Latitude",
       "stars": 4600,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/latitude"
     }
   },
   {
@@ -1130,7 +1171,8 @@
       "name": "llama.cpp",
       "stars": 125000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/llama-cpp"
     }
   },
   {
@@ -1157,7 +1199,8 @@
       "name": "LocalAI",
       "stars": 49000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/localai"
     }
   },
   {
@@ -1184,7 +1227,8 @@
       "name": "mlop",
       "stars": 392,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/mlop"
     }
   },
   {
@@ -1211,7 +1255,8 @@
       "name": "Ollama",
       "stars": 179000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/ollama"
     }
   },
   {
@@ -1238,7 +1283,8 @@
       "name": "Open-Notebook",
       "stars": 37000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/open-notebook"
     }
   },
   {
@@ -1265,7 +1311,8 @@
       "name": "OpenLIT",
       "stars": 2700,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/openlit"
     }
   },
   {
@@ -1292,7 +1339,8 @@
       "name": "OpenLLMetry",
       "stars": 7400,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/openllmetry"
     }
   },
   {
@@ -1319,7 +1367,8 @@
       "name": "Spanlens",
       "stars": 12,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/spanlens"
     }
   },
   {
@@ -1346,7 +1395,8 @@
       "name": "Macro Mail",
       "stars": 4000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/macro-mail"
     }
   },
   {
@@ -1373,7 +1423,8 @@
       "name": "Proton Lumo",
       "stars": 5600,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/proton-lumo"
     }
   },
   {
@@ -1400,7 +1451,8 @@
       "name": "5ire",
       "stars": 5300,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/5ire"
     }
   },
   {
@@ -1427,7 +1479,8 @@
       "name": "AnythingLLM",
       "stars": 65000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/anythingllm"
     }
   },
   {
@@ -1454,7 +1507,8 @@
       "name": "Browser Operator",
       "stars": 499,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/browser-operator"
     }
   },
   {
@@ -1481,7 +1535,8 @@
       "name": "Browser Use",
       "stars": 110000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/browser-use"
     }
   },
   {
@@ -1508,7 +1563,8 @@
       "name": "Cherry Studio",
       "stars": 51000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/cherry-studio"
     }
   },
   {
@@ -1535,7 +1591,8 @@
       "name": "Corpus",
       "stars": 13,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/corpus"
     }
   },
   {
@@ -1562,7 +1619,8 @@
       "name": "Eigent",
       "stars": 15000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/eigent"
     }
   },
   {
@@ -1589,7 +1647,8 @@
       "name": "FastGPT",
       "stars": 29000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/fastgpt"
     }
   },
   {
@@ -1616,7 +1675,8 @@
       "name": "Fullmoon",
       "stars": 2300,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/fullmoon"
     }
   },
   {
@@ -1643,7 +1703,8 @@
       "name": "Inbox Zero",
       "stars": 12000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/inboxzero"
     }
   },
   {
@@ -1670,7 +1731,8 @@
       "name": "Jarvis",
       "stars": 619,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/jarvis"
     }
   },
   {
@@ -1697,7 +1759,8 @@
       "name": "Khoj",
       "stars": 37000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/khoj"
     }
   },
   {
@@ -1724,7 +1787,8 @@
       "name": "Leon",
       "stars": 17000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/leon"
     }
   },
   {
@@ -1751,7 +1815,8 @@
       "name": "Lightpanda",
       "stars": 34000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/lightpanda"
     }
   },
   {
@@ -1778,7 +1843,8 @@
       "name": "MaxKB",
       "stars": 23000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/maxkb"
     }
   },
   {
@@ -1805,7 +1871,8 @@
       "name": "Meetily",
       "stars": 30000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/meetily"
     }
   },
   {
@@ -1832,7 +1899,8 @@
       "name": "Minutes",
       "stars": 1400,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/minutes"
     }
   },
   {
@@ -1859,7 +1927,8 @@
       "name": "Morphic",
       "stars": 9100,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/morphic"
     }
   },
   {
@@ -1886,7 +1955,8 @@
       "name": "NanoClaw",
       "stars": 31000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/nanoclaw"
     }
   },
   {
@@ -1913,7 +1983,8 @@
       "name": "Onyx",
       "stars": 32000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/onyx"
     }
   },
   {
@@ -1940,7 +2011,8 @@
       "name": "Open WebUI",
       "stars": 150000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/open-webui"
     }
   },
   {
@@ -1967,7 +2039,8 @@
       "name": "OpenClaw",
       "stars": 387000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/openclaw"
     }
   },
   {
@@ -1994,7 +2067,8 @@
       "name": "Orama",
       "stars": 11000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/orama"
     }
   },
   {
@@ -2021,7 +2095,8 @@
       "name": "Pearl",
       "stars": 1100,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/pearl"
     }
   },
   {
@@ -2048,7 +2123,8 @@
       "name": "Pipeshub",
       "stars": 3700,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/pipeshub"
     }
   },
   {
@@ -2075,7 +2151,8 @@
       "name": "Prismical",
       "stars": 66,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/prismical"
     }
   },
   {
@@ -2102,7 +2179,8 @@
       "name": "Rakazo",
       "stars": 1200,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/rakazo"
     }
   },
   {
@@ -2129,7 +2207,8 @@
       "name": "Scira",
       "stars": 12000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/scira"
     }
   },
   {
@@ -2156,7 +2235,8 @@
       "name": "screenpipe",
       "stars": 21000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/screenpipe"
     }
   },
   {
@@ -2183,7 +2263,8 @@
       "name": "Skyvern",
       "stars": 23000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/skyvern"
     }
   },
   {
@@ -2210,7 +2291,8 @@
       "name": "Steel",
       "stars": 7500,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/steel"
     }
   },
   {
@@ -2237,7 +2319,8 @@
       "name": "SurfSense",
       "stars": 16000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/surfsense"
     }
   },
   {
@@ -2264,7 +2347,8 @@
       "name": "Swirl Search",
       "stars": 3000,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/swirl"
     }
   },
   {
@@ -2291,7 +2375,8 @@
       "name": "Typebot",
       "stars": 10000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/typebot"
     }
   },
   {
@@ -2318,7 +2403,8 @@
       "name": "Zola",
       "stars": 1500,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/zola"
     }
   },
   {
@@ -2345,7 +2431,8 @@
       "name": "Proxed AI",
       "stars": 8,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/proxed-ai"
     }
   },
   {
@@ -2372,7 +2459,8 @@
       "name": "VerifyWise",
       "stars": 339,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/verifywise"
     }
   },
   {
@@ -2399,7 +2487,8 @@
       "name": "CRM",
       "stars": 8800,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/crm"
     }
   },
   {
@@ -2426,7 +2515,8 @@
       "name": "Macro CRM",
       "stars": 4000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/macro-crm"
     }
   },
   {
@@ -2453,7 +2543,8 @@
       "name": "Atomic CRM",
       "stars": 1200,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/atomic-crm"
     }
   },
   {
@@ -2480,7 +2571,8 @@
       "name": "Erxes",
       "stars": 4100,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/erxes"
     }
   },
   {
@@ -2507,7 +2599,8 @@
       "name": "EspoCRM",
       "stars": 3300,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/espocrm"
     }
   },
   {
@@ -2534,7 +2627,8 @@
       "name": "Ever Gauzy",
       "stars": 4300,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/ever-gauzy"
     }
   },
   {
@@ -2561,7 +2655,8 @@
       "name": "Frappe CRM",
       "stars": 3400,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/frappe-crm"
     }
   },
   {
@@ -2588,7 +2683,8 @@
       "name": "Krayin",
       "stars": 24000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/krayin"
     }
   },
   {
@@ -2615,7 +2711,8 @@
       "name": "Malak",
       "stars": 61,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/malak"
     }
   },
   {
@@ -2642,7 +2739,8 @@
       "name": "Odoo",
       "stars": 54000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/odoo"
     }
   },
   {
@@ -2669,7 +2767,8 @@
       "name": "Open Mercato",
       "stars": 1700,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/open-mercato"
     }
   },
   {
@@ -2696,7 +2795,8 @@
       "name": "Relaticle",
       "stars": 1500,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/relaticle"
     }
   },
   {
@@ -2723,7 +2823,8 @@
       "name": "Twenty",
       "stars": 55000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/twenty"
     }
   },
   {
@@ -2750,7 +2851,8 @@
       "name": "Warpdrive",
       "stars": 74,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/warpdrive"
     }
   },
   {
@@ -2777,7 +2879,8 @@
       "name": "ERPNext",
       "stars": 38000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/erpnext"
     }
   },
   {
@@ -2804,7 +2907,8 @@
       "name": "FleetBase",
       "stars": 2500,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/fleetbase"
     }
   },
   {
@@ -2831,7 +2935,8 @@
       "name": "Shelf",
       "stars": 3000,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/shelf"
     }
   },
   {
@@ -2858,7 +2963,8 @@
       "name": "Horilla",
       "stars": 1300,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/horilla"
     }
   },
   {
@@ -2885,7 +2991,8 @@
       "name": "Reqcore",
       "stars": 3500,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/reqcore"
     }
   },
   {
@@ -2912,7 +3019,8 @@
       "name": "Dub Partners",
       "stars": 25000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/dub-partners"
     }
   },
   {
@@ -2939,7 +3047,8 @@
       "name": "Novu",
       "stars": 40000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/novu"
     }
   },
   {
@@ -2966,7 +3075,8 @@
       "name": "OpenSEO",
       "stars": 13000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/openseo"
     }
   },
   {
@@ -2993,7 +3103,8 @@
       "name": "Postiz",
       "stars": 35000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/postiz"
     }
   },
   {
@@ -3020,7 +3131,8 @@
       "name": "Billion Mail",
       "stars": 15000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/billion-mail"
     }
   },
   {
@@ -3047,7 +3159,8 @@
       "name": "Brace.to",
       "stars": 105,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/brace-to"
     }
   },
   {
@@ -3074,7 +3187,8 @@
       "name": "Chaskiq",
       "stars": 3600,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/chaskiq"
     }
   },
   {
@@ -3101,7 +3215,8 @@
       "name": "Chatwoot",
       "stars": 36000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/chatwoot"
     }
   },
   {
@@ -3128,7 +3243,8 @@
       "name": "Contentport",
       "stars": 764,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/contentport"
     }
   },
   {
@@ -3155,7 +3271,8 @@
       "name": "Cossistant",
       "stars": 714,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/cossistant"
     }
   },
   {
@@ -3182,7 +3299,8 @@
       "name": "Dittofeed",
       "stars": 2900,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/dittofeed"
     }
   },
   {
@@ -3209,7 +3327,8 @@
       "name": "Dub Links",
       "stars": 25000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/dub-links"
     }
   },
   {
@@ -3236,7 +3355,8 @@
       "name": "Fonoster",
       "stars": 8100,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/fonoster"
     }
   },
   {
@@ -3263,7 +3383,8 @@
       "name": "Frappe Helpdesk",
       "stars": 3300,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/frappe-helpdesk"
     }
   },
   {
@@ -3290,7 +3411,8 @@
       "name": "Freescout",
       "stars": 4500,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/freescout"
     }
   },
   {
@@ -3317,7 +3439,8 @@
       "name": "Hyvor Post",
       "stars": 31,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/hyvor-post"
     }
   },
   {
@@ -3344,7 +3467,8 @@
       "name": "Keila",
       "stars": 2200,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/keila"
     }
   },
   {
@@ -3371,7 +3495,8 @@
       "name": "Kutt",
       "stars": 11000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/kutt"
     }
   },
   {
@@ -3398,7 +3523,8 @@
       "name": "LinkStack",
       "stars": 3800,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/linkstack"
     }
   },
   {
@@ -3425,7 +3551,8 @@
       "name": "Linky",
       "stars": 796,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/linky"
     }
   },
   {
@@ -3452,7 +3579,8 @@
       "name": "Listmonk",
       "stars": 23000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/listmonk"
     }
   },
   {
@@ -3479,7 +3607,8 @@
       "name": "LittleLink",
       "stars": 3100,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/littlelink"
     }
   },
   {
@@ -3506,7 +3635,8 @@
       "name": "Lua.sh",
       "stars": 338,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/lua-sh"
     }
   },
   {
@@ -3533,7 +3663,8 @@
       "name": "Mautic",
       "stars": 10000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/mautic"
     }
   },
   {
@@ -3560,7 +3691,8 @@
       "name": "Mixpost",
       "stars": 3500,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/mixpost"
     }
   },
   {
@@ -3587,7 +3719,8 @@
       "name": "Notifuse",
       "stars": 2100,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/notifuse"
     }
   },
   {
@@ -3614,7 +3747,8 @@
       "name": "Plunk",
       "stars": 5400,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/plunk"
     }
   },
   {
@@ -3641,7 +3775,8 @@
       "name": "Sendportal",
       "stars": 2200,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/sendportal"
     }
   },
   {
@@ -3668,7 +3803,8 @@
       "name": "Sendune",
       "stars": 2300,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/sendune"
     }
   },
   {
@@ -3695,7 +3831,8 @@
       "name": "Shlink",
       "stars": 5200,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/shlink"
     }
   },
   {
@@ -3722,7 +3859,8 @@
       "name": "Sink",
       "stars": 7000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/sink"
     }
   },
   {
@@ -3749,7 +3887,8 @@
       "name": "Slugy",
       "stars": 92,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/slugy"
     }
   },
   {
@@ -3776,7 +3915,8 @@
       "name": "Tiledesk",
       "stars": 14,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/tiledesk"
     }
   },
   {
@@ -3803,7 +3943,8 @@
       "name": "TryPost",
       "stars": 536,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/trypost"
     }
   },
   {
@@ -3830,7 +3971,8 @@
       "name": "Usertour",
       "stars": 2300,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/usertour"
     }
   },
   {
@@ -3857,7 +3999,8 @@
       "name": "useSend",
       "stars": 4600,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/usesend"
     }
   },
   {
@@ -3884,7 +4027,8 @@
       "name": "WR.DO",
       "stars": 2300,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/wr-do"
     }
   },
   {
@@ -3911,7 +4055,8 @@
       "name": "Wraps",
       "stars": 56,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/wraps"
     }
   },
   {
@@ -3938,7 +4083,8 @@
       "name": "Zammad",
       "stars": 5900,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/zammad"
     }
   },
   {
@@ -3965,7 +4111,8 @@
       "name": "Akaunting",
       "stars": 10000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/akaunting"
     }
   },
   {
@@ -3992,7 +4139,8 @@
       "name": "Autumn",
       "stars": 2600,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/autumn"
     }
   },
   {
@@ -4019,7 +4167,8 @@
       "name": "Bigcapital",
       "stars": 3800,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/bigcapital"
     }
   },
   {
@@ -4046,7 +4195,8 @@
       "name": "Crater",
       "stars": 8300,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/crater"
     }
   },
   {
@@ -4073,7 +4223,8 @@
       "name": "Expensify",
       "stars": 5000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/expensify"
     }
   },
   {
@@ -4100,7 +4251,8 @@
       "name": "ezBookkeeping",
       "stars": 5400,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/ezbookkeeping"
     }
   },
   {
@@ -4127,7 +4279,8 @@
       "name": "Flexprice",
       "stars": 4400,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/flexprice"
     }
   },
   {
@@ -4154,7 +4307,8 @@
       "name": "Flowglad",
       "stars": 1700,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/flowglad"
     }
   },
   {
@@ -4181,7 +4335,8 @@
       "name": "Formance",
       "stars": 518,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/formance"
     }
   },
   {
@@ -4208,7 +4363,8 @@
       "name": "Frappe Books",
       "stars": 4900,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/frappe-books"
     }
   },
   {
@@ -4235,7 +4391,8 @@
       "name": "Gumroad",
       "stars": 9600,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/gumroad"
     }
   },
   {
@@ -4262,7 +4419,8 @@
       "name": "Hyperswitch",
       "stars": 44000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/hyperswitch"
     }
   },
   {
@@ -4289,7 +4447,8 @@
       "name": "Invoice Ninja",
       "stars": 10000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/invoice-ninja"
     }
   },
   {
@@ -4316,7 +4475,8 @@
       "name": "Kimai",
       "stars": 4900,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/kimai"
     }
   },
   {
@@ -4343,7 +4503,8 @@
       "name": "Lago",
       "stars": 10000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/lago"
     }
   },
   {
@@ -4370,7 +4531,8 @@
       "name": "Meteroid",
       "stars": 1200,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/meteroid"
     }
   },
   {
@@ -4397,7 +4559,8 @@
       "name": "Midday",
       "stars": 15000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/midday"
     }
   },
   {
@@ -4424,7 +4587,8 @@
       "name": "OpenBB",
       "stars": 72000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/openbb"
     }
   },
   {
@@ -4451,7 +4615,8 @@
       "name": "OpenMeter",
       "stars": 2200,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/openmeter"
     }
   },
   {
@@ -4478,7 +4643,8 @@
       "name": "Paymenter",
       "stars": 2300,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/paymenter"
     }
   },
   {
@@ -4505,7 +4671,8 @@
       "name": "Polar",
       "stars": 10000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/polar"
     }
   },
   {
@@ -4532,7 +4699,8 @@
       "name": "Spliit",
       "stars": 2900,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/spliit"
     }
   },
   {
@@ -4559,7 +4727,8 @@
       "name": "Suprascribe",
       "stars": 10,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/suprascribe"
     }
   },
   {
@@ -4586,7 +4755,8 @@
       "name": "UniBee",
       "stars": 229,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/unibee"
     }
   },
   {
@@ -4613,7 +4783,8 @@
       "name": "ClearFlask",
       "stars": 448,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/clearflask"
     }
   },
   {
@@ -4640,7 +4811,8 @@
       "name": "Fider",
       "stars": 4500,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/fider"
     }
   },
   {
@@ -4667,7 +4839,8 @@
       "name": "Formbricks",
       "stars": 13000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/formbricks"
     }
   },
   {
@@ -4694,7 +4867,8 @@
       "name": "LogChimp",
       "stars": 1100,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/logchimp"
     }
   },
   {
@@ -4721,7 +4895,8 @@
       "name": "Reflet",
       "stars": 33,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/reflet"
     }
   },
   {
@@ -4748,7 +4923,8 @@
       "name": "SAMA",
       "stars": 158,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/sama"
     }
   },
   {
@@ -4775,7 +4951,8 @@
       "name": "UserTourKit",
       "stars": 61,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/usertourkit"
     }
   },
   {
@@ -4802,7 +4979,8 @@
       "name": "Alokai",
       "stars": 11000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/alokai"
     }
   },
   {
@@ -4829,7 +5007,8 @@
       "name": "Bagisto",
       "stars": 28000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/bagisto"
     }
   },
   {
@@ -4856,7 +5035,8 @@
       "name": "Medusa",
       "stars": 36000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/medusa"
     }
   },
   {
@@ -4883,7 +5063,8 @@
       "name": "Saleor",
       "stars": 23000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/saleor"
     }
   },
   {
@@ -4910,7 +5091,8 @@
       "name": "Shopware",
       "stars": 3400,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/shopware"
     }
   },
   {
@@ -4937,7 +5119,8 @@
       "name": "Solidus",
       "stars": 5300,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/solidus"
     }
   },
   {
@@ -4964,7 +5147,8 @@
       "name": "Spree Commerce",
       "stars": 16000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/spree-commerce"
     }
   },
   {
@@ -4991,7 +5175,8 @@
       "name": "UnoPim",
       "stars": 11000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/unopim"
     }
   },
   {
@@ -5018,7 +5203,8 @@
       "name": "Vendure",
       "stars": 8400,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/vendure"
     }
   },
   {
@@ -5045,7 +5231,8 @@
       "name": "WooCommerce",
       "stars": 10000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/woocommerce"
     }
   },
   {
@@ -5072,7 +5259,8 @@
       "name": "Your Next Store (YNS)",
       "stars": 5500,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/yournextstore"
     }
   },
   {
@@ -5099,7 +5287,8 @@
       "name": "Baserow",
       "stars": 5700,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/baserow"
     }
   },
   {
@@ -5126,7 +5315,8 @@
       "name": "Macro Chat",
       "stars": 4000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/macro-chat"
     }
   },
   {
@@ -5153,7 +5343,8 @@
       "name": "Affine",
       "stars": 72000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/affine"
     }
   },
   {
@@ -5180,7 +5371,8 @@
       "name": "Buzz",
       "stars": 30000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/buzz"
     }
   },
   {
@@ -5207,7 +5399,8 @@
       "name": "Campfire",
       "stars": 4500,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/campfire"
     }
   },
   {
@@ -5234,7 +5427,8 @@
       "name": "Cinny",
       "stars": 3900,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/cinny"
     }
   },
   {
@@ -5261,7 +5455,8 @@
       "name": "Colanode",
       "stars": 5000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/colanode"
     }
   },
   {
@@ -5288,7 +5483,8 @@
       "name": "dDocs",
       "stars": 398,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/ddocs"
     }
   },
   {
@@ -5315,7 +5511,8 @@
       "name": "Docs",
       "stars": 17000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/docs"
     }
   },
   {
@@ -5342,7 +5539,8 @@
       "name": "Element",
       "stars": 13000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/element"
     }
   },
   {
@@ -5369,7 +5567,8 @@
       "name": "Ethora",
       "stars": 542,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/ethora"
     }
   },
   {
@@ -5396,7 +5595,8 @@
       "name": "Ever Teams",
       "stars": 544,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/ever-teams"
     }
   },
   {
@@ -5423,7 +5623,8 @@
       "name": "Excalidraw",
       "stars": 130000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/excalidraw"
     }
   },
   {
@@ -5450,7 +5651,8 @@
       "name": "Fluxer",
       "stars": 10000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/fluxer"
     }
   },
   {
@@ -5477,7 +5679,8 @@
       "name": "Huly",
       "stars": 27000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/huly"
     }
   },
   {
@@ -5504,7 +5707,8 @@
       "name": "Jitsi",
       "stars": 30000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/jitsi"
     }
   },
   {
@@ -5531,7 +5735,8 @@
       "name": "Mattermost",
       "stars": 39000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/mattermost"
     }
   },
   {
@@ -5558,7 +5763,8 @@
       "name": "Mezon",
       "stars": 1600,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/mezon"
     }
   },
   {
@@ -5585,7 +5791,8 @@
       "name": "Nextcloud",
       "stars": 37000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/nextcloud"
     }
   },
   {
@@ -5612,7 +5819,8 @@
       "name": "Plane",
       "stars": 57000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/plane"
     }
   },
   {
@@ -5639,7 +5847,8 @@
       "name": "Quiet",
       "stars": 2600,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/quiet"
     }
   },
   {
@@ -5666,7 +5875,8 @@
       "name": "Rocket.Chat",
       "stars": 46000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/rocket-chat"
     }
   },
   {
@@ -5693,7 +5903,8 @@
       "name": "Stoat",
       "stars": 3200,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/stoat"
     }
   },
   {
@@ -5720,7 +5931,8 @@
       "name": "Sync-in",
       "stars": 1700,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/sync-in"
     }
   },
   {
@@ -5747,7 +5959,8 @@
       "name": "Teable",
       "stars": 22000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/teable"
     }
   },
   {
@@ -5774,7 +5987,8 @@
       "name": "Tldraw",
       "stars": 50000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/tldraw"
     }
   },
   {
@@ -5801,7 +6015,8 @@
       "name": "Twake Chat",
       "stars": 163,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/twake-chat"
     }
   },
   {
@@ -5828,7 +6043,8 @@
       "name": "UnInbox",
       "stars": 1800,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/uninbox"
     }
   },
   {
@@ -5855,7 +6071,8 @@
       "name": "Wire",
       "stars": 2500,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/wire"
     }
   },
   {
@@ -5882,7 +6099,8 @@
       "name": "Workadventure",
       "stars": 5700,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/workadventure"
     }
   },
   {
@@ -5909,7 +6127,8 @@
       "name": "Zulip",
       "stars": 26000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/zulip"
     }
   },
   {
@@ -5936,7 +6155,8 @@
       "name": "Cal.com",
       "stars": 48000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/cal-com"
     }
   },
   {
@@ -5963,7 +6183,8 @@
       "name": "Chobble Tickets",
       "stars": 31,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/chobble-tickets"
     }
   },
   {
@@ -5990,7 +6211,8 @@
       "name": "Easy!Appointments",
       "stars": 4300,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/easy-appointments"
     }
   },
   {
@@ -6017,7 +6239,8 @@
       "name": "Hi.Events",
       "stars": 4000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/hi-events"
     }
   },
   {
@@ -6044,7 +6267,8 @@
       "name": "Rallly",
       "stars": 5200,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/rallly"
     }
   },
   {
@@ -6071,7 +6295,8 @@
       "name": "Documenso",
       "stars": 15000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/documenso"
     }
   },
   {
@@ -6098,7 +6323,8 @@
       "name": "Docuseal",
       "stars": 18000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/docuseal"
     }
   },
   {
@@ -6125,7 +6351,8 @@
       "name": "OpenSign",
       "stars": 6900,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/opensign"
     }
   },
   {
@@ -6152,7 +6379,8 @@
       "name": "Paperless-home",
       "stars": 45000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/paperless-home"
     }
   },
   {
@@ -6179,7 +6407,8 @@
       "name": "Papermark",
       "stars": 9000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/papermark"
     }
   },
   {
@@ -6206,7 +6435,8 @@
       "name": "Papra",
       "stars": 5200,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/papra"
     }
   },
   {
@@ -6233,7 +6463,8 @@
       "name": "Seafile",
       "stars": 15000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/seafile"
     }
   },
   {
@@ -6260,7 +6491,8 @@
       "name": "Wraft",
       "stars": 163,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/wraft"
     }
   },
   {
@@ -6287,7 +6519,8 @@
       "name": "Formizee",
       "stars": 183,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/formizee"
     }
   },
   {
@@ -6314,7 +6547,8 @@
       "name": "HeyForm",
       "stars": 8900,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/heyform"
     }
   },
   {
@@ -6341,7 +6575,8 @@
       "name": "Ikiform",
       "stars": 356,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/ikiform"
     }
   },
   {
@@ -6368,7 +6603,8 @@
       "name": "LimeSurvey",
       "stars": 3700,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/limesurvey"
     }
   },
   {
@@ -6395,7 +6631,8 @@
       "name": "OpnForm",
       "stars": 3600,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/opnform"
     }
   },
   {
@@ -6422,7 +6659,8 @@
       "name": "Palform",
       "stars": 45,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/palform"
     }
   },
   {
@@ -6449,7 +6687,8 @@
       "name": "Openlane",
       "stars": 293,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/openlane"
     }
   },
   {
@@ -6476,7 +6715,8 @@
       "name": "Probo",
       "stars": 1300,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/probo"
     }
   },
   {
@@ -6503,7 +6743,8 @@
       "name": "Ballerine",
       "stars": 2400,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/ballerine"
     }
   },
   {
@@ -6530,7 +6771,8 @@
       "name": "c15t",
       "stars": 1900,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/c15t"
     }
   },
   {
@@ -6557,7 +6799,8 @@
       "name": "Comp AI",
       "stars": 1900,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/comp"
     }
   },
   {
@@ -6584,7 +6827,8 @@
       "name": "OpenPolicy",
       "stars": 160,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/openpolicy"
     }
   },
   {
@@ -6611,7 +6855,8 @@
       "name": "Macro Tasks",
       "stars": 4000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/macro-tasks"
     }
   },
   {
@@ -6638,7 +6883,8 @@
       "name": "AppFlowy",
       "stars": 76000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/appflowy"
     }
   },
   {
@@ -6665,7 +6911,8 @@
       "name": "Donetick",
       "stars": 2500,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/donetick"
     }
   },
   {
@@ -6692,7 +6939,8 @@
       "name": "Fizzy",
       "stars": 8100,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/fizzy"
     }
   },
   {
@@ -6719,7 +6967,8 @@
       "name": "Freeter",
       "stars": 1000,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/freeter"
     }
   },
   {
@@ -6746,7 +6995,8 @@
       "name": "GitLab",
       "stars": 25000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/gitlab"
     }
   },
   {
@@ -6773,7 +7023,8 @@
       "name": "Kan",
       "stars": 5500,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/kan"
     }
   },
   {
@@ -6800,7 +7051,8 @@
       "name": "Kanba",
       "stars": 647,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/kanba"
     }
   },
   {
@@ -6827,7 +7079,8 @@
       "name": "Kaneo",
       "stars": 8500,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/kaneo"
     }
   },
   {
@@ -6854,7 +7107,8 @@
       "name": "Kanri",
       "stars": 2000,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/kanri"
     }
   },
   {
@@ -6881,7 +7135,8 @@
       "name": "Leantime",
       "stars": 11000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/leantime"
     }
   },
   {
@@ -6908,7 +7163,8 @@
       "name": "Manage",
       "stars": 68,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/manage"
     }
   },
   {
@@ -6935,7 +7191,8 @@
       "name": "OpenProject",
       "stars": 16000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/openproject"
     }
   },
   {
@@ -6962,7 +7219,8 @@
       "name": "Operately",
       "stars": 544,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/operately"
     }
   },
   {
@@ -6989,7 +7247,8 @@
       "name": "Orgnise",
       "stars": 246,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/orgnise"
     }
   },
   {
@@ -7016,7 +7275,8 @@
       "name": "Planka",
       "stars": 12000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/planka"
     }
   },
   {
@@ -7043,7 +7303,8 @@
       "name": "Sayr",
       "stars": 20,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/sayr"
     }
   },
   {
@@ -7070,7 +7331,8 @@
       "name": "Shelve",
       "stars": 451,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/shelve"
     }
   },
   {
@@ -7097,7 +7359,8 @@
       "name": "ShipShipShip",
       "stars": 297,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/shipshipship"
     }
   },
   {
@@ -7124,7 +7387,8 @@
       "name": "Super Productivity",
       "stars": 22000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/super-productivity"
     }
   },
   {
@@ -7151,7 +7415,8 @@
       "name": "Taiga",
       "stars": 847,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/taiga"
     }
   },
   {
@@ -7178,7 +7443,8 @@
       "name": "Vikunja",
       "stars": 5100,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/vikunja"
     }
   },
   {
@@ -7205,7 +7471,8 @@
       "name": "Wekan",
       "stars": 21000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/wekan"
     }
   },
   {
@@ -7232,7 +7499,8 @@
       "name": "Windshift",
       "stars": 103,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/windshift"
     }
   },
   {
@@ -7259,7 +7527,8 @@
       "name": "Worklenz",
       "stars": 3200,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/worklenz"
     }
   },
   {
@@ -7286,7 +7555,8 @@
       "name": "Mike",
       "stars": 4100,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/mike"
     }
   },
   {
@@ -7313,7 +7583,8 @@
       "name": "Bluesky",
       "stars": 18000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/bluesky"
     }
   },
   {
@@ -7340,7 +7611,8 @@
       "name": "Hey",
       "stars": 29000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/hey"
     }
   },
   {
@@ -7367,7 +7639,8 @@
       "name": "Lemmy",
       "stars": 15000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/lemmy"
     }
   },
   {
@@ -7394,7 +7667,8 @@
       "name": "Loops",
       "stars": 443,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/loops"
     }
   },
   {
@@ -7421,7 +7695,8 @@
       "name": "Mastodon",
       "stars": 50000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/mastodon"
     }
   },
   {
@@ -7448,7 +7723,8 @@
       "name": "PeerTube",
       "stars": 15000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/peertube"
     }
   },
   {
@@ -7475,7 +7751,8 @@
       "name": "Pixelfed",
       "stars": 7100,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/pixelfed"
     }
   },
   {
@@ -7502,7 +7779,8 @@
       "name": "BugPin",
       "stars": 29,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/bugpin"
     }
   },
   {
@@ -7529,7 +7807,8 @@
       "name": "Apache Answer",
       "stars": 16000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/apache-answer"
     }
   },
   {
@@ -7556,7 +7835,8 @@
       "name": "Discourse",
       "stars": 48000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/discourse"
     }
   },
   {
@@ -7583,7 +7863,8 @@
       "name": "Flarum",
       "stars": 16000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/flarum"
     }
   },
   {
@@ -7610,7 +7891,8 @@
       "name": "LearnHouse",
       "stars": 2200,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/learnhouse"
     }
   },
   {
@@ -7637,7 +7919,8 @@
       "name": "Storyden",
       "stars": 330,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/storyden"
     }
   },
   {
@@ -7664,7 +7947,8 @@
       "name": "Builder",
       "stars": 8800,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/builder"
     }
   },
   {
@@ -7691,7 +7975,8 @@
       "name": "Craft CMS",
       "stars": 3600,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/craft-cms"
     }
   },
   {
@@ -7718,7 +8003,8 @@
       "name": "Directus",
       "stars": 37000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/directus"
     }
   },
   {
@@ -7745,7 +8031,8 @@
       "name": "Drupal",
       "stars": 4300,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/drupal"
     }
   },
   {
@@ -7772,7 +8059,8 @@
       "name": "Ghost",
       "stars": 55000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/ghost"
     }
   },
   {
@@ -7799,7 +8087,8 @@
       "name": "KeystoneJS",
       "stars": 10000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/keystonejs"
     }
   },
   {
@@ -7826,7 +8115,8 @@
       "name": "Marble CMS",
       "stars": 381,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/marble-cms"
     }
   },
   {
@@ -7853,7 +8143,8 @@
       "name": "Payload",
       "stars": 44000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/payload"
     }
   },
   {
@@ -7880,7 +8171,8 @@
       "name": "ProcessWire",
       "stars": 1100,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/processwire"
     }
   },
   {
@@ -7907,7 +8199,8 @@
       "name": "Statamic",
       "stars": 4900,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/statamic"
     }
   },
   {
@@ -7934,7 +8227,8 @@
       "name": "Strapi",
       "stars": 73000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/strapi"
     }
   },
   {
@@ -7961,7 +8255,8 @@
       "name": "TinaCMS",
       "stars": 14000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/tinacms"
     }
   },
   {
@@ -7988,7 +8283,8 @@
       "name": "Twill CMS",
       "stars": 4000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/twill-cms"
     }
   },
   {
@@ -8015,7 +8311,8 @@
       "name": "Typemill",
       "stars": 612,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/typemill"
     }
   },
   {
@@ -8042,7 +8339,8 @@
       "name": "Vvveb CMS",
       "stars": 1200,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/vvveb-cms"
     }
   },
   {
@@ -8069,7 +8367,8 @@
       "name": "Webiny",
       "stars": 8000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/webiny"
     }
   },
   {
@@ -8096,7 +8395,8 @@
       "name": "WordPress",
       "stars": 21000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/wordpress"
     }
   },
   {
@@ -8123,7 +8423,8 @@
       "name": "Pagecord",
       "stars": 188,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/pagecord"
     }
   },
   {
@@ -8150,7 +8451,8 @@
       "name": "Sigle",
       "stars": 490,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/sigle"
     }
   },
   {
@@ -8177,7 +8479,8 @@
       "name": "Zenblog",
       "stars": 253,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/zenblog"
     }
   },
   {
@@ -8204,7 +8507,8 @@
       "name": "Valour",
       "stars": 393,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/valour"
     }
   },
   {
@@ -8231,7 +8535,8 @@
       "name": "Changes.Page",
       "stars": 284,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/changes-page"
     }
   },
   {
@@ -8258,7 +8563,8 @@
       "name": "Docmost",
       "stars": 21000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/docmost"
     }
   },
   {
@@ -8285,7 +8591,8 @@
       "name": "Firecamp",
       "stars": 2600,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/firecamp"
     }
   },
   {
@@ -8312,7 +8619,8 @@
       "name": "Fumadocs",
       "stars": 13000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/fumadocs"
     }
   },
   {
@@ -8339,7 +8647,8 @@
       "name": "Outline",
       "stars": 40000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/outline"
     }
   },
   {
@@ -8366,7 +8675,8 @@
       "name": "Scalar",
       "stars": 16000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/scalar"
     }
   },
   {
@@ -8393,7 +8703,8 @@
       "name": "Vrite",
       "stars": 2000,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/vrite"
     }
   },
   {
@@ -8420,7 +8731,8 @@
       "name": "XWiki",
       "stars": 1300,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/xwiki"
     }
   },
   {
@@ -8447,7 +8759,8 @@
       "name": "xyd",
       "stars": 113,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/xyd"
     }
   },
   {
@@ -8474,7 +8787,8 @@
       "name": "ClassroomIO",
       "stars": 1700,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/classroomio"
     }
   },
   {
@@ -8501,7 +8815,8 @@
       "name": "CourseLit",
       "stars": 1300,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/courselit"
     }
   },
   {
@@ -8528,7 +8843,8 @@
       "name": "Ente",
       "stars": 28000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/ente"
     }
   },
   {
@@ -8555,7 +8871,8 @@
       "name": "Immich",
       "stars": 112000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/immich"
     }
   },
   {
@@ -8582,7 +8899,8 @@
       "name": "Lychee",
       "stars": 4300,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/lychee"
     }
   },
   {
@@ -8609,7 +8927,8 @@
       "name": "Openinary",
       "stars": 382,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/openinary"
     }
   },
   {
@@ -8636,7 +8955,8 @@
       "name": "Piwigo",
       "stars": 3800,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/piwigo"
     }
   },
   {
@@ -8663,7 +8983,8 @@
       "name": "Tolgee",
       "stars": 4100,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/tolgee"
     }
   },
   {
@@ -8690,7 +9011,8 @@
       "name": "Languine",
       "stars": 2000,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/languine"
     }
   },
   {
@@ -8717,7 +9039,8 @@
       "name": "LibreTranslate",
       "stars": 16000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/libretranslate"
     }
   },
   {
@@ -8744,7 +9067,8 @@
       "name": "Lingo.dev",
       "stars": 5400,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/lingo"
     }
   },
   {
@@ -8771,7 +9095,8 @@
       "name": "Weblate",
       "stars": 6000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/weblate"
     }
   },
   {
@@ -8798,7 +9123,8 @@
       "name": "Crawl4AI",
       "stars": 79000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/crawl4ai"
     }
   },
   {
@@ -8825,7 +9151,8 @@
       "name": "Firecrawl",
       "stars": 171000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/firecrawl"
     }
   },
   {
@@ -8852,7 +9179,8 @@
       "name": "Maxun",
       "stars": 17000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/maxun"
     }
   },
   {
@@ -8879,7 +9207,8 @@
       "name": "OpenSERP",
       "stars": 1300,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/openserp"
     }
   },
   {
@@ -8906,7 +9235,8 @@
       "name": "Apache Cloudberry",
       "stars": 1400,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/cloudberry"
     }
   },
   {
@@ -8933,7 +9263,8 @@
       "name": "Apache Pinot",
       "stars": 6100,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/apache-pinot"
     }
   },
   {
@@ -8960,7 +9291,8 @@
       "name": "ClickHouse",
       "stars": 49000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/clickhouse"
     }
   },
   {
@@ -8987,7 +9319,8 @@
       "name": "Databend",
       "stars": 9400,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/databend"
     }
   },
   {
@@ -9014,7 +9347,8 @@
       "name": "Logstash",
       "stars": 15000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/logstash"
     }
   },
   {
@@ -9041,7 +9375,8 @@
       "name": "Timeplus",
       "stars": 2200,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/timeplus"
     }
   },
   {
@@ -9068,7 +9403,8 @@
       "name": "Trench",
       "stars": 1700,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/trench"
     }
   },
   {
@@ -9095,7 +9431,8 @@
       "name": "OpenPanel",
       "stars": 6800,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/openpanel"
     }
   },
   {
@@ -9122,7 +9459,8 @@
       "name": "Aptabase",
       "stars": 1800,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/aptabase"
     }
   },
   {
@@ -9149,7 +9487,8 @@
       "name": "Betterlytics",
       "stars": 174,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/betterlytics"
     }
   },
   {
@@ -9176,7 +9515,8 @@
       "name": "Countly",
       "stars": 5900,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/countly"
     }
   },
   {
@@ -9203,7 +9543,8 @@
       "name": "Databuddy",
       "stars": 1100,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/databuddy"
     }
   },
   {
@@ -9230,7 +9571,8 @@
       "name": "Fathom Lite",
       "stars": 8000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/fathom"
     }
   },
   {
@@ -9257,7 +9599,8 @@
       "name": "GrowthBook",
       "stars": 8200,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/growthbook"
     }
   },
   {
@@ -9284,7 +9627,8 @@
       "name": "HitKeep",
       "stars": 83,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/hitkeep"
     }
   },
   {
@@ -9311,7 +9655,8 @@
       "name": "Litlyx",
       "stars": 1700,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/litlyx"
     }
   },
   {
@@ -9338,7 +9683,8 @@
       "name": "Matomo",
       "stars": 22000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/matomo"
     }
   },
   {
@@ -9365,7 +9711,8 @@
       "name": "OpenReplay",
       "stars": 13000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/openreplay"
     }
   },
   {
@@ -9392,7 +9739,8 @@
       "name": "OpenWebAnalytics",
       "stars": 2700,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/openwebanalytics"
     }
   },
   {
@@ -9419,7 +9767,8 @@
       "name": "Plausible",
       "stars": 29000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/plausible"
     }
   },
   {
@@ -9446,7 +9795,8 @@
       "name": "PostHog",
       "stars": 39000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/posthog"
     }
   },
   {
@@ -9473,7 +9823,8 @@
       "name": "Prisme Analytics",
       "stars": 129,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/prisme-analytics"
     }
   },
   {
@@ -9500,7 +9851,8 @@
       "name": "Rybbit",
       "stars": 13000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/rybbit"
     }
   },
   {
@@ -9527,7 +9879,8 @@
       "name": "Swetrix",
       "stars": 1200,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/swetrix"
     }
   },
   {
@@ -9554,7 +9907,8 @@
       "name": "Umami",
       "stars": 38000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/umami"
     }
   },
   {
@@ -9581,7 +9935,8 @@
       "name": "Vemetric",
       "stars": 382,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/vemetric"
     }
   },
   {
@@ -9608,7 +9963,8 @@
       "name": "Apache Superset",
       "stars": 74000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/apache-superset"
     }
   },
   {
@@ -9635,7 +9991,8 @@
       "name": "Azimutt",
       "stars": 2200,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/azimutt"
     }
   },
   {
@@ -9662,7 +10019,8 @@
       "name": "Chartbrew",
       "stars": 4000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/chartbrew"
     }
   },
   {
@@ -9689,7 +10047,8 @@
       "name": "draw.io",
       "stars": 7700,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/draw-io"
     }
   },
   {
@@ -9716,7 +10075,8 @@
       "name": "drawDB",
       "stars": 39000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/drawdb"
     }
   },
   {
@@ -9743,7 +10103,8 @@
       "name": "Evidence",
       "stars": 6900,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/evidence"
     }
   },
   {
@@ -9770,7 +10131,8 @@
       "name": "Frappe Insights",
       "stars": 1000,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/frappe-insights"
     }
   },
   {
@@ -9797,7 +10159,8 @@
       "name": "Grafana",
       "stars": 76000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/grafana"
     }
   },
   {
@@ -9824,7 +10187,8 @@
       "name": "Grist",
       "stars": 12000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/grist"
     }
   },
   {
@@ -9851,7 +10215,8 @@
       "name": "Lightdash",
       "stars": 6100,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/lightdash"
     }
   },
   {
@@ -9878,7 +10243,8 @@
       "name": "Mermaid",
       "stars": 90000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/mermaid"
     }
   },
   {
@@ -9905,7 +10271,8 @@
       "name": "Metabase",
       "stars": 49000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/metabase"
     }
   },
   {
@@ -9932,7 +10299,8 @@
       "name": "Redash",
       "stars": 29000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/redash"
     }
   },
   {
@@ -9959,7 +10327,8 @@
       "name": "Airbyte",
       "stars": 22000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/airbyte"
     }
   },
   {
@@ -9986,7 +10355,8 @@
       "name": "CloudQuery",
       "stars": 6500,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/cloudquery"
     }
   },
   {
@@ -10013,7 +10383,8 @@
       "name": "CocoIndex",
       "stars": 11000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/cocoindex"
     }
   },
   {
@@ -10040,7 +10411,8 @@
       "name": "Cube",
       "stars": 21000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/cube"
     }
   },
   {
@@ -10067,7 +10439,8 @@
       "name": "Elementary Data",
       "stars": 2400,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/elementary-data"
     }
   },
   {
@@ -10094,7 +10467,8 @@
       "name": "Impler",
       "stars": 290,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/impler"
     }
   },
   {
@@ -10121,7 +10495,8 @@
       "name": "Jitsu",
       "stars": 5000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/jitsu"
     }
   },
   {
@@ -10148,7 +10523,8 @@
       "name": "Kestra",
       "stars": 28000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/kestra"
     }
   },
   {
@@ -10175,7 +10551,8 @@
       "name": "Mage",
       "stars": 8800,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/mage"
     }
   },
   {
@@ -10202,7 +10579,8 @@
       "name": "Open Wearables",
       "stars": 2400,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/open-wearables"
     }
   },
   {
@@ -10229,7 +10607,8 @@
       "name": "Orbital",
       "stars": 360,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/orbital"
     }
   },
   {
@@ -10256,7 +10635,8 @@
       "name": "Frappe Builder",
       "stars": 2300,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/frappe-builder"
     }
   },
   {
@@ -10283,7 +10663,8 @@
       "name": "Nordcraft",
       "stars": 487,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/nordcraft"
     }
   },
   {
@@ -10310,7 +10691,8 @@
       "name": "Silex",
       "stars": 2900,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/silex"
     }
   },
   {
@@ -10337,7 +10719,8 @@
       "name": "WebStudio",
       "stars": 8900,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/webstudio"
     }
   },
   {
@@ -10364,7 +10747,8 @@
       "name": "Ycode",
       "stars": 279,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/ycode"
     }
   },
   {
@@ -10391,7 +10775,8 @@
       "name": "CodeEdit",
       "stars": 23000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/codeedit"
     }
   },
   {
@@ -10418,7 +10803,8 @@
       "name": "Kilo",
       "stars": 27000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/kilocode"
     }
   },
   {
@@ -10445,7 +10831,8 @@
       "name": "Zed",
       "stars": 89000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/zed"
     }
   },
   {
@@ -10472,7 +10859,8 @@
       "name": "ActivePieces",
       "stars": 24000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/activepieces"
     }
   },
   {
@@ -10499,7 +10887,8 @@
       "name": "AITable",
       "stars": 16000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/apitable"
     }
   },
   {
@@ -10526,7 +10915,8 @@
       "name": "AppSmith",
       "stars": 41000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/appsmith"
     }
   },
   {
@@ -10553,7 +10943,8 @@
       "name": "Appwrite",
       "stars": 57000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/appwrite"
     }
   },
   {
@@ -10580,7 +10971,8 @@
       "name": "Automa",
       "stars": 22000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/automa"
     }
   },
   {
@@ -10607,7 +10999,8 @@
       "name": "Bknd",
       "stars": 3800,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/bknd"
     }
   },
   {
@@ -10634,7 +11027,8 @@
       "name": "Budibase",
       "stars": 28000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/budibase"
     }
   },
   {
@@ -10661,7 +11055,8 @@
       "name": "Capgo",
       "stars": 205,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/capgo"
     }
   },
   {
@@ -10688,7 +11083,8 @@
       "name": "Convex",
       "stars": 12000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/convex"
     }
   },
   {
@@ -10715,7 +11111,8 @@
       "name": "Encore",
       "stars": 12000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/encore"
     }
   },
   {
@@ -10742,7 +11139,8 @@
       "name": "Grida",
       "stars": 2600,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/grida"
     }
   },
   {
@@ -10769,7 +11167,8 @@
       "name": "Hatchet",
       "stars": 7800,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/hatchet"
     }
   },
   {
@@ -10796,7 +11195,8 @@
       "name": "Hercules",
       "stars": 1100,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/hercules"
     }
   },
   {
@@ -10823,7 +11223,8 @@
       "name": "Hexabot",
       "stars": 1200,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/hexabot"
     }
   },
   {
@@ -10850,7 +11251,8 @@
       "name": "Inngest",
       "stars": 5800,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/inngest"
     }
   },
   {
@@ -10877,7 +11279,8 @@
       "name": "Instant",
       "stars": 10000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/instant"
     }
   },
   {
@@ -10904,7 +11307,8 @@
       "name": "LyteNyte Grid",
       "stars": 1000,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/lytenyte-grid"
     }
   },
   {
@@ -10931,7 +11335,8 @@
       "name": "Mathesar",
       "stars": 5100,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/mathesar"
     }
   },
   {
@@ -10958,7 +11363,8 @@
       "name": "Mockoon",
       "stars": 8400,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/mockoon"
     }
   },
   {
@@ -10985,7 +11391,8 @@
       "name": "n8n",
       "stars": 202000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/n8n"
     }
   },
   {
@@ -11012,7 +11419,8 @@
       "name": "NHost",
       "stars": 9300,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/nhost"
     }
   },
   {
@@ -11039,7 +11447,8 @@
       "name": "NocoBase",
       "stars": 24000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/nocobase"
     }
   },
   {
@@ -11066,7 +11475,8 @@
       "name": "NocoDB",
       "stars": 65000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/nocodb"
     }
   },
   {
@@ -11093,7 +11503,8 @@
       "name": "Onlook",
       "stars": 27000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/onlook"
     }
   },
   {
@@ -11120,7 +11531,8 @@
       "name": "Plasmic",
       "stars": 7000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/plasmic"
     }
   },
   {
@@ -11147,7 +11559,8 @@
       "name": "PocketBase",
       "stars": 61000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/pocketbase"
     }
   },
   {
@@ -11174,7 +11587,8 @@
       "name": "Refine",
       "stars": 36000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/refine"
     }
   },
   {
@@ -11201,7 +11615,8 @@
       "name": "Reflex",
       "stars": 29000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/reflex"
     }
   },
   {
@@ -11228,7 +11643,8 @@
       "name": "Rowy",
       "stars": 6800,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/rowy"
     }
   },
   {
@@ -11255,7 +11671,8 @@
       "name": "Structr",
       "stars": 828,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/structr"
     }
   },
   {
@@ -11282,7 +11699,8 @@
       "name": "Supabase",
       "stars": 108000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/supabase"
     }
   },
   {
@@ -11309,7 +11727,8 @@
       "name": "Tailcall",
       "stars": 1400,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/tailcall"
     }
   },
   {
@@ -11336,7 +11755,8 @@
       "name": "TipTap",
       "stars": 38000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/tiptap"
     }
   },
   {
@@ -11363,7 +11783,8 @@
       "name": "ToolJet",
       "stars": 41000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/tooljet"
     }
   },
   {
@@ -11390,7 +11811,8 @@
       "name": "Trigger",
       "stars": 16000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/trigger"
     }
   },
   {
@@ -11417,7 +11839,8 @@
       "name": "undb",
       "stars": 3000,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/undb"
     }
   },
   {
@@ -11444,7 +11867,8 @@
       "name": "WunderGraph",
       "stars": 1300,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/wundergraph"
     }
   },
   {
@@ -11471,7 +11895,8 @@
       "name": "Argos",
       "stars": 613,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/argos"
     }
   },
   {
@@ -11498,7 +11923,8 @@
       "name": "Quant-UX",
       "stars": 2700,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/quant-ux"
     }
   },
   {
@@ -11525,7 +11951,8 @@
       "name": "Unleash",
       "stars": 14000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/unleash"
     }
   },
   {
@@ -11552,7 +11979,8 @@
       "name": "/dev/push",
       "stars": 4700,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/dev-push"
     }
   },
   {
@@ -11579,7 +12007,8 @@
       "name": "Bytebase",
       "stars": 14000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/bytebase"
     }
   },
   {
@@ -11606,7 +12035,8 @@
       "name": "Coolify",
       "stars": 61000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/coolify"
     }
   },
   {
@@ -11633,7 +12063,8 @@
       "name": "Digger",
       "stars": 5000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/digger"
     }
   },
   {
@@ -11660,7 +12091,8 @@
       "name": "Dokku",
       "stars": 32000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/dokku"
     }
   },
   {
@@ -11687,7 +12119,8 @@
       "name": "Dokploy",
       "stars": 37000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/dokploy"
     }
   },
   {
@@ -11714,7 +12147,8 @@
       "name": "Dyrector",
       "stars": 1800,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/dyrector"
     }
   },
   {
@@ -11741,7 +12175,8 @@
       "name": "FeatBit",
       "stars": 1900,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/featbit"
     }
   },
   {
@@ -11768,7 +12203,8 @@
       "name": "Flagsmith",
       "stars": 6500,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/flagsmith"
     }
   },
   {
@@ -11795,7 +12231,8 @@
       "name": "Harness",
       "stars": 38000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/harness"
     }
   },
   {
@@ -11822,7 +12259,8 @@
       "name": "Nitric",
       "stars": 2000,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/nitric"
     }
   },
   {
@@ -11849,7 +12287,8 @@
       "name": "Semaphore",
       "stars": 1600,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/semaphore"
     }
   },
   {
@@ -11876,7 +12315,8 @@
       "name": "Stormkit",
       "stars": 254,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/stormkit"
     }
   },
   {
@@ -11903,7 +12343,8 @@
       "name": "Temps",
       "stars": 670,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/temps"
     }
   },
   {
@@ -11930,7 +12371,8 @@
       "name": "Terrateam",
       "stars": 1300,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/terrateam"
     }
   },
   {
@@ -11957,7 +12399,8 @@
       "name": "Windmill",
       "stars": 18000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/windmill"
     }
   },
   {
@@ -11984,7 +12427,8 @@
       "name": "Woodpecker CI",
       "stars": 7700,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/woodpecker-ci"
     }
   },
   {
@@ -12011,7 +12455,8 @@
       "name": "Automatisch",
       "stars": 14000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/automatisch"
     }
   },
   {
@@ -12038,7 +12483,8 @@
       "name": "Hook0",
       "stars": 1500,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/hook0"
     }
   },
   {
@@ -12065,7 +12511,8 @@
       "name": "Krakend",
       "stars": 2700,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/krakend"
     }
   },
   {
@@ -12092,7 +12539,8 @@
       "name": "Bruno",
       "stars": 46000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/bruno"
     }
   },
   {
@@ -12119,7 +12567,8 @@
       "name": "Gravitee",
       "stars": 444,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/gravitee"
     }
   },
   {
@@ -12146,7 +12595,8 @@
       "name": "Hive",
       "stars": 485,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/hive"
     }
   },
   {
@@ -12173,7 +12623,8 @@
       "name": "Hoppscotch",
       "stars": 80000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/hoppscotch"
     }
   },
   {
@@ -12200,7 +12651,8 @@
       "name": "HTTPie",
       "stars": 4000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/httpie"
     }
   },
   {
@@ -12227,7 +12679,8 @@
       "name": "Insomnia",
       "stars": 40000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/insomnia"
     }
   },
   {
@@ -12254,7 +12707,8 @@
       "name": "Requestly",
       "stars": 6800,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/requestly"
     }
   },
   {
@@ -12281,7 +12735,8 @@
       "name": "Tyk",
       "stars": 11000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/tyk"
     }
   },
   {
@@ -12308,7 +12763,8 @@
       "name": "UnKey",
       "stars": 5400,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/unkey"
     }
   },
   {
@@ -12335,7 +12791,8 @@
       "name": "Voiden",
       "stars": 1500,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/voiden"
     }
   },
   {
@@ -12362,7 +12819,8 @@
       "name": "Yaak",
       "stars": 19000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/yaak"
     }
   },
   {
@@ -12389,7 +12847,8 @@
       "name": "Coder",
       "stars": 14000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/coder"
     }
   },
   {
@@ -12416,7 +12875,8 @@
       "name": "Forgejo",
       "stars": 5400,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/forgejo"
     }
   },
   {
@@ -12443,7 +12903,8 @@
       "name": "GitButler",
       "stars": 22000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/gitbutler"
     }
   },
   {
@@ -12470,7 +12931,8 @@
       "name": "GitComet",
       "stars": 751,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/gitcomet"
     }
   },
   {
@@ -12497,7 +12959,8 @@
       "name": "Gitea",
       "stars": 58000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/gitea"
     }
   },
   {
@@ -12524,7 +12987,8 @@
       "name": "Gogs",
       "stars": 48000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/gogs"
     }
   },
   {
@@ -12551,7 +13015,8 @@
       "name": "Opengrep",
       "stars": 3000,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/opengrep"
     }
   },
   {
@@ -12578,7 +13043,8 @@
       "name": "Aider",
       "stars": 48000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/aider"
     }
   },
   {
@@ -12605,7 +13071,8 @@
       "name": "Cline",
       "stars": 67000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/cline"
     }
   },
   {
@@ -12632,7 +13099,8 @@
       "name": "Continue",
       "stars": 36000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/continue"
     }
   },
   {
@@ -12659,7 +13127,8 @@
       "name": "Dyad",
       "stars": 21000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/dyad"
     }
   },
   {
@@ -12686,7 +13155,8 @@
       "name": "Emdash",
       "stars": 5500,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/emdash"
     }
   },
   {
@@ -12713,7 +13183,8 @@
       "name": "Forgecode",
       "stars": 7500,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/forgecode"
     }
   },
   {
@@ -12740,7 +13211,8 @@
       "name": "Frontman",
       "stars": 673,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/frontman"
     }
   },
   {
@@ -12767,7 +13239,8 @@
       "name": "Grok Build",
       "stars": 26000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/grok-build"
     }
   },
   {
@@ -12794,7 +13267,8 @@
       "name": "Kodus",
       "stars": 1300,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/kodus"
     }
   },
   {
@@ -12821,7 +13295,8 @@
       "name": "Omnigent",
       "stars": 9200,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/omnigent"
     }
   },
   {
@@ -12848,7 +13323,8 @@
       "name": "OmoiOS",
       "stars": 74,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/omoios"
     }
   },
   {
@@ -12875,7 +13351,8 @@
       "name": "OpenCode",
       "stars": 201000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/opencode"
     }
   },
   {
@@ -12902,7 +13379,8 @@
       "name": "OpenHands",
       "stars": 85000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/openhands"
     }
   },
   {
@@ -12929,7 +13407,8 @@
       "name": "Orca",
       "stars": 52000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/orca"
     }
   },
   {
@@ -12956,7 +13435,8 @@
       "name": "Paseo",
       "stars": 15000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/paseo"
     }
   },
   {
@@ -12983,7 +13463,8 @@
       "name": "pi",
       "stars": 96000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/pi"
     }
   },
   {
@@ -13010,7 +13491,8 @@
       "name": "Pullfrog",
       "stars": 1000,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/pullfrog"
     }
   },
   {
@@ -13037,7 +13519,8 @@
       "name": "Roomote",
       "stars": 201,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/roomote"
     }
   },
   {
@@ -13064,7 +13547,8 @@
       "name": "Superset",
       "stars": 13000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/superset"
     }
   },
   {
@@ -13091,7 +13575,8 @@
       "name": "SWE-agent",
       "stars": 20000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/swe-agent"
     }
   },
   {
@@ -13118,7 +13603,8 @@
       "name": "Synara",
       "stars": 1600,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/synara"
     }
   },
   {
@@ -13145,7 +13631,8 @@
       "name": "T3 Code",
       "stars": 20000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/t3-code"
     }
   },
   {
@@ -13172,7 +13659,8 @@
       "name": "Tabby",
       "stars": 34000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/tabby"
     }
   },
   {
@@ -13199,7 +13687,8 @@
       "name": "Alacritty",
       "stars": 65000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/alacritty"
     }
   },
   {
@@ -13226,7 +13715,8 @@
       "name": "Ghostty",
       "stars": 60000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/ghostty"
     }
   },
   {
@@ -13253,7 +13743,8 @@
       "name": "iTerm 2",
       "stars": 18000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/iterm-2"
     }
   },
   {
@@ -13280,7 +13771,8 @@
       "name": "Kitty",
       "stars": 35000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/kitty"
     }
   },
   {
@@ -13307,7 +13799,8 @@
       "name": "Warp",
       "stars": 64000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/warp"
     }
   },
   {
@@ -13334,7 +13827,8 @@
       "name": "WaveTerm",
       "stars": 22000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/waveterm"
     }
   },
   {
@@ -13361,7 +13855,8 @@
       "name": "WezTerm",
       "stars": 29000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/wezterm"
     }
   },
   {
@@ -13388,7 +13883,8 @@
       "name": "Zellij",
       "stars": 35000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/zellij"
     }
   },
   {
@@ -13415,7 +13911,8 @@
       "name": "Elasticsearch",
       "stars": 78000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/elasticsearch"
     }
   },
   {
@@ -13442,7 +13939,8 @@
       "name": "Manticore Search",
       "stars": 12000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/manticore"
     }
   },
   {
@@ -13469,7 +13967,8 @@
       "name": "Meilisearch",
       "stars": 59000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/meilisearch"
     }
   },
   {
@@ -13496,7 +13995,8 @@
       "name": "OpenSearch",
       "stars": 14000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/opensearch"
     }
   },
   {
@@ -13523,7 +14023,8 @@
       "name": "Quickwit",
       "stars": 12000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/quickwit"
     }
   },
   {
@@ -13550,7 +14051,8 @@
       "name": "SeekStorm",
       "stars": 1900,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/seekstorm"
     }
   },
   {
@@ -13577,7 +14079,8 @@
       "name": "Typesense",
       "stars": 26000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/typesense"
     }
   },
   {
@@ -13604,7 +14107,8 @@
       "name": "AutoMQ",
       "stars": 11000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/automq"
     }
   },
   {
@@ -13631,7 +14135,8 @@
       "name": "Cozystack",
       "stars": 2200,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/cozystack"
     }
   },
   {
@@ -13658,7 +14163,8 @@
       "name": "OpenStack",
       "stars": 6000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/openstack"
     }
   },
   {
@@ -13685,7 +14191,8 @@
       "name": "OpenTofu",
       "stars": 30000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/opentofu"
     }
   },
   {
@@ -13712,7 +14219,8 @@
       "name": "Pulumi",
       "stars": 26000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/pulumi"
     }
   },
   {
@@ -13739,7 +14247,8 @@
       "name": "Spinifex",
       "stars": 81,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/spinifex"
     }
   },
   {
@@ -13766,7 +14275,8 @@
       "name": "1Panel",
       "stars": 37000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/1panel"
     }
   },
   {
@@ -13793,7 +14303,8 @@
       "name": "aaPanel",
       "stars": 3000,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/aapanel"
     }
   },
   {
@@ -13820,7 +14331,8 @@
       "name": "CasaOS",
       "stars": 37000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/casaos"
     }
   },
   {
@@ -13847,7 +14359,8 @@
       "name": "Cosmos Server",
       "stars": 6100,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/cosmos-server"
     }
   },
   {
@@ -13874,7 +14387,8 @@
       "name": "YunoHost",
       "stars": 3000,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/yunohost"
     }
   },
   {
@@ -13901,7 +14415,8 @@
       "name": "Bugsink",
       "stars": 2000,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/bugsink"
     }
   },
   {
@@ -13928,7 +14443,8 @@
       "name": "Cachet",
       "stars": 15000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/cachet"
     }
   },
   {
@@ -13955,7 +14471,8 @@
       "name": "Checkmate",
       "stars": 11000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/checkmate"
     }
   },
   {
@@ -13982,7 +14499,8 @@
       "name": "Checkmk",
       "stars": 2300,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/checkmk"
     }
   },
   {
@@ -14009,7 +14527,8 @@
       "name": "Coroot",
       "stars": 7900,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/coroot"
     }
   },
   {
@@ -14036,7 +14555,8 @@
       "name": "EasyMonitor",
       "stars": 71,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/easymonitor"
     }
   },
   {
@@ -14063,7 +14583,8 @@
       "name": "Gatus",
       "stars": 12000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/gatus"
     }
   },
   {
@@ -14090,7 +14611,8 @@
       "name": "Gigapipe",
       "stars": 1700,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/gigapipe"
     }
   },
   {
@@ -14117,7 +14639,8 @@
       "name": "GreptimeDB",
       "stars": 6600,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/greptimedb"
     }
   },
   {
@@ -14144,7 +14667,8 @@
       "name": "Healthchecks",
       "stars": 10000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/healthchecks"
     }
   },
   {
@@ -14171,7 +14695,8 @@
       "name": "Highlight",
       "stars": 9400,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/highlight"
     }
   },
   {
@@ -14198,7 +14723,8 @@
       "name": "HyperDX",
       "stars": 9900,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/hyperdx"
     }
   },
   {
@@ -14225,7 +14751,8 @@
       "name": "Icinga",
       "stars": 2200,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/icinga"
     }
   },
   {
@@ -14252,7 +14779,8 @@
       "name": "Keep",
       "stars": 12000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/keep"
     }
   },
   {
@@ -14279,7 +14807,8 @@
       "name": "Kener",
       "stars": 5100,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/kener"
     }
   },
   {
@@ -14306,7 +14835,8 @@
       "name": "Logfire",
       "stars": 4400,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/logfire"
     }
   },
   {
@@ -14333,7 +14863,8 @@
       "name": "Maple",
       "stars": 1700,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/maple"
     }
   },
   {
@@ -14360,7 +14891,8 @@
       "name": "Nagios",
       "stars": 2000,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/nagios"
     }
   },
   {
@@ -14387,7 +14919,8 @@
       "name": "NetData",
       "stars": 80000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/netdata"
     }
   },
   {
@@ -14414,7 +14947,8 @@
       "name": "OneUptime",
       "stars": 7500,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/oneuptime"
     }
   },
   {
@@ -14441,7 +14975,8 @@
       "name": "OpenObserve",
       "stars": 21000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/openobserve"
     }
   },
   {
@@ -14468,7 +15003,8 @@
       "name": "OpenStatus",
       "stars": 9000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/openstatus"
     }
   },
   {
@@ -14495,7 +15031,8 @@
       "name": "Peekaping",
       "stars": 1200,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/peekaping"
     }
   },
   {
@@ -14522,7 +15059,8 @@
       "name": "ProjectDiscovery",
       "stars": 31000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/projectdiscovery"
     }
   },
   {
@@ -14549,7 +15087,8 @@
       "name": "Prometheus",
       "stars": 66000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/prometheus"
     }
   },
   {
@@ -14576,7 +15115,8 @@
       "name": "Scanopy",
       "stars": 5400,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/scanopy"
     }
   },
   {
@@ -14603,7 +15143,8 @@
       "name": "Sentry",
       "stars": 45000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/sentry"
     }
   },
   {
@@ -14630,7 +15171,8 @@
       "name": "SigNoz",
       "stars": 32000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/signoz"
     }
   },
   {
@@ -14657,7 +15199,8 @@
       "name": "Statusnook",
       "stars": 975,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/statusnook"
     }
   },
   {
@@ -14684,7 +15227,8 @@
       "name": "StatusScout",
       "stars": 15,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/statusscout"
     }
   },
   {
@@ -14711,7 +15255,8 @@
       "name": "Uptime Kuma",
       "stars": 91000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/uptime-kuma"
     }
   },
   {
@@ -14738,7 +15283,8 @@
       "name": "Uptrace",
       "stars": 4300,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/uptrace"
     }
   },
   {
@@ -14765,7 +15311,8 @@
       "name": "VictoriaMetrics",
       "stars": 18000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/victoriametrics"
     }
   },
   {
@@ -14792,7 +15339,8 @@
       "name": "Wachd",
       "stars": 35,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/wachd"
     }
   },
   {
@@ -14819,7 +15367,8 @@
       "name": "Defguard",
       "stars": 2800,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/defguard"
     }
   },
   {
@@ -14846,7 +15395,8 @@
       "name": "FireZone",
       "stars": 9000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/firezone"
     }
   },
   {
@@ -14873,7 +15423,8 @@
       "name": "Netbird",
       "stars": 29000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/netbird"
     }
   },
   {
@@ -14900,7 +15451,8 @@
       "name": "OpenVPN",
       "stars": 14000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/openvpn"
     }
   },
   {
@@ -14927,7 +15479,8 @@
       "name": "Pangolin",
       "stars": 22000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/pangolin"
     }
   },
   {
@@ -14954,7 +15507,8 @@
       "name": "Soketi",
       "stars": 5600,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/soketi"
     }
   },
   {
@@ -14981,7 +15535,8 @@
       "name": "Tailscale",
       "stars": 35000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/tailscale"
     }
   },
   {
@@ -15008,7 +15563,8 @@
       "name": "Bacalhau",
       "stars": 870,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/bacalhau"
     }
   },
   {
@@ -15035,7 +15591,8 @@
       "name": "Prefect",
       "stars": 24000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/prefect"
     }
   },
   {
@@ -15062,7 +15619,8 @@
       "name": "Temporal",
       "stars": 22000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/temporal"
     }
   },
   {
@@ -15089,7 +15647,8 @@
       "name": "Tracecat",
       "stars": 3800,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/tracecat"
     }
   },
   {
@@ -15116,7 +15675,8 @@
       "name": "Ntfy",
       "stars": 34000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/ntfy"
     }
   },
   {
@@ -15143,7 +15703,8 @@
       "name": "Operational",
       "stars": 476,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/operational"
     }
   },
   {
@@ -15170,7 +15731,8 @@
       "name": "Sequin",
       "stars": 2200,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/sequin"
     }
   },
   {
@@ -15197,7 +15759,8 @@
       "name": "Workbench",
       "stars": 434,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/workbench"
     }
   },
   {
@@ -15224,7 +15787,8 @@
       "name": "Plakar",
       "stars": 2000,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/plakar"
     }
   },
   {
@@ -15251,7 +15815,8 @@
       "name": "Pluton",
       "stars": 746,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/pluton"
     }
   },
   {
@@ -15278,7 +15843,8 @@
       "name": "Alarik",
       "stars": 514,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/alarik"
     }
   },
   {
@@ -15305,7 +15871,8 @@
       "name": "Ceph",
       "stars": 17000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/ceph"
     }
   },
   {
@@ -15332,7 +15899,8 @@
       "name": "Cozy",
       "stars": 1300,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/cozy"
     }
   },
   {
@@ -15359,7 +15927,8 @@
       "name": "Filestash",
       "stars": 15000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/filestash"
     }
   },
   {
@@ -15386,7 +15955,8 @@
       "name": "Firefiles",
       "stars": 371,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/firefiles"
     }
   },
   {
@@ -15413,7 +15983,8 @@
       "name": "Garage",
       "stars": 4400,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/garage"
     }
   },
   {
@@ -15440,7 +16011,8 @@
       "name": "Hoodik",
       "stars": 1400,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/hoodik"
     }
   },
   {
@@ -15467,7 +16039,8 @@
       "name": "Puter",
       "stars": 43000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/puter"
     }
   },
   {
@@ -15494,7 +16067,8 @@
       "name": "Spacedrive",
       "stars": 39000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/spacedrive"
     }
   },
   {
@@ -15521,7 +16095,8 @@
       "name": "Storj",
       "stars": 3300,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/storj"
     }
   },
   {
@@ -15548,7 +16123,8 @@
       "name": "Twake Drive",
       "stars": 981,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/twake-drive"
     }
   },
   {
@@ -15575,7 +16151,8 @@
       "name": "Activeloop",
       "stars": 9200,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/activeloop"
     }
   },
   {
@@ -15602,7 +16179,8 @@
       "name": "Apache Druid",
       "stars": 14000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/apache-druid"
     }
   },
   {
@@ -15629,7 +16207,8 @@
       "name": "Apache IoTDB",
       "stars": 6400,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/apache-iotdb"
     }
   },
   {
@@ -15656,7 +16235,8 @@
       "name": "Beekeeper Studio",
       "stars": 23000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/beekeeper-studio"
     }
   },
   {
@@ -15683,7 +16263,8 @@
       "name": "Chat2DB",
       "stars": 28000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/chat2db"
     }
   },
   {
@@ -15710,7 +16291,8 @@
       "name": "Chroma",
       "stars": 29000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/chroma"
     }
   },
   {
@@ -15737,7 +16319,8 @@
       "name": "Conar",
       "stars": 1400,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/conar"
     }
   },
   {
@@ -15764,7 +16347,8 @@
       "name": "CrateDB",
       "stars": 4400,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/cratedb"
     }
   },
   {
@@ -15791,7 +16375,8 @@
       "name": "DBeaver",
       "stars": 52000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/dbeaver"
     }
   },
   {
@@ -15818,7 +16403,8 @@
       "name": "Dragonfly",
       "stars": 31000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/dragonfly"
     }
   },
   {
@@ -15845,7 +16431,8 @@
       "name": "HelixDB",
       "stars": 5800,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/helixdb"
     }
   },
   {
@@ -15872,7 +16459,8 @@
       "name": "InfluxDB",
       "stars": 32000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/influxdb"
     }
   },
   {
@@ -15899,7 +16487,8 @@
       "name": "Memgraph",
       "stars": 4400,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/memgraph"
     }
   },
   {
@@ -15926,7 +16515,8 @@
       "name": "Milvus",
       "stars": 46000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/milvus"
     }
   },
   {
@@ -15953,7 +16543,8 @@
       "name": "Neon Postgres",
       "stars": 23000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/neon-postgres"
     }
   },
   {
@@ -15980,7 +16571,8 @@
       "name": "OceanBase",
       "stars": 10000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/oceanbase"
     }
   },
   {
@@ -16007,7 +16599,8 @@
       "name": "Peergos",
       "stars": 2400,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/peergos"
     }
   },
   {
@@ -16034,7 +16627,8 @@
       "name": "Qdrant",
       "stars": 34000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/qdrant"
     }
   },
   {
@@ -16061,7 +16655,8 @@
       "name": "QuestDB",
       "stars": 17000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/questdb"
     }
   },
   {
@@ -16088,7 +16683,8 @@
       "name": "SlateDB",
       "stars": 3300,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/slatedb"
     }
   },
   {
@@ -16115,7 +16711,8 @@
       "name": "Tabularis",
       "stars": 4200,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/tabularis"
     }
   },
   {
@@ -16142,7 +16739,8 @@
       "name": "TDengine",
       "stars": 25000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/tdengine"
     }
   },
   {
@@ -16169,7 +16767,8 @@
       "name": "TiDB",
       "stars": 40000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/tidb"
     }
   },
   {
@@ -16196,7 +16795,8 @@
       "name": "TimescaleDb",
       "stars": 23000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/timescale"
     }
   },
   {
@@ -16223,7 +16823,8 @@
       "name": "Turso",
       "stars": 17000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/turso"
     }
   },
   {
@@ -16250,7 +16851,8 @@
       "name": "Weaviate",
       "stars": 17000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/weaviate"
     }
   },
   {
@@ -16277,7 +16879,8 @@
       "name": "0 Finance",
       "stars": 249,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/0-finance"
     }
   },
   {
@@ -16304,7 +16907,8 @@
       "name": "Hummingbot",
       "stars": 20000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/hummingbot"
     }
   },
   {
@@ -16331,7 +16935,8 @@
       "name": "OctoBot",
       "stars": 6500,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/octobot"
     }
   },
   {
@@ -16358,7 +16963,8 @@
       "name": "Fincept Terminal",
       "stars": 31000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/fincept-terminal"
     }
   },
   {
@@ -16385,7 +16991,8 @@
       "name": "Ghostfolio",
       "stars": 9200,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/ghostfolio"
     }
   },
   {
@@ -16412,7 +17019,8 @@
       "name": "Wealthfolio",
       "stars": 8700,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/wealthfolio"
     }
   },
   {
@@ -16439,7 +17047,8 @@
       "name": "GDevelop",
       "stars": 26000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/gdevelop"
     }
   },
   {
@@ -16466,7 +17075,8 @@
       "name": "Godot",
       "stars": 116000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/godot"
     }
   },
   {
@@ -16493,7 +17103,8 @@
       "name": "MonoGame",
       "stars": 14000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/monogame"
     }
   },
   {
@@ -16520,7 +17131,8 @@
       "name": "s&box",
       "stars": 6400,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/sbox"
     }
   },
   {
@@ -16547,7 +17159,8 @@
       "name": "Gladys Assistant",
       "stars": 3200,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/gladys-assistant"
     }
   },
   {
@@ -16574,7 +17187,8 @@
       "name": "Home Assistant",
       "stars": 90000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/home-assistant"
     }
   },
   {
@@ -16601,7 +17215,8 @@
       "name": "OpenPencil",
       "stars": 7900,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/openpencil"
     }
   },
   {
@@ -16628,7 +17243,8 @@
       "name": "Penpot",
       "stars": 59000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/penpot"
     }
   },
   {
@@ -16655,7 +17271,8 @@
       "name": "Anthias",
       "stars": 3700,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/anthias"
     }
   },
   {
@@ -16682,7 +17299,8 @@
       "name": "BookWyrm",
       "stars": 2800,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/bookwyrm"
     }
   },
   {
@@ -16709,7 +17327,8 @@
       "name": "Invidious",
       "stars": 23000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/invidious"
     }
   },
   {
@@ -16736,7 +17355,8 @@
       "name": "Jellyfin",
       "stars": 56000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/jellyfin"
     }
   },
   {
@@ -16763,7 +17383,8 @@
       "name": "Navidrome",
       "stars": 23000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/navidrome"
     }
   },
   {
@@ -16790,7 +17411,8 @@
       "name": "Nuclear",
       "stars": 18000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/nuclear"
     }
   },
   {
@@ -16817,7 +17439,8 @@
       "name": "Audacity",
       "stars": 18000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/audacity"
     }
   },
   {
@@ -16844,7 +17467,8 @@
       "name": "Darktable",
       "stars": 13000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/darktable"
     }
   },
   {
@@ -16871,7 +17495,8 @@
       "name": "GIMP",
       "stars": 6400,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/gimp"
     }
   },
   {
@@ -16898,7 +17523,8 @@
       "name": "Kdenlive",
       "stars": 5500,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/kdenlive"
     }
   },
   {
@@ -16925,7 +17551,8 @@
       "name": "Krita",
       "stars": 10000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/krita"
     }
   },
   {
@@ -16952,7 +17579,8 @@
       "name": "LosslessCut",
       "stars": 43000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/losslesscut"
     }
   },
   {
@@ -16979,7 +17607,8 @@
       "name": "OpenCut",
       "stars": 86000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/opencut"
     }
   },
   {
@@ -17006,7 +17635,8 @@
       "name": "OpenShot",
       "stars": 6200,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/openshot"
     }
   },
   {
@@ -17033,7 +17663,8 @@
       "name": "RawTherapee",
       "stars": 4100,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/rawtherapee"
     }
   },
   {
@@ -17060,7 +17691,8 @@
       "name": "Shotcut",
       "stars": 15000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/shotcut"
     }
   },
   {
@@ -17087,7 +17719,8 @@
       "name": "Collabora Online",
       "stars": 3300,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/collabora-online"
     }
   },
   {
@@ -17114,7 +17747,8 @@
       "name": "CryptPad",
       "stars": 7900,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/cryptpad"
     }
   },
   {
@@ -17141,7 +17775,8 @@
       "name": "IronCalc",
       "stars": 4100,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/ironcalc"
     }
   },
   {
@@ -17168,7 +17803,8 @@
       "name": "LibreOffice",
       "stars": 4300,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/libreoffice"
     }
   },
   {
@@ -17195,7 +17831,8 @@
       "name": "ONLYOFFICE Docs",
       "stars": 6800,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/onlyoffice-docs"
     }
   },
   {
@@ -17222,7 +17859,8 @@
       "name": "Macro Docs",
       "stars": 4000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/macro-docs"
     }
   },
   {
@@ -17249,7 +17887,8 @@
       "name": "Anarlog",
       "stars": 9100,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/anarlog"
     }
   },
   {
@@ -17276,7 +17915,8 @@
       "name": "AnyType",
       "stars": 8700,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/anytype"
     }
   },
   {
@@ -17303,7 +17943,8 @@
       "name": "Beaver Notes",
       "stars": 1300,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/beaver-notes"
     }
   },
   {
@@ -17330,7 +17971,8 @@
       "name": "Blinko",
       "stars": 11000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/blinko"
     }
   },
   {
@@ -17357,7 +17999,8 @@
       "name": "Darkwrite",
       "stars": 310,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/darkwrite"
     }
   },
   {
@@ -17384,7 +18027,8 @@
       "name": "Deta Surf",
       "stars": 3500,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/deta-surf"
     }
   },
   {
@@ -17411,7 +18055,8 @@
       "name": "itsnotes",
       "stars": 30,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/itsnotes"
     }
   },
   {
@@ -17438,7 +18083,8 @@
       "name": "Joplin",
       "stars": 56000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/joplin"
     }
   },
   {
@@ -17465,7 +18111,8 @@
       "name": "Justnote",
       "stars": 67,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/justnote"
     }
   },
   {
@@ -17492,7 +18139,8 @@
       "name": "KeePassXC",
       "stars": 29000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/keepassxc"
     }
   },
   {
@@ -17519,7 +18167,8 @@
       "name": "Logseq",
       "stars": 45000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/logseq"
     }
   },
   {
@@ -17546,7 +18195,8 @@
       "name": "Memos",
       "stars": 62000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/memos"
     }
   },
   {
@@ -17573,7 +18223,8 @@
       "name": "Notesnook",
       "stars": 14000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/notesnook"
     }
   },
   {
@@ -17600,7 +18251,8 @@
       "name": "OpenNotas",
       "stars": 178,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/opennotas"
     }
   },
   {
@@ -17627,7 +18279,8 @@
       "name": "SiYuan",
       "stars": 46000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/siyuan"
     }
   },
   {
@@ -17654,7 +18307,8 @@
       "name": "Standard Notes",
       "stars": 6600,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/standard-notes"
     }
   },
   {
@@ -17681,7 +18335,8 @@
       "name": "Tolaria",
       "stars": 20000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/tolaria"
     }
   },
   {
@@ -17708,7 +18363,8 @@
       "name": "Zen",
       "stars": 1200,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/zen"
     }
   },
   {
@@ -17735,7 +18391,8 @@
       "name": "Bitwarden",
       "stars": 20000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/bitwarden"
     }
   },
   {
@@ -17762,7 +18419,8 @@
       "name": "Padloc",
       "stars": 2900,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/padloc"
     }
   },
   {
@@ -17789,7 +18447,8 @@
       "name": "Passbolt",
       "stars": 6100,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/passbolt"
     }
   },
   {
@@ -17816,7 +18475,8 @@
       "name": "PearPass",
       "stars": 532,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/pearpass"
     }
   },
   {
@@ -17843,7 +18503,8 @@
       "name": "Cap",
       "stars": 21000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/cap"
     }
   },
   {
@@ -17870,7 +18531,8 @@
       "name": "Kap",
       "stars": 19000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/kap"
     }
   },
   {
@@ -17897,7 +18559,8 @@
       "name": "OBS Studio",
       "stars": 75000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/obs-studio"
     }
   },
   {
@@ -17924,7 +18587,8 @@
       "name": "Screenity",
       "stars": 18000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/screenity"
     }
   },
   {
@@ -17951,7 +18615,8 @@
       "name": "ShareX",
       "stars": 39000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/sharex"
     }
   },
   {
@@ -17978,7 +18643,8 @@
       "name": "Snapify",
       "stars": 1000,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/snapify"
     }
   },
   {
@@ -18005,7 +18671,8 @@
       "name": "LocalSend",
       "stars": 89000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/localsend"
     }
   },
   {
@@ -18032,7 +18699,8 @@
       "name": "OpenCloud",
       "stars": 5800,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/opencloud"
     }
   },
   {
@@ -18059,7 +18727,8 @@
       "name": "PairDrop",
       "stars": 11000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/pairdrop"
     }
   },
   {
@@ -18086,7 +18755,8 @@
       "name": "AgentMail",
       "stars": 38,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/agentmail"
     }
   },
   {
@@ -18113,7 +18783,8 @@
       "name": "DoubleZero",
       "stars": 1200,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/doublezero"
     }
   },
   {
@@ -18140,7 +18811,8 @@
       "name": "Hyvor Relay",
       "stars": 872,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/hyvor-relay"
     }
   },
   {
@@ -18167,7 +18839,8 @@
       "name": "Sessy",
       "stars": 914,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/sessy"
     }
   },
   {
@@ -18194,7 +18867,8 @@
       "name": "Tuta",
       "stars": 7900,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/tuta"
     }
   },
   {
@@ -18221,7 +18895,8 @@
       "name": "Twake Mail",
       "stars": 647,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/twake-mail"
     }
   },
   {
@@ -18248,7 +18923,8 @@
       "name": "Brave",
       "stars": 23000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/brave"
     }
   },
   {
@@ -18275,7 +18951,8 @@
       "name": "Cloudmark",
       "stars": 75,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/cloudmark"
     }
   },
   {
@@ -18302,7 +18979,8 @@
       "name": "Flow",
       "stars": 1100,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/flow"
     }
   },
   {
@@ -18329,7 +19007,8 @@
       "name": "Harper",
       "stars": 15000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/harper"
     }
   },
   {
@@ -18356,7 +19035,8 @@
       "name": "Helium",
       "stars": 20000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/helium"
     }
   },
   {
@@ -18383,7 +19063,8 @@
       "name": "Ladybird",
       "stars": 66000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/ladybird"
     }
   },
   {
@@ -18410,7 +19091,8 @@
       "name": "LanguageTool",
       "stars": 15000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/languagetool"
     }
   },
   {
@@ -18437,7 +19119,8 @@
       "name": "Linguist",
       "stars": 1100,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/linguist"
     }
   },
   {
@@ -18464,7 +19147,8 @@
       "name": "Midori Browser",
       "stars": 385,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/midori-browser"
     }
   },
   {
@@ -18491,7 +19175,8 @@
       "name": "Zen",
       "stars": 4100,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/zen-privacy"
     }
   },
   {
@@ -18518,7 +19203,8 @@
       "name": "Zen Browser",
       "stars": 44000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/zen-browser"
     }
   },
   {
@@ -18545,7 +19231,8 @@
       "name": "MDMA",
       "stars": 64,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/mdma"
     }
   },
   {
@@ -18572,7 +19259,8 @@
       "name": "OpenWork",
       "stars": 23000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/openwork"
     }
   },
   {
@@ -18599,7 +19287,8 @@
       "name": "ActivityWatch",
       "stars": 19000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/activitywatch"
     }
   },
   {
@@ -18626,7 +19315,8 @@
       "name": "Hackatime",
       "stars": 185,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/hackatime"
     }
   },
   {
@@ -18653,7 +19343,8 @@
       "name": "Sol",
       "stars": 3100,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/sol"
     }
   },
   {
@@ -18680,7 +19371,8 @@
       "name": "SolidTime",
       "stars": 8900,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/solidtime"
     }
   },
   {
@@ -18707,7 +19399,8 @@
       "name": "TimeScribe",
       "stars": 887,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/timescribe"
     }
   },
   {
@@ -18734,7 +19427,8 @@
       "name": "Ueli",
       "stars": 4600,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/ueli"
     }
   },
   {
@@ -18761,7 +19455,8 @@
       "name": "Wakapi",
       "stars": 4400,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/wakapi"
     }
   },
   {
@@ -18788,7 +19483,8 @@
       "name": "Ziit",
       "stars": 249,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/ziit"
     }
   },
   {
@@ -18815,7 +19511,8 @@
       "name": "Actual",
       "stars": 28000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/actual"
     }
   },
   {
@@ -18842,7 +19539,8 @@
       "name": "Financial Freedom",
       "stars": 2900,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/financial-freedom"
     }
   },
   {
@@ -18869,7 +19567,8 @@
       "name": "Firefly III",
       "stars": 24000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/firefly-iii"
     }
   },
   {
@@ -18896,7 +19595,8 @@
       "name": "Monetr",
       "stars": 678,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/monetr"
     }
   },
   {
@@ -18923,7 +19623,8 @@
       "name": "Splitpro",
       "stars": 1400,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/splitpro"
     }
   },
   {
@@ -18950,7 +19651,8 @@
       "name": "Sure.am",
       "stars": 9600,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/sure-am"
     }
   },
   {
@@ -18977,7 +19679,8 @@
       "name": "YAFFA",
       "stars": 108,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/yaffa"
     }
   },
   {
@@ -19004,7 +19707,8 @@
       "name": "Chalk.ist",
       "stars": 1800,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/chalkist"
     }
   },
   {
@@ -19031,7 +19735,8 @@
       "name": "Graphite",
       "stars": 27000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/graphite"
     }
   },
   {
@@ -19058,7 +19763,8 @@
       "name": "Ray.so",
       "stars": 2300,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/ray-so"
     }
   },
   {
@@ -19085,7 +19791,8 @@
       "name": "Bookmark It",
       "stars": 326,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/bookmark-it"
     }
   },
   {
@@ -19112,7 +19819,8 @@
       "name": "Faved",
       "stars": 1300,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/faved"
     }
   },
   {
@@ -19139,7 +19847,8 @@
       "name": "Karakeep",
       "stars": 29000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/karakeep"
     }
   },
   {
@@ -19166,7 +19875,8 @@
       "name": "Linkding",
       "stars": 11000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/linkding"
     }
   },
   {
@@ -19193,7 +19903,8 @@
       "name": "Linkwarden",
       "stars": 20000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/linkwarden"
     }
   },
   {
@@ -19220,7 +19931,8 @@
       "name": "Readeck",
       "stars": 1100,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/readeck"
     }
   },
   {
@@ -19247,7 +19959,8 @@
       "name": "Ryot",
       "stars": 3600,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/ryot"
     }
   },
   {
@@ -19274,7 +19987,8 @@
       "name": "SeriesGuide",
       "stars": 2100,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/seriesguide"
     }
   },
   {
@@ -19301,7 +20015,8 @@
       "name": "Showly",
       "stars": 1400,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/showly"
     }
   },
   {
@@ -19328,7 +20043,8 @@
       "name": "Tonkatsu Box",
       "stars": 511,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/tonkatsu-box"
     }
   },
   {
@@ -19355,7 +20071,8 @@
       "name": "Wallabag",
       "stars": 13000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/wallabag"
     }
   },
   {
@@ -19382,7 +20099,8 @@
       "name": "RustDesk",
       "stars": 122000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/rustdesk"
     }
   },
   {
@@ -19409,7 +20127,8 @@
       "name": "BleachBit",
       "stars": 6700,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/bleachbit"
     }
   },
   {
@@ -19436,7 +20155,8 @@
       "name": "Mole",
       "stars": 65000,
       "language": "TypeScript",
-      "quality_score": 98
+      "quality_score": 98,
+      "html_url": "https://openalternative.co/mole"
     }
   },
   {
@@ -19463,7 +20183,8 @@
       "name": "Pearcleaner",
       "stars": 14000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/pearcleaner"
     }
   },
   {
@@ -19490,7 +20211,8 @@
       "name": "VoiceInk",
       "stars": 6100,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/voiceink"
     }
   },
   {
@@ -19517,7 +20239,8 @@
       "name": "Amical",
       "stars": 1500,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/amical"
     }
   },
   {
@@ -19544,7 +20267,8 @@
       "name": "FluidVoice",
       "stars": 11000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/fluidvoice"
     }
   },
   {
@@ -19571,7 +20295,8 @@
       "name": "Handy",
       "stars": 30000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/handy"
     }
   },
   {
@@ -19598,7 +20323,8 @@
       "name": "OpenWispr",
       "stars": 5700,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/openwispr"
     }
   },
   {
@@ -19625,7 +20351,8 @@
       "name": "VoiceTypr",
       "stars": 681,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/voicetypr"
     }
   },
   {
@@ -19652,7 +20379,8 @@
       "name": "CoMaps",
       "stars": 2000,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/comaps"
     }
   },
   {
@@ -19679,7 +20407,8 @@
       "name": "Organic Maps",
       "stars": 15000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/organic-maps"
     }
   },
   {
@@ -19706,7 +20435,8 @@
       "name": "OSMAnd",
       "stars": 5900,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/osmand"
     }
   },
   {
@@ -19733,7 +20463,8 @@
       "name": "Hanko",
       "stars": 9000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/hanko"
     }
   },
   {
@@ -19760,7 +20491,8 @@
       "name": "Authentik",
       "stars": 25000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/authentik"
     }
   },
   {
@@ -19787,7 +20519,8 @@
       "name": "Authgear",
       "stars": 2000,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/authgear"
     }
   },
   {
@@ -19814,7 +20547,8 @@
       "name": "Better Auth",
       "stars": 30000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/better-auth"
     }
   },
   {
@@ -19841,7 +20575,8 @@
       "name": "Cerbos",
       "stars": 4600,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/cerbos"
     }
   },
   {
@@ -19868,7 +20603,8 @@
       "name": "HashiCorp Vault",
       "stars": 36000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/vault"
     }
   },
   {
@@ -19895,7 +20631,8 @@
       "name": "Hexclave",
       "stars": 6800,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/hexclave"
     }
   },
   {
@@ -19922,7 +20659,8 @@
       "name": "JumpServer",
       "stars": 31000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/jumpserver"
     }
   },
   {
@@ -19949,7 +20687,8 @@
       "name": "Keycloak",
       "stars": 36000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/keycloak"
     }
   },
   {
@@ -19976,7 +20715,8 @@
       "name": "Logto",
       "stars": 14000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/logto"
     }
   },
   {
@@ -20003,7 +20743,8 @@
       "name": "Ory",
       "stars": 14000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/ory"
     }
   },
   {
@@ -20030,7 +20771,8 @@
       "name": "Permify",
       "stars": 5900,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/permify"
     }
   },
   {
@@ -20057,7 +20799,8 @@
       "name": "SuperTokens",
       "stars": 15000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/supertokens"
     }
   },
   {
@@ -20084,7 +20827,8 @@
       "name": "Werbot",
       "stars": 169,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/werbot"
     }
   },
   {
@@ -20111,7 +20855,8 @@
       "name": "Zitadel",
       "stars": 15000,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/zitadel"
     }
   },
   {
@@ -20138,7 +20883,8 @@
       "name": "Infisical",
       "stars": 29000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/infisical"
     }
   },
   {
@@ -20165,7 +20911,8 @@
       "name": "Keyshade",
       "stars": 766,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/keyshade"
     }
   },
   {
@@ -20192,7 +20939,8 @@
       "name": "Phase",
       "stars": 908,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/phase"
     }
   },
   {
@@ -20219,7 +20967,8 @@
       "name": "Tirreno",
       "stars": 1500,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/tirreno"
     }
   },
   {
@@ -20246,7 +20995,8 @@
       "name": "Signal",
       "stars": 29000,
       "language": "TypeScript",
-      "quality_score": 95
+      "quality_score": 95,
+      "html_url": "https://openalternative.co/signal"
     }
   },
   {
@@ -20273,7 +21023,8 @@
       "name": "Abby",
       "stars": 167,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/abby"
     }
   },
   {
@@ -20300,7 +21051,8 @@
       "name": "ALTCHA",
       "stars": 2700,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/altcha"
     }
   },
   {
@@ -20327,7 +21079,8 @@
       "name": "Featurevisor",
       "stars": 805,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/featurevisor"
     }
   },
   {
@@ -20354,7 +21107,8 @@
       "name": "Flipt",
       "stars": 4900,
       "language": "TypeScript",
-      "quality_score": 92
+      "quality_score": 92,
+      "html_url": "https://openalternative.co/flipt"
     }
   },
   {
@@ -20381,7 +21135,8 @@
       "name": "Friendly Captcha",
       "stars": 32,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/friendly-captcha"
     }
   },
   {
@@ -20408,7 +21163,8 @@
       "name": "mCaptcha",
       "stars": 2500,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/mcaptcha"
     }
   },
   {
@@ -20435,7 +21191,8 @@
       "name": "Private Captcha",
       "stars": 187,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/private-captcha"
     }
   },
   {
@@ -20462,7 +21219,8 @@
       "name": "Procaptcha",
       "stars": 298,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/procaptcha"
     }
   },
   {
@@ -20489,7 +21247,8 @@
       "name": "Marble",
       "stars": 585,
       "language": "TypeScript",
-      "quality_score": 88
+      "quality_score": 88,
+      "html_url": "https://openalternative.co/marble"
     }
   },
   {
@@ -20504,7 +21263,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-26T10:47:02.881Z",
+    "updated_at": "2026-08-27T06:10:54.768Z",
     "resolved_name": "Open-webui",
     "repo": {
       "id": "repo-open-webui",
@@ -20527,7 +21286,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-26T10:47:04.869Z",
+    "updated_at": "2026-08-27T06:10:58.305Z",
     "resolved_name": "LibreChat",
     "repo": {
       "id": "repo-librechat",
@@ -20550,7 +21309,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-26T10:47:06.640Z",
+    "updated_at": "2026-08-27T06:10:59.850Z",
     "resolved_name": "Ollama",
     "repo": {
       "id": "repo-ollama",
@@ -20573,7 +21332,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-26T10:47:08.728Z",
+    "updated_at": "2026-08-27T06:11:02.799Z",
     "resolved_name": "Aider",
     "repo": {
       "id": "repo-aider",
@@ -20596,7 +21355,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-26T10:47:10.249Z",
+    "updated_at": "2026-08-27T06:11:05.114Z",
     "resolved_name": "Continue",
     "repo": {
       "id": "repo-continue",
@@ -20619,7 +21378,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-26T10:47:12.050Z",
+    "updated_at": "2026-08-27T06:11:07.723Z",
     "resolved_name": "Roo-Code",
     "repo": {
       "id": "repo-roo-code",
@@ -20642,7 +21401,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-26T10:47:14.132Z",
+    "updated_at": "2026-08-27T06:11:09.223Z",
     "resolved_name": "AppFlowy",
     "repo": {
       "id": "repo-appflowy",
@@ -20665,7 +21424,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-26T10:47:16.226Z",
+    "updated_at": "2026-08-27T06:11:11.930Z",
     "resolved_name": "AFFiNE",
     "repo": {
       "id": "repo-affine",
@@ -20688,7 +21447,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-26T10:47:18.045Z",
+    "updated_at": "2026-08-27T06:11:13.517Z",
     "resolved_name": "Logseq",
     "repo": {
       "id": "repo-logseq",
@@ -20711,7 +21470,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-26T10:47:19.582Z",
+    "updated_at": "2026-08-27T06:11:15.355Z",
     "resolved_name": "Mattermost",
     "repo": {
       "id": "repo-mattermost",
@@ -20734,7 +21493,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-26T10:47:21.386Z",
+    "updated_at": "2026-08-27T06:11:17.157Z",
     "resolved_name": "Zulip",
     "repo": {
       "id": "repo-zulip",
@@ -20757,7 +21516,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-26T10:47:22.978Z",
+    "updated_at": "2026-08-27T06:11:18.667Z",
     "resolved_name": "Element-web",
     "repo": {
       "id": "repo-element-web",
@@ -20780,7 +21539,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-26T10:47:25.045Z",
+    "updated_at": "2026-08-27T06:11:20.152Z",
     "resolved_name": "Coolify",
     "repo": {
       "id": "repo-coolify",
@@ -20803,7 +21562,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-26T10:47:26.550Z",
+    "updated_at": "2026-08-27T06:11:25.175Z",
     "resolved_name": "Dokku",
     "repo": {
       "id": "repo-dokku",
@@ -20826,7 +21585,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-26T10:47:28.217Z",
+    "updated_at": "2026-08-27T06:11:27.006Z",
     "resolved_name": "Caprover",
     "repo": {
       "id": "repo-caprover",
@@ -20849,7 +21608,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-26T10:47:29.776Z",
+    "updated_at": "2026-08-27T06:11:28.521Z",
     "resolved_name": "Posthog",
     "repo": {
       "id": "repo-posthog",
@@ -20872,7 +21631,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-26T10:47:31.286Z",
+    "updated_at": "2026-08-27T06:11:30.586Z",
     "resolved_name": "Umami",
     "repo": {
       "id": "repo-umami",
@@ -20895,7 +21654,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-26T10:47:33.069Z",
+    "updated_at": "2026-08-27T06:11:32.349Z",
     "resolved_name": "Analytics",
     "repo": {
       "id": "repo-analytics",
@@ -20918,7 +21677,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-26T10:37:37.195Z",
+    "updated_at": "2026-08-27T06:11:34.076Z",
     "resolved_name": "Nocodb",
     "repo": {
       "id": "repo-nocodb",
@@ -20941,7 +21700,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-26T10:37:39.695Z",
+    "updated_at": "2026-08-27T06:11:36.051Z",
     "resolved_name": "Baserow",
     "repo": {
       "id": "repo-baserow",
@@ -20964,7 +21723,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-26T10:37:41.234Z",
+    "updated_at": "2026-08-27T06:11:37.571Z",
     "resolved_name": "Grist-core",
     "repo": {
       "id": "repo-grist-core",
@@ -20987,7 +21746,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-26T10:37:42.768Z",
+    "updated_at": "2026-08-27T06:11:39.110Z",
     "resolved_name": "Plane",
     "repo": {
       "id": "repo-plane",
@@ -21010,7 +21769,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-26T10:37:44.303Z",
+    "updated_at": "2026-08-27T06:11:40.912Z",
     "resolved_name": "Focalboard",
     "repo": {
       "id": "repo-focalboard",
@@ -21033,7 +21792,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-26T10:37:45.775Z",
+    "updated_at": "2026-08-27T06:11:42.428Z",
     "resolved_name": "Leantime",
     "repo": {
       "id": "repo-leantime",
@@ -21056,7 +21815,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-26T10:37:47.291Z",
+    "updated_at": "2026-08-27T06:11:43.967Z",
     "resolved_name": "Cal.com",
     "repo": {
       "id": "repo-cal-com",
@@ -21079,7 +21838,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-26T10:37:50.141Z",
+    "updated_at": "2026-08-27T06:11:46.888Z",
     "resolved_name": "Dub",
     "repo": {
       "id": "repo-dub",
@@ -21102,7 +21861,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-26T10:37:51.945Z",
+    "updated_at": "2026-08-27T06:11:50.161Z",
     "resolved_name": "Documenso",
     "repo": {
       "id": "repo-documenso",
@@ -21125,7 +21884,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-26T10:37:54.004Z",
+    "updated_at": "2026-08-27T06:11:51.676Z",
     "resolved_name": "Supabase",
     "repo": {
       "id": "repo-supabase",
@@ -21148,7 +21907,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-26T10:37:55.531Z",
+    "updated_at": "2026-08-27T06:11:54.179Z",
     "resolved_name": "Pocketbase",
     "repo": {
       "id": "repo-pocketbase",
@@ -21171,7 +21930,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-26T10:37:58.423Z",
+    "updated_at": "2026-08-27T06:11:57.352Z",
     "resolved_name": "Appwrite",
     "repo": {
       "id": "repo-appwrite",
@@ -21194,7 +21953,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-26T10:38:03.436Z",
+    "updated_at": "2026-08-27T06:11:59.443Z",
     "resolved_name": "Minio",
     "repo": {
       "id": "repo-minio",
@@ -21217,7 +21976,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-26T10:38:04.964Z",
+    "updated_at": "2026-08-27T06:12:01.248Z",
     "resolved_name": "N8n",
     "repo": {
       "id": "repo-n8n",
@@ -21240,7 +21999,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-26T10:38:07.308Z",
+    "updated_at": "2026-08-27T06:12:03.545Z",
     "resolved_name": "Activepieces",
     "repo": {
       "id": "repo-activepieces",
@@ -21263,7 +22022,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-26T10:38:08.897Z",
+    "updated_at": "2026-08-27T06:12:05.771Z",
     "resolved_name": "Server",
     "repo": {
       "id": "repo-server",
@@ -21286,7 +22045,7 @@
     "feature_parity_score": 75,
     "openlysts_score": 85,
     "verified_oss": true,
-    "updated_at": "2026-08-26T10:38:10.506Z",
+    "updated_at": "2026-08-27T06:12:07.241Z",
     "resolved_name": "Keepassxc",
     "repo": {
       "id": "repo-keepassxc",

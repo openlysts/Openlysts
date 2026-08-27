@@ -7,6 +7,12 @@
       "maxDuration": 60
     }
   },
+  "crons": [
+    {
+      "path": "/api/functions/runIngestion",
+      "schedule": "0 2 * * *"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",

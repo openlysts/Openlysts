@@ -105,11 +105,11 @@ Openlysts computes a hybrid relevance score combining semantic topic matching, a
 $$\text{Relevance} = (\text{TextScore} \times 1.5) + (\text{AuthorityScore} \times 0.5) + (\text{EngagementScore} \times 0.2) + \log_{10}(\text{Stars})$$
 This ensures established, production-grade repositories rank naturally above small or unmaintained repositories with overlapping keyword tags.
 
-### B. Self-Sufficient Edge Caching & Resilient Outbox (SRA-Engine)
-- **In-Memory LRU/TTL Cache**: Aggregates category counts and alternatives base datasets in memory, delivering $<1\text{ms}$ query responses.
-- **Lean Column Projections**: Eliminates heavy columns from index queries, dropping bandwidth overhead by 96%.
-- **Distributed Session Lock**: Uses `pg_try_advisory_lock` to coordinate single-worker background ingestion cycles across serverless environments.
-- **Optimistic Client Outbox**: Writes occur with 0ms UI latency via `syncOutbox.js` and queue replay.
+### B. 100% Free Autonomous Edge Catalog & Vercel Cron
+- **In-Memory Catalog Engine**: The entire 47,000+ repository catalog and its inverted indices are loaded into RAM via `catalogEngine.js`, delivering sub-millisecond query responses and completely eliminating Neon PostgreSQL read bandwidth for searches.
+- **Vercel Cron Automation**: Daily ingestion (`runIngestion.js`) is triggered autonomously by Vercel Cron (`0 2 * * *`), removing the need for manual Git commits or external GitHub Action runners.
+- **Lean PostgreSQL**: Postgres is used strictly for lightweight features (Users, Auth, Bookmarks, and Alternatives sync) to aggressively preserve free-tier limits.
+- **Optimistic Client Outbox**: UI mutations (e.g., bookmarking) occur with 0ms latency via `syncOutbox.js` and queue replay.
 
 ### C. Multi-Tier Persistent Video Cache Engine (`getRepoVideos`)
 To eliminate the 4,000ms–6,000ms latency of cold YouTube search scraping, Openlysts employs a four-tier retrieval pipeline:
