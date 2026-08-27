@@ -324,6 +324,117 @@ export default function ThreeBackground() {
         camera.position.y += (-my * 5 - camera.position.y) * 0.1;
       };
     }
+    else if (bgType === 'aurora') {
+      const geometry = new THREE.PlaneGeometry(width * 2, height * 2);
+      const material = new THREE.ShaderMaterial({
+        uniforms: {
+          u_time: { value: 0 },
+          u_color: { value: color },
+          u_opacity: { value: isLight ? 0.3 : 0.6 }
+        },
+        vertexShader: `
+          varying vec2 vUv;
+          void main() {
+            vUv = uv;
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+          }
+        `,
+        fragmentShader: `
+          uniform float u_time;
+          uniform vec3 u_color;
+          uniform float u_opacity;
+          varying vec2 vUv;
+          void main() {
+            vec2 p = vUv * 2.0 - 1.0;
+            float t = u_time * 0.2;
+            float intensity = sin(p.x * 2.0 + t) * cos(p.y * 2.0 + t) + sin(p.x * 4.0 - t * 1.5) * 0.5;
+            vec3 aurora = mix(u_color, vec3(0.1, 0.5, 0.8), sin(t) * 0.5 + 0.5);
+            float alpha = smoothstep(0.1, 1.0, intensity) * u_opacity;
+            gl_FragColor = vec4(aurora * intensity, alpha * (1.0 - length(p) * 0.5));
+          }
+        `,
+        transparent: true,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending
+      });
+      geometries.push(geometry);
+      materials.push(material);
+      const mesh = new THREE.Mesh(geometry, material);
+      mesh.position.z = -50;
+      scene.add(mesh);
+      updateFn = (time) => { material.uniforms.u_time.value = time; };
+    }
+    else if (bgType === 'liquid_noise') {
+      const geometry = new THREE.PlaneGeometry(width * 2, height * 2);
+      const material = new THREE.ShaderMaterial({
+        uniforms: { u_time: { value: 0 }, u_color: { value: color }, u_opacity: { value: isLight ? 0.15 : 0.3 } },
+        vertexShader: `varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
+        fragmentShader: `
+          uniform float u_time; uniform vec3 u_color; uniform float u_opacity; varying vec2 vUv;
+          void main() {
+            vec2 p = vUv * 5.0;
+            for(int i=1; i<4; i++) {
+              vec2 newp = p;
+              newp.x += 0.6/float(i)*sin(float(i)*p.y+u_time/2.0+0.3) + 1.0;
+              newp.y += 0.6/float(i)*cos(float(i)*p.x+u_time/2.0+0.3) - 1.0;
+              p = newp;
+            }
+            vec3 col = u_color * (0.5 * sin(3.0 * p.x) + 0.5);
+            gl_FragColor = vec4(col, u_opacity * 0.5);
+          }
+        `,
+        transparent: true, depthWrite: false, blending: THREE.AdditiveBlending
+      });
+      geometries.push(geometry); materials.push(material);
+      const mesh = new THREE.Mesh(geometry, material); mesh.position.z = -50; scene.add(mesh);
+      updateFn = (time) => { material.uniforms.u_time.value = time; };
+    }
+    else if (bgType === 'plasma') {
+      const geometry = new THREE.PlaneGeometry(width * 2, height * 2);
+      const material = new THREE.ShaderMaterial({
+        uniforms: { u_time: { value: 0 }, u_color: { value: color }, u_opacity: { value: isLight ? 0.2 : 0.4 } },
+        vertexShader: `varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
+        fragmentShader: `
+          uniform float u_time; uniform vec3 u_color; uniform float u_opacity; varying vec2 vUv;
+          void main() {
+            vec2 p = vUv * 2.0 - 1.0;
+            float v1 = sin(p.x * 5.0 + u_time);
+            float v2 = sin(10.0 * (p.x * sin(u_time/2.0) + p.y * cos(u_time/3.0)) + u_time);
+            float cx = p.x + 0.5 * sin(u_time/5.0);
+            float cy = p.y + 0.5 * cos(u_time/3.0);
+            float v3 = sin(sqrt(100.0 * (cx*cx + cy*cy) + 1.0) + u_time);
+            float v = v1 + v2 + v3;
+            vec3 col = mix(u_color, vec3(1.0, 1.0, 1.0), sin(v * 3.14) * 0.5 + 0.5);
+            gl_FragColor = vec4(col, u_opacity * (0.3 + 0.3 * sin(v)));
+          }
+        `,
+        transparent: true, depthWrite: false, blending: THREE.AdditiveBlending
+      });
+      geometries.push(geometry); materials.push(material);
+      const mesh = new THREE.Mesh(geometry, material); mesh.position.z = -50; scene.add(mesh);
+      updateFn = (time) => { material.uniforms.u_time.value = time; };
+    }
+    else if (bgType === 'warp_speed') {
+      const count = isMobileScreen ? 400 : 1500;
+      const { geometry, points } = createPoints(count, () => [
+        (Math.random() - 0.5) * 200, (Math.random() - 0.5) * 200, -Math.random() * 400
+      ], 1.5, 0.8);
+      
+      updateFn = (time, mx, my) => {
+        const pos = geometry.attributes.position.array;
+        for (let i = 0; i < count; i++) {
+          pos[i*3 + 2] += 2.0;
+          if (pos[i*3 + 2] > 100) {
+            pos[i*3 + 2] = -400;
+            pos[i*3] = (Math.random() - 0.5) * 200;
+            pos[i*3 + 1] = (Math.random() - 0.5) * 200;
+          }
+        }
+        geometry.attributes.position.needsUpdate = true;
+        camera.position.x += (mx * 20 - camera.position.x) * 0.05;
+        camera.position.y += (-my * 20 - camera.position.y) * 0.05;
+      };
+    }
 
     let mouseX = 0, mouseY = 0;
     const onMove = (e) => {

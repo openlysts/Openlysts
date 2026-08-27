@@ -85,7 +85,7 @@ export default function RepositoryCard({ repo, index = 0, view = 'grid', showTre
   // Sparkle gradient position based on mouse
   const gradientX = useTransform(mouseXSpring, [-0.5, 0.5], [100, 0]);
   const gradientY = useTransform(mouseYSpring, [-0.5, 0.5], [100, 0]);
-  const background = useMotionTemplate`radial-gradient(circle at ${gradientX}% ${gradientY}%, rgba(var(--accent-rgb, 100, 200, 100), 0.08) 0%, transparent 60%)`;
+  const background = useMotionTemplate`radial-gradient(circle at ${gradientX}% ${gradientY}%, rgba(255, 255, 255, 0.6) 0%, rgba(var(--accent-rgb, 100, 200, 100), 0.15) 30%, transparent 70%)`;
 
   const handleMouseMove = (e) => {
     // Only compute on devices with mouse hover
@@ -140,10 +140,10 @@ export default function RepositoryCard({ repo, index = 0, view = 'grid', showTre
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         style={{ rotateX, rotateY }}
-        className={`card h-full flex p-4 pt-4.5 relative rounded-xl border bg-bg-card transition-[border-color,box-shadow,background-color] duration-200 group touch-active overflow-hidden select-none ${isTrending ? 'border-trending/40 shadow-[0_0_15px_rgba(255,100,50,0.15)]' : 'border-border'} ${view === 'list' ? 'flex-col md:flex-row items-start gap-4 md:gap-6' : 'flex-col justify-between'}`}
+        className={`card card-hover h-full flex p-4 pt-4.5 relative rounded-xl border bg-bg-card transition-[border-color,box-shadow,background-color] duration-200 group touch-active overflow-hidden select-none ${isTrending ? 'border-trending/40 shadow-[0_0_15px_rgba(255,100,50,0.15)]' : 'border-border'} ${view === 'list' ? 'flex-col md:flex-row items-start gap-4 md:gap-6' : 'flex-col justify-between'}`}
       >
         <motion.div 
-          className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"
+          className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0 mix-blend-overlay"
           style={{ background }}
         />
         {isWebsite ? (

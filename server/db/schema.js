@@ -96,6 +96,7 @@ export async function initSchema(db) {
       paid_tool_name TEXT,
       free_tool_name TEXT,
       free_tool_repo TEXT,
+      free_tool_url TEXT,
       description TEXT,
       pros_and_cons TEXT,
       youtube_tutorial_url TEXT,
@@ -103,6 +104,8 @@ export async function initSchema(db) {
       why_it_is_better TEXT,
       migration_difficulty TEXT,
       feature_parity_score REAL,
+      quality_score REAL,
+      verified_oss INTEGER,
       category TEXT
     );`,
 
@@ -182,6 +185,9 @@ export async function initSchema(db) {
     // Existing migrations
     `ALTER TABLE "Alternative" ADD COLUMN free_tool_name TEXT`,
     `ALTER TABLE "Alternative" ADD COLUMN category TEXT`,
+    `ALTER TABLE "Alternative" ADD COLUMN free_tool_url TEXT`,
+    `ALTER TABLE "Alternative" ADD COLUMN quality_score REAL`,
+    `ALTER TABLE "Alternative" ADD COLUMN verified_oss INTEGER`,
     `ALTER TABLE "DiscoveryQuery" ADD COLUMN current_page INTEGER DEFAULT 1`,
 
     // Auth columns for User table
@@ -240,7 +246,7 @@ export async function initSchema(db) {
     // Performance expression indexes
     `CREATE INDEX IF NOT EXISTS idx_repo_lower_name ON "Repository"(lower(full_name));`,
     `CREATE INDEX IF NOT EXISTS idx_alt_lower_repo ON "Alternative"(lower(free_tool_repo));`,
-    `CREATE INDEX IF NOT EXISTS idx_repo_github_updated_at ON "Repository"((NULLIF(github_updated_at, '')::timestamptz));`,
+    `CREATE INDEX IF NOT EXISTS idx_repo_github_updated_at ON "Repository"(github_updated_at);`,
 
     // Auth indexes
     `CREATE UNIQUE INDEX IF NOT EXISTS idx_user_email_normalized ON "User"(email_normalized);`,

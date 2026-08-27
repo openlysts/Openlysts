@@ -11,7 +11,7 @@ import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import rehypeHighlight from 'rehype-highlight';
 import 'highlight.js/styles/atom-one-dark.css';
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
+import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 import LicenseBadge from '@/components/openlyst/LicenseBadge';
 import RepoVideoLinks from '@/components/openlyst/RepoVideoLinks';
 import RepositoryCard from '@/components/openlyst/RepositoryCard';
@@ -382,7 +382,13 @@ export default function RepoDetail() {
               <div className="card p-5 h-64 mb-6">
                 <h2 className="text-sm font-bold text-text mb-4 uppercase tracking-wider text-text-muted">Star Growth (30d)</h2>
                 <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={historyData}>
+                  <AreaChart data={historyData}>
+                    <defs>
+                      <linearGradient id="colorStars" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="hsl(var(--accent))" stopOpacity={0.3}/>
+                        <stop offset="95%" stopColor="hsl(var(--accent))" stopOpacity={0}/>
+                      </linearGradient>
+                    </defs>
                     <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} opacity={0.5} />
                     <XAxis dataKey="date" stroke="var(--text-muted)" fontSize={11} tickLine={false} axisLine={false} />
                     <YAxis stroke="var(--text-muted)" fontSize={11} tickLine={false} axisLine={false} width={40} tickFormatter={(val) => val >= 1000 ? `${(val/1000).toFixed(0)}k` : val} />
@@ -390,8 +396,8 @@ export default function RepoDetail() {
                       contentStyle={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '12px', fontSize: '13px', color: 'var(--text)', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
                       itemStyle={{ color: 'hsl(var(--accent))', fontWeight: 'bold' }}
                     />
-                    <Line type="monotone" dataKey="stars" stroke="hsl(var(--accent))" strokeWidth={2.5} dot={{ r: 0 }} activeDot={{ r: 6, fill: 'hsl(var(--accent))', stroke: 'var(--bg-card)', strokeWidth: 2 }} />
-                  </LineChart>
+                    <Area type="monotone" dataKey="stars" stroke="hsl(var(--accent))" strokeWidth={2.5} fillOpacity={1} fill="url(#colorStars)" activeDot={{ r: 6, fill: 'hsl(var(--accent))', stroke: 'var(--bg-card)', strokeWidth: 2 }} animationDuration={1500} animationEasing="ease-out" />
+                  </AreaChart>
                 </ResponsiveContainer>
               </div>
             )}

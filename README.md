@@ -42,7 +42,8 @@ Openlysts is a complete intelligence platform for developers, tech leads, and op
 - 📐 **Pixel-Uniform Equal-Height Discovery Grid**: Flexbox-equalized grid rows ensuring deterministic card heights, uniform descriptions, and pinned metrics across responsive breakpoints.
 - 🧑‍💻 **Interactive 3D Reactive Founder Avatar & Support Desk**: Cursor-tracking 3D avatar with eyelid winks, cheek smiles, particle reactions, and seamless Contact Portal routing.
 - 📊 **Deep Health & Maintenance Insights**: Direct GitHub integration inspecting release cadences, license legitimacy, community health, and full rendered markdown READMEs.
-- 🎨 **Multi-Theme Design Engine**: Dynamic theme switching with 3D WebGL shader syncing and pure tokenized contrast across all devices.
+- 🎨 **Multi-Theme Design Engine & Fluid Physics**: Dynamic theme switching with 14+ GPU-accelerated WebGL shaders (Aurora, Plasma, Liquid Noise) and Framer Motion spring physics governing all interactive modals and drawers.
+- 📈 **Recharts Data Visualizations**: Animated `AreaChart` and `ScoreRing` metrics rendering GitHub historical star velocity and benchmark scoring with gradient aesthetics.
 - 💾 **Local & Cloud Bookmarking**: Instant offline bookmarking with real-time mobile badge synchronization and JSON export in the user Data Vault.
 - 📲 **Progressive Web App (PWA)**: Full offline service-worker caching, installable on macOS, Windows, iOS, and Android.
 - 🔐 **Pure Enterprise Auth & Profile Management**: Email/password, Google & GitHub OAuth2, secure session cookies (`connect-pg-simple`), and 3D card tilt authentication.

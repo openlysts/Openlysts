@@ -6,6 +6,8 @@
 
 @layer base {
   :root, [data-theme="light"] {
+    --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --holographic-glare: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.4) 25%, rgba(255,255,255,0.6) 50%, transparent 55%);
     --bg: 210 20% 98%;
     --bg-card: 0 0% 100%;
     --bg-subtle: 215 25% 94%;
@@ -345,12 +347,16 @@
   box-shadow: var(--shadow);
 }
 .card-hover {
-  transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.2s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.2s ease;
+  transition: transform 0.4s var(--ease-spring), box-shadow 0.4s var(--ease-spring), border-color 0.2s ease;
 }
 .card-hover:hover {
   transform: translateY(-6px);
   box-shadow: 0 16px 36px rgba(0,0,0,0.18), 0 0 20px rgba(var(--accent-rgb), 0.2);
   border-color: hsl(var(--accent) / 0.6);
+}
+.card-hover:active {
+  transform: translateY(-2px) scale(0.97);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12), 0 0 10px rgba(var(--accent-rgb), 0.1);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -498,4 +504,28 @@ button, a, input, select, textarea, [role="button"], [tabindex="0"] {
 }
 @media (min-width: 1024px) {
   .discovery-rail-card { width: 360px; }
+}
+
+/* Magnetic Button & Fluid Feel */
+.magnetic-button {
+  transition: transform 0.3s var(--ease-spring), background-color 0.2s ease, box-shadow 0.2s ease;
+}
+.magnetic-button:active {
+  transform: scale(0.95) !important;
+}
+
+/* Holographic Glare Overlay */
+.holographic-sheen {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--holographic-glare);
+  background-size: 200% 200%;
+  opacity: 0;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.group:hover .holographic-sheen, .card-hover:hover .holographic-sheen {
+  opacity: 1;
 }

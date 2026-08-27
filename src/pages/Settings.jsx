@@ -211,6 +211,10 @@ export default function Settings() {
               <option value="waves">8. Particle Waves</option>
               <option value="dna">9. DNA Helix</option>
               <option value="vortex">10. Vortex Tunnel</option>
+              <option value="aurora">11. Aurora (Shader)</option>
+              <option value="liquid_noise">12. Liquid Noise (Shader)</option>
+              <option value="plasma">13. Plasma (Shader)</option>
+              <option value="warp_speed">14. Warp Speed</option>
               <option value="none">None (Disabled)</option>
             </select>
           </div>

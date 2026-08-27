@@ -47,7 +47,7 @@ Specialized toolkits for crafting animations, WebGL canvas shaders, anti-slop in
 ### 🪐 [threejs-backgrounds](file:///d:/AI/Openlyst/openlyst/.agents/skills/threejs-backgrounds/SKILL.md)
 - **Official Source**: Openlysts Custom WebGL Engine
 - **Location**: `.agents/skills/threejs-backgrounds/` & [`src/components/openlyst/ThreeBackground.jsx`](file:///d:/AI/Openlyst/openlyst/src/components/openlyst/ThreeBackground.jsx)
-- **What It Provides**: Zero-memory-leak Three.js runtime managing 10+ dynamic 3D scenes (Particle Wave, Cyber Grid, Starfield, Floating Orbs, Blackhole).
+- **What It Provides**: Zero-memory-leak Three.js runtime managing 14+ dynamic 3D scenes (Particle Wave, Cyber Grid, Starfield, Floating Orbs, Blackhole, plus custom GPU shaders like Aurora, Liquid Noise, Plasma, and Warp Speed).
 - **When to Use**: When adding or customizing background themes in `Settings.jsx` while enforcing 1-draw-call buffer geometry and garbage-collection safety.
 
 ---
@@ -163,6 +163,7 @@ Openlysts Architecture
  ├── Frontend Layer (React 18 + Vite 6)
  │    ├── UI & Components: @radix-ui/*, lucide-react, embla-carousel-react, vaul, cmdk
  │    ├── Motion & 3D: framer-motion, three, ogl, canvas-confetti
+ │    ├── Data Visualization: recharts
  │    ├── Styling: tailwindcss, tailwindcss-animate, @tailwindcss/typography, clsx, tailwind-merge
  │    ├── Routing & Query: react-router-dom (v6), @tanstack/react-query (v5)
  │    └── Markdown & Code: react-markdown, highlight.js, rehype-highlight, rehype-raw

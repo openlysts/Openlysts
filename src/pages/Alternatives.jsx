@@ -31,9 +31,25 @@ function ScoreRing({ score, size = 44, strokeWidth = 3.5 }) {
     <div className="relative flex items-center justify-center" style={{ width: size, height: size }}>
       <svg width={size} height={size} className="-rotate-90">
         <circle cx={size/2} cy={size/2} r={radius} fill="none" stroke="currentColor" strokeWidth={strokeWidth} className="text-border/30" />
-        <circle cx={size/2} cy={size/2} r={radius} fill="none" stroke={color} strokeWidth={strokeWidth} strokeDasharray={circumference} strokeDashoffset={offset} strokeLinecap="round" style={{ transition: 'stroke-dashoffset 0.8s ease' }} />
+        <motion.circle 
+          cx={size/2} cy={size/2} r={radius} fill="none" stroke={color} 
+          strokeWidth={strokeWidth} strokeDasharray={circumference} strokeLinecap="round" 
+          initial={{ strokeDashoffset: circumference }}
+          whileInView={{ strokeDashoffset: offset }}
+          viewport={{ once: true }}
+          transition={{ type: "spring", stiffness: 45, damping: 15, delay: 0.1 }}
+        />
       </svg>
-      <span className="absolute text-xs font-black" style={{ color }}>{score}</span>
+      <motion.span 
+        className="absolute text-xs font-black" 
+        style={{ color }}
+        initial={{ opacity: 0, scale: 0.5 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ type: "spring", stiffness: 200, damping: 10, delay: 0.2 }}
+      >
+        {score}
+      </motion.span>
     </div>
   );
 }
@@ -124,17 +140,17 @@ function AlternativeCard({ alt, idx, viewMode, isSelected, onToggleCompare, onSe
         animate={{ rotateX: rotate.x, rotateY: rotate.y }}
         transition={{ type: 'spring', stiffness: 300, damping: 25, mass: 0.5 }}
         style={{ transformStyle: 'preserve-3d' }}
-        className={`absolute inset-0 rounded-xl bg-bg-card border transition-colors duration-300 ${
+        className={`absolute inset-0 rounded-xl bg-bg-card border transition-[border-color,box-shadow,transform] duration-300 card-hover ${
           isSelected 
             ? 'border-accent ring-1 ring-accent/50' 
             : 'border-border'
         } ${hovered && !isSelected ? 'border-accent/40 shadow-2xl shadow-accent/10' : ''}`}
       >
         <div 
-          className="absolute inset-0 rounded-xl pointer-events-none transition-opacity duration-300"
+          className="absolute inset-0 rounded-xl pointer-events-none transition-opacity duration-300 mix-blend-overlay"
           style={{
             opacity: hovered ? 1 : 0,
-            background: `radial-gradient(400px circle at ${spotlight.x}% ${spotlight.y}%, rgba(99, 102, 241, 0.08), rgba(16, 185, 129, 0.05), transparent 60%)`
+            background: `radial-gradient(circle at ${spotlight.x}% ${spotlight.y}%, rgba(255, 255, 255, 0.6) 0%, rgba(var(--accent-rgb, 99, 102, 241), 0.15) 30%, transparent 70%)`
           }}
         />
       </motion.div>
