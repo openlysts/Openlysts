@@ -4,7 +4,14 @@ import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const DATA_DIR = path.join(__dirname, '..', 'data');
+
+// Robust data directory resolution for both local Node and Vercel Serverless (/var/task)
+const possibleDataDirs = [
+  path.join(process.cwd(), 'server', 'data'),
+  path.join(__dirname, '..', 'data'),
+  path.join(process.cwd(), 'data')
+];
+const DATA_DIR = possibleDataDirs.find(d => fs.existsSync(d)) || path.join(__dirname, '..', 'data');
 
 const ALTS_PATH = path.join(DATA_DIR, 'mega_alternatives_catalog.json');
 const REPOS_PATH = path.join(DATA_DIR, 'mega_repositories_catalog.json');
@@ -28,6 +35,8 @@ function buildIndices() {
   try {
     if (fs.existsSync(ALTS_PATH)) {
       const rawAlts = JSON.parse(fs.readFileSync(ALTS_PATH, 'utf-8'));
+      const cleanMd = (str) => typeof str === 'string' ? str.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').trim() : (str || '');
+
       ALTERNATIVES = rawAlts.map(alt => {
         const stars = Number(alt.stars) || 0;
         const hasFpScore = alt.feature_parity_score && alt.feature_parity_score !== 75;
@@ -50,10 +59,19 @@ function buildIndices() {
         // Cross-reference with repository catalog for real data
         const repoFullName = alt.free_tool_repo || '';
         const catalogMatch = repoFullName.includes('/') ? REPOSITORIES.find(r => (r.full_name || '').toLowerCase() === repoFullName.toLowerCase()) : null;
+
+        const cleanCategory = cleanMd(alt.category) || 'Developer Tools';
+        const cleanPaid = cleanMd(alt.paid_tool_name || alt.paid) || 'Proprietary Tool';
+        const cleanFree = cleanMd(alt.free_tool_name || alt.name) || (repoFullName.includes('/') ? repoFullName.split('/')[1] : repoFullName) || 'Alternative';
      
         return {
           ...alt,
-          resolved_name: alt.free_tool_name || alt.name,
+          category: cleanCategory,
+          subcategory: cleanMd(alt.subcategory) || cleanCategory,
+          paid_tool_name: cleanPaid,
+          free_tool_name: cleanFree,
+          resolved_name: cleanFree,
+          description: cleanMd(alt.description),
           openlysts_score: score,
           feature_parity_score: fpScore,
           migration_difficulty: difficulty,
@@ -67,9 +85,9 @@ function buildIndices() {
             quality_score: catalogMatch.quality_score || score,
             html_url: catalogMatch.html_url || alt.free_tool_url
           } : {
-            id: `repo-${(alt.free_tool_name || '').toLowerCase().replace(/[^a-z0-9]/g, '-')}`,
-            full_name: repoFullName || `${(alt.free_tool_name || '').toLowerCase()}/${(alt.free_tool_name || '').toLowerCase()}`,
-            name: alt.free_tool_name,
+            id: `repo-${cleanFree.toLowerCase().replace(/[^a-z0-9]/g, '-')}`,
+            full_name: repoFullName || `${cleanFree.toLowerCase()}/${cleanFree.toLowerCase()}`,
+            name: cleanFree,
             stars: stars,
             language: alt.language || 'Unknown',
             quality_score: score,
@@ -504,8 +522,13 @@ export function queryAlternativesCatalog(params = {}) {
   // Sorting
   if (sort === 'name') {
     list.sort((a, b) => (a.free_tool_name || '').localeCompare(b.free_tool_name || '') || (b.id || '').localeCompare(a.id || ''));
-  } else if (sort === 'quality') {
-    list.sort((a, b) => (b.quality_score || 0) - (a.quality_score || 0) || (b.stars || 0) - (a.stars || 0) || (b.id || '').localeCompare(a.id || ''));
+  } else if (sort === 'quality' || sort === 'score') {
+    list.sort((a, b) => (b.openlysts_score || b.quality_score || 0) - (a.openlysts_score || a.quality_score || 0) || (b.stars || 0) - (a.stars || 0) || (b.id || '').localeCompare(a.id || ''));
+  } else if (sort === 'parity') {
+    list.sort((a, b) => (b.feature_parity_score || 0) - (a.feature_parity_score || 0) || (b.stars || 0) - (a.stars || 0) || (b.id || '').localeCompare(a.id || ''));
+  } else if (sort === 'difficulty') {
+    const diffVal = d => d === 'Easy' ? 3 : d === 'Medium' ? 2 : 1;
+    list.sort((a, b) => diffVal(b.migration_difficulty) - diffVal(a.migration_difficulty) || (b.stars || 0) - (a.stars || 0));
   } else {
     // Default by stars
     list.sort((a, b) => (b.stars || 0) - (a.stars || 0) || (b.id || '').localeCompare(a.id || ''));

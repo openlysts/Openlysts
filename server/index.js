@@ -74,15 +74,51 @@ app.use('/api/entities', entitiesRouter);
 app.use('/api/functions', functionsRouter);
 app.use('/api/contact', contactRouter);
 
-// Serve static frontend files (used only in self-hosted standalone server)
-const distPath = path.resolve(__dirname, '../dist');
-app.use(express.static(distPath));
-app.use((req, res, next) => {
-  if (req.method === 'GET' && !req.path.startsWith('/api/') && !req.path.startsWith('/auth/')) {
-    return res.sendFile(path.join(distPath, 'index.html'));
-  }
-  next();
-});
+const isDevMode = process.argv.includes('--dev');
+
+if (!isDevMode) {
+  // Serve static frontend files (used only in self-hosted standalone server)
+  const distPath = path.resolve(__dirname, '../dist');
+  app.use(express.static(distPath));
+  app.use((req, res, next) => {
+    if (req.method === 'GET' && !req.path.startsWith('/api/') && !req.path.startsWith('/auth/')) {
+      return res.sendFile(path.join(distPath, 'index.html'));
+    }
+    next();
+  });
+} else {
+  // Development mode fallback: Prevent serving stale dist/ folder which causes "localhost doesn't work" confusion
+  app.use((req, res, next) => {
+    if (req.method === 'GET' && !req.path.startsWith('/api/') && !req.path.startsWith('/auth/')) {
+      return res.send(`
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <title>Openlysts API Server</title>
+            <style>
+              body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #09090b; color: #fafafa; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+              .card { background-color: #18181b; border: 1px solid #27272a; border-radius: 12px; padding: 40px; text-align: center; max-width: 500px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5); }
+              h1 { margin-top: 0; color: #a1a1aa; }
+              a { display: inline-block; margin-top: 20px; padding: 12px 24px; background-color: #fafafa; color: #18181b; text-decoration: none; font-weight: 600; border-radius: 6px; transition: opacity 0.2s; }
+              a:hover { opacity: 0.9; }
+              .note { margin-top: 30px; font-size: 13px; color: #71717a; }
+            </style>
+          </head>
+          <body>
+            <div class="card">
+              <h1>API Server is Running</h1>
+              <p>You have accessed the backend Express server on port <strong>${PORT}</strong>.</p>
+              <p>To view the Openlysts frontend with hot-reloading enabled, please open the Vite development server:</p>
+              <a href="http://localhost:5173">Go to http://localhost:5173</a>
+              <p class="note">Note: Serving static files from the <code>/dist</code> folder is disabled in development mode to prevent stale UI issues after a deployment.</p>
+            </div>
+          </body>
+        </html>
+      `);
+    }
+    next();
+  });
+}
 
 // Centralized JSON error handling
 app.use((err, req, res, next) => {
