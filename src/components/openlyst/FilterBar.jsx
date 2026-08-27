@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, SlidersHorizontal, X, LayoutGrid, List } from 'lucide-react';
 import { CATEGORIES } from '@/lib/categories';
 import { useViewMode } from '@/hooks/useViewMode';
@@ -166,8 +167,16 @@ export default function FilterBar({ filters, onChange, languages = [] }) {
         </div>
       </div>
 
-      {expanded && (
-        <div className="mt-3 p-4 rounded-xl border border-border bg-bg-card space-y-4">
+      <AnimatePresence>
+        {expanded && (
+          <motion.div 
+            initial={{ height: 0, opacity: 0 }} 
+            animate={{ height: 'auto', opacity: 1 }} 
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            className="overflow-hidden"
+          >
+            <div className="mt-3 p-4 rounded-xl border border-border bg-bg-card space-y-4">
           {/* Languages */}
           {languages.length > 0 && (
             <div>
@@ -272,8 +281,10 @@ export default function FilterBar({ filters, onChange, languages = [] }) {
               </div>
             </div>
           </div>
-        </div>
-      )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

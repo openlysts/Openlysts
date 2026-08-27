@@ -272,14 +272,8 @@ export default function RepoDetail() {
                 )}
               {isGithub && (
                   <a
-                    href={repo.html_url.replace('github.com', 'gitingest.com')}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      background: 'linear-gradient(var(--color-bg), var(--color-bg)) padding-box, linear-gradient(to right, #ec4899, #8b5cf6, #6366f1) border-box',
-                      border: '1.5px solid transparent',
-                    }}
-                    className="flex items-center justify-center gap-2 px-6 h-11 sm:h-10 rounded-xl font-bold text-sm shadow-[0_0_15px_rgba(236,72,153,0.25)] hover:shadow-[0_0_22px_rgba(236,72,153,0.5)] transition-all"
+                    href={`/food-for-ai/${encodeURIComponent(repo.id)}`}
+                    className="flex items-center justify-center gap-2 px-6 h-11 sm:h-10 rounded-xl font-bold text-sm bg-bg-card border border-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] hover:bg-bg-hover transition-all"
                   >
                     <Sparkles className="w-4 h-4 text-pink-400" />
                     <span className="bg-gradient-to-r from-pink-400 to-indigo-400 bg-clip-text text-transparent">Food for AI</span>
@@ -327,19 +321,19 @@ export default function RepoDetail() {
           <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: 0.1 }}>
             {/* Stats grid (2x2) */}
             <div className="grid grid-cols-2 gap-3 mb-6" data-tour="repo-stats-bar">
-              <div className="card p-4 hover:border-border transition-colors">
+              <div className="card p-4 hover:border-border transition-colors bg-bg-card/80 backdrop-blur-md border border-white/5 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
                 <div className="flex items-center gap-1.5 text-text-muted text-xs mb-1.5 font-medium uppercase tracking-wider"><Star className="w-3.5 h-3.5 text-yellow-500" /> Stars</div>
                 <p className="text-2xl font-bold text-text">{formatNum(repo.stars)}</p>
               </div>
-              <div className="card p-4 hover:border-border transition-colors">
+              <div className="card p-4 hover:border-border transition-colors bg-bg-card/80 backdrop-blur-md border border-white/5 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
                 <div className="flex items-center gap-1.5 text-text-muted text-xs mb-1.5 font-medium uppercase tracking-wider"><GitFork className="w-3.5 h-3.5 text-blue-500" /> Forks</div>
                 <p className="text-2xl font-bold text-text">{formatNum(repo.forks)}</p>
               </div>
-              <div className="card p-4 hover:border-border transition-colors">
+              <div className="card p-4 hover:border-border transition-colors bg-bg-card/80 backdrop-blur-md border border-white/5 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
                 <div className="flex items-center gap-1.5 text-text-muted text-xs mb-1.5 font-medium uppercase tracking-wider"><AlertCircle className="w-3.5 h-3.5 text-green-500" /> Issues</div>
                 <p className="text-2xl font-bold text-text">{formatNum(repo.open_issues)}</p>
               </div>
-              <div className="card p-4 hover:border-border transition-colors">
+              <div className="card p-4 hover:border-border transition-colors bg-bg-card/80 backdrop-blur-md border border-white/5 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
                 <div className="flex items-center gap-1.5 text-text-muted text-xs mb-1.5 font-medium uppercase tracking-wider"><Activity className="w-3.5 h-3.5 text-accent" /> Quality</div>
                 <p className="text-2xl font-bold text-text">{repo.quality_score?.toFixed(1) || '—'}</p>
               </div>

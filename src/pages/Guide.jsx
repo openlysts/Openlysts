@@ -282,17 +282,24 @@ export default function Guide() {
                 <button
                   key={mod.id}
                   onClick={() => handleSelectTab(mod.id)}
-                  className={`relative flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-150 whitespace-nowrap touch-target flex-shrink-0 cursor-pointer ${
-                    isActive 
-                      ? 'text-accent-fg bg-accent shadow-sm font-bold' 
-                      : 'text-text-secondary hover:text-text hover:bg-bg-hover'
+                  className={`relative flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-colors duration-150 whitespace-nowrap touch-target flex-shrink-0 cursor-pointer ${
+                    isActive ? 'text-accent-fg font-bold' : 'text-text-secondary hover:text-text hover:bg-bg-hover'
                   }`}
                 >
-                  <Icon className={`w-4 h-4 flex-shrink-0 ${isActive ? 'text-accent-fg' : 'text-accent'}`} />
-                  <span>{mod.label}</span>
-                  {isExplored && !isActive && (
-                    <span className="w-1.5 h-1.5 rounded-full bg-accent/80" title="Explored" />
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeGuideTab"
+                      className="absolute inset-0 bg-accent rounded-xl shadow-sm z-0"
+                      transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                    />
                   )}
+                  <span className="relative z-10 flex items-center gap-2">
+                    <Icon className={`w-4 h-4 flex-shrink-0 ${isActive ? 'text-accent-fg' : 'text-accent'}`} />
+                    <span>{mod.label}</span>
+                    {isExplored && !isActive && (
+                      <span className="w-1.5 h-1.5 rounded-full bg-accent/80" title="Explored" />
+                    )}
+                  </span>
                 </button>
               );
             })}

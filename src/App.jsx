@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, lazy } from 'react';
 import { Toaster } from "@/components/ui/toaster"
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
@@ -8,7 +8,7 @@ import { AuthProvider } from '@/lib/AuthContext';
 import { ThemeProvider } from '@/lib/theme';
 import { MobileLayoutProvider } from '@/lib/MobileLayoutContext';
 import { CompareProvider } from '@/lib/CompareContext';
-import { lazyWithRetry } from '@/lib/lazyWithRetry';
+import { importWithRetry } from '@/lib/lazyWithRetry';
 
 import OpenlystLayout from './components/openlyst/OpenlystLayout';
 import AdminRoute from './components/openlyst/AdminRoute';
@@ -27,31 +27,31 @@ if (typeof window !== 'undefined') {
 }
 
 // Public Pages
-import Welcome from './pages/Welcome';
-import Home from './pages/Home';
-import Search from './pages/Search';
-import RepoDetail from './pages/RepoDetail';
-import Alternatives from './pages/Alternatives';
-import Trending from './pages/Trending';
-import About from './pages/About';
-import Contact from './pages/Contact';
-import Compare from './pages/Compare';
-import Guide from './pages/Guide';
-import PrivacyPolicy from './pages/PrivacyPolicy';
-import TermsOfService from './pages/TermsOfService';
+const Welcome = lazy(() => importWithRetry(() => import('./pages/Welcome')));
+const Home = lazy(() => importWithRetry(() => import('./pages/Home')));
+const Search = lazy(() => importWithRetry(() => import('./pages/Search')));
+const RepoDetail = lazy(() => importWithRetry(() => import('./pages/RepoDetail')));
+const Alternatives = lazy(() => importWithRetry(() => import('./pages/Alternatives')));
+const Trending = lazy(() => importWithRetry(() => import('./pages/Trending')));
+const About = lazy(() => importWithRetry(() => import('./pages/About')));
+const Contact = lazy(() => importWithRetry(() => import('./pages/Contact')));
+const Compare = lazy(() => importWithRetry(() => import('./pages/Compare')));
+const Guide = lazy(() => importWithRetry(() => import('./pages/Guide')));
+const PrivacyPolicy = lazy(() => importWithRetry(() => import('./pages/PrivacyPolicy')));
+const TermsOfService = lazy(() => importWithRetry(() => import('./pages/TermsOfService')));
 
 // Auth Pages
-import Login from './pages/Login';
-import Register from './pages/Register';
-import ForgotPassword from './pages/ForgotPassword';
-import ResetPassword from './pages/ResetPassword';
-import VerifyEmail from './pages/VerifyEmail';
+const Login = lazy(() => importWithRetry(() => import('./pages/Login')));
+const Register = lazy(() => importWithRetry(() => import('./pages/Register')));
+const ForgotPassword = lazy(() => importWithRetry(() => import('./pages/ForgotPassword')));
+const ResetPassword = lazy(() => importWithRetry(() => import('./pages/ResetPassword')));
+const VerifyEmail = lazy(() => importWithRetry(() => import('./pages/VerifyEmail')));
 
 // Protected Pages
-import Bookmarks from './pages/Bookmarks';
-import Settings from './pages/Settings';
-import Profile from './pages/Profile';
-import Admin from './pages/Admin';
+const Bookmarks = lazy(() => importWithRetry(() => import('./pages/Bookmarks')));
+const Settings = lazy(() => importWithRetry(() => import('./pages/Settings')));
+const Profile = lazy(() => importWithRetry(() => import('./pages/Profile')));
+const Admin = lazy(() => importWithRetry(() => import('./pages/Admin')));
 
 function App() {
   return (

@@ -1355,5 +1355,28 @@
       }
     ],
     "timestamp": 1787745658094
+  },
+  "n8n/n8n": {
+    "videos": [
+      {
+        "video_id": "UIf-SlmMays",
+        "title": "n8n Tutorial – Zero to Hero Course",
+        "channel": "freeCodeCamp.org",
+        "url": "https://youtube.com/watch?v=UIf-SlmMays"
+      },
+      {
+        "video_id": "MkFJX2wHFTE",
+        "title": "n8n Tutorial for Beginners - Full Course (+ ai agent)",
+        "channel": "Website Learners",
+        "url": "https://youtube.com/watch?v=MkFJX2wHFTE"
+      },
+      {
+        "video_id": "e3OV3LnrS7o",
+        "title": "Master 80% of n8n in 36 Minutes",
+        "channel": "Futurepedia and AI Agent Lab",
+        "url": "https://youtube.com/watch?v=e3OV3LnrS7o"
+      }
+    ],
+    "timestamp": 1787830196089
   }
 }

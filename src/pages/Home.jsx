@@ -11,7 +11,6 @@ import InfiniteDiscoveryFeed from '@/components/openlyst/InfiniteDiscoveryFeed';
 import AnimatedSearch from '@/components/openlyst/AnimatedSearch';
 import FilterBar from '@/components/openlyst/FilterBar';
 import DiscoverLiveMetrics from '@/components/openlyst/DiscoverLiveMetrics';
-import VariableProximity from '@/components/ui/VariableProximity';
 import { useToast } from '@/components/ui/use-toast';
 import { usePlatformStats } from '@/hooks/usePlatformStats';
 
@@ -140,19 +139,14 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}>
           
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-text leading-tight mb-4 w-full flex justify-center sm:whitespace-nowrap">
-            <VariableProximity
-              label="Uncover what the top 1% ship with."
-              className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-text leading-tight"
-              fromFontVariationSettings="'wght' 900"
-              toFontVariationSettings="'wght' 900"
-              containerRef={heroRef}
-              radius={160}
-              falloff="gaussian"
-            />
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-[-0.04em] text-text leading-[1.05] mb-5 w-full flex flex-col items-center justify-center sm:whitespace-nowrap">
+            <span>Uncover what the top 1%</span>
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-accent via-emerald-400 to-cyan-400">
+              ship with.
+            </span>
           </h1>
           
-          <p className="text-text-secondary text-base sm:text-lg leading-relaxed mb-8 max-w-2xl mx-auto">
+          <p className="text-text-secondary text-base sm:text-lg leading-relaxed mb-8 max-w-2xl mx-auto font-normal">
             Stop guessing. We track, rank, and surface explosive open-source systems before they go mainstream.
           </p>
         </motion.div>

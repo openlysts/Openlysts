@@ -105,25 +105,9 @@ export default function OpenlystLayout() {
         )}
         <Header />
         
-        {/* Main Content with Spring Bounce Page Transition */}
+        {/* Main Content */}
         <main id="main-content" role="main" tabIndex="-1" className={`flex-1 transition-all duration-300 ease-in-out pb-16 sm:pb-0 ${isMobileLayout ? 'max-w-md w-full mx-auto shadow-2xl border-x border-border bg-bg/50' : ''}`}>
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.div
-              key={location.pathname}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{
-                type: 'spring',
-                stiffness: 300,
-                damping: 24,
-                mass: 0.8
-              }}
-              className="w-full h-full"
-            >
-              <Outlet />
-            </motion.div>
-          </AnimatePresence>
+          <Outlet />
         </main>
 
         <footer role="contentinfo" className={`${isMobileLayout ? 'max-w-md w-full mx-auto' : ''}`}>

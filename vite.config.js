@@ -38,12 +38,7 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        manualChunks(id) {
-          if (id.includes('node_modules')) {
-            if (id.includes('three')) return 'vendor-three';
-            return 'vendor';
-          }
-        }
+        // Letting Rollup handle chunking natively based on dynamic imports
       }
     }
   }

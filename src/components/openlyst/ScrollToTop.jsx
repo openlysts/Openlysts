@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 /**
- * ScrollToTop component ensures that navigating to any page (especially from the footer)
- * immediately and smoothly resets the viewport to the top (0,0) or scrolls to the target anchor hash.
+ * ScrollToTop component ensures that navigating to any page
+ * immediately resets the viewport to the top (0,0) or scrolls to the target anchor hash.
  */
 export default function ScrollToTop() {
   const { pathname, search, hash } = useLocation();
@@ -15,24 +15,24 @@ export default function ScrollToTop() {
         const element = document.getElementById(hash.replace('#', '')) || document.querySelector(hash);
         if (element) {
           element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          return;
         }
       }, 50);
+      return;
     }
 
-    // Default: Reset scroll position to top instantly on route change
-    // Using instant prevents visual jitter of the new page rendering at previous scroll offset
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: 'instant',
-    });
+    // Immediate scroll reset
+    window.scrollTo(0, 0);
 
-    // Fallback for browsers or container scrolling
-    const mainContent = document.getElementById('main-content');
-    if (mainContent && mainContent.scrollTop > 0) {
-      mainContent.scrollTop = 0;
-    }
+    // Single deferred fallback after framer-motion transitions complete
+    const fallback = setTimeout(() => {
+      window.scrollTo(0, 0);
+      const mainContent = document.getElementById('main-content');
+      if (mainContent && mainContent.scrollTop > 0) {
+        mainContent.scrollTop = 0;
+      }
+    }, 100);
+
+    return () => clearTimeout(fallback);
   }, [pathname, search, hash]);
 
   return null;

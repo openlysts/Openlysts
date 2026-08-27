@@ -151,23 +151,26 @@ if (isMainModule) {
     }
 
     // Auto-Ingestion Loop (Every 10 minutes)
-    const TEN_MINUTES = 10 * 60 * 1000;
-    setInterval(async () => {
-      try {
-        await executeIngestion();
-      } catch (err) {
-        // Suppress expected DB throttling warnings in background
-      }
-    }, TEN_MINUTES);
+    // Only run in local/standalone mode. On Vercel, this is handled by Vercel Cron.
+    if (!process.env.VERCEL) {
+      const TEN_MINUTES = 10 * 60 * 1000;
+      setInterval(async () => {
+        try {
+          await executeIngestion();
+        } catch (err) {
+          // Suppress expected DB throttling warnings in background
+        }
+      }, TEN_MINUTES);
 
-    // Auto-Ingest Alternatives (Every 6 hours)
-    const SIX_HOURS = 6 * 60 * 60 * 1000;
-    setInterval(async () => {
-      try {
-        await ingestAlternatives();
-      } catch (err) {
-        // Suppress expected DB throttling warnings in background
-      }
-    }, SIX_HOURS);
+      // Auto-Ingest Alternatives (Every 6 hours)
+      const SIX_HOURS = 6 * 60 * 60 * 1000;
+      setInterval(async () => {
+        try {
+          await ingestAlternatives();
+        } catch (err) {
+          // Suppress expected DB throttling warnings in background
+        }
+      }, SIX_HOURS);
+    }
   });
 }

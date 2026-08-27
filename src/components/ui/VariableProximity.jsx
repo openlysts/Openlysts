@@ -39,13 +39,20 @@ const VariableProximity = forwardRef((/** @type {any} */ props, ref) => {
   const mousePos = useRef({ x: -9999, y: -9999, active: false });
   const isUpdating = useRef(false);
 
-  // Extract min and max weights
+  // Extract min and max weights, plus any extra axes to preserve
   const parsedWeights = useMemo(() => {
     const fromMatch = fromFontVariationSettings.match(/'wght'\s*(\d+)/);
     const toMatch = toFontVariationSettings.match(/'wght'\s*(\d+)/);
+    // Extract non-wght axes (e.g. "'opsz' 32") to preserve during interpolation
+    const extraAxes = fromFontVariationSettings
+      .split(',')
+      .map(s => s.trim())
+      .filter(s => !s.includes("'wght'"))
+      .join(', ');
     return {
       min: fromMatch ? parseInt(fromMatch[1], 10) : 400,
       max: toMatch ? parseInt(toMatch[1], 10) : 900,
+      extraAxes, // e.g. "'opsz' 32"
     };
   }, [fromFontVariationSettings, toFontVariationSettings]);
 
@@ -113,7 +120,8 @@ const VariableProximity = forwardRef((/** @type {any} */ props, ref) => {
           );
           const lift = (-4 * intensity).toFixed(2);
 
-          el.style.fontVariationSettings = `'wght' ${currentWeight}`;
+          const extraPart = parsedWeights.extraAxes ? `, ${parsedWeights.extraAxes}` : '';
+          el.style.fontVariationSettings = `'wght' ${currentWeight}${extraPart}`;
           el.style.fontWeight = currentWeight;
           el.style.transform = `translate3d(0, ${lift}px, 0)`;
         } else {

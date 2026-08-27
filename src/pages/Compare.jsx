@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { queryRepos } from '@/lib/api';
 import { motion } from 'framer-motion';
 import { Star, GitFork, AlertCircle, X, Plus, Search, Trophy, Activity } from 'lucide-react';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, CartesianGrid } from 'recharts';
 import LicenseBadge from '@/components/openlyst/LicenseBadge';
 import { getDifficultyColor } from '@/lib/difficultyColors';
 import { useCompare } from '@/lib/CompareContext';
@@ -258,47 +259,58 @@ export default function Compare() {
                 <Trophy className="w-3.5 h-3.5 text-accent" /> Key Metrics Comparison
               </h2>
 
-              {/* Stars comparison */}
-              <div className="space-y-1.5">
-                <div className="flex justify-between text-xs font-medium text-text-secondary">
-                  <span>Stars (GitHub Popularity)</span>
-                </div>
-                <div className="space-y-1.5">
-                  {repos?.map(r => (
-                    <div key={r.id} className="flex items-center gap-2">
-                      <span className="w-20 text-[11px] font-semibold text-text truncate">{r.name}</span>
-                      <div className="flex-1 h-3 bg-bg-subtle rounded-full overflow-hidden">
-                        <div 
-                          className="h-full bg-accent rounded-full transition-all duration-500" 
-                          style={{ width: `${Math.max(8, ((r.stars || 0) / maxStars) * 100)}%` }} 
+              {/* Recharts Bar Charts for Compare */}
+              {repos && repos.length > 0 && (
+                <div className="space-y-6 pt-2">
+                  <div className="h-48">
+                    <h3 className="text-xs font-medium text-text-secondary mb-2">Stars (GitHub Popularity)</h3>
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart data={repos} layout="vertical" margin={{ top: 0, right: 30, left: 0, bottom: 0 }}>
+                        <defs>
+                          <linearGradient id="starsGrad" x1="0" y1="0" x2="1" y2="0">
+                            <stop offset="0%" stopColor="hsl(var(--accent))" stopOpacity={0.6}/>
+                            <stop offset="100%" stopColor="hsl(var(--accent))" stopOpacity={1}/>
+                          </linearGradient>
+                        </defs>
+                        <XAxis type="number" hide />
+                        <YAxis type="category" dataKey="name" stroke="var(--text-secondary)" fontSize={11} width={80} tickLine={false} axisLine={false} />
+                        <Tooltip 
+                          cursor={{fill: 'var(--bg-subtle)'}}
+                          contentStyle={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '8px', fontSize: '12px' }}
+                          formatter={(value) => formatStars(value)}
                         />
-                      </div>
-                      <span className="w-12 text-right text-xs font-bold text-text">{formatStars(r.stars)}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+                        <Bar dataKey="stars" fill="url(#starsGrad)" radius={[0, 4, 4, 0]} barSize={16}>
+                          {repos.map((entry, index) => (
+                            <Cell key={`cell-${index}`} />
+                          ))}
+                        </Bar>
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
 
-              {/* Forks comparison */}
-              <div className="space-y-1.5 pt-2 border-t border-border/50">
-                <div className="flex justify-between text-xs font-medium text-text-secondary">
-                  <span>Forks (Community Adoption)</span>
-                </div>
-                <div className="space-y-1.5">
-                  {repos?.map(r => (
-                    <div key={r.id} className="flex items-center gap-2">
-                      <span className="w-20 text-[11px] font-semibold text-text truncate">{r.name}</span>
-                      <div className="flex-1 h-3 bg-bg-subtle rounded-full overflow-hidden">
-                        <div 
-                          className="h-full bg-blue-500 rounded-full transition-all duration-500" 
-                          style={{ width: `${Math.max(8, ((r.forks || 0) / maxForks) * 100)}%` }} 
+                  <div className="h-48 border-t border-border/50 pt-4">
+                    <h3 className="text-xs font-medium text-text-secondary mb-2">Forks (Community Adoption)</h3>
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart data={repos} layout="vertical" margin={{ top: 0, right: 30, left: 0, bottom: 0 }}>
+                        <defs>
+                          <linearGradient id="forksGrad" x1="0" y1="0" x2="1" y2="0">
+                            <stop offset="0%" stopColor="#3b82f6" stopOpacity={0.6}/>
+                            <stop offset="100%" stopColor="#3b82f6" stopOpacity={1}/>
+                          </linearGradient>
+                        </defs>
+                        <XAxis type="number" hide />
+                        <YAxis type="category" dataKey="name" stroke="var(--text-secondary)" fontSize={11} width={80} tickLine={false} axisLine={false} />
+                        <Tooltip 
+                          cursor={{fill: 'var(--bg-subtle)'}}
+                          contentStyle={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '8px', fontSize: '12px' }}
+                          formatter={(value) => formatStars(value)}
                         />
-                      </div>
-                      <span className="w-12 text-right text-xs font-bold text-text">{formatStars(r.forks)}</span>
-                    </div>
-                  ))}
+                        <Bar dataKey="forks" fill="url(#forksGrad)" radius={[0, 4, 4, 0]} barSize={16} />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
                 </div>
-              </div>
+              )}
 
               {/* Issues & Activity Row */}
               <div className="grid grid-cols-2 gap-2 pt-2 border-t border-border/50">

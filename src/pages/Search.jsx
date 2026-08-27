@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { useSearchParams } from 'react-router-dom';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useQuery } from '@tanstack/react-query';
@@ -154,8 +155,9 @@ export default function Search() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
       {/* Search input */}
-      <div data-tour="search-input" className="relative max-w-2xl mb-6">
-        <SearchIcon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted" />
+      <motion.div whileTap={{ scale: 0.995 }} data-tour="search-input" className="relative max-w-2xl mb-6 group">
+        <SearchIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted group-focus-within:text-accent transition-colors z-10" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent rounded-2xl pointer-events-none opacity-0 group-focus-within:opacity-100 transition-opacity" />
         <input
           type="text"
           value={inputVal}
@@ -169,9 +171,9 @@ export default function Search() {
             }
           }}
           placeholder="Search open-source projects (e.g. language:python stars:>1000 topic:ai)..."
-          className="w-full bg-bg-card border border-border rounded-xl pl-11 pr-4 py-3 text-base text-text placeholder:text-text-muted focus:border-accent focus:outline-none shadow-sm"
+          className="w-full bg-bg-card/80 backdrop-blur-md border border-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)] rounded-2xl pl-12 pr-4 py-4 text-base text-text placeholder:text-text-muted focus:border-accent focus:ring-1 focus:ring-accent focus:outline-none transition-all"
         />
-      </div>
+      </motion.div>
 
       {q && (
         <div className="flex flex-wrap items-center justify-between gap-3 mb-4 p-3 rounded-xl bg-bg-card border border-border">

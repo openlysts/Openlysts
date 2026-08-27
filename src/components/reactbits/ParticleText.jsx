@@ -137,6 +137,11 @@ const ParticleText = ({
     };
 
     const render = now => {
+      if (!isVisible) {
+        animationFrame = null;
+        return;
+      }
+
       ctx.clearRect(0, 0, width, height);
 
       if (glow && !reducedMotion) {
@@ -198,8 +203,19 @@ const ParticleText = ({
       animationFrame = window.requestAnimationFrame(render);
     };
 
+    let isVisible = true;
+    const intersectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        isVisible = entry.isIntersecting;
+        if (isVisible) {
+          ensureRenderLoop();
+        }
+      });
+    }, { rootMargin: '200px' });
+    intersectionObserver.observe(container);
+
     const ensureRenderLoop = () => {
-      if (animationFrame === null) {
+      if (animationFrame === null && isVisible) {
         animationFrame = window.requestAnimationFrame(render);
       }
     };
@@ -375,6 +391,7 @@ const ParticleText = ({
     return () => {
       buildId += 1;
       resizeObserver.disconnect();
+      intersectionObserver.disconnect();
       reduceMotionQuery?.removeEventListener('change', handleReduceMotionChange);
       canvas.removeEventListener('pointerenter', handlePointerEnter);
       canvas.removeEventListener('pointermove', handlePointerMove);
