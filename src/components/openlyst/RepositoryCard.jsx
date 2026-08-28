@@ -283,7 +283,7 @@ export default function RepositoryCard({ repo, index = 0, view = 'grid', showTre
                 </span>
               )}
               <LicenseBadge repo={repo} />
-              {!isWebsite && repo?.html_url && (
+              {!isWebsite && repo?.html_url?.includes('github.com') && (
                 <a
                   href={repo.html_url.replace('github.com', 'gitingest.com')}
                   target="_blank"
