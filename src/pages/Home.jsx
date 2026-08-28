@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Cpu, Wrench, ShieldCheck, Activity, Server, Zap, Database, Clock } from 'lucide-react';
 import { queryRepos } from '@/lib/api';
+import { TextRoll } from '@/components/ui/text-roll';
 
 import RepositoryGrid from '@/components/openlyst/RepositoryGrid';
 import InfiniteDiscoveryFeed from '@/components/openlyst/InfiniteDiscoveryFeed';
@@ -113,7 +114,7 @@ export default function Home() {
             animate={{ y: 0, opacity: 1, x: '-50%' }}
             exit={{ y: -100, opacity: 0, x: '-50%' }}
             transition={{ type: "spring", stiffness: 300, damping: 25 }}
-            className="fixed top-6 left-1/2 z-50 hidden md:flex items-center gap-1.5 p-1.5 rounded-full bg-bg-card/90 backdrop-blur-2xl border border-border shadow-2xl"
+            className="fixed top-20 left-1/2 -translate-x-1/2 z-[50] bg-bg-surface/80 backdrop-blur-xl border border-border rounded-full shadow-2xl p-2 flex items-center gap-1 mx-auto w-max max-w-[95vw] overflow-x-auto no-scrollbar"
           >
             {QUICK_CATEGORIES.map((cat) => {
               const Icon = cat.icon;
@@ -139,11 +140,11 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}>
           
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-[-0.04em] text-text leading-[1.05] mb-5 w-full flex flex-col items-center justify-center sm:whitespace-nowrap">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-[-0.04em] text-text leading-[1.05] mb-5 w-full flex flex-wrap items-center justify-center gap-x-3 sm:whitespace-nowrap">
             <span>Uncover what the top 1%</span>
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-accent via-emerald-400 to-cyan-400">
+            <TextRoll className="bg-clip-text text-transparent bg-gradient-to-r from-accent via-emerald-400 to-cyan-400" once={false}>
               ship with.
-            </span>
+            </TextRoll>
           </h1>
           
           <p className="text-text-secondary text-base sm:text-lg leading-relaxed mb-8 max-w-2xl mx-auto font-normal">

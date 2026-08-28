@@ -61,6 +61,26 @@ export class EntityService {
   }
 
   async list(sort = null, limit = null) {
+    if (this.entity === 'Repository') {
+      let repos = [...getCatalogRepositories()];
+      if (sort) {
+        const isDesc = sort.startsWith('-');
+        const field = isDesc ? sort.substring(1) : sort;
+        repos.sort((a, b) => {
+          const valA = a[field] || 0;
+          const valB = b[field] || 0;
+          return isDesc ? (valB > valA ? 1 : -1) : (valA > valB ? 1 : -1);
+        });
+      }
+      if (limit) repos = repos.slice(0, parseInt(limit, 10));
+      return repos;
+    }
+    if (this.entity === 'Alternative') {
+      let alts = [...getCatalogAlternatives()];
+      if (limit) alts = alts.slice(0, parseInt(limit, 10));
+      return alts;
+    }
+
     try {
       let orderClause = '';
       if (sort) {
@@ -72,30 +92,9 @@ export class EntityService {
       let limitClause = '';
       if (limit) limitClause = `LIMIT ${parseInt(limit, 10)}`;
       const { rows } = await db.query(`SELECT ${this.getColumnList()} FROM "${this.entity}" ${orderClause} ${limitClause}`);
-      if (rows.length === 0 && (this.entity === 'Repository' || this.entity === 'Alternative')) {
-        throw new Error('Fallback to static catalog because table is empty');
-      }
       return rows.map(parseRow);
     } catch (err) {
-      if (this.entity === 'Repository') {
-        let repos = [...getCatalogRepositories()];
-        if (sort) {
-          const isDesc = sort.startsWith('-');
-          const field = isDesc ? sort.substring(1) : sort;
-          repos.sort((a, b) => {
-            const valA = a[field] || 0;
-            const valB = b[field] || 0;
-            return isDesc ? (valB > valA ? 1 : -1) : (valA > valB ? 1 : -1);
-          });
-        }
-        if (limit) repos = repos.slice(0, parseInt(limit, 10));
-        return repos;
-      }
-      if (this.entity === 'Alternative') {
-        let alts = [...getCatalogAlternatives()];
-        if (limit) alts = alts.slice(0, parseInt(limit, 10));
-        return alts;
-      }
+      console.error(`[ENTITY LIST] DB error for ${this.entity}:`, err.message);
       return [];
     }
   }

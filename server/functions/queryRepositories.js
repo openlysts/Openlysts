@@ -1,6 +1,6 @@
 import { githubFetch, ingestRepoItem } from './runIngestion.js';
 import { serverCache } from '../services/cache.js';
-import { queryRepositoriesCatalog } from '../services/catalogEngine.js';
+import { queryRepositoriesCatalog, syncDeltasFromDB } from '../services/catalogEngine.js';
 
 const PER_PAGE = 24;
 
@@ -36,6 +36,9 @@ export default async function queryRepositories(req, res) {
         console.error('GitHub fallback search failed in background:', err.message);
       });
     }
+
+    // Ensure Neon DB deltas are fused into memory before answering
+    await syncDeltasFromDB();
 
     // Primary: In-memory catalog engine (sub-millisecond, zero DB cost)
     const catalogData = queryRepositoriesCatalog({

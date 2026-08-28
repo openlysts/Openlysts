@@ -151,6 +151,30 @@ function buildIndices() {
   console.log(`[CATALOG ENGINE] Indexed ${REPOSITORIES.length} repositories & ${ALTERNATIVES.length} alternatives in-memory.`);
 }
 
+let dbSynced = false;
+export async function syncDeltasFromDB() {
+  if (dbSynced) return;
+  try {
+    const { db } = await import('../db/index.js');
+    const [repoRes, altRes] = await Promise.allSettled([
+      db.query('SELECT * FROM "Repository"'),
+      db.query('SELECT * FROM "Alternative"')
+    ]);
+    
+    if (repoRes.status === 'fulfilled' && repoRes.value.rows) {
+      repoRes.value.rows.forEach(r => ingestCatalogRepository(r));
+    }
+    if (altRes.status === 'fulfilled' && altRes.value.rows) {
+      altRes.value.rows.forEach(a => ingestCatalogAlternative(a));
+    }
+    
+    dbSynced = true;
+    console.log(`[CATALOG ENGINE] Fused delta updates from Neon DB.`);
+  } catch (err) {
+    console.error('[CATALOG ENGINE] Failed to sync deltas from DB:', err.message);
+  }
+}
+
 // Initialize indices on module load
 buildIndices();
 
@@ -437,6 +461,21 @@ export function queryRepositoriesCatalog(params = {}) {
     // Trending (Composite Score)
     list.sort((a, b) => (b.trending_score || 0) - (a.trending_score || 0) || (b.stars || 0) - (a.stars || 0) || (b.id || '').localeCompare(a.id || ''));
   }
+
+  // 6.5 Deduplicate identical repos (Git vs Alternative)
+  const seenUrls = new Set();
+  const seenNames = new Set();
+  list = list.filter(r => {
+    const url = (r.html_url || '').toLowerCase().trim();
+    const normalizedName = (r.full_name || r.name || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+    
+    if (url && seenUrls.has(url)) return false;
+    if (normalizedName && seenNames.has(normalizedName)) return false;
+    
+    if (url) seenUrls.add(url);
+    if (normalizedName) seenNames.add(normalizedName);
+    return true;
+  });
 
   // 7. SOTA Pagination
   const total = list.length;
