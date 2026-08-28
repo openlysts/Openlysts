@@ -72,6 +72,9 @@ export class EntityService {
       let limitClause = '';
       if (limit) limitClause = `LIMIT ${parseInt(limit, 10)}`;
       const { rows } = await db.query(`SELECT ${this.getColumnList()} FROM "${this.entity}" ${orderClause} ${limitClause}`);
+      if (rows.length === 0 && (this.entity === 'Repository' || this.entity === 'Alternative')) {
+        throw new Error('Fallback to static catalog because table is empty');
+      }
       return rows.map(parseRow);
     } catch (err) {
       if (this.entity === 'Repository') {
@@ -124,6 +127,9 @@ export class EntityService {
       let limitClause = '';
       if (limit) limitClause = `LIMIT ${parseInt(limit, 10)}`;
       const { rows } = await db.query(`SELECT ${this.getColumnList()} FROM "${this.entity}" ${whereClause} ${orderClause} ${limitClause}`, params);
+      if (rows.length === 0 && (this.entity === 'Repository' || this.entity === 'Alternative')) {
+        throw new Error('Fallback to static catalog because table is empty for this query');
+      }
       return rows.map(parseRow);
     } catch (err) {
       if (this.entity === 'Repository') {
