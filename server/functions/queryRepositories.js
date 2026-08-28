@@ -37,8 +37,15 @@ export default async function queryRepositories(req, res) {
       });
     }
 
-    // Ensure Neon DB deltas are fused into memory before answering
-    await syncDeltasFromDB();
+    // Ensure Neon DB deltas are fused into memory before answering, with a strict 2.5 second timeout for Vercel
+    try {
+      await Promise.race([
+        syncDeltasFromDB(),
+        new Promise((_, reject) => setTimeout(() => reject(new Error('Sync timeout')), 2500))
+      ]);
+    } catch (err) {
+      console.warn('[queryRepositories] DB sync skipped/timeout:', err.message);
+    }
 
     // Primary: In-memory catalog engine (sub-millisecond, zero DB cost)
     const catalogData = queryRepositoriesCatalog({

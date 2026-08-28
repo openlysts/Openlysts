@@ -151,27 +151,66 @@ function buildIndices() {
   console.log(`[CATALOG ENGINE] Indexed ${REPOSITORIES.length} repositories & ${ALTERNATIVES.length} alternatives in-memory.`);
 }
 
-let dbSynced = false;
+let lastSyncTime = new Date(0);
+let isSyncing = false;
 export async function syncDeltasFromDB() {
-  if (dbSynced) return;
+  if (isSyncing) return;
+  
+  // Throttle sync to at most once every 60 seconds per instance
+  const now = new Date();
+  if (now - lastSyncTime < 60000) return;
+  
+  isSyncing = true;
   try {
     const { db } = await import('../db/index.js');
+    
+    // Find the latest updated_at in memory to use as the delta cursor
+    let maxUpdatedRepo = new Date(0);
+    if (REPOSITORIES.length > 0) {
+      REPOSITORIES.forEach(r => {
+        const d = new Date(r.updated_at || 0);
+        if (d > maxUpdatedRepo) maxUpdatedRepo = d;
+      });
+    }
+
+    let maxUpdatedAlt = new Date(0);
+    if (ALTERNATIVES.length > 0) {
+      ALTERNATIVES.forEach(a => {
+        const d = new Date(a.updated_at || 0);
+        if (d > maxUpdatedAlt) maxUpdatedAlt = d;
+      });
+    }
+
+    // Only fetch records updated after our max in-memory timestamp
     const [repoRes, altRes] = await Promise.allSettled([
-      db.query('SELECT * FROM "Repository"'),
-      db.query('SELECT * FROM "Alternative"')
+      db.query('SELECT * FROM "Repository" WHERE updated_at > $1 ORDER BY updated_at ASC', [maxUpdatedRepo]),
+      db.query('SELECT * FROM "Alternative" WHERE updated_at > $1 ORDER BY updated_at ASC', [maxUpdatedAlt])
     ]);
     
+    let repoDeltas = 0;
+    let altDeltas = 0;
+
     if (repoRes.status === 'fulfilled' && repoRes.value.rows) {
-      repoRes.value.rows.forEach(r => ingestCatalogRepository(r));
+      repoRes.value.rows.forEach(r => {
+        ingestCatalogRepository(r);
+        repoDeltas++;
+      });
     }
     if (altRes.status === 'fulfilled' && altRes.value.rows) {
-      altRes.value.rows.forEach(a => ingestCatalogAlternative(a));
+      altRes.value.rows.forEach(a => {
+        ingestCatalogAlternative(a);
+        altDeltas++;
+      });
     }
     
-    dbSynced = true;
-    console.log(`[CATALOG ENGINE] Fused delta updates from Neon DB.`);
+    lastSyncTime = new Date();
+    if (repoDeltas > 0 || altDeltas > 0) {
+      console.log(`[CATALOG ENGINE] Fused ${repoDeltas} repo deltas and ${altDeltas} alt deltas from Neon DB.`);
+    }
   } catch (err) {
     console.error('[CATALOG ENGINE] Failed to sync deltas from DB:', err.message);
+  } finally {
+    isSyncing = false;
   }
 }
 
@@ -181,6 +220,10 @@ buildIndices();
 let persistTimeout = null;
 function schedulePersist() {
   if (persistTimeout) return;
+  // Vercel serverless environment is read-only, do not attempt fs.writeFileSync
+  const isProd = process.env.NODE_ENV === 'production' || !!process.env.VERCEL;
+  if (isProd) return;
+
   persistTimeout = setTimeout(() => {
     persistTimeout = null;
     try {
