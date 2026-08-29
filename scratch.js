@@ -1,24 +1,19 @@
-import pkg from 'pg';
-const { Pool } = pkg;
-
-const pool = new Pool({
-  connectionString: 'postgresql://neondb_owner:npg_qFaRV2XzfS9W@ep-plain-band-aepvip8k-pooler.c-2.us-east-2.aws.neon.tech/neondb?sslmode=require',
-});
+import { Client } from 'pg';
 
 async function run() {
-  const res = await pool.query('SELECT * FROM "User" WHERE email_normalized = $1', ['admin@openlysts.com']);
-  console.log('User found:', res.rows.length);
+  const client = new Client({ connectionString: 'postgresql://neondb_owner:npg_qFaRV2XzfS9W@ep-plain-band-aepvip8k-pooler.c-2.us-east-2.aws.neon.tech/neondb?sslmode=require' });
+  await client.connect();
+  const res = await client.query('SELECT COUNT(*) FROM "Repository"');
+  console.log('Total Repositories in DB:', res.rows[0].count);
   
-  if (res.rows.length === 0) {
-    console.log("Admin user does not exist in this Neon database. We need to create it!");
-  } else if (res.rows[0].email_verified === 0) {
-    console.log("Setting email_verified to 1...");
-    await pool.query('UPDATE "User" SET email_verified = 1 WHERE email_normalized = $1', ['admin@openlysts.com']);
-    console.log("Done.");
-  } else {
-    console.log("Admin is already verified.");
-  }
-  process.exit(0);
+  const recent = await client.query('SELECT COUNT(*) FROM "Repository" WHERE updated_at > NOW() - INTERVAL \'24 hours\'');
+  console.log('Repositories updated in last 24h:', recent.rows[0].count);
+
+  const runs = await client.query('SELECT * FROM "IngestionRun" ORDER BY started_at DESC LIMIT 5');
+  console.log('Recent IngestionRuns:');
+  runs.rows.forEach(r => console.log(`- ${r.started_at} | ${r.status} | Processed: ${r.repos_processed} | Added: ${r.repos_added}`));
+
+  await client.end();
 }
 
 run().catch(console.error);

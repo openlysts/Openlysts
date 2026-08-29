@@ -183,8 +183,8 @@ export async function syncDeltasFromDB() {
 
     // Only fetch records updated after our max in-memory timestamp
     const [repoRes, altRes] = await Promise.allSettled([
-      db.query('SELECT * FROM "Repository" WHERE updated_at > $1 ORDER BY updated_at ASC', [maxUpdatedRepo]),
-      db.query('SELECT * FROM "Alternative" WHERE updated_at > $1 ORDER BY updated_at ASC', [maxUpdatedAlt])
+      db.query('SELECT * FROM "Repository" WHERE updated_at > $1 ORDER BY updated_at ASC', [maxUpdatedRepo.toISOString()]),
+      db.query('SELECT * FROM "Alternative" WHERE updated_at > $1 ORDER BY updated_at ASC', [maxUpdatedAlt.toISOString()])
     ]);
     
     let repoDeltas = 0;
