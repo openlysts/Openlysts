@@ -1,370 +1,462 @@
 [
   {
-    "id": "local-q-0",
+    "id": "8773fa34-1406-4995-a6a2-2f997f3ad3c1",
+    "created_date": "2026-08-29T03:34:05.073Z",
     "query_string": "LLM",
     "category_hint": "LLMs",
     "enabled": true,
-    "current_page": 1,
-    "last_run_at": "2026-08-27T17:00:45.607Z"
+    "last_run_at": null,
+    "current_page": null,
+    "description": null
   },
   {
-    "id": "local-q-1",
+    "id": "96ce2332-8588-4472-8909-627275c73c43",
+    "created_date": "2026-08-29T03:34:05.073Z",
     "query_string": "AI",
     "category_hint": "AI",
     "enabled": true,
-    "current_page": 2,
-    "last_run_at": "2026-08-27T17:00:45.062Z"
+    "last_run_at": null,
+    "current_page": null,
+    "description": null
   },
   {
-    "id": "local-q-2",
+    "id": "6a072479-abb2-46ce-a79d-defc07099c46",
+    "created_date": "2026-08-29T03:34:05.073Z",
     "query_string": "generative AI",
     "category_hint": "AI",
     "enabled": true,
-    "current_page": 1,
-    "last_run_at": "2026-08-27T17:00:40.514Z"
+    "last_run_at": null,
+    "current_page": null,
+    "description": null
   },
   {
-    "id": "local-q-3",
+    "id": "7c48a0cc-9b58-4f44-8d82-f3b4b9b0cb7f",
+    "created_date": "2026-08-29T03:34:05.073Z",
     "query_string": "AI agents",
     "category_hint": "AI Agents",
     "enabled": true,
-    "current_page": 1,
-    "last_run_at": "2026-08-27T17:00:36.079Z"
+    "last_run_at": null,
+    "current_page": null,
+    "description": null
   },
   {
-    "id": "local-q-4",
-    "query_string": "RAG created:<2012-03-11",
+    "id": "3526334d-56e8-42b9-ae8b-e863e46bb1ca",
+    "created_date": "2026-08-29T03:34:05.073Z",
+    "query_string": "RAG",
     "category_hint": "RAG",
     "enabled": true,
-    "current_page": 1,
-    "last_run_at": "2026-08-27T17:00:35.548Z"
+    "last_run_at": null,
+    "current_page": null,
+    "description": null
   },
   {
-    "id": "local-q-5",
+    "id": "26d5f152-7067-4d59-84a7-92a2578841ed",
+    "created_date": "2026-08-29T03:34:05.073Z",
     "query_string": "local AI",
     "category_hint": "Local AI",
     "enabled": true,
-    "current_page": 4,
-    "last_run_at": "2026-08-27T17:00:31.419Z"
+    "last_run_at": null,
+    "current_page": null,
+    "description": null
   },
   {
-    "id": "local-q-6",
+    "id": "7aec0d28-636f-4190-9d02-51caeb731d3e",
+    "created_date": "2026-08-29T03:34:05.073Z",
     "query_string": "local LLM",
     "category_hint": "Local AI",
     "enabled": true,
-    "current_page": 6,
-    "last_run_at": "2026-08-27T16:52:34.267Z"
+    "last_run_at": null,
+    "current_page": null,
+    "description": null
   },
   {
-    "id": "local-q-7",
+    "id": "06d748a4-821b-49f3-8bcd-ce347dc760a0",
+    "created_date": "2026-08-29T03:34:05.073Z",
     "query_string": "Ollama",
     "category_hint": "Local AI",
     "enabled": true,
-    "current_page": 4,
-    "last_run_at": "2026-08-27T16:52:29.449Z"
+    "last_run_at": null,
+    "current_page": null,
+    "description": null
   },
   {
-    "id": "local-q-8",
+    "id": "46ba8107-2240-41fb-a9e1-ca1779f836c7",
+    "created_date": "2026-08-29T03:34:05.073Z",
     "query_string": "llama.cpp",
     "category_hint": "Local AI",
     "enabled": true,
-    "current_page": 2,
-    "last_run_at": "2026-08-27T16:52:25.129Z"
+    "last_run_at": null,
+    "current_page": null,
+    "description": null
   },
   {
-    "id": "local-q-9",
-    "query_string": "machine learning created:<2011-04-28",
+    "id": "18c632d7-eee6-4b2b-bbbc-5fa7c1e07320",
+    "created_date": "2026-08-29T03:34:05.073Z",
+    "query_string": "machine learning",
     "category_hint": "Machine Learning",
     "enabled": true,
-    "current_page": 1,
-    "last_run_at": "2026-08-27T16:52:21.231Z"
+    "last_run_at": null,
+    "current_page": null,
+    "description": null
   },
   {
-    "id": "local-q-10",
+    "id": "f73867a7-49f9-43e0-9b7a-1b7e364bd1eb",
+    "created_date": "2026-08-29T03:34:05.073Z",
     "query_string": "AI framework",
     "category_hint": "Libraries & Frameworks",
     "enabled": true,
-    "current_page": 3,
-    "last_run_at": "2026-08-27T16:52:16.820Z"
+    "last_run_at": null,
+    "current_page": null,
+    "description": null
   },
   {
-    "id": "local-q-11",
-    "query_string": "react created:<2012-01-30",
+    "id": "f8d06734-f6e3-4919-961e-2aad3fe13132",
+    "created_date": "2026-08-29T03:34:05.073Z",
+    "query_string": "react",
     "category_hint": "Web Frameworks",
     "enabled": true,
-    "current_page": 1,
-    "last_run_at": "2026-08-27T16:52:10.034Z"
+    "last_run_at": null,
+    "current_page": null,
+    "description": null
   },
   {
-    "id": "local-q-12",
+    "id": "9fe27cbb-3b81-4656-8aaf-c954018ff23d",
+    "created_date": "2026-08-29T03:34:05.073Z",
     "query_string": "vue",
     "category_hint": "Web Frameworks",
     "enabled": true,
-    "current_page": 1,
-    "last_run_at": "2026-08-27T16:52:04.914Z"
+    "last_run_at": null,
+    "current_page": null,
+    "description": null
   },
   {
-    "id": "local-q-13",
-    "query_string": "nextjs created:<2016-04-01",
+    "id": "f151497b-02d8-44e7-8408-0e287450ec24",
+    "created_date": "2026-08-29T03:34:05.073Z",
+    "query_string": "nextjs",
     "category_hint": "Web Frameworks",
     "enabled": true,
-    "current_page": 1,
-    "last_run_at": "2026-08-27T16:52:04.070Z"
+    "last_run_at": null,
+    "current_page": null,
+    "description": null
   },
   {
-    "id": "local-q-14",
+    "id": "80065fb0-ae26-49b9-be16-6fbd096edd54",
+    "created_date": "2026-08-29T03:34:05.073Z",
     "query_string": "typescript",
     "category_hint": "Languages",
     "enabled": true,
-    "current_page": 1,
-    "last_run_at": "2026-08-27T16:51:30.804Z"
+    "last_run_at": null,
+    "current_page": null,
+    "description": null
   },
   {
-    "id": "local-q-15",
-    "query_string": "tailwindcss created:<2017-08-08",
+    "id": "3a5e8641-c193-4c42-96e5-454e9a8fca76",
+    "created_date": "2026-08-29T03:34:05.073Z",
+    "query_string": "tailwindcss",
     "category_hint": "Styling",
     "enabled": true,
-    "current_page": 1,
-    "last_run_at": "2026-08-27T16:51:29.676Z"
+    "last_run_at": null,
+    "current_page": null,
+    "description": null
   },
   {
-    "id": "local-q-16",
+    "id": "161ea1d3-08cd-46cb-98a3-ab059b0024f1",
+    "created_date": "2026-08-29T03:34:05.073Z",
     "query_string": "static site generator",
     "category_hint": "Static Site Generators",
     "enabled": true,
-    "current_page": 3,
-    "last_run_at": "2026-08-27T16:41:31.131Z"
+    "last_run_at": null,
+    "current_page": null,
+    "description": null
   },
   {
-    "id": "local-q-17",
+    "id": "2be8d389-2429-493f-9bf4-718b3f2f274d",
+    "created_date": "2026-08-29T03:34:05.073Z",
     "query_string": "headless cms",
     "category_hint": "CMS",
     "enabled": true,
-    "current_page": 1,
-    "last_run_at": "2026-08-27T16:41:26.497Z"
+    "last_run_at": null,
+    "current_page": null,
+    "description": null
   },
   {
-    "id": "local-q-18",
+    "id": "edc46c14-5f78-49ba-af18-ebadfa7567bd",
+    "created_date": "2026-08-29T03:34:05.073Z",
     "query_string": "database",
     "category_hint": "Databases",
     "enabled": true,
-    "current_page": 9,
-    "last_run_at": "2026-08-27T16:41:21.769Z"
+    "last_run_at": null,
+    "current_page": null,
+    "description": null
   },
   {
-    "id": "local-q-19",
+    "id": "4c27b32c-aff6-4b01-9527-fb7e07beb128",
+    "created_date": "2026-08-29T03:34:05.073Z",
     "query_string": "orm",
     "category_hint": "ORMs",
     "enabled": true,
-    "current_page": 3,
-    "last_run_at": "2026-08-27T16:41:14.070Z"
+    "last_run_at": null,
+    "current_page": null,
+    "description": null
   },
   {
-    "id": "local-q-20",
+    "id": "31427a08-37d4-402f-81ac-fddc4c3d8684",
+    "created_date": "2026-08-29T03:34:05.073Z",
     "query_string": "api gateway",
     "category_hint": "API Gateways",
     "enabled": true,
-    "current_page": 4,
-    "last_run_at": "2026-08-27T16:41:04.535Z"
+    "last_run_at": null,
+    "current_page": null,
+    "description": null
   },
   {
-    "id": "local-q-21",
-    "query_string": "graphql created:<2015-07-27",
+    "id": "4a94db99-bc9c-463f-84eb-2fb4c407cd80",
+    "created_date": "2026-08-29T03:34:05.073Z",
+    "query_string": "graphql",
     "category_hint": "APIs",
     "enabled": true,
-    "current_page": 1,
-    "last_run_at": "2026-08-27T16:40:41.086Z"
+    "last_run_at": null,
+    "current_page": null,
+    "description": null
   },
   {
-    "id": "local-q-22",
+    "id": "f3375003-94f2-4c28-bdc0-5ccc26a1974c",
+    "created_date": "2026-08-29T03:34:05.073Z",
     "query_string": "serverless",
     "category_hint": "Serverless",
     "enabled": true,
-    "current_page": 1,
-    "last_run_at": "2026-08-27T16:40:24.832Z"
+    "last_run_at": null,
+    "current_page": null,
+    "description": null
   },
   {
-    "id": "local-q-23",
+    "id": "3b875774-7507-4d08-828c-8e67cbb1e0db",
+    "created_date": "2026-08-29T03:34:05.073Z",
     "query_string": "kubernetes",
     "category_hint": "DevOps",
     "enabled": true,
-    "current_page": 1,
-    "last_run_at": "2026-08-27T16:40:21.776Z"
+    "last_run_at": null,
+    "current_page": null,
+    "description": null
   },
   {
-    "id": "local-q-24",
+    "id": "4ec0d4a9-4442-4037-b001-3ce7390cdf56",
+    "created_date": "2026-08-29T03:34:05.073Z",
     "query_string": "docker",
     "category_hint": "DevOps",
     "enabled": true,
-    "current_page": 1,
-    "last_run_at": "2026-08-27T16:40:21.138Z"
+    "last_run_at": null,
+    "current_page": null,
+    "description": null
   },
   {
-    "id": "local-q-25",
+    "id": "12e3f8dd-e910-4444-85fd-caf83ba0c43b",
+    "created_date": "2026-08-29T03:34:05.073Z",
     "query_string": "ci/cd",
     "category_hint": "CI/CD",
     "enabled": true,
-    "current_page": 3,
-    "last_run_at": "2026-08-27T16:40:20.160Z"
+    "last_run_at": null,
+    "current_page": null,
+    "description": null
   },
   {
-    "id": "local-q-26",
+    "id": "df1624e5-6ccc-4a71-9e81-a3c17ac420fd",
+    "created_date": "2026-08-29T03:34:05.073Z",
     "query_string": "infrastructure as code",
     "category_hint": "Infrastructure",
     "enabled": true,
-    "current_page": 1,
-    "last_run_at": "2026-08-27T16:31:10.675Z"
+    "last_run_at": null,
+    "current_page": null,
+    "description": null
   },
   {
-    "id": "local-q-27",
+    "id": "9f9aefb7-7254-47d0-9697-dbbc435c022c",
+    "created_date": "2026-08-29T03:34:05.073Z",
     "query_string": "observability",
     "category_hint": "Monitoring",
     "enabled": true,
-    "current_page": 4,
-    "last_run_at": "2026-08-27T16:31:04.964Z"
+    "last_run_at": null,
+    "current_page": null,
+    "description": null
   },
   {
-    "id": "local-q-28",
+    "id": "50457e40-2c71-4fec-955e-29df53bc4109",
+    "created_date": "2026-08-29T03:34:05.073Z",
     "query_string": "monitoring",
     "category_hint": "Monitoring",
     "enabled": true,
-    "current_page": 2,
-    "last_run_at": "2026-08-27T16:30:55.907Z"
+    "last_run_at": null,
+    "current_page": null,
+    "description": null
   },
   {
-    "id": "local-q-29",
+    "id": "c06309e2-9d08-4f09-a759-3451abf659d9",
+    "created_date": "2026-08-29T03:34:05.073Z",
     "query_string": "prometheus",
     "category_hint": "Monitoring",
     "enabled": true,
-    "current_page": 3,
-    "last_run_at": "2026-08-27T16:30:46.751Z"
+    "last_run_at": null,
+    "current_page": null,
+    "description": null
   },
   {
-    "id": "local-q-30",
+    "id": "f2226f4d-e304-474e-a981-f76ca18f1104",
+    "created_date": "2026-08-29T03:34:05.073Z",
     "query_string": "developer tools",
     "category_hint": "Developer Tools",
     "enabled": true,
-    "current_page": 6,
-    "last_run_at": "2026-08-27T16:30:41.215Z"
+    "last_run_at": null,
+    "current_page": null,
+    "description": null
   },
   {
-    "id": "local-q-31",
+    "id": "a6dcebde-5daf-4384-927c-15396df76c7c",
+    "created_date": "2026-08-29T03:34:05.073Z",
     "query_string": "developer productivity",
     "category_hint": "Developer Tools",
     "enabled": true,
-    "current_page": 1,
-    "last_run_at": "2026-08-27T16:30:30.791Z"
+    "last_run_at": null,
+    "current_page": null,
+    "description": null
   },
   {
-    "id": "local-q-32",
+    "id": "eff6ece4-085d-4ce1-a16f-930b9e6a4945",
+    "created_date": "2026-08-29T03:34:05.073Z",
     "query_string": "cli",
     "category_hint": "CLI Tools",
     "enabled": true,
-    "current_page": 5,
-    "last_run_at": "2026-08-27T17:10:49.906Z"
+    "last_run_at": null,
+    "current_page": null,
+    "description": null
   },
   {
-    "id": "local-q-33",
+    "id": "de605181-2d0a-4e99-b38c-f1f55d7cc989",
+    "created_date": "2026-08-29T03:34:05.073Z",
     "query_string": "testing framework",
     "category_hint": "Testing",
     "enabled": true,
-    "current_page": 5,
-    "last_run_at": "2026-08-27T17:10:45.463Z"
+    "last_run_at": null,
+    "current_page": null,
+    "description": null
   },
   {
-    "id": "local-q-34",
+    "id": "07af09dd-5c8c-45f1-aa3b-e894abed3940",
+    "created_date": "2026-08-29T03:34:05.073Z",
     "query_string": "security",
     "category_hint": "Security",
     "enabled": true,
-    "current_page": 2,
-    "last_run_at": "2026-08-27T17:10:39.626Z"
+    "last_run_at": null,
+    "current_page": null,
+    "description": null
   },
   {
-    "id": "local-q-35",
+    "id": "884331b0-b6b3-4c6e-874a-a2289c73f103",
+    "created_date": "2026-08-29T03:34:05.073Z",
     "query_string": "authentication",
     "category_hint": "Authentication",
     "enabled": true,
-    "current_page": 2,
-    "last_run_at": "2026-08-27T17:10:35.053Z"
+    "last_run_at": null,
+    "current_page": null,
+    "description": null
   },
   {
-    "id": "local-q-36",
+    "id": "0d54170a-d3c9-4270-afbe-3df13342a796",
+    "created_date": "2026-08-29T03:34:05.073Z",
     "query_string": "authorization",
     "category_hint": "Authentication",
     "enabled": true,
-    "current_page": 1,
-    "last_run_at": "2026-08-27T17:10:30.962Z"
+    "last_run_at": "2026-08-29T03:35:13.008Z",
+    "current_page": 2,
+    "description": null
   },
   {
-    "id": "local-q-37",
+    "id": "d2c7eb14-e196-40e6-8bf4-4bdc88f37b87",
+    "created_date": "2026-08-29T03:34:05.073Z",
     "query_string": "penetration testing",
     "category_hint": "Security",
     "enabled": true,
-    "current_page": 1,
-    "last_run_at": "2026-08-27T17:10:27.431Z"
+    "last_run_at": "2026-08-29T03:35:08.129Z",
+    "current_page": 2,
+    "description": null
   },
   {
-    "id": "local-q-38",
+    "id": "a4a6d504-a7e3-469d-a098-3a1961f595a1",
+    "created_date": "2026-08-29T03:34:05.073Z",
     "query_string": "self-hosted",
     "category_hint": "Self-Hosted",
     "enabled": true,
+    "last_run_at": "2026-08-29T03:35:04.047Z",
     "current_page": 2,
-    "last_run_at": "2026-08-27T17:10:24.695Z"
+    "description": null
   },
   {
-    "id": "local-q-39",
+    "id": "31f2689a-735f-424d-b4e4-b52e2b8433a2",
+    "created_date": "2026-08-29T03:34:05.073Z",
     "query_string": "open-source web application",
     "category_hint": "Web Applications",
     "enabled": true,
-    "current_page": 1,
-    "last_run_at": "2026-08-27T17:10:19.602Z"
+    "last_run_at": "2026-08-29T03:34:59.468Z",
+    "current_page": 2,
+    "description": null
   },
   {
-    "id": "local-q-40",
+    "id": "97ce198b-0aaa-45f7-9a1e-79d6b8f167f5",
+    "created_date": "2026-08-29T03:34:05.073Z",
     "query_string": "automation",
     "category_hint": "Automation",
     "enabled": true,
-    "current_page": 10,
-    "last_run_at": "2026-08-27T17:10:15.715Z"
+    "last_run_at": "2026-08-29T03:34:54.510Z",
+    "current_page": 2,
+    "description": null
   },
   {
-    "id": "local-q-41",
+    "id": "43dacd30-93ba-418d-9181-bb0b64714e16",
+    "created_date": "2026-08-29T03:34:05.073Z",
     "query_string": "open source alternative",
     "category_hint": "Alternatives",
     "enabled": true,
-    "current_page": 1,
-    "last_run_at": "2026-08-27T17:10:10.292Z"
+    "last_run_at": "2026-08-29T03:34:49.442Z",
+    "current_page": 2,
+    "description": null
   },
   {
-    "id": "local-q-42",
+    "id": "cb480db7-ce1c-4673-91b9-1ac446ae412e",
+    "created_date": "2026-08-29T03:34:05.073Z",
     "query_string": "low code",
     "category_hint": "Low Code",
     "enabled": true,
-    "current_page": 1,
-    "last_run_at": "2026-08-27T17:00:59.768Z"
+    "last_run_at": "2026-08-29T03:34:43.777Z",
+    "current_page": 2,
+    "description": null
   },
   {
-    "id": "local-q-43",
+    "id": "425899dc-f5c5-4760-a544-dfdb39a32311",
+    "created_date": "2026-08-29T03:34:05.073Z",
     "query_string": "rust",
     "category_hint": "Languages",
     "enabled": true,
+    "last_run_at": "2026-08-29T03:34:38.599Z",
     "current_page": 2,
-    "last_run_at": "2026-08-27T17:00:58.254Z"
+    "description": null
   },
   {
-    "id": "local-q-44",
-    "query_string": "python created:<2008-09-29",
+    "id": "1c72096b-145d-43a4-b52b-01c8812300fd",
+    "created_date": "2026-08-29T03:34:05.073Z",
+    "query_string": "python",
     "category_hint": "Languages",
     "enabled": true,
-    "current_page": 1,
-    "last_run_at": "2026-08-27T17:00:54.368Z"
+    "last_run_at": "2026-08-29T03:34:33.791Z",
+    "current_page": 2,
+    "description": null
   },
   {
-    "id": "local-q-45",
+    "id": "0158820e-953a-4531-97d4-2c915d9bf4ef",
+    "created_date": "2026-08-29T03:34:05.073Z",
     "query_string": "golang",
     "category_hint": "Languages",
     "enabled": true,
+    "last_run_at": "2026-08-29T03:34:27.898Z",
     "current_page": 2,
-    "last_run_at": "2026-08-27T17:00:49.394Z"
+    "description": null
   }
 ]

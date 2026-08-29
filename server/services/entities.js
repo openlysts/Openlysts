@@ -23,12 +23,12 @@ function parseRow(row) {
       }
     }
   }
-  if ('archived' in parsed) parsed.archived = !!parsed.archived;
-  if ('hidden' in parsed) parsed.hidden = !!parsed.hidden;
-  if ('featured' in parsed) parsed.featured = !!parsed.featured;
-  if ('created_by_ai' in parsed) parsed.created_by_ai = !!parsed.created_by_ai;
-  if ('enabled' in parsed) parsed.enabled = !!parsed.enabled;
-  if ('onboarded' in parsed) parsed.onboarded = !!parsed.onboarded;
+  const boolFields = ['archived', 'hidden', 'featured', 'created_by_ai', 'enabled', 'onboarded', 'staff_pick'];
+  for (const f of boolFields) {
+    if (f in parsed) {
+      parsed[f] = (parsed[f] === 1 || parsed[f] === '1' || parsed[f] === true || parsed[f] === 'true');
+    }
+  }
   return parsed;
 }
 
@@ -39,12 +39,12 @@ function stringifyData(data) {
       result[field] = JSON.stringify(result[field]);
     }
   }
-  if (typeof result.archived === 'boolean') result.archived = result.archived ? 1 : 0;
-  if (typeof result.hidden === 'boolean') result.hidden = result.hidden ? 1 : 0;
-  if (typeof result.featured === 'boolean') result.featured = result.featured ? 1 : 0;
-  if (typeof result.created_by_ai === 'boolean') result.created_by_ai = result.created_by_ai ? 1 : 0;
-  if (typeof result.enabled === 'boolean') result.enabled = result.enabled ? 1 : 0;
-  if (typeof result.onboarded === 'boolean') result.onboarded = result.onboarded ? 1 : 0;
+  const boolFields = ['archived', 'hidden', 'featured', 'created_by_ai', 'enabled', 'onboarded', 'staff_pick'];
+  for (const f of boolFields) {
+    if (result[f] !== undefined) {
+      result[f] = (result[f] === true || result[f] === 'true' || result[f] === 1 || result[f] === '1') ? 1 : 0;
+    }
+  }
   return result;
 }
 
@@ -268,7 +268,13 @@ export class EntityService {
     const client = await db.connect();
     try {
       await client.query('BEGIN');
-      const keys = Object.keys(payloadArray[0]).map(sanitizeIdentifier);
+      let keys = Object.keys(payloadArray[0]).map(sanitizeIdentifier);
+      const allowedCols = this.getColumnList();
+      if (allowedCols !== '*') {
+        const allowedSet = new Set(allowedCols.split(',').map(s => s.trim()));
+        keys = keys.filter(k => allowedSet.has(k));
+      }
+      
       const cols = keys.map(k => `"${k}"`).join(', ');
       const placeholders = keys.map((_, i) => `$${i + 1}`).join(', ');
       
