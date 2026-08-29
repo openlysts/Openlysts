@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import zlib from 'zlib';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -101,7 +102,11 @@ function buildIndices() {
   }
 
   try {
-    if (fs.existsSync(REPOS_PATH)) {
+    const gzPath = REPOS_PATH + '.gz';
+    if (fs.existsSync(gzPath)) {
+      const gzipped = fs.readFileSync(gzPath);
+      REPOSITORIES = JSON.parse(zlib.gunzipSync(gzipped).toString('utf-8'));
+    } else if (fs.existsSync(REPOS_PATH)) {
       REPOSITORIES = JSON.parse(fs.readFileSync(REPOS_PATH, 'utf-8'));
     }
   } catch (err) {
