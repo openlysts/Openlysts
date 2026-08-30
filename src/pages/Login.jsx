@@ -291,7 +291,7 @@ export default function Login() {
 
               <div className="pt-2 flex justify-center">
                 <Turnstile
-                  siteKey="0x4AAAAAAEhvTMENfU1-v3c7"
+                  siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY || "0x4AAAAAAEhvTMENfU1-v3c7"}
                   onSuccess={(token) => setTurnstileToken(token)}
                   options={{
                     theme: 'dark'

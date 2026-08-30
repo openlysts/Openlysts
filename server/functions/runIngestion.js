@@ -304,11 +304,13 @@ export async function ingestRepoItem(item, categoryHint = '', repoMap = new Map(
 export async function executeIngestion() {
   let acquiredLock = false;
   let client = null;
+
   try {
     // Acquire PostgreSQL distributed advisory lock to guarantee only 1 worker runs across the globe
     try {
       client = await db.connect();
-      const lockRes = await client.query('SELECT pg_try_advisory_lock($1) as locked', [INGESTION_LOCK_ID]);
+      const lockId = process.env.TEST_INGESTION ? 8888 : INGESTION_LOCK_ID;
+      const lockRes = await client.query('SELECT pg_try_advisory_lock($1) as locked', [lockId]);
       acquiredLock = !!lockRes.rows[0]?.locked;
     } catch (lockErr) {
       if (process.env.NODE_ENV !== 'test') {
@@ -416,12 +418,9 @@ export async function executeIngestion() {
           qStr += ' stars:>50';
         }
 
-        // Alternate fetching between historical deep pagination and finding newly pushed trending repos
-        const isOddPage = page % 2 !== 0;
-        const sortMode = isOddPage ? 'stars' : 'updated';
-
         // Fetch repositories using GitHub search API with pagination
-        const url = `${GITHUB_API}/search/repositories?q=${encodeURIComponent(qStr)}&sort=${sortMode}&order=desc&per_page=${PER_PAGE}&page=${page}`;
+        // We always use sort=stars for deep pagination to ensure created:<date slicing works monotonically.
+        const url = `${GITHUB_API}/search/repositories?q=${encodeURIComponent(qStr)}&sort=stars&order=desc&per_page=${PER_PAGE}&page=${page}`;
         const data = await githubFetch(url, process.env.GITHUB_TOKEN);
         
         let hasMore = false;
