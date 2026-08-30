@@ -343,6 +343,7 @@ router.post('/logout', async (req, res) => {
 // ─── GET /api/auth/me ───────────────────────────────────────────────
 
 router.get('/me', async (req, res) => {
+  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
   if (!req.session?.userId) {
     return res.json({ user: null });
   }

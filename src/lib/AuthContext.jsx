@@ -12,7 +12,12 @@ export const AuthProvider = ({ children }) => {
     try {
       setIsLoadingAuth(true);
       const res = await fetch('/api/auth/me', {
-        headers: { 'Accept': 'application/json' },
+        headers: { 
+          'Accept': 'application/json',
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0'
+        },
         credentials: 'include',
       });
       if (!res.ok) {
