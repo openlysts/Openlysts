@@ -76,7 +76,7 @@ export default function Footer() {
         {/* Bottom Row */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-8 border-t border-border/50">
           <p className="text-xs text-text-muted">
-            © {new Date().getFullYear()} Openlysts. 100% Free & Open Source.
+            © {new Date().getFullYear()} Openlysts. All Rights Reserved.
           </p>
 
           <p className="text-xs text-text-muted flex flex-wrap items-center justify-center sm:justify-end gap-1.5">

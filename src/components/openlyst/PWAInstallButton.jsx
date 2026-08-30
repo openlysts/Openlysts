@@ -139,7 +139,7 @@ export default function PWAInstallButton({ className = '', variant = 'compact' }
                       <span>Select <strong>"Install app"</strong> or <strong>"Add to Home screen"</strong>.</span>
                     </p>
                     <div className="p-2.5 rounded-xl bg-accent/10 border border-accent/20 text-[11px] text-text-secondary leading-relaxed">
-                      💡 <strong>Note on Android:</strong> If Google Play Protect shows a verification prompt for direct WebAPK installation, tap <strong>More details ⌵ &rarr; Install anyway</strong>. Openlysts is 100% open-source and safe.
+                      💡 <strong>Note on Android:</strong> If Google Play Protect shows a verification prompt for direct WebAPK installation, tap <strong>More details ⌵ &rarr; Install anyway</strong>. Openlysts is safe and verified.
                     </div>
                   </>
                 )}
