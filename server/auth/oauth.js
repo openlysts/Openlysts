@@ -96,6 +96,13 @@ export function getGoogleCallbackUrl(reqOrBase) {
   if (typeof reqOrBase === 'string' && reqOrBase.startsWith('http')) {
     return `${reqOrBase.replace(/\/$/, '')}/api/auth/google/callback`;
   }
+
+  // Always prioritize explicitly configured APP_URL to prevent redirect_uri_mismatch
+  // on preview deployments or local network IP access.
+  if (process.env.APP_URL) {
+    return `${process.env.APP_URL.replace(/\/$/, '')}/api/auth/google/callback`;
+  }
+
   if (reqOrBase && typeof reqOrBase === 'object') {
     const proto = reqOrBase.headers?.['x-forwarded-proto'] || (reqOrBase.secure ? 'https' : 'http');
     const host = reqOrBase.headers?.['x-forwarded-host'] || reqOrBase.headers?.host || reqOrBase.get?.('host');
@@ -104,8 +111,8 @@ export function getGoogleCallbackUrl(reqOrBase) {
       return `${proto}://${cleanHost}/api/auth/google/callback`;
     }
   }
-  const base = (process.env.APP_URL || 'https://openlysts.vercel.app').replace(/\/$/, '');
-  return `${base}/api/auth/google/callback`;
+  
+  return `https://openlysts.vercel.app/api/auth/google/callback`;
 }
 
 
@@ -223,6 +230,12 @@ export function getGithubCallbackUrl(reqOrBase) {
   if (typeof reqOrBase === 'string' && reqOrBase.startsWith('http')) {
     return `${reqOrBase.replace(/\/$/, '')}/api/auth/github/callback`;
   }
+
+  // Always prioritize explicitly configured APP_URL to prevent redirect_uri_mismatch
+  if (process.env.APP_URL) {
+    return `${process.env.APP_URL.replace(/\/$/, '')}/api/auth/github/callback`;
+  }
+
   if (reqOrBase && typeof reqOrBase === 'object') {
     const proto = reqOrBase.headers?.['x-forwarded-proto'] || (reqOrBase.secure ? 'https' : 'http');
     const host = reqOrBase.headers?.['x-forwarded-host'] || reqOrBase.headers?.host || reqOrBase.get?.('host');
@@ -231,8 +244,8 @@ export function getGithubCallbackUrl(reqOrBase) {
       return `${proto}://${cleanHost}/api/auth/github/callback`;
     }
   }
-  const base = (process.env.APP_URL || 'https://openlysts.vercel.app').replace(/\/$/, '');
-  return `${base}/api/auth/github/callback`;
+  
+  return `https://openlysts.vercel.app/api/auth/github/callback`;
 }
 
 
