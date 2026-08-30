@@ -7,6 +7,7 @@ import { loadSessionUser, csrfProtection } from './auth/middleware.js';
 import { autoBootstrapFromEnv } from './auth/bootstrap.js';
 
 import authRouter from './api/auth.js';
+import mfaRouter from './api/mfa.js';
 import adminRouter from './api/admin.js';
 import profileRouter from './api/profile.js';
 import entitiesRouter from './api/entities.js';
@@ -65,9 +66,11 @@ const healthHandler = async (req, res) => {
 };
 
 app.get('/api/health', healthHandler);
+app.get('/api/health', healthHandler);
 app.get('/health', healthHandler);
 
 app.use('/api/auth', authRouter);
+app.use('/api/mfa', mfaRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/profile', profileRouter);
 app.use('/api/entities', entitiesRouter);

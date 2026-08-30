@@ -88,7 +88,9 @@ export async function initSchema(db) {
       role TEXT,
       workspace_name TEXT,
       onboarded INTEGER,
-      settings TEXT
+      settings TEXT,
+      totp_secret TEXT,
+      totp_enabled INTEGER DEFAULT 0
     );`,
     `CREATE TABLE IF NOT EXISTS "Alternative" (
       id TEXT PRIMARY KEY,
@@ -131,6 +133,19 @@ export async function initSchema(db) {
       provider_avatar TEXT,
       created_date TEXT NOT NULL,
       CONSTRAINT uq_auth_provider UNIQUE (provider, provider_account_id)
+    );`,
+
+    `CREATE TABLE IF NOT EXISTS "Passkey" (
+      id TEXT PRIMARY KEY,
+      user_id TEXT NOT NULL REFERENCES "User"(id) ON DELETE CASCADE,
+      webauthn_user_id TEXT NOT NULL,
+      credential_id TEXT NOT NULL UNIQUE,
+      public_key BYTEA NOT NULL,
+      counter BIGINT NOT NULL,
+      device_type TEXT NOT NULL,
+      backed_up INTEGER NOT NULL,
+      transports TEXT,
+      created_date TEXT NOT NULL
     );`,
 
     `CREATE TABLE IF NOT EXISTS "session" (
@@ -177,6 +192,15 @@ export async function initSchema(db) {
       errors.push({ query: q.substring(0, 50), error: e.message });
       console.error('[DB] Failed to execute schema query:', e.message);
     }
+  }
+
+  // Automatic schema migrations (safe to run repeatedly)
+  try {
+    // Add TOTP columns to existing User table if they don't exist
+    await db.query(`ALTER TABLE "User" ADD COLUMN IF NOT EXISTS totp_secret TEXT;`);
+    await db.query(`ALTER TABLE "User" ADD COLUMN IF NOT EXISTS totp_enabled INTEGER DEFAULT 0;`);
+  } catch (e) {
+    console.error('[DB] Failed to run migrations:', e.message);
   }
 
   // ─── ALTER TABLE migrations (idempotent, errors suppressed) ─────

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { Turnstile } from '@marsidev/react-turnstile';
 import { useAuth } from '@/lib/AuthContext';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
@@ -18,6 +19,7 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
+  const [turnstileToken, setTurnstileToken] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const { checkUserAuth } = useAuth();
   
@@ -71,7 +73,7 @@ export default function Login() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ email, password, turnstileToken })
       });
       
       const data = await res.json();
@@ -287,9 +289,19 @@ export default function Login() {
                 </div>
               </div>
 
+              <div className="pt-2 flex justify-center">
+                <Turnstile
+                  siteKey="0x4AAAAAAEhvTMENfU1-v3c7"
+                  onSuccess={(token) => setTurnstileToken(token)}
+                  options={{
+                    theme: 'dark'
+                  }}
+                />
+              </div>
+
               <button
                 type="submit"
-                disabled={isLoading}
+                disabled={isLoading || !turnstileToken}
                 className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-accent text-accent-fg font-bold text-sm shadow-lg hover:shadow-accent/25 hover:brightness-110 active:scale-[0.99] disabled:opacity-50 transition-all duration-200 mt-2"
               >
                 {isLoading ? (

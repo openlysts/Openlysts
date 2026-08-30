@@ -11,6 +11,7 @@ import { requireAuth, loginRateLimiter, registerRateLimiter, resetRateLimiter } 
 import { logAuditEvent, getRequestMeta } from '../auth/audit.js';
 import { sendPasswordResetEmail, sendVerificationEmail, sendDuplicateRegistrationEmail, isSmtpConfigured } from '../auth/email.js';
 import { getGoogleAuthUrl, exchangeGoogleCode, getGithubAuthUrl, exchangeGithubCode, findOrCreateOAuthUser, generateOAuthState, verifyOAuthState } from '../auth/oauth.js';
+import { verifyTurnstile } from '../auth/turnstile.js';
 
 const router = Router();
 
@@ -18,11 +19,16 @@ const router = Router();
 
 router.post('/register', registerRateLimiter, async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, turnstileToken } = req.body;
 
     // Validate inputs
     if (!name || !email || !password) {
       return res.status(400).json({ error: true, message: 'Name, email, and password are required.' });
+    }
+
+    const isValidTurnstile = await verifyTurnstile(turnstileToken);
+    if (!isValidTurnstile) {
+      return res.status(400).json({ error: true, message: 'Security check failed. Please try again.' });
     }
 
     if (typeof name !== 'string' || name.trim().length < 1 || name.trim().length > 100) {
@@ -129,19 +135,30 @@ router.post('/register', registerRateLimiter, async (req, res) => {
 
 router.post('/login', loginRateLimiter, async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, turnstileToken } = req.body;
 
     if (!email || !password) {
       return res.status(400).json({ error: true, message: 'Email and password are required.' });
     }
 
+    const isValidTurnstile = await verifyTurnstile(turnstileToken);
+    if (!isValidTurnstile) {
+      return res.status(400).json({ error: true, message: 'Security check failed. Please try again.' });
+    }
+
     const emailNorm = normalizeEmail(email);
     const { rows } = await db.query(
-      'SELECT id, name, email, password_hash, role, account_status, email_verified, email_normalized, avatar_url, has_seen_tour FROM "User" WHERE email_normalized = $1',
+      'SELECT id, name, email, password_hash, role, account_status, email_verified, email_normalized, avatar_url, has_seen_tour, totp_enabled FROM "User" WHERE email_normalized = $1',
       [emailNorm]
     );
 
     const user = rows[0];
+
+    if (!user) {
+      console.log("[AUTH DEBUG] User not found for email:", emailNorm);
+    } else if (!user.password_hash) {
+      console.log("[AUTH DEBUG] User found but no password_hash.");
+    }
 
     // Generic error for both wrong email and wrong password
     if (!user || !user.password_hash) {
@@ -155,6 +172,8 @@ router.post('/login', loginRateLimiter, async (req, res) => {
     }
 
     const passwordValid = await verifyPassword(password, user.password_hash);
+    console.log("[AUTH DEBUG] Password valid:", passwordValid, "for hash:", user.password_hash);
+    
     if (!passwordValid) {
       const meta = getRequestMeta(req);
       await logAuditEvent({
@@ -183,8 +202,29 @@ router.post('/login', loginRateLimiter, async (req, res) => {
       });
     }
 
-    // Create session
+    // Check for 2FA
+    const hasTotp = Number(user.totp_enabled) === 1;
+    const { rows: passkeys } = await db.query('SELECT 1 FROM "Passkey" WHERE user_id = $1 LIMIT 1', [user.id]);
+    const hasPasskeys = passkeys.length > 0;
+
+    if (hasTotp || hasPasskeys) {
+      // Create pending session
+      req.session.pendingUserId = user.id;
+      
+      const methods = [];
+      if (hasTotp) methods.push('totp');
+      if (hasPasskeys) methods.push('passkey');
+
+      return res.json({
+        success: true,
+        requires2FA: true,
+        methods
+      });
+    }
+
+    // Fully Create session
     req.session.userId = user.id;
+    delete req.session.pendingUserId;
 
     // Update last login
     await db.query(
@@ -207,6 +247,74 @@ router.post('/login', loginRateLimiter, async (req, res) => {
   } catch (err) {
     console.error('[AUTH] Login error:', err.message);
     return res.status(500).json({ error: true, message: 'Login failed. Please try again.' });
+  }
+});
+
+// ─── POST /api/auth/login/2fa ───────────────────────────────────────
+
+import { verify } from 'otplib';
+
+router.post('/login/2fa', loginRateLimiter, async (req, res) => {
+  try {
+    const { code } = req.body;
+    const pendingUserId = req.session.pendingUserId;
+
+    if (!pendingUserId) {
+      return res.status(401).json({ error: true, message: 'Session expired. Please log in again.' });
+    }
+
+    if (!code) {
+      return res.status(400).json({ error: true, message: 'Verification code is required.' });
+    }
+
+    const { rows } = await db.query(
+      'SELECT id, name, email, role, account_status, email_verified, avatar_url, has_seen_tour, totp_secret, totp_enabled FROM "User" WHERE id = $1',
+      [pendingUserId]
+    );
+
+    const user = rows[0];
+    if (!user || Number(user.totp_enabled) !== 1 || !user.totp_secret) {
+      return res.status(400).json({ error: true, message: 'Invalid 2FA setup.' });
+    }
+
+    const result = await verify({ token: code, secret: user.totp_secret });
+    const isValid = result.valid;
+
+    if (!isValid) {
+      const meta = getRequestMeta(req);
+      await logAuditEvent({
+        actorId: user.id,
+        action: AUDIT_ACTIONS.USER_LOGIN_FAILED,
+        ...meta,
+        metadata: { reason: 'invalid_totp' },
+      });
+      return res.status(401).json({ error: true, message: 'Invalid code.' });
+    }
+
+    // Upgrade session
+    req.session.userId = user.id;
+    delete req.session.pendingUserId;
+
+    await db.query(
+      'UPDATE "User" SET last_login_at = $1, updated_at = $1 WHERE id = $2',
+      [new Date().toISOString(), user.id]
+    );
+
+    const meta = getRequestMeta(req);
+    await logAuditEvent({
+      actorId: user.id,
+      action: AUDIT_ACTIONS.USER_LOGIN,
+      ...meta,
+      metadata: { provider: AUTH_PROVIDERS.LOCAL, mfa: 'totp' },
+    });
+
+    return res.json({
+      success: true,
+      user: sanitizeUser(user),
+    });
+  } catch (err) {
+    console.error('[AUTH] 2FA login error:', err.message);
+    return res.status(500).json({ error: true, message: 'Login failed.' });
   }
 });
 

@@ -18,14 +18,15 @@ export default defineConfig({
       'lucide-react',
       'recharts',
       'react-markdown',
-      'canvas-confetti'
+      'canvas-confetti',
+      '@marsidev/react-turnstile'
     ],
   },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
-    dedupe: ['react', 'react-dom', 'react-router-dom', '@tanstack/react-query', 'framer-motion'],
+    dedupe: ['react', 'react-dom', 'react-router-dom', '@tanstack/react-query', 'framer-motion', '@marsidev/react-turnstile'],
   },
   server: {
     host: 'localhost',

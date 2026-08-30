@@ -9,6 +9,7 @@ import {
 import AnimateDigits from '@/components/openlyst/AnimateDigits';
 import SocialHoverCards from '@/components/openlyst/SocialHoverCards';
 import { usePlatformStats } from '@/hooks/usePlatformStats';
+import { Turnstile } from '@marsidev/react-turnstile';
 
 const DEVELOPER_ROLES = [
   { id: 'fullstack', label: 'Fullstack', icon: Layers, color: 'from-blue-500 to-cyan-400' },
@@ -29,6 +30,7 @@ export default function Register() {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState(null);
   
   const navigate = useNavigate();
   const location = useLocation();
@@ -78,6 +80,10 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!turnstileToken) {
+      setError('Please complete the security check.');
+      return;
+    }
     setError(null);
     setIsLoading(true);
     
@@ -86,7 +92,7 @@ export default function Register() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
-        body: JSON.stringify({ name, email, password, role: selectedRole })
+        body: JSON.stringify({ name, email, password, role: selectedRole, turnstileToken })
       });
       
       const data = await res.json();
@@ -457,9 +463,17 @@ export default function Register() {
                 )}
               </div>
 
+              <div className="flex justify-center pt-2">
+                <Turnstile
+                  siteKey="0x4AAAAAAEhvTMENfU1-v3c7"
+                  onSuccess={(token) => setTurnstileToken(token)}
+                  options={{ theme: 'dark' }}
+                />
+              </div>
+
               <button
                 type="submit"
-                disabled={isLoading}
+                disabled={isLoading || !turnstileToken}
                 className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-accent text-accent-fg font-bold text-sm shadow-lg hover:shadow-accent/25 hover:brightness-110 active:scale-[0.99] disabled:opacity-50 transition-all duration-200 mt-2"
               >
                 {isLoading ? (

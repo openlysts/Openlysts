@@ -35,6 +35,8 @@ jobs:
           git config --global user.name "Openlysts Sync Bot"
           git config --global user.email "bot@openlysts.app"
           git add server/data/*.json
+          # Do not commit rate limit state across runs to avoid persistent lockout
+          git reset server/data/rate_limit.json || true
           # Only commit and push if there are changes
           if ! git diff --staged --quiet; then
             git commit -m "chore(catalog): automated edge catalog hydration sync [skip ci]"

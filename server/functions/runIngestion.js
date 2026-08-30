@@ -124,21 +124,19 @@ export async function githubFetch(url, token, retries = 3) {
   for (let attempt = 0; attempt < retries; attempt++) {
     try {
       const headers = {
-        'Accept': 'application/vnd.github+json',
-        'X-GitHub-Api-Version': '2022-11-28',
+        'Accept': 'application/vnd.github.v3+json',
         'User-Agent': 'Openlysts-Discovery-Engine',
       };
-      if (token) {
-        headers['Authorization'] = `Bearer ${token}`;
+      if (token) headers['Authorization'] = `Bearer ${token}`;
+      
+      const res = await fetch(url, { headers, signal: AbortSignal.timeout(10000) });
+      
+      if (res.status === 401) {
+        throw new Error(`GitHub API 401 Unauthorized: Bad credentials. Check GITHUB_TOKEN.`);
       }
 
-      const res = await fetch(url, {
-        headers,
-        signal: AbortSignal.timeout(15000),
-      });
       if (res.status === 403 || res.status === 429) {
         const resetHeader = res.headers.get('X-RateLimit-Reset');
-        const remaining = res.headers.get('X-RateLimit-Remaining');
         const waitMs = resetHeader ? Math.min(120000, Math.max(2000, (parseInt(resetHeader) * 1000) - Date.now())) : 60000;
         
         try {
@@ -147,20 +145,15 @@ export async function githubFetch(url, token, retries = 3) {
           fs.writeFileSync(RATE_LIMIT_FILE, JSON.stringify({ backoffUntil: Date.now() + waitMs }));
         } catch(e) {}
 
-        if (retries === 1 || attempt === retries - 1) {
-          throw new Error(`GitHub API rate limit or access denied (${res.status})`);
-        }
-        if (remaining === '0' && resetHeader) {
-          const waitSec = Math.min(60, Math.max(1, Math.ceil(waitMs / 1000)));
-          await new Promise((r) => setTimeout(r, waitSec * 1000));
-          continue;
-        }
-        await new Promise((r) => setTimeout(r, Math.pow(2, attempt) * 1000));
-        continue;
+        throw new Error(`GitHub API rate limited. Backoff set for ${Math.round(waitMs/1000)}s.`);
       }
+      
       if (!res.ok) throw new Error(`GitHub API ${res.status}: ${await res.text()}`);
       return await res.json();
     } catch (err) {
+      if (err.message.includes('rate limited') || err.message.includes('401')) {
+        throw err; // Fail fast for rate limits and auth errors, do not retry
+      }
       if (attempt === retries - 1) throw err;
       await new Promise((r) => setTimeout(r, Math.pow(2, attempt) * 1000));
     }
@@ -342,9 +335,6 @@ export async function executeIngestion() {
     const startedAt = new Date().toISOString();
     console.log('[INGESTION] started');
 
-    // Make sure alternatives are ingested!
-    await ingestAlternatives();
-
     let runRecord = { id: 'local-run' };
     try {
       runRecord = await entities.IngestionRun.create({
@@ -423,13 +413,15 @@ export async function executeIngestion() {
         
         let qStr = dq.query_string;
         if (!qStr.includes('stars:>')) {
-          qStr += ' stars:>100';
+          qStr += ' stars:>50';
         }
-        // Deep Pagination Date-Slicing: 
-        // We no longer arbitrarily interleave dates. We process sequentially.
+
+        // Alternate fetching between historical deep pagination and finding newly pushed trending repos
+        const isOddPage = page % 2 !== 0;
+        const sortMode = isOddPage ? 'stars' : 'updated';
 
         // Fetch repositories using GitHub search API with pagination
-        const url = `${GITHUB_API}/search/repositories?q=${encodeURIComponent(qStr)}&sort=stars&order=desc&per_page=${PER_PAGE}&page=${page}`;
+        const url = `${GITHUB_API}/search/repositories?q=${encodeURIComponent(qStr)}&sort=${sortMode}&order=desc&per_page=${PER_PAGE}&page=${page}`;
         const data = await githubFetch(url, process.env.GITHUB_TOKEN);
         
         let hasMore = false;
@@ -444,6 +436,12 @@ export async function executeIngestion() {
                const res = await ingestRepoItem(item, dq.category_hint, repoMap, snapshotMap);
                processedBatch.push(res);
                reposProcessed++;
+               if (!repoMap.has(String(item.id)) && !repoMap.has(item.full_name.toLowerCase())) {
+                 reposAdded++;
+                 repoMap.set(String(item.id), res.repoData);
+               } else {
+                 reposUpdated++;
+               }
              } catch (repoErr) {
                errors.push(`Repo ${item.full_name}: ${repoErr.message}`);
              }
