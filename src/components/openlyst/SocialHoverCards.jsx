@@ -22,7 +22,7 @@ const SOCIAL_ITEMS = [
           </span>
         </div>
         <p className="text-[11px] text-text-muted leading-snug mb-2">
-          100% open-source software discovery engine with live AI telemetry.
+          The intelligence engine for discovering open-source software with live telemetry.
         </p>
         <a
           href="https://github.com/openlysts/Openlysts"
