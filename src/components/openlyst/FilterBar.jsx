@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, SlidersHorizontal, X, LayoutGrid, List } from 'lucide-react';
+import { ChevronDown, SlidersHorizontal, X, LayoutGrid, List, Sparkles, Loader2 } from 'lucide-react';
 import { CATEGORIES } from '@/lib/categories';
 import { useViewMode } from '@/hooks/useViewMode';
+import { useNavigate } from 'react-router-dom';
 
 const LICENSES = [
   { value: 'verified_oss', label: 'Verified OSS' },
@@ -43,6 +44,25 @@ export default function FilterBar({ filters, onChange, languages = [] }) {
   const [expanded, setExpanded] = useState(false);
   const [categoriesExpanded, setCategoriesExpanded] = useState(false);
   const [view, toggleView] = useViewMode();
+  const navigate = useNavigate();
+  const [isSurpriseLoading, setIsSurpriseLoading] = useState(false);
+
+  const handleSurprise = async () => {
+    setIsSurpriseLoading(true);
+    try {
+      const res = await fetch('/api/functions/getRandomRepo');
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.full_name) {
+          navigate(`/repo/${data.full_name}`);
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsSurpriseLoading(false);
+    }
+  };
 
   const update = (key, value) => onChange({ ...filters, [key]: value, page: 1 });
 
@@ -146,23 +166,23 @@ export default function FilterBar({ filters, onChange, languages = [] }) {
           </button>
         )}
 
-        {/* Layout toggle - standardized to 44px (h-11) on mobile */}
-        <div className="flex items-center h-11 sm:h-9 bg-bg-card border border-border p-0.5 rounded-xl ml-auto shrink-0 shadow-xs">
+        {/* Surprise Me button - Premium Glowing Aesthetic */}
+        <div className="flex items-center ml-auto shrink-0 relative group">
+          {/* Animated Glow Behind */}
+          <div className="absolute -inset-0.5 bg-gradient-to-r from-violet-500 via-fuchsia-500 to-orange-500 rounded-full blur opacity-30 group-hover:opacity-75 transition duration-500 group-hover:duration-200"></div>
+          
           <button 
-            onClick={() => toggleView('grid')}
-            title="Grid View"
-            aria-label="Grid View"
-            className={`h-full w-10 sm:w-8 rounded-lg flex items-center justify-center transition-colors ${view !== 'list' ? 'bg-bg-subtle text-text shadow-sm' : 'text-text-muted hover:text-text hover:bg-bg-hover'}`}
+            onClick={handleSurprise}
+            disabled={isSurpriseLoading}
+            title="Surprise Me"
+            className="relative h-11 sm:h-9 px-4 sm:px-5 bg-bg-card border border-border/50 rounded-full flex items-center justify-center gap-2 text-sm font-semibold transition-all hover:bg-bg-subtle text-text disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
           >
-            <LayoutGrid className="w-4 h-4" />
-          </button>
-          <button 
-            onClick={() => toggleView('list')}
-            title="List View"
-            aria-label="List View"
-            className={`h-full w-10 sm:w-8 rounded-lg flex items-center justify-center transition-colors ${view === 'list' ? 'bg-bg-subtle text-text shadow-sm' : 'text-text-muted hover:text-text hover:bg-bg-hover'}`}
-          >
-            <List className="w-4 h-4" />
+            {isSurpriseLoading ? (
+              <Loader2 className="w-4 h-4 animate-spin text-fuchsia-500" />
+            ) : (
+              <Sparkles className="w-4 h-4 text-orange-500 drop-shadow-sm" />
+            )}
+            <span className="hidden sm:inline bg-gradient-to-r from-violet-400 via-fuchsia-400 to-orange-400 bg-clip-text text-transparent">Surprise Me</span>
           </button>
         </div>
       </div>

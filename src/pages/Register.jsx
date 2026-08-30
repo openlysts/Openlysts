@@ -31,6 +31,7 @@ export default function Register() {
   const [success, setSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState(null);
+  const [consentGiven, setConsentGiven] = useState(false);
   
   const navigate = useNavigate();
   const location = useLocation();
@@ -92,7 +93,7 @@ export default function Register() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
-        body: JSON.stringify({ name, email, password, role: selectedRole, turnstileToken })
+        body: JSON.stringify({ name, email, password, role: selectedRole, turnstileToken, consent: consentGiven })
       });
       
       const data = await res.json();
@@ -471,9 +472,19 @@ export default function Register() {
                 />
               </div>
 
+              <label className="flex items-start gap-2 text-xs text-text-secondary cursor-pointer pt-2">
+                <input 
+                  type="checkbox" 
+                  checked={consentGiven} 
+                  onChange={(e) => setConsentGiven(e.target.checked)} 
+                  className="mt-0.5 rounded border-border/70 text-accent focus:ring-accent"
+                />
+                <span>I am 18 years or older and I consent to the collection and processing of my personal data as described in the <Link to="/privacy-policy" className="text-accent hover:underline">Privacy Policy</Link>.</span>
+              </label>
+
               <button
                 type="submit"
-                disabled={isLoading || !turnstileToken}
+                disabled={isLoading || !turnstileToken || !consentGiven}
                 className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-accent text-accent-fg font-bold text-sm shadow-lg hover:shadow-accent/25 hover:brightness-110 active:scale-[0.99] disabled:opacity-50 transition-all duration-200 mt-2"
               >
                 {isLoading ? (

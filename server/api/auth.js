@@ -13,13 +13,20 @@ import { sendPasswordResetEmail, sendVerificationEmail, sendDuplicateRegistratio
 import { getGoogleAuthUrl, exchangeGoogleCode, getGithubAuthUrl, exchangeGithubCode, findOrCreateOAuthUser, generateOAuthState, verifyOAuthState } from '../auth/oauth.js';
 import { verifyTurnstile } from '../auth/turnstile.js';
 
+import { getSystemConfig } from '../config.js';
+
 const router = Router();
 
 // ─── POST /api/auth/register ────────────────────────────────────────
 
 router.post('/register', registerRateLimiter, async (req, res) => {
   try {
-    const { name, email, password, turnstileToken } = req.body;
+    const disableSignups = await getSystemConfig('disable_signups');
+    if (disableSignups === 'true') {
+      return res.status(403).json({ error: true, message: 'New user registrations are currently disabled by the administrator.' });
+    }
+
+    const { name, email, password, turnstileToken, consent } = req.body;
 
     // Validate inputs
     if (!name || !email || !password) {
@@ -29,6 +36,10 @@ router.post('/register', registerRateLimiter, async (req, res) => {
     const isValidTurnstile = await verifyTurnstile(turnstileToken);
     if (!isValidTurnstile) {
       return res.status(400).json({ error: true, message: 'Security check failed. Please try again.' });
+    }
+
+    if (!consent) {
+      return res.status(400).json({ error: true, message: 'Consent to the Privacy Policy and age attestation is required to create an account.' });
     }
 
     if (typeof name !== 'string' || name.trim().length < 1 || name.trim().length > 100) {
@@ -72,9 +83,9 @@ router.post('/register', registerRateLimiter, async (req, res) => {
     const passwordHash = await hashPassword(password);
 
     await db.query(
-      `INSERT INTO "User" (id, created_date, name, email, email_normalized, password_hash, role, account_status, email_verified, updated_at)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
-      [userId, now, name.trim(), email, emailNorm, passwordHash, ROLES.USER, ACCOUNT_STATUS.ACTIVE, 0, now]
+      `INSERT INTO "User" (id, created_date, name, email, email_normalized, password_hash, role, account_status, email_verified, consent_given_at, consent_version, updated_at)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`,
+      [userId, now, name.trim(), email, emailNorm, passwordHash, ROLES.USER, ACCOUNT_STATUS.ACTIVE, 0, now, '1.0', now]
     );
 
     // Generate verification token

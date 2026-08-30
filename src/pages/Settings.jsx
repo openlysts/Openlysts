@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
   Settings as SettingsIcon, Github, Eye, EyeOff, Save, Trash2,
   Check, BookmarkX, RotateCcw, SlidersHorizontal, KeyRound, Info,
-  Shield, Smartphone, Fingerprint, Plus, X
+  Shield, Smartphone, Fingerprint, Plus, X, Download, UserMinus
 } from 'lucide-react';
 import { getSettings, saveSettings, clearSettings } from '@/lib/settings';
 import { updateConfig } from '@/lib/api';
@@ -85,6 +85,27 @@ export default function Settings() {
       await updateConfig('');
     } catch (e) { }
     toast({ title: 'Settings reset to defaults' });
+  };
+
+  const handleDownloadData = () => {
+    window.location.href = '/api/data-rights/export';
+  };
+
+  const handleWithdrawConsent = async () => {
+    if (!window.confirm("WARNING: This will permanently erase all your personal data, bookmarks, and linked accounts. This action is irreversible. Are you sure you want to withdraw consent and delete your account?")) return;
+    if (!window.confirm("Are you absolutely sure? Your data cannot be recovered.")) return;
+    
+    try {
+      const res = await fetch('/api/profile', { method: 'DELETE' });
+      if (res.ok) {
+        window.location.href = '/login';
+      } else {
+        const data = await res.json();
+        toast({ title: 'Error', description: data.message || 'Failed to delete account', variant: 'destructive' });
+      }
+    } catch (e) {
+      toast({ title: 'Error', description: 'Failed to delete account', variant: 'destructive' });
+    }
   };
 
   const handleSetupTotp = async () => {
@@ -459,23 +480,43 @@ export default function Settings() {
             <Trash2 className="w-5 h-5 text-nonoss" />
             <h2 className="font-bold text-lg text-nonoss">Data Management</h2>
           </div>
-          <div className="flex flex-col sm:flex-row gap-3">
-            <motion.button
-              whileTap={{ scale: 0.97 }}
-              onClick={handleClearBookmarks}
-              className="flex-1 flex justify-center items-center gap-2 px-4 py-3 rounded-xl border border-border/60 bg-bg-card hover:bg-nonoss-soft hover:border-nonoss/30 hover:text-nonoss text-xs font-bold text-text-secondary transition-all shadow-sm"
-            >
-              <BookmarkX className="w-4 h-4" />
-              Clear Bookmarks
-            </motion.button>
-            <motion.button
-              whileTap={{ scale: 0.97 }}
-              onClick={handleResetSettings}
-              className="flex-1 flex justify-center items-center gap-2 px-4 py-3 rounded-xl border border-border/60 bg-bg-card hover:bg-nonoss-soft hover:border-nonoss/30 hover:text-nonoss text-xs font-bold text-text-secondary transition-all shadow-sm"
-            >
-              <RotateCcw className="w-4 h-4" />
-              Reset All Settings
-            </motion.button>
+          <div className="flex flex-col gap-3">
+            <div className="flex flex-col sm:flex-row gap-3">
+              <motion.button
+                whileTap={{ scale: 0.97 }}
+                onClick={handleDownloadData}
+                className="flex-1 flex justify-center items-center gap-2 px-4 py-3 rounded-xl border border-border/60 bg-bg-card hover:bg-bg-subtle hover:border-border text-xs font-bold text-text transition-all shadow-sm"
+              >
+                <Download className="w-4 h-4 text-accent" />
+                Download My Data
+              </motion.button>
+              <motion.button
+                whileTap={{ scale: 0.97 }}
+                onClick={handleWithdrawConsent}
+                className="flex-1 flex justify-center items-center gap-2 px-4 py-3 rounded-xl border border-border/60 bg-bg-card hover:bg-nonoss-soft hover:border-nonoss/30 hover:text-nonoss text-xs font-bold text-text-secondary transition-all shadow-sm"
+              >
+                <UserMinus className="w-4 h-4 text-nonoss" />
+                Withdraw Consent & Delete
+              </motion.button>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-3 mt-1">
+              <motion.button
+                whileTap={{ scale: 0.97 }}
+                onClick={handleClearBookmarks}
+                className="flex-1 flex justify-center items-center gap-2 px-4 py-3 rounded-xl border border-border/60 bg-bg-card hover:bg-nonoss-soft hover:border-nonoss/30 hover:text-nonoss text-xs font-bold text-text-secondary transition-all shadow-sm"
+              >
+                <BookmarkX className="w-4 h-4" />
+                Clear Bookmarks
+              </motion.button>
+              <motion.button
+                whileTap={{ scale: 0.97 }}
+                onClick={handleResetSettings}
+                className="flex-1 flex justify-center items-center gap-2 px-4 py-3 rounded-xl border border-border/60 bg-bg-card hover:bg-nonoss-soft hover:border-nonoss/30 hover:text-nonoss text-xs font-bold text-text-secondary transition-all shadow-sm"
+              >
+                <RotateCcw className="w-4 h-4" />
+                Reset All Settings
+              </motion.button>
+            </div>
           </div>
         </motion.section>
       </div>

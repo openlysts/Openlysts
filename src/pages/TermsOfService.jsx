@@ -21,6 +21,7 @@ export default function TermsOfService() {
 
         <section>
           <h2 className="text-xl font-semibold text-text mb-2 mt-8">2. Eligibility</h2>
+          <p className="mb-2">You must be at least 18 years of age to use Openlysts and create an account, in compliance with the Digital Personal Data Protection Act, 2023 (DPDP Act).</p>
           <p className="mb-2">You may use Openlysts provided that you are legally permitted to do so under the laws applicable to you.</p>
           <p>If you use Openlysts on behalf of an organization, you represent that you have authority to accept these Terms on its behalf.</p>
         </section>
@@ -103,14 +104,40 @@ export default function TermsOfService() {
         </section>
 
         <section>
-          <h2 className="text-xl font-semibold text-text mb-2 mt-8">8. Intellectual Property</h2>
+          <h2 className="text-xl font-semibold text-text mb-2 mt-8">8. Limitation of Liability</h2>
+          <p className="mb-2">To the maximum extent permitted by applicable law, in no event will Openlysts, its affiliates, developers, or maintainers be liable for any:</p>
+          <ul className="list-disc pl-6 mb-4 space-y-1">
+            <li>Indirect damages;</li>
+            <li>Consequential damages;</li>
+            <li>Incidental damages;</li>
+            <li>Special damages;</li>
+            <li>Punitive damages;</li>
+            <li>Loss of profits;</li>
+            <li>Loss of revenue;</li>
+            <li>Loss of data;</li>
+            <li>Loss of use;</li>
+            <li>Loss of goodwill; or</li>
+            <li>Business interruption</li>
+          </ul>
+          <p>arising out of or in connection with these Terms or the use of Openlysts, regardless of the theory of liability.</p>
+        </section>
+
+        <section>
+          <h2 className="text-xl font-semibold text-text mb-2 mt-8">9. Intellectual Property</h2>
           <p className="mb-2">The Openlysts website, including its original branding, interface, design, code, text, graphics, and other original materials, may be protected by applicable intellectual-property laws.</p>
           <p className="mb-2">Unless otherwise stated, you may not reproduce, redistribute, modify, publicly display, or commercially exploit Openlysts's proprietary materials without appropriate authorization.</p>
           <p>Third-party repository names, trademarks, logos, software, and other materials remain the property of their respective owners and are subject to their applicable licenses and rights.</p>
         </section>
 
         <section>
-          <h2 className="text-xl font-semibold text-text mb-2 mt-8">9. Availability and Changes</h2>
+          <h2 className="text-xl font-semibold text-text mb-2 mt-8">10. Privacy and Data Protection (DPDP Act 2023)</h2>
+          <p className="mb-2">Your use of Openlysts is also governed by our Privacy Policy, which is incorporated into these Terms by reference.</p>
+          <p className="mb-2">Openlysts strictly complies with the <strong>Digital Personal Data Protection (DPDP) Act, 2023</strong> of India. By creating an account, you provide explicit, free, specific, and informed consent to the processing of your personal data as a Data Principal.</p>
+          <p className="mb-2">You have the right to withdraw your consent, access your data, and request the erasure of your personal data at any time through your account settings or by contacting our Data Protection Officer.</p>
+        </section>
+
+        <section>
+          <h2 className="text-xl font-semibold text-text mb-2 mt-8">11. Availability and Changes</h2>
           <p className="mb-2">We may modify, suspend, discontinue, or restrict access to any part of Openlysts at any time.</p>
           <p className="mb-2">We may also modify features, functionality, repository indexing, categories, ranking systems, or other aspects of the service without notice.</p>
           <p>We are not obligated to maintain any particular feature indefinitely.</p>

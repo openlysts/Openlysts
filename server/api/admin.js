@@ -827,4 +827,79 @@ export async function checkFinalAdminProtection(targetUserId) {
   return null;
 }
 
+
+
+// --- System Config ---
+router.get('/config', async (req, res) => {
+  try {
+    const { rows } = await db.query('SELECT key, value FROM "SystemConfig"');
+    res.json({ config: rows });
+  } catch (err) {
+    res.status(500).json({ error: true });
+  }
+});
+
+router.patch('/config', async (req, res) => {
+  const { configs } = req.body;
+  try {
+    for (const [key, value] of Object.entries(configs)) {
+      await db.query(
+        'INSERT INTO "SystemConfig" (id, key, value, updated_at) VALUES ($1, $2, $3, $4) ON CONFLICT (key) DO UPDATE SET value = $3, updated_at = $4',
+        [crypto.randomUUID(), key, String(value), new Date().toISOString()]
+      );
+    }
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: true });
+  }
+});
+
+// --- Pending Repositories ---
+router.get('/repositories/pending', async (req, res) => {
+  try {
+    const { rows } = await db.query(
+      'SELECT id, name, full_name, owner, description, stars, is_pending, categories, topics FROM "Repository" WHERE is_pending = 1 ORDER BY created_date DESC'
+    );
+    res.json({ repositories: rows });
+  } catch (err) {
+    res.status(500).json({ error: true, message: err.message });
+  }
+});
+
+router.patch('/repositories/pending/:id', async (req, res) => {
+  const { is_pending, categories, topics } = req.body;
+  try {
+    let updates = [];
+    let values = [];
+    
+    if (is_pending !== undefined) {
+      updates.push(`is_pending = $${updates.length + 1}`);
+      values.push(is_pending ? 1 : 0);
+    }
+    
+    if (categories !== undefined) {
+      updates.push(`categories = $${updates.length + 1}`);
+      values.push(typeof categories === 'object' ? JSON.stringify(categories) : categories);
+    }
+    
+    if (topics !== undefined) {
+      updates.push(`topics = $${updates.length + 1}`);
+      values.push(typeof topics === 'object' ? JSON.stringify(topics) : topics);
+    }
+    
+    if (updates.length > 0) {
+      values.push(req.params.id);
+      await db.query(
+        `UPDATE "Repository" SET ${updates.join(', ')} WHERE id = $${values.length}`,
+        values
+      );
+      invalidateRepositoriesCache();
+    }
+    
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: true, message: err.message });
+  }
+});
+
 export default router;

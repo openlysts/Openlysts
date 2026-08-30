@@ -70,7 +70,14 @@ export async function initSchema(db) {
       difficulty TEXT,
       engagement_score INTEGER DEFAULT 0,
       authority_score REAL DEFAULT 0,
+      is_pending INTEGER DEFAULT 0,
       embedding vector(768)
+    );`,
+    `CREATE TABLE IF NOT EXISTS "SystemConfig" (
+      id TEXT PRIMARY KEY,
+      key TEXT UNIQUE NOT NULL,
+      value TEXT,
+      updated_at TEXT
     );`,
     `CREATE TABLE IF NOT EXISTS "Invitation" (
       id TEXT PRIMARY KEY,
@@ -90,7 +97,9 @@ export async function initSchema(db) {
       onboarded INTEGER,
       settings TEXT,
       totp_secret TEXT,
-      totp_enabled INTEGER DEFAULT 0
+      totp_enabled INTEGER DEFAULT 0,
+      consent_given_at TEXT,
+      consent_version TEXT
     );`,
     `CREATE TABLE IF NOT EXISTS "Alternative" (
       id TEXT PRIMARY KEY,
@@ -223,6 +232,8 @@ export async function initSchema(db) {
     `ALTER TABLE "User" ADD COLUMN last_login_at TEXT`,
     `ALTER TABLE "User" ADD COLUMN updated_at TEXT`,
     `ALTER TABLE "User" ADD COLUMN has_seen_tour INTEGER DEFAULT 0`,
+    `ALTER TABLE "User" ADD COLUMN consent_given_at TEXT`,
+    `ALTER TABLE "User" ADD COLUMN consent_version TEXT`,
 
     // Repository columns for Admin Studio & boosts
     `ALTER TABLE "Repository" ADD COLUMN staff_pick INTEGER DEFAULT 0`,

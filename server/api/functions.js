@@ -13,6 +13,7 @@ import updateConfig from '../functions/updateConfig.js';
 import queryAlternatives from '../functions/queryAlternatives.js';
 import getGlobalStats from '../functions/getGlobalStats.js';
 import syncCatalogToNeon from '../functions/syncCatalogToNeon.js';
+import getRandomRepo from '../functions/getRandomRepo.js';
 import { requireAuth, requireRole } from '../auth/middleware.js';
 import { ROLES } from '../auth/constants.js';
 
@@ -32,7 +33,8 @@ const fns = {
   updateConfig,
   queryAlternatives,
   getGlobalStats,
-  syncCatalogToNeon
+  syncCatalogToNeon,
+  getRandomRepo
 };
 
 const adminOnlyFunctions = [

@@ -191,13 +191,13 @@ export default function Profile() {
   }, [avatarPreset]);
 
   // Handlers
-  const handleSaveProfile = async (e) => {
-    if (e) e.preventDefault();
+  const handleSaveProfile = async (e, overridePreset = null) => {
+    if (e && typeof e.preventDefault === 'function') e.preventDefault();
     setIsSavingProfile(true);
 
     try {
       const newSettings = {
-        avatarPreset,
+        avatarPreset: overridePreset || avatarPreset,
         customAvatarUrl,
         preferredStacks: selectedStacks,
         landingView,
@@ -470,7 +470,7 @@ export default function Profile() {
                           key={p.id}
                           onClick={() => {
                             setAvatarPreset(p.id);
-                            handleSaveProfile();
+                            handleSaveProfile(null, p.id);
                           }}
                           className={`p-2 rounded-xl bg-gradient-to-tr ${p.bg} flex items-center justify-center text-white transition-all ${
                             isSelected ? 'ring-2 ring-accent scale-110 shadow-lg' : 'opacity-70 hover:opacity-100'

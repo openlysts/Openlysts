@@ -5,7 +5,7 @@ import {
   Activity, Database, RefreshCw, Calculator, Trash2, 
   Search, Plus, CheckCircle, Shield, KeyRound, Copy, Check, Layers, Users, 
   UserCheck, UserX, Eye, EyeOff, Star, Sparkles, Download, 
-  Radio, Clock, Cpu, HardDrive, Zap, Loader2, Compass, Play, X, CheckSquare, Square
+  Radio, Clock, Cpu, HardDrive, Zap, Loader2, Compass, Play, X, XCircle, CheckSquare, Square
 } from 'lucide-react';
 import { localClient } from '@/api/localClient';
 import { runIngestion, recalculateScores, reclassifyRepos, syncCatalogToNeon } from '@/lib/api';
@@ -85,6 +85,30 @@ export default function Admin() {
     queryFn: () => localClient.entities.Alternative.list('-feature_parity_score', 200),
   });
 
+  // ─── Pending Repos Query ──────────────────────────────────────────
+  const { data: pendingReposData, isLoading: pendingReposLoading, refetch: refetchPendingRepos } = useQuery({
+    queryKey: ['admin-pending-repos'],
+    queryFn: async () => {
+      const res = await fetch('/api/admin/repositories/pending', { credentials: 'include' });
+      if (!res.ok) throw new Error('Failed to fetch pending repos');
+      return res.json();
+    },
+  });
+  const pendingRepos = pendingReposData?.repositories || [];
+
+  // ─── Config Query ──────────────────────────────────────────────────
+  const { data: configData, refetch: refetchConfig } = useQuery({
+    queryKey: ['admin-config'],
+    queryFn: async () => {
+      const res = await fetch('/api/admin/config', { credentials: 'include' });
+      if (!res.ok) throw new Error('Failed to fetch config');
+      return res.json();
+    },
+  });
+  const config = configData?.config || [];
+  const maintenanceMode = config.find(c => c.key === 'maintenance_mode')?.value === 'true';
+  const disableSignups = config.find(c => c.key === 'disable_signups')?.value === 'true';
+
   // ─── Local State for Operations ───────────────────────────────────
   const [syncInput, setSyncInput] = useState('');
   const [syncCategory, setSyncCategory] = useState('');
@@ -112,6 +136,12 @@ export default function Admin() {
   const [generatedResetLink, setGeneratedResetLink] = useState(null);
   const [copiedLink, setCopiedLink] = useState(false);
 
+  // SaaS Alternatives Studio
+  const [altSearch, setAltSearch] = useState('');
+  const [altCategoryFilter, setAltCategoryFilter] = useState('all');
+  const [selectedAltIds, setSelectedAltIds] = useState(new Set());
+  const [editingAlt, setEditingAlt] = useState(null);
+
   // Filtered Repos
   const filteredRepos = useMemo(() => {
     return repos.filter((r) => {
@@ -125,12 +155,71 @@ export default function Admin() {
       if (repoCatFilter !== 'all' && !(r.categories || []).includes(repoCatFilter)) {
         return false;
       }
-      if (repoLicenseFilter !== 'all' && r.license_status !== repoLicenseFilter) {
-        return false;
+      if (repoLicenseFilter !== 'all') {
+        const isMIT = (r.license_key || '').toLowerCase() === 'mit';
+        const isApache = (r.license_key || '').toLowerCase() === 'apache-2.0';
+        if (repoLicenseFilter === 'mit' && !isMIT) return false;
+        if (repoLicenseFilter === 'apache-2.0' && !isApache) return false;
+        if (repoLicenseFilter === 'other' && (isMIT || isApache)) return false;
       }
       return true;
     });
   }, [repos, repoSearch, repoCatFilter, repoLicenseFilter]);
+
+  // Filtered Alternatives
+  const filteredAlternatives = useMemo(() => {
+    return alternatives.filter(alt => {
+      if (altCategoryFilter !== 'all' && alt.category !== altCategoryFilter) return false;
+      if (altSearch) {
+        const q = altSearch.toLowerCase();
+        return (
+          (alt.paid_tool_name || '').toLowerCase().includes(q) ||
+          (alt.free_tool_name || '').toLowerCase().includes(q) ||
+          (alt.free_tool_repo || '').toLowerCase().includes(q)
+        );
+      }
+      return true;
+    });
+  }, [alternatives, altSearch, altCategoryFilter]);
+
+  // Unique categories for alternatives filter
+  const altCategories = useMemo(() => {
+    const cats = new Set(alternatives.map(a => a.category).filter(Boolean));
+    return Array.from(cats).sort();
+  }, [alternatives]);
+
+  const handleBulkDeleteAlts = async () => {
+    if (selectedAltIds.size === 0) return;
+    if (!window.confirm(`Delete ${selectedAltIds.size} alternatives?`)) return;
+    try {
+      setRunningAction('Deleting alternatives...');
+      for (const id of selectedAltIds) {
+        await localClient.entities.Alternative.delete(id);
+      }
+      queryClient.invalidateQueries({ queryKey: ['admin-alternatives'] });
+      setSelectedAltIds(new Set());
+      toast({ title: 'Success', description: `Deleted ${selectedAltIds.size} alternatives.` });
+    } catch (err) {
+      toast({ title: 'Error', description: err.message, variant: 'destructive' });
+    } finally {
+      setRunningAction(null);
+    }
+  };
+
+  const handleSaveEditAlt = async (e) => {
+    e.preventDefault();
+    try {
+      setRunningAction('Saving alternative...');
+      await localClient.entities.Alternative.update(editingAlt.id, editingAlt);
+      queryClient.invalidateQueries({ queryKey: ['admin-alternatives'] });
+      setEditingAlt(null);
+      toast({ title: 'Success', description: 'Alternative mapping updated.' });
+    } catch (err) {
+      toast({ title: 'Error', description: err.message, variant: 'destructive' });
+    } finally {
+      setRunningAction(null);
+    }
+  };
 
   // ─── Actions & Handlers ───────────────────────────────────────────
 
@@ -214,6 +303,18 @@ export default function Admin() {
       toast({ title: 'Success', description: 'Alternative mapped successfully' });
     } catch (err) {
       toast({ title: 'Error', description: err.message, variant: 'destructive' });
+    }
+  };
+
+  const handleDeleteAlternative = async (id, name) => {
+    if (!confirm(`Are you sure you want to permanently delete the mapping for "${name}"?`)) return;
+    try {
+      await localClient.entities.Alternative.delete(id);
+      toast({ title: 'Deleted', description: `Deleted SaaS alternative mapping for ${name}.` });
+      refetchAlts();
+      refetchTelemetry();
+    } catch (err) {
+      toast({ title: 'Delete Failed', description: err.message, variant: 'destructive' });
     }
   };
 
@@ -369,6 +470,27 @@ export default function Admin() {
     }
   };
 
+  const handleForceLogout = async (user) => {
+    if (user.id === currentUser?.id) {
+      toast({ title: 'Action Prohibited', description: 'You cannot force logout yourself.', variant: 'destructive' });
+      return;
+    }
+    if (!confirm(`Are you sure you want to instantly terminate all active sessions for ${user.email}?`)) return;
+
+    try {
+      const res = await fetch(`/api/admin/users/${user.id}/logout`, {
+        method: 'POST',
+        credentials: 'include'
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message);
+      toast({ title: 'Sessions Terminated', description: data.message });
+      refetchAudit();
+    } catch (err) {
+      toast({ title: 'Force Logout Failed', description: err.message, variant: 'destructive' });
+    }
+  };
+
   const handleUserRoleChange = async (userId, newRole) => {
     try {
       const res = await fetch(`/api/admin/users/${userId}/role`, {
@@ -392,6 +514,8 @@ export default function Admin() {
       toast({ title: 'Action Prohibited', description: 'You cannot suspend or disable yourself.', variant: 'destructive' });
       return;
     }
+    
+    // existing logic...
     if (!window.confirm(`Are you sure you want to ${action} ${user.name}?`)) return;
 
     try {
@@ -440,6 +564,39 @@ export default function Admin() {
     dl.setAttribute('href', dataStr);
     dl.setAttribute('download', `openlysts_audit_logs_${Date.now()}.json`);
     dl.click();
+  };
+
+  const handleToggleConfig = async (key, currentValue) => {
+    try {
+      const res = await fetch('/api/admin/config', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ configs: { [key]: !currentValue } })
+      });
+      if (!res.ok) throw new Error('Failed to update configuration');
+      toast({ title: 'Config Updated', description: `${key} is now ${!currentValue}` });
+      refetchConfig();
+    } catch (err) {
+      toast({ title: 'Update Failed', description: err.message, variant: 'destructive' });
+    }
+  };
+
+  const handlePendingRepoAction = async (repoId, isPending) => {
+    try {
+      const res = await fetch(`/api/admin/repositories/pending/${repoId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ is_pending: isPending })
+      });
+      if (!res.ok) throw new Error('Failed to update repository status');
+      toast({ title: 'Repository Updated', description: `Repository marked as ${isPending ? 'pending' : 'active'}` });
+      refetchPendingRepos();
+      refetchRepos();
+    } catch (err) {
+      toast({ title: 'Update Failed', description: err.message, variant: 'destructive' });
+    }
   };
 
   // ─── Render ───────────────────────────────────────────────────────
@@ -517,15 +674,17 @@ export default function Admin() {
         </div>
       </div>
 
-      {/* ─── 6-Pillar Navigation Tabs (Touch-scrollable on mobile) ─── */}
+      {/* ─── Navigation Tabs (Touch-scrollable on mobile) ─── */}
       <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar touch-scroll bg-bg-card p-1.5 rounded-2xl border border-border shadow-sm">
         {[
           { id: 'telemetry', label: 'Telemetry & Vitals', icon: Activity, badge: telemetry?.githubRateLimit?.remaining !== undefined ? `${telemetry.githubRateLimit.remaining} calls` : null },
           { id: 'repositories', label: 'Repository Studio', icon: Database, badge: `${repos.length}` },
+          { id: 'curation', label: 'Repository Curation', icon: CheckSquare, badge: `${pendingRepos.length}` },
           { id: 'alternatives', label: 'SaaS Alternatives', icon: Layers, badge: `${alternatives.length}` },
           { id: 'discovery', label: 'Discovery Sandbox', icon: Compass, badge: `${queries.length}` },
           { id: 'users', label: 'User Governance', icon: Users, badge: `${users.length}` },
           { id: 'audit', label: 'Security Audit', icon: Shield, badge: `${auditLogs.length}` },
+          { id: 'config', label: 'System Config', icon: HardDrive, badge: config.length ? 'Active' : null },
         ].map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -555,7 +714,7 @@ export default function Admin() {
       {activeTab === 'telemetry' && (
         <div className="space-y-6">
           {/* Vitals Grid */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+          <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
             <div className="card p-4 sm:p-5 relative overflow-hidden">
               <div className="flex items-center justify-between text-text-muted text-xs mb-2">
                 <span className="flex items-center gap-1.5 font-bold uppercase tracking-wider text-[10px]"><Radio className="w-3.5 h-3.5 text-accent animate-pulse" /> GitHub Rate Limit</span>
@@ -610,7 +769,47 @@ export default function Admin() {
                 Last Run: {runs[0] ? new Date(runs[0].started_at).toLocaleTimeString() : 'Ready'}
               </p>
             </div>
+            
+            {/* DB Connection Pool Card */}
+            <div className="card p-4 sm:p-5">
+              <div className="flex items-center justify-between text-text-muted text-xs mb-2">
+                <span className="flex items-center gap-1.5 font-bold uppercase tracking-wider text-[10px]"><Layers className="w-3.5 h-3.5 text-blue-400" /> Connection Pool</span>
+                <span className="text-blue-400 font-semibold text-[10px]">Neon</span>
+              </div>
+              <div className="text-2xl sm:text-3xl font-black text-blue-400 mb-1 font-mono">
+                {telemetry?.databasePool ? telemetry.databasePool.total : '—'}
+              </div>
+              <div className="flex items-center gap-3 text-[10px] text-text-muted mt-2 font-mono">
+                <span className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>{telemetry?.databasePool?.idle || 0} idle</span>
+                <span className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-amber-400"></span>{telemetry?.databasePool?.waiting || 0} wait</span>
+              </div>
+            </div>
           </div>
+
+          {/* Telemetry Graphs */}
+          {telemetry?.historicalTelemetry && (
+            <div className="card p-5 sm:p-6 border border-border/50 shadow-sm relative overflow-hidden group">
+              <div className="absolute inset-0 bg-gradient-to-r from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+              <h3 className="font-bold text-text mb-6 flex items-center gap-2 text-sm relative z-10">
+                <Activity className="w-4 h-4 text-accent" /> System Telemetry (Last 24h)
+              </h3>
+              <div className="h-[150px] w-full relative z-10">
+                <div className="w-full h-full border-b border-l border-border/50 relative flex items-end">
+                  {telemetry.historicalTelemetry?.length > 0 ? (
+                    telemetry.historicalTelemetry.map((p, i) => (
+                      <div key={i} className="flex-1 bg-accent/20 hover:bg-accent/40 relative group transition-colors" style={{ height: `${(p.ingestionSpeed / (Math.max(...telemetry.historicalTelemetry.map(t => t.ingestionSpeed)) || 1)) * 100}%` }}>
+                        <div className="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-bg-card border border-border px-2 py-1 rounded text-[10px] text-text whitespace-nowrap z-50 pointer-events-none">
+                          {p.timestamp}: {p.ingestionSpeed} req/s
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center text-text-muted text-xs">No telemetry data</div>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Database Tables Breakdown & Recent Ingestion Logs */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -954,6 +1153,50 @@ export default function Admin() {
               </div>
             </div>
           )}
+
+          {/* EDIT ALTERNATIVE MODAL */}
+          {editingAlt && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+              <div className="bg-bg-card border border-border rounded-xl w-full max-w-lg p-6 shadow-2xl">
+                <h3 className="text-lg font-bold text-text mb-4">Edit SaaS Alternative</h3>
+                <form onSubmit={handleSaveEditAlt} className="space-y-4">
+                  <div>
+                    <label className="text-xs text-text-secondary block mb-1">Proprietary SaaS</label>
+                    <input required className="w-full bg-bg border border-border rounded p-2 text-sm text-text" value={editingAlt.paid_tool_name} onChange={e => setEditingAlt({...editingAlt, paid_tool_name: e.target.value})} />
+                  </div>
+                  <div>
+                    <label className="text-xs text-text-secondary block mb-1">Open Source Repo</label>
+                    <input required className="w-full bg-bg border border-border rounded p-2 text-sm text-text" value={editingAlt.free_tool_name} onChange={e => setEditingAlt({...editingAlt, free_tool_name: e.target.value})} />
+                  </div>
+                  <div>
+                    <label className="text-xs text-text-secondary block mb-1">GitHub Repo Slug</label>
+                    <input required className="w-full bg-bg border border-border rounded p-2 text-sm text-text" value={editingAlt.free_tool_repo} onChange={e => setEditingAlt({...editingAlt, free_tool_repo: e.target.value})} />
+                  </div>
+                  <div>
+                    <label className="text-xs text-text-secondary block mb-1">Category</label>
+                    <input required className="w-full bg-bg border border-border rounded p-2 text-sm text-text" value={editingAlt.category} onChange={e => setEditingAlt({...editingAlt, category: e.target.value})} />
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-xs text-text-secondary block mb-1">Migration Difficulty</label>
+                      <select className="w-full bg-bg border border-border rounded p-2 text-sm text-text" value={editingAlt.migration_difficulty} onChange={e => setEditingAlt({...editingAlt, migration_difficulty: e.target.value})}>
+                        <option>Easy</option><option>Medium</option><option>Hard</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="text-xs text-text-secondary block mb-1">Match Score (0-1)</label>
+                      <input required type="number" step="0.01" className="w-full bg-bg border border-border rounded p-2 text-sm text-text" value={editingAlt.feature_parity_score} onChange={e => setEditingAlt({...editingAlt, feature_parity_score: parseFloat(e.target.value)})} />
+                    </div>
+                  </div>
+                  <div className="flex justify-end gap-3 mt-6">
+                    <button type="button" onClick={() => setEditingAlt(null)} className="px-4 py-2 rounded text-sm text-text border border-border hover:bg-bg-subtle">Cancel</button>
+                    <button type="submit" className="px-4 py-2 rounded text-sm bg-accent text-black font-bold hover:bg-accent/90">Save Changes</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          )}
+
           <div className="card p-5 sm:p-6 bg-gradient-to-r from-emerald-500/5 via-bg-card to-bg-card border-emerald-500/20">
             <h3 className="font-bold text-text text-sm sm:text-base mb-1 flex items-center justify-between gap-2">
               <span className="flex items-center gap-2"><Layers className="w-4 h-4 text-emerald-400" /> SaaS Alternative Mapping Studio</span>
@@ -966,45 +1209,115 @@ export default function Admin() {
             </p>
           </div>
 
-          <div className="card p-5 sm:p-6">
-            <div className="overflow-x-auto">
-              <table className="w-full text-xs text-left">
-                <thead>
-                  <tr className="text-text-muted border-b border-border font-semibold">
-                    <th className="pb-2.5 pr-4">Open Source Tool</th>
-                    <th className="pb-2.5 pr-4">Replaces SaaS</th>
-                    <th className="pb-2.5 pr-4">Category</th>
-                    <th className="pb-2.5 pr-4">Score</th>
-                    <th className="pb-2.5 pr-4">Migration</th>
-                    <th className="pb-2.5 text-right pr-2">Stars</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-border/40">
-                  {altsLoading ? (
-                    <tr><td colSpan={6} className="py-8 text-center text-text-muted">Loading alternatives...</td></tr>
-                  ) : alternatives.map((alt) => (
-                    <tr key={alt.id} className="hover:bg-bg-subtle/30">
-                      <td className="py-2.5 pr-4 font-bold text-text">{alt.resolved_name || alt.title}</td>
-                      <td className="py-2.5 pr-4">
-                        <span className="font-bold text-text-secondary bg-bg-subtle px-2 py-0.5 rounded border border-border">
-                          {alt.paid_tool_name}
-                        </span>
-                      </td>
-                      <td className="py-2.5 pr-4 text-text-secondary">{alt.category}</td>
-                      <td className="py-2.5 pr-4 font-mono font-bold text-accent">{alt.openlysts_score || alt.quality_score}</td>
-                      <td className="py-2.5 pr-4">
-                        <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 rounded bg-bg-subtle text-text-secondary border border-border">
-                          {alt.migration_difficulty || 'Medium'}
-                        </span>
-                      </td>
-                      <td className="py-2.5 text-right pr-2 font-mono font-semibold text-text-secondary">
-                        {(alt.stars || 0).toLocaleString()}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+          <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
+            <div className="flex items-center gap-3 w-full sm:w-auto">
+              <div className="relative w-full sm:w-64">
+                <Search className="w-4 h-4 text-text-muted absolute left-3 top-1/2 -translate-y-1/2" />
+                <input 
+                  type="text" 
+                  placeholder="Search alternatives..." 
+                  className="w-full bg-bg-card border border-border rounded-xl pl-9 pr-4 py-2 text-sm text-text focus:border-accent outline-none"
+                  value={altSearch}
+                  onChange={e => setAltSearch(e.target.value)}
+                />
+              </div>
+              <select 
+                className="bg-bg-card border border-border rounded-xl px-3 py-2 text-sm text-text focus:border-accent outline-none"
+                value={altCategoryFilter}
+                onChange={e => setAltCategoryFilter(e.target.value)}
+              >
+                <option value="all">All Categories</option>
+                {altCategories.map(cat => <option key={cat} value={cat}>{cat}</option>)}
+              </select>
             </div>
+            
+            <AnimatePresence>
+              {selectedAltIds.size > 0 && (
+                <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} className="flex items-center gap-3 bg-nonoss-soft border border-nonoss/30 px-3 py-1.5 rounded-lg">
+                  <span className="text-xs font-bold text-nonoss">{selectedAltIds.size} selected</span>
+                  <button onClick={handleBulkDeleteAlts} className="text-xs bg-nonoss text-white px-2 py-1 rounded hover:opacity-90 font-bold flex items-center gap-1">
+                    <Trash2 className="w-3.5 h-3.5" /> Delete
+                  </button>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          <div className="card p-5 sm:p-6 space-y-4">
+            <div className="flex items-center gap-3 px-4 pb-2 border-b border-border/50">
+              <button 
+                onClick={() => {
+                  if (selectedAltIds.size === filteredAlternatives.length && filteredAlternatives.length > 0) {
+                    setSelectedAltIds(new Set());
+                  } else {
+                    setSelectedAltIds(new Set(filteredAlternatives.map(a => a.id)));
+                  }
+                }}
+                className="text-text-muted hover:text-text transition-colors"
+              >
+                {selectedAltIds.size === filteredAlternatives.length && filteredAlternatives.length > 0 ? <CheckSquare className="w-4 h-4" /> : <Square className="w-4 h-4" />}
+              </button>
+              <span className="text-xs font-bold text-text-muted uppercase tracking-wider">Alternative Mapping</span>
+            </div>
+
+            {altsLoading ? (
+              <p className="text-xs text-center text-text-muted py-6">Loading alternatives...</p>
+            ) : filteredAlternatives.length === 0 ? (
+              <p className="text-xs text-center text-text-muted py-6">No mappings found.</p>
+            ) : filteredAlternatives.map((alt) => (
+              <div key={alt.id} className="p-4 rounded-xl bg-bg-subtle border border-border flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 group">
+                <div className="flex items-start sm:items-center gap-3">
+                  <button 
+                    onClick={() => {
+                      const newSet = new Set(selectedAltIds);
+                      if (newSet.has(alt.id)) newSet.delete(alt.id);
+                      else newSet.add(alt.id);
+                      setSelectedAltIds(newSet);
+                    }}
+                    className="mt-1 sm:mt-0 text-text-muted hover:text-text transition-colors"
+                  >
+                    {selectedAltIds.has(alt.id) ? <CheckSquare className="w-4 h-4 text-accent" /> : <Square className="w-4 h-4" />}
+                  </button>
+                  <div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="font-black text-text text-sm">{alt.paid_tool_name}</span>
+                      <span className="text-text-muted text-xs">→</span>
+                      <span className="font-bold text-accent text-sm flex items-center gap-1.5"><Layers className="w-3.5 h-3.5" /> {alt.free_tool_name}</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-xs text-text-muted font-mono">
+                      <span>{alt.free_tool_repo}</span>
+                      {alt.category && <span className="bg-bg-card border border-border px-1.5 py-0.5 rounded text-[10px]">{alt.category}</span>}
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-2 text-xs">
+                    <span className={`px-2 py-0.5 rounded-md font-bold ${alt.migration_difficulty === 'Easy' ? 'bg-oss-soft text-oss' : alt.migration_difficulty === 'Medium' ? 'bg-amber-500/10 text-amber-500' : 'bg-nonoss-soft text-nonoss'}`}>
+                      {alt.migration_difficulty}
+                    </span>
+                    <span className="font-mono text-text-secondary bg-bg-card border border-border px-1.5 py-0.5 rounded">
+                      {(alt.feature_parity_score * 100).toFixed(0)}% Match
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button 
+                      onClick={() => setEditingAlt(alt)}
+                      className="p-1.5 text-text-muted hover:text-accent hover:bg-accent/10 rounded-lg transition-colors"
+                      title="Edit Mapping"
+                    >
+                      <CheckCircle className="w-4 h-4" />
+                    </button>
+                    <button 
+                      onClick={() => handleDeleteAlternative(alt.id, alt.paid_tool_name)}
+                      className="p-1.5 text-nonoss hover:bg-nonoss-soft rounded-lg transition-colors"
+                      title="Delete Mapping"
+                    >
+                      <XCircle className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       )}
@@ -1214,6 +1527,16 @@ export default function Admin() {
                             >
                               <KeyRound className="w-3.5 h-3.5" />
                               <span className="hidden sm:inline">Reset Link</span>
+                            </button>
+
+                            <button
+                              onClick={() => handleForceLogout(u)}
+                              disabled={isSelf}
+                              className="p-1.5 rounded-lg bg-bg-subtle hover:bg-nonoss-soft text-nonoss font-bold text-[10px] flex items-center gap-1 disabled:opacity-50"
+                              title="Force Logout (Kill Sessions)"
+                            >
+                              <XCircle className="w-3.5 h-3.5" />
+                              <span className="hidden sm:inline">Force Logout</span>
                             </button>
 
                             {isSuspended ? (
@@ -1523,6 +1846,86 @@ export default function Admin() {
             </motion.div>
           </div>
         )}
+
+        {/* ─── TAB 7: REPOSITORY CURATION ─── */}
+        {activeTab === 'curation' && (
+          <div className="space-y-6">
+            <div className="card p-5 sm:p-6 space-y-4">
+              <h3 className="font-bold text-text text-sm flex items-center gap-2">
+                <CheckSquare className="w-4 h-4 text-accent" /> Pending Repositories ({pendingRepos.length})
+              </h3>
+              
+              <div className="space-y-3">
+                {pendingReposLoading ? (
+                  <p className="text-xs text-text-muted">Loading pending repositories...</p>
+                ) : pendingRepos.length === 0 ? (
+                  <p className="text-xs text-text-muted py-6 text-center border border-dashed border-border rounded-xl">No pending repositories.</p>
+                ) : (
+                  pendingRepos.map(repo => (
+                    <div key={repo.id} className="p-4 rounded-xl bg-bg-subtle border border-border flex flex-col gap-3">
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <a href={`https://github.com/${repo.full_name}`} target="_blank" rel="noreferrer" className="text-sm font-bold text-text hover:text-accent">
+                            {repo.full_name}
+                          </a>
+                          <p className="text-xs text-text-secondary mt-1">{repo.description}</p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <button onClick={() => handlePendingRepoAction(repo.id, false)} className="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-500 hover:bg-emerald-500/30 text-xs font-bold transition-colors">
+                            Approve
+                          </button>
+                          <button onClick={() => handleDeleteRepo(repo)} className="px-3 py-1.5 rounded-lg bg-red-500/20 text-red-500 hover:bg-red-500/30 text-xs font-bold transition-colors">
+                            Reject
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ─── TAB 8: SYSTEM CONFIG ─── */}
+        {activeTab === 'config' && (
+          <div className="space-y-6">
+            <div className="card p-5 sm:p-6 space-y-6">
+              <h3 className="font-bold text-text text-sm flex items-center gap-2">
+                <HardDrive className="w-4 h-4 text-accent" /> System Configuration
+              </h3>
+              
+              <div className="space-y-4">
+                <div className="flex items-center justify-between p-4 rounded-xl bg-bg-subtle border border-border">
+                  <div>
+                    <h4 className="text-sm font-bold text-text">Maintenance Mode</h4>
+                    <p className="text-xs text-text-secondary">Intercept all non-admin traffic with a maintenance screen.</p>
+                  </div>
+                  <button
+                    onClick={() => handleToggleConfig('maintenance_mode', maintenanceMode)}
+                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${maintenanceMode ? 'bg-red-500' : 'bg-bg-hover'}`}
+                  >
+                    <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${maintenanceMode ? 'translate-x-6' : 'translate-x-1'}`} />
+                  </button>
+                </div>
+
+                <div className="flex items-center justify-between p-4 rounded-xl bg-bg-subtle border border-border">
+                  <div>
+                    <h4 className="text-sm font-bold text-text">Disable Sign-ups</h4>
+                    <p className="text-xs text-text-secondary">Prevent new user registrations globally.</p>
+                  </div>
+                  <button
+                    onClick={() => handleToggleConfig('disable_signups', disableSignups)}
+                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${disableSignups ? 'bg-amber-500' : 'bg-bg-hover'}`}
+                  >
+                    <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${disableSignups ? 'translate-x-6' : 'translate-x-1'}`} />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
       </AnimatePresence>
 
     </div>

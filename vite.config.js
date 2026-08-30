@@ -16,7 +16,6 @@ export default defineConfig({
       '@tanstack/react-query',
       'framer-motion',
       'lucide-react',
-      'recharts',
       'react-markdown',
       'canvas-confetti',
       '@marsidev/react-turnstile'

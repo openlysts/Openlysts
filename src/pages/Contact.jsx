@@ -4,14 +4,14 @@ import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default function Contact() {
   usePageTitle('Contact');
-  const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const [form, setForm] = useState({ name: '', email: '', category: 'General Inquiry', message: '' });
   const [errors, setErrors] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState(null);
   const [loading, setLoading] = useState(false);
   const sendingRef = useRef(false);
 
   const getMessageBody = () => {
-    return `${form.message}\n\n— ${form.name}${form.email ? ` (${form.email})` : ''}`;
+    return `[${form.category}]\n\n${form.message}\n\n— ${form.name}${form.email ? ` (${form.email})` : ''}`;
   };
 
   const handleEmail = async () => {
@@ -52,7 +52,7 @@ export default function Contact() {
       }
       
       setStatus({ type: 'success', message: 'Email sent successfully!' });
-      setForm({ name: '', email: '', message: '' });
+      setForm({ name: '', email: '', category: 'General Inquiry', message: '' });
     } catch (err) {
       setStatus({ type: 'error', message: err.message });
     } finally {
@@ -122,6 +122,19 @@ export default function Contact() {
             placeholder="you@example.com"
             className={`w-full bg-bg-card border rounded-lg px-3 py-2.5 text-sm text-text placeholder:text-text-muted focus:outline-none ${errors.email ? 'border-red-500 focus:border-red-500' : 'border-border focus:border-accent'}`} />
           {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-text mb-1.5">Category <span className="text-red-500">*</span></label>
+          <select
+            value={form.category}
+            onChange={(e) => setForm({ ...form, category: e.target.value })}
+            className="w-full bg-bg-card border rounded-lg px-3 py-2.5 text-sm text-text border-border focus:outline-none focus:border-accent cursor-pointer"
+          >
+            <option value="General Inquiry">General Inquiry</option>
+            <option value="Feature Request">Feature Request</option>
+            <option value="Bug Report">Bug Report</option>
+            <option value="Data Privacy Concern (DPDP Act)">Data Privacy Concern (DPDP Act)</option>
+          </select>
         </div>
         <div>
           <label className="block text-sm font-medium text-text mb-1.5">Message <span className="text-red-500">*</span></label>

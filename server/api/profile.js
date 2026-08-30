@@ -171,24 +171,9 @@ router.delete('/', async (req, res) => {
       return res.status(403).json(protectionError);
     }
 
-    // Soft delete: keep the record but anonymize and disable
-    const now = new Date().toISOString();
-    const anonEmail = `deleted_${targetId}@deleted.local`;
-
-    await db.query(
-      `UPDATE "User" SET 
-        name = 'Deleted User', 
-        email = $1, 
-        email_normalized = $1, 
-        password_hash = NULL, 
-        account_status = $2, 
-        updated_at = $3 
-       WHERE id = $4`,
-      [anonEmail, ACCOUNT_STATUS.DISABLED, now, targetId]
-    );
-
-    // Delete linked accounts
-    await db.query('DELETE FROM "AuthAccount" WHERE user_id = $1', [targetId]);
+    // DPDP Section 12: Hard erasure of Personal Identifiable Information (PII)
+    // Linked accounts and bookmarks cascade via DB foreign keys
+    await db.query('DELETE FROM "User" WHERE id = $1', [targetId]);
     
     // Destroy session
     req.session.destroy(() => {});

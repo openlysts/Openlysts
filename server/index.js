@@ -2,6 +2,7 @@ import './env.js';
 import express from 'express';
 import cors from 'cors';
 import { db } from './db/index.js';
+import { getSystemConfig } from './config.js';
 import { configureSession } from './auth/session.js';
 import { loadSessionUser, csrfProtection } from './auth/middleware.js';
 import { autoBootstrapFromEnv } from './auth/bootstrap.js';
@@ -13,6 +14,7 @@ import profileRouter from './api/profile.js';
 import entitiesRouter from './api/entities.js';
 import functionsRouter from './api/functions.js';
 import contactRouter from './api/contact.js';
+import dataRightsRouter from './api/data-rights.js';
 import { executeIngestion } from './functions/runIngestion.js';
 import { ingestAlternatives } from './functions/ingestAlternatives.js';
 import { prewarmRepositoriesCache } from './functions/queryRepositories.js';
@@ -69,6 +71,33 @@ app.get('/api/health', healthHandler);
 app.get('/api/health', healthHandler);
 app.get('/health', healthHandler);
 
+// Maintenance Mode Interceptor
+app.use(async (req, res, next) => {
+  // Let auth and admin routes pass so admins can log in and manage the site
+  if (req.path.startsWith('/api/auth') || req.path.startsWith('/api/admin')) {
+    return next();
+  }
+  
+  // Admins bypass maintenance mode
+  if (req.user?.role === 'ADMIN') {
+    return next();
+  }
+
+  try {
+    const maintenanceMode = await getSystemConfig('maintenance_mode');
+    if (maintenanceMode === 'true') {
+      return res.status(503).json({ 
+        error: true, 
+        message: 'Openlysts is currently undergoing maintenance. Please check back later.',
+        maintenance: true
+      });
+    }
+  } catch (e) {
+    console.error('[API] Error checking maintenance mode:', e);
+  }
+  next();
+});
+
 app.use('/api/auth', authRouter);
 app.use('/api/mfa', mfaRouter);
 app.use('/api/admin', adminRouter);
@@ -76,6 +105,7 @@ app.use('/api/profile', profileRouter);
 app.use('/api/entities', entitiesRouter);
 app.use('/api/functions', functionsRouter);
 app.use('/api/contact', contactRouter);
+app.use('/api/data-rights', dataRightsRouter);
 
 const isDevMode = process.argv.includes('--dev');
 
