@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Sparkles, ArrowRight } from 'lucide-react';
 import ParticleText from '../components/reactbits/ParticleText';
 import Scanner from '../components/reactbits/Scanner';
@@ -24,6 +24,9 @@ export default function Welcome() {
 
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-black selection:bg-accent/30 flex items-center justify-center">
+      <a href="#main-content" className="absolute top-0 left-0 -translate-y-full focus:translate-y-0 z-[9999] p-4 bg-black text-white font-bold outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 transition-transform duration-200">
+        Skip to main content
+      </a>
       {/* Scanner Animated Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <Scanner
@@ -56,14 +59,14 @@ export default function Welcome() {
       </div>
 
       {/* Content */}
-      <motion.div 
+      <motion.header 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
         className="absolute top-8 left-8 md:top-12 md:left-12 z-20 pointer-events-none"
       >
         <img src="/logo.png" alt="Openlysts" className="w-20 h-20 md:w-28 md:h-28 object-contain drop-shadow-[0_0_15px_rgba(16,185,129,0.3)] opacity-90" />
-      </motion.div>
+      </motion.header>
 
       <main id="main-content" role="main" className="relative z-10 flex flex-col items-center justify-center text-center px-4 max-w-4xl mx-auto w-full">
         <h1 className="sr-only">Openlysts — Discover Open-Source Projects</h1>

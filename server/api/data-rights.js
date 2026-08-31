@@ -38,8 +38,8 @@ router.get('/export', async (req, res) => {
 
     // 4. Get audit logs
     const { rows: auditRows } = await db.query(
-      `SELECT action, created_date, ip_address, user_agent, details 
-       FROM "AuditLog" WHERE user_id = $1 ORDER BY created_date DESC LIMIT 500`,
+      `SELECT action, created_date, ip_address, user_agent, metadata 
+       FROM "AuditLog" WHERE actor_id = $1 ORDER BY created_date DESC LIMIT 500`,
       [userId]
     );
 
@@ -52,8 +52,11 @@ router.get('/export', async (req, res) => {
     };
 
     // Log the data export action
-    await logAuditEvent(userId, AUDIT_ACTIONS.DATA_EXPORTED, req, {
-      description: 'User exported their personal data'
+    await logAuditEvent({
+      actorId: userId,
+      action: AUDIT_ACTIONS.DATA_EXPORTED,
+      ip: req.ip,
+      metadata: { description: 'User exported their personal data' }
     });
 
     res.setHeader('Content-Type', 'application/json');

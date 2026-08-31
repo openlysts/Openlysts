@@ -238,13 +238,21 @@ export class EntityService {
       await client.query('BEGIN');
       const keys = Object.keys(payloadArray[0]).map(sanitizeIdentifier);
       const cols = keys.map(k => `"${k}"`).join(', ');
-      const placeholders = keys.map((_, i) => `$${i + 1}`).join(', ');
-      const queryStr = `INSERT INTO "${this.entity}" (${cols}) VALUES (${placeholders})`;
-
+      
+      let allValues = [];
+      let placeholders = [];
+      let i = 1;
       for (const item of payloadArray) {
-        const values = keys.map(k => item[k]);
-        await client.query(queryStr, values);
+        let rowPlaceholders = [];
+        for (const k of keys) {
+           rowPlaceholders.push(`$${i++}`);
+           allValues.push(item[k]);
+        }
+        placeholders.push(`(${rowPlaceholders.join(', ')})`);
       }
+      
+      const queryStr = `INSERT INTO "${this.entity}" (${cols}) VALUES ${placeholders.join(', ')}`;
+      await client.query(queryStr, allValues);
       await client.query('COMMIT');
     } catch (e) {
       await client.query('ROLLBACK');
@@ -276,16 +284,24 @@ export class EntityService {
       }
       
       const cols = keys.map(k => `"${k}"`).join(', ');
-      const placeholders = keys.map((_, i) => `$${i + 1}`).join(', ');
+      
+      let allValues = [];
+      let placeholders = [];
+      let i = 1;
+      for (const item of payloadArray) {
+        let rowPlaceholders = [];
+        for (const k of keys) {
+           rowPlaceholders.push(`$${i++}`);
+           allValues.push(item[k]);
+        }
+        placeholders.push(`(${rowPlaceholders.join(', ')})`);
+      }
       
       const updateSet = keys.filter(k => k !== 'id' && k !== 'created_date').map(k => `"${k}" = EXCLUDED."${k}"`).join(', ');
       const whereDistinctClause = keys.filter(k => k !== 'id' && k !== 'created_date').map(k => `"${this.entity}"."${k}" IS DISTINCT FROM EXCLUDED."${k}"`).join(' OR ');
-      const queryStr = `INSERT INTO "${this.entity}" (${cols}) VALUES (${placeholders}) ON CONFLICT (id) DO UPDATE SET ${updateSet} ${whereDistinctClause ? 'WHERE ' + whereDistinctClause : ''}`;
+      const queryStr = `INSERT INTO "${this.entity}" (${cols}) VALUES ${placeholders.join(', ')} ON CONFLICT (id) DO UPDATE SET ${updateSet} ${whereDistinctClause ? 'WHERE ' + whereDistinctClause : ''}`;
 
-      for (const item of payloadArray) {
-        const values = keys.map(k => item[k]);
-        await client.query(queryStr, values);
-      }
+      await client.query(queryStr, allValues);
       await client.query('COMMIT');
     } catch (e) {
       await client.query('ROLLBACK');

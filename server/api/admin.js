@@ -149,7 +149,7 @@ router.post('/repos/sync', async (req, res) => {
     });
   } catch (err) {
     console.error('[ADMIN] Sync repo error:', err.message);
-    return res.status(500).json({ error: true, message: `Sync failed: ${err.message}` });
+    return res.status(500).json({ error: true, message: `Sync failed.` });
   }
 });
 
@@ -166,10 +166,12 @@ router.patch('/repos/:id', async (req, res) => {
     const params = [repoId];
 
     if (name !== undefined) {
+      if (typeof name !== 'string' || name.length > 255) return res.status(400).json({ error: true, message: 'Invalid name.' });
       params.push(name.trim());
       updates.push(`name = $${params.length}`);
     }
     if (description !== undefined) {
+      if (typeof description !== 'string' || description.length > 2000) return res.status(400).json({ error: true, message: 'Invalid description.' });
       params.push(description.trim());
       updates.push(`description = $${params.length}`);
     }
@@ -334,7 +336,7 @@ router.post('/discovery/test', async (req, res) => {
     });
   } catch (err) {
     console.error('[ADMIN] Discovery dry-run error:', err.message);
-    return res.status(500).json({ error: true, message: `Dry run failed: ${err.message}` });
+    return res.status(500).json({ error: true, message: `Dry run failed.` });
   }
 });
 
@@ -415,7 +417,9 @@ router.post('/cache/flush', async (req, res) => {
 router.get('/users', async (req, res) => {
   try {
     const { search, role, status, page = 1, limit = 50 } = req.query;
-    const offset = (Math.max(1, parseInt(page)) - 1) * parseInt(limit);
+    const pageNum = Math.max(1, parseInt(page) || 1);
+    const limitNum = Math.min(100, Math.max(1, parseInt(limit) || 50));
+    const offset = (pageNum - 1) * limitNum;
     const params = [];
     const conditions = [];
 
@@ -439,7 +443,7 @@ router.get('/users', async (req, res) => {
       params
     );
 
-    params.push(parseInt(limit), offset);
+    params.push(limitNum, offset);
     const { rows: users } = await db.query(
       `SELECT id, name, email, role, account_status, email_verified, avatar_url, created_date, last_login_at
        FROM "User" ${where}
@@ -469,8 +473,8 @@ router.get('/users', async (req, res) => {
     return res.json({
       users: enrichedUsers,
       total: parseInt(countRows[0].total),
-      page: parseInt(page),
-      limit: parseInt(limit),
+      page: pageNum,
+      limit: limitNum,
     });
   } catch (err) {
     console.error('[ADMIN] List users error:', err.message);
@@ -514,6 +518,15 @@ router.post('/users', async (req, res) => {
 
     if (!name || !email || !password) {
       return res.status(400).json({ error: true, message: 'Name, email, and password are required.' });
+    }
+
+    if (typeof name !== 'string' || name.trim().length < 1 || name.trim().length > 100) {
+      return res.status(400).json({ error: true, message: 'Name must be between 1 and 100 characters.' });
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ error: true, message: 'Invalid email address.' });
     }
 
     if (!Object.values(ROLES).includes(role)) {
@@ -620,7 +633,7 @@ router.post('/users/:id/suspend', async (req, res) => {
     );
 
     await db.query(
-      `DELETE FROM "session" WHERE sess::text LIKE '%"userId":"' || $1 || '"%'`,
+      `DELETE FROM "session" WHERE sess->>'userId' = $1`,
       [targetId]
     );
 
@@ -684,7 +697,7 @@ router.post('/users/:id/disable', async (req, res) => {
     );
 
     await db.query(
-      `DELETE FROM "session" WHERE sess::text LIKE '%"userId":"' || $1 || '"%'`,
+      `DELETE FROM "session" WHERE sess->>'userId' = $1`,
       [targetId]
     );
 
@@ -728,7 +741,7 @@ router.delete('/users/:id', async (req, res) => {
       db.query('DELETE FROM "Bookmark" WHERE user_id = $1', [targetId]).catch(() => {}),
       db.query('DELETE FROM "AuthAccount" WHERE user_id = $1', [targetId]).catch(() => {}),
       db.query('DELETE FROM "PasswordResetToken" WHERE user_id = $1', [targetId]).catch(() => {}),
-      db.query(`DELETE FROM "session" WHERE sess::text LIKE '%"userId":"' || $1 || '"%'`, [targetId]).catch(() => {}),
+      db.query(`DELETE FROM "session" WHERE sess->>'userId' = $1`, [targetId]).catch(() => {}),
     ]);
 
     // Delete user
@@ -756,7 +769,9 @@ router.delete('/users/:id', async (req, res) => {
 router.get('/audit', async (req, res) => {
   try {
     const { action, userId, page = 1, limit = 50 } = req.query;
-    const offset = (Math.max(1, parseInt(page)) - 1) * parseInt(limit);
+    const pageNum = Math.max(1, parseInt(page) || 1);
+    const limitNum = Math.min(100, Math.max(1, parseInt(limit) || 50));
+    const offset = (pageNum - 1) * limitNum;
     const params = [];
     const conditions = [];
 
@@ -776,7 +791,7 @@ router.get('/audit', async (req, res) => {
       params
     );
 
-    params.push(parseInt(limit), offset);
+    params.push(limitNum, offset);
     const { rows: logs } = await db.query(
       `SELECT al.*, u.name as actor_name, tu.name as target_name
        FROM "AuditLog" al
@@ -791,8 +806,8 @@ router.get('/audit', async (req, res) => {
     return res.json({
       logs,
       total: parseInt(countRows[0].total),
-      page: parseInt(page),
-      limit: parseInt(limit),
+      page: pageNum,
+      limit: limitNum,
     });
   } catch (err) {
     console.error('[ADMIN] Audit log error:', err.message);
@@ -862,7 +877,8 @@ router.get('/repositories/pending', async (req, res) => {
     );
     res.json({ repositories: rows });
   } catch (err) {
-    res.status(500).json({ error: true, message: err.message });
+    const msg = process.env.NODE_ENV === 'development' ? err.message : 'Internal Server Error';
+    res.status(500).json({ error: true, message: msg });
   }
 });
 
@@ -898,7 +914,8 @@ router.patch('/repositories/pending/:id', async (req, res) => {
     
     res.json({ success: true });
   } catch (err) {
-    res.status(500).json({ error: true, message: err.message });
+    const msg = process.env.NODE_ENV === 'development' ? err.message : 'Internal Server Error';
+    res.status(500).json({ error: true, message: msg });
   }
 });
 

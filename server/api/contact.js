@@ -1,8 +1,20 @@
 import express from 'express';
 import nodemailer from 'nodemailer';
+import crypto from 'crypto';
+import { db } from '../db/index.js';
 import { generalRateLimiter } from '../auth/middleware.js';
 
 const router = express.Router();
+
+function sanitizeText(text) {
+  if (!text) return '';
+  return String(text)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
 
 router.post('/send', generalRateLimiter, async (req, res) => {
   const { name, email, message } = req.body;
@@ -11,48 +23,59 @@ router.post('/send', generalRateLimiter, async (req, res) => {
     return res.status(400).json({ status: 'error', message: 'Name, email, and message are required.' });
   }
 
+  const safeName = sanitizeText(name).replace(/[\r\n]/g, "").substring(0, 100);
+  const safeMessage = sanitizeText(message);
+  const safeEmail = sanitizeText(email).replace(/[\r\n]/g, "").substring(0, 200);
+
+  // Persist to database
+  try {
+    await db.query(
+      `INSERT INTO "ContactMessage" (id, name, email, message) VALUES ($1, $2, $3, $4)`,
+      [crypto.randomUUID(), safeName, safeEmail, safeMessage]
+    );
+  } catch (dbErr) {
+    console.error('[CONTACT DB ERROR]', dbErr.message);
+    return res.status(500).json({ status: 'error', message: 'Failed to save contact message. Please try again later.' });
+  }
+
   // Create reusable transporter object using SMTP transport
-  // Requires SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS in .env.local
   const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST || 'smtp.gmail.com',
     port: parseInt(process.env.SMTP_PORT || '587'),
-    secure: process.env.SMTP_SECURE === 'true' || false, // true for 465, false for other ports
+    secure: process.env.SMTP_SECURE === 'true' || false,
     auth: {
-      user: process.env.SMTP_USER, // e.g. openlysts@gmail.com
-      pass: process.env.SMTP_PASS, // App password
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS,
     },
   });
 
-  // DEV BYPASS for E2E TESTING
   if (!process.env.SMTP_USER) {
     console.log('[DEV] Simulating successful email send (no SMTP_USER configured).');
     return res.json({ status: 'success', message: 'Email sent successfully! (Simulated)' });
   }
 
   try {
-    // Verify connection configuration
     await transporter.verify();
 
-    // Send email
     await transporter.sendMail({
       from: `"Openlysts Support Desk" <${process.env.SMTP_FROM || process.env.SMTP_USER || 'openlysts@gmail.com'}>`,
-      to: process.env.CONTACT_EMAIL || process.env.SMTP_USER || 'openlysts@gmail.com', // list of receivers
-      replyTo: email,
-      subject: `Openlysts Contact Form: Message from ${name}`, // Subject line
-      text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`, // plain text body
+      to: process.env.CONTACT_EMAIL || process.env.SMTP_USER || 'openlysts@gmail.com',
+      replyTo: safeEmail,
+      subject: `Openlysts Contact Form: Message from ${safeName}`,
+      text: `Name: ${safeName}\nEmail: ${safeEmail}\n\nMessage:\n${safeMessage}`,
     });
 
     res.json({ status: 'success', message: 'Email sent successfully!' });
   } catch (error) {
-    console.error('[EMAIL ERROR]', error);
-    // If auth fails, provide a specific error so the user knows to configure .env
+    console.error('[EMAIL ERROR]', error.message);
     if (error.code === 'EAUTH') {
       return res.status(500).json({ 
         status: 'error', 
-        message: 'Email sending failed: SMTP credentials are not configured or are invalid on the server (.env.local).' 
+        message: 'Email sending failed: SMTP credentials are not configured or are invalid.' 
       });
     }
-    res.status(500).json({ status: 'error', message: `Email sending failed: ${error.message}` });
+    const msg = process.env.NODE_ENV === 'development' ? error.message : 'Internal Server Error';
+    res.status(500).json({ status: 'error', message: `Email sending failed: ${msg}` });
   }
 });
 

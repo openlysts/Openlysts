@@ -172,7 +172,7 @@ export default function InfiniteDiscoveryFeed({ initialFilters = {}, onRefresh, 
         {renderHeader()}
         <div className="-mx-4 px-4 sm:-mx-6 sm:px-6 relative">
           <div className="grid grid-rows-2 grid-flow-col gap-4 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory pb-4" role="region" aria-label="Loading Feed">
-            {Array.from({ length: 8 }).map((_, i) => (
+            {Array.from({ length: 12 }).map((_, i) => (
               <div key={i} className="w-[300px] sm:w-[340px] snap-start">
                 <SkeletonCard view="grid" />
               </div>

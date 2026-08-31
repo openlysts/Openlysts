@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Heart } from 'lucide-react';
-import { APP_VERSION } from '@/config/version';
 
 export default function Footer() {
   const links = [

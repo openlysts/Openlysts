@@ -17,13 +17,13 @@ export default function Pagination({ page, totalPages, onChange }) {
         onClick={() => onChange(page - 1)}
         disabled={page <= 1}
         aria-label="Previous Page"
-        className="w-9 h-9 flex items-center justify-center rounded-xl text-sm border border-border bg-bg-card text-text-secondary hover:bg-bg-hover disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+        className="w-9 h-9 flex items-center justify-center rounded-xl text-sm border border-border bg-bg-card text-text-secondary hover:bg-bg-hover disabled:opacity-40 disabled:cursor-not-allowed transition-colors touch-target"
       >
         <ChevronLeft className="w-4 h-4" />
       </button>
       {start > 1 && (
         <>
-          <button onClick={() => onChange(1)} className="min-w-[36px] h-9 px-3 flex items-center justify-center rounded-xl text-sm border border-border bg-bg-card text-text-secondary hover:bg-bg-hover transition-colors font-medium">1</button>
+          <button onClick={() => onChange(1)} className="min-w-[36px] h-9 px-3 flex items-center justify-center rounded-xl text-sm border border-border bg-bg-card text-text-secondary hover:bg-bg-hover transition-colors font-medium touch-target">1</button>
           {start > 2 && <span className="px-1 text-text-muted">…</span>}
         </>
       )}
@@ -31,7 +31,7 @@ export default function Pagination({ page, totalPages, onChange }) {
         <button
           key={p}
           onClick={() => onChange(p)}
-          className={`min-w-[36px] h-9 px-3 flex items-center justify-center rounded-xl text-sm font-medium border transition-colors ${
+          className={`min-w-[36px] h-9 px-3 flex items-center justify-center rounded-xl text-sm font-medium border transition-colors touch-target ${
             p === page
               ? 'bg-accent text-accent-fg border-accent shadow-xs'
               : 'bg-bg-card text-text-secondary border-border hover:bg-bg-hover'
@@ -43,14 +43,14 @@ export default function Pagination({ page, totalPages, onChange }) {
       {end < totalPages && (
         <>
           {end < totalPages - 1 && <span className="px-1 text-text-muted">…</span>}
-          <button onClick={() => onChange(totalPages)} className="min-w-[36px] h-9 px-3 flex items-center justify-center rounded-xl text-sm border border-border bg-bg-card text-text-secondary hover:bg-bg-hover transition-colors font-medium">{totalPages}</button>
+          <button onClick={() => onChange(totalPages)} className="min-w-[36px] h-9 px-3 flex items-center justify-center rounded-xl text-sm border border-border bg-bg-card text-text-secondary hover:bg-bg-hover transition-colors font-medium touch-target">{totalPages}</button>
         </>
       )}
       <button
         onClick={() => onChange(page + 1)}
         disabled={page >= totalPages}
         aria-label="Next Page"
-        className="w-9 h-9 flex items-center justify-center rounded-xl text-sm border border-border bg-bg-card text-text-secondary hover:bg-bg-hover disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+        className="w-9 h-9 flex items-center justify-center rounded-xl text-sm border border-border bg-bg-card text-text-secondary hover:bg-bg-hover disabled:opacity-40 disabled:cursor-not-allowed transition-colors touch-target"
       >
         <ChevronRight className="w-4 h-4" />
       </button>

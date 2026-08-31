@@ -23,6 +23,31 @@ let REPOSITORIES = [];
 let INVERTED_INDEX_REPOS = new Map();
 let INVERTED_INDEX_ALTS = new Map();
 
+class SimpleLRU {
+  constructor(limit = 100) {
+    this.limit = limit;
+    this.cache = new Map();
+  }
+  get(key) {
+    if (!this.cache.has(key)) return null;
+    const val = this.cache.get(key);
+    this.cache.delete(key);
+    this.cache.set(key, val);
+    return val;
+  }
+  set(key, val) {
+    if (this.cache.has(key)) this.cache.delete(key);
+    this.cache.set(key, val);
+    if (this.cache.size > this.limit) {
+      this.cache.delete(this.cache.keys().next().value);
+    }
+  }
+  clear() {
+    this.cache.clear();
+  }
+}
+const QUERY_CACHE = new SimpleLRU(200);
+
 function tokenize(text) {
   if (!text) return [];
   return text
@@ -127,6 +152,7 @@ function buildIndices() {
 
     tokens.forEach(token => {
       if (!INVERTED_INDEX_REPOS.has(token)) {
+        if (INVERTED_INDEX_REPOS.size >= 100000) return;
         INVERTED_INDEX_REPOS.set(token, new Set());
       }
       INVERTED_INDEX_REPOS.get(token).add(idx);
@@ -147,23 +173,28 @@ function buildIndices() {
 
     tokens.forEach(token => {
       if (!INVERTED_INDEX_ALTS.has(token)) {
+        if (INVERTED_INDEX_ALTS.size >= 50000) return;
         INVERTED_INDEX_ALTS.set(token, new Set());
       }
       INVERTED_INDEX_ALTS.get(token).add(idx);
     });
   });
 
+  QUERY_CACHE.clear();
+
+  const mem = process.memoryUsage();
   console.log(`[CATALOG ENGINE] Indexed ${REPOSITORIES.length} repositories & ${ALTERNATIVES.length} alternatives in-memory.`);
+  console.log(`[CATALOG ENGINE] Memory usage: RSS=${Math.round(mem.rss / 1024 / 1024)}MB, HeapTotal=${Math.round(mem.heapTotal / 1024 / 1024)}MB, HeapUsed=${Math.round(mem.heapUsed / 1024 / 1024)}MB`);
 }
 
 let lastSyncTime = new Date(0);
 let isSyncing = false;
-export async function syncDeltasFromDB() {
+export async function syncDeltasFromDB(force = false) {
   if (isSyncing) return;
   
-  // Throttle sync to at most once every 60 seconds per instance
+  // Throttle sync to at most once every 60 seconds per instance, unless forced
   const now = new Date();
-  if (now - lastSyncTime < 60000) return;
+  if (!force && now - lastSyncTime < 60000) return;
   
   isSyncing = true;
   try {
@@ -210,6 +241,7 @@ export async function syncDeltasFromDB() {
     
     lastSyncTime = new Date();
     if (repoDeltas > 0 || altDeltas > 0) {
+      QUERY_CACHE.clear();
       console.log(`[CATALOG ENGINE] Fused ${repoDeltas} repo deltas and ${altDeltas} alt deltas from Neon DB.`);
     }
   } catch (err) {
@@ -265,6 +297,7 @@ export function ingestCatalogRepository(repo) {
     license_url: repo.license_url || '',
     license_status: repo.license_status || 'Permissive',
     stars: Number(repo.stars) || 0,
+    stargazers_count: Number(repo.stars) || Number(repo.stargazers_count) || 0,
     forks: Number(repo.forks) || 0,
     open_issues: Number(repo.open_issues) || 0,
     watchers: Number(repo.watchers) || Number(repo.stars) || 0,
@@ -406,6 +439,10 @@ export function queryRepositoriesCatalog(params = {}) {
     minScore = 0
   } = params;
 
+  const cacheKey = 'repo:' + JSON.stringify(params);
+  const cached = QUERY_CACHE.get(cacheKey);
+  if (cached) return cached;
+
   let matchedIndices = null;
   const relevanceScores = new Map();
 
@@ -499,7 +536,8 @@ export function queryRepositoriesCatalog(params = {}) {
   } else if (sort === 'quality') {
     list.sort((a, b) => (b.quality_score || 0) - (a.quality_score || 0) || (b.stars || 0) - (a.stars || 0) || (b.id || '').localeCompare(a.id || ''));
   } else if (sort === 'recent') {
-    list.sort((a, b) => new Date(b.created_date || 0) - new Date(a.created_date || 0) || (b.id || '').localeCompare(a.id || ''));
+    const getTime = (r) => new Date(r.github_created_at || r.created_at || r.created_date || 0).getTime();
+    list.sort((a, b) => getTime(b) - getTime(a) || (b.id || '').localeCompare(a.id || ''));
   } else if (sort === 'name') {
     list.sort((a, b) => (a.name || '').localeCompare(b.name || '') || (b.id || '').localeCompare(a.id || ''));
   } else if (searchTrimmed) {
@@ -533,7 +571,7 @@ export function queryRepositoriesCatalog(params = {}) {
   const startIndex = (pageNum - 1) * limitNum;
   const results = list.slice(startIndex, startIndex + limitNum);
 
-  return {
+  const result = {
     results,
     total,
     page: pageNum,
@@ -542,6 +580,8 @@ export function queryRepositoriesCatalog(params = {}) {
     categoryCounts,
     languageCounts
   };
+  QUERY_CACHE.set(cacheKey, result);
+  return result;
 }
 
 /**
@@ -555,6 +595,10 @@ export function queryAlternativesCatalog(params = {}) {
     perPage = 24,
     sort = 'stars'
   } = params;
+
+  const cacheKey = 'alt:' + JSON.stringify(params);
+  const cached = QUERY_CACHE.get(cacheKey);
+  if (cached) return cached;
 
   let matchedIndices = null;
   const searchTrimmed = (search || '').trim().toLowerCase();
@@ -658,7 +702,7 @@ export function queryAlternativesCatalog(params = {}) {
     count
   })).sort((a, b) => b.count - a.count);
 
-  return {
+  const result = {
     results,
     alternatives: list,
     grouped,
@@ -676,6 +720,8 @@ export function queryAlternativesCatalog(params = {}) {
     totalPages,
     perPage: limitNum
   };
+  QUERY_CACHE.set(cacheKey, result);
+  return result;
 }
 
 /**

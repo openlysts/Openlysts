@@ -18,7 +18,7 @@ function getExpectedOrigin(req) {
 
 // ─── TOTP (Authenticator App) ──────────────────────────────────────────
 
-router.post('/totp/setup', requireAuth, async (req, res) => {
+const handleTotpSetup = async (req, res) => {
   try {
     const { rows } = await db.query('SELECT email FROM "User" WHERE id = $1', [req.user.id]);
     const user = rows[0];
@@ -28,13 +28,15 @@ router.post('/totp/setup', requireAuth, async (req, res) => {
     const imageUrl = await qrcode.toDataURL(otpauth);
 
     req.session.pendingTotpSecret = secret;
-
-    res.json({ success: true, secret, imageUrl });
-  } catch (error) {
-    console.error('[MFA] TOTP setup error:', error);
-    res.status(500).json({ error: true, message: 'Failed to setup TOTP' });
+    return res.json({ success: true, qr: imageUrl, secret });
+  } catch (err) {
+    console.error('[MFA] TOTP setup error:', err);
+    return res.status(500).json({ error: true, message: 'Failed to setup TOTP.' });
   }
-});
+};
+
+router.post('/totp/setup', requireAuth, handleTotpSetup);
+router.post('/setup', requireAuth, handleTotpSetup); // Alias for backward compatibility
 
 router.post('/totp/verify', requireAuth, async (req, res) => {
   try {

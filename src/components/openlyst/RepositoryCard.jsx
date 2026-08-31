@@ -131,7 +131,7 @@ export default function RepositoryCard({ repo, index = 0, view = 'grid', showTre
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: Math.min(index * 0.04, 0.4) }}
-      className="h-full"
+      className="h-full [content-visibility:auto] contain-intrinsic-size-[340px_240px]"
       style={{ perspective: 1000 }}
     >
       <motion.div 
@@ -203,10 +203,10 @@ export default function RepositoryCard({ repo, index = 0, view = 'grid', showTre
             <div className={`flex items-center gap-2 z-20 flex-shrink-0 relative top-0 right-0 pointer-events-auto ${view === 'list' ? 'flex md:hidden' : ''}`}>
                 <button
                   onClick={handleCompareClick}
-                  className={`p-2 rounded-xl transition-colors touch-target ${
+                  className={`p-2.5 w-11 h-11 flex items-center justify-center rounded-xl transition-colors touch-target ${
                     isCompared ? 'text-accent bg-accent-soft' : 'text-text-muted hover:text-text hover:bg-bg-hover active:bg-bg-subtle'
                   }`}
-                  aria-label="Add to compare"
+                  aria-label={`Add ${name} to compare`}
                   title="Compare"
                 >
                   <GitCompare className="w-4 h-4" />
@@ -214,10 +214,10 @@ export default function RepositoryCard({ repo, index = 0, view = 'grid', showTre
                 <ParticleExplosion active={bookmarked}>
                   <button
                     onClick={handleBookmark}
-                    className={`p-2 rounded-xl transition-colors touch-target ${
+                    className={`p-2.5 w-11 h-11 flex items-center justify-center rounded-xl transition-colors touch-target ${
                       bookmarked ? 'text-[#F43F5E] bg-[#F43F5E]/10' : 'text-text-muted hover:text-text hover:bg-bg-hover active:bg-bg-subtle'
                     }`}
-                    aria-label="Save"
+                    aria-label={`Bookmark ${name}`}
                     title="Save"
                   >
                     <Heart className="w-4 h-4" fill={bookmarked ? 'currentColor' : 'none'} />
@@ -311,16 +311,16 @@ export default function RepositoryCard({ repo, index = 0, view = 'grid', showTre
 
         {view === 'list' && (
           <div className="hidden md:flex flex-col gap-2 items-end justify-start ml-4 border-l border-border pl-4 relative z-30 pointer-events-auto">
-            <button onClick={handleCompareClick} className={`p-2.5 rounded-xl transition-colors touch-target flex items-center justify-center border w-10 h-10 ${isCompared ? 'text-accent bg-accent-soft border-accent' : 'text-text-muted hover:text-text hover:bg-bg-hover active:bg-bg-subtle border-border'}`} aria-label="Add to compare" title="Compare">
+            <button onClick={handleCompareClick} className={`p-2.5 rounded-xl transition-colors touch-target flex items-center justify-center border w-11 h-11 ${isCompared ? 'text-accent bg-accent-soft border-accent' : 'text-text-muted hover:text-text hover:bg-bg-hover active:bg-bg-subtle border-border'}`} aria-label={`Compare ${name}`} title="Compare">
               <GitCompare className="w-5 h-5" />
             </button>
             <ParticleExplosion active={bookmarked}>
               <button
                 onClick={handleBookmark}
-                className={`p-2.5 rounded-xl transition-colors touch-target flex items-center justify-center border w-10 h-10 ${
+                className={`p-2.5 rounded-xl transition-colors touch-target flex items-center justify-center border w-11 h-11 ${
                   bookmarked ? 'text-[#F43F5E] bg-[#F43F5E]/10 border-[#F43F5E]/20' : 'text-text-muted hover:text-text hover:bg-bg-hover active:bg-bg-subtle border-border'
                 }`}
-                aria-label="Save"
+                aria-label={`Bookmark ${name}`}
                 title="Save"
               >
                 <Heart className="w-5 h-5" fill={bookmarked ? 'currentColor' : 'none'} />

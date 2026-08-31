@@ -7,7 +7,34 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const CACHE_FILE = path.resolve(__dirname, '../data/video_cache.json');
 const CACHE_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 
-const videoCache = new Map();
+class SimpleLRU {
+  constructor(limit = 1000) {
+    this.limit = limit;
+    this.cache = new Map();
+  }
+  get(key) {
+    if (!this.cache.has(key)) return null;
+    const val = this.cache.get(key);
+    this.cache.delete(key);
+    this.cache.set(key, val);
+    return val;
+  }
+  set(key, val) {
+    if (this.cache.has(key)) this.cache.delete(key);
+    this.cache.set(key, val);
+    if (this.cache.size > this.limit) {
+      this.cache.delete(this.cache.keys().next().value);
+    }
+  }
+  entries() {
+    return this.cache.entries();
+  }
+  get size() {
+    return this.cache.size;
+  }
+}
+
+const videoCache = new SimpleLRU(1000);
 
 // Load persistent disk cache on startup
 try {

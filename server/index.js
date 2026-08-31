@@ -1,10 +1,11 @@
 import './env.js';
 import express from 'express';
 import cors from 'cors';
+import helmet from 'helmet';
 import { db } from './db/index.js';
 import { getSystemConfig } from './config.js';
 import { configureSession } from './auth/session.js';
-import { loadSessionUser, csrfProtection } from './auth/middleware.js';
+import { loadSessionUser, csrfProtection, generalRateLimiter } from './auth/middleware.js';
 import { autoBootstrapFromEnv } from './auth/bootstrap.js';
 
 import authRouter from './api/auth.js';
@@ -39,8 +40,7 @@ const ALLOWED_ORIGINS = [
 
 app.use(cors({
   origin: (origin, callback) => {
-    // Allow requests with no origin (mobile apps, curl, server-to-server) or valid origins
-    if (!origin || ALLOWED_ORIGINS.includes(origin) || origin.endsWith('.vercel.app')) {
+    if (!origin || ALLOWED_ORIGINS.includes(origin) || /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
@@ -48,26 +48,44 @@ app.use(cors({
   },
   credentials: true
 }));
-app.use('/api/entities', express.json({ limit: '2mb' }));
-app.use('/api/admin', express.json({ limit: '2mb' }));
-app.use(express.json({ limit: '100kb' }));
+
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "https://vercel.live", "https://challenges.cloudflare.com"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      imgSrc: ["'self'", "data:", "https:"],
+      connectSrc: ["'self'", "https://api.github.com"],
+      frameSrc: ["'self'", "https://www.youtube.com", "https://challenges.cloudflare.com"],
+      upgradeInsecureRequests: [],
+    },
+  },
+}));
+
+app.use('/api/entities', express.json({ limit: '2mb', strict: true }));
+app.use('/api/admin', express.json({ limit: '2mb', strict: true }));
+app.use(express.json({ limit: '100kb', strict: true }));
 
 configureSession(app);
 app.use(loadSessionUser);
 app.use(csrfProtection);
 
+app.use('/api', generalRateLimiter);
+
 app.use((req, res, next) => {
-  console.log(`[API] ${req.method} ${req.url}`);
+  if (process.env.NODE_ENV === 'development') {
+    console.log(`[API] ${req.method} ${req.url}`);
+  }
   next();
 });
 
-import { initSchema } from './db/schema.js';
+
 
 const healthHandler = async (req, res) => {
   res.json({ status: 'ok', uptime: process.uptime() });
 };
 
-app.get('/api/health', healthHandler);
 app.get('/api/health', healthHandler);
 app.get('/health', healthHandler);
 

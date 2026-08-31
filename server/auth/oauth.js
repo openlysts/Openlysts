@@ -392,7 +392,10 @@ export function verifyOAuthState(state) {
   const [payload, sig] = state.split('.');
   const expectedSig = crypto.createHmac('sha256', secret).update(payload).digest('base64url');
 
-  if (sig !== expectedSig) {
+  const sigBuf = Buffer.from(sig, 'utf8');
+  const expectedBuf = Buffer.from(expectedSig, 'utf8');
+
+  if (sigBuf.length !== expectedBuf.length || !crypto.timingSafeEqual(sigBuf, expectedBuf)) {
     return { valid: false, redirect: '/discover' };
   }
 
