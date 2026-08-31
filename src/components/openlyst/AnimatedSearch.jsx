@@ -105,7 +105,7 @@ export default function AnimatedSearch({ className = '', size = 'default' }) {
           <button 
             type="button"
             onClick={(e) => { e.preventDefault(); window.dispatchEvent(new CustomEvent('open-command-palette')); }}
-            className="flex items-center gap-1 bg-bg-subtle border border-border px-1.5 py-0.5 rounded text-[10px] font-mono text-text-muted hover:text-text hover:bg-bg-hover transition-colors shadow-sm cursor-pointer pointer-events-auto"
+            className="flex items-center justify-center min-w-[44px] min-h-[44px] gap-1 bg-bg-subtle border border-border px-1.5 py-0.5 rounded text-[10px] font-mono text-text-muted hover:text-text hover:bg-bg-hover transition-colors shadow-sm cursor-pointer pointer-events-auto"
           >
             ⌘K
           </button>

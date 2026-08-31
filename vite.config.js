@@ -10,8 +10,6 @@ export default defineConfig({
   ],
   optimizeDeps: {
     include: [
-      'react',
-      'react-dom',
       'react-router-dom',
       '@tanstack/react-query',
       'framer-motion',
@@ -20,6 +18,7 @@ export default defineConfig({
       'canvas-confetti',
       '@marsidev/react-turnstile'
     ],
+    exclude: ['react', 'react-dom']
   },
   resolve: {
     alias: {

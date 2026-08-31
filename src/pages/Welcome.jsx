@@ -24,7 +24,7 @@ export default function Welcome() {
 
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-black selection:bg-accent/30 flex items-center justify-center">
-      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-black focus:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400">
+      <a href="#main-content" className="absolute top-0 left-0 -translate-y-full focus:translate-y-0 z-[9999] p-4 bg-black text-white font-bold outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 transition-transform duration-200">
         Skip to main content
       </a>
       {/* Scanner Animated Background */}
