@@ -240,6 +240,7 @@ export async function initSchema(db) {
     `ALTER TABLE "Alternative" ADD COLUMN free_tool_url TEXT`,
     `ALTER TABLE "Alternative" ADD COLUMN quality_score REAL`,
     `ALTER TABLE "Alternative" ADD COLUMN verified_oss INTEGER`,
+    `ALTER TABLE "Alternative" ADD COLUMN IF NOT EXISTS updated_at TEXT`,
     `ALTER TABLE "DiscoveryQuery" ADD COLUMN current_page INTEGER DEFAULT 1`,
 
     // Auth columns for User table
@@ -292,6 +293,7 @@ export async function initSchema(db) {
     `CREATE INDEX IF NOT EXISTS idx_repo_trending ON "Repository"(trending_score DESC);`,
     `CREATE INDEX IF NOT EXISTS idx_repo_full_name ON "Repository"(full_name);`,
     `CREATE INDEX IF NOT EXISTS idx_repo_updated_at ON "Repository"(updated_at);`,
+    `CREATE INDEX IF NOT EXISTS idx_alt_updated_at ON "Alternative"(updated_at);`,
     `CREATE INDEX IF NOT EXISTS idx_ingestion_run_started ON "IngestionRun"(started_at DESC);`,
 
     // Bookmark indexes
