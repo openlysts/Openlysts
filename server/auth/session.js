@@ -79,19 +79,35 @@ export function configureSession(app) {
     }
   }
 
+  const cookieName = getSessionCookieName();
+  
   app.use(session({
     store: new ResilientStore(),
     secret: sessionSecret,
-    name: isSecure ? '__Host-openlysts.sid' : 'openlysts.sid',
+    name: cookieName,
     resave: false,
     saveUninitialized: false,
     rolling: true,
-    cookie: {
-      httpOnly: true,
-      secure: isSecure,
-      sameSite: 'lax',
-      maxAge: TOKEN_EXPIRY.SESSION_MAX_AGE,
-      path: '/',
-    },
+    cookie: getSessionCookieOptions(),
   }));
+}
+
+export function getSessionCookieName() {
+  const appUrl = process.env.APP_URL || '';
+  const isLocalhost = appUrl.includes('localhost') || appUrl.includes('127.0.0.1');
+  const isSecure = isLocalhost ? false : (appUrl.startsWith('https://') || process.env.NODE_ENV === 'production' || !!process.env.VERCEL);
+  return isSecure ? '__Host-openlysts.sid' : 'openlysts.sid';
+}
+
+export function getSessionCookieOptions() {
+  const appUrl = process.env.APP_URL || '';
+  const isLocalhost = appUrl.includes('localhost') || appUrl.includes('127.0.0.1');
+  const isSecure = isLocalhost ? false : (appUrl.startsWith('https://') || process.env.NODE_ENV === 'production' || !!process.env.VERCEL);
+  return {
+    httpOnly: true,
+    secure: isSecure,
+    sameSite: 'lax',
+    maxAge: TOKEN_EXPIRY.SESSION_MAX_AGE,
+    path: '/',
+  };
 }

@@ -11,8 +11,7 @@
     "lint:fix": "eslint . --fix",
     "typecheck": "tsc -p ./jsconfig.json",
     "preview": "vite preview",
-    "test": "node server/tests/catalog_invariants.test.js && node server/tests/edge_chaos.test.js",
-    "db:reset": "node -e \"console.log('Use Neon dashboard to reset DB');\"",
+    "test": "node server/tests/catalog_invariants.test.js && node server/tests/edge_chaos.test.js && playwright test",
     "db:seed": "node server/db/seed.js",
     "db:build-catalogs": "node server/scripts/buildMegaCatalogs.js",
     "db:sync-neon": "node server/scripts/syncNeon.js"

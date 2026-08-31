@@ -23,7 +23,7 @@ router.post('/send', generalRateLimiter, async (req, res) => {
     return res.status(400).json({ status: 'error', message: 'Name, email, and message are required.' });
   }
 
-  const safeName = sanitizeText(name);
+  const safeName = sanitizeText(name).replace(/[\r\n]/g, "").substring(0, 100);
   const safeMessage = sanitizeText(message);
   const safeEmail = sanitizeText(email).replace(/[\r\n]/g, "").substring(0, 200);
 
@@ -35,7 +35,7 @@ router.post('/send', generalRateLimiter, async (req, res) => {
     );
   } catch (dbErr) {
     console.error('[CONTACT DB ERROR]', dbErr.message);
-    // Continue even if DB fails, so we can try to send the email
+    return res.status(500).json({ status: 'error', message: 'Failed to save contact message. Please try again later.' });
   }
 
   // Create reusable transporter object using SMTP transport

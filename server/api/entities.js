@@ -126,6 +126,15 @@ router.post('/:entity/:action', async (req, res, next) => {
     } else {
       return res.status(400).json({ error: true, message: `Unknown action: ${action}` });
     }
+    
+    // Real-time invalidation for catalog mutations
+    if (isMutating && (entity === 'Repository' || entity === 'Alternative')) {
+      // Import dynamically to avoid circular dependencies if any
+      import('../services/catalogEngine.js').then(module => {
+        module.syncDeltasFromDB(true).catch(e => console.error('[CATALOG ENGINE] Invalidation failed:', e));
+      });
+    }
+
     return res.json(result);
   } catch (err) {
     next(err);

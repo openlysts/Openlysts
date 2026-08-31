@@ -21,21 +21,7 @@ export default async function queryRepositories(req, res) {
 
     const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 
-    // Background: trigger GitHub live search for new queries on page 1 (fire-and-forget)
-    if (page === 1 && q && q.trim() && GITHUB_TOKEN) {
-      const queryStr = q.trim();
-      const url = `https://api.github.com/search/repositories?q=${encodeURIComponent(queryStr)}&sort=stars&order=desc&per_page=30`;
-      
-      githubFetch(url, GITHUB_TOKEN, 1).then(async (data) => {
-        if (data && data.items) {
-          for (const item of data.items) {
-            await ingestRepoItem(item);
-          }
-        }
-      }).catch(err => {
-        console.error('GitHub fallback search failed in background:', err.message);
-      });
-    }
+
 
     // Ensure Neon DB deltas are fused into memory before answering, with a strict 2.5 second timeout for Vercel
     try {

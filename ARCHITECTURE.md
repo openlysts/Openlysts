@@ -19,7 +19,7 @@ The application uses a full-stack JavaScript architecture designed to run seamle
 - **Styling**: Tailwind CSS with CSS Variable token design system (`index.css`)
 - **UI Components & Primitives**: Radix UI primitives, Vaul (drawers/bottom sheets), Lucide React, Recharts (Data Visualization).
 - **Motion & Graphics**: Framer Motion (page animations & physics), Three.js & OGL (interactive 3D & custom GPU shaders), 3D Card Tilt with specular sheen.
-- **Global State Contexts**: `AuthContext` (sessions & profile), `CompareContext` (side-by-side comparison dock & query sync), `BookmarkContext` (cross-device/local storage bookmarking).
+- **Global State Contexts**: `AuthContext` (sessions & profile), `CompareContext` (side-by-side comparison dock & query sync).
 - **Outbox Engine**: `syncOutbox.js` (0ms latency optimistic client write engine).
 - **PWA**: Workbox service-worker caching with installable application manifests.
 

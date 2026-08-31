@@ -12,18 +12,14 @@ import { logAuditEvent, getRequestMeta } from '../auth/audit.js';
 import { sendPasswordResetEmail, sendVerificationEmail, sendDuplicateRegistrationEmail, isSmtpConfigured } from '../auth/email.js';
 import { getGoogleAuthUrl, exchangeGoogleCode, getGithubAuthUrl, exchangeGithubCode, findOrCreateOAuthUser, generateOAuthState, verifyOAuthState } from '../auth/oauth.js';
 import { verifyTurnstile } from '../auth/turnstile.js';
+import { verify } from 'otplib';
 
 import { getSystemConfig } from '../config.js';
+import { getSessionCookieName, getSessionCookieOptions } from '../auth/session.js';
 
 const router = Router();
 
-// ─── GET /api/auth/csrf ─────────────────────────────────────────────
 
-router.get('/csrf', (req, res) => {
-  // Return a mock CSRF token for backward compatibility with frontend middleware
-  // If actual CSRF protection is implemented, req.csrfToken() would be used here.
-  return res.json({ csrfToken: 'legacy-compat-token-openlysts' });
-});
 
 // ─── POST /api/auth/register ────────────────────────────────────────
 
@@ -254,8 +250,6 @@ router.post('/login', loginRateLimiter, async (req, res) => {
 
 // ─── POST /api/auth/login/2fa ───────────────────────────────────────
 
-import { verify } from 'otplib';
-
 router.post('/login/2fa', loginRateLimiter, async (req, res) => {
   try {
     const { code } = req.body;
@@ -330,8 +324,7 @@ router.post('/logout', async (req, res) => {
     if (err) {
       console.error('[AUTH] Session destroy error:', err.message);
     }
-    const cookieName = (process.env.COOKIE_SECURE === "true" || (process.env.NODE_ENV === "production" && !process.env.VERCEL)) ? "__Host-openlysts.sid" : "openlysts.sid";
-    res.clearCookie(cookieName);
+    res.clearCookie(getSessionCookieName(), getSessionCookieOptions());
 
     if (userId) {
       const meta = getRequestMeta(req);
@@ -420,10 +413,14 @@ router.get('/google/callback', async (req, res) => {
     }
 
     const profile = await exchangeGoogleCode(code, req);
-    console.log('[AUTH] Google profile exchanged successfully:', profile.email);
+    if (process.env.NODE_ENV === 'development') {
+      console.log('[AUTH] Google profile exchanged successfully:', profile.email);
+    }
 
     const { user } = await findOrCreateOAuthUser(profile, AUTH_PROVIDERS.GOOGLE);
-    console.log('[AUTH] Google user authenticated:', user.id, user.email, 'Role:', user.role);
+    if (process.env.NODE_ENV === 'development') {
+      console.log('[AUTH] Google user authenticated:', user.id, user.email, 'Role:', user.role);
+    }
 
     if (user.account_status !== ACCOUNT_STATUS.ACTIVE) {
       return res.redirect(`${appUrl}/login?error=account_inactive`);
@@ -494,10 +491,14 @@ router.get('/github/callback', async (req, res) => {
     }
 
     const profile = await exchangeGithubCode(code, req);
-    console.log('[AUTH] GitHub profile exchanged successfully:', profile.email);
+    if (process.env.NODE_ENV === 'development') {
+      console.log('[AUTH] GitHub profile exchanged successfully:', profile.email);
+    }
     
     const { user } = await findOrCreateOAuthUser(profile, AUTH_PROVIDERS.GITHUB);
-    console.log('[AUTH] GitHub user authenticated:', user.id, user.email, 'Role:', user.role);
+    if (process.env.NODE_ENV === 'development') {
+      console.log('[AUTH] GitHub user authenticated:', user.id, user.email, 'Role:', user.role);
+    }
 
     if (user.account_status !== ACCOUNT_STATUS.ACTIVE) {
       return res.redirect(`${appUrl}/login?error=account_inactive`);
@@ -513,7 +514,9 @@ router.get('/github/callback', async (req, res) => {
       metadata: { provider: AUTH_PROVIDERS.GITHUB },
     });
 
-    console.log('[AUTH] GitHub OAuth successful. Redirecting to:', `${appUrl}${redirect}`);
+    if (process.env.NODE_ENV === 'development') {
+      console.log('[AUTH] GitHub OAuth successful. Redirecting to:', `${appUrl}${redirect}`);
+    }
     req.session.save((err) => {
       if (err) console.error('[AUTH] Session save error:', err.message);
       return res.redirect(`${appUrl}${redirect}`);
@@ -561,7 +564,7 @@ router.post('/password/change', requireAuth, async (req, res) => {
     // Invalidate all other sessions
     const currentSid = req.sessionID;
     await db.query(
-      `DELETE FROM "session" WHERE sid != $1 AND sess::text LIKE '%"userId":"' || $2 || '"%'`,
+      `DELETE FROM "session" WHERE sid != $1 AND sess->>'userId' = $2`,
       [currentSid, req.user.id]
     );
 
@@ -686,7 +689,7 @@ router.post('/password/reset', async (req, res) => {
 
     // Invalidate all sessions
     await db.query(
-      `DELETE FROM "session" WHERE sess::text LIKE '%"userId":"' || $1 || '"%'`,
+      `DELETE FROM "session" WHERE sess->>'userId' = $1`,
       [resetToken.user_id]
     );
 
@@ -736,9 +739,7 @@ router.post('/verify-email', async (req, res) => {
 
     // Check if already used
     if (verifyToken.used === 1) {
-      // It was already used. Let's auto-login anyway to support React StrictMode double-firing
-      req.session.userId = verifyToken.user_id;
-      return res.json({ success: true, message: 'Email was already verified.' });
+      return res.status(400).json({ error: true, message: 'Email is already verified or token is invalid. Please sign in.' });
     }
 
     // Mark email as verified

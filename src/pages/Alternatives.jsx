@@ -586,17 +586,17 @@ export default function Alternatives() {
             <div className="flex items-center bg-bg border border-border rounded-xl overflow-hidden">
               <button 
                 onClick={() => setViewMode('grid')}
-                className={`p-2 transition-colors touch-target ${viewMode === 'grid' ? 'bg-accent/10 text-accent' : 'text-text-muted hover:text-text'}`}
+                className={`p-2 min-w-[44px] min-h-[44px] flex items-center justify-center transition-colors touch-target ${viewMode === 'grid' ? 'bg-accent/10 text-accent' : 'text-text-muted hover:text-text'}`}
                 title="Grid View"
-                aria-label="Grid View"
+                aria-label="Switch to Grid View"
               >
                 <Grid3X3 className="w-4 h-4" />
               </button>
               <button 
                 onClick={() => setViewMode('list')}
-                className={`p-2 transition-colors touch-target ${viewMode === 'list' ? 'bg-accent/10 text-accent' : 'text-text-muted hover:text-text'}`}
+                className={`p-2 min-w-[44px] min-h-[44px] flex items-center justify-center transition-colors touch-target ${viewMode === 'list' ? 'bg-accent/10 text-accent' : 'text-text-muted hover:text-text'}`}
                 title="List View"
-                aria-label="List View"
+                aria-label="Switch to List View"
               >
                 <List className="w-4 h-4" />
               </button>

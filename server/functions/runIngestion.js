@@ -303,20 +303,44 @@ export async function ingestRepoItem(item, categoryHint = '', repoMap = new Map(
 
 export async function executeIngestion() {
   let acquiredLock = false;
-  let client = null;
 
   try {
-    // Acquire PostgreSQL distributed advisory lock to guarantee only 1 worker runs across the globe
+    // Acquire soft lock using SystemConfig to prevent holding a DB connection open
+    const LOCK_KEY = 'INGESTION_LOCK';
+    const LOCK_EXPIRY_MS = 60 * 1000 * 5; // 5 minutes max lock
+    
     try {
-      client = await db.connect();
-      const lockId = process.env.TEST_INGESTION ? 8888 : INGESTION_LOCK_ID;
-      const lockRes = await client.query('SELECT pg_try_advisory_lock($1) as locked', [lockId]);
-      acquiredLock = !!lockRes.rows[0]?.locked;
-    } catch (lockErr) {
-      if (process.env.NODE_ENV !== 'test') {
-        console.warn('[INGESTION] Could not check advisory lock:', lockErr.message);
+      const { rows } = await db.query('SELECT value, updated_at FROM "SystemConfig" WHERE key = $1', [LOCK_KEY]);
+      let lockIsStale = false;
+      let existingValue = '';
+      if (rows.length > 0) {
+        existingValue = rows[0].value;
+        const lockData = JSON.parse(existingValue || '{}');
+        if (lockData.lockedAt && (Date.now() - lockData.lockedAt > LOCK_EXPIRY_MS)) {
+          lockIsStale = true;
+        } else if (lockData.locked) {
+          console.log('[INGESTION] Another ingestion worker is active (soft lock). Yielding.');
+          return { status: 'skipped', message: 'Ingestion currently locked', repos_processed: 0 };
+        }
       }
-      acquiredLock = true; // Fallback to proceed if locks unsupported
+
+      const lockVal = JSON.stringify({ locked: true, lockedAt: Date.now() });
+      if (rows.length === 0) {
+        await db.query(
+          'INSERT INTO "SystemConfig" (id, key, value, updated_at) VALUES ($1, $2, $3, $4) ON CONFLICT (key) DO NOTHING',
+          [crypto.randomUUID(), LOCK_KEY, lockVal, new Date().toISOString()]
+        );
+        acquiredLock = true;
+      } else {
+        const { rowCount } = await db.query(
+          'UPDATE "SystemConfig" SET value = $1, updated_at = $2 WHERE key = $3 AND (value = $4 OR $5)',
+          [lockVal, new Date().toISOString(), LOCK_KEY, existingValue, lockIsStale]
+        );
+        acquiredLock = rowCount > 0;
+      }
+    } catch (lockErr) {
+      console.warn('[INGESTION] Could not check soft lock:', lockErr.message);
+      acquiredLock = true; // Fallback
     }
 
     if (!acquiredLock) {
@@ -427,31 +451,35 @@ export async function executeIngestion() {
         if (data.items && data.items.length > 0) {
           hasMore = data.items.length === PER_PAGE;
           
-          // Process items and batch insert
+          // Process items in chunks of 25 to prevent memory spikes and DB overload
           const items = data.items;
-          const processedBatch = [];
-          for (const item of items) {
-             try {
-               const res = await ingestRepoItem(item, dq.category_hint, repoMap, snapshotMap);
-               processedBatch.push(res);
-               reposProcessed++;
-               if (!repoMap.has(String(item.id)) && !repoMap.has(item.full_name.toLowerCase())) {
-                 reposAdded++;
-                 repoMap.set(String(item.id), res.repoData);
-               } else {
-                 reposUpdated++;
+          const chunkSize = 25;
+          for (let i = 0; i < items.length; i += chunkSize) {
+            const chunk = items.slice(i, i + chunkSize);
+            const processedBatch = [];
+            for (const item of chunk) {
+               try {
+                 const res = await ingestRepoItem(item, dq.category_hint, repoMap, snapshotMap);
+                 processedBatch.push(res);
+                 reposProcessed++;
+                 if (!repoMap.has(String(item.id)) && !repoMap.has(item.full_name.toLowerCase())) {
+                   reposAdded++;
+                   repoMap.set(String(item.id), res.repoData);
+                 } else {
+                   reposUpdated++;
+                 }
+               } catch (repoErr) {
+                 errors.push(`Repo ${item.full_name}: ${repoErr.message}`);
                }
-             } catch (repoErr) {
-               errors.push(`Repo ${item.full_name}: ${repoErr.message}`);
-             }
-          }
-          if (processedBatch.length > 0) {
-             try {
-               await entities.Repository.bulkUpsert(processedBatch.map(p => p.repoData));
-               await entities.MetricSnapshot.bulkCreate(processedBatch.map(p => p.snapshotData));
-             } catch (dbErr) {
-               console.warn('[INGESTION] DB persistence warning (batch):', dbErr.message);
-             }
+            }
+            if (processedBatch.length > 0) {
+               try {
+                 await entities.Repository.bulkUpsert(processedBatch.map(p => p.repoData));
+                 await entities.MetricSnapshot.bulkCreate(processedBatch.map(p => p.snapshotData));
+               } catch (dbErr) {
+                 console.warn('[INGESTION] DB persistence warning (batch):', dbErr.message);
+               }
+            }
           }
         }
 
@@ -498,6 +526,12 @@ export async function executeIngestion() {
         }
       } catch (queryErr) {
         errors.push(`Query "${dq.query_string}": ${queryErr.message}`);
+      }
+      
+      // Prevent Vercel edge timeout: limit execution to 45 seconds to safely save state
+      if (Date.now() - new Date(startedAt).getTime() > 45000) {
+        console.log('[INGESTION] Time limit approaching (45s). Yielding and saving state for next run...');
+        break;
       }
     }
 
@@ -554,15 +588,12 @@ export async function executeIngestion() {
     console.error('[INGESTION] failed:', error);
     throw error;
   } finally {
-    if (acquiredLock && client) {
+    if (acquiredLock) {
       try {
-        await client.query('SELECT pg_advisory_unlock($1)', [INGESTION_LOCK_ID]);
+        await db.query('UPDATE "SystemConfig" SET value = $1 WHERE key = $2', [JSON.stringify({ locked: false }), 'INGESTION_LOCK']);
       } catch (unlockErr) {
-        console.warn('[INGESTION] Advisory unlock warning:', unlockErr.message);
+        console.warn('[INGESTION] Soft unlock warning:', unlockErr.message);
       }
-    }
-    if (client) {
-      client.release();
     }
   }
 }
@@ -570,9 +601,9 @@ export async function executeIngestion() {
 export default async function runIngestion(req, res) {
   try {
     const authHeader = req.headers.authorization;
-    if (!process.env.CRON_SECRET) {
-      console.warn('[INGESTION] FATAL: CRON_SECRET is not set. Ingestion API disabled for security.');
-      return res.status(500).json({ error: true, message: 'Server misconfiguration: CRON_SECRET missing' });
+    if (!process.env.CRON_SECRET || process.env.CRON_SECRET.trim().length === 0) {
+      console.warn('[INGESTION] FATAL: CRON_SECRET is not set or empty. Ingestion API disabled for security.');
+      return res.status(500).json({ error: true, message: 'Server misconfiguration: CRON_SECRET missing or empty' });
     }
     
     if (!authHeader || authHeader !== `Bearer ${process.env.CRON_SECRET}`) {

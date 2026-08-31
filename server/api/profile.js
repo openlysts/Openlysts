@@ -3,6 +3,7 @@
 
 import { Router } from 'express';
 import { db } from '../db/index.js';
+import { getSessionCookieName, getSessionCookieOptions } from '../auth/session.js';
 import { requireAuth } from '../auth/middleware.js';
 import { hashPassword, validatePasswordStrength } from '../auth/password.js';
 import { AUDIT_ACTIONS, AUTH_PROVIDERS, ACCOUNT_STATUS } from '../auth/constants.js';
@@ -177,7 +178,7 @@ router.delete('/', async (req, res) => {
     
     // Destroy session
     req.session.destroy(() => {});
-    res.clearCookie('openlysts.sid');
+    res.clearCookie(getSessionCookieName(), getSessionCookieOptions());
 
     const meta = getRequestMeta(req);
     await logAuditEvent({

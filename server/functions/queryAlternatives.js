@@ -257,11 +257,14 @@ export default async function queryAlternatives(req, res) {
     
     const results = filtered.slice(offset, offset + PER_PAGE);
 
+    // API-009: Prevent massive payload by limiting grouped view to top 15 categories
+    // and removing the unbounded 'alternatives' array from the response.
+    const limitedGroupedArray = groupedArray.slice(0, 15);
+
     res.setHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400');
     return res.json({ 
-      alternatives: filtered,
       categories: categoriesList,
-      grouped: groupedArray,
+      grouped: limitedGroupedArray,
       stats,
       results, 
       total, 

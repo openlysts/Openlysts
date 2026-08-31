@@ -13,7 +13,7 @@ export default function RepositoryGrid({ repos, loading, emptyMessage = 'No syst
           ? "flex flex-col gap-4" 
           : "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"}
       >
-        {Array.from({ length: 8 }).map((_, i) => (
+        {Array.from({ length: 12 }).map((_, i) => (
           <SkeletonCard key={i} view={view} />
         ))}
       </div>
