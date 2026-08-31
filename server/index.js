@@ -1,6 +1,7 @@
 import './env.js';
 import express from 'express';
 import cors from 'cors';
+import helmet from 'helmet';
 import { db } from './db/index.js';
 import { getSystemConfig } from './config.js';
 import { configureSession } from './auth/session.js';
@@ -48,9 +49,23 @@ app.use(cors({
   },
   credentials: true
 }));
-app.use('/api/entities', express.json({ limit: '2mb' }));
-app.use('/api/admin', express.json({ limit: '2mb' }));
-app.use(express.json({ limit: '100kb' }));
+
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "https://vercel.live"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      imgSrc: ["'self'", "data:", "https:"],
+      connectSrc: ["'self'", "https://api.github.com"],
+      frameSrc: ["'self'", "https://www.youtube.com"],
+    },
+  },
+}));
+
+app.use('/api/entities', express.json({ limit: '2mb', strict: true }));
+app.use('/api/admin', express.json({ limit: '2mb', strict: true }));
+app.use(express.json({ limit: '100kb', strict: true }));
 
 configureSession(app);
 app.use(loadSessionUser);

@@ -28,7 +28,7 @@ export default defineConfig({
     dedupe: ['react', 'react-dom', 'react-router-dom', '@tanstack/react-query', 'framer-motion', '@marsidev/react-turnstile'],
   },
   server: {
-    host: 'localhost',
+    host: true,
     port: 5173,
     strictPort: true,
     proxy: {

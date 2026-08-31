@@ -127,6 +127,7 @@ function buildIndices() {
 
     tokens.forEach(token => {
       if (!INVERTED_INDEX_REPOS.has(token)) {
+        if (INVERTED_INDEX_REPOS.size >= 100000) return;
         INVERTED_INDEX_REPOS.set(token, new Set());
       }
       INVERTED_INDEX_REPOS.get(token).add(idx);
@@ -265,6 +266,7 @@ export function ingestCatalogRepository(repo) {
     license_url: repo.license_url || '',
     license_status: repo.license_status || 'Permissive',
     stars: Number(repo.stars) || 0,
+    stargazers_count: Number(repo.stars) || Number(repo.stargazers_count) || 0,
     forks: Number(repo.forks) || 0,
     open_issues: Number(repo.open_issues) || 0,
     watchers: Number(repo.watchers) || Number(repo.stars) || 0,
@@ -499,7 +501,8 @@ export function queryRepositoriesCatalog(params = {}) {
   } else if (sort === 'quality') {
     list.sort((a, b) => (b.quality_score || 0) - (a.quality_score || 0) || (b.stars || 0) - (a.stars || 0) || (b.id || '').localeCompare(a.id || ''));
   } else if (sort === 'recent') {
-    list.sort((a, b) => new Date(b.created_date || 0) - new Date(a.created_date || 0) || (b.id || '').localeCompare(a.id || ''));
+    const getTime = (r) => new Date(r.github_created_at || r.created_at || r.created_date || 0).getTime();
+    list.sort((a, b) => getTime(b) - getTime(a) || (b.id || '').localeCompare(a.id || ''));
   } else if (sort === 'name') {
     list.sort((a, b) => (a.name || '').localeCompare(b.name || '') || (b.id || '').localeCompare(a.id || ''));
   } else if (searchTrimmed) {

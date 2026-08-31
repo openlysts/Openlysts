@@ -66,7 +66,7 @@ openlyst/
 │   │   └── runIngestion.js     # GitHub API ingestion & score evaluation
 │   ├── services/               # Edge Caching & Dynamic SQL Builders
 │   │   ├── cache.js            # Sub-millisecond LRU/TTL in-memory cache manager
-│   │   └── entityService.js    # Optimized SQL entity queries & lean projections
+│   │   └── entities.js    # Optimized SQL entity queries & lean projections
 │   └── index.js                # Express app entrypoint & background scheduler
 ├── src/                        # React Frontend
 │   ├── api/                    # API clients (localClient)

@@ -17,6 +17,14 @@ import { getSystemConfig } from '../config.js';
 
 const router = Router();
 
+// ─── GET /api/auth/csrf ─────────────────────────────────────────────
+
+router.get('/csrf', (req, res) => {
+  // Return a mock CSRF token for backward compatibility with frontend middleware
+  // If actual CSRF protection is implemented, req.csrfToken() would be used here.
+  return res.json({ csrfToken: 'legacy-compat-token-openlysts' });
+});
+
 // ─── POST /api/auth/register ────────────────────────────────────────
 
 router.post('/register', registerRateLimiter, async (req, res) => {
@@ -102,10 +110,6 @@ router.post('/register', registerRateLimiter, async (req, res) => {
     // Send verification email
     const appUrl = process.env.APP_URL || `${req.protocol}://${req.get('host')}`.replace('3001', '5173');
     const verifyUrl = `${appUrl}/verify-email?token=${encodeURIComponent(rawToken)}`;
-    console.log('\n==================================================');
-    console.log(`[QA DEV] Email Verification Link for ${email}:`);
-    console.log(verifyUrl);
-    console.log('==================================================\n');
     
     if (isSmtpConfigured()) {
       try {
@@ -113,12 +117,6 @@ router.post('/register', registerRateLimiter, async (req, res) => {
       } catch (e) {
         console.error('[AUTH] Failed to send verification email:', e.message);
       }
-    } else {
-      console.log('\n==================================================');
-      console.log('[LOCAL DEV] SMTP is not configured.');
-      console.log(`[LOCAL DEV] Verification Link for ${email}:`);
-      console.log(verifyUrl);
-      console.log('==================================================\n');
     }
 
     const meta = getRequestMeta(req);
@@ -165,12 +163,6 @@ router.post('/login', loginRateLimiter, async (req, res) => {
 
     const user = rows[0];
 
-    if (!user) {
-      console.log("[AUTH DEBUG] User not found for email:", emailNorm);
-    } else if (!user.password_hash) {
-      console.log("[AUTH DEBUG] User found but no password_hash.");
-    }
-
     // Generic error for both wrong email and wrong password
     if (!user || !user.password_hash) {
       const meta = getRequestMeta(req);
@@ -183,7 +175,6 @@ router.post('/login', loginRateLimiter, async (req, res) => {
     }
 
     const passwordValid = await verifyPassword(password, user.password_hash);
-    console.log("[AUTH DEBUG] Password valid:", passwordValid, "for hash:", user.password_hash);
     
     if (!passwordValid) {
       const meta = getRequestMeta(req);
@@ -339,7 +330,8 @@ router.post('/logout', async (req, res) => {
     if (err) {
       console.error('[AUTH] Session destroy error:', err.message);
     }
-    res.clearCookie('openlysts.sid');
+    const cookieName = (process.env.COOKIE_SECURE === "true" || (process.env.NODE_ENV === "production" && !process.env.VERCEL)) ? "__Host-openlysts.sid" : "openlysts.sid";
+    res.clearCookie(cookieName);
 
     if (userId) {
       const meta = getRequestMeta(req);
@@ -630,10 +622,6 @@ router.post('/password/reset-request', resetRateLimiter, async (req, res) => {
     // Send email
     const appUrl = process.env.APP_URL || `${req.protocol}://${req.get('host')}`.replace('3001', '5173');
     const resetUrl = `${appUrl}/reset-password?token=${encodeURIComponent(rawToken)}`;
-    console.log('\n==================================================');
-    console.log(`[QA DEV] Password Reset Link for ${user.email}:`);
-    console.log(resetUrl);
-    console.log('==================================================\n');
 
     if (isSmtpConfigured()) {
       try {
@@ -641,12 +629,6 @@ router.post('/password/reset-request', resetRateLimiter, async (req, res) => {
       } catch (e) {
         console.error('[AUTH] Failed to send reset email:', e.message);
       }
-    } else {
-      console.log('\n==================================================');
-      console.log('[LOCAL DEV] SMTP is not configured.');
-      console.log(`[LOCAL DEV] Password Reset Link for ${user.email}:`);
-      console.log(resetUrl);
-      console.log('==================================================\n');
     }
 
     const meta = getRequestMeta(req);

@@ -3,7 +3,7 @@ import { queryRepositoriesCatalog } from "../services/catalogEngine.js";
 export default async function getRandomRepo(req, res) {
   try {
     const catalogData = queryRepositoriesCatalog({ search: "", page: 1, perPage: 1000 });
-    const repos = catalogData.items;
+    const repos = catalogData.results;
     if (!repos || repos.length === 0) {
       return res.status(404).json({ error: true, message: "No repositories found" });
     }

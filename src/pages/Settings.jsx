@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   Settings as SettingsIcon, Github, Eye, EyeOff, Save, Trash2,
-  Check, BookmarkX, RotateCcw, SlidersHorizontal, KeyRound, Info,
+  Check, BookmarkX, RotateCcw, SlidersHorizontal, KeyRound,
   Shield, Smartphone, Fingerprint, Plus, X, Download, UserMinus
 } from 'lucide-react';
 import { getSettings, saveSettings, clearSettings } from '@/lib/settings';

@@ -60,7 +60,6 @@ export default function RepoDetail() {
       if (results && results.length > 0) {
         const exact = results.find(r => (r.owner || '').toLowerCase() === owner.toLowerCase());
         if (exact) return exact;
-        return results[0];
       }
 
       // 3. Fallback to GitHub public API if repository is not yet in local database

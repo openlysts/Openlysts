@@ -149,7 +149,7 @@ router.post('/repos/sync', async (req, res) => {
     });
   } catch (err) {
     console.error('[ADMIN] Sync repo error:', err.message);
-    return res.status(500).json({ error: true, message: `Sync failed: ${err.message}` });
+    return res.status(500).json({ error: true, message: `Sync failed.` });
   }
 });
 
@@ -334,7 +334,7 @@ router.post('/discovery/test', async (req, res) => {
     });
   } catch (err) {
     console.error('[ADMIN] Discovery dry-run error:', err.message);
-    return res.status(500).json({ error: true, message: `Dry run failed: ${err.message}` });
+    return res.status(500).json({ error: true, message: `Dry run failed.` });
   }
 });
 
@@ -620,7 +620,7 @@ router.post('/users/:id/suspend', async (req, res) => {
     );
 
     await db.query(
-      `DELETE FROM "session" WHERE sess::text LIKE '%"userId":"' || $1 || '"%'`,
+      `DELETE FROM "session" WHERE sess->>'userId' = $1`,
       [targetId]
     );
 
@@ -684,7 +684,7 @@ router.post('/users/:id/disable', async (req, res) => {
     );
 
     await db.query(
-      `DELETE FROM "session" WHERE sess::text LIKE '%"userId":"' || $1 || '"%'`,
+      `DELETE FROM "session" WHERE sess->>'userId' = $1`,
       [targetId]
     );
 
@@ -728,7 +728,7 @@ router.delete('/users/:id', async (req, res) => {
       db.query('DELETE FROM "Bookmark" WHERE user_id = $1', [targetId]).catch(() => {}),
       db.query('DELETE FROM "AuthAccount" WHERE user_id = $1', [targetId]).catch(() => {}),
       db.query('DELETE FROM "PasswordResetToken" WHERE user_id = $1', [targetId]).catch(() => {}),
-      db.query(`DELETE FROM "session" WHERE sess::text LIKE '%"userId":"' || $1 || '"%'`, [targetId]).catch(() => {}),
+      db.query(`DELETE FROM "session" WHERE sess->>'userId' = $1`, [targetId]).catch(() => {}),
     ]);
 
     // Delete user
@@ -862,7 +862,8 @@ router.get('/repositories/pending', async (req, res) => {
     );
     res.json({ repositories: rows });
   } catch (err) {
-    res.status(500).json({ error: true, message: err.message });
+    const msg = process.env.NODE_ENV === 'development' ? err.message : 'Internal Server Error';
+    res.status(500).json({ error: true, message: msg });
   }
 });
 
@@ -898,7 +899,8 @@ router.patch('/repositories/pending/:id', async (req, res) => {
     
     res.json({ success: true });
   } catch (err) {
-    res.status(500).json({ error: true, message: err.message });
+    const msg = process.env.NODE_ENV === 'development' ? err.message : 'Internal Server Error';
+    res.status(500).json({ error: true, message: msg });
   }
 });
 

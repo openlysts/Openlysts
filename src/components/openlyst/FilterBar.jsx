@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, SlidersHorizontal, X, LayoutGrid, List, Sparkles, Loader2 } from 'lucide-react';
+import { ChevronDown, SlidersHorizontal, X, Sparkles, Loader2 } from 'lucide-react';
 import { CATEGORIES } from '@/lib/categories';
 import { useViewMode } from '@/hooks/useViewMode';
 import { useNavigate } from 'react-router-dom';

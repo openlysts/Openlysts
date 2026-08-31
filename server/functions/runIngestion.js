@@ -570,11 +570,14 @@ export async function executeIngestion() {
 export default async function runIngestion(req, res) {
   try {
     const authHeader = req.headers.authorization;
-    if (process.env.CRON_SECRET) {
-      if (!authHeader || authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-        console.warn('[INGESTION] Unauthorized attempt to trigger ingestion.');
-        return res.status(401).json({ error: true, message: 'Unauthorized' });
-      }
+    if (!process.env.CRON_SECRET) {
+      console.warn('[INGESTION] FATAL: CRON_SECRET is not set. Ingestion API disabled for security.');
+      return res.status(500).json({ error: true, message: 'Server misconfiguration: CRON_SECRET missing' });
+    }
+    
+    if (!authHeader || authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+      console.warn('[INGESTION] Unauthorized attempt to trigger ingestion.');
+      return res.status(401).json({ error: true, message: 'Unauthorized' });
     }
 
     const result = await executeIngestion();

@@ -120,6 +120,25 @@ export async function initSchema(db) {
       category TEXT
     );`,
 
+    `CREATE TABLE IF NOT EXISTS "ContactMessage" (
+      id TEXT PRIMARY KEY,
+      created_date TEXT,
+      name TEXT,
+      email TEXT,
+      message TEXT,
+      category TEXT,
+      status TEXT DEFAULT 'pending'
+    );`,
+
+    `CREATE TABLE IF NOT EXISTS "DataRequest" (
+      id TEXT PRIMARY KEY,
+      created_date TEXT,
+      user_id TEXT REFERENCES "User"(id),
+      request_type TEXT,
+      status TEXT DEFAULT 'pending',
+      completed_at TEXT
+    );`,
+
     // ─── Bookmark Table ─────────────────────────────────────────────────
 
     `CREATE TABLE IF NOT EXISTS "Bookmark" (
@@ -232,8 +251,8 @@ export async function initSchema(db) {
     `ALTER TABLE "User" ADD COLUMN last_login_at TEXT`,
     `ALTER TABLE "User" ADD COLUMN updated_at TEXT`,
     `ALTER TABLE "User" ADD COLUMN has_seen_tour INTEGER DEFAULT 0`,
-    `ALTER TABLE "User" ADD COLUMN consent_given_at TEXT`,
-    `ALTER TABLE "User" ADD COLUMN consent_version TEXT`,
+    `ALTER TABLE "User" ADD COLUMN IF NOT EXISTS consent_given_at TEXT`,
+    `ALTER TABLE "User" ADD COLUMN IF NOT EXISTS consent_version TEXT`,
 
     // Repository columns for Admin Studio & boosts
     `ALTER TABLE "Repository" ADD COLUMN staff_pick INTEGER DEFAULT 0`,

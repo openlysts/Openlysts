@@ -4,17 +4,21 @@ import { classifyRepo } from '../shared/openlyst.js';
 export default async function reclassifyRepos(req, res) {
   try {
     const repos = await entities.Repository.list('-created_date', 2000);
-    let updated = 0;
+    const updates = [];
+    
     for (const repo of repos) {
       const categories = classifyRepo(
         { name: repo.name, description: repo.description, topics: repo.topics },
         null
       );
-      await entities.Repository.update(repo.id, { categories });
-      updated++;
+      updates.push({ id: repo.id, categories });
     }
 
-    return res.json({ status: 'success', repos_updated: updated });
+    if (updates.length > 0) {
+      await entities.Repository.bulkUpsert(updates);
+    }
+
+    return res.json({ status: 'success', repos_updated: updates.length });
   } catch (error) {
     return res.status(500).json({ error: true, message: error.message });
   }

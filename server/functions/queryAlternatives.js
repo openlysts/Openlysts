@@ -47,7 +47,11 @@ export default async function queryAlternatives(req, res) {
             r.quality_score as repo_quality_score, r.trending_score as repo_trending_score,
             r.difficulty as repo_difficulty
           FROM "Alternative" a
-          LEFT JOIN "Repository" r ON lower(a.free_tool_repo) = lower(r.full_name)
+          LEFT JOIN LATERAL (
+            SELECT * FROM "Repository" r 
+            WHERE lower(a.free_tool_repo) = lower(r.full_name) 
+            LIMIT 1
+          ) r ON true
         `;
         const { rows } = await db.query(query);
         baseRows = rows;
@@ -77,7 +81,7 @@ export default async function queryAlternatives(req, res) {
     const seenKeys = new Set();
     const dedupedRows = [];
     for (const row of baseRows) {
-      const uniqueKey = `${(row.paid_tool_name || '').trim().toLowerCase()}::${(row.free_tool_repo || row.free_tool_name || '').trim().toLowerCase()}`;
+      const uniqueKey = row.id || `${(row.paid_tool_name || '').trim().toLowerCase()}::${(row.free_tool_repo || row.free_tool_name || '').trim().toLowerCase()}`;
       if (!seenKeys.has(uniqueKey)) {
         seenKeys.add(uniqueKey);
         dedupedRows.push(row);

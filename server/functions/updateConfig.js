@@ -3,6 +3,7 @@ import { existsSync } from 'fs';
 import path from 'path';
 
 export default async function updateConfig(req, res) {
+  if (!req.user || req.user.role !== 'ADMIN') return res.status(403).json({ error: true });
   const { githubToken } = req.body;
 
   try {

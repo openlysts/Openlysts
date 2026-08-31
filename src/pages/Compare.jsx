@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { queryRepos } from '@/lib/api';
 import { motion } from 'framer-motion';
 import { Star, GitFork, AlertCircle, X, Plus, Search, Trophy, Activity } from 'lucide-react';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, CartesianGrid } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import LicenseBadge from '@/components/openlyst/LicenseBadge';
 import { getDifficultyColor } from '@/lib/difficultyColors';
 import { useCompare } from '@/lib/CompareContext';

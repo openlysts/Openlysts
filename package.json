@@ -12,7 +12,7 @@
     "typecheck": "tsc -p ./jsconfig.json",
     "preview": "vite preview",
     "test": "node server/tests/catalog_invariants.test.js && node server/tests/edge_chaos.test.js",
-    "db:reset": "node -e \"const fs=require('fs'); fs.rmSync('data/openlyst.db', {force:true}); fs.rmSync('data/openlyst.db-wal', {force:true}); fs.rmSync('data/openlyst.db-shm', {force:true}); console.log('Database reset');\"",
+    "db:reset": "node -e \"console.log('Use Neon dashboard to reset DB');\"",
     "db:seed": "node server/db/seed.js",
     "db:build-catalogs": "node server/scripts/buildMegaCatalogs.js",
     "db:sync-neon": "node server/scripts/syncNeon.js"
@@ -67,6 +67,7 @@
     "express-rate-limit": "^8.6.2",
     "express-session": "^1.19.0",
     "framer-motion": "^11.18.2",
+    "helmet": "^8.3.0",
     "highlight.js": "^11.12.0",
     "input-otp": "^1.4.2",
     "lodash": "^4.17.21",
