@@ -24,7 +24,10 @@ import {
   Users,
   Tag,
   Flame,
+  Activity,
   Github,
+  Globe,
+  AlertCircle,
   GitCompare,
   Heart,
   Eye
@@ -763,8 +766,8 @@ export default function Guide() {
                   </div>
 
                   <div className="w-full flex-1 flex items-center justify-center pt-32 pb-8 overflow-y-auto relative z-10 px-4">
-                    {/* The Repository Card */}
-                    <div className="w-full max-w-[400px] p-6 rounded-[24px] border border-white/20 dark:border-white/5 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.05),0_0_0_1px_rgba(255,255,255,0.5)_inset] dark:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.05)_inset] transition-all hover:scale-[1.02] duration-500 ease-out hover:shadow-[0_30px_70px_-15px_rgba(0,0,0,0.1),0_0_0_1px_rgba(255,255,255,0.6)_inset] dark:hover:shadow-[0_40px_80px_-15px_rgba(0,0,0,0.7),0_0_0_1px_rgba(255,255,255,0.1)_inset] relative group">
+                    {/* Premium Mock Repository Card */}
+                    <div className="relative w-full max-w-[400px] p-6 rounded-[24px] border border-white/20 dark:border-white/5 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.05),0_0_0_1px_rgba(255,255,255,0.5)_inset] dark:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.05)_inset] transition-all hover:scale-[1.02] duration-500 ease-out hover:shadow-[0_30px_70px_-15px_rgba(0,0,0,0.1),0_0_0_1px_rgba(255,255,255,0.6)_inset] dark:hover:shadow-[0_40px_80px_-15px_rgba(0,0,0,0.7),0_0_0_1px_rgba(255,255,255,0.1)_inset]">
                       
                       {/* Header Tags */}
                       <div className="flex flex-wrap gap-1.5 mb-3 group/header">
@@ -791,14 +794,13 @@ export default function Guide() {
                       <div className="flex justify-between items-start mb-4">
                         <div>
                           <LegendTooltip content="Repository Name: The official name of the open-source project.">
-                            <h3 className="font-bold text-text text-xl leading-snug cursor-help hover:text-accent transition-colors flex items-center gap-2">
-                              Openlysts
-                              <CheckCircle2 className="w-5 h-5 text-accent" />
+                            <h3 className="font-bold text-text text-lg leading-snug cursor-help hover:text-accent transition-colors">
+                              awesome-project
                             </h3>
                           </LegendTooltip>
                           <LegendTooltip content="Author / Organization: The creator or company maintaining the project.">
                             <p className="text-text-muted text-xs mt-0.5 cursor-help hover:underline">
-                              openlysts-org
+                              open-source-hero
                             </p>
                           </LegendTooltip>
                         </div>
@@ -821,25 +823,25 @@ export default function Guide() {
                       {/* Description */}
                       <LegendTooltip content="Description: A brief summary of what the project does, pulled directly from its repository.">
                         <p className="text-text-secondary text-sm leading-relaxed mb-4 cursor-help text-left">
-                          The most advanced discovery engine for open-source software. Skip the junk, find free alternatives, and build faster with deep AI context.
+                          The most advanced, blazingly fast framework for building modern user interfaces. Zero config required.
                         </p>
                       </LegendTooltip>
 
                       {/* Tags & Difficulty */}
                       <div className="flex flex-wrap gap-1.5 mb-4">
                         <LegendTooltip content="Complexity Level: Estimated difficulty to set up and use (Beginner, Intermediate, Advanced).">
-                          <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wider border border-green-500/50 bg-green-500/10 text-green-600 dark:text-green-500 cursor-help">
-                            BEGINNER
+                          <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wider border border-orange-500/50 bg-orange-500/10 text-orange-500 cursor-help">
+                            INTERMEDIATE
                           </span>
                         </LegendTooltip>
                         <LegendTooltip content="Category: The primary function of the project (e.g., Framework, Database, Tooling).">
                           <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold tracking-wide border border-border/50 bg-bg-subtle text-text-secondary cursor-help">
-                            discovery-engine
+                            framework
                           </span>
                         </LegendTooltip>
                         <LegendTooltip content="Topic Tags: Additional keywords to help categorize the technology stack.">
                           <span className="px-2.5 py-0.5 rounded-full text-[11px] font-medium tracking-wide border border-border/30 bg-bg-card text-text-muted cursor-help">
-                            react
+                            ui-library
                           </span>
                         </LegendTooltip>
                       </div>
@@ -850,15 +852,15 @@ export default function Guide() {
                       <div className="flex items-center flex-wrap gap-4 mb-4">
                         <LegendTooltip content="Stars: Total number of GitHub stars, indicating overall popularity.">
                           <div className="flex items-center gap-1.5 text-text-secondary text-[13px] font-medium cursor-help hover:text-text transition-colors">
-                            <Heart className="w-4 h-4 text-accent" fill="currentColor" />
-                            <span className="font-bold text-text">100k</span>
+                            <Heart className="w-4 h-4" />
+                            <span>45.2k</span>
                           </div>
                         </LegendTooltip>
 
                         <LegendTooltip content="Forks / Views: The number of times this project has been forked or viewed. Indicates active usage.">
                           <div className="flex items-center gap-1.5 text-text-secondary text-[13px] font-medium cursor-help hover:text-text transition-colors">
                             <Eye className="w-4 h-4" />
-                            <span>45k</span>
+                            <span>12k</span>
                           </div>
                         </LegendTooltip>
                         
@@ -869,10 +871,10 @@ export default function Guide() {
                           </div>
                         </LegendTooltip>
                         
-                        <LegendTooltip content="License Type: Openlysts is a proprietary, closed-source platform.">
-                          <span className="px-2 py-0.5 rounded text-[10px] font-bold tracking-widest uppercase border border-purple-500/30 bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center gap-1 cursor-help">
-                            <ShieldCheck className="w-3 h-3" />
-                            PROPRIETARY
+                        <LegendTooltip content="License Safety: Indicates the open-source license. Green means permissive (MIT, Apache) and safe for commercial use.">
+                          <span className="px-2 py-0.5 rounded text-[10px] font-bold tracking-widest uppercase border border-green-500/30 bg-green-500/10 text-green-600 dark:text-green-400 flex items-center gap-1 cursor-help">
+                            <CheckCircle2 className="w-3 h-3" />
+                            MIT
                           </span>
                         </LegendTooltip>
                       </div>
@@ -888,7 +890,7 @@ export default function Guide() {
                         
                         <LegendTooltip content="Last Updated: How recently the repository had code committed to it.">
                           <span className="text-[11px] font-medium text-text-muted cursor-help">
-                            just now
+                            2d ago
                           </span>
                         </LegendTooltip>
                       </div>

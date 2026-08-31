@@ -528,9 +528,9 @@ export async function executeIngestion() {
         errors.push(`Query "${dq.query_string}": ${queryErr.message}`);
       }
       
-      // Prevent Vercel edge timeout: limit execution to 45 seconds to safely save state
-      if (Date.now() - new Date(startedAt).getTime() > 45000) {
-        console.log('[INGESTION] Time limit approaching (45s). Yielding and saving state for next run...');
+      // Prevent Vercel edge timeout: limit execution to 30 seconds to safely save state
+      if (Date.now() - new Date(startedAt).getTime() > 30000) {
+        console.log('[INGESTION] Time limit approaching (30s). Yielding and saving state for next run...');
         break;
       }
     }
@@ -549,11 +549,21 @@ export async function executeIngestion() {
     }
 
     // Global multi-source ingestion (non-blocking — failures are tolerated)
-    await Promise.allSettled([
+    const auxPromise = Promise.allSettled([
       ingestHackerNews().then(r => { if (r?.count) reposProcessed += r.count; }).catch(e => errors.push(`HN Ingestion: ${e.message}`)),
       ingestAwesomeLists().then(r => { if (r?.count) reposProcessed += r.count; }).catch(e => errors.push(`AwesomeLists Ingestion: ${e.message}`)),
       ingestFeeds().then(r => { if (r?.count) reposProcessed += r.count; }).catch(e => errors.push(`Feeds Ingestion: ${e.message}`)),
+      ingestAlternatives().then(r => { if (r?.count) reposProcessed += r.count; }).catch(e => errors.push(`Alternatives Ingestion: ${e.message}`)),
     ]);
+    
+    // Ensure we ALWAYS return within 50 seconds to save state to DB
+    const timeRemaining = Math.max(1000, 50000 - (Date.now() - new Date(startedAt).getTime()));
+    const timeoutPromise = new Promise(resolve => setTimeout(() => resolve('timeout'), timeRemaining));
+    
+    if (await Promise.race([auxPromise, timeoutPromise]) === 'timeout') {
+      errors.push('Global timeout reached. Some auxiliary ingestors may have been skipped.');
+      console.log('[INGESTION] Auxiliary tasks timed out. Finalizing DB run state.');
+    }
 
     const status = errors.length === 0 ? 'success' : (reposProcessed > 0 ? 'partial' : 'failed');
     if (runRecord.id && runRecord.id !== 'local-run') {

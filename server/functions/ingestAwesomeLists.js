@@ -120,9 +120,11 @@ export async function ingestAwesomeLists() {
   console.log(`[AwesomeLists] Found ${repoMap.size} unique repos across awesome lists.`);
 
   // 3. Filter: only ingest repos appearing in lists (all are quality-curated)
-  //    Sort by multi-list appearances first for quality-bias
+  //    Sort by multi-list appearances first for quality-bias, then random slice to avoid timeouts
   const repoList = Array.from(repoMap.values())
-    .sort((a, b) => b.listCount - a.listCount);
+    .sort((a, b) => b.listCount - a.listCount)
+    .sort(() => Math.random() - 0.5)
+    .slice(0, 24);
 
   // 4. Load existing repos for dedup
   const existingMap = new Map();

@@ -112,7 +112,7 @@ export async function ingestHackerNews() {
   const processedBatch = [];
   let successCount = 0;
 
-  const repoList = Array.from(repoMap.values());
+  const repoList = Array.from(repoMap.values()).slice(0, 24);
   for (let i = 0; i < repoList.length; i += BATCH_CONCURRENCY) {
     const chunk = repoList.slice(i, i + BATCH_CONCURRENCY);
     await Promise.all(chunk.map(async (r) => {

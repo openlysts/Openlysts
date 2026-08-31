@@ -9,11 +9,11 @@ import { useNavigate } from 'react-router-dom';
 import RepositoryCard from '@/components/openlyst/RepositoryCard';
 import SkeletonCard from '@/components/openlyst/SkeletonCard';
 
-async function fetchAlternatives(category, search, sort) {
+async function fetchAlternatives(category, search, sort, page) {
   const res = await fetch('/api/functions/queryAlternatives', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ category, search, sort })
+    body: JSON.stringify({ category, search, sort, page })
   });
   if (!res.ok) throw new Error('Failed to fetch alternatives');
   return res.json();

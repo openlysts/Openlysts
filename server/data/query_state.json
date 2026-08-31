@@ -115,8 +115,8 @@
     "query_string": "react",
     "category_hint": "Web Frameworks",
     "enabled": true,
-    "last_run_at": null,
-    "current_page": null,
+    "last_run_at": "2026-08-31T18:05:53.396Z",
+    "current_page": 2,
     "description": null
   },
   {
@@ -125,8 +125,8 @@
     "query_string": "vue",
     "category_hint": "Web Frameworks",
     "enabled": true,
-    "last_run_at": null,
-    "current_page": null,
+    "last_run_at": "2026-08-31T18:05:42.830Z",
+    "current_page": 2,
     "description": null
   },
   {
@@ -135,307 +135,17 @@
     "query_string": "nextjs",
     "category_hint": "Web Frameworks",
     "enabled": true,
-    "last_run_at": null,
-    "current_page": null,
+    "last_run_at": "2026-08-31T18:05:31.248Z",
+    "current_page": 2,
     "description": null
   },
   {
-    "id": "80065fb0-ae26-49b9-be16-6fbd096edd54",
+    "id": "0158820e-953a-4531-97d4-2c915d9bf4ef",
     "created_date": "2026-08-29T03:34:05.073Z",
-    "query_string": "typescript",
+    "query_string": "golang",
     "category_hint": "Languages",
     "enabled": true,
-    "last_run_at": null,
-    "current_page": null,
-    "description": null
-  },
-  {
-    "id": "3a5e8641-c193-4c42-96e5-454e9a8fca76",
-    "created_date": "2026-08-29T03:34:05.073Z",
-    "query_string": "tailwindcss",
-    "category_hint": "Styling",
-    "enabled": true,
-    "last_run_at": null,
-    "current_page": null,
-    "description": null
-  },
-  {
-    "id": "161ea1d3-08cd-46cb-98a3-ab059b0024f1",
-    "created_date": "2026-08-29T03:34:05.073Z",
-    "query_string": "static site generator",
-    "category_hint": "Static Site Generators",
-    "enabled": true,
-    "last_run_at": null,
-    "current_page": null,
-    "description": null
-  },
-  {
-    "id": "2be8d389-2429-493f-9bf4-718b3f2f274d",
-    "created_date": "2026-08-29T03:34:05.073Z",
-    "query_string": "headless cms",
-    "category_hint": "CMS",
-    "enabled": true,
-    "last_run_at": null,
-    "current_page": null,
-    "description": null
-  },
-  {
-    "id": "edc46c14-5f78-49ba-af18-ebadfa7567bd",
-    "created_date": "2026-08-29T03:34:05.073Z",
-    "query_string": "database",
-    "category_hint": "Databases",
-    "enabled": true,
-    "last_run_at": null,
-    "current_page": null,
-    "description": null
-  },
-  {
-    "id": "4c27b32c-aff6-4b01-9527-fb7e07beb128",
-    "created_date": "2026-08-29T03:34:05.073Z",
-    "query_string": "orm",
-    "category_hint": "ORMs",
-    "enabled": true,
-    "last_run_at": null,
-    "current_page": null,
-    "description": null
-  },
-  {
-    "id": "31427a08-37d4-402f-81ac-fddc4c3d8684",
-    "created_date": "2026-08-29T03:34:05.073Z",
-    "query_string": "api gateway",
-    "category_hint": "API Gateways",
-    "enabled": true,
-    "last_run_at": null,
-    "current_page": null,
-    "description": null
-  },
-  {
-    "id": "4a94db99-bc9c-463f-84eb-2fb4c407cd80",
-    "created_date": "2026-08-29T03:34:05.073Z",
-    "query_string": "graphql",
-    "category_hint": "APIs",
-    "enabled": true,
-    "last_run_at": null,
-    "current_page": null,
-    "description": null
-  },
-  {
-    "id": "f3375003-94f2-4c28-bdc0-5ccc26a1974c",
-    "created_date": "2026-08-29T03:34:05.073Z",
-    "query_string": "serverless",
-    "category_hint": "Serverless",
-    "enabled": true,
-    "last_run_at": null,
-    "current_page": null,
-    "description": null
-  },
-  {
-    "id": "3b875774-7507-4d08-828c-8e67cbb1e0db",
-    "created_date": "2026-08-29T03:34:05.073Z",
-    "query_string": "kubernetes",
-    "category_hint": "DevOps",
-    "enabled": true,
-    "last_run_at": null,
-    "current_page": null,
-    "description": null
-  },
-  {
-    "id": "4ec0d4a9-4442-4037-b001-3ce7390cdf56",
-    "created_date": "2026-08-29T03:34:05.073Z",
-    "query_string": "docker",
-    "category_hint": "DevOps",
-    "enabled": true,
-    "last_run_at": null,
-    "current_page": null,
-    "description": null
-  },
-  {
-    "id": "12e3f8dd-e910-4444-85fd-caf83ba0c43b",
-    "created_date": "2026-08-29T03:34:05.073Z",
-    "query_string": "ci/cd",
-    "category_hint": "CI/CD",
-    "enabled": true,
-    "last_run_at": null,
-    "current_page": null,
-    "description": null
-  },
-  {
-    "id": "df1624e5-6ccc-4a71-9e81-a3c17ac420fd",
-    "created_date": "2026-08-29T03:34:05.073Z",
-    "query_string": "infrastructure as code",
-    "category_hint": "Infrastructure",
-    "enabled": true,
-    "last_run_at": null,
-    "current_page": null,
-    "description": null
-  },
-  {
-    "id": "9f9aefb7-7254-47d0-9697-dbbc435c022c",
-    "created_date": "2026-08-29T03:34:05.073Z",
-    "query_string": "observability",
-    "category_hint": "Monitoring",
-    "enabled": true,
-    "last_run_at": null,
-    "current_page": null,
-    "description": null
-  },
-  {
-    "id": "50457e40-2c71-4fec-955e-29df53bc4109",
-    "created_date": "2026-08-29T03:34:05.073Z",
-    "query_string": "monitoring",
-    "category_hint": "Monitoring",
-    "enabled": true,
-    "last_run_at": null,
-    "current_page": null,
-    "description": null
-  },
-  {
-    "id": "c06309e2-9d08-4f09-a759-3451abf659d9",
-    "created_date": "2026-08-29T03:34:05.073Z",
-    "query_string": "prometheus",
-    "category_hint": "Monitoring",
-    "enabled": true,
-    "last_run_at": null,
-    "current_page": null,
-    "description": null
-  },
-  {
-    "id": "f2226f4d-e304-474e-a981-f76ca18f1104",
-    "created_date": "2026-08-29T03:34:05.073Z",
-    "query_string": "developer tools",
-    "category_hint": "Developer Tools",
-    "enabled": true,
-    "last_run_at": null,
-    "current_page": null,
-    "description": null
-  },
-  {
-    "id": "a6dcebde-5daf-4384-927c-15396df76c7c",
-    "created_date": "2026-08-29T03:34:05.073Z",
-    "query_string": "developer productivity",
-    "category_hint": "Developer Tools",
-    "enabled": true,
-    "last_run_at": null,
-    "current_page": null,
-    "description": null
-  },
-  {
-    "id": "eff6ece4-085d-4ce1-a16f-930b9e6a4945",
-    "created_date": "2026-08-29T03:34:05.073Z",
-    "query_string": "cli",
-    "category_hint": "CLI Tools",
-    "enabled": true,
-    "last_run_at": null,
-    "current_page": null,
-    "description": null
-  },
-  {
-    "id": "de605181-2d0a-4e99-b38c-f1f55d7cc989",
-    "created_date": "2026-08-29T03:34:05.073Z",
-    "query_string": "testing framework",
-    "category_hint": "Testing",
-    "enabled": true,
-    "last_run_at": null,
-    "current_page": null,
-    "description": null
-  },
-  {
-    "id": "07af09dd-5c8c-45f1-aa3b-e894abed3940",
-    "created_date": "2026-08-29T03:34:05.073Z",
-    "query_string": "security",
-    "category_hint": "Security",
-    "enabled": true,
-    "last_run_at": null,
-    "current_page": null,
-    "description": null
-  },
-  {
-    "id": "884331b0-b6b3-4c6e-874a-a2289c73f103",
-    "created_date": "2026-08-29T03:34:05.073Z",
-    "query_string": "authentication",
-    "category_hint": "Authentication",
-    "enabled": true,
-    "last_run_at": null,
-    "current_page": null,
-    "description": null
-  },
-  {
-    "id": "0d54170a-d3c9-4270-afbe-3df13342a796",
-    "created_date": "2026-08-29T03:34:05.073Z",
-    "query_string": "authorization",
-    "category_hint": "Authentication",
-    "enabled": true,
-    "last_run_at": "2026-08-29T03:35:13.008Z",
-    "current_page": 2,
-    "description": null
-  },
-  {
-    "id": "d2c7eb14-e196-40e6-8bf4-4bdc88f37b87",
-    "created_date": "2026-08-29T03:34:05.073Z",
-    "query_string": "penetration testing",
-    "category_hint": "Security",
-    "enabled": true,
-    "last_run_at": "2026-08-29T03:35:08.129Z",
-    "current_page": 2,
-    "description": null
-  },
-  {
-    "id": "a4a6d504-a7e3-469d-a098-3a1961f595a1",
-    "created_date": "2026-08-29T03:34:05.073Z",
-    "query_string": "self-hosted",
-    "category_hint": "Self-Hosted",
-    "enabled": true,
-    "last_run_at": "2026-08-29T03:35:04.047Z",
-    "current_page": 2,
-    "description": null
-  },
-  {
-    "id": "31f2689a-735f-424d-b4e4-b52e2b8433a2",
-    "created_date": "2026-08-29T03:34:05.073Z",
-    "query_string": "open-source web application",
-    "category_hint": "Web Applications",
-    "enabled": true,
-    "last_run_at": "2026-08-29T03:34:59.468Z",
-    "current_page": 2,
-    "description": null
-  },
-  {
-    "id": "97ce198b-0aaa-45f7-9a1e-79d6b8f167f5",
-    "created_date": "2026-08-29T03:34:05.073Z",
-    "query_string": "automation",
-    "category_hint": "Automation",
-    "enabled": true,
-    "last_run_at": "2026-08-29T03:34:54.510Z",
-    "current_page": 2,
-    "description": null
-  },
-  {
-    "id": "43dacd30-93ba-418d-9181-bb0b64714e16",
-    "created_date": "2026-08-29T03:34:05.073Z",
-    "query_string": "open source alternative",
-    "category_hint": "Alternatives",
-    "enabled": true,
-    "last_run_at": "2026-08-29T03:34:49.442Z",
-    "current_page": 2,
-    "description": null
-  },
-  {
-    "id": "cb480db7-ce1c-4673-91b9-1ac446ae412e",
-    "created_date": "2026-08-29T03:34:05.073Z",
-    "query_string": "low code",
-    "category_hint": "Low Code",
-    "enabled": true,
-    "last_run_at": "2026-08-29T03:34:43.777Z",
-    "current_page": 2,
-    "description": null
-  },
-  {
-    "id": "425899dc-f5c5-4760-a544-dfdb39a32311",
-    "created_date": "2026-08-29T03:34:05.073Z",
-    "query_string": "rust",
-    "category_hint": "Languages",
-    "enabled": true,
-    "last_run_at": "2026-08-29T03:34:38.599Z",
+    "last_run_at": "2026-08-29T03:34:27.898Z",
     "current_page": 2,
     "description": null
   },
@@ -450,12 +160,302 @@
     "description": null
   },
   {
-    "id": "0158820e-953a-4531-97d4-2c915d9bf4ef",
+    "id": "425899dc-f5c5-4760-a544-dfdb39a32311",
     "created_date": "2026-08-29T03:34:05.073Z",
-    "query_string": "golang",
+    "query_string": "rust",
     "category_hint": "Languages",
     "enabled": true,
-    "last_run_at": "2026-08-29T03:34:27.898Z",
+    "last_run_at": "2026-08-29T03:34:38.599Z",
+    "current_page": 2,
+    "description": null
+  },
+  {
+    "id": "cb480db7-ce1c-4673-91b9-1ac446ae412e",
+    "created_date": "2026-08-29T03:34:05.073Z",
+    "query_string": "low code",
+    "category_hint": "Low Code",
+    "enabled": true,
+    "last_run_at": "2026-08-29T03:34:43.777Z",
+    "current_page": 2,
+    "description": null
+  },
+  {
+    "id": "43dacd30-93ba-418d-9181-bb0b64714e16",
+    "created_date": "2026-08-29T03:34:05.073Z",
+    "query_string": "open source alternative",
+    "category_hint": "Alternatives",
+    "enabled": true,
+    "last_run_at": "2026-08-29T03:34:49.442Z",
+    "current_page": 2,
+    "description": null
+  },
+  {
+    "id": "97ce198b-0aaa-45f7-9a1e-79d6b8f167f5",
+    "created_date": "2026-08-29T03:34:05.073Z",
+    "query_string": "automation",
+    "category_hint": "Automation",
+    "enabled": true,
+    "last_run_at": "2026-08-29T03:34:54.510Z",
+    "current_page": 2,
+    "description": null
+  },
+  {
+    "id": "31f2689a-735f-424d-b4e4-b52e2b8433a2",
+    "created_date": "2026-08-29T03:34:05.073Z",
+    "query_string": "open-source web application",
+    "category_hint": "Web Applications",
+    "enabled": true,
+    "last_run_at": "2026-08-29T03:34:59.468Z",
+    "current_page": 2,
+    "description": null
+  },
+  {
+    "id": "a4a6d504-a7e3-469d-a098-3a1961f595a1",
+    "created_date": "2026-08-29T03:34:05.073Z",
+    "query_string": "self-hosted",
+    "category_hint": "Self-Hosted",
+    "enabled": true,
+    "last_run_at": "2026-08-29T03:35:04.047Z",
+    "current_page": 2,
+    "description": null
+  },
+  {
+    "id": "d2c7eb14-e196-40e6-8bf4-4bdc88f37b87",
+    "created_date": "2026-08-29T03:34:05.073Z",
+    "query_string": "penetration testing",
+    "category_hint": "Security",
+    "enabled": true,
+    "last_run_at": "2026-08-29T03:35:08.129Z",
+    "current_page": 2,
+    "description": null
+  },
+  {
+    "id": "0d54170a-d3c9-4270-afbe-3df13342a796",
+    "created_date": "2026-08-29T03:34:05.073Z",
+    "query_string": "authorization",
+    "category_hint": "Authentication",
+    "enabled": true,
+    "last_run_at": "2026-08-29T03:35:13.008Z",
+    "current_page": 2,
+    "description": null
+  },
+  {
+    "id": "884331b0-b6b3-4c6e-874a-a2289c73f103",
+    "created_date": "2026-08-29T03:34:05.073Z",
+    "query_string": "authentication",
+    "category_hint": "Authentication",
+    "enabled": true,
+    "last_run_at": "2026-08-29T03:38:15.336Z",
+    "current_page": 2,
+    "description": null
+  },
+  {
+    "id": "07af09dd-5c8c-45f1-aa3b-e894abed3940",
+    "created_date": "2026-08-29T03:34:05.073Z",
+    "query_string": "security",
+    "category_hint": "Security",
+    "enabled": true,
+    "last_run_at": "2026-08-29T03:39:13.864Z",
+    "current_page": 2,
+    "description": null
+  },
+  {
+    "id": "de605181-2d0a-4e99-b38c-f1f55d7cc989",
+    "created_date": "2026-08-29T03:34:05.073Z",
+    "query_string": "testing framework",
+    "category_hint": "Testing",
+    "enabled": true,
+    "last_run_at": "2026-08-29T03:40:11.303Z",
+    "current_page": 2,
+    "description": null
+  },
+  {
+    "id": "eff6ece4-085d-4ce1-a16f-930b9e6a4945",
+    "created_date": "2026-08-29T03:34:05.073Z",
+    "query_string": "cli",
+    "category_hint": "CLI Tools",
+    "enabled": true,
+    "last_run_at": "2026-08-29T03:41:08.316Z",
+    "current_page": 2,
+    "description": null
+  },
+  {
+    "id": "a6dcebde-5daf-4384-927c-15396df76c7c",
+    "created_date": "2026-08-29T03:34:05.073Z",
+    "query_string": "developer productivity",
+    "category_hint": "Developer Tools",
+    "enabled": true,
+    "last_run_at": "2026-08-29T03:41:49.443Z",
+    "current_page": 1,
+    "description": null
+  },
+  {
+    "id": "f2226f4d-e304-474e-a981-f76ca18f1104",
+    "created_date": "2026-08-29T03:34:05.073Z",
+    "query_string": "developer tools",
+    "category_hint": "Developer Tools",
+    "enabled": true,
+    "last_run_at": "2026-08-29T03:42:46.231Z",
+    "current_page": 2,
+    "description": null
+  },
+  {
+    "id": "c06309e2-9d08-4f09-a759-3451abf659d9",
+    "created_date": "2026-08-29T03:34:05.073Z",
+    "query_string": "prometheus",
+    "category_hint": "Monitoring",
+    "enabled": true,
+    "last_run_at": "2026-08-29T03:43:47.738Z",
+    "current_page": 2,
+    "description": null
+  },
+  {
+    "id": "50457e40-2c71-4fec-955e-29df53bc4109",
+    "created_date": "2026-08-29T03:34:05.073Z",
+    "query_string": "monitoring",
+    "category_hint": "Monitoring",
+    "enabled": true,
+    "last_run_at": "2026-08-29T03:44:43.658Z",
+    "current_page": 2,
+    "description": null
+  },
+  {
+    "id": "9f9aefb7-7254-47d0-9697-dbbc435c022c",
+    "created_date": "2026-08-29T03:34:05.073Z",
+    "query_string": "observability",
+    "category_hint": "Monitoring",
+    "enabled": true,
+    "last_run_at": "2026-08-29T03:45:40.800Z",
+    "current_page": 2,
+    "description": null
+  },
+  {
+    "id": "df1624e5-6ccc-4a71-9e81-a3c17ac420fd",
+    "created_date": "2026-08-29T03:34:05.073Z",
+    "query_string": "infrastructure as code",
+    "category_hint": "Infrastructure",
+    "enabled": true,
+    "last_run_at": "2026-08-29T03:46:35.179Z",
+    "current_page": 1,
+    "description": null
+  },
+  {
+    "id": "12e3f8dd-e910-4444-85fd-caf83ba0c43b",
+    "created_date": "2026-08-29T03:34:05.073Z",
+    "query_string": "ci/cd",
+    "category_hint": "CI/CD",
+    "enabled": true,
+    "last_run_at": "2026-08-30T09:21:45.491Z",
+    "current_page": 2,
+    "description": null
+  },
+  {
+    "id": "4ec0d4a9-4442-4037-b001-3ce7390cdf56",
+    "created_date": "2026-08-29T03:34:05.073Z",
+    "query_string": "docker",
+    "category_hint": "DevOps",
+    "enabled": true,
+    "last_run_at": "2026-08-30T09:22:43.635Z",
+    "current_page": 2,
+    "description": null
+  },
+  {
+    "id": "3b875774-7507-4d08-828c-8e67cbb1e0db",
+    "created_date": "2026-08-29T03:34:05.073Z",
+    "query_string": "kubernetes",
+    "category_hint": "DevOps",
+    "enabled": true,
+    "last_run_at": "2026-08-30T09:23:43.134Z",
+    "current_page": 2,
+    "description": null
+  },
+  {
+    "id": "f3375003-94f2-4c28-bdc0-5ccc26a1974c",
+    "created_date": "2026-08-29T03:34:05.073Z",
+    "query_string": "serverless",
+    "category_hint": "Serverless",
+    "enabled": true,
+    "last_run_at": "2026-08-30T09:41:57.667Z",
+    "current_page": 2,
+    "description": null
+  },
+  {
+    "id": "4a94db99-bc9c-463f-84eb-2fb4c407cd80",
+    "created_date": "2026-08-29T03:34:05.073Z",
+    "query_string": "graphql",
+    "category_hint": "APIs",
+    "enabled": true,
+    "last_run_at": "2026-08-30T09:42:50.185Z",
+    "current_page": 2,
+    "description": null
+  },
+  {
+    "id": "31427a08-37d4-402f-81ac-fddc4c3d8684",
+    "created_date": "2026-08-29T03:34:05.073Z",
+    "query_string": "api gateway",
+    "category_hint": "API Gateways",
+    "enabled": true,
+    "last_run_at": "2026-08-30T09:43:43.083Z",
+    "current_page": 2,
+    "description": null
+  },
+  {
+    "id": "161ea1d3-08cd-46cb-98a3-ab059b0024f1",
+    "created_date": "2026-08-29T03:34:05.073Z",
+    "query_string": "static site generator",
+    "category_hint": "Static Site Generators",
+    "enabled": true,
+    "last_run_at": "2026-08-31T18:01:57.862Z",
+    "current_page": 2,
+    "description": null
+  },
+  {
+    "id": "4c27b32c-aff6-4b01-9527-fb7e07beb128",
+    "created_date": "2026-08-29T03:34:05.073Z",
+    "query_string": "orm",
+    "category_hint": "ORMs",
+    "enabled": true,
+    "last_run_at": "2026-08-30T09:44:40.521Z",
+    "current_page": 2,
+    "description": null
+  },
+  {
+    "id": "3a5e8641-c193-4c42-96e5-454e9a8fca76",
+    "created_date": "2026-08-29T03:34:05.073Z",
+    "query_string": "tailwindcss",
+    "category_hint": "Styling",
+    "enabled": true,
+    "last_run_at": "2026-08-31T18:02:08.382Z",
+    "current_page": 2,
+    "description": null
+  },
+  {
+    "id": "edc46c14-5f78-49ba-af18-ebadfa7567bd",
+    "created_date": "2026-08-29T03:34:05.073Z",
+    "query_string": "database",
+    "category_hint": "Databases",
+    "enabled": true,
+    "last_run_at": "2026-08-30T09:45:33.894Z",
+    "current_page": 2,
+    "description": null
+  },
+  {
+    "id": "2be8d389-2429-493f-9bf4-718b3f2f274d",
+    "created_date": "2026-08-29T03:34:05.073Z",
+    "query_string": "headless cms",
+    "category_hint": "CMS",
+    "enabled": true,
+    "last_run_at": "2026-08-31T18:01:47.198Z",
+    "current_page": 2,
+    "description": null
+  },
+  {
+    "id": "80065fb0-ae26-49b9-be16-6fbd096edd54",
+    "created_date": "2026-08-29T03:34:05.073Z",
+    "query_string": "typescript",
+    "category_hint": "Languages",
+    "enabled": true,
+    "last_run_at": "2026-08-31T18:02:18.943Z",
     "current_page": 2,
     "description": null
   }

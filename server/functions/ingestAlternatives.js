@@ -283,7 +283,7 @@ export async function ingestAlternatives() {
         FROM "Alternative" a 
         LEFT JOIN "Repository" r ON LOWER(a.free_tool_repo) = LOWER(r.full_name) 
         WHERE r.id IS NULL AND a.free_tool_repo LIKE '%/%'
-        LIMIT 60
+        LIMIT 10
       `);
 
       if (missingRepoRows.length > 0) {

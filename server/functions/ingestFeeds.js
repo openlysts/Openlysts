@@ -130,7 +130,7 @@ export async function ingestFeeds() {
   // 4. Ingest in small batches
   const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
   const BATCH_SIZE = 6;
-  const repoList = Array.from(repoMap.values()).sort((a, b) => b.mentions - a.mentions);
+  const repoList = Array.from(repoMap.values()).sort((a, b) => b.mentions - a.mentions).slice(0, 24);
   const processedBatch = [];
   let successCount = 0;
 
