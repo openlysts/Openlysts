@@ -29,9 +29,52 @@ import {
   Globe,
   AlertCircle,
   GitCompare,
-  Heart
+  Heart,
+  Eye
 } from 'lucide-react';
 import { usePageTitle } from '@/hooks/usePageTitle';
+import * as TooltipPrimitive from "@radix-ui/react-tooltip";
+import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
+
+// Custom Tooltip for the Interactive Card Anatomy using Radix for Portal support
+const LegendTooltip = ({ children, content }) => {
+  // Split content into title and description gracefully
+  const parts = content.split(':');
+  const title = parts[0];
+  const description = parts.length > 1 ? parts.slice(1).join(':').trim() : '';
+
+  return (
+    <TooltipProvider delayDuration={100}>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          {children}
+        </TooltipTrigger>
+        <TooltipContent 
+          sideOffset={8}
+          collisionPadding={16}
+          className="z-[9999] w-max max-w-[280px] p-3.5 rounded-xl bg-slate-900/95 dark:bg-zinc-900/95 backdrop-blur-xl border border-white/10 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.7)] text-left !animate-none"
+        >
+          <motion.div
+            initial={{ opacity: 0, y: 4, scale: 0.96, filter: 'blur(2px)' }}
+            animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <div className="text-[13px] font-bold text-white mb-1 tracking-tight flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-accent opacity-80" />
+              {title}
+            </div>
+            {description && (
+              <div className="text-[11px] text-slate-300 leading-relaxed font-medium">
+                {description}
+              </div>
+            )}
+          </motion.div>
+          <TooltipPrimitive.Arrow className="fill-slate-900/95 dark:fill-zinc-900/95" width={12} height={6} />
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+};
 
 // 6 Beginner-Friendly Capability Modules
 const MODULES = [
@@ -698,168 +741,160 @@ export default function Guide() {
 
               {/* Tab 7: Badges & Legend Simulator */}
               {activeModule.id === 'badge-legend' && (
-                <div className="space-y-4 h-full flex flex-col">
-                  <div className="flex items-center justify-between border-b border-border pb-3 flex-shrink-0">
-                    <span className="text-xs font-bold text-text flex items-center gap-1.5">
-                      <Tag className="w-3.5 h-3.5 text-accent" />
-                      Visual Indicator Legend
+                <div className="h-full flex flex-col items-center justify-center relative overflow-hidden bg-zinc-50 dark:bg-black/20 rounded-2xl border border-border/50 shadow-inner">
+                  
+                  {/* Dotted Grid Background */}
+                  <div 
+                    className="absolute inset-0 pointer-events-none opacity-[0.15] dark:opacity-30" 
+                    style={{ 
+                      backgroundImage: 'url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMTUwLCAxNTAsIDE1MCwgMSkiLz48L3N2Zz4=")',
+                      maskImage: 'radial-gradient(circle at center, black 30%, transparent 80%)',
+                      WebkitMaskImage: 'radial-gradient(circle at center, black 30%, transparent 80%)'
+                    }} 
+                  />
+
+                  {/* Header */}
+                  <div className="absolute top-0 left-0 right-0 flex items-center justify-between border-b border-border/40 pb-3 pt-3 flex-shrink-0 z-20 bg-bg/60 backdrop-blur-xl px-5">
+                    <span className="text-xs font-bold text-text flex items-center gap-2">
+                      <Tag className="w-4 h-4 text-accent drop-shadow-[0_0_8px_rgba(var(--color-accent-rgb),0.6)]" />
+                      Interactive Card Anatomy
+                    </span>
+                    <span className="text-[9px] font-bold text-text-muted uppercase tracking-widest bg-bg-card/80 px-3 py-1.5 rounded-full border border-border/60 shadow-sm flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+                      Hover to reveal
                     </span>
                   </div>
 
-                  <div className="space-y-3 overflow-y-auto pr-2 custom-scrollbar flex-1 relative min-h-[300px]">
-                    {/* Badge Example 1: System Status */}
-                    <div className="p-3 rounded-xl bg-bg-card border border-border flex items-start gap-4 shadow-sm hover:border-accent/40 transition-colors">
-                       <div className="flex-shrink-0 pt-1 w-[120px]">
-                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-yellow-500/40 bg-yellow-500/10 text-yellow-500 w-fit">
-                            <Zap className="w-3 h-3" /> Top Tier System
-                          </span>
-                       </div>
-                       <div>
-                         <h4 className="text-sm font-bold text-text mb-1">System Tier</h4>
-                         <p className="text-xs text-text-secondary leading-relaxed">Indicates the overall quality, community trust, and stability of the repository.</p>
-                       </div>
-                    </div>
-
-                    {/* Example 2: Platform Origin */}
-                    <div className="p-3 rounded-xl bg-bg-card border border-border flex items-start gap-4 shadow-sm hover:border-accent/40 transition-colors">
-                       <div className="flex-shrink-0 pt-1 flex flex-col gap-2 w-[120px]">
-                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-zinc-500/30 bg-zinc-500/10 text-text-secondary w-fit">
+                  <div className="w-full flex-1 flex items-center justify-center pt-32 pb-8 overflow-y-auto relative z-10 px-4">
+                    {/* Premium Mock Repository Card */}
+                    <div className="relative w-full max-w-[400px] p-6 rounded-[24px] border border-white/20 dark:border-white/5 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.05),0_0_0_1px_rgba(255,255,255,0.5)_inset] dark:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.05)_inset] transition-all hover:scale-[1.02] duration-500 ease-out hover:shadow-[0_30px_70px_-15px_rgba(0,0,0,0.1),0_0_0_1px_rgba(255,255,255,0.6)_inset] dark:hover:shadow-[0_40px_80px_-15px_rgba(0,0,0,0.7),0_0_0_1px_rgba(255,255,255,0.1)_inset]">
+                      
+                      {/* Header Tags */}
+                      <div className="flex flex-wrap gap-1.5 mb-3 group/header">
+                        <LegendTooltip content="Source Platform: Indicates if the code lives on GitHub/GitLab, is a packaged Open Source product, or an external Website.">
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-zinc-500/30 bg-zinc-500/10 text-text-secondary cursor-help">
                             <Github className="w-3 h-3" /> Git
                           </span>
-                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-emerald-500/30 bg-emerald-500/10 text-emerald-500 w-fit shadow-[0_0_10px_rgba(16,185,129,0.15)]">
-                            <Sparkles className="w-3 h-3" /> Open Source
-                          </span>
-                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-purple-500/30 bg-purple-500/10 text-purple-500 w-fit">
-                            <Globe className="w-3 h-3" /> Website
-                          </span>
-                       </div>
-                       <div>
-                         <h4 className="text-sm font-bold text-text mb-1">Source Platform</h4>
-                         <p className="text-xs text-text-secondary leading-relaxed">Shows whether it's a Git repository, an Open Source product (e.g. Docker images), or an external Website.</p>
-                       </div>
-                    </div>
-
-                    {/* Example 3: Trending */}
-                    <div className="p-3 rounded-xl bg-bg-card border border-border flex items-start gap-4 shadow-sm hover:border-accent/40 transition-colors">
-                       <div className="flex-shrink-0 pt-1 w-[120px]">
-                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-trending/40 bg-trending/10 text-trending w-fit shadow-[0_0_8px_rgba(255,100,50,0.3)]">
+                        </LegendTooltip>
+                        
+                        <LegendTooltip content="Trending: Assigned to projects gaining rapid popularity and stars over the last 24-48 hours.">
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold tracking-wide border border-trending/40 bg-trending/10 text-trending cursor-help shadow-[0_0_8px_rgba(255,100,50,0.3)] animate-pulse">
                             <Flame className="w-3 h-3" /> Trending
                           </span>
-                       </div>
-                       <div>
-                         <h4 className="text-sm font-bold text-text mb-1">Trending Status</h4>
-                         <p className="text-xs text-text-secondary leading-relaxed">Assigned to projects gaining rapid popularity and stars recently.</p>
-                       </div>
-                    </div>
+                        </LegendTooltip>
 
-                     {/* Example 4: Health Indicators */}
-                    <div className="p-3 rounded-xl bg-bg-card border border-border flex items-start gap-4 shadow-sm hover:border-accent/40 transition-colors">
-                       <div className="flex-shrink-0 pt-1 flex flex-col gap-2 w-[120px]">
-                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-blue-500/40 bg-blue-500/10 text-blue-500 w-fit shadow-[0_0_8px_rgba(59,130,246,0.3)]">
+                        <LegendTooltip content="Core System: Indicates a foundational technology with massive community trust and production stability.">
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold tracking-wide border border-blue-500/40 bg-blue-500/10 text-blue-500 cursor-help shadow-[0_0_8px_rgba(59,130,246,0.3)]">
                             <ShieldCheck className="w-3 h-3" /> Core
                           </span>
-                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-green-500/40 bg-green-500/10 text-green-500 w-fit shadow-[0_0_8px_rgba(34,197,94,0.3)]">
-                            <Activity className="w-3 h-3" /> Active
-                          </span>
-                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-nonoss/40 bg-nonoss/10 text-nonoss w-fit">
-                            <AlertCircle className="w-3 h-3" /> Archived
-                          </span>
-                       </div>
-                       <div>
-                         <h4 className="text-sm font-bold text-text mb-1">Health & Status</h4>
-                         <p className="text-xs text-text-secondary leading-relaxed">Shows maintenance health. <strong>Core</strong> means it's a foundational tech piece. <strong>Active</strong> indicates recent commits and bug fixes. <strong>Archived</strong> means the project is no longer maintained by its authors.</p>
-                       </div>
-                    </div>
+                        </LegendTooltip>
+                      </div>
 
-                    {/* Example 5: Discovery Hooks */}
-                    <div className="p-3 rounded-xl bg-bg-card border border-border flex items-start gap-4 shadow-sm hover:border-accent/40 transition-colors">
-                       <div className="flex-shrink-0 pt-1 flex flex-col gap-2 w-[120px]">
-                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-orange-500/40 bg-orange-500/10 text-orange-400 w-fit">
-                            🔥 Hot Today
-                          </span>
-                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-emerald-500/40 bg-emerald-500/10 text-emerald-400 w-fit">
-                            📈 Rising Fast
-                          </span>
-                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-blue-500/40 bg-blue-500/10 text-blue-400 w-fit">
-                            ✨ Community Pick
-                          </span>
-                       </div>
-                       <div>
-                         <h4 className="text-sm font-bold text-text mb-1">Discovery Hooks</h4>
-                         <p className="text-xs text-text-secondary leading-relaxed">Dynamic badges assigned when a project experiences a sudden spike in stars, or is highly recommended by platforms like HackerNews.</p>
-                       </div>
-                    </div>
+                      {/* Title & Owner */}
+                      <div className="flex justify-between items-start mb-4">
+                        <div>
+                          <LegendTooltip content="Repository Name: The official name of the open-source project.">
+                            <h3 className="font-bold text-text text-lg leading-snug cursor-help hover:text-accent transition-colors">
+                              awesome-project
+                            </h3>
+                          </LegendTooltip>
+                          <LegendTooltip content="Author / Organization: The creator or company maintaining the project.">
+                            <p className="text-text-muted text-xs mt-0.5 cursor-help hover:underline">
+                              open-source-hero
+                            </p>
+                          </LegendTooltip>
+                        </div>
+                        
+                        {/* Actions */}
+                        <div className="flex items-center gap-2">
+                          <LegendTooltip content="Compare: Add this project to the Side-by-Side comparison dock to evaluate it against alternatives.">
+                            <div className="p-2 w-9 h-9 flex items-center justify-center rounded-xl text-text-muted bg-bg-hover border border-border cursor-help">
+                              <GitCompare className="w-4 h-4" />
+                            </div>
+                          </LegendTooltip>
+                          <LegendTooltip content="Save: Bookmark this project to your private, offline-capable vault.">
+                            <div className="p-2 w-9 h-9 flex items-center justify-center rounded-xl text-[#F43F5E] bg-[#F43F5E]/10 border border-[#F43F5E]/20 cursor-help">
+                              <Heart className="w-4 h-4" fill="currentColor" />
+                            </div>
+                          </LegendTooltip>
+                        </div>
+                      </div>
 
-                    {/* Example 6: Licenses */}
-                    <div className="p-3 rounded-xl bg-bg-card border border-border flex items-start gap-4 shadow-sm hover:border-accent/40 transition-colors">
-                       <div className="flex-shrink-0 pt-1 flex flex-col gap-2 w-[120px]">
-                          <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-bold tracking-wide border border-green-500/30 bg-green-500/10 text-green-500 w-fit">
-                            MIT
-                          </span>
-                          <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-bold tracking-wide border border-orange-500/30 bg-orange-500/10 text-orange-500 w-fit">
-                            GPL
-                          </span>
-                       </div>
-                       <div>
-                         <h4 className="text-sm font-bold text-text mb-1">Licenses</h4>
-                         <p className="text-xs text-text-secondary leading-relaxed">Green licenses (MIT, Apache) are usually safe for commercial use. Orange (GPL) may require you to open-source your own code.</p>
-                       </div>
-                    </div>
+                      {/* Description */}
+                      <LegendTooltip content="Description: A brief summary of what the project does, pulled directly from its repository.">
+                        <p className="text-text-secondary text-sm leading-relaxed mb-4 cursor-help text-left">
+                          The most advanced, blazingly fast framework for building modern user interfaces. Zero config required.
+                        </p>
+                      </LegendTooltip>
 
-                    {/* Example 5: Difficulty */}
-                    <div className="p-3 rounded-xl bg-bg-card border border-border flex items-start gap-4 shadow-sm hover:border-accent/40 transition-colors">
-                       <div className="flex-shrink-0 pt-1 w-[120px]">
-                          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider border border-orange-500/50 bg-orange-500/10 text-orange-500 inline-block w-fit">
+                      {/* Tags & Difficulty */}
+                      <div className="flex flex-wrap gap-1.5 mb-4">
+                        <LegendTooltip content="Complexity Level: Estimated difficulty to set up and use (Beginner, Intermediate, Advanced).">
+                          <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wider border border-orange-500/50 bg-orange-500/10 text-orange-500 cursor-help">
                             INTERMEDIATE
                           </span>
-                       </div>
-                       <div>
-                         <h4 className="text-sm font-bold text-text mb-1">Complexity Level</h4>
-                         <p className="text-xs text-text-secondary leading-relaxed">Estimated difficulty to set up and use (Beginner, Intermediate, Advanced).</p>
-                       </div>
-                    </div>
-
-                    {/* Example 6: License */}
-                    <div className="p-3 rounded-xl bg-bg-card border border-border flex items-start gap-4 shadow-sm hover:border-accent/40 transition-colors">
-                       <div className="flex-shrink-0 pt-1 w-[120px]">
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-medium tracking-wide bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 w-fit">
-                            <CheckCircle2 className="w-3 h-3" /> MIT
+                        </LegendTooltip>
+                        <LegendTooltip content="Category: The primary function of the project (e.g., Framework, Database, Tooling).">
+                          <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold tracking-wide border border-border/50 bg-bg-subtle text-text-secondary cursor-help">
+                            framework
                           </span>
-                       </div>
-                       <div>
-                         <h4 className="text-sm font-bold text-text mb-1">License Safety</h4>
-                         <p className="text-xs text-text-secondary leading-relaxed">Indicates the open-source license. Green means permissive (MIT, Apache) and safe for commercial use.</p>
-                       </div>
-                    </div>
-
-                    {/* Example 7: AI Friendly */}
-                    <div className="p-3 rounded-xl bg-bg-card border border-border flex items-start gap-4 shadow-sm hover:border-accent/40 transition-colors">
-                       <div className="flex-shrink-0 pt-1 w-[120px]">
-                          <span className="flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-md shadow-[0_0_8px_rgba(236,72,153,0.2)] border border-pink-500/20 w-fit">
-                            <Sparkles className="w-3 h-3 text-pink-400" />
-                            <span className="bg-gradient-to-r from-pink-400 to-indigo-400 bg-clip-text text-transparent">Food for AI</span>
+                        </LegendTooltip>
+                        <LegendTooltip content="Topic Tags: Additional keywords to help categorize the technology stack.">
+                          <span className="px-2.5 py-0.5 rounded-full text-[11px] font-medium tracking-wide border border-border/30 bg-bg-card text-text-muted cursor-help">
+                            ui-library
                           </span>
-                       </div>
-                       <div>
-                         <h4 className="text-sm font-bold text-text mb-1">AI Context</h4>
-                         <p className="text-xs text-text-secondary leading-relaxed">Indicates quick access to full repository context specifically optimized for pasting into LLMs (like ChatGPT or Claude) via Gitingest.</p>
-                       </div>
-                    </div>
+                        </LegendTooltip>
+                      </div>
 
-                    {/* Example 8: Actions */}
-                    <div className="p-3 rounded-xl bg-bg-card border border-border flex items-start gap-4 shadow-sm hover:border-accent/40 transition-colors mb-4">
-                       <div className="flex-shrink-0 pt-1 flex flex-wrap gap-2 w-[120px]">
-                          <span className="p-2 w-9 h-9 flex items-center justify-center rounded-xl bg-accent-soft text-accent border border-accent">
-                            <GitCompare className="w-4 h-4" />
-                          </span>
-                          <span className="p-2 w-9 h-9 flex items-center justify-center rounded-xl bg-[#F43F5E]/10 text-[#F43F5E] border border-[#F43F5E]/20">
+                      <div className="w-full h-px bg-border my-4" />
+
+                      {/* Footer Stats */}
+                      <div className="flex items-center flex-wrap gap-4 mb-4">
+                        <LegendTooltip content="Stars: Total number of GitHub stars, indicating overall popularity.">
+                          <div className="flex items-center gap-1.5 text-text-secondary text-[13px] font-medium cursor-help hover:text-text transition-colors">
                             <Heart className="w-4 h-4" />
+                            <span>45.2k</span>
+                          </div>
+                        </LegendTooltip>
+
+                        <LegendTooltip content="Forks / Views: The number of times this project has been forked or viewed. Indicates active usage.">
+                          <div className="flex items-center gap-1.5 text-text-secondary text-[13px] font-medium cursor-help hover:text-text transition-colors">
+                            <Eye className="w-4 h-4" />
+                            <span>12k</span>
+                          </div>
+                        </LegendTooltip>
+                        
+                        <LegendTooltip content="Language: The primary programming language the project is written in.">
+                          <div className="flex items-center gap-1.5 text-text-secondary text-[13px] font-medium cursor-help hover:text-text transition-colors">
+                            <span className="w-2.5 h-2.5 rounded-full bg-yellow-400" />
+                            JavaScript
+                          </div>
+                        </LegendTooltip>
+                        
+                        <LegendTooltip content="License Safety: Indicates the open-source license. Green means permissive (MIT, Apache) and safe for commercial use.">
+                          <span className="px-2 py-0.5 rounded text-[10px] font-bold tracking-widest uppercase border border-green-500/30 bg-green-500/10 text-green-600 dark:text-green-400 flex items-center gap-1 cursor-help">
+                            <CheckCircle2 className="w-3 h-3" />
+                            MIT
                           </span>
-                       </div>
-                       <div>
-                         <h4 className="text-sm font-bold text-text mb-1">Actions</h4>
-                         <p className="text-xs text-text-secondary leading-relaxed">Interactive buttons to compare repositories side-by-side or bookmark them to your private, offline-capable collection.</p>
-                       </div>
+                        </LegendTooltip>
+                      </div>
+
+                      {/* AI Context Button */}
+                      <div className="flex items-center justify-between">
+                        <LegendTooltip content="AI Context (Gitingest): Instantly turns the entire repository codebase into a single text prompt optimized for LLMs (ChatGPT/Claude).">
+                          <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-gradient-to-r from-pink-500/10 to-purple-500/10 text-pink-600 dark:text-pink-400 border border-pink-500/20 cursor-help hover:border-pink-500/40 transition-colors">
+                            <Sparkles className="w-3.5 h-3.5" />
+                            Food for AI
+                          </div>
+                        </LegendTooltip>
+                        
+                        <LegendTooltip content="Last Updated: How recently the repository had code committed to it.">
+                          <span className="text-[11px] font-medium text-text-muted cursor-help">
+                            2d ago
+                          </span>
+                        </LegendTooltip>
+                      </div>
+
                     </div>
                   </div>
                 </div>

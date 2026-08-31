@@ -17,8 +17,7 @@ export default defineConfig({
       'react-markdown',
       'canvas-confetti',
       '@marsidev/react-turnstile'
-    ],
-    exclude: ['react', 'react-dom']
+    ]
   },
   resolve: {
     alias: {
