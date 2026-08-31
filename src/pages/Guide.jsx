@@ -21,7 +21,11 @@ import {
   Trophy,
   Compass,
   CheckCircle,
-  Users
+  Users,
+  Tag,
+  Flame,
+  Activity,
+  Github
 } from 'lucide-react';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
@@ -140,6 +144,25 @@ const MODULES = [
     whoHelps: 'Navigate the entire directory in seconds without lifting hands from keyboard.',
     ctaPath: '/discover',
     ctaText: 'Try ⌘K on Discover'
+  },
+  {
+    id: 'badge-legend',
+    label: 'Badges & Legend',
+    title: 'Decode Repository Cards',
+    badge: 'Quick Reference',
+    icon: Tag,
+    audience: 'Everyone',
+    tagline: 'Understand what each visual indicator means at a glance.',
+    description: 'Openlysts uses a rich set of badges to instantly convey a repository\'s health, ecosystem, difficulty, and special characteristics. Here is your cheat sheet.',
+    howItWorks: 'Badges = Fast Visual Information Parsing',
+    highlights: [
+      'Know if a project is actively maintained or foundational.',
+      'Check the difficulty level before diving in.',
+      'Instantly spot AI-friendly or trending tools.'
+    ],
+    whoHelps: 'Quickly evaluate tools without reading through source code.',
+    ctaPath: '/discover',
+    ctaText: 'View Cards in Action'
   }
 ];
 
@@ -148,7 +171,8 @@ const GOALS = [
   { id: 'alternatives', label: '💸 Replace a paid $50/mo subscription', tabId: 'alternatives' },
   { id: 'hybrid-search', label: '⚡ Find clean code without dead clones', tabId: 'hybrid-search' },
   { id: 'compare-matrix', label: '⚖️ Compare 2 tools without 20 open tabs', tabId: 'compare-matrix' },
-  { id: 'video-lab', label: '📺 Watch a 5-min video instead of long docs', tabId: 'video-lab' }
+  { id: 'video-lab', label: '📺 Watch a 5-min video instead of long docs', tabId: 'video-lab' },
+  { id: 'badge-legend', label: '🏷️ Decode badges & labels on cards', tabId: 'badge-legend' }
 ];
 
 export default function Guide() {
@@ -664,6 +688,116 @@ export default function Guide() {
                       <span className="text-text font-medium">Close Modal</span>
                       <kbd className="px-2.5 py-0.5 rounded-md bg-bg-subtle text-[11px] font-mono text-accent border border-border font-bold">ESC</kbd>
                     </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Tab 7: Badges & Legend Simulator */}
+              {activeModule.id === 'badge-legend' && (
+                <div className="space-y-4 h-full flex flex-col">
+                  <div className="flex items-center justify-between border-b border-border pb-3 flex-shrink-0">
+                    <span className="text-xs font-bold text-text flex items-center gap-1.5">
+                      <Tag className="w-3.5 h-3.5 text-accent" />
+                      Visual Indicator Legend
+                    </span>
+                  </div>
+
+                  <div className="space-y-3 overflow-y-auto pr-2 custom-scrollbar flex-1 relative min-h-[300px]">
+                    {/* Badge Example 1: System Status */}
+                    <div className="p-3 rounded-xl bg-bg-card border border-border flex items-start gap-4 shadow-sm hover:border-accent/40 transition-colors">
+                       <div className="flex-shrink-0 pt-1 w-[120px]">
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-yellow-500/40 bg-yellow-500/10 text-yellow-500 w-fit">
+                            <Zap className="w-3 h-3" /> Top Tier System
+                          </span>
+                       </div>
+                       <div>
+                         <h4 className="text-sm font-bold text-text mb-1">System Tier</h4>
+                         <p className="text-xs text-text-secondary leading-relaxed">Indicates the overall quality, community trust, and stability of the repository.</p>
+                       </div>
+                    </div>
+
+                    {/* Example 2: Platform Origin */}
+                    <div className="p-3 rounded-xl bg-bg-card border border-border flex items-start gap-4 shadow-sm hover:border-accent/40 transition-colors">
+                       <div className="flex-shrink-0 pt-1 w-[120px]">
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-zinc-500/30 bg-zinc-500/10 text-text-secondary w-fit">
+                            <Github className="w-3 h-3" /> Git
+                          </span>
+                       </div>
+                       <div>
+                         <h4 className="text-sm font-bold text-text mb-1">Source Platform</h4>
+                         <p className="text-xs text-text-secondary leading-relaxed">Shows whether it's a Git repository, an Open Source product, or an external Website.</p>
+                       </div>
+                    </div>
+
+                    {/* Example 3: Trending */}
+                    <div className="p-3 rounded-xl bg-bg-card border border-border flex items-start gap-4 shadow-sm hover:border-accent/40 transition-colors">
+                       <div className="flex-shrink-0 pt-1 w-[120px]">
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-trending/40 bg-trending/10 text-trending w-fit shadow-[0_0_8px_rgba(255,100,50,0.3)]">
+                            <Flame className="w-3 h-3" /> Trending
+                          </span>
+                       </div>
+                       <div>
+                         <h4 className="text-sm font-bold text-text mb-1">Trending Status</h4>
+                         <p className="text-xs text-text-secondary leading-relaxed">Assigned to projects gaining rapid popularity and stars recently.</p>
+                       </div>
+                    </div>
+
+                    {/* Example 4: Health Indicators */}
+                    <div className="p-3 rounded-xl bg-bg-card border border-border flex items-start gap-4 shadow-sm hover:border-accent/40 transition-colors">
+                       <div className="flex-shrink-0 pt-1 flex flex-col gap-2 w-[120px]">
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-blue-500/40 bg-blue-500/10 text-blue-500 w-fit shadow-[0_0_8px_rgba(59,130,246,0.3)]">
+                            <ShieldCheck className="w-3 h-3" /> Core
+                          </span>
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-green-500/40 bg-green-500/10 text-green-500 w-fit shadow-[0_0_8px_rgba(34,197,94,0.3)]">
+                            <Activity className="w-3 h-3" /> Active
+                          </span>
+                       </div>
+                       <div>
+                         <h4 className="text-sm font-bold text-text mb-1">Health & Status</h4>
+                         <p className="text-xs text-text-secondary leading-relaxed">Shows maintenance health. <strong>Core</strong> means it's a foundational tech piece. <strong>Active</strong> indicates recent commits and bug fixes.</p>
+                       </div>
+                    </div>
+
+                    {/* Example 5: Difficulty */}
+                    <div className="p-3 rounded-xl bg-bg-card border border-border flex items-start gap-4 shadow-sm hover:border-accent/40 transition-colors">
+                       <div className="flex-shrink-0 pt-1 w-[120px]">
+                          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider border border-orange-500/50 bg-orange-500/10 text-orange-500 inline-block w-fit">
+                            INTERMEDIATE
+                          </span>
+                       </div>
+                       <div>
+                         <h4 className="text-sm font-bold text-text mb-1">Complexity Level</h4>
+                         <p className="text-xs text-text-secondary leading-relaxed">Estimated difficulty to set up and use (Beginner, Intermediate, Advanced).</p>
+                       </div>
+                    </div>
+
+                    {/* Example 6: License */}
+                    <div className="p-3 rounded-xl bg-bg-card border border-border flex items-start gap-4 shadow-sm hover:border-accent/40 transition-colors">
+                       <div className="flex-shrink-0 pt-1 w-[120px]">
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-medium tracking-wide bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 w-fit">
+                            <CheckCircle2 className="w-3 h-3" /> MIT
+                          </span>
+                       </div>
+                       <div>
+                         <h4 className="text-sm font-bold text-text mb-1">License Safety</h4>
+                         <p className="text-xs text-text-secondary leading-relaxed">Indicates the open-source license. Green means permissive (MIT, Apache) and safe for commercial use.</p>
+                       </div>
+                    </div>
+
+                    {/* Example 7: AI Friendly */}
+                    <div className="p-3 rounded-xl bg-bg-card border border-border flex items-start gap-4 shadow-sm hover:border-accent/40 transition-colors">
+                       <div className="flex-shrink-0 pt-1 w-[120px]">
+                          <span className="flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-md shadow-[0_0_8px_rgba(236,72,153,0.2)] border border-pink-500/20 w-fit">
+                            <Sparkles className="w-3 h-3 text-pink-400" />
+                            <span className="bg-gradient-to-r from-pink-400 to-indigo-400 bg-clip-text text-transparent">Food for AI</span>
+                          </span>
+                       </div>
+                       <div>
+                         <h4 className="text-sm font-bold text-text mb-1">AI Context</h4>
+                         <p className="text-xs text-text-secondary leading-relaxed">Tags projects that are highly relevant to LLMs, Machine Learning, or easily ingested into AI agents.</p>
+                       </div>
+                    </div>
+
                   </div>
                 </div>
               )}
