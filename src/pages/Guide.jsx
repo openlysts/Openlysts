@@ -191,22 +191,22 @@ const MODULES = [
   },
   {
     id: 'badge-legend',
-    label: 'Badges & Legend',
-    title: 'Decode Repository Cards',
-    badge: 'Quick Reference',
-    icon: Tag,
+    label: 'Openlysts Card',
+    title: 'Openlysts Open-Source Identity',
+    badge: 'Advertisement',
+    icon: Star,
     audience: 'Everyone',
-    tagline: 'Understand what each visual indicator means at a glance.',
-    description: 'Openlysts uses a rich set of badges to instantly convey a repository\'s health, ecosystem, difficulty, and special characteristics. Here is your cheat sheet.',
-    howItWorks: 'Badges = Fast Visual Information Parsing',
+    tagline: 'This is what Openlysts would look like if it were ranked on Openlysts.',
+    description: 'We believe in building beautiful, fast, and highly reliable software. Here is a mock card representing our own architecture, complete with our ideal community metrics.',
+    howItWorks: 'Built with React, Tailwind, and a deep love for open-source.',
     highlights: [
-      'Know if a project is actively maintained or foundational.',
-      'Check the difficulty level before diving in.',
-      'Instantly spot AI-friendly or trending tools.'
+      'The most advanced discovery engine for open-source software.',
+      'Instant AI context extraction and side-by-side comparisons.',
+      '100% Free and MIT Licensed.'
     ],
-    whoHelps: 'Quickly evaluate tools without reading through source code.',
+    whoHelps: 'Developers finding the best tools on the internet.',
     ctaPath: '/discover',
-    ctaText: 'View Cards in Action'
+    ctaText: 'Start Exploring'
   }
 ];
 
@@ -216,7 +216,7 @@ const GOALS = [
   { id: 'hybrid-search', label: '⚡ Find clean code without dead clones', tabId: 'hybrid-search' },
   { id: 'compare-matrix', label: '⚖️ Compare 2 tools without 20 open tabs', tabId: 'compare-matrix' },
   { id: 'video-lab', label: '📺 Watch a 5-min video instead of long docs', tabId: 'video-lab' },
-  { id: 'badge-legend', label: '🏷️ Decode badges & labels on cards', tabId: 'badge-legend' }
+  { id: 'badge-legend', label: '🌟 See the Openlysts Mock Card', tabId: 'badge-legend' }
 ];
 
 export default function Guide() {
@@ -736,107 +736,134 @@ export default function Guide() {
                 </div>
               )}
 
-              {/* Tab 7: Badges & Legend Visual Glossary */}
+              {/* Tab 7: Openlysts Mock Card Advertisement */}
               {activeModule.id === 'badge-legend' && (
-                <div className="h-[500px] flex flex-col relative overflow-hidden bg-zinc-50 dark:bg-black/20 rounded-2xl border border-border/50 shadow-inner">
+                <div className="h-[600px] flex flex-col items-center justify-center relative overflow-hidden bg-zinc-50 dark:bg-black/20 rounded-2xl border border-border/50 shadow-inner group">
+                  
+                  {/* Dotted Grid Background */}
+                  <div 
+                    className="absolute inset-0 pointer-events-none opacity-[0.15] dark:opacity-30 mix-blend-overlay" 
+                    style={{ 
+                      backgroundImage: 'url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMTUwLCAxNTAsIDE1MCwgMSkiLz48L3N2Zz4=")',
+                      maskImage: 'radial-gradient(circle at center, black 30%, transparent 80%)',
+                      WebkitMaskImage: 'radial-gradient(circle at center, black 30%, transparent 80%)'
+                    }} 
+                  />
+                  
+                  {/* Ambient Glows */}
+                  <div className="absolute top-0 left-1/4 w-64 h-64 bg-accent/10 rounded-full blur-3xl pointer-events-none transition-opacity duration-1000 group-hover:opacity-70 opacity-30" />
+                  <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl pointer-events-none transition-opacity duration-1000 group-hover:opacity-70 opacity-30" />
+
                   {/* Header */}
-                  <div className="flex items-center justify-between border-b border-border/40 pb-3 pt-4 px-6 flex-shrink-0 z-20 bg-bg/80 backdrop-blur-xl">
-                    <span className="text-sm font-extrabold text-text flex items-center gap-2">
-                      <Tag className="w-4 h-4 text-accent" />
-                      Visual Glossary
+                  <div className="absolute top-0 left-0 right-0 flex items-center justify-between border-b border-black/5 dark:border-white/5 pb-3 pt-3 flex-shrink-0 z-20 bg-white/60 dark:bg-zinc-900/60 backdrop-blur-xl px-5">
+                    <span className="text-xs font-bold text-text flex items-center gap-2">
+                      <Star className="w-4 h-4 text-accent drop-shadow-[0_0_8px_rgba(var(--color-accent-rgb),0.6)]" fill="currentColor" />
+                      The Openlysts Mock Card
                     </span>
-                    <span className="text-[10px] font-bold text-text-muted uppercase tracking-widest bg-bg-card/80 px-3 py-1.5 rounded-full border border-border/60 shadow-sm">
-                      No Hover Required
+                    <span className="text-[9px] font-bold text-text-muted uppercase tracking-widest bg-black/5 dark:bg-white/5 px-3 py-1.5 rounded-full border border-black/5 dark:border-white/5 shadow-sm flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+                      100K Stars Target
                     </span>
                   </div>
 
-                  <div className="w-full flex-1 overflow-y-auto p-4 space-y-3 custom-scrollbar">
-                    {/* Item 1: Trust Badges */}
-                    <div className="p-4 rounded-xl bg-bg-card border border-border/60 flex flex-col sm:flex-row gap-4 items-start sm:items-center hover:border-accent/40 transition-colors shadow-sm">
-                      <div className="flex flex-col gap-2 min-w-[120px]">
-                        <span className="inline-flex items-center w-fit gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold tracking-wide border border-trending/40 bg-trending/10 text-trending shadow-[0_0_8px_rgba(255,100,50,0.3)] animate-pulse">
+                  <div className="w-full flex-1 flex items-center justify-center pt-16 relative z-10 px-4">
+                    {/* Premium Mock Repository Card */}
+                    <div className="relative w-full max-w-[400px] p-6 rounded-[24px] border border-white/20 dark:border-white/5 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.05),0_0_0_1px_rgba(255,255,255,0.5)_inset] dark:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.05)_inset] transition-all hover:scale-[1.02] duration-500 ease-out hover:shadow-[0_30px_70px_-15px_rgba(0,0,0,0.1),0_0_0_1px_rgba(255,255,255,0.6)_inset] dark:hover:shadow-[0_40px_80px_-15px_rgba(0,0,0,0.7),0_0_0_1px_rgba(255,255,255,0.1)_inset]">
+                      
+                      {/* Header Tags */}
+                      <div className="flex flex-wrap gap-1.5 mb-3 group/header">
+                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-zinc-500/30 bg-zinc-500/10 text-text-secondary">
+                          <Github className="w-3 h-3" /> Git
+                        </span>
+                        
+                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold tracking-wide border border-trending/40 bg-trending/10 text-trending shadow-[0_0_8px_rgba(255,100,50,0.3)] animate-pulse">
                           <Flame className="w-3 h-3" /> Trending
                         </span>
-                        <span className="inline-flex items-center w-fit gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold tracking-wide border border-blue-500/40 bg-blue-500/10 text-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.3)]">
+
+                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold tracking-wide border border-blue-500/40 bg-blue-500/10 text-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.3)]">
                           <ShieldCheck className="w-3 h-3" /> Core
                         </span>
                       </div>
-                      <div>
-                        <h4 className="text-sm font-bold text-text mb-1">Status Indicators</h4>
-                        <p className="text-xs text-text-secondary leading-relaxed">
-                          <strong>Trending</strong> projects are gaining rapid popularity over the last 48 hours. <strong>Core</strong> systems are foundational technologies with massive community trust.
-                        </p>
-                      </div>
-                    </div>
 
-                    {/* Item 2: AI Context */}
-                    <div className="p-4 rounded-xl bg-bg-card border border-border/60 flex flex-col sm:flex-row gap-4 items-start sm:items-center hover:border-pink-500/40 transition-colors shadow-sm">
-                      <div className="min-w-[120px]">
-                        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-gradient-to-r from-pink-500/10 to-purple-500/10 text-pink-600 dark:text-pink-400 border border-pink-500/30">
-                          <Sparkles className="w-3.5 h-3.5" />
-                          Food for AI
+                      {/* Title & Owner */}
+                      <div className="flex justify-between items-start mb-4">
+                        <div>
+                          <h3 className="font-bold text-text text-xl leading-snug hover:text-accent transition-colors flex items-center gap-2">
+                            Openlysts
+                            <CheckCircle2 className="w-5 h-5 text-accent" />
+                          </h3>
+                          <p className="text-text-muted text-xs mt-0.5 hover:underline cursor-pointer">
+                            openlysts-org
+                          </p>
+                        </div>
+                        
+                        {/* Actions */}
+                        <div className="flex items-center gap-2">
+                          <div className="p-2 w-9 h-9 flex items-center justify-center rounded-xl text-text-muted bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 hover:bg-black/10 dark:hover:bg-white/10 transition-colors cursor-pointer">
+                            <GitCompare className="w-4 h-4" />
+                          </div>
+                          <div className="p-2 w-9 h-9 flex items-center justify-center rounded-xl text-[#F43F5E] bg-[#F43F5E]/10 border border-[#F43F5E]/20 cursor-pointer shadow-[0_0_12px_rgba(244,63,94,0.3)]">
+                            <Heart className="w-4 h-4" fill="currentColor" />
+                          </div>
                         </div>
                       </div>
-                      <div>
-                        <h4 className="text-sm font-bold text-text mb-1">Gitingest (AI Context)</h4>
-                        <p className="text-xs text-text-secondary leading-relaxed">
-                          Instantly turns the entire repository codebase into a single formatted text prompt, optimized for pasting directly into ChatGPT or Claude.
-                        </p>
-                      </div>
-                    </div>
 
-                    {/* Item 3: Safety & Licenses */}
-                    <div className="p-4 rounded-xl bg-bg-card border border-border/60 flex flex-col sm:flex-row gap-4 items-start sm:items-center hover:border-green-500/40 transition-colors shadow-sm">
-                      <div className="min-w-[120px]">
-                        <span className="inline-flex px-2 py-0.5 rounded text-[10px] font-bold tracking-widest uppercase border border-green-500/30 bg-green-500/10 text-green-600 dark:text-green-400 items-center gap-1">
+                      {/* Description */}
+                      <p className="text-text-secondary text-sm leading-relaxed mb-4 text-left">
+                        The most advanced discovery engine for open-source software. Skip the junk, find free alternatives, and build faster with deep AI context.
+                      </p>
+
+                      {/* Tags & Difficulty */}
+                      <div className="flex flex-wrap gap-1.5 mb-4">
+                        <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wider border border-green-500/50 bg-green-500/10 text-green-600 dark:text-green-500">
+                          BEGINNER
+                        </span>
+                        <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold tracking-wide border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-text-secondary">
+                          discovery-engine
+                        </span>
+                        <span className="px-2.5 py-0.5 rounded-full text-[11px] font-medium tracking-wide border border-black/5 dark:border-white/5 bg-transparent text-text-muted">
+                          react
+                        </span>
+                      </div>
+
+                      <div className="w-full h-px bg-black/5 dark:bg-white/5 my-4" />
+
+                      {/* Footer Stats */}
+                      <div className="flex items-center flex-wrap gap-4 mb-4">
+                        <div className="flex items-center gap-1.5 text-text-secondary text-[13px] font-medium hover:text-text transition-colors">
+                          <Heart className="w-4 h-4 text-accent" fill="currentColor" />
+                          <span className="font-bold text-text">100k</span>
+                        </div>
+
+                        <div className="flex items-center gap-1.5 text-text-secondary text-[13px] font-medium hover:text-text transition-colors">
+                          <Eye className="w-4 h-4" />
+                          <span>45k</span>
+                        </div>
+                        
+                        <div className="flex items-center gap-1.5 text-text-secondary text-[13px] font-medium hover:text-text transition-colors">
+                          <span className="w-2.5 h-2.5 rounded-full bg-yellow-400 shadow-[0_0_8px_rgba(250,204,21,0.5)]" />
+                          JavaScript
+                        </div>
+                        
+                        <span className="px-2 py-0.5 rounded text-[10px] font-bold tracking-widest uppercase border border-green-500/30 bg-green-500/10 text-green-700 dark:text-green-400 flex items-center gap-1">
                           <CheckCircle2 className="w-3 h-3" />
                           MIT
                         </span>
                       </div>
-                      <div>
-                        <h4 className="text-sm font-bold text-text mb-1">License Safety</h4>
-                        <p className="text-xs text-text-secondary leading-relaxed">
-                          Green permissive licenses (MIT, Apache) mean the software is generally safe for commercial use and modification.
-                        </p>
-                      </div>
-                    </div>
 
-                    {/* Item 4: Actions */}
-                    <div className="p-4 rounded-xl bg-bg-card border border-border/60 flex flex-col sm:flex-row gap-4 items-start sm:items-center hover:border-accent/40 transition-colors shadow-sm">
-                      <div className="flex gap-2 min-w-[120px]">
-                        <div className="p-2 w-9 h-9 flex items-center justify-center rounded-xl text-text-muted bg-bg-hover border border-border">
-                          <GitCompare className="w-4 h-4" />
+                      {/* AI Context Button */}
+                      <div className="flex items-center justify-between mt-2">
+                        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-gradient-to-r from-pink-500/10 to-purple-500/10 text-pink-700 dark:text-pink-400 border border-pink-500/20 hover:border-pink-500/40 transition-colors cursor-pointer shadow-sm">
+                          <Sparkles className="w-3.5 h-3.5" />
+                          Food for AI
                         </div>
-                        <div className="p-2 w-9 h-9 flex items-center justify-center rounded-xl text-[#F43F5E] bg-[#F43F5E]/10 border border-[#F43F5E]/20">
-                          <Heart className="w-4 h-4" fill="currentColor" />
-                        </div>
-                      </div>
-                      <div>
-                        <h4 className="text-sm font-bold text-text mb-1">Interactive Actions</h4>
-                        <p className="text-xs text-text-secondary leading-relaxed">
-                          <strong>Compare</strong> adds the project to the Side-by-Side dock. <strong>Save</strong> bookmarks it to your private, offline-capable vault.
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Item 5: Difficulty & Categories */}
-                    <div className="p-4 rounded-xl bg-bg-card border border-border/60 flex flex-col sm:flex-row gap-4 items-start sm:items-center hover:border-accent/40 transition-colors shadow-sm">
-                      <div className="flex flex-col gap-2 min-w-[120px]">
-                        <span className="inline-flex w-fit px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border border-orange-500/50 bg-orange-500/10 text-orange-500">
-                          INTERMEDIATE
-                        </span>
-                        <span className="inline-flex w-fit px-2.5 py-0.5 rounded-full text-xs font-semibold tracking-wide border border-border/50 bg-bg-subtle text-text-secondary">
-                          framework
+                        
+                        <span className="text-[11px] font-medium text-text-muted bg-black/5 dark:bg-white/5 px-2 py-1 rounded-md border border-black/5 dark:border-white/5">
+                          just now
                         </span>
                       </div>
-                      <div>
-                        <h4 className="text-sm font-bold text-text mb-1">Tags & Taxonomy</h4>
-                        <p className="text-xs text-text-secondary leading-relaxed">
-                          Estimated complexity levels help you avoid tools that are too difficult to set up, while clear categorization helps you find alternatives.
-                        </p>
-                      </div>
-                    </div>
 
+                    </div>
                   </div>
                 </div>
               )}
