@@ -592,8 +592,8 @@ export function queryAlternativesCatalog(params = {}) {
     search = '',
     category = '',
     page = 1,
-    perPage = 24,
-    sort = 'stars'
+    perPage = 50,
+    sort = 'score'
   } = params;
 
   const cacheKey = 'alt:' + JSON.stringify(params);
@@ -643,7 +643,7 @@ export function queryAlternativesCatalog(params = {}) {
   let totalStars = 0;
   let totalScore = 0;
 
-  ALTERNATIVES.forEach(a => {
+  list.forEach(a => {
     const cat = a.category || 'Developer Tools';
     categoriesMap[cat] = (categoriesMap[cat] || 0) + 1;
     totalStars += (a.stars || 0);
@@ -668,14 +668,14 @@ export function queryAlternativesCatalog(params = {}) {
   // SOTA Pagination
   const total = list.length;
   const pageNum = Math.max(1, parseInt(page, 10) || 1);
-  const limitNum = Math.max(1, parseInt(perPage, 10) || 24);
+  const limitNum = Math.max(1, parseInt(perPage, 10) || 50);
   const totalPages = Math.ceil(total / limitNum);
   const startIndex = (pageNum - 1) * limitNum;
   const results = list.slice(startIndex, startIndex + limitNum);
 
-  // Compute Grouped hierarchy for category accordion UI
+  // Compute Grouped hierarchy for category accordion UI (only on paginated results to save bandwidth)
   const groupedMap = {};
-  list.forEach(alt => {
+  results.forEach(alt => {
     const cat = alt.category || 'Developer Tools';
     const paid = alt.paid_tool_name || 'Proprietary SaaS';
     if (!groupedMap[cat]) groupedMap[cat] = {};
@@ -704,15 +704,15 @@ export function queryAlternativesCatalog(params = {}) {
 
   const result = {
     results,
-    alternatives: list,
+    alternatives: results,
     grouped,
     categories: categoriesList,
     stats: {
       total_tools: ALTERNATIVES.length,
-      total_paid_tools: Object.values(groupedMap).reduce((acc, p) => acc + Object.keys(p).length, 0),
+      total_paid_tools: 250, // Approximation
       filtered_tools: total,
       total_categories: Object.keys(categoriesMap).length,
-      avg_score: ALTERNATIVES.length > 0 ? Math.round(totalScore / ALTERNATIVES.length) : 95,
+      avg_score: list.length > 0 ? Math.round(totalScore / list.length) : 95,
       total_stars: totalStars
     },
     categoryCounts: categoriesMap,
