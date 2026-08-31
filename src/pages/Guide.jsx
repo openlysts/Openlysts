@@ -872,10 +872,10 @@ export default function Guide() {
                           </div>
                         </LegendTooltip>
                         
-                        <LegendTooltip content="License Safety: Indicates the open-source license. Green means permissive (MIT, Apache) and safe for commercial use.">
-                          <span className="px-2 py-0.5 rounded text-[10px] font-bold tracking-widest uppercase border border-green-500/30 bg-green-500/10 text-green-600 dark:text-green-400 flex items-center gap-1 cursor-help">
-                            <CheckCircle2 className="w-3 h-3" />
-                            MIT
+                        <LegendTooltip content="License Type: Openlysts is a proprietary, closed-source platform.">
+                          <span className="px-2 py-0.5 rounded text-[10px] font-bold tracking-widest uppercase border border-purple-500/30 bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center gap-1 cursor-help">
+                            <ShieldCheck className="w-3 h-3" />
+                            PROPRIETARY
                           </span>
                         </LegendTooltip>
                       </div>
