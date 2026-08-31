@@ -274,6 +274,9 @@ export default function Alternatives() {
   const [categoryDrawerOpen, setCategoryDrawerOpen] = useState(false);
   const [visibleMainGroups, setVisibleMainGroups] = useState(20);
   const [visibleSidebarCategories, setVisibleSidebarCategories] = useState(20);
+  const [page, setPage] = useState(1);
+  const [accumulatedAlts, setAccumulatedAlts] = useState([]);
+  const [accumulatedGrouped, setAccumulatedGrouped] = useState([]);
   const navigate = useNavigate();
   const categoryRefs = useRef({});
   const sortRef = useRef(null);
@@ -289,159 +292,79 @@ export default function Alternatives() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Debounce search
+  // Debounce search and reset page on filter change
   useEffect(() => {
-    const timeout = setTimeout(() => setDebouncedSearch(search), 300);
+    const timeout = setTimeout(() => {
+      setDebouncedSearch(search);
+      setPage(1);
+      setAccumulatedAlts([]);
+      setAccumulatedGrouped([]);
+    }, 300);
     return () => clearTimeout(timeout);
   }, [search]);
 
-  // Handle modal focus trap and Escape
   useEffect(() => {
-    if (selectedAlt) {
-      previousFocusRef.current = document.activeElement;
-    } else {
-      if (previousFocusRef.current) {
-        setTimeout(() => previousFocusRef.current?.focus(), 0);
-      }
-      return;
-    }
+    setPage(1);
+    setAccumulatedAlts([]);
+    setAccumulatedGrouped([]);
+  }, [activeCategory, sortBy]);
 
-    const handleKeyDown = (e) => {
-      if (e.key === 'Escape') {
-        setSelectedAlt(null);
-      }
-      
-      if (e.key === 'Tab') {
-        const modal = document.getElementById('alt-detail-modal');
-        if (!modal) return;
-        
-        const focusableElements = modal.querySelectorAll(
-          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-        );
-        if (focusableElements.length === 0) return;
-        const firstElement = focusableElements[0];
-        const lastElement = focusableElements[focusableElements.length - 1];
-
-        if (e.shiftKey) {
-          if (document.activeElement === firstElement || document.activeElement === document.body) {
-            if (lastElement instanceof HTMLElement) lastElement.focus();
-            e.preventDefault();
-          }
-        } else {
-          if (document.activeElement === lastElement || document.activeElement === document.body) {
-            if (firstElement instanceof HTMLElement) firstElement.focus();
-            e.preventDefault();
-          }
-        }
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedAlt]);
-
-  const { data, isLoading, error } = useQuery({
-    queryKey: ['alternatives', debouncedSearch, sortBy],
-    queryFn: () => fetchAlternatives('All', '', sortBy),
+  const { data, isLoading, error, isFetching } = useQuery({
+    queryKey: ['alternatives', activeCategory, debouncedSearch, sortBy, page],
+    queryFn: () => fetchAlternatives(activeCategory, debouncedSearch, sortBy, page),
     staleTime: 60 * 1000,
     refetchOnMount: true,
   });
 
-  // Client-side category & search filter so sidebar clicks and typing are instant
+  // Accumulate results for infinite load effect without breaking UI structure
+  useEffect(() => {
+    if (data && data.alternatives) {
+      if (page === 1) {
+        setAccumulatedAlts(data.alternatives);
+        setAccumulatedGrouped(data.grouped || []);
+      } else {
+        setAccumulatedAlts(prev => {
+          const newAlts = data.alternatives.filter(a => !prev.some(p => p.id === a.id));
+          return [...prev, ...newAlts];
+        });
+        
+        // Merge grouped data carefully
+        setAccumulatedGrouped(prev => {
+          const next = [...prev];
+          for (const newGroup of (data.grouped || [])) {
+            const existingGroup = next.find(g => g.category === newGroup.category);
+            if (!existingGroup) {
+              next.push(newGroup);
+            } else {
+              for (const newPaid of newGroup.paid_groups) {
+                const existingPaid = existingGroup.paid_groups.find(p => p.paid_tool_name === newPaid.paid_tool_name);
+                if (!existingPaid) {
+                  existingGroup.paid_groups.push(newPaid);
+                } else {
+                  const newUniqueAlts = newPaid.alternatives.filter(na => !existingPaid.alternatives.some(ea => ea.id === na.id));
+                  existingPaid.alternatives.push(...newUniqueAlts);
+                  existingPaid.count = existingPaid.alternatives.length;
+                }
+              }
+              existingGroup.total = existingGroup.paid_groups.reduce((sum, g) => sum + g.count, 0);
+            }
+          }
+          return next;
+        });
+      }
+    }
+  }, [data, page]);
+
   const filteredData = useMemo(() => {
     if (!data) return null;
-    let allAlts = Array.isArray(data.alternatives) ? data.alternatives : (Array.isArray(data.results) ? data.results : []);
-    
-    // 1. Search Filter
-    if (debouncedSearch && debouncedSearch.trim()) {
-      const s = debouncedSearch.toLowerCase().trim();
-      allAlts = allAlts.filter(a => 
-        (a.resolved_name || a.free_tool_name || a.name || '').toLowerCase().includes(s) ||
-        (a.paid_tool_name || '').toLowerCase().includes(s) ||
-        (a.description || '').toLowerCase().includes(s) ||
-        (a.category || '').toLowerCase().includes(s) ||
-        (a.subcategory || '').toLowerCase().includes(s)
-      );
-    }
-
-    // 2. Category Filter
-    const filtered = activeCategory === 'All' 
-      ? allAlts 
-      : allAlts.filter(a => (a.category || '').toLowerCase() === activeCategory.toLowerCase());
-
-    const grouped = {};
-    for (const alt of filtered) {
-      const cat = alt.category || 'Uncategorized';
-      if (!grouped[cat]) grouped[cat] = {};
-      const paid = alt.paid_tool_name || 'Unknown';
-      if (!grouped[cat][paid]) grouped[cat][paid] = [];
-      grouped[cat][paid].push(alt);
-    }
-    
-    // Helper to get the value to sort by
-    const getSortValue = (alt) => {
-      switch (sortBy) {
-        case 'score': return alt.openlysts_score || alt.quality_score || 0;
-        case 'stars': return (alt.repo?.stars || alt.stars || alt.github_stars || 0);
-        case 'parity': return alt.feature_parity_score || alt.feature_parity || 0;
-        case 'difficulty': return alt.migration_difficulty === 'Easy' ? 3 : alt.migration_difficulty === 'Medium' ? 2 : 1;
-        case 'name': return (alt.resolved_name || alt.free_tool_name || alt.name || '').toLowerCase();
-        default: return alt.openlysts_score || alt.quality_score || 0;
-      }
-    };
-    
-    // name and difficulty sort ascending, others descending
-    const isAscending = sortBy === 'name' || sortBy === 'difficulty';
-    
-    const sortAlts = (alts) => {
-      return [...alts].sort((a, b) => {
-        const valA = getSortValue(a);
-        const valB = getSortValue(b);
-        if (typeof valA === 'string' && typeof valB === 'string') {
-          return valA.localeCompare(valB);
-        }
-        return isAscending ? valA - valB : valB - valA;
-      });
-    };
-
-    const groupedArray = Object.entries(grouped)
-      .map(([categoryName, paidGroups]) => {
-        const paidGroupsArray = Object.entries(paidGroups)
-          .map(([paidName, alts]) => {
-            const sortedAlts = sortAlts(alts);
-            return {
-              paid_tool_name: paidName,
-              alternatives: sortedAlts,
-              count: sortedAlts.length,
-            };
-          })
-          .sort((a, b) => b.count - a.count);
-
-        return {
-          category: categoryName,
-          paid_groups: paidGroupsArray,
-          total: paidGroupsArray.reduce((sum, g) => sum + g.count, 0)
-        };
-      })
-      .sort((a, b) => b.total - a.total);
-
-    const sortedFiltered = sortAlts(filtered);
-
     return {
       ...data,
-      alternatives: sortedFiltered,
-      results: sortedFiltered,
-      total: sortedFiltered.length,
-      categories: data.categories || [],
-      grouped: groupedArray,
-      stats: {
-        total_tools: sortedFiltered.length,
-        total_paid_tools: Object.values(grouped).reduce((acc, p) => acc + Object.keys(p).length, 0),
-        total_categories: Object.keys(grouped).length,
-        avg_score: sortedFiltered.length > 0 ? Math.round(sortedFiltered.reduce((sum, a) => sum + (a.openlysts_score || a.quality_score || 90), 0) / sortedFiltered.length) : 95
-      }
+      alternatives: accumulatedAlts,
+      results: accumulatedAlts,
+      grouped: accumulatedGrouped,
+      stats: data.stats
     };
-  }, [data, activeCategory, sortBy, debouncedSearch]);
+  }, [data, accumulatedAlts, accumulatedGrouped]);
 
   // Auto-expand top 10 categories on load to show rich cards immediately
   useEffect(() => {
@@ -837,6 +760,26 @@ export default function Alternatives() {
                   </AnimatePresence>
                 </div>
               ))}
+            </div>
+          )}
+
+          {/* Load More Button */}
+          {data?.totalPages > page && (
+            <div className="mt-8 flex justify-center">
+              <button
+                onClick={() => setPage(p => p + 1)}
+                disabled={isFetching}
+                className="bg-bg-subtle hover:bg-bg-hover text-text font-bold py-2.5 px-6 rounded-xl border border-border transition-colors flex items-center gap-2"
+              >
+                {isFetching ? (
+                  <>
+                    <span className="w-4 h-4 border-2 border-text-muted border-t-accent rounded-full animate-spin" />
+                    Loading...
+                  </>
+                ) : (
+                  'Load More Tools'
+                )}
+              </button>
             </div>
           )}
         </main>

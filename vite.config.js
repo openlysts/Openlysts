@@ -22,8 +22,9 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+      'react': path.resolve(__dirname, './node_modules/react'),
+      'react-dom': path.resolve(__dirname, './node_modules/react-dom'),
     },
-    dedupe: ['react', 'react-dom', 'react-router-dom', '@tanstack/react-query', 'framer-motion', '@marsidev/react-turnstile'],
   },
   server: {
     host: true,
