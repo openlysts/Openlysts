@@ -131,7 +131,7 @@ export default function RepositoryCard({ repo, index = 0, view = 'grid', showTre
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: Math.min(index * 0.04, 0.4) }}
-      className="h-full [content-visibility:auto] contain-intrinsic-size-[340px_240px]"
+      className="h-full"
       style={{ perspective: 1000 }}
     >
       <motion.div 
