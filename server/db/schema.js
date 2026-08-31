@@ -291,6 +291,7 @@ export async function initSchema(db) {
     `CREATE INDEX IF NOT EXISTS idx_repo_created ON "Repository"(created_date DESC);`,
     `CREATE INDEX IF NOT EXISTS idx_repo_trending ON "Repository"(trending_score DESC);`,
     `CREATE INDEX IF NOT EXISTS idx_repo_full_name ON "Repository"(full_name);`,
+    `CREATE INDEX IF NOT EXISTS idx_repo_updated_at ON "Repository"(updated_at);`,
     `CREATE INDEX IF NOT EXISTS idx_ingestion_run_started ON "IngestionRun"(started_at DESC);`,
 
     // Bookmark indexes

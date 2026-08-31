@@ -140,7 +140,7 @@ export default function RepositoryCard({ repo, index = 0, view = 'grid', showTre
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         style={{ rotateX, rotateY }}
-        className={`card card-hover h-full flex p-4 pt-4.5 relative rounded-xl border bg-bg-card transition-[border-color,box-shadow,background-color] duration-200 group touch-active overflow-hidden select-none ${isTrending ? 'border-trending/40 shadow-[0_0_15px_rgba(255,100,50,0.15)]' : 'border-border'} ${view === 'list' ? 'flex-col md:flex-row items-start gap-4 md:gap-6' : 'flex-col justify-between'}`}
+        className={`card card-hover flex p-4 pt-4.5 relative rounded-xl border bg-bg-card transition-[border-color,box-shadow,background-color] duration-200 group touch-active overflow-hidden select-none ${isTrending ? 'border-trending/40 shadow-[0_0_15px_rgba(255,100,50,0.15)]' : 'border-border'} ${view === 'list' ? 'flex-col md:flex-row items-start gap-4 md:gap-6' : 'flex-col gap-3'}`}
       >
         <motion.div 
           className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0 mix-blend-overlay"
@@ -151,7 +151,7 @@ export default function RepositoryCard({ repo, index = 0, view = 'grid', showTre
         ) : (
           <Link to={repoUrl} className="absolute inset-0 z-10 cursor-pointer" aria-label={`View ${repo?.name}`} />
         )}
-        <div className={`relative z-10 flex-1 flex pointer-events-none ${view === 'list' ? 'flex-col md:flex-row justify-between w-full gap-4 md:gap-0' : 'flex-col justify-between'}`}>
+        <div className={`relative z-10 flex-1 flex pointer-events-none ${view === 'list' ? 'flex-col md:flex-row justify-between w-full gap-4 md:gap-0' : 'flex-col gap-3'}`}>
           <div className={view === 'list' ? 'flex-1 min-w-0 md:pr-6 flex flex-col' : 'w-full flex-1 flex flex-col justify-start'}>
             <div className={`flex justify-between items-start mb-1.5 gap-2 ${view === 'list' ? 'flex-col sm:flex-row' : ''}`}>
             <div className="min-w-0 flex-1">
@@ -226,11 +226,11 @@ export default function RepositoryCard({ repo, index = 0, view = 'grid', showTre
               </div>
           </div>
 
-          <p className="text-text-secondary text-sm leading-relaxed line-clamp-2 min-h-[40px] mb-3">
+          <p className="text-text-secondary text-sm leading-relaxed line-clamp-2 min-h-min mb-2">
             {repo?.description || 'No description available.'}
           </p>
 
-          <div className="flex flex-wrap gap-1.5 mb-2.5 relative z-30 pointer-events-auto" data-tour="repo-tags">
+          <div className="flex flex-wrap gap-1.5 mb-2 relative z-30 pointer-events-auto" data-tour="repo-tags">
             {repo?.difficulty && (
               <span
                 onClick={(e) => { e.preventDefault(); e.stopPropagation(); navigate(`/search?difficulties=${repo.difficulty}`); }}

@@ -22,11 +22,11 @@ export default async function queryAlternatives(req, res) {
       catList.push(category);
     }
 
-    // Ensure DB deltas are synced (timeout 2.5s for Vercel limits)
+    // Ensure DB deltas are fused into memory before answering, with a strict timeout
     try {
       await Promise.race([
         syncDeltasFromDB(),
-        new Promise((_, reject) => setTimeout(() => reject(new Error('Sync timeout')), 2500))
+        new Promise((_, reject) => setTimeout(() => reject(new Error('Sync timeout')), 4500))
       ]);
     } catch (err) {
       console.warn('[queryAlternatives] DB sync skipped/timeout:', err.message);

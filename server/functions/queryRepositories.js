@@ -23,11 +23,11 @@ export default async function queryRepositories(req, res) {
 
 
 
-    // Ensure Neon DB deltas are fused into memory before answering, with a strict 2.5 second timeout for Vercel
+    // Ensure Neon DB deltas are fused into memory before answering, with a strict timeout for Vercel
     try {
       await Promise.race([
         syncDeltasFromDB(),
-        new Promise((_, reject) => setTimeout(() => reject(new Error('Sync timeout')), 2500))
+        new Promise((_, reject) => setTimeout(() => reject(new Error('Sync timeout')), 4500))
       ]);
     } catch (err) {
       console.warn('[queryRepositories] DB sync skipped/timeout:', err.message);
