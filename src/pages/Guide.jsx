@@ -752,7 +752,7 @@ export default function Guide() {
                        </div>
                     </div>
 
-                    {/* Example 4: Health Indicators */}
+                     {/* Example 4: Health Indicators */}
                     <div className="p-3 rounded-xl bg-bg-card border border-border flex items-start gap-4 shadow-sm hover:border-accent/40 transition-colors">
                        <div className="flex-shrink-0 pt-1 flex flex-col gap-2 w-[120px]">
                           <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-blue-500/40 bg-blue-500/10 text-blue-500 w-fit shadow-[0_0_8px_rgba(59,130,246,0.3)]">
@@ -768,6 +768,41 @@ export default function Guide() {
                        <div>
                          <h4 className="text-sm font-bold text-text mb-1">Health & Status</h4>
                          <p className="text-xs text-text-secondary leading-relaxed">Shows maintenance health. <strong>Core</strong> means it's a foundational tech piece. <strong>Active</strong> indicates recent commits and bug fixes. <strong>Archived</strong> means the project is no longer maintained by its authors.</p>
+                       </div>
+                    </div>
+
+                    {/* Example 5: Discovery Hooks */}
+                    <div className="p-3 rounded-xl bg-bg-card border border-border flex items-start gap-4 shadow-sm hover:border-accent/40 transition-colors">
+                       <div className="flex-shrink-0 pt-1 flex flex-col gap-2 w-[120px]">
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-orange-500/40 bg-orange-500/10 text-orange-400 w-fit">
+                            🔥 Hot Today
+                          </span>
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-emerald-500/40 bg-emerald-500/10 text-emerald-400 w-fit">
+                            📈 Rising Fast
+                          </span>
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-blue-500/40 bg-blue-500/10 text-blue-400 w-fit">
+                            ✨ Community Pick
+                          </span>
+                       </div>
+                       <div>
+                         <h4 className="text-sm font-bold text-text mb-1">Discovery Hooks</h4>
+                         <p className="text-xs text-text-secondary leading-relaxed">Dynamic badges assigned when a project experiences a sudden spike in stars, or is highly recommended by platforms like HackerNews.</p>
+                       </div>
+                    </div>
+
+                    {/* Example 6: Licenses */}
+                    <div className="p-3 rounded-xl bg-bg-card border border-border flex items-start gap-4 shadow-sm hover:border-accent/40 transition-colors">
+                       <div className="flex-shrink-0 pt-1 flex flex-col gap-2 w-[120px]">
+                          <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-bold tracking-wide border border-green-500/30 bg-green-500/10 text-green-500 w-fit">
+                            MIT
+                          </span>
+                          <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-bold tracking-wide border border-orange-500/30 bg-orange-500/10 text-orange-500 w-fit">
+                            GPL
+                          </span>
+                       </div>
+                       <div>
+                         <h4 className="text-sm font-bold text-text mb-1">Licenses</h4>
+                         <p className="text-xs text-text-secondary leading-relaxed">Green licenses (MIT, Apache) are usually safe for commercial use. Orange (GPL) may require you to open-source your own code.</p>
                        </div>
                     </div>
 
