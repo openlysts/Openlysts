@@ -25,7 +25,11 @@ import {
   Tag,
   Flame,
   Activity,
-  Github
+  Github,
+  Globe,
+  AlertCircle,
+  GitCompare,
+  Heart
 } from 'lucide-react';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
@@ -297,7 +301,7 @@ export default function Guide() {
 
         {/* Bento Grid Segmented Navigation Tabs */}
         <div className="w-full mb-8">
-          <div className="flex items-center justify-start sm:justify-center gap-1.5 p-1.5 rounded-2xl bg-bg-card border border-border shadow-sm overflow-x-auto no-scrollbar scrollbar-none touch-pan-x">
+          <div className="flex flex-wrap items-center justify-center gap-1.5 p-1.5 rounded-2xl bg-bg-card border border-border shadow-sm">
             {MODULES.map((mod) => {
               const Icon = mod.icon;
               const isActive = activeTabId === mod.id;
@@ -718,14 +722,20 @@ export default function Guide() {
 
                     {/* Example 2: Platform Origin */}
                     <div className="p-3 rounded-xl bg-bg-card border border-border flex items-start gap-4 shadow-sm hover:border-accent/40 transition-colors">
-                       <div className="flex-shrink-0 pt-1 w-[120px]">
+                       <div className="flex-shrink-0 pt-1 flex flex-col gap-2 w-[120px]">
                           <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-zinc-500/30 bg-zinc-500/10 text-text-secondary w-fit">
                             <Github className="w-3 h-3" /> Git
+                          </span>
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-emerald-500/30 bg-emerald-500/10 text-emerald-500 w-fit shadow-[0_0_10px_rgba(16,185,129,0.15)]">
+                            <Sparkles className="w-3 h-3" /> Open Source
+                          </span>
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-purple-500/30 bg-purple-500/10 text-purple-500 w-fit">
+                            <Globe className="w-3 h-3" /> Website
                           </span>
                        </div>
                        <div>
                          <h4 className="text-sm font-bold text-text mb-1">Source Platform</h4>
-                         <p className="text-xs text-text-secondary leading-relaxed">Shows whether it's a Git repository, an Open Source product, or an external Website.</p>
+                         <p className="text-xs text-text-secondary leading-relaxed">Shows whether it's a Git repository, an Open Source product (e.g. Docker images), or an external Website.</p>
                        </div>
                     </div>
 
@@ -751,10 +761,13 @@ export default function Guide() {
                           <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-green-500/40 bg-green-500/10 text-green-500 w-fit shadow-[0_0_8px_rgba(34,197,94,0.3)]">
                             <Activity className="w-3 h-3" /> Active
                           </span>
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border border-nonoss/40 bg-nonoss/10 text-nonoss w-fit">
+                            <AlertCircle className="w-3 h-3" /> Archived
+                          </span>
                        </div>
                        <div>
                          <h4 className="text-sm font-bold text-text mb-1">Health & Status</h4>
-                         <p className="text-xs text-text-secondary leading-relaxed">Shows maintenance health. <strong>Core</strong> means it's a foundational tech piece. <strong>Active</strong> indicates recent commits and bug fixes.</p>
+                         <p className="text-xs text-text-secondary leading-relaxed">Shows maintenance health. <strong>Core</strong> means it's a foundational tech piece. <strong>Active</strong> indicates recent commits and bug fixes. <strong>Archived</strong> means the project is no longer maintained by its authors.</p>
                        </div>
                     </div>
 
@@ -794,10 +807,25 @@ export default function Guide() {
                        </div>
                        <div>
                          <h4 className="text-sm font-bold text-text mb-1">AI Context</h4>
-                         <p className="text-xs text-text-secondary leading-relaxed">Tags projects that are highly relevant to LLMs, Machine Learning, or easily ingested into AI agents.</p>
+                         <p className="text-xs text-text-secondary leading-relaxed">Indicates quick access to full repository context specifically optimized for pasting into LLMs (like ChatGPT or Claude) via Gitingest.</p>
                        </div>
                     </div>
 
+                    {/* Example 8: Actions */}
+                    <div className="p-3 rounded-xl bg-bg-card border border-border flex items-start gap-4 shadow-sm hover:border-accent/40 transition-colors mb-4">
+                       <div className="flex-shrink-0 pt-1 flex flex-wrap gap-2 w-[120px]">
+                          <span className="p-2 w-9 h-9 flex items-center justify-center rounded-xl bg-accent-soft text-accent border border-accent">
+                            <GitCompare className="w-4 h-4" />
+                          </span>
+                          <span className="p-2 w-9 h-9 flex items-center justify-center rounded-xl bg-[#F43F5E]/10 text-[#F43F5E] border border-[#F43F5E]/20">
+                            <Heart className="w-4 h-4" />
+                          </span>
+                       </div>
+                       <div>
+                         <h4 className="text-sm font-bold text-text mb-1">Actions</h4>
+                         <p className="text-xs text-text-secondary leading-relaxed">Interactive buttons to compare repositories side-by-side or bookmark them to your private, offline-capable collection.</p>
+                       </div>
+                    </div>
                   </div>
                 </div>
               )}
