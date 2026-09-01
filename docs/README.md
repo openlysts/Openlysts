@@ -306,7 +306,7 @@ Fork the repo, create a feature branch, and submit a PR. We welcome contribution
 <br/>
 <br/>
 
-### Built with ❤️ by **Adil Rafiq Dar**
+### Built with <img src="../public/animated-heart.svg" alt="Red Heart" width="18" /> by **Adil Rafiq Dar**
 
 *Openlysts — Open-source intelligence for developers who move fast*
 
