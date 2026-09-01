@@ -47,7 +47,7 @@
 
 <div align="center">
 
-**[🚀 See the Full Experience (Animated)](https://openlyst.github.io/openlysts)** · [Quick Start](#-quick-start) · [SaaS Unbundling](#-the-saas-unbundling--mapped) · [API Docs](#-api-access) · [FAQ](#-faq)
+**[🚀 See the Full Experience (Animated)](https://openlysts.pages.dev)** · [Quick Start](#-quick-start) · [SaaS Unbundling](#-the-saas-unbundling--mapped) · [API Docs](#-api-access) · [FAQ](#-faq)
 
 </div>
 
@@ -296,7 +296,7 @@ Fork the repo, create a feature branch, and submit a PR. We welcome contribution
 <a href="https://openlysts.dpdns.org">
   <img src="https://img.shields.io/badge/ENTER_PLATFORM-000?style=for-the-badge&logo=vercel&logoColor=white" alt="Enter Openlysts" />
 </a>
-<a href="https://openlyst.github.io/openlysts">
+<a href="https://openlysts.pages.dev">
   <img src="https://img.shields.io/badge/✨_ANIMATED_PREVIEW-3b82f6?style=for-the-badge" alt="Animated Preview" />
 </a>
 <a href="https://github.com/Openlyst/openlysts">
