@@ -1,8 +1,13 @@
+---
+trigger: always_on
+---
+
 # Implementation Plan Layout Standard
 
-Every implementation plan artifact MUST follow this exact structure. No exceptions.
+Every implementation plan artifact MUST follow this exact structure. No
+exceptions.
 
-```
+````
 # [Title — Descriptive, Project-Specific]
 
 > **Design Read:** [1-line project context]. Vibe: *[adjectives]*. Dials: `KEY: N / KEY: N`.
@@ -65,14 +70,16 @@ All must be physically verified via Playwright MCP:
 - [ ] [specific, measurable, observable criterion]
 - [ ] [regression items]
 - [ ] [no console errors, no broken routes]
-```
+````
 
 Rules:
+
 - ALWAYS include line numbers for affected code
 - ALWAYS use `diff` blocks for exact changes
 - ALWAYS use GitHub alerts (WARNING/IMPORTANT/NOTE) for risks and gotchas
 - ALWAYS include a Dependencies Check for any change touching imports/packages
 - ALWAYS include per-change Verification with regression
 - ALWAYS end with a checkbox Definition of DONE
-- NEVER omit research basis when categories/terminology/design decisions are involved
+- NEVER omit research basis when categories/terminology/design decisions are
+  involved
 - NEVER produce a generic checklist — every item must be directly executable
