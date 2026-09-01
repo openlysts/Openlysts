@@ -58,14 +58,8 @@ reports/
 archive/
 .temp/
 
-# AI and Project Rules
-.agents/
+# AI Config Junk
 .claude/
 .codex/
 .playwright-mcp/
 Audit_QA/
-AGENTS.md
-Antigravity_skill.md
-LOCAL_RUNTIME.md
-SKILLS_AND_RESOURCES.md
-ARCHITECTURE.md
