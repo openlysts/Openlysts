@@ -80,3 +80,4 @@ stats*.json
 base44/.app.jsonc
 k6-*.json
 /.freebuff
+/.freebuff
