@@ -1,0 +1,86 @@
+{
+  "success": {
+    "200": {
+      "ok": true,
+      "status": 200,
+      "message": "Success"
+    },
+    "201": {
+      "ok": true,
+      "status": 201,
+      "message": "Created"
+    }
+  },
+  "error": {
+    "400": {
+      "ok": false,
+      "status": 400,
+      "error": "Bad Request",
+      "message": "Invalid input"
+    },
+    "401": {
+      "ok": false,
+      "status": 401,
+      "error": "Unauthorized",
+      "message": "Authentication required"
+    },
+    "403": {
+      "ok": false,
+      "status": 403,
+      "error": "Forbidden",
+      "message": "Insufficient permissions"
+    },
+    "404": {
+      "ok": false,
+      "status": 404,
+      "error": "Not Found",
+      "message": "Resource not found"
+    },
+    "409": {
+      "ok": false,
+      "status": 409,
+      "error": "Conflict",
+      "message": "Resource already exists"
+    },
+    "429": {
+      "ok": false,
+      "status": 429,
+      "error": "Rate Limited",
+      "message": "Too many requests",
+      "retryAfter": 900
+    },
+    "500": {
+      "ok": false,
+      "status": 500,
+      "error": "Internal Server Error",
+      "message": "An unexpected error occurred"
+    }
+  },
+  "securityHeaders": {
+    "required": [
+      "x-content-type-options",
+      "x-frame-options",
+      "x-xss-protection",
+      "strict-transport-security"
+    ],
+    "csp": {
+      "default-src": ["'self'"],
+      "script-src": ["'self'", "'unsafe-inline'"],
+      "style-src": ["'self'", "'unsafe-inline'"],
+      "img-src": ["'self'", "data:", "https:"],
+      "font-src": ["'self'", "https://fonts.gstatic.com"]
+    }
+  },
+  "rateLimits": {
+    "auth": {
+      "windowMs": 900000,
+      "max": 6,
+      "headers": ["X-RateLimit-Limit", "X-RateLimit-Remaining", "X-RateLimit-Reset"]
+    },
+    "api": {
+      "windowMs": 60000,
+      "max": 100,
+      "headers": ["X-RateLimit-Limit", "X-RateLimit-Remaining", "X-RateLimit-Reset"]
+    }
+  }
+}

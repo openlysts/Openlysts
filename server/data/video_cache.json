@@ -1470,5 +1470,28 @@
       }
     ],
     "timestamp": 1787924008478
+  },
+  "datadog/datadog-lambda-extension": {
+    "videos": [
+      {
+        "video_id": "ou9oE-Ms5KM",
+        "title": "AWS Lambda Observability with Datadog - Implementation Guide",
+        "channel": "Observability Guru",
+        "url": "https://youtube.com/watch?v=ou9oE-Ms5KM"
+      },
+      {
+        "video_id": "s84pHdUThSY",
+        "title": "Monitor AWS Lambda with Datadog",
+        "channel": "Datadog",
+        "url": "https://youtube.com/watch?v=s84pHdUThSY"
+      },
+      {
+        "video_id": "CcxggSZukpA",
+        "title": "Serverless Monitoring (AWS Lambda) Demo",
+        "channel": "Datadog",
+        "url": "https://youtube.com/watch?v=CcxggSZukpA"
+      }
+    ],
+    "timestamp": 1788257091554
   }
 }

@@ -1,0 +1,60 @@
+# Build outputs
+dist/
+dist-ssr/
+.vite/
+
+# Dependencies
+node_modules/
+
+# Generated files
+*.min.js
+*.min.css
+*.map
+
+# Lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Reports and temp
+scratch/
+reports/
+archive/
+.temp/
+test-results/
+playwright-report/
+
+# AI/Editor configs
+.claude/
+.codex/
+.vscode/
+.idea/
+
+# Database files
+data/*.db
+data/*.db-shm
+data/*.db-wal
+
+# Binary files
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.ico
+*.svg
+*.woff
+*.woff2
+*.ttf
+*.eot
+
+# Impeccable generated
+.github/skills/impeccable/scripts/
+.github/skills/impeccable/reference/
+
+# Audit output
+QA_Audit/

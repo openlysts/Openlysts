@@ -1,0 +1,86 @@
+{
+  "popular": {
+    "github_url": "https://github.com/facebook/react",
+    "full_name": "facebook/react",
+    "description": "The library for web and native user interfaces.",
+    "stars": 230000,
+    "forks": 45000,
+    "language": "JavaScript",
+    "license": "MIT",
+    "topics": ["ui", "javascript", "frontend"],
+    "is_oss": true
+  },
+  "trending": {
+    "github_url": "https://github.com/vercel/next.js",
+    "full_name": "vercel/next.js",
+    "description": "The React Framework for the Web.",
+    "stars": 130000,
+    "forks": 28000,
+    "language": "TypeScript",
+    "license": "MIT",
+    "topics": ["react", "nextjs", "ssr"],
+    "is_oss": true
+  },
+  "small": {
+    "github_url": "https://github.com/user/small-project",
+    "full_name": "user/small-project",
+    "description": "A small test project.",
+    "stars": 150,
+    "forks": 25,
+    "language": "Python",
+    "license": "Apache-2.0",
+    "topics": ["python", "test"],
+    "is_oss": true
+  },
+  "proprietary": {
+    "github_url": "https://github.com/company/proprietary",
+    "full_name": "company/proprietary",
+    "description": "Private repository.",
+    "stars": 5000,
+    "forks": 0,
+    "language": "Go",
+    "license": null,
+    "topics": [],
+    "is_oss": false
+  },
+  "searchResults": [
+    {
+      "full_name": "facebook/react",
+      "description": "The library for web and native user interfaces.",
+      "stars": 230000,
+      "score": 0.95
+    },
+    {
+      "full_name": "vuejs/core",
+      "description": "Progressive JavaScript framework.",
+      "stars": 48000,
+      "score": 0.88
+    },
+    {
+      "full_name": "sveltejs/svelte",
+      "description": "Cybernetically enhanced web apps.",
+      "stars": 80000,
+      "score": 0.82
+    }
+  ],
+  "pagination": {
+    "page1": {
+      "repos": [],
+      "page": 1,
+      "limit": 20,
+      "total": 100
+    },
+    "page5": {
+      "repos": [],
+      "page": 5,
+      "limit": 20,
+      "total": 100
+    },
+    "lastPage": {
+      "repos": [],
+      "page": 10,
+      "limit": 20,
+      "total": 100
+    }
+  }
+}

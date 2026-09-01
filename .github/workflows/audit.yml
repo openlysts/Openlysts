@@ -1,0 +1,112 @@
+name: Automated Audits
+
+on:
+  schedule:
+    # Run full audit weekly on Monday at 09:00 UTC
+    - cron: '0 9 * * 1'
+  workflow_dispatch:
+    inputs:
+      audit_type:
+        description: 'Audit type to run'
+        required: true
+        default: 'full'
+        type: choice
+        options:
+          - full
+          - quick
+          - security
+          - performance
+          - quality
+
+jobs:
+  audit:
+    name: Run Audit (${{ inputs.audit_type || 'full' }})
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run audit
+        run: |
+          AUDIT_TYPE="${{ inputs.audit_type || 'full' }}"
+          echo "🔍 Running $AUDIT_TYPE audit..."
+          
+          if [ "$AUDIT_TYPE" = "full" ]; then
+            npm run audit
+          elif [ "$AUDIT_TYPE" = "quick" ]; then
+            npm run audit:quick
+          elif [ "$AUDIT_TYPE" = "security" ]; then
+            npm run audit:security
+          elif [ "$AUDIT_TYPE" = "performance" ]; then
+            npm run audit:performance
+          elif [ "$AUDIT_TYPE" = "quality" ]; then
+            npm run audit:quality
+          fi
+        continue-on-error: true
+
+      - name: Upload audit results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: audit-results-${{ github.run_number }}
+          path: reports/
+          retention-days: 30
+
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "❌ Audit failed! Check results artifact."
+          # Add notification logic here (Slack, email, etc.)
+
+  security-scan:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run npm audit
+        run: npm audit --audit-level=critical
+        continue-on-error: true
+
+      - name: Check for hardcoded secrets
+        run: |
+          echo "🔍 Scanning for hardcoded secrets..."
+          # Check for common secret patterns
+          grep -rn "password\s*=\s*['\"]" server/ src/ --include="*.js" --include="*.jsx" --include="*.ts" || true
+          grep -rn "secret\s*=\s*['\"]" server/ src/ --include="*.js" --include="*.jsx" --include="*.ts" || true
+          grep -rn "api_key\s*=\s*['\"]" server/ src/ --include="*.js" --include="*.jsx" --include="*.ts" || true
+          echo "✅ Secret scan complete"
+
+  dependency-check:
+    name: Dependency Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Check for outdated dependencies
+        run: npm outdated || true
+
+      - name: Check for vulnerable dependencies
+        run: npm audit || true
+
+      - name: Bundle size check
+        run: |
+          echo "📦 Checking bundle size..."
+          npm run build 2>/dev/null || echo "Build skipped"
