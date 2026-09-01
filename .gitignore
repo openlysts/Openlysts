@@ -81,3 +81,8 @@ base44/.app.jsonc
 k6-*.json
 # ─── Freebuff Worktrees ────────────────────────────────────────
 .freebuff/
+
+# ─── Large Files (use Git LFS for these) ────────────────────────
+server/data/mega_repositories_catalog.json
+cloudflared.exe
+cloudflared_running.exe
