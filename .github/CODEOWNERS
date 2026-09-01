@@ -1,0 +1,51 @@
+# CODEOWNERS - Automatic review assignments
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default owners for everything
+* @openlysts/maintainers
+
+# Frontend
+/src/components/ @openlysts/frontend
+/src/pages/ @openlysts/frontend
+/src/hooks/ @openlysts/frontend
+/src/lib/ @openlysts/frontend
+src/lib/local-runtime/ @openlysts/frontend
+tailwind.config.js @openlysts/frontend
+vite.config.js @openlysts/frontend
+
+# Backend
+/server/ @openlysts/backend
+/api/ @openlysts/backend
+
+# Database
+/server/db/ @openlysts/backend @openlysts/database
+scripts/db/ @openlysts/backend @openlysts/database
+
+# Authentication
+/server/auth/ @openlysts/security
+/server/api/auth.js @openlysts/security
+/server/api/mfa.js @openlysts/security
+
+# Security
+SECURITY.md @openlysts/security
+server/auth/ @openlysts/security
+
+# Testing
+/tests/ @openlysts/qa
+playwright.config.js @openlysts/qa
+
+# DevOps/Infrastructure
+/.github/workflows/ @openlysts/devops
+vercel.json @openlysts/devops
+Dockerfile @openlysts/devops
+docker-compose.yml @openlysts/devops
+
+# Documentation
+*.md @openlysts/docs
+/docs/ @openlysts/docs
+
+# Agent Configuration
+/.agents/ @openlysts/maintainers
+
+# Scripts
+/scripts/ @openlysts/maintainers

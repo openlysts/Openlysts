@@ -1,0 +1,77 @@
+name: Post-Deploy Smoke Tests
+
+on:
+  deployment_status:
+  workflow_dispatch:
+    inputs:
+      target_url:
+        description: 'Target URL to test'
+        required: false
+        default: 'https://openlysts.vercel.app'
+
+jobs:
+  smoke:
+    name: Smoke Tests
+    runs-on: ubuntu-latest
+    if: github.event.deployment_status.state == 'success' || github.event_name == 'workflow_dispatch'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run smoke tests
+        run: |
+          TARGET="${{ inputs.target_url || github.event.deployment_status.target_url || 'https://openlysts.vercel.app' }}"
+          echo "🧪 Running smoke tests against: $TARGET"
+          SMOKE_URL="$TARGET" node scripts/smoke/post-deploy.js
+        continue-on-error: false
+
+      - name: Run Playwright smoke tests
+        run: |
+          TARGET="${{ inputs.target_url || 'http://localhost:5173' }}"
+          SMOKE_URL="$TARGET" npx playwright test tests/smoke/post-deploy.spec.js --reporter=line
+        continue-on-error: true
+
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "❌ SMOKE TESTS FAILED"
+          echo "Deployment may need rollback: bash scripts/rollback/rollback.sh production --dry-run"
+          # Add Slack/Discord notification here
+
+  regression:
+    name: Regression Tests
+    runs-on: ubuntu-latest
+    needs: smoke
+    if: success()
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run API regression tests
+        run: node tests/regression/api-regression.js
+        env:
+          REGRESSION_URL: ${{ inputs.target_url || 'http://localhost:3001' }}
+        continue-on-error: true

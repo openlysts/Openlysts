@@ -112,6 +112,60 @@ Mission-critical engineering workflows ensuring zero-mock data integrity, automa
 
 ---
 
+## 3b. 🛡️ Infrastructure, Security & Quality Skills
+
+Enterprise-grade skills for database engineering, security auditing, resilience, performance, accessibility, authentication, CI/CD, PWA, email, documentation, and cost optimization.
+
+### 🗄️ [postgresql-db-engineering](.agents/skills/postgresql-db-engineering/SKILL.md)
+- **Role**: PostgreSQL/Neon Database Engineering.
+- **Capabilities**: Schema design, migration patterns, query optimization, index strategy, connection pooling for serverless, and diagnostic workflows.
+
+### 🔒 [security-auditing](.agents/skills/security-auditing/SKILL.md)
+- **Role**: OWASP Top 10 Security Auditing.
+- **Capabilities**: Auth flow penetration testing, XSS/SQLi/CSRF/IDOR verification, rate limit validation, session security review, and secrets management.
+
+### 🛡️ [error-resilience](.agents/skills/error-resilience/SKILL.md)
+- **Role**: Error Handling & Resilience Engineering.
+- **Capabilities**: Retry with exponential backoff, circuit breaker patterns, React error boundaries, graceful degradation, timeout handling, and partial-failure recovery.
+
+### ⚡ [performance-core-web-vitals](.agents/skills/performance-core-web-vitals/SKILL.md)
+- **Role**: Performance Monitoring & Core Web Vitals.
+- **Capabilities**: LCP/INP/CLS optimization, bundle analysis, memory profiling (Three.js), network waterfall optimization, and serverless cold-start mitigation.
+
+### 📱 [responsive-mobile-first](.agents/skills/responsive-mobile-first/SKILL.md)
+- **Role**: Responsive & Mobile-First Design.
+- **Capabilities**: Breakpoint strategy, touch target sizing, responsive typography, mobile navigation patterns, and cross-device testing protocols.
+
+### ♿ [accessibility-wcag](.agents/skills/accessibility-wcag/SKILL.md)
+- **Role**: WCAG 2.1 AA Accessibility.
+- **Capabilities**: Semantic HTML auditing, keyboard navigation, screen reader support, ARIA patterns, focus management, contrast verification, and form accessibility.
+
+### 🔑 [oauth-auth-flows](.agents/skills/oauth-auth-flows/SKILL.md)
+- **Role**: OAuth & Authentication Flow Engineering.
+- **Capabilities**: OAuth2 PKCE flows, session management, MFA/TOTP, Passkey/WebAuthn, password reset flows, and token lifecycle management.
+
+### 🚀 [cicd-pipeline](.agents/skills/cicd-pipeline/SKILL.md)
+- **Role**: CI/CD & Deployment Pipeline.
+- **Capabilities**: Automated testing, build verification, Vercel deployment, environment management, rollback procedures, and deployment safety.
+
+### 📶 [pwa-offline-first](.agents/skills/pwa-offline-first/SKILL.md)
+- **Role**: PWA & Offline-First Engineering.
+- **Capabilities**: Service worker strategies, cache invalidation, manifest configuration, offline fallback UI, and background sync patterns.
+
+### 📧 [email-smtp](.agents/skills/email-smtp/SKILL.md)
+- **Role**: Email & SMTP Engineering.
+- **Capabilities**: Email template design, deliverability, nodemailer configuration, testing without live SMTP, and email flow verification.
+
+### 📚 [documentation-consistency](.agents/skills/documentation-consistency/SKILL.md)
+- **Role**: Documentation Consistency & Maintenance.
+- **Capabilities**: Docs-to-code synchronization, README accuracy, API documentation, architecture docs, and dead reference detection.
+
+### 💰 [cost-infra-efficiency](.agents/skills/cost-infra-efficiency/SKILL.md)
+- **Role**: Cost & Infrastructure Efficiency.
+- **Capabilities**: Vercel serverless budgets, Neon PostgreSQL cost analysis, API quota monitoring, bundle size budgets, and waste reduction.
+
+---
+
 ## 4. 🔌 IDE Plugins & System Extensions
 
 Pre-installed global customization packages extending the agent's inspection, analysis, and debugging capabilities.

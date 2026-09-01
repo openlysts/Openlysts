@@ -1,0 +1,59 @@
+name: Deploy to Staging
+
+on:
+  push:
+    branches: [dev]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-staging
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Deploy Staging
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run lint
+        run: npm run lint
+
+      - name: Run typecheck
+        run: npm run typecheck
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy to Vercel (staging)
+        run: npx vercel --yes
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+      - name: Verify deployment
+        run: |
+          echo "🔍 Verifying staging deployment..."
+          sleep 10
+          STAGING_URL=$(npx vercel ls 2>/dev/null | grep -o 'https://[^ ]*' | head -1)
+          if curl -sf "$STAGING_URL/api/health" > /dev/null 2>&1; then
+            echo "✅ Staging deployment verified"
+          else
+            echo "⚠️  Could not verify staging deployment"
+          fi
+        continue-on-error: true
+
+      - name: Run post-change audit
+        run: npm run audit:post-change
+        continue-on-error: true

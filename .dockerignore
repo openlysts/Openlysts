@@ -1,0 +1,79 @@
+# Dependencies
+node_modules
+npm-debug.log*
+
+# Build outputs
+dist
+dist-ssr
+.vite
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Git
+.git
+.gitignore
+
+# IDE
+.vscode
+.idea
+*.sw?
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Tests
+test-results
+playwright-report
+coverage
+tests
+
+# Documentation
+*.md
+!README.md
+docs
+
+# Scripts (not needed in production)
+scripts
+.husky
+
+# Agent config
+.agents
+.github
+
+# Audit output
+QA_Audit
+scratch
+reports
+archive
+.temp
+
+# Database files
+data/*.db
+data/*.db-shm
+data/*.db-wal
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Debug/development files
+get-logs.js
+screenshot.png
+migrate_v2.js
+reclassify.js
+stats*.json
+
+# AI config
+.claude
+.codex
+.playwright-mcp
+
+# License (keep in image)
+LICENSE
+
+# Audit output
+QA_Audit/

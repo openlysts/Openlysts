@@ -1,0 +1,44 @@
+{
+  "admin": {
+    "email": "admin@openlysts.com",
+    "password": "AdminPassword123!",
+    "name": "Admin User",
+    "role": "admin"
+  },
+  "user": {
+    "email": "user@openlysts.com",
+    "password": "UserPassword123!",
+    "name": "Test User",
+    "role": "user"
+  },
+  "moderator": {
+    "email": "mod@openlysts.com",
+    "password": "ModPassword123!",
+    "name": "Moderator User",
+    "role": "moderator"
+  },
+  "newUser": {
+    "email": "newuser@example.com",
+    "password": "NewUser123!",
+    "name": "New User"
+  },
+  "invalid": {
+    "email": "not-an-email",
+    "password": "short",
+    "name": ""
+  },
+  "xss": {
+    "email": "xss@test.com",
+    "password": "Password123!",
+    "name": "<script>alert('xss')</script>",
+    "maliciousInputs": [
+      "<script>alert('xss')</script>",
+      "javascript:alert(1)",
+      "onerror=alert(1)",
+      "{{7*7}}",
+      "${7*7}",
+      "../../../etc/passwd",
+      "'; DROP TABLE users; --"
+    ]
+  }
+}

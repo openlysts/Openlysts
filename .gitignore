@@ -1,9 +1,21 @@
-#env
+# ─── Environment ───────────────────────────────────────────────
 .env
 .env.*
 !.env.example
 
-# Logs
+# ─── Dependencies ──────────────────────────────────────────────
+node_modules
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# ─── Build Output ──────────────────────────────────────────────
+dist
+dist-ssr
+*.local
+.vite
+
+# ─── Logs ──────────────────────────────────────────────────────
 /logs
 *.log
 npm-debug.log*
@@ -12,54 +24,58 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
-.vite
-
-# Editor directories and files
-.vscode/*
+# ─── Editor / IDE ─────────────────────────────────────────────
+.vscode/
+!.vscode/settings.json
 !.vscode/extensions.json
+!.vscode/*.code-workspace
 .idea
 .DS_Store
+Thumbs.db
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+*~
 
-base44/.app.jsonc
-
-# Local Database
+# ─── Local Database ────────────────────────────────────────────
 data/*.db
 data/*.db-shm
 data/*.db-wal
 
-# Vercel & Playwright
+# ─── Vercel ────────────────────────────────────────────────────
 .vercel
-.playwright-mcp/
 
-# Local scripts / binaries
+# ─── Playwright ────────────────────────────────────────────────
+.playwright-mcp/
+test-results/
+playwright-report/
+
+# ─── Test & Audit Output ───────────────────────────────────────
+reports/
+coverage/
+.nyc_output/
+
+# ─── Temporary / Scratch ───────────────────────────────────────
+scratch/
+archive/
+.temp/
+tmp/
+
+# ─── AI / Code Agent Config ────────────────────────────────────
+.claude/
+.codex/
+Audit_QA/
+
+# ─── Local Binaries ────────────────────────────────────────────
 cloudflared.exe
 cloudflared_running.exe
-get-logs.js
+
+# ─── Miscellaneous ─────────────────────────────────────────────
 screenshot.png
 migrate_v2.js
 reclassify.js
 stats*.json
-test-results/
-playwright-report/
-.env*
-
-# Organized Output & Temp Folders
-scratch/
-reports/
-archive/
-.temp/
-
-# AI Config Junk
-.claude/
-.codex/
-.playwright-mcp/
-Audit_QA/
+base44/.app.jsonc
+k6-*.json

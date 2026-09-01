@@ -1,0 +1,79 @@
+version: '3.8'
+
+services:
+  # PostgreSQL database
+  db:
+    image: postgres:16-alpine
+    container_name: openlysts-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: openlysts
+      POSTGRES_USER: openlysts
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-openlysts_dev_2026}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./server/db/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U openlysts -d openlysts"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - openlysts-net
+
+  # Application
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: openlysts-app
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgresql://openlysts:${DB_PASSWORD:-openlysts_dev_2026}@db:5432/openlysts
+      SESSION_SECRET: ${SESSION_SECRET:-dev-session-secret-change-in-production}
+      SESSION_PASSWORD: ${SESSION_PASSWORD:-dev-session-password-change-in-production}
+      TURNSTILE_SECRET_KEY: ${TURNSTILE_SECRET_KEY:-}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-}
+      GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID:-}
+      GITHUB_CLIENT_SECRET: ${GITHUB_CLIENT_SECRET:-}
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - openlysts-net
+
+  # Frontend (development mode)
+  frontend:
+    image: node:20-alpine
+    container_name: openlysts-frontend
+    working_dir: /app
+    ports:
+      - "5173:5173"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm run dev
+    environment:
+      NODE_ENV: development
+    depends_on:
+      - app
+    networks:
+      - openlysts-net
+    profiles:
+      - dev
+
+volumes:
+  pgdata:
+    driver: local
+
+networks:
+  openlysts-net:
+    driver: bridge
