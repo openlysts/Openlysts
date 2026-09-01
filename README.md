@@ -77,6 +77,7 @@ It's not a list. It's not a blog. It's a **living engine** that never sleeps.
 <td width="50%" valign="top">
 
 **What it does:**
+
 - 📡 Scans the entire open-source ecosystem in real-time
 - ⚡ Scores by velocity — not popularity, not stars
 - 💰 Maps paid SaaS tools to open-source alternatives
@@ -87,6 +88,7 @@ It's not a list. It's not a blog. It's a **living engine** that never sleeps.
 <td width="50%" valign="top">
 
 **What it doesn't do:**
+
 - ❌ Just another GitHub trending page
 - ❌ Curate "awesome lists" by opinion
 - ❌ Show you what's already popular
@@ -162,13 +164,14 @@ npm run dev
 ```
 
 The dev server starts both servers simultaneously:
+
 - 🖥️ **Frontend** — [http://localhost:5173](http://localhost:5173) (Vite + React)
 - ⚙️ **Backend** — [http://localhost:3001](http://localhost:3001) (Express + PostgreSQL)
 
 ### All commands
 
 | Command | Description |
-|:---|:---|
+| :--- | :--- |
 | `npm run dev` | Start development servers |
 | `npm run build` | Production build |
 | `npm start` | Run production server |
@@ -208,7 +211,7 @@ Relevance = (TextScore × 1.5) + (AuthorityScore × 0.5)
 ## 🔒 Security
 
 | Protection | Implementation |
-|:---|:---|
+| :--- | :--- |
 | **Authentication** | Session-based with `__Host-` cookies, bcrypt hashing |
 | **Rate Limiting** | Login: 5 req/15min · Search: 30 req/min · API: 60 req/min |
 | **Security Headers** | Helmet.js — CSP, HSTS, X-Frame-Options, X-Content-Type |
@@ -223,7 +226,7 @@ Relevance = (TextScore × 1.5) + (AuthorityScore × 0.5)
 RESTful JSON endpoints with JSON-LD structured data. No API key required.
 
 | Endpoint | Description |
-|:---|:---|
+| :--- | :--- |
 | `G
 GET /api/search?q=` | Fuzzy search across entire catalog |
 | `GET /api/alternatives?tool=` | SaaS-to-OSS alternatives |
@@ -239,7 +242,7 @@ GET /api/search?q=` | Fuzzy search across entire catalog |
 ## Tech stack
 
 | Frontend | Backend | Quality |
-|:---|:---|:---|
+| :--- | :--- | :--- |
 | React 19 | Node.js + Express 5 | Playwright E2E |
 | Vite 6 | PostgreSQL (Neon) | Strix pentesting |
 | Tailwind CSS 4 | In-memory catalog engine | OWASP Top 10 |
@@ -304,7 +307,7 @@ Fork the repo, create a feature branch, and submit a PR. We welcome contribution
 
 <br/>
 
-### Don't be late again.
+### Don't be late again
 
 <a href="https://openlysts.dpdns.org">
   <img src="https://img.shields.io/badge/ENTER_PLATFORM-000?style=for-the-badge&logo=vercel&logoColor=white" alt="Enter Openlysts" />

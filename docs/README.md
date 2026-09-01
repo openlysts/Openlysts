@@ -1,7 +1,7 @@
 <div align="center">
 
 <a href="https://openlysts.dpdns.org">
-  <img src="public/logo.png" alt="Openlysts" width="90" />
+  <img src="../public/logo.png" alt="Openlysts" width="90" />
 </a>
 
 <br/>
