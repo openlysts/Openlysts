@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Openlysts — README Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#09090b;--card:#18181b;--border:#27272a;--text:#fafafa;--dim:#71717a;--blue:#3b82f6;--purple:#8b5cf6;--cyan:#06b6d4}
+html{scroll-behavior:smooth}
+body{font-family:Inter,-apple-system,sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.6}
+canvas#particles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.content{position:relative;z-index:1}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;padding:.5rem 1.2rem;border-radius:999px;border:1px solid var(--border);background:rgba(24,24,27,.8);backdrop-filter:blur(12px);font-size:.8rem;color:var(--dim);margin-bottom:2rem;animation:fadeUp .8s ease both}
+.hero-badge .dot{width:6px;height:6px;border-radius:50%;background:#22c55e;animation:pulse 2s ease infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.title{font-size:clamp(3rem,8vw,7rem);font-weight:800;letter-spacing:-.04em;line-height:1;background:linear-gradient(135deg,#fff 0%,var(--blue) 40%,var(--purple) 70%,var(--cyan) 100%);background-size:300% 300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 6s ease infinite,fadeUp .8s ease .2s both}
+@keyframes shimmer{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.tagline{font-size:1.25rem;color:var(--dim);margin-top:1.5rem;max-width:600px;opacity:0;animation:fadeUp .8s ease .4s both}
+.tagline em{color:var(--text);font-style:normal;font-weight:600}
+.cta-group{display:flex;gap:1rem;margin-top:2.5rem;opacity:0;animation:fadeUp .8s ease .6s both}
+.btn{padding:.8rem 2rem;border-radius:12px;font-size:1rem;font-weight:600;border:none;cursor:pointer;transition:all .3s ease;text-decoration:none}
+.btn-primary{background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;box-shadow:0 0 30px rgba(59,130,246,.3)}
+.btn-primary:hover{box-shadow:0 0 50px rgba(59,130,246,.5);transform:translateY(-2px)}
+.btn-secondary{background:transparent;color:var(--text);border:1px solid var(--border)}
+.btn-secondary:hover{border-color:var(--dim);background:var(--card)}
+.terminal{max-width:560px;margin:3rem auto 0;background:#000;border-radius:12px;border:1px solid var(--border);overflow:hidden;opacity:0;animation:fadeUp .8s ease .8s both;font-family:JetBrains Mono,Menlo,monospace;font-size:.85rem}
+.terminal-bar{display:flex;align-items:center;gap:6px;padding:12px 16px;background:#1a1a1a}
+.terminal-dot{width:12px;height:12px;border-radius:50%}
+.terminal-dot.r{background:#ff5f57}.terminal-dot.y{background:#ffbd2e}.terminal-dot.g{background:#28c840}
+.terminal-body{padding:16px;color:#22c55e}
+.terminal-body .prompt{color:var(--blue)}
+.terminal-body .dim{color:#666}
+.terminal-body .blink{animation:blink 1s step-end infinite}
+@keyframes blink{50%{opacity:0}}
+section{max-width:900px;margin:0 auto;padding:5rem 2rem}
+.section-label{font-size:.75rem;text-transform:uppercase;letter-spacing:.15em;color:var(--blue);font-weight:600;margin-bottom:.5rem}
+.section-title{font-size:2rem;font-weight:700;letter-spacing:-.03em;margin-bottom:1rem}
+.section-desc{color:var(--dim);max-width:600px;margin-bottom:3rem}
+.bento{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
+.bento-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;transition:all .3s ease}
+.bento-card:hover{border-color:var(--blue);transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,.3)}
+.bento-icon{font-size:1.5rem;margin-bottom:.75rem}
+.bento-title{font-size:1.1rem;font-weight:600;margin-bottom:.5rem}
+.bento-desc{font-size:.875rem;color:var(--dim);line-height:1.5}
+.compare-table{width:100%;border-collapse:collapse;margin:2rem 0}
+.compare-table th,.compare-table td{padding:.75rem 1rem;text-align:left;border-bottom:1px solid var(--border);font-size:.9rem}
+.compare-table th{color:var(--dim);font-weight:500;font-size:.8rem;text-transform:uppercase;letter-spacing:.1em}
+.compare-table td:first-child{color:var(--dim)}
+.check{color:#22c55e}.cross{color:#ef4444}
+.marquee{overflow:hidden;padding:1rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin:4rem 0;white-space:nowrap}
+.marquee-inner{display:inline-flex;animation:scroll 20s linear infinite}
+@keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.marquee span{font-size:.85rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--border);padding:0 2rem}
+.marquee span:nth-child(odd){color:var(--blue)}
+.faq-item{border-bottom:1px solid var(--border);padding:1.25rem 0;cursor:pointer}
+.faq-q{font-weight:600;font-size:1rem;display:flex;justify-content:space-between;align-items:center}
+.faq-q::after{content:"+"  ;font-size:1.5rem;color:var(--blue);transition:transform .3s}
+.faq-item.open .faq-q::after{transform:rotate(45deg)}
+.faq-a{color:var(--dim);font-size:.9rem;max-height:0;overflow:hidden;transition:max-height .4s ease,padding .4s ease}
+.faq-item.open .faq-a{max-height:200px;padding-top:.75rem}
+.footer{text-align:center;padding:5rem 2rem;border-top:1px solid var(--border)}
+.footer .heart{font-size:2rem;display:inline-block;animation:heartbeat 1.5s ease infinite}
+@keyframes heartbeat{0%,100%{transform:scale(1)}15%{transform:scale(1.3)}30%{transform:scale(1)}45%{transform:scale(1.15)}}
+.footer p{color:var(--dim);margin-top:1rem;font-size:.9rem}
+.footer button:hover{border-color:#71717a;background:rgba(255,255,255,.05)}
+.reveal{opacity:0;transform:translateY(40px);transition:all .8s cubic-bezier(.16,1,.3,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.stats{display:flex;gap:3rem;justify-content:center;margin:3rem 0;flex-wrap:wrap}
+.stat{text-align:center}
+.stat-num{font-size:2rem;font-weight:800;background:linear-gradient(135deg,var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-label{font-size:.8rem;color:var(--dim);margin-top:.25rem}
+.saud-text{max-width:700px;margin:0 auto;text-align:center;font-size:1.15rem;color:var(--dim);line-height:1.8;font-style:italic}
+.saud-text strong{color:var(--text)}
+
+.portal-section{position:relative;padding:8rem 2rem;text-align:center;overflow:hidden}
+.portal-section .section-title{margin-bottom:3rem}
+.portal-wrap{position:relative;width:320px;height:320px;margin:0 auto}
+#portal-canvas{position:absolute;top:0;left:0;width:320px;height:320px;border-radius:50%}
+.portal-ring{position:absolute;border-radius:50%;border:1px solid rgba(59,130,246,.15);top:50%;left:50%;transform:translate(-50%,-50%);animation:spin linear infinite}
+.portal-ring:nth-child(2){width:280px;height:280px;animation-duration:8s;border-color:rgba(139,92,246,.12)}
+.portal-ring:nth-child(3){width:240px;height:240px;animation-duration:12s;animation-direction:reverse;border-color:rgba(6,182,212,.1)}
+.portal-ring:nth-child(4){width:200px;height:200px;animation-duration:6s;border-color:rgba(59,130,246,.08)}
+@keyframes spin{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+.portal-label{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:5;font-size:.7rem;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#3b82f6;white-space:nowrap;animation:portalPulse 3s ease infinite;text-shadow:0 0 20px rgba(59,130,246,.5)}
+@keyframes portalPulse{0%,100%{opacity:.6;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.05)}}
+.portal-sub{margin-top:2.5rem;color:#71717a;font-size:.9rem}
+.portal-sub a{color:#3b82f6;text-decoration:none;border-bottom:1px dashed #3b82f6}
+.portal-sub a:hover{color:#fff;border-color:#fff}
+.launch-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;z-index:9999;display:none;flex-direction:column;align-items:center;justify-content:center;opacity:0;transition:opacity .6s ease;backdrop-filter:none}
+.launch-overlay.active{display:flex;opacity:1}
+.launch-terminal{width:min(560px,90vw);background:#0a0a0a;border:1px solid #1a1a1a;border-radius:12px;overflow:hidden;font-family:JetBrains Mono,Menlo,monospace;font-size:.8rem}
+.launch-terminal .terminal-bar{display:flex;align-items:center;gap:6px;padding:10px 14px;background:#111}
+.launch-terminal .terminal-dot{width:10px;height:10px;border-radius:50%}
+.launch-terminal .terminal-dot.r{background:#ff5f57}.launch-terminal .terminal-dot.y{background:#ffbd2e}.launch-terminal .terminal-dot.g{background:#28c840}
+.launch-lines{padding:16px;min-height:200px}
+.launch-line{color:#22c55e;line-height:1.8;opacity:0;transform:translateY(5px);transition:all .3s ease}
+.launch-line.visible{opacity:1;transform:translateY(0)}
+.launch-line .time{color:#555}
+.launch-line .ok{color:#22c55e}
+.launch-line .val{color:#3b82f6}
+.launch-line .warn{color:#fbbf24}
+.launch-countdown{text-align:center;margin-top:3rem;font-size:6rem;font-weight:800;background:linear-gradient(135deg,#3b82f6,#8b5cf6,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;opacity:0;transition:all .5s ease;line-height:1}
+.launch-countdown.visible{opacity:1}
+.launch-enter{text-align:center;margin-top:3rem;opacity:0;transition:all .8s ease}
+.launch-enter.visible{opacity:1}
+.launch-enter-btn{display:inline-block;padding:1.2rem 3rem;border-radius:16px;font-size:1.1rem;font-weight:700;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;cursor:pointer;border:none;text-decoration:none;transition:all .3s ease;box-shadow:0 0 40px rgba(59,130,246,.4)}
+@keyframes launchGlow{0%,100%{box-shadow:0 0 40px rgba(59,130,246,.3)}50%{box-shadow:0 0 80px rgba(59,130,246,.6),0 0 120px rgba(139,92,246,.3)}}
+.launch-enter-btn:hover{transform:scale(1.05);box-shadow:0 0 100px rgba(59,130,246,.5)}
+.launch-enter-sub{color:#71717a;font-size:.8rem;margin-top:1rem;font-family:JetBrains Mono,Menlo,monospace}
+</style>
+</head>
+<body>
+<canvas id="particles"></canvas>
+<div class="content">
+<section class="hero">
+  <div class="hero-badge"><span class="dot"></span> Open-Source Intelligence Engine</div>
+  <h1 class="title">OPENLYSTS</h1>
+  <p class="tagline">You've been late to every major project.<br>Every new framework. Every rising star.<br><em>This stops that.</em></p>
+  <div class="cta-group">
+    <a href="#features" class="btn btn-primary">Explore Features</a>
+    <a href="#install" class="btn btn-secondary">Quick Start</a>
+  </div>
+  <div class="terminal">
+    <div class="terminal-bar">
+      <span class="terminal-dot r"></span><span class="terminal-dot y"></span><span class="terminal-dot g"></span>
+    </div>
+    <div class="terminal-body">
+      <span class="prompt">$</span> git clone https://github.com/Openlyst/openlysts<br>
+      <span class="prompt">$</span> cd openlysts &amp;&amp; npm install<br>
+      <span class="prompt">$</span> npm run dev<br>
+      <span class="dim">&#x27A1;  Local:   http://localhost:5173</span><br>
+      <span class="dim">&#x27A1;  Network: http://192.168.1.42:5173</span><br>
+      <span class="dim">&#x2714; Ready in</span> <span class="blink">_</span>
+    </div>
+  </div>
+</section>
+
+<div class="marquee"><div class="marquee-inner">
+  <span>VELOCITY</span><span>TRAJECTORY</span><span>DISPLACEMENT</span><span>ACCELERATION</span><span>MOMENTUM</span><span>SIGNAL</span><span>DISCOVERY</span><span>EDGE</span>
+  <span>VELOCITY</span><span>TRAJECTORY</span><span>DISPLACEMENT</span><span>ACCELERATION</span><span>MOMENTUM</span><span>SIGNAL</span><span>DISCOVERY</span><span>EDGE</span>
+</div></div>
+<section class="reveal">
+  <div class="saud-text">
+    <p>"<strong>What if every discovery you missed this year wasn't a miss?</strong> What if there was a system that watches the entire open-source ecosystem — every commit, every fork, every abandoned project that's about to resurface — and tells you <strong>before</strong> everyone else?"</p>
+  </div>
+</section>
+
+<section class="reveal" id="features">
+  <div class="section-label">What you get</div>
+  <div class="section-title">Seven things that matter</div>
+  <div class="section-desc">No bloat. No dashboards with 47 tabs. Just the signal you need, fast.</div>
+  <div class="bento">
+    <div class="bento-card"><div class="bento-icon">&#x26A1;</div><div class="bento-title">Velocity Scoring</div><div class="bento-desc">Not stars. Not forks. A composite score that tracks real momentum — commits, contributor growth, issue velocity, and trajectory over time.</div></div>
+    <div class="bento-card"><div class="bento-icon">&#x1F52D;</div><div class="bento-title">Rising Project Detection</div><div class="bento-desc">Identifies projects accelerating before they trend. The signal that separates "I found it early" from "I read about it on HN."</div></div>
+    <div class="bento-card"><div class="bento-icon">&#x1F4B0;</div><div class="bento-title">SaaS Unbundling</div><div class="bento-desc">Type any paid tool. Get the open-source alternative that's actually good. Maps 160+ SaaS categories to free replacements that are production-ready.</div></div>
+    <div class="bento-card"><div class="bento-icon">&#x1F9EC;</div><div class="bento-title">Technology DNA</div><div class="bento-desc">See exactly what a project is built with — languages, frameworks, dependencies — and compare it against alternatives in the same vertical.</div></div>
+    <div class="bento-card"><div class="bento-icon">&#x1F4CA;</div><div class="bento-title">Vertical Intelligence</div><div class="bento-desc">Hundreds of curated categories from "state management" to "edge computing" — each with ranked alternatives, comparative data, and ecosystem context.</div></div>
+    <div class="bento-card"><div class="bento-icon">&#x1F50D;</div><div class="bento-title">Smart Search</div><div class="bento-desc">Fuzzy search across the entire catalog. Find by name, category, language, or description. Results in milliseconds, not seconds.</div></div>
+    <div class="bento-card"><div class="bento-icon">&#x1F9E0;</div><div class="bento-title">Trending Analysis</div><div class="bento-desc">Real-time trending signals across the ecosystem. See what's accelerating, what's decelerating, and what's about to break out.</div></div>
+  </div>
+</section>
+<section class="reveal">
+  <div class="section-label">Why this exists</div>
+  <div class="section-title">Everyone vs. Openlysts</div>
+  <div class="section-desc">The tools you're using now show you what's popular. This shows you what's about to be.</div>
+  <table class="compare-table">
+    <thead><tr><th></th><th>Awesome Lists</th><th>GitHub Trending</th><th>Blog Posts</th><th>Openlysts</th></tr></thead>
+    <tbody>
+      <tr><td>Updated</td><td class="cross">Whenever</td><td class="check">Daily</td><td class="cross">Never</td><td class="check">Live</td></tr>
+      <tr><td>Scored</td><td class="cross">By popularity</td><td class="cross">By stars</td><td class="cross">By opinion</td><td class="check">By velocity</td></tr>
+      <tr><td>Alternatives</td><td class="cross">Manual curation</td><td class="cross">No</td><td class="cross">Maybe</td><td class="check">160+ categories</td></tr>
+      <tr><td>SaaS mapping</td><td class="cross">No</td><td class="cross">No</td><td class="cross">Sometimes</td><td class="check">301+ tools mapped</td></tr>
+      <tr><td>Rising detection</td><td class="cross">No</td><td class="cross">No</td><td class="cross">No</td><td class="check">Yes</td></tr>
+      <tr><td>API access</td><td class="cross">No</td><td class="cross">No</td><td class="cross">No</td><td class="check">RESTful + JSON-LD</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="reveal" id="saas">
+  <div class="section-label">SaaS Unbundling</div>
+  <div class="section-title">Stop paying for things you can self-host</div>
+  <div class="section-desc">Openlysts maintains a living map from paid SaaS tools to open-source alternatives — scored by readiness, community health, and feature parity.</div>
+  <div class="bento" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
+    <div class="bento-card"><div class="bento-title">Slack</div><div class="bento-desc">&#x2192; Matrix, Mattermost, Rocket.Chat</div></div>
+    <div class="bento-card"><div class="bento-title">Datadog</div><div class="bento-desc">&#x2192; Grafana, Prometheus, Jaeger</div></div>
+    <div class="bento-card"><div class="bento-title">Notion</div><div class="bento-desc">&#x2192; AppFlowy, Outline, Logseq</div></div>
+    <div class="bento-card"><div class="bento-title">Jira</div><div class="bento-desc">&#x2192; Plane, Linear (free tier), Taiga</div></div>
+    <div class="bento-card"><div class="bento-title">Salesforce</div><div class="bento-desc">&#x2192; Twenty, Huly, ERPNext</div></div>
+    <div class="bento-card"><div class="bento-title">Vercel</div><div class="bento-desc">&#x2192; Coolify, CapRover, Dokku</div></div>
+  </div>
+  <p style="text-align:center;margin-top:2rem;color:var(--dim);font-size:.9rem">...and 160+ more categories</p>
+</section>
+<section class="reveal">
+  <div class="stats">
+    <div class="stat"><div class="stat-num">Tens of thousands</div><div class="stat-label">Repositories tracked</div></div>
+    <div class="stat"><div class="stat-num">Thousands</div><div class="stat-label">Alternatives mapped</div></div>
+    <div class="stat"><div class="stat-num">300+</div><div class="stat-label">SaaS tools cataloged</div></div>
+    <div class="stat"><div class="stat-num">200+</div><div class="stat-label">Languages covered</div></div>
+  </div>
+</section>
+
+<section class="reveal" id="tech">
+  <div class="section-label">Tech Stack</div>
+  <div class="section-title">Built with intention</div>
+  <div class="section-desc">Every choice was deliberate. Nothing here for the sake of it.</div>
+  <div class="bento" style="grid-template-columns:repeat(3,1fr)">
+    <div class="bento-card"><div class="bento-icon">&#x269B;&#xFE0F;</div><div class="bento-title">Frontend</div><div class="bento-desc">React 19 + Vite 6 &#xB7; TanStack Router &#xB7; Framer Motion &#xB7; Tailwind CSS 4</div></div>
+    <div class="bento-card"><div class="bento-icon">&#x1F527;</div><div class="bento-title">Backend</div><div class="bento-desc">Express.js &#xB7; PostgreSQL &#xB7; Custom RAM catalog engine &#xB7; LRU cache</div></div>
+    <div class="bento-card"><div class="bento-icon">&#x1F6E1;&#xFE0F;</div><div class="bento-title">Quality</div><div class="bento-desc">Playwright E2E &#xB7; Helmet security &#xB7; Strix pentested &#xB7; Zero npm vulns</div></div>
+  </div>
+</section>
+
+<section class="reveal" id="install">
+  <div class="section-label">Quick Start</div>
+  <div class="section-title">Up and running in 60 seconds</div>
+  <div class="bento" style="grid-template-columns:1fr">
+    <div class="bento-card" style="font-family:JetBrains Mono,Menlo,monospace;font-size:.85rem;line-height:2">
+      <div style="color:var(--dim);margin-bottom:.5rem"># Clone and install</div>
+      <div><span style="color:var(--blue)">$</span> git clone https://github.com/Openlyst/openlysts.git</div>
+      <div><span style="color:var(--blue)">$</span> cd openlysts</div>
+      <div><span style="color:var(--blue)">$</span> npm install</div>
+      <div style="color:var(--dim);margin:.5rem 0"># Configure environment</div>
+      <div><span style="color:var(--blue)">$</span> cp .env.example .env</div>
+      <div style="color:var(--dim);margin:.5rem 0"># Start development</div>
+      <div><span style="color:var(--blue)">$</span> npm run dev</div>
+      <div style="color:#22c55e;margin-top:.5rem">&#x2714; Open http://localhost:5173</div>
+    </div>
+  </div>
+</section>
+<section class="reveal" id="faq">
+  <div class="section-label">FAQ</div>
+  <div class="section-title">Questions worth answering</div>
+  <div class="faq-item">
+    <div class="faq-q">Is this just another awesome list?</div>
+    <div class="faq-a">No. Awesome lists are curated by humans with opinions. Openlysts is scored by data — commit velocity, contributor growth, issue resolution rates, and trajectory. It's the difference between someone telling you a stock is "good" and seeing the earnings report.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">How does the scoring work?</div>
+    <div class="faq-a">The Velocity Score is a composite of six signals: commit frequency, contributor growth rate, issue close velocity, fork-to-star ratio, dependency adoption, and recency weight. It's designed to catch momentum before it becomes popularity.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Can I self-host it?</div>
+    <div class="faq-a">Yes. Clone the repo, run npm install, npm run dev. The full catalog engine runs locally. The database is PostgreSQL — connect to your own instance and you're running your own intelligence platform.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">What's the API like?</div>
+    <div class="faq-a">RESTful JSON endpoints with JSON-LD structured data. Search, browse by category, get alternatives, fetch trending data, and access the full catalog. No API key required for the public instance.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Why does this exist?</div>
+    <div class="faq-a">Because most developer tools solve a problem you already have. Openlysts solves one you didn't know you had yet — knowing what's worth your attention before everyone else does. Built by one engineer who got tired of missing things.</div>
+  </div>
+</section>
+
+
+<section class="portal-section reveal" id="portal">
+  <div class="section-label">The Portal</div>
+  <div class="section-title">Ready to see everything?</div>
+  <div class="section-desc" style="margin:0 auto 3rem">This is not a button. It is a wormhole. Hover near it. Watch what happens. Then step through.</div>
+  <div class="portal-wrap" id="portalWrap">
+    <canvas id="portal-canvas" width="320" height="320"></canvas>
+    <div class="portal-ring" style="width:320px;height:320px"></div>
+    <div class="portal-ring"></div>
+    <div class="portal-ring"></div>
+    <div class="portal-ring"></div>
+    <div class="portal-label">ENTER THE ENGINE</div>
+  </div>
+  <p class="portal-sub">The engine is live at <a href="https://openlysts.dpdns.org/" target="_blank">openlysts.dpdns.org</a> — or trigger the launch sequence below</p>
+</section>
+<footer class="footer">
+  <p style="font-size:1.5rem;margin-bottom:1rem">Don't be late again.</p>
+  <button onclick="launchSequence()" style="display:inline-block;margin-bottom:2rem;padding:.8rem 2.5rem;border-radius:12px;font-size:1rem;font-weight:600;border:1px solid #27272a;background:transparent;color:#fafafa;cursor:pointer;transition:all .3s ease">LAUNCH SEQUENCE &#x2192;</button>
+  <br><br>
+  <div class="heart">&#x2764;&#xFE0F;</div>
+  <p>Built with love by <strong style="color:var(--text)">Adil Rafiq Dar</strong></p>
+  <p style="margin-top:.5rem;font-size:.8rem">Openlysts &#xB7; Open-source intelligence for developers who move fast</p>
+</footer>
+</div>
+
+<script>
+var c=document.getElementById('particles'),x=c.getContext('2d');
+var w,h,pts=[];
+function resize(){w=c.width=innerWidth;h=c.height=document.documentElement.scrollHeight}
+resize();
+for(var i=0;i<80;i++)pts.push({x:Math.random()*2e3,y:Math.random()*5e3,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4,r:Math.random()*2+.5});
+function draw(){
+  x.clearRect(0,0,w,h);
+  pts.forEach(function(p,i){
+    p.x+=p.vx;p.y+=p.vy;
+    if(p.x<0||p.x>w)p.vx*=-1;
+    if(p.y<0||p.y>h)p.vy*=-1;
+    x.beginPath();x.arc(p.x,p.y,p.r,0,Math.PI*2);
+    x.fillStyle='rgba(59,130,246,0.35)';x.fill();
+    for(var j=i+1;j<pts.length;j++){
+      var dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);
+      if(d<150){x.beginPath();x.moveTo(pts[i].x,pts[i].y);x.lineTo(pts[j].x,pts[j].y);
+      x.strokeStyle='rgba(59,130,246,'+(1-d/150)*.12+')';x.stroke()}
+    }
+  });
+  requestAnimationFrame(draw);
+}
+draw();
+var obs=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el)});
+document.querySelectorAll('.faq-q').forEach(function(q){q.addEventListener('click',function(){q.parentElement.classList.toggle('open')})});
+
+/* === PORTAL CANVAS === */
+(function(){var pc=document.getElementById("portal-canvas");if(!pc)return;var px=pc.getContext("2d"),pw=320,ph=320,pp=[];for(var i=0;i<120;i++){var a=Math.random()*Math.PI*2,r=Math.random()*160+20;pp.push({a:a,r:r,speed:.005+Math.random()*.015,dr:-.15-Math.random()*.3,size:Math.random()*1.5+.5,hue:200+Math.random()*60})}var mouseX=pw/2,mouseY=ph/2;var wrap=document.getElementById("portalWrap");wrap.addEventListener("mousemove",function(e){var rect=this.getBoundingClientRect();mouseX=e.clientX-rect.left;mouseY=e.clientY-rect.top});function drawPortal(){px.clearRect(0,0,pw,ph);var cx=pw/2,cy=ph/2;var grad=px.createRadialGradient(cx,cy,0,cx,cy,160);grad.addColorStop(0,"rgba(59,130,246,0.08)");grad.addColorStop(.5,"rgba(139,92,246,0.04)");grad.addColorStop(1,"rgba(0,0,0,0)");px.fillStyle=grad;px.fillRect(0,0,pw,ph);var dist=Math.sqrt(Math.pow(mouseX-cx,2)+Math.pow(mouseY-cy,2));var intensity=Math.max(0,1-dist/160);pp.forEach(function(p){p.a+=p.speed*(1+intensity*2);p.r+=p.dr*(1+intensity);if(p.r<5){p.r=160+Math.random()*20;p.a=Math.random()*Math.PI*2}var x=cx+Math.cos(p.a)*p.r;var y=cy+Math.sin(p.a)*p.r;px.beginPath();px.arc(x,y,p.size*(1+intensity),0,Math.PI*2);px.fillStyle="hsla("+p.hue+",80%,"+(55+intensity*30)+"%,"+(0.4+intensity*0.6)+")";px.fill()});if(intensity>.3){px.beginPath();px.arc(cx,cy,30+intensity*20,0,Math.PI*2);px.fillStyle="rgba(59,130,246,"+(intensity*0.15)+")";px.fill()}requestAnimationFrame(drawPortal)}drawPortal()})();
+
+/* === LAUNCH SEQUENCE === */
+var launchData=[{t:"OPENLYSTS INTELLIGENCE ENGINE v2.0",d:0},{t:"• Initializing RAM catalog... <span class=\"ok\">OK</span>",d:300},{t:"• Scanning <span class=\"val\">tens of thousands</span> repositories...",d:600},{t:"• Computing velocity scores... <span class=\"ok\">OK</span>",d:900},{t:"• Mapping <span class=\"val\">160+</span> SaaS displacement signals...",d:1200},{t:"• Loading trending engine... <span class=\"ok\">OK</span>",d:1500},{t:"• Connecting to <span class=\"val\">openlysts.dpdns.org</span>...",d:1800},{t:"• Security: <span class=\"ok\">Helmet + Rate Limiter</span>",d:2100},{t:"• Cache: <span class=\"val\">LRU</span> | DB: <span class=\"val\">PostgreSQL</span> | Latency: <span class=\"ok\">&lt;50ms</span>",d:2400},{t:"✔ All systems nominal. <span class=\"warn\">LAUNCH READY</span>",d:2700}];
+function launchSequence(){var ov=document.getElementById("launchOverlay");var lc=document.getElementById("launchLines");var cd=document.getElementById("launchCountdown");var en=document.getElementById("launchEnter");ov.style.display="flex";setTimeout(function(){ov.classList.add("active")},50);lc.innerHTML="";cd.classList.remove("visible");en.classList.remove("visible");launchData.forEach(function(l){setTimeout(function(){var div=document.createElement("div");div.className="launch-line";div.innerHTML="<span class=\"time\">[" + new Date().toLocaleTimeString() + "]</span> " + l.t;lc.appendChild(div);setTimeout(function(){div.classList.add("visible")},50)},l.d)});setTimeout(function(){var n=5;cd.textContent=n;cd.classList.add("visible");var tm=setInterval(function(){n--;if(n>0){cd.textContent=n;cd.style.transform="scale(1.2)";setTimeout(function(){cd.style.transform="scale(1)"},150)}else{clearInterval(tm);cd.textContent="GO";cd.style.transform="scale(1.5)";setTimeout(function(){cd.classList.remove("visible");en.classList.add("visible")},800)}},700)},3200)}
+document.addEventListener("keydown",function(e){if(e.key==="Escape"){var o=document.getElementById("launchOverlay");o.classList.remove("active");setTimeout(function(){o.style.display="none"},600)}});
+var pw2=document.getElementById("portalWrap");if(pw2){pw2.addEventListener("click",function(){launchSequence()});pw2.style.cursor="pointer"}
+
+</script>
+
+<div class="launch-overlay" id="launchOverlay">
+  <div class="launch-terminal">
+    <div class="terminal-bar">
+      <span class="terminal-dot r"></span><span class="terminal-dot y"></span><span class="terminal-dot g"></span>
+    </div>
+    <div class="launch-lines" id="launchLines"></div>
+  </div>
+  <div class="launch-countdown" id="launchCountdown"></div>
+  <div class="launch-enter" id="launchEnter">
+    <a href="https://openlysts.dpdns.org/" class="launch-enter-btn">ENTER OPENLYSTS &#x27A1;</a>
+    <div class="launch-enter-sub">or press ESC to abort</div>
+  </div>
+</div>
+</body>
+</html>
