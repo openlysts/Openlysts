@@ -1,53 +1,66 @@
 <div align="center">
 
 <a href="https://openlysts.dpdns.org">
-<img src="public/logo.png" alt="Openlysts" width="90" />
+  <img src="public/logo.png" alt="Openlysts" width="90" />
 </a>
 
-<!-- Animated title using SVG -->
-<h1>
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=42&duration=3000&pause=1000&color=3B82F6&center=true&vCenter=true&multiline=true&repeat=true&width=600&height=60&lines=OPENLYSTS;The+telescope+that+sees+what%27s+next" alt="OPENLYSTS" />
-</h1>
+<br/>
 
+# OPENLYSTS
+### The telescope that sees what's next.
+
+<br/>
+
+<p align="center">
+  <i>You've been late to every major project.<br/>
+  Kubernetes. Tailwind. Bun. Next.js.<br/>
+  You found out six months after they mattered.<br/>
+  <b>This time, you won't be.</b></i>
+</p>
+
+<br/>
+
+<a href="https://openlysts.dpdns.org">
+  <img src="public/hero-dashboard.jpg" alt="Openlysts Platform Dashboard" width="100%" style="border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);" />
+</a>
+
+<br/>
 <br/>
 
 <a href="https://github.com/Openlyst/openlysts">
-  <img src="https://img.shields.io/github/stars/Openlyst/openlysts?style=social&label=Stars" alt="Stars" />
+  <img src="https://img.shields.io/github/stars/Openlyst/openlysts?style=flat-square&color=000000&logo=github&logoColor=white&label=STARS" alt="Stars" />
 </a>
 <a href="https://github.com/Openlyst/openlysts/fork">
-  <img src="https://img.shields.io/github/forks/Openlyst/openlysts?style=social&label=Forks" alt="Forks" />
+  <img src="https://img.shields.io/github/forks/Openlyst/openlysts?style=flat-square&color=000000&logo=github&logoColor=white&label=FORKS" alt="Forks" />
 </a>
 <a href="https://github.com/Openlyst/openlysts/issues">
-  <img src="https://img.shields.io/github/issues/Openlyst/openlysts?color=red" alt="Issues" />
+  <img src="https://img.shields.io/github/issues/Openlyst/openlysts?style=flat-square&color=000000&logo=github&logoColor=white" alt="Issues" />
 </a>
 <a href="https://github.com/Openlyst/openlysts/pulls">
-  <img src="https://img.shields.io/github/issues-pr/Openlyst/openlysts?color=purple" alt="PRs" />
+  <img src="https://img.shields.io/github/issues-pr/Openlyst/openlysts?style=flat-square&color=000000&logo=github&logoColor=white" alt="PRs" />
 </a>
 <a href="https://github.com/Openlyst/openlysts/blob/main/LICENSE">
-  <img src="https://img.shields.io/github/license/Openlyst/openlysts?color=green" alt="License" />
-</a>
-<a href="https://openlysts.dpdns.org">
-  <img src="https://img.shields.io/badge/🌐_LIVE_DEMO-3b82f6?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo" />
+  <img src="https://img.shields.io/github/license/Openlyst/openlysts?style=flat-square&color=000000" alt="License" />
 </a>
 <a href="https://github.com/Openlyst/openlysts/actions">
-  <img src="https://img.shields.io/badge/build-passing-brightgreen?style=for-the-badge" alt="Build" />
+  <img src="https://img.shields.io/badge/BUILD-PASSING-000000?style=flat-square&logo=githubactions&logoColor=white" alt="Build" />
 </a>
 
 <br/>
 <br/>
 
-> ### You've been late to every major project.
-> ### Kubernetes. Tailwind. Bun. Next.js.
-> ### You found out six months after they mattered.
-> **This time, you won't be.**
+<a href="https://openlysts.dpdns.org">
+  <img src="https://img.shields.io/badge/ENTER_PLATFORM-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo" />
+</a>
+&nbsp;&nbsp;
+<a href="https://openlysts.pages.dev">
+  <img src="https://img.shields.io/badge/VIEW_DOCUMENTATION-1A1A1A?style=for-the-badge" alt="Docs" />
+</a>
 
-</div>
+<br/>
+<br/>
 
----
-
-<div align="center">
-
-**[🚀 See the Full Experience (Animated)](https://openlysts.pages.dev)** · [Quick Start](#-quick-start) · [SaaS Unbundling](#-the-saas-unbundling--mapped) · [API Docs](#-api-access) · [FAQ](#-faq)
+**[Quick Start](#-quick-start)** · **[SaaS Unbundling](#-the-saas-unbundling--mapped)** · **[API Docs](#-api-access)** · **[FAQ](#-faq)**
 
 </div>
 
