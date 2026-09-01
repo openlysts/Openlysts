@@ -52,3 +52,8 @@ test-results/
 playwright-report/
 .env*
 
+# Organized Output & Temp Folders
+scratch/
+reports/
+archive/
+.temp/
