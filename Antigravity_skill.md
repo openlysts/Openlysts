@@ -48,17 +48,16 @@ The frontend uses `@tanstack/react-query` with background polling (`refetchInter
 
 ## 4. Multi-Branch Git & Production Release Workflow
 
-Openlysts enforces a strict 4-branch architecture (`experimental` -> `dev` -> `main` -> `backup`):
+Openlysts enforces a strict 3-branch architecture (`experimental` -> `dev` -> `main`):
 
 - **`experimental`**: Working branch where active coding occurs.
 - **`dev`**: Staging sync.
 - **`main`**: Production release branch. **Vercel production deployments MUST ONLY and ALWAYS be executed while checked out to `main` (`git checkout main`).**
-- **`backup`**: Rollback snapshot.
 
 ### Production Release Protocol:
 1. `npm run lint; npm run typecheck; npm run build` (Verify 0 errors).
 2. Commit on `experimental`.
-3. Fast-forward merge `experimental` -> `dev` -> `main` -> `backup` and push all branches to remote.
+3. Fast-forward merge `experimental` -> `dev` -> `main` and push all branches to remote.
 4. `git checkout main`
 5. `npx vercel --prod --yes --force` (or `vercel build --prod` + `vercel deploy --prebuilt --prod --yes`).
 6. Verify live deployment at `https://openlysts.vercel.app`.

@@ -11,5 +11,3 @@ export default function EasterEggsOverlay() {
     </>
   );
 }
-
-console.log('EasterEggsOverlay file loaded');

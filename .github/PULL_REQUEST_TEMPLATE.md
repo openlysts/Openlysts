@@ -55,5 +55,3 @@
 
 ---
 
-**Generated with Codebuff 🤖**
-Co-Authored-By: Codebuff <noreply@codebuff.com>

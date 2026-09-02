@@ -96,6 +96,8 @@ export async function initSchema(db) {
       workspace_name TEXT,
       onboarded INTEGER,
       settings TEXT,
+      failed_login_attempts INTEGER DEFAULT 0,
+      locked_until TEXT,
       totp_secret TEXT,
       totp_enabled INTEGER DEFAULT 0,
       consent_given_at TEXT,

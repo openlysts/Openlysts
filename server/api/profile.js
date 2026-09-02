@@ -194,4 +194,10 @@ router.delete('/', async (req, res) => {
   }
 });
 
+import syncBookmarks from '../functions/syncBookmarks.js';
+
+// ─── POST /api/profile/bookmarks/sync ───────────────────────────────
+
+router.post('/bookmarks/sync', syncBookmarks);
+
 export default router;

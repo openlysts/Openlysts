@@ -466,7 +466,7 @@ export default function Register() {
 
               <div className="flex justify-center pt-2">
                 <Turnstile
-                  siteKey="0x4AAAAAAEhvTMENfU1-v3c7"
+                  siteKey={import.meta.env.DEV ? "1x00000000000000000000AA" : "0x4AAAAAAEhvTMENfU1-v3c7"}
                   onSuccess={(token) => setTurnstileToken(token)}
                   options={{ theme: 'dark' }}
                 />

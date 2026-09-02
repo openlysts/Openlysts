@@ -13,6 +13,16 @@ import { invalidateRepositoriesCache } from '../functions/queryRepositories.js';
 
 const router = Router();
 
+import express from 'express';
+
+// Accept CSP violation reports (No Auth Required for browser reporting)
+router.post('/csp-report', express.json({ type: ['application/json', 'application/csp-report'] }), (req, res) => {
+  if (process.env.NODE_ENV === 'development') {
+    console.warn('[CSP VIOLATION]', req.body);
+  }
+  res.status(204).end();
+});
+
 // All admin routes require authentication + ADMIN role
 router.use(requireAuth, requireRole(ROLES.ADMIN));
 
@@ -63,6 +73,11 @@ router.get('/telemetry', async (req, res) => {
         memoryRssMb: Math.round(memory.rss / (1024 * 1024)),
         memoryHeapUsedMb: Math.round(memory.heapUsed / (1024 * 1024)),
         nodeVersion: process.version,
+      },
+      databasePool: {
+        total: db.totalCount || 0,
+        idle: db.idleCount || 0,
+        waiting: db.waitingCount || 0,
       }
     });
   } catch (err) {

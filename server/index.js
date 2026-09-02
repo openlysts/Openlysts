@@ -59,6 +59,7 @@ app.use(helmet({
       connectSrc: ["'self'", "https://api.github.com"],
       frameSrc: ["'self'", "https://www.youtube.com", "https://challenges.cloudflare.com"],
       upgradeInsecureRequests: [],
+      reportUri: '/api/admin/csp-report',
     },
   },
 }));

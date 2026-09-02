@@ -7,17 +7,16 @@ Every Git operation in Openlysts MUST follow these standards. No exceptions.
 ## 1. Branch Strategy
 
 ```
-experimental → dev → main → backup
-     ↑           ↑       ↑        ↑
-  Development  Staging  Prod   Rollback
+experimental → dev → main
+     ↑           ↑       ↑
+  Development  Staging  Production
 ```
 
 | Branch | Purpose | Deploy | Merge Direction |
 |---|---|---|---|
 | `experimental` | Active development | None | → dev |
 | `dev` | Staging | Vercel preview | → main |
-| `main` | Production | Vercel production | → backup |
-| `backup` | Disaster recovery | None | ← main only |
+| `main` | Production | Vercel production | — |
 
 ---
 
@@ -90,7 +89,7 @@ git add .
 git commit -m "feat/fix: description"
 git push origin experimental
 
-# 2. Sync all branches
+# 2. Sync branches
 git checkout dev
 git merge experimental --ff-only || git merge experimental
 git push origin dev
@@ -98,10 +97,6 @@ git push origin dev
 git checkout main
 git merge dev --ff-only || git merge dev
 git push origin main
-
-git checkout backup
-git merge main --ff-only || git merge main
-git push origin backup
 
 # 3. Deploy from main
 git checkout main
@@ -142,7 +137,7 @@ git push origin v1.0.0
 
 ## 6. Forbidden
 
-- NEVER force-push to `main` or `backup`
+- NEVER force-push to `main`
 - NEVER commit directly to `main`
 - NEVER commit `.env`, `.env.local`, or secrets
 - NEVER commit `node_modules/` or `dist/`

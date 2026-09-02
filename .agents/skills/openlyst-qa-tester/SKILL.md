@@ -711,6 +711,10 @@ Document: Counts for each page
 - **Steps**: Rapidly double-click "Run Ingestion" or "Recalculate Scores"
 - **Verify**: Prevent duplicate concurrent pipeline runs (idempotency lock / disabled button during execution)
 
+### TC-114b: About Page Creator Modal & CTA Verification
+- **Steps**: Navigate to `/about` → Verify visibility of "Star us on GitHub" CTA and "About Creator & Architect" button → Click "About Creator & Architect" → Verify modal appears with blur background and traps scroll → Verify modal displays Creator Info (Avatar, Badges, Narrative) and social links → Close modal via 'X' or backdrop click
+- **Verify**: Modal opens and closes properly, document scroll is prevented while open, all 3D effects and links inside the modal are functional.
+
 
 ## PHASE 18: Video Explanations & Multimodal Integration
 

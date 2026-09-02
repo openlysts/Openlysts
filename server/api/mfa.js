@@ -132,7 +132,7 @@ router.post('/passkey/register/verify', requireAuth, async (req, res) => {
       const { credential, credentialDeviceType, credentialBackedUp } = registrationInfo;
 
       await db.query(
-        `INSERT INTO "Passkey" (id, user_id, webauthn_user_id, credential_id, public_key, counter, device_type, backed_up, created_at)
+        `INSERT INTO "Passkey" (id, user_id, webauthn_user_id, credential_id, public_key, counter, device_type, backed_up, created_date)
          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
         [
           crypto.randomUUID(),
@@ -142,8 +142,8 @@ router.post('/passkey/register/verify', requireAuth, async (req, res) => {
           Buffer.from(credential.publicKey).toString('base64'),
           credential.counter,
           credentialDeviceType,
-          credentialBackedUp,
-          new Date()
+          credentialBackedUp ? 1 : 0,
+          new Date().toISOString()
         ]
       );
 

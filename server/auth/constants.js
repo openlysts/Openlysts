@@ -48,6 +48,7 @@ export const AUDIT_ACTIONS = Object.freeze({
   QUERY_CREATED: 'QUERY_CREATED',
   QUERY_UPDATED: 'QUERY_UPDATED',
   CACHE_FLUSHED: 'CACHE_FLUSHED',
+  USER_DELETED_SELF: 'USER_DELETED_SELF',
 });
 
 // Role → permissions mapping (extensible for future roles)

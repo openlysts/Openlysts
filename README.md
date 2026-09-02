@@ -180,7 +180,7 @@ Relevance = (TextScore × 1.5) + (AuthorityScore × 0.5)
 ```
 ┌─────────────────────────────────────────────────┐
 │                   Frontend                       │
-│   React 19 · Vite 6 · TanStack Router · Framer │
+│   React 18 · Vite 6 · React Router v7 · Framer │
 ├─────────────────────────────────────────────────┤
 │                   Backend                        │
 │   Express.js · PostgreSQL · RAM Catalog Engine  │
@@ -227,9 +227,9 @@ GET /api/search?q=` | Fuzzy search across entire catalog |
 
 | Frontend | Backend | Quality |
 |:---|:---|:---|
-| React 19 | Node.js + Express 5 | Playwright E2E |
+| React 18 | Node.js + Express 5 | Playwright E2E |
 | Vite 6 | PostgreSQL (Neon) | Strix pentesting |
-| Tailwind CSS 4 | In-memory catalog engine | OWASP Top 10 |
+| Tailwind CSS 3 | In-memory catalog engine | OWASP Top 10 |
 | Framer Motion | LRU/TTL caching | 0 npm vulnerabilities |
 | Three.js | bcrypt + session auth | Rate limiting (4 tiers) |
 | Recharts | Cloudflare Turnstile | CSP + HSTS headers |

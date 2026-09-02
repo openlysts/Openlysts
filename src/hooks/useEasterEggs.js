@@ -31,7 +31,6 @@ export function useEasterEggs() {
       if (e.key.toLowerCase() === KONAMI_CODE[konamiIndex].toLowerCase()) {
         konamiIndex++;
         if (konamiIndex === KONAMI_CODE.length) {
-          console.log("KONAMI TRIGGERED!");
           setKonamiActive(true);
           const root = document.getElementById('root');
           if (root) root.classList.add('konami-active');

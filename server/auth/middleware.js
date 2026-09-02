@@ -184,6 +184,15 @@ export const resetRateLimiter = rateLimit({
   message: { error: true, message: 'Too many reset requests. Please try again later.' },
 });
 
+/** Rate limiter for password reset execution: 5 / 15 min per IP in prod */
+export const passwordResetExecuteLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: true, message: 'Too many reset execution attempts. Please try again later.' },
+});
+
 /** General API rate limiter: 100 requests / 15 min */
 export const generalRateLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
