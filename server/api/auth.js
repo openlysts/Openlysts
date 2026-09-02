@@ -7,7 +7,7 @@ import crypto from 'crypto';
 import { db } from '../db/index.js';
 import { hashPassword, verifyPassword, validatePasswordStrength, normalizeEmail } from '../auth/password.js';
 import { ROLES, ACCOUNT_STATUS, AUTH_PROVIDERS, AUDIT_ACTIONS, TOKEN_EXPIRY } from '../auth/constants.js';
-import { requireAuth, loginRateLimiter, registerRateLimiter, resetRateLimiter } from '../auth/middleware.js';
+import { requireAuth, loginRateLimiter, registerRateLimiter, resetRateLimiter, passwordResetExecuteLimiter } from '../auth/middleware.js';
 import { logAuditEvent, getRequestMeta } from '../auth/audit.js';
 import { sendPasswordResetEmail, sendVerificationEmail, sendDuplicateRegistrationEmail, isSmtpConfigured } from '../auth/email.js';
 import { getGoogleAuthUrl, exchangeGoogleCode, getGithubAuthUrl, exchangeGithubCode, findOrCreateOAuthUser, generateOAuthState, verifyOAuthState } from '../auth/oauth.js';
@@ -153,11 +153,15 @@ router.post('/login', loginRateLimiter, async (req, res) => {
 
     const emailNorm = normalizeEmail(email);
     const { rows } = await db.query(
-      'SELECT id, name, email, password_hash, role, account_status, email_verified, email_normalized, avatar_url, has_seen_tour, totp_enabled FROM "User" WHERE email_normalized = $1',
+      'SELECT id, name, email, password_hash, role, account_status, email_verified, email_normalized, avatar_url, has_seen_tour, totp_enabled, failed_login_attempts, locked_until FROM "User" WHERE email_normalized = $1',
       [emailNorm]
     );
 
     const user = rows[0];
+
+    if (user && user.locked_until && new Date(user.locked_until) > new Date()) {
+      return res.status(403).json({ error: true, message: 'Account locked due to too many failed attempts. Try again later.' });
+    }
 
     // Generic error for both wrong email and wrong password
     if (!user || !user.password_hash) {
@@ -173,14 +177,28 @@ router.post('/login', loginRateLimiter, async (req, res) => {
     const passwordValid = await verifyPassword(password, user.password_hash);
     
     if (!passwordValid) {
+      const attempts = (user.failed_login_attempts || 0) + 1;
+      let lockedUntil = null;
+      let message = 'Invalid email or password.';
+      
+      if (attempts >= 5) {
+        lockedUntil = new Date(Date.now() + 15 * 60 * 1000).toISOString(); // 15 mins
+        message = 'Account locked due to too many failed attempts. Try again later.';
+      }
+
+      await db.query(
+        'UPDATE "User" SET failed_login_attempts = $1, locked_until = $2 WHERE id = $3',
+        [attempts, lockedUntil, user.id]
+      );
+
       const meta = getRequestMeta(req);
       await logAuditEvent({
         actorId: user.id,
         action: AUDIT_ACTIONS.USER_LOGIN_FAILED,
         ...meta,
-        metadata: { reason: 'invalid_password' },
+        metadata: { reason: 'invalid_password', attempts, lockedUntil },
       });
-      return res.status(401).json({ error: true, message: 'Invalid email or password.' });
+      return res.status(401).json({ error: true, message });
     }
 
     // Check account status
@@ -224,9 +242,9 @@ router.post('/login', loginRateLimiter, async (req, res) => {
     req.session.userId = user.id;
     delete req.session.pendingUserId;
 
-    // Update last login
+    // Update last login and reset attempts
     await db.query(
-      'UPDATE "User" SET last_login_at = $1, updated_at = $1 WHERE id = $2',
+      'UPDATE "User" SET last_login_at = $1, updated_at = $1, failed_login_attempts = 0, locked_until = NULL WHERE id = $2',
       [new Date().toISOString(), user.id]
     );
 
@@ -651,7 +669,7 @@ router.post('/password/reset-request', resetRateLimiter, async (req, res) => {
 
 // ─── Password Reset Execute ─────────────────────────────────────────
 
-router.post('/password/reset', async (req, res) => {
+router.post('/password/reset', passwordResetExecuteLimiter, async (req, res) => {
   try {
     const { token, password } = req.body;
 

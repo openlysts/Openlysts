@@ -140,7 +140,7 @@ export default function RepositoryCard({ repo, index = 0, view = 'grid', showTre
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         style={{ rotateX, rotateY }}
-        className={`card card-hover flex p-4 pt-4.5 relative rounded-xl border bg-bg-card transition-[border-color,box-shadow,background-color] duration-200 group touch-active overflow-hidden select-none ${isTrending ? 'border-trending/40 shadow-[0_0_15px_rgba(255,100,50,0.15)]' : 'border-border'} ${view === 'list' ? 'flex-col md:flex-row items-start gap-4 md:gap-6' : 'flex-col gap-3'}`}
+        className={`card card-hover h-full flex p-4 pt-4.5 relative rounded-xl border bg-bg-card transition-[border-color,box-shadow,background-color] duration-200 group touch-active overflow-hidden select-none ${isTrending ? 'border-trending/40 shadow-[0_0_15px_rgba(255,100,50,0.15)]' : 'border-border'} ${view === 'list' ? 'flex-col md:flex-row items-start gap-4 md:gap-6' : 'flex-col gap-3'}`}
       >
         <motion.div 
           className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0 mix-blend-overlay"

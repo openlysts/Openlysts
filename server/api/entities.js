@@ -107,7 +107,6 @@ router.post('/:entity/:action', async (req, res, next) => {
       result = await service.list(req.body.sort, req.body.limit);
     } else if (action === 'filter') {
       try {
-        console.log('[DEBUG req.body]', req.body);
         const validatedWhere = validateWhere(entity, req.body.where || {});
         result = await service.filter(validatedWhere, req.body.sort, req.body.limit);
       } catch (e) {

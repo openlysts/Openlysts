@@ -615,8 +615,10 @@ export default async function runIngestion(req, res) {
       console.warn('[INGESTION] FATAL: CRON_SECRET is not set or empty. Ingestion API disabled for security.');
       return res.status(500).json({ error: true, message: 'Server misconfiguration: CRON_SECRET missing or empty' });
     }
-    
-    if (!authHeader || authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+    const isCron = authHeader && authHeader === `Bearer ${process.env.CRON_SECRET}`;
+    const isAdmin = req.user && req.user.role === 'ADMIN';
+
+    if (!isCron && !isAdmin) {
       console.warn('[INGESTION] Unauthorized attempt to trigger ingestion.');
       return res.status(401).json({ error: true, message: 'Unauthorized' });
     }
@@ -624,6 +626,7 @@ export default async function runIngestion(req, res) {
     const result = await executeIngestion();
     return res.json(result);
   } catch (error) {
+    console.error('[INGESTION] Error executing ingestion:', error);
     return res.status(500).json({ error: true, message: error.message });
   }
 }

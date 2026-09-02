@@ -85,8 +85,8 @@
     "query_string": "llama.cpp",
     "category_hint": "Local AI",
     "enabled": true,
-    "last_run_at": null,
-    "current_page": null,
+    "last_run_at": "2026-09-02T07:21:16.093Z",
+    "current_page": 2,
     "description": null
   },
   {
@@ -95,8 +95,8 @@
     "query_string": "machine learning",
     "category_hint": "Machine Learning",
     "enabled": true,
-    "last_run_at": null,
-    "current_page": null,
+    "last_run_at": "2026-09-02T07:21:04.193Z",
+    "current_page": 2,
     "description": null
   },
   {
@@ -105,37 +105,7 @@
     "query_string": "AI framework",
     "category_hint": "Libraries & Frameworks",
     "enabled": true,
-    "last_run_at": null,
-    "current_page": null,
-    "description": null
-  },
-  {
-    "id": "f8d06734-f6e3-4919-961e-2aad3fe13132",
-    "created_date": "2026-08-29T03:34:05.073Z",
-    "query_string": "react",
-    "category_hint": "Web Frameworks",
-    "enabled": true,
-    "last_run_at": "2026-08-31T18:05:53.396Z",
-    "current_page": 2,
-    "description": null
-  },
-  {
-    "id": "9fe27cbb-3b81-4656-8aaf-c954018ff23d",
-    "created_date": "2026-08-29T03:34:05.073Z",
-    "query_string": "vue",
-    "category_hint": "Web Frameworks",
-    "enabled": true,
-    "last_run_at": "2026-08-31T18:05:42.830Z",
-    "current_page": 2,
-    "description": null
-  },
-  {
-    "id": "f151497b-02d8-44e7-8408-0e287450ec24",
-    "created_date": "2026-08-29T03:34:05.073Z",
-    "query_string": "nextjs",
-    "category_hint": "Web Frameworks",
-    "enabled": true,
-    "last_run_at": "2026-08-31T18:05:31.248Z",
+    "last_run_at": "2026-09-02T07:20:51.478Z",
     "current_page": 2,
     "description": null
   },
@@ -456,6 +426,36 @@
     "category_hint": "Languages",
     "enabled": true,
     "last_run_at": "2026-08-31T18:02:18.943Z",
+    "current_page": 2,
+    "description": null
+  },
+  {
+    "id": "f151497b-02d8-44e7-8408-0e287450ec24",
+    "created_date": "2026-08-29T03:34:05.073Z",
+    "query_string": "nextjs",
+    "category_hint": "Web Frameworks",
+    "enabled": true,
+    "last_run_at": "2026-08-31T18:05:31.248Z",
+    "current_page": 2,
+    "description": null
+  },
+  {
+    "id": "9fe27cbb-3b81-4656-8aaf-c954018ff23d",
+    "created_date": "2026-08-29T03:34:05.073Z",
+    "query_string": "vue",
+    "category_hint": "Web Frameworks",
+    "enabled": true,
+    "last_run_at": "2026-08-31T18:05:42.830Z",
+    "current_page": 2,
+    "description": null
+  },
+  {
+    "id": "f8d06734-f6e3-4919-961e-2aad3fe13132",
+    "created_date": "2026-08-29T03:34:05.073Z",
+    "query_string": "react",
+    "category_hint": "Web Frameworks",
+    "enabled": true,
+    "last_run_at": "2026-08-31T18:05:53.396Z",
     "current_page": 2,
     "description": null
   }

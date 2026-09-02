@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Activity, Database, RefreshCw, Calculator, Trash2, 
@@ -12,9 +12,9 @@ import { runIngestion, recalculateScores, reclassifyRepos, syncCatalogToNeon } f
 import { CATEGORIES } from '@/lib/categories';
 import { useAuth } from '@/lib/AuthContext';
 import { useToast } from '@/components/ui/use-toast';
+import { queryClientInstance as queryClient } from '@/lib/query-client';
 
 export default function Admin() {
-  const queryClient = useQueryClient();
   const { user: currentUser } = useAuth();
   const { toast } = useToast();
 
@@ -443,6 +443,8 @@ export default function Admin() {
           featured: editingRepo.featured,
           hidden: editingRepo.hidden,
           staff_pick: editingRepo.staff_pick,
+          categories: Array.isArray(editingRepo.categories) ? editingRepo.categories : [],
+          tags: Array.isArray(editingRepo.tags) ? editingRepo.tags : [],
         }),
       });
       const data = await res.json();

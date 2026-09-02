@@ -48,7 +48,6 @@
     "setup": "bash scripts/setup.sh",
     "db:reset": "bash scripts/db-reset.sh --confirm",
     "db:backup": "bash scripts/backup.sh",
-    "db:seed-script": "bash scripts/seed.sh",
     "audit:lighthouse": "npx lighthouse-ci autorun",
     "audit:accessibility": "bash scripts/audit/a11y-audit.sh"
   },

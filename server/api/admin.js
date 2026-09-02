@@ -73,6 +73,11 @@ router.get('/telemetry', async (req, res) => {
         memoryRssMb: Math.round(memory.rss / (1024 * 1024)),
         memoryHeapUsedMb: Math.round(memory.heapUsed / (1024 * 1024)),
         nodeVersion: process.version,
+      },
+      databasePool: {
+        total: db.totalCount || 0,
+        idle: db.idleCount || 0,
+        waiting: db.waitingCount || 0,
       }
     });
   } catch (err) {

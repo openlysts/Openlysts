@@ -14,6 +14,8 @@ import 'highlight.js/styles/atom-one-dark.css';
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 import LicenseBadge from '@/components/openlyst/LicenseBadge';
 import RepoVideoLinks from '@/components/openlyst/RepoVideoLinks';
+import RepoVideoSection from '@/components/openlyst/RepoVideoSection';
+import TranslateDescription from '@/components/openlyst/TranslateDescription';
 import RepositoryCard from '@/components/openlyst/RepositoryCard';
 
 function formatNum(n) {
@@ -228,7 +230,7 @@ export default function RepoDetail() {
                 </button>
               </div>
 
-              <p className="text-text-secondary text-base leading-relaxed mb-5">{repo.description || 'No description available.'}</p>
+              <TranslateDescription text={repo.description || 'No description available.'} />
 
               {repo.archived && (
                 <div className="flex items-center gap-2 px-3 py-2.5 rounded-xl bg-nonoss-soft text-nonoss text-sm font-medium mb-5">
@@ -284,10 +286,7 @@ export default function RepoDetail() {
 
           {/* Videos Section */}
           <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: 0.1 }}>
-            <div className="card p-6">
-              <h2 className="text-xl font-bold text-text mb-5">Tutorials & Explanations</h2>
-              <RepoVideoLinks repo={repo} />
-            </div>
+            <RepoVideoSection repo={repo} />
           </motion.div>
 
           {/* README Section — only shown for GitHub repos */}

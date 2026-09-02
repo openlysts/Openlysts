@@ -1470,5 +1470,28 @@
       }
     ],
     "timestamp": 1787924008478
+  },
+  "chat2db/chat2db": {
+    "videos": [
+      {
+        "video_id": "lGE_0Y6-SMo",
+        "title": "Chat2DB - The Ultimate AI-Powered SQL Tool (complete beginners tutorial)",
+        "channel": "James Willett",
+        "url": "https://youtube.com/watch?v=lGE_0Y6-SMo"
+      },
+      {
+        "video_id": "kz3AysTvEYE",
+        "title": "Chat2DB: Build SQL AI Chatbots To Talk To Database! (Opensource)",
+        "channel": "WorldofAI",
+        "url": "https://youtube.com/watch?v=kz3AysTvEYE"
+      },
+      {
+        "video_id": "bCsp-tf-VOE",
+        "title": "Chat2DB-tutorial-01",
+        "channel": "Chat2DB",
+        "url": "https://youtube.com/watch?v=bCsp-tf-VOE"
+      }
+    ],
+    "timestamp": 1788338179724
   }
 }
