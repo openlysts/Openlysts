@@ -124,7 +124,7 @@
     "react-hook-form": "^7.54.2",
     "react-joyride": "^3.2.0",
     "react-markdown": "^9.0.1",
-    "react-resizable-panels": "^2.1.7",
+    "react-resizable-panels": "^4.12.3",
     "react-router": "^7.18.3",
     "react-router-dom": "^7.18.3",
     "recharts": "^3.10.1",
