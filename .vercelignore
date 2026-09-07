@@ -1,0 +1,16 @@
+node_modules
+.git
+.agents
+.vercel
+.playwright-mcp
+data/*.db
+data/*.db-shm
+data/*.db-wal
+*.log
+logs
+dist
+.vscode
+.idea
+*.md
+!README.md
+cloudflared*

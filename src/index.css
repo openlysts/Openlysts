@@ -1,0 +1,609 @@
+/* Fonts are loaded from index.html <link> tags (preconnect + non-render-blocking) —
+   an @import here would serialize the font CSS fetch behind this stylesheet. */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root, [data-theme="light"] {
+    --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --holographic-glare: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.4) 25%, rgba(255,255,255,0.6) 50%, transparent 55%);
+    --bg: 210 20% 98%;
+    --bg-card: 0 0% 100%;
+    --bg-subtle: 215 25% 94%;
+    --bg-hover: 215 25% 90%;
+    --text: 222 47% 11%;
+    --text-secondary: 215 25% 30%;
+    --text-muted: 215 20% 44%;
+    --border: 214 20% 86%;
+    --border-strong: 214 22% 74%;
+    --accent: 142 71% 28%;
+    --accent-rgb: 20, 121, 58;
+    --accent-fg: 0 0% 100%;
+    --accent-soft: 142 71% 94%;
+    --trending: 25 95% 38%;
+    --trending-soft: 25 95% 94%;
+    --oss: 142 71% 40%;
+    --oss-soft: 142 71% 94%;
+    --unknown: 215 20% 42%;
+    --unknown-soft: 210 20% 92%;
+    --nonoss: 0 72% 48%;
+    --nonoss-soft: 0 72% 95%;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+    --shadow-lg: 0 12px 32px rgba(0,0,0,0.10), 0 4px 8px rgba(0,0,0,0.05);
+    --shadow-hover: 0 16px 40px rgba(0,0,0,0.12), 0 6px 12px rgba(0,0,0,0.06);
+  }
+
+  [data-theme="dark"] {
+    --bg: 222 47% 7%;
+    --bg-card: 222 44% 10%;
+    --bg-subtle: 222 40% 13%;
+    --bg-hover: 222 40% 16%;
+    --text: 210 20% 96%;
+    --text-secondary: 215 16% 75%;
+    --text-muted: 215 14% 65%;
+    --border: 217 19% 20%;
+    --border-strong: 217 19% 28%;
+    --accent: 142 71% 52%;
+    --accent-rgb: 74, 222, 128;
+    --accent-fg: 222 47% 9%;
+    --accent-soft: 142 40% 14%;
+    --trending: 25 95% 58%;
+    --trending-soft: 25 50% 16%;
+    --oss: 142 71% 52%;
+    --oss-soft: 142 40% 14%;
+    --unknown: 215 16% 55%;
+    --unknown-soft: 215 20% 16%;
+    --nonoss: 0 72% 58%;
+    --nonoss-soft: 0 40% 16%;
+    --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.35), 0 2px 4px rgba(0,0,0,0.2);
+    --shadow-lg: 0 12px 32px rgba(0,0,0,0.4), 0 4px 8px rgba(0,0,0,0.25);
+    --shadow-hover: 0 16px 40px rgba(0,0,0,0.5), 0 6px 12px rgba(0,0,0,0.3);
+  }
+
+  [data-theme="slate"] {
+    --bg: 210 30% 14%;
+    --bg-card: 210 32% 18%;
+    --bg-subtle: 210 28% 22%;
+    --bg-hover: 210 28% 26%;
+    --text: 200 30% 92%;
+    --text-secondary: 200 18% 68%;
+    --text-muted: 200 14% 52%;
+    --border: 210 20% 28%;
+    --border-strong: 210 20% 36%;
+    --accent: 199 89% 48%;
+    --accent-rgb: 14, 165, 233;
+    --accent-fg: 210 40% 10%;
+    --accent-soft: 199 50% 20%;
+    --trending: 25 95% 58%;
+    --trending-soft: 25 50% 18%;
+    --oss: 142 71% 52%;
+    --oss-soft: 142 40% 16%;
+    --unknown: 200 14% 55%;
+    --unknown-soft: 200 20% 20%;
+    --nonoss: 0 72% 58%;
+    --nonoss-soft: 0 40% 18%;
+    --shadow: 0 1px 3px rgba(0,0,0,0.25), 0 1px 2px rgba(0,0,0,0.15);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.3), 0 2px 4px rgba(0,0,0,0.18);
+    --shadow-lg: 0 12px 32px rgba(0,0,0,0.35), 0 4px 8px rgba(0,0,0,0.22);
+    --shadow-hover: 0 16px 40px rgba(0,0,0,0.42), 0 6px 12px rgba(0,0,0,0.28);
+  }
+
+  [data-theme="creme"] {
+    --bg: 40 30% 96%;
+    --bg-card: 40 33% 99%;
+    --bg-subtle: 40 25% 91%;
+    --bg-hover: 40 25% 86%;
+    --text: 30 35% 15%;
+    --text-secondary: 30 25% 30%;
+    --text-muted: 30 20% 44%;
+    --border: 40 22% 82%;
+    --border-strong: 40 25% 70%;
+    --accent: 20 80% 40%;
+    --accent-rgb: 184, 75, 20;
+    --accent-fg: 0 0% 100%;
+    --accent-soft: 20 80% 92%;
+    --trending: 15 90% 40%;
+    --trending-soft: 15 90% 92%;
+    --oss: 120 40% 45%;
+    --oss-soft: 120 40% 92%;
+    --unknown: 30 20% 46%;
+    --unknown-soft: 40 25% 88%;
+    --nonoss: 0 65% 50%;
+    --nonoss-soft: 0 60% 92%;
+    --shadow: 0 1px 3px rgba(100, 80, 60, 0.06), 0 1px 2px rgba(100, 80, 60, 0.04);
+    --shadow-md: 0 4px 12px rgba(100, 80, 60, 0.08), 0 2px 4px rgba(100, 80, 60, 0.04);
+    --shadow-lg: 0 12px 32px rgba(100, 80, 60, 0.10), 0 4px 8px rgba(100, 80, 60, 0.05);
+    --shadow-hover: 0 16px 40px rgba(100, 80, 60, 0.12), 0 6px 12px rgba(100, 80, 60, 0.06);
+  }
+
+  [data-theme="dracula"] {
+    --bg: 231 15% 18%;
+    --bg-card: 231 15% 21%;
+    --bg-subtle: 231 15% 25%;
+    --bg-hover: 231 15% 28%;
+    --text: 60 30% 96%;
+    --text-secondary: 231 15% 75%;
+    --text-muted: 231 15% 60%;
+    --border: 231 15% 30%;
+    --border-strong: 231 15% 40%;
+    --accent: 326 100% 74%;
+    --accent-rgb: 255, 121, 198;
+    --accent-fg: 231 15% 18%;
+    --accent-soft: 326 50% 25%;
+    --trending: 41 100% 69%;
+    --trending-soft: 41 50% 25%;
+    --oss: 135 94% 65%;
+    --oss-soft: 135 50% 25%;
+    --unknown: 231 15% 60%;
+    --unknown-soft: 231 15% 25%;
+    --nonoss: 0 100% 67%;
+    --nonoss-soft: 0 50% 25%;
+    --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.35), 0 2px 4px rgba(0,0,0,0.2);
+    --shadow-lg: 0 12px 32px rgba(0,0,0,0.4), 0 4px 8px rgba(0,0,0,0.25);
+    --shadow-hover: 0 16px 40px rgba(0,0,0,0.5), 0 6px 12px rgba(0,0,0,0.3);
+  }
+
+  [data-theme="ocean"] {
+    --bg: 220 50% 10%;
+    --bg-card: 220 45% 14%;
+    --bg-subtle: 220 40% 18%;
+    --bg-hover: 220 40% 22%;
+    --text: 200 40% 95%;
+    --text-secondary: 200 25% 72%;
+    --text-muted: 210 20% 55%;
+    --border: 220 40% 26%;
+    --border-strong: 220 40% 36%;
+    --accent: 190 80% 60%;
+    --accent-rgb: 71, 215, 235;
+    --accent-fg: 220 50% 10%;
+    --accent-soft: 190 80% 20%;
+    --trending: 30 90% 60%;
+    --trending-soft: 30 50% 20%;
+    --oss: 150 70% 50%;
+    --oss-soft: 150 50% 20%;
+    --unknown: 210 20% 55%;
+    --unknown-soft: 220 50% 20%;
+    --nonoss: 350 70% 60%;
+    --nonoss-soft: 350 50% 20%;
+    --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.35), 0 2px 4px rgba(0,0,0,0.2);
+    --shadow-lg: 0 12px 32px rgba(0,0,0,0.4), 0 4px 8px rgba(0,0,0,0.25);
+    --shadow-hover: 0 16px 40px rgba(0,0,0,0.5), 0 6px 12px rgba(0,0,0,0.3);
+  }
+
+  [data-theme="forest"] {
+    --bg: 140 30% 12%;
+    --bg-card: 140 30% 16%;
+    --bg-subtle: 140 30% 20%;
+    --bg-hover: 140 30% 24%;
+    --text: 120 20% 92%;
+    --text-secondary: 120 15% 70%;
+    --text-muted: 120 15% 55%;
+    --border: 140 25% 26%;
+    --border-strong: 140 25% 36%;
+    --accent: 90 60% 50%;
+    --accent-rgb: 128, 204, 51;
+    --accent-fg: 140 30% 10%;
+    --accent-soft: 90 60% 20%;
+    --trending: 30 80% 60%;
+    --trending-soft: 30 50% 20%;
+    --oss: 140 50% 60%;
+    --oss-soft: 140 50% 20%;
+    --unknown: 120 15% 55%;
+    --unknown-soft: 140 30% 20%;
+    --nonoss: 350 60% 60%;
+    --nonoss-soft: 350 50% 20%;
+    --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.35), 0 2px 4px rgba(0,0,0,0.2);
+    --shadow-lg: 0 12px 32px rgba(0,0,0,0.4), 0 4px 8px rgba(0,0,0,0.25);
+    --shadow-hover: 0 16px 40px rgba(0,0,0,0.5), 0 6px 12px rgba(0,0,0,0.3);
+  }
+
+  [data-theme="royal"] {
+    --bg: 260 20% 98%;
+    --bg-card: 0 0% 100%;
+    --bg-subtle: 260 25% 94%;
+    --bg-hover: 260 25% 89%;
+    --text: 260 60% 14%;
+    --text-secondary: 260 35% 30%;
+    --text-muted: 260 25% 44%;
+    --border: 260 20% 84%;
+    --border-strong: 260 25% 72%;
+    --accent: 45 90% 45%;
+    --accent-rgb: 218, 163, 11;
+    --accent-fg: 0 0% 100%;
+    --accent-soft: 45 90% 92%;
+    --trending: 15 90% 50%;
+    --trending-soft: 15 90% 92%;
+    --oss: 120 40% 45%;
+    --oss-soft: 120 40% 92%;
+    --unknown: 260 25% 46%;
+    --unknown-soft: 260 20% 90%;
+    --nonoss: 0 65% 50%;
+    --nonoss-soft: 0 60% 92%;
+    --shadow: 0 1px 3px rgba(40, 20, 60, 0.05), 0 1px 2px rgba(40, 20, 60, 0.03);
+    --shadow-md: 0 4px 12px rgba(40, 20, 60, 0.08), 0 2px 4px rgba(40, 20, 60, 0.04);
+    --shadow-lg: 0 12px 32px rgba(40, 20, 60, 0.10), 0 4px 8px rgba(40, 20, 60, 0.05);
+    --shadow-hover: 0 16px 40px rgba(40, 20, 60, 0.12), 0 6px 12px rgba(40, 20, 60, 0.06);
+  }
+
+  [data-theme="sand"] {
+    --bg: 30 25% 95%;
+    --bg-card: 30 35% 99%;
+    --bg-subtle: 30 25% 90%;
+    --bg-hover: 30 25% 84%;
+    --text: 215 60% 15%;
+    --text-secondary: 215 35% 30%;
+    --text-muted: 215 25% 44%;
+    --border: 30 20% 80%;
+    --border-strong: 30 22% 68%;
+    --accent: 35 80% 42%;
+    --accent-rgb: 193, 119, 21;
+    --accent-fg: 0 0% 100%;
+    --accent-soft: 35 60% 90%;
+    --trending: 15 90% 50%;
+    --trending-soft: 15 90% 92%;
+    --oss: 120 40% 45%;
+    --oss-soft: 120 40% 92%;
+    --unknown: 215 25% 46%;
+    --unknown-soft: 215 20% 88%;
+    --nonoss: 0 65% 50%;
+    --nonoss-soft: 0 60% 92%;
+    --shadow: 0 1px 3px rgba(40, 30, 20, 0.06), 0 1px 2px rgba(40, 30, 20, 0.04);
+    --shadow-md: 0 4px 12px rgba(40, 30, 20, 0.08), 0 2px 4px rgba(40, 30, 20, 0.05);
+    --shadow-lg: 0 12px 32px rgba(40, 30, 20, 0.10), 0 4px 8px rgba(40, 30, 20, 0.06);
+    --shadow-hover: 0 16px 40px rgba(40, 30, 20, 0.12), 0 6px 12px rgba(40, 30, 20, 0.07);
+  }
+
+  [data-theme="mint"] {
+    --bg: 150 20% 96%;
+    --bg-card: 150 25% 99%;
+    --bg-subtle: 150 20% 90%;
+    --bg-hover: 150 20% 85%;
+    --text: 160 60% 12%;
+    --text-secondary: 160 35% 28%;
+    --text-muted: 160 25% 42%;
+    --border: 150 20% 82%;
+    --border-strong: 150 22% 70%;
+    --accent: 150 50% 40%;
+    --accent-rgb: 51, 153, 102;
+    --accent-fg: 0 0% 100%;
+    --accent-soft: 150 40% 90%;
+    --trending: 35 90% 48%;
+    --trending-soft: 35 90% 90%;
+    --oss: 150 50% 40%;
+    --oss-soft: 150 40% 90%;
+    --unknown: 160 25% 44%;
+    --unknown-soft: 160 20% 88%;
+    --nonoss: 0 65% 50%;
+    --nonoss-soft: 0 60% 92%;
+    --shadow: 0 1px 3px rgba(20, 60, 40, 0.05), 0 1px 2px rgba(20, 60, 40, 0.03);
+    --shadow-md: 0 4px 12px rgba(20, 60, 40, 0.07), 0 2px 4px rgba(20, 60, 40, 0.04);
+    --shadow-lg: 0 12px 32px rgba(20, 60, 40, 0.09), 0 4px 8px rgba(20, 60, 40, 0.05);
+    --shadow-hover: 0 16px 40px rgba(20, 60, 40, 0.11), 0 6px 12px rgba(20, 60, 40, 0.06);
+  }
+
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  *:focus-visible {
+    outline: 2px solid hsl(var(--accent));
+    outline-offset: 2px;
+  }
+
+  *:focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11", "calt", "liga";
+    font-optical-sizing: auto;
+    background: hsl(var(--bg));
+    color: hsl(var(--text));
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: hsl(var(--text));
+    text-rendering: optimizeLegibility;
+  }
+
+  p, span, a, label, input, button {
+    text-rendering: optimizeLegibility;
+  }
+
+  .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+    font-feature-settings: "liga" 1, "calt" 1;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: hsl(var(--border-strong)); border-radius: 9999px; border: 2px solid hsl(var(--bg)); }
+::-webkit-scrollbar-thumb:hover { background: hsl(var(--text-muted)); }
+
+/* Hide scrollbar for horizontal pill rows */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Card */
+.card {
+  background: hsl(var(--bg-card));
+  border: 1px solid hsl(var(--border));
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+}
+.card-hover {
+  transition: transform 0.4s var(--ease-spring), box-shadow 0.4s var(--ease-spring), border-color 0.2s ease;
+}
+.card-hover:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 36px rgba(0,0,0,0.18), 0 0 20px rgba(var(--accent-rgb), 0.2);
+  border-color: hsl(var(--accent) / 0.6);
+}
+.card-hover:active {
+  transform: translateY(-2px) scale(0.97);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12), 0 0 10px rgba(var(--accent-rgb), 0.1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  /* Konami easter egg rotates the whole page — disable its transform under reduced motion */
+  #root.konami-active {
+    transform: none !important;
+    transition: none !important;
+    filter: none !important;
+  }
+}
+
+/* Typography theme overrides for Markdown */
+.prose {
+  color: hsl(var(--text-secondary)) !important;
+}
+.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+  color: hsl(var(--text)) !important;
+}
+.prose a {
+  color: hsl(var(--accent)) !important;
+}
+.prose strong {
+  color: hsl(var(--text)) !important;
+}
+.prose code {
+  color: hsl(var(--text)) !important;
+}
+.prose pre {
+  background-color: hsl(var(--bg-subtle)) !important;
+  color: hsl(var(--text)) !important;
+}
+.prose blockquote {
+  border-left-color: hsl(var(--border-strong)) !important;
+  color: hsl(var(--text-muted)) !important;
+}
+.prose hr {
+  border-color: hsl(var(--border)) !important;
+}
+.prose thead {
+  color: hsl(var(--text)) !important;
+  border-bottom-color: hsl(var(--border-strong)) !important;
+}
+.prose tbody tr {
+  border-bottom-color: hsl(var(--border)) !important;
+}
+#root.konami-active {
+  transition: transform 1.5s ease-in-out, filter 1.5s ease-in-out;
+  transform: rotateX(180deg);
+  filter: invert(1) hue-rotate(180deg);
+}
+
+/* ─── Mobile, Tablet & Touch Device Utilities ─── */
+
+/* Eliminate 300ms tap delay and mobile grey highlight */
+button, a, input, select, textarea, [role="button"], [tabindex="0"] {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Safe Area Insets for modern iOS & Android devices */
+.pt-safe {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.pl-safe {
+  padding-left: env(safe-area-inset-left, 0px);
+}
+.pr-safe {
+  padding-right: env(safe-area-inset-right, 0px);
+}
+.mb-safe {
+  margin-bottom: env(safe-area-inset-bottom, 0px);
+}
+.bottom-safe {
+  bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Smooth Touch Scrolling with momentum inertia */
+.touch-scroll {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* WCAG 2.5.5 minimum 44px tap target utility */
+.touch-target {
+  min-width: 44px;
+  min-height: 44px;
+}
+
+/* Touch-specific feedback: replace stuck hover states with crisp active touch feedback */
+@media (hover: none) and (pointer: coarse) {
+  .card-hover:hover {
+    transform: none !important;
+    box-shadow: var(--shadow) !important;
+    border-color: hsl(var(--border)) !important;
+  }
+  .card-hover:active,
+  .touch-active:active {
+    transform: scale(0.985) !important;
+    transition: transform 0.08s ease !important;
+  }
+  button:active, a:active {
+    opacity: 0.85;
+  }
+}
+
+/* Remove default tap highlight (blue/grey flash) on iOS Safari & Android Chrome */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Discovery Rail — Cinematic Horizontal Scroll */
+.discovery-rail {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-behavior: smooth;
+  padding-bottom: 1rem;
+  align-items: stretch;
+}
+.discovery-rail::-webkit-scrollbar {
+  display: none;
+}
+.discovery-rail-card {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+  width: 300px;
+}
+@media (min-width: 640px) {
+  .discovery-rail-card { width: 340px; }
+}
+@media (min-width: 1024px) {
+  .discovery-rail-card { width: 360px; }
+}
+
+/* Magnetic Button & Fluid Feel */
+.magnetic-button {
+  transition: transform 0.3s var(--ease-spring), background-color 0.2s ease, box-shadow 0.2s ease;
+}
+.magnetic-button:active {
+  transform: scale(0.95) !important;
+}
+
+/* Dark-theme shade swaps for fixed Tailwind palette chips (difficulty pills,
+   repo status badges). The app themes via [data-theme], not the .dark class,
+   so Tailwind's `dark:` variant never activates here — emulate the intended
+   dark:*-300 tints with explicit rules so text on 10% tinted pills stays ≥4.5:1
+   in dark themes too (the 500/600 shades are only safe on light backgrounds). */
+[data-theme="dark"] .text-emerald-600,
+[data-theme="dark"] .text-emerald-700 { color: #6ee7b7; } /* emerald-300 */
+[data-theme="dark"] .text-green-600 { color: #86efac; } /* green-300 */
+[data-theme="dark"] .text-blue-600 { color: #93c5fd; } /* blue-300 */
+[data-theme="dark"] .text-purple-600 { color: #d8b4fe; } /* purple-300 */
+[data-theme="dark"] .text-orange-600 { color: #fdba74; } /* orange-300 */
+[data-theme="dark"] .text-red-600 { color: #fca5a5; } /* red-300 */
+[data-theme="dark"] .text-slate-600 { color: #cbd5e1; } /* slate-300 */
+
+/* Holographic Glare Overlay */
+.holographic-sheen {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--holographic-glare);
+  background-size: 200% 200%;
+  opacity: 0;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.group:hover .holographic-sheen, .card-hover:hover .holographic-sheen {
+  opacity: 1;
+}
+
+/* ═══ Accessibility engine (WCAG AA) ═════════════════════════════════
+   Driven by data-* attributes set on <html> by src/lib/accessibility.js
+   from the user's Settings → Accessibility panel + OS media queries.   */
+
+/* Text scaling: rem-based Tailwind sizes grow proportionally. */
+html[data-font-size="large"] { font-size: 17px; }
+html[data-font-size="xlarge"] { font-size: 19px; }
+
+/* Reduced motion — user-chosen kill switch (mirrors the OS media query
+   below so it also applies when the user opts out even if the OS doesn't). */
+html[data-motion="reduced"] *,
+html[data-motion="reduced"] *::before,
+html[data-motion="reduced"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+html[data-motion="reduced"] .card-hover:hover { transform: none; }
+
+/* High contrast: lift muted/secondary text toward the primary tone and
+   strengthen borders so 4.5:1 contrast holds for small text. */
+[data-theme="light"][data-contrast="high"] {
+  --text-muted: 222 40% 22%;
+  --text-secondary: 222 42% 16%;
+  --border: 214 24% 62%;
+  --border-strong: 214 26% 48%;
+}
+[data-theme="dark"][data-contrast="high"] {
+  --text-muted: 215 20% 88%;
+  --text-secondary: 210 20% 93%;
+  --border: 217 24% 46%;
+  --border-strong: 217 26% 58%;
+}
+[data-theme="slate"][data-contrast="high"] {
+  --text-muted: 200 20% 84%;
+  --text-secondary: 200 22% 92%;
+  --border: 210 24% 48%;
+  --border-strong: 210 26% 58%;
+}
+/* Underline only inline text links (prose/paragraphs/lists/tables), never
+   block-level link cards, nav items, icon buttons or logo links — a blanket
+   underline paints stray lines under every <a> when high contrast is on. */
+[data-contrast="high"] p a,
+[data-contrast="high"] li a,
+[data-contrast="high"] td a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Strong focus indicators for keyboard / screen-reader users. */
+html[data-focus="strong"] :focus-visible {
+  outline: 3px solid hsl(var(--accent));
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px hsl(var(--bg));
+}

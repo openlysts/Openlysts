@@ -1,0 +1,515 @@
+import React, { useState, useEffect, useMemo } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { localClient } from '@/api/localClient';
+import { motion } from 'framer-motion';
+import { Star, GitFork, AlertCircle, Calendar, Clock, ExternalLink, ArrowLeft, Bookmark, Flame, TrendingUp, Activity, ShieldCheck, CopyPlus, Sparkles, List } from 'lucide-react';
+import { getLanguageColor } from '@/lib/languageColors';
+import { isBookmarked, toggleBookmark, persistBookmarkToggle } from '@/lib/bookmarks';
+import { useAuth } from '@/lib/AuthContext';
+import { getRepoReadme, getSimilarRepos, getRepoHistory } from '@/lib/api';
+import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
+import rehypeHighlight from 'rehype-highlight';
+import 'highlight.js/styles/atom-one-dark.css';
+import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
+import LicenseBadge from '@/components/openlyst/LicenseBadge';
+import RepoVideoSection from '@/components/openlyst/RepoVideoSection';
+import TranslateDescription from '@/components/openlyst/TranslateDescription';
+import RepositoryCard from '@/components/openlyst/RepositoryCard';
+import QualityRadar from '@/components/openlyst/QualityRadar';
+import CommunityGraph from '@/components/openlyst/CommunityGraph';
+
+// ── README TOC helpers (live data, no deps) ────────────────────────────
+function stripMarkdown(text) {
+  return String(text)
+    .replace(/[`*_~[\]]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function slugifyHeading(text) {
+  return String(text)
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
+}
+
+function headingText(children) {
+  return React.Children.toArray(children)
+    .map((child) => {
+      if (typeof child === 'string') return child;
+      if (child && typeof child === 'object' && !Array.isArray(child) && 'props' in child && child.props && child.props.children != null) {
+        return headingText(child.props.children);
+      }
+      return '';
+    })
+    .join('');
+}
+
+// Renders a heading level with a stable id matching the rail TOC.
+const HeadingWithId = (Tag) => function HeadingWithIdInner({ children }) {
+  return <Tag id={slugifyHeading(stripMarkdown(headingText(children)))}>{children}</Tag>;
+};
+
+function formatNum(n) {
+  if (!n) return '0';
+  if (n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
+  return String(n);
+}
+
+function formatDate(dateStr) {
+  if (!dateStr) return '—';
+  return new Date(dateStr).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+}
+
+function timeAgo(dateStr) {
+  if (!dateStr) return '';
+  const diff = Date.now() - new Date(dateStr).getTime();
+  const hrs = Math.floor(diff / 3600000);
+  if (hrs < 1) return 'just now';
+  if (hrs < 24) return `${hrs}h ago`;
+  const days = Math.floor(hrs / 24);
+  if (days < 30) return `${days}d ago`;
+  const months = Math.floor(days / 30);
+  if (months < 12) return `${months}mo ago`;
+  return `${Math.floor(months / 12)}y ago`;
+}
+
+export default function RepoDetail() {
+  const { owner, name } = useParams();
+  const navigate = useNavigate();
+  const [bookmarked, setBookmarked] = useState(false);
+
+  const { data: repo, isLoading } = useQuery({
+    queryKey: ['repo', owner, name],
+    /** @returns {Promise<any>} */
+    queryFn: async () => {
+      if (!owner || !name) return null;
+      
+      // 1. Try case-insensitive full_name filter
+      let results = await localClient.entities.Repository.filter({ full_name: `${owner}/${name}` }, '-stars', 5);
+      if (results && results[0]) return results[0];
+
+      // 2. Try match by repository name
+      results = await localClient.entities.Repository.filter({ name: name }, '-stars', 10);
+      if (results && results.length > 0) {
+        const exact = results.find(r => (r.owner || '').toLowerCase() === owner.toLowerCase());
+        if (exact) return exact;
+      }
+
+      // 3. Fallback to GitHub public API if repository is not yet in local database
+      try {
+        const ghRes = await fetch(`https://api.github.com/repos/${owner}/${name}`);
+        if (ghRes.ok) {
+          const ghData = await ghRes.json();
+          return {
+            id: String(ghData.id),
+            name: ghData.name,
+            full_name: ghData.full_name,
+            owner: ghData.owner?.login || owner,
+            description: ghData.description || '',
+            stars: ghData.stargazers_count || 0,
+            forks: ghData.forks_count || 0,
+            language: ghData.language || 'Unknown',
+            topics: ghData.topics || [],
+            categories: [],
+            github_updated_at: ghData.updated_at,
+            html_url: ghData.html_url,
+            homepage_url: ghData.homepage || '',
+            default_branch: ghData.default_branch || 'main',
+            open_issues_count: ghData.open_issues_count || 0,
+            license_spdx: ghData.license?.spdx_id || 'Other'
+          };
+        }
+      } catch (e) {
+        console.warn('GitHub API fallback fetch failed:', e);
+      }
+
+      return null;
+    }
+  });
+
+  const { data: readme, isLoading: isReadmeLoading } = useQuery({
+    queryKey: ['readme', owner, name],
+    queryFn: async () => {
+      try {
+        const data = await getRepoReadme(`${owner}/${name}`, repo?.default_branch);
+        return data.readme || '';
+      } catch (err) {
+        return '';
+      }
+    },
+    enabled: !!repo && (repo.source_type !== 'oss_project') && (repo.html_url?.includes('github.com') ?? true)
+  });
+
+  // Extract heading structure from the live README for the right-rail TOC.
+  const readmeToc = useMemo(() => {
+    if (!readme) return [];
+    const entries = [];
+    let inFence = false;
+    for (const rawLine of readme.split(/\r?\n/)) {
+      const line = rawLine.trim();
+      if (line.startsWith('```')) { inFence = !inFence; continue; }
+      if (inFence) continue;
+      const m = line.match(/^(#{2,3})\s+(.+)$/);
+      if (m) {
+        const level = m[1].length;
+        const text = stripMarkdown(m[2]);
+        if (text) entries.push({ level, text, id: slugifyHeading(text) });
+      }
+    }
+    return entries;
+  }, [readme]);
+
+  const scrollToHeading = (id) => {
+    const container = document.querySelector('[data-tour="repo-readme"] .overflow-y-auto');
+    const el = container ? container.querySelector(`[id="${id}"]`) : null;
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  const { data: similarRepos } = useQuery({
+    queryKey: ['similarRepos', owner, name],
+    queryFn: async () => {
+      const data = await getSimilarRepos(`${owner}/${name}`);
+      return data.similarRepos || [];
+    },
+    enabled: !!repo
+  });
+
+  const { data: historyData } = useQuery({
+    queryKey: ['repoHistory', repo?.id],
+    queryFn: async () => {
+      const data = await getRepoHistory(repo.id);
+      return (data.history || []).map(h => ({
+        date: new Date(h.snapshot_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+        stars: h.stars
+      }));
+    },
+    enabled: !!repo?.id
+  });
+
+  useEffect(() => {
+    if (repo) {
+      setBookmarked(isBookmarked(repo.id));
+      document.title = `Openlysts — ${repo.name} | Open-Source Discovery`;
+      
+      // Update recently viewed history
+      try {
+        const stored = localStorage.getItem('openlyst_history');
+        let history = stored ? JSON.parse(stored) : [];
+        // Remove if already exists to push to front
+        history = history.filter(r => r.id !== repo.id);
+        history.unshift({
+          id: repo.id,
+          name: repo.name,
+          full_name: repo.full_name,
+          owner: repo.owner,
+          description: repo.description,
+          stars: repo.stars,
+          forks: repo.forks,
+          language: repo.language,
+          difficulty: repo.difficulty,
+          categories: repo.categories,
+          topics: repo.topics,
+          archived: repo.archived,
+          github_updated_at: repo.github_updated_at,
+          trending_score: repo.trending_score
+        });
+        // Keep only last 10
+        if (history.length > 10) history = history.slice(0, 10);
+        localStorage.setItem('openlyst_history', JSON.stringify(history));
+      } catch (e) {
+        console.error('Failed to update history', e);
+      }
+    }
+  }, [repo]);
+
+  const { isAuthenticated } = useAuth();
+
+  const handleBookmark = () => {
+    if (!repo) return;
+    const nowBookmarked = toggleBookmark(repo.id);
+    setBookmarked(nowBookmarked);
+    persistBookmarkToggle(repo.id, nowBookmarked, isAuthenticated);
+  };
+
+  if (isLoading) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+        <div className="card p-6 h-96 animate-pulse">
+          <div className="h-6 bg-bg-subtle rounded w-1/3 mb-4" />
+          <div className="h-4 bg-bg-subtle rounded w-2/3 mb-8" />
+          <div className="h-3 bg-bg-subtle rounded w-full mb-2" />
+          <div className="h-3 bg-bg-subtle rounded w-5/6" />
+        </div>
+      </div>
+    );
+  }
+
+  if (!repo) {
+    return (
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-20 text-center">
+        <AlertCircle className="w-10 h-10 text-text-muted mx-auto mb-3" />
+        <h1 className="text-xl font-bold text-text mb-1">Repository not found</h1>
+        <p className="text-text-muted text-sm mb-4">This repository may have been removed or not yet ingested.</p>
+        <Link to="/discover" className="inline-flex items-center gap-1.5 text-accent hover:underline">
+          <ArrowLeft className="w-4 h-4" /> Back to Discover
+        </Link>
+      </div>
+    );
+  }
+
+  const langColor = getLanguageColor(repo.language);
+  const isTrending = (repo.trending_score || 0) > 10;
+  const isGithub = (repo.source_type !== 'oss_project') && (repo.html_url?.includes('github.com') ?? true);
+
+  return (
+    <div className="max-w-7xl xl:max-w-[1440px] mx-auto px-4 sm:px-6 py-6 lg:py-8">
+      <button onClick={() => navigate(-1)} className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] gap-1.5 text-sm text-text-muted hover:text-text mb-5 -ml-3 px-3 touch-target">
+        <ArrowLeft className="w-4 h-4" /> Back
+      </button>
+
+      <div className="lg:grid lg:grid-cols-12 gap-8 items-start">
+        
+        {/* Main Column (Left) */}
+        <div className="lg:col-span-8 xl:col-span-8 space-y-6">
+          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
+            {/* Header */}
+            <div className="card p-6">
+              <div className="flex items-start justify-between gap-4 mb-3">
+                <div>
+                  <h1 className="text-2xl md:text-3xl font-bold text-text tracking-tight">{repo.name}</h1>
+                  <p className="text-text-muted text-base mt-1">{repo.owner}</p>
+                </div>
+                <button
+                  onClick={handleBookmark}
+                  className={`flex items-center justify-center gap-1.5 px-4 h-11 sm:h-10 rounded-lg text-sm font-medium border transition-colors ${
+                    bookmarked ? 'bg-accent-soft text-accent border-accent' : 'bg-bg-card text-text-secondary border-border hover:bg-bg-hover'
+                  }`}
+                >
+                  <Bookmark className="w-4 h-4" fill={bookmarked ? 'currentColor' : 'none'} />
+                  {bookmarked ? 'Saved' : 'Save'}
+                </button>
+              </div>
+
+              <TranslateDescription text={repo.description || 'No description available.'} />
+
+              {repo.archived && (
+                <div className="flex items-center gap-2 px-3 py-2.5 rounded-xl bg-nonoss-soft text-nonoss text-sm font-medium mb-5">
+                  <AlertCircle className="w-4 h-4" />
+                  This repository is archived and no longer maintained.
+                </div>
+              )}
+
+              <div className="flex flex-wrap gap-2 mb-4">
+                {(repo.categories || []).map((cat) => (
+                  <Link key={cat} to={`/search?categories=${encodeURIComponent(cat.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and'))}`}>
+                    <span className="flex items-center justify-center px-3 min-h-[44px] sm:min-h-[32px] rounded-lg text-[13px] font-medium bg-accent-soft text-accent hover:opacity-80 cursor-pointer">
+                      {cat}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+
+              <div className="flex flex-wrap gap-1.5 mb-6">
+                {(repo.topics || []).map((t) => (
+                  <span key={t} className="px-2 py-1 rounded-md text-[11px] bg-bg-subtle text-text-muted font-mono tracking-wide pointer-events-none">
+                    {t}
+                  </span>
+                ))}
+              </div>
+
+              <div className="flex flex-wrap items-center gap-3" data-tour="repo-links">
+                <Link to={`/compare?repos=${repo.full_name}`} className="flex items-center justify-center gap-2 px-5 h-11 sm:h-10 rounded-xl border border-border text-text-secondary font-medium text-sm hover:bg-bg-hover transition-colors shadow-sm">
+                  <CopyPlus className="w-4 h-4" /> Compare
+                </Link>
+                <a href={repo.html_url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 px-6 h-11 sm:h-10 rounded-xl bg-accent text-accent-fg font-bold text-sm hover:opacity-90 transition-opacity shadow-md">
+                  <ExternalLink className="w-4 h-4" />
+                  {isGithub ? 'Open on GitHub' : 'Visit Website'}
+                </a>
+                {repo.homepage_url && (
+                  <a href={repo.homepage_url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 px-5 h-11 sm:h-10 rounded-xl border border-border text-text-secondary font-medium text-sm hover:bg-bg-hover transition-colors shadow-sm">
+                    <ExternalLink className="w-4 h-4" />
+                    Homepage
+                  </a>
+                )}
+              {isGithub && (
+                  <a
+                    href={`/food-for-ai/${encodeURIComponent(repo.id)}`}
+                    className="flex items-center justify-center gap-2 px-6 h-11 sm:h-10 rounded-xl font-bold text-sm bg-bg-card border border-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] hover:bg-bg-hover transition-all"
+                  >
+                    <Sparkles className="w-4 h-4 text-pink-400" />
+                    <span className="bg-gradient-to-r from-pink-400 to-indigo-400 bg-clip-text text-transparent">Food for AI</span>
+                  </a>
+                )}
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Community Graph — verified alternatives knowledge-graph edges */}
+          <CommunityGraph repo={repo} />
+
+          {/* Videos Section */}
+          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: 0.1 }}>
+            <RepoVideoSection repo={repo} />
+          </motion.div>
+
+          {/* README Section — only shown for GitHub repos */}
+          {isGithub && (
+          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: 0.2 }}>
+            <div className="card p-6 md:p-8" data-tour="repo-readme">
+              <h2 className="text-xl font-bold text-text mb-6">README</h2>
+              <div className="prose prose-sm sm:prose-base dark:prose-invert max-w-none break-words text-text-secondary max-h-[800px] overflow-y-auto">
+                {isReadmeLoading ? (
+                  <div className="animate-pulse space-y-4">
+                    <div className="h-5 bg-bg-subtle rounded w-3/4"></div>
+                    <div className="h-5 bg-bg-subtle rounded w-full"></div>
+                    <div className="h-5 bg-bg-subtle rounded w-5/6"></div>
+                    <div className="h-5 bg-bg-subtle rounded w-1/2 mt-4"></div>
+                  </div>
+                ) : readme ? (
+                  <ReactMarkdown
+                    rehypePlugins={[rehypeRaw, rehypeHighlight]}
+                    components={{ h2: HeadingWithId('h2'), h3: HeadingWithId('h3') }}
+                  >
+                    {readme}
+                  </ReactMarkdown>
+                ) : (
+                  <p className="text-text-muted italic">No README found for this repository.</p>
+                )}
+              </div>
+            </div>
+          </motion.div>
+          )}
+        </div>
+
+        {/* Sidebar Column (Right) */}
+        <div className="lg:col-span-4 xl:col-span-4 space-y-6 mt-6 lg:mt-0 lg:sticky lg:top-24">
+          
+          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: 0.1 }}>
+            {/* Stats grid (2x2) */}
+            <div className="grid grid-cols-2 gap-3 mb-6" data-tour="repo-stats-bar">
+              <div className="card p-4 hover:border-border transition-colors bg-bg-card/80 backdrop-blur-md border border-white/5 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
+                <div className="flex items-center gap-1.5 text-text-muted text-xs mb-1.5 font-medium uppercase tracking-wider"><Star className="w-3.5 h-3.5 text-yellow-500" /> Stars</div>
+                <p className="text-2xl font-bold text-text">{formatNum(repo.stars)}</p>
+              </div>
+              <div className="card p-4 hover:border-border transition-colors bg-bg-card/80 backdrop-blur-md border border-white/5 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
+                <div className="flex items-center gap-1.5 text-text-muted text-xs mb-1.5 font-medium uppercase tracking-wider"><GitFork className="w-3.5 h-3.5 text-blue-500" /> Forks</div>
+                <p className="text-2xl font-bold text-text">{formatNum(repo.forks)}</p>
+              </div>
+              <div className="card p-4 hover:border-border transition-colors bg-bg-card/80 backdrop-blur-md border border-white/5 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
+                <div className="flex items-center gap-1.5 text-text-muted text-xs mb-1.5 font-medium uppercase tracking-wider"><AlertCircle className="w-3.5 h-3.5 text-green-500" /> Issues</div>
+                <p className="text-2xl font-bold text-text">{formatNum(repo.open_issues)}</p>
+              </div>
+              <div className="card p-4 hover:border-border transition-colors bg-bg-card/80 backdrop-blur-md border border-white/5 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
+                <div className="flex items-center gap-1.5 text-text-muted text-xs mb-1.5 font-medium uppercase tracking-wider"><Activity className="w-3.5 h-3.5 text-accent" /> Quality</div>
+                <p className="text-2xl font-bold text-text">{repo.quality_score?.toFixed(1) || '—'}</p>
+              </div>
+            </div>
+
+            {/* Health Radar Visualizer */}
+            <QualityRadar repo={repo} />
+
+            {/* Details */}
+            <div className="card p-5 space-y-3 mb-6">
+              <div className="flex items-center justify-between py-2 border-b border-border/50">
+                <span className="text-text-secondary text-sm flex items-center gap-2"><ShieldCheck className="w-4 h-4" /> License</span>
+                <LicenseBadge repo={repo} />
+              </div>
+              <div className="flex items-center justify-between py-2 border-b border-border/50">
+                <span className="text-text-secondary text-sm flex items-center gap-2">
+                  <span className="w-3 h-3 rounded-full shadow-sm" style={{ background: langColor }} /> Language
+                </span>
+                <span className="text-text text-sm font-semibold">{repo.language || '—'}</span>
+              </div>
+              <div className="flex items-center justify-between py-2 border-b border-border/50">
+                <span className="text-text-secondary text-sm flex items-center gap-2"><Calendar className="w-4 h-4" /> Created</span>
+                <span className="text-text text-sm font-medium">{formatDate(repo.github_created_at)}</span>
+              </div>
+              <div className="flex items-center justify-between py-2 border-b border-border/50">
+                <span className="text-text-secondary text-sm flex items-center gap-2"><Clock className="w-4 h-4" /> Updated</span>
+                <span className="text-text text-sm font-medium">{timeAgo(repo.github_updated_at)}</span>
+              </div>
+              {isTrending && (
+                <div className="flex items-center justify-between py-2 border-b border-border/50">
+                  <span className="text-text-secondary text-sm flex items-center gap-2"><Flame className="w-4 h-4 text-trending" /> Stars (7d)</span>
+                  <span className="text-trending text-sm font-bold">+{formatNum(repo.stars_gained_7d)}</span>
+                </div>
+              )}
+              <div className="flex items-center justify-between py-2">
+                <span className="text-text-secondary text-sm flex items-center gap-2"><TrendingUp className="w-4 h-4" /> Trending Score</span>
+                <span className="text-text text-sm font-bold">{repo.trending_score?.toFixed(1) || '0'}</span>
+              </div>
+            </div>
+
+            {/* README Table of Contents — live from the fetched README */}
+            {readmeToc.length > 0 && (
+              <div className="card p-5 mb-6">
+                <h2 className="text-sm font-bold text-text mb-4 uppercase tracking-wider text-text-muted flex items-center gap-2">
+                  <List className="w-4 h-4" /> On this page
+                </h2>
+                <nav className="space-y-1 max-h-[320px] overflow-y-auto custom-scrollbar" aria-label="README sections">
+                  {readmeToc.map((entry, i) => (
+                    <button
+                      key={`${entry.id}-${i}`}
+                      onClick={() => scrollToHeading(entry.id)}
+                      className={`block w-full text-left px-3 py-1.5 rounded-lg text-xs hover:bg-bg-hover hover:text-text transition-colors touch-target ${
+                        entry.level === 3 ? 'pl-7 text-text-muted' : 'font-semibold text-text-secondary'
+                      }`}
+                    >
+                      {entry.text}
+                    </button>
+                  ))}
+                </nav>
+              </div>
+            )}
+
+            {/* Chart Section */}
+            {historyData && historyData.length > 0 && (
+              <div className="card p-5 h-64 mb-6">
+                <h2 className="text-sm font-bold text-text mb-4 uppercase tracking-wider text-text-muted">Star Growth (30d)</h2>
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={historyData}>
+                    <defs>
+                      <linearGradient id="colorStars" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="hsl(var(--accent))" stopOpacity={0.3}/>
+                        <stop offset="95%" stopColor="hsl(var(--accent))" stopOpacity={0}/>
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} opacity={0.5} />
+                    <XAxis dataKey="date" stroke="var(--text-muted)" fontSize={11} tickLine={false} axisLine={false} />
+                    <YAxis stroke="var(--text-muted)" fontSize={11} tickLine={false} axisLine={false} width={40} tickFormatter={(val) => val >= 1000 ? `${(val/1000).toFixed(0)}k` : val} />
+                    <Tooltip 
+                      contentStyle={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '12px', fontSize: '13px', color: 'var(--text)', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+                      itemStyle={{ color: 'hsl(var(--accent))', fontWeight: 'bold' }}
+                    />
+                    <Area type="monotone" dataKey="stars" stroke="hsl(var(--accent))" strokeWidth={2.5} fillOpacity={1} fill="url(#colorStars)" activeDot={{ r: 6, fill: 'hsl(var(--accent))', stroke: 'var(--bg-card)', strokeWidth: 2 }} animationDuration={1500} animationEasing="ease-out" />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </div>
+            )}
+            
+            {/* Similar Repositories Section */}
+            {similarRepos && similarRepos.length > 0 && (
+              <div className="mt-8">
+                <h2 className="text-lg font-bold text-text mb-4 px-1 flex items-center gap-2">
+                  <Sparkles className="w-5 h-5 text-accent" />
+                  You might also like
+                </h2>
+                <div className="flex flex-col gap-4">
+                  {similarRepos.slice(0, 3).map((r, i) => (
+                    <RepositoryCard key={r.id} repo={r} index={i} />
+                  ))}
+                </div>
+              </div>
+            )}
+          </motion.div>
+        </div>
+
+      </div>
+    </div>
+  );
+}

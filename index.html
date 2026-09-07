@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png" />
+    <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0d1117" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Openlysts" />
+
+    <!-- Core SEO & Search Indexing -->
+    <title>Openlysts — Discover Open-Source Projects</title>
+    <meta name="description" content="Openlysts is a high-velocity discovery engine for curated open-source software, SaaS alternatives, and developer tools." />
+    <meta name="keywords" content="open source, github, open source alternatives, free software, developer tools, saas alternatives, AI repositories, self-hosted" />
+    <meta name="author" content="Adil Rafiq Dar" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://openlysts.dpdns.org" />
+
+    <!-- Open Graph / Facebook / LinkedIn -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Openlysts" />
+    <meta property="og:url" content="https://openlysts.dpdns.org" />
+    <meta property="og:title" content="Openlysts — Discover Open-Source Projects" />
+    <meta property="og:description" content="Openlysts is a high-velocity discovery engine for curated open-source software, SaaS alternatives, and developer tools." />
+    <meta property="og:image" content="https://openlysts.dpdns.org/banner.jpg" />
+    <meta property="og:image:alt" content="Openlysts — The Open Source Telescope" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://openlysts.dpdns.org" />
+    <meta name="twitter:title" content="Openlysts — Discover Open-Source Projects" />
+    <meta name="twitter:description" content="Openlysts is a high-velocity discovery engine for curated open-source software, SaaS alternatives, and developer tools." />
+    <meta name="twitter:image" content="https://openlysts.dpdns.org/banner.jpg" />
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/manifest.json?v=1.0.0" />
+
+    <!-- Google Preferred Sources (AI Mode / AI Overviews / Top Stories badge).
+         manual control: the SPA mounts the button after this async script can
+         finish scanning, so the footer binds the flow programmatically. -->
+    <script async preferred-sources-control="manual" src="https://news.google.com/swg/js/v1/publisher.js"></script>
+
+    <!-- Structured Data: JSON-LD Schema -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://openlysts.dpdns.org/#website",
+            "url": "https://openlysts.dpdns.org/",
+            "name": "Openlysts",
+            "description": "Discover high-quality free and open-source GitHub repositories across AI, developer tools, and SaaS alternatives.",
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "https://openlysts.dpdns.org/discover?q={search_term_string}"
+              },
+              "query-input": "required name=search_term_string"
+            }
+          },
+          {
+            "@type": "SoftwareApplication",
+            "@id": "https://openlysts.dpdns.org/#application",
+            "name": "Openlysts",
+            "applicationCategory": "DeveloperApplication",
+            "operatingSystem": "All",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD"
+            }
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://openlysts.dpdns.org/#organization",
+            "name": "Openlysts",
+            "url": "https://openlysts.dpdns.org/",
+            "logo": "https://openlysts.dpdns.org/logo.png",
+            "founder": {
+              "@type": "Person",
+              "name": "Adil Rafiq Dar",
+              "sameAs": "https://www.linkedin.com/in/adil-rafiq-dar"
+            }
+          }
+        ]
+      }
+    </script>
+
+    <!-- Instant Theme Loader (Zero Flash) -->
+    <script>!function(){try{var t=localStorage.getItem('openlyst_theme')||'light';document.documentElement.setAttribute('data-theme',t),document.documentElement.style.colorScheme=['dark','slate','dracula','ocean','forest'].includes(t)?'dark':'light'}catch(t){}}();</script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js?v=1.0.0').catch((err) => {
+            console.warn('[PWA] ServiceWorker registration skipped:', err);
+          });
+        });
+      }
+    </script>
+  </body>
+</html>

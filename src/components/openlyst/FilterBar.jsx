@@ -1,0 +1,319 @@
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronDown, SlidersHorizontal, X, Sparkles, Loader2 } from 'lucide-react';
+import { CATEGORIES } from '@/lib/categories';
+import { useViewMode } from '@/hooks/useViewMode';
+import { useNavigate } from 'react-router-dom';
+
+const LICENSES = [
+  { value: 'verified_oss', label: 'Verified OSS' },
+  { value: 'unknown', label: 'Unknown' },
+  { value: 'non_oss', label: 'Non-OSS' },
+];
+
+const DIFFICULTIES = [
+  { value: 'Beginner', label: 'Beginner Friendly' },
+  { value: 'Intermediate', label: 'Intermediate' },
+  { value: 'Pro', label: 'Pro / Advanced' },
+];
+
+const UPDATED_WITHIN = [
+  { value: '', label: 'Any time' },
+  { value: '24h', label: '24 hours' },
+  { value: '7d', label: '7 days' },
+  { value: '30d', label: '30 days' },
+  { value: '6mo', label: '6 months' },
+  { value: '1yr', label: '1 year' },
+];
+
+const ACTIVITY = [
+  { value: '', label: 'All' },
+  { value: 'active', label: 'Active' },
+  { value: 'recently-active', label: 'Recently Active' },
+  { value: 'archived', label: 'Archived' },
+];
+
+const SORTS = [
+  { value: 'trending', label: 'Trending' },
+  { value: 'stars', label: 'Most Stars' },
+  { value: 'updated', label: 'Recently Updated' },
+  { value: 'recent', label: 'Recently Added' },
+];
+
+export default function FilterBar({ filters, onChange, languages = [] }) {
+  const [expanded, setExpanded] = useState(false);
+  const [categoriesExpanded, setCategoriesExpanded] = useState(false);
+  const [view, toggleView] = useViewMode();
+  const navigate = useNavigate();
+  const [isSurpriseLoading, setIsSurpriseLoading] = useState(false);
+
+  const handleSurprise = async () => {
+    setIsSurpriseLoading(true);
+    try {
+      const res = await fetch('/api/functions/getRandomRepo');
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.full_name) {
+          navigate(`/repo/${data.full_name}`);
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsSurpriseLoading(false);
+    }
+  };
+
+  const update = (key, value) => onChange({ ...filters, [key]: value, page: 1 });
+
+  const toggleArray = (key, val) => {
+    const arr = filters[key] || [];
+    const next = arr.includes(val) ? arr.filter((v) => v !== val) : [...arr, val];
+    update(key, next);
+  };
+
+  const activeCount =
+    (filters.categories?.length || 0) +
+    (filters.languages?.length || 0) +
+    (filters.licenses?.length || 0) +
+    (filters.difficulties?.length || 0) +
+    (filters.minStars > 0 ? 1 : 0) +
+    (filters.updatedWithin ? 1 : 0) +
+    (filters.activity ? 1 : 0);
+
+  const reset = () => onChange({ q: filters.q, categories: [], languages: [], licenses: [], difficulties: [], minStars: 0, updatedWithin: '', activity: '', sort: 'trending', page: 1 });
+
+  return (
+    <div data-tour="filter-bar" className="mb-5">
+      <div className="flex items-center gap-2 flex-wrap">
+        {/* Sort dropdown */}
+        <div className="flex-1 sm:flex-initial sm:min-w-[140px]">
+          <div className="relative flex items-center">
+            <select
+              value={filters.sort || 'trending'}
+              onChange={(e) => update('sort', e.target.value)}
+              aria-label="Sort repositories"
+              className="w-full h-11 sm:h-9 text-sm bg-bg-card border border-border rounded-xl px-3 pr-8 text-text-secondary font-medium cursor-pointer hover:border-border-strong focus:outline-none focus:border-accent appearance-none transition-colors"
+            >
+              {SORTS.map((s) => <option key={s.value} value={s.value}>Sort: {s.label}</option>)}
+            </select>
+            <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted pointer-events-none" />
+          </div>
+        </div>
+
+        {/* Categories button */}
+        <div className="relative flex-1 sm:flex-initial">
+          <button
+            onClick={() => { setCategoriesExpanded((v) => !v); setExpanded(false); }}
+            aria-expanded={categoriesExpanded}
+            aria-haspopup="true"
+            aria-controls="categories-popup"
+            className={`w-full h-11 sm:h-9 flex items-center justify-center gap-1.5 px-3 rounded-xl text-sm font-medium border transition-all ${
+              categoriesExpanded || (filters.categories?.length || 0) > 0
+                ? 'bg-accent-soft text-accent border-accent shadow-sm'
+                : 'bg-bg-card text-text-secondary border-border hover:border-border-strong'
+            }`}
+          >
+            <span>Categories</span>
+            {(filters.categories?.length || 0) > 0 && (
+              <span className="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-accent text-accent-fg">
+                {filters.categories.length}
+              </span>
+            )}
+            <ChevronDown className={`w-3.5 h-3.5 transition-transform ${categoriesExpanded ? 'rotate-180' : ''}`} />
+          </button>
+          
+          {categoriesExpanded && (
+            <div id="categories-popup" className="absolute top-full left-0 mt-2 w-64 max-w-[calc(100vw-32px)] p-3 rounded-xl border border-border bg-bg-card shadow-2xl z-50 max-h-80 sm:max-h-96 overflow-y-auto custom-scrollbar touch-scroll">
+              <div className="flex flex-col gap-1">
+                {CATEGORIES.map((c) => {
+                  const active = (filters.categories || []).includes(c.slug);
+                  return (
+                    <button
+                      key={c.slug}
+                      onClick={() => toggleArray('categories', c.slug)}
+                      className={`text-left px-3 py-2.5 rounded-lg text-sm font-medium transition-colors touch-target ${
+                        active ? 'bg-accent text-accent-fg' : 'text-text-secondary hover:bg-bg-subtle hover:text-text active:bg-bg-subtle'
+                      }`}
+                    >
+                      {c.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Filters button */}
+        <button
+          onClick={() => { setExpanded((v) => !v); setCategoriesExpanded(false); }}
+          aria-expanded={expanded}
+          aria-haspopup="true"
+          aria-controls="filters-panel"
+          className={`flex-1 sm:flex-initial h-11 sm:h-9 flex items-center justify-center gap-1.5 px-3 rounded-xl text-sm font-medium border transition-all ${
+            expanded || activeCount > 0
+              ? 'bg-accent-soft text-accent border-accent shadow-sm'
+              : 'bg-bg-card text-text-secondary border-border hover:border-border-strong'
+          }`}
+        >
+          <SlidersHorizontal className="w-3.5 h-3.5" />
+          <span>Filters</span>
+          {activeCount > 0 && (
+            <span className="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-accent text-accent-fg">{activeCount}</span>
+          )}
+          <ChevronDown className={`w-3.5 h-3.5 transition-transform ${expanded ? 'rotate-180' : ''}`} />
+        </button>
+
+        {/* Clear button */}
+        {activeCount > 0 && (
+          <button onClick={reset} className="h-11 sm:h-9 flex items-center gap-1 text-xs font-semibold text-text-muted hover:text-text px-2.5 rounded-xl border border-transparent hover:border-border transition-colors">
+            <X className="w-3.5 h-3.5" /> Clear
+          </button>
+        )}
+
+        {/* Surprise Me button - Premium Glowing Aesthetic */}
+        <div className="flex items-center ml-auto shrink-0 relative group">
+          {/* Animated Glow Behind */}
+          <div className="absolute -inset-0.5 bg-gradient-to-r from-violet-500 via-fuchsia-500 to-orange-500 rounded-full blur opacity-30 group-hover:opacity-75 transition duration-500 group-hover:duration-200"></div>
+          
+          <button 
+            onClick={handleSurprise}
+            disabled={isSurpriseLoading}
+            title="Surprise Me"
+            className="relative h-11 sm:h-9 px-4 sm:px-5 bg-bg-card border border-border/50 rounded-full flex items-center justify-center gap-2 text-sm font-semibold transition-all hover:bg-bg-subtle text-text disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+          >
+            {isSurpriseLoading ? (
+              <Loader2 className="w-4 h-4 animate-spin text-fuchsia-500" />
+            ) : (
+              <Sparkles className="w-4 h-4 text-orange-500 drop-shadow-sm" />
+            )}
+            <span className="hidden sm:inline bg-gradient-to-r from-violet-400 via-fuchsia-400 to-orange-400 bg-clip-text text-transparent">Surprise Me</span>
+          </button>
+        </div>
+      </div>
+
+      <AnimatePresence>
+        {expanded && (
+          <motion.div 
+            id="filters-panel"
+            initial={{ height: 0, opacity: 0 }} 
+            animate={{ height: 'auto', opacity: 1 }} 
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            className="overflow-hidden"
+          >
+            <div className="mt-3 p-4 rounded-xl border border-border bg-bg-card space-y-4">
+          {/* Languages */}
+          {languages.length > 0 && (
+            <div>
+              <p className="text-xs font-semibold text-text-muted uppercase tracking-wide mb-2">Language</p>
+              <div className="flex flex-wrap gap-1.5">
+                {languages.map((l) => {
+                  const active = (filters.languages || []).includes(l);
+                  return (
+                    <button
+                      key={l}
+                      onClick={() => toggleArray('languages', l)}
+                      className={`px-2.5 py-1 rounded-lg text-xs font-medium border transition-colors ${
+                        active ? 'bg-accent text-accent-fg border-accent' : 'bg-bg-subtle text-text-secondary border-border hover:border-border-strong'
+                      }`}
+                    >
+                      {l}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {/* License and Difficulty */}
+            <div className="space-y-4">
+              <div>
+                <p className="text-xs font-semibold text-text-muted uppercase tracking-wide mb-2">License</p>
+                <div className="flex flex-wrap gap-1.5">
+                  {LICENSES.map((l) => {
+                    const active = (filters.licenses || []).includes(l.value);
+                    return (
+                      <button
+                        key={l.value}
+                        onClick={() => toggleArray('licenses', l.value)}
+                        className={`px-2.5 py-1 rounded-lg text-xs font-medium border transition-colors ${
+                          active ? 'bg-accent text-accent-fg border-accent' : 'bg-bg-subtle text-text-secondary border-border hover:border-border-strong'
+                        }`}
+                      >
+                        {l.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+              
+              <div>
+                <p className="text-xs font-semibold text-text-muted uppercase tracking-wide mb-2">Difficulty</p>
+                <div className="flex flex-wrap gap-1.5">
+                  {DIFFICULTIES.map((d) => {
+                    const active = (filters.difficulties || []).includes(d.value);
+                    return (
+                      <button
+                        key={d.value}
+                        onClick={() => toggleArray('difficulties', d.value)}
+                        className={`px-2.5 py-1 rounded-lg text-xs font-medium border transition-colors ${
+                          active ? 'bg-accent text-accent-fg border-accent' : 'bg-bg-subtle text-text-secondary border-border hover:border-border-strong'
+                        }`}
+                      >
+                        {d.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+
+            {/* Min stars */}
+            <div>
+              <p className="text-xs font-semibold text-text-muted uppercase tracking-wide mb-2">Min Stars</p>
+              <input
+                type="number"
+                min="0"
+                value={filters.minStars || 0}
+                onChange={(e) => update('minStars', parseInt(e.target.value) || 0)}
+                placeholder="0"
+                className="w-full bg-bg-subtle border border-border rounded-lg px-3 py-1.5 text-sm text-text placeholder:text-text-muted focus:border-accent focus:outline-none"
+              />
+            </div>
+
+            {/* Updated within + Activity */}
+            <div className="space-y-3">
+              <div>
+                <p className="text-xs font-semibold text-text-muted uppercase tracking-wide mb-2">Updated Within</p>
+                <select
+                  value={filters.updatedWithin || ''}
+                  onChange={(e) => update('updatedWithin', e.target.value)}
+                  aria-label="Updated within"
+                  className="w-full bg-bg-subtle border border-border rounded-lg px-2.5 py-1.5 text-sm text-text-secondary cursor-pointer"
+                >
+                  {UPDATED_WITHIN.map((u) => <option key={u.value} value={u.value}>{u.label}</option>)}
+                </select>
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-text-muted uppercase tracking-wide mb-2">Activity</p>
+                <select
+                  value={filters.activity || ''}
+                  onChange={(e) => update('activity', e.target.value)}
+                  aria-label="Activity"
+                  className="w-full bg-bg-subtle border border-border rounded-lg px-2.5 py-1.5 text-sm text-text-secondary cursor-pointer"
+                >
+                  {ACTIVITY.map((a) => <option key={a.value} value={a.value}>{a.label}</option>)}
+                </select>
+              </div>
+            </div>
+          </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}

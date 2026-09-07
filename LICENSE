@@ -1,0 +1,116 @@
+# Business Source License 1.1
+
+License text copyright (c) 2017 MariaDB Corporation Ab, All Rights Reserved.
+"Business Source License" is a trademark of MariaDB Corporation Ab.
+
+## Parameters
+
+Licensor:             Openlysts (ARD)
+Licensed Work:        Openlysts — the open-source discovery engine
+                      (all files in this repository unless a file carries
+                      its own license or notice)
+Additional Use Grant: You may use the Licensed Work for any lawful purpose,
+                      including operating a public instance of the Service,
+                      provided that you do not use the Licensed Work to
+                      create, develop, or operate a product or service that
+                      is a discovery, search, comparison, ranking, or
+                      curation engine for software repositories (a
+                      "Competing Product"), and provided that you do not
+                      remove or alter any license, attribution, or notice
+                      from the Licensed Work.
+Change License:       Apache License, Version 2.0
+
+Change Date:          September 6, 2030
+
+For information about alternative licensing arrangements for the Licensed
+Work, please contact us via the Openlysts website contact form (https://openlysts.dpdns.org/contact).
+
+## Notice
+
+The Business Source License (this document, or the "License") is not an
+Open Source license. However, the Licensed Work will eventually be made
+available under the Change License, as stated in this License.
+
+You are not required to accept this License, since you have not signed it.
+However, nothing else grants you permission to modify or distribute the
+Licensed Work except these terms, and if you cannot accept and comply with
+this License, you may not modify, distribute, or otherwise use the Licensed
+Work. You are not authorized to use the Licensed Work until you accept and
+comply with all of the terms of this License.
+
+Subject to the terms of this License, the Licensor grants you a
+non-exclusive, worldwide, revocable, non-sublicensable, non-transferable,
+royalty-free license to use, copy, modify, and distribute the Licensed Work
+as permitted by this License, provided that you reproduce, in every copy of
+the Licensed Work and any derivative works of the Licensed Work made by you,
+(i) this License, (ii) a notice of the Licensor's copyright, and (iii) a
+notice stating that the Licensed Work is made available under this License.
+Nothing in this License shall be construed as limiting or modifying any
+other license or right that the Licensor has or may grant.
+
+## Copyright
+
+Copyright (c) 2026 Openlysts (ARD). All Rights Reserved.
+
+## The Business Source License (this document, or the "License")
+
+1. **Licensor**: Openlysts (ARD).
+
+2. **Licensed Work**: The Licensed Work is the work defined in this
+   License, including the software, documentation, and other files in this
+   repository, as identified in the Parameters above.
+
+3. **Additional Use Grant**: The Additional Use Grant specified in the
+   Parameters above applies to the Licensed Work.
+
+4. **Change License**: The Change License specified in the Parameters above
+   applies to the Licensed Work at the Change Date.
+
+5. **Change Date**: The Change Date specified in the Parameters above is the
+   date on which the Licensed Work becomes available under the Change
+   License.
+
+6. **Grant of Rights**:
+   (a) Subject to the terms of this License, the Licensor grants you a
+       non-exclusive, worldwide, revocable, non-sublicensable,
+       non-transferable, royalty-free license to use, copy, modify, and
+       distribute the Licensed Work, provided that you reproduce, in every
+       copy of the Licensed Work and any derivative works of the Licensed
+       Work made by you, (i) this License, (ii) a notice of the Licensor's
+       copyright, and (iii) a notice stating that the Licensed Work is made
+       available under this License. Nothing in this License shall be
+       construed as limiting or modifying any other license or right that
+       the Licensor has or may grant.
+   (b) You may distribute the Licensed Work in object code form only if you
+       also distribute the corresponding source code.
+
+7. **Restrictions**:
+   (a) You may not use the Licensed Work to create, develop, or operate a
+       Competing Product (as defined in the Additional Use Grant) unless
+       expressly authorized by the Licensor in writing.
+   (b) You may not remove or alter any license, copyright, or attribution
+       notice in the Licensed Work.
+
+8. **Termination**: This License terminates automatically if you breach any
+   of its terms. Upon termination, your rights to use, copy, modify, and
+   distribute the Licensed Work cease, and you must delete all copies in
+   your possession or control.
+
+9. **Disclaimer of Warranty**: THE LICENSED WORK IS PROVIDED "AS IS"
+   WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
+   LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+   PURPOSE, AND NON-INFRINGEMENT.
+
+10. **Limitation of Liability**: IN NO EVENT SHALL THE LICENSOR BE LIABLE
+    FOR ANY DAMAGES ARISING OUT OF OR IN CONNECTION WITH THE USE OF THE
+    LICENSED WORK, INCLUDING BUT NOT LIMITED TO DIRECT, INDIRECT,
+    INCIDENTAL, CONSEQUENTIAL, SPECIAL, OR PUNITIVE DAMAGES.
+
+11. **General**:
+    (a) This License is governed by the laws of the Republic of India,
+        without regard to its conflict-of-law provisions.
+    (b) If any provision of this License is held to be invalid or
+        unenforceable, the remaining provisions shall remain in effect.
+    (c) This License is the entire agreement between you and the Licensor
+        concerning the Licensed Work, and supersedes all prior agreements
+        with respect to the Licensed Work.

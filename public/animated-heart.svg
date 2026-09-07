@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="24" height="24">
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="#ff6b8a"/>
+      <stop offset="60%" stop-color="#e11d48"/>
+      <stop offset="100%" stop-color="#be123c"/>
+    </radialGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="1.2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <style>
+    @keyframes beat {
+      0%, 100% { transform: scale(1); }
+      14% { transform: scale(1.2); }
+      28% { transform: scale(0.95); }
+      42% { transform: scale(1.12); }
+      56% { transform: scale(1); }
+    }
+    .heart {
+      fill: url(#glow);
+      filter: url(#soft);
+      transform-origin: 50px 50px;
+      animation: beat 1.8s ease-in-out infinite;
+    }
+  </style>
+  <path class="heart" d="M50 88C50 88 10 58 10 30C10 12 27 5 38 14C44 19 50 28 50 28C50 28 56 19 62 14C73 5 90 12 90 30C90 58 50 88 50 88Z"/>
+</svg>

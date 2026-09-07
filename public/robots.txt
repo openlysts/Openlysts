@@ -1,0 +1,23 @@
+# Openlysts Robots.txt
+User-agent: *
+Allow: /
+Allow: /discover
+Allow: /alternatives
+Allow: /about
+Allow: /trending
+Allow: /guide
+Allow: /compare
+Allow: /contact
+Allow: /privacy-policy
+Allow: /terms-of-service
+
+# Disallow private user data and admin routes
+Disallow: /api/
+Disallow: /admin
+Disallow: /settings
+Disallow: /profile
+Disallow: /reset-password
+Disallow: /verify-email
+
+# Sitemap location
+Sitemap: https://openlysts.dpdns.org/sitemap.xml

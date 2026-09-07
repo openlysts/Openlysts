@@ -1,0 +1,871 @@
+// ─── Auth API Router ────────────────────────────────────────────────
+// All authentication endpoints: register, login, logout, OAuth, password
+// reset, email verification. Mounted at /api/auth.
+
+import { Router } from 'express';
+import crypto from 'crypto';
+import { db } from '../db/index.js';
+import { hashPassword, verifyPassword, validatePasswordStrength, normalizeEmail } from '../auth/password.js';
+import { ROLES, ACCOUNT_STATUS, AUTH_PROVIDERS, AUDIT_ACTIONS, TOKEN_EXPIRY } from '../auth/constants.js';
+import { requireAuth, loginRateLimiter, registerRateLimiter, resetRateLimiter, passwordResetExecuteLimiter } from '../auth/middleware.js';
+import { logAuditEvent, getRequestMeta } from '../auth/audit.js';
+import { sendPasswordResetEmail, sendVerificationEmail, sendDuplicateRegistrationEmail, isSmtpConfigured } from '../auth/email.js';
+import { getGoogleAuthUrl, exchangeGoogleCode, getGithubAuthUrl, exchangeGithubCode, findOrCreateOAuthUser, generateOAuthState, verifyOAuthState } from '../auth/oauth.js';
+import { verifyTurnstile } from '../auth/turnstile.js';
+import { verify } from 'otplib';
+
+import { getSystemConfig } from '../config.js';
+import { getSessionCookieName, getSessionCookieOptions } from '../auth/session.js';
+
+const router = Router();
+
+
+
+// ─── POST /api/auth/register ────────────────────────────────────────
+
+router.post('/register', registerRateLimiter, async (req, res) => {
+  try {
+    const disableSignups = await getSystemConfig('disable_signups');
+    if (disableSignups === 'true') {
+      return res.status(403).json({ error: true, message: 'New user registrations are currently disabled by the administrator.' });
+    }
+
+    const { name, email, password, turnstileToken, consent } = req.body;
+
+    // Validate inputs
+    if (!name || !email || !password) {
+      return res.status(400).json({ error: true, message: 'Name, email, and password are required.' });
+    }
+
+    const isValidTurnstile = await verifyTurnstile(turnstileToken);
+    if (!isValidTurnstile) {
+      return res.status(400).json({ error: true, message: 'Security check failed. Please try again.' });
+    }
+
+    if (!consent) {
+      return res.status(400).json({ error: true, message: 'Consent to the Privacy Policy and age attestation is required to create an account.' });
+    }
+
+    if (typeof name !== 'string' || name.trim().length < 1 || name.trim().length > 100) {
+      return res.status(400).json({ error: true, message: 'Name must be between 1 and 100 characters.' });
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ error: true, message: 'Invalid email address.' });
+    }
+
+    const { valid, errors } = validatePasswordStrength(password);
+    if (!valid) {
+      return res.status(400).json({ error: true, message: errors.join('. ') });
+    }
+
+    const emailNorm = normalizeEmail(email);
+
+    // Check for existing user (no enumeration — but we must reject duplicates)
+    const { rows: existing } = await db.query(
+      'SELECT id FROM "User" WHERE email_normalized = $1',
+      [emailNorm]
+    );
+
+    if (existing.length > 0) {
+      // Prevent enumeration: send warning email and return generic success
+      if (isSmtpConfigured()) {
+        const appUrl = process.env.APP_URL || `${req.protocol}://${req.get('host')}`.replace('3001', '5173');
+        sendDuplicateRegistrationEmail(emailNorm, appUrl).catch(console.error);
+      }
+      return res.status(201).json({
+        success: true,
+        message: 'Registration successful. Please check your email to verify your account.',
+        requiresVerification: true,
+      });
+    }
+
+    // Create user
+    const userId = crypto.randomUUID();
+    const now = new Date().toISOString();
+    const passwordHash = await hashPassword(password);
+
+    await db.query(
+      `INSERT INTO "User" (id, created_date, name, email, email_normalized, password_hash, role, account_status, email_verified, consent_given_at, consent_version, updated_at)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`,
+      [userId, now, name.trim(), email, emailNorm, passwordHash, ROLES.USER, ACCOUNT_STATUS.ACTIVE, 0, now, '1.0', now]
+    );
+
+    // Generate verification token
+    const rawToken = crypto.randomBytes(32).toString('hex');
+    const tokenHash = crypto.createHash('sha256').update(rawToken).digest('hex');
+    const expiresAt = new Date(Date.now() + TOKEN_EXPIRY.EMAIL_VERIFICATION).toISOString();
+
+    await db.query(
+      `INSERT INTO "EmailVerificationToken" (id, user_id, token_hash, expires_at, used, created_date)
+       VALUES ($1, $2, $3, $4, $5, $6)`,
+      [crypto.randomUUID(), userId, tokenHash, expiresAt, 0, now]
+    );
+
+    // Send verification email
+    const appUrl = process.env.APP_URL || `${req.protocol}://${req.get('host')}`.replace('3001', '5173');
+    const verifyUrl = `${appUrl}/verify-email?token=${encodeURIComponent(rawToken)}`;
+    
+    if (isSmtpConfigured()) {
+      try {
+        await sendVerificationEmail(email, rawToken, appUrl);
+      } catch (e) {
+        console.error('[AUTH] Failed to send verification email:', e.message);
+      }
+    }
+
+    const meta = getRequestMeta(req);
+    await logAuditEvent({
+      actorId: userId,
+      targetUserId: userId,
+      action: AUDIT_ACTIONS.USER_REGISTERED,
+      ...meta,
+      metadata: { email, provider: AUTH_PROVIDERS.LOCAL },
+    });
+
+    return res.status(201).json({
+      success: true,
+      message: 'Registration successful. Please check your email to verify your account.',
+      requiresVerification: true,
+    });
+  } catch (err) {
+    console.error('[AUTH] Registration error:', err.message);
+    return res.status(500).json({ error: true, message: 'Registration failed. Please try again.' });
+  }
+});
+
+
+// ─── POST /api/auth/login ───────────────────────────────────────────
+
+router.post('/login', loginRateLimiter, async (req, res) => {
+  try {
+    const { email, password, turnstileToken } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ error: true, message: 'Email and password are required.' });
+    }
+
+    const isValidTurnstile = await verifyTurnstile(turnstileToken);
+    if (!isValidTurnstile) {
+      return res.status(400).json({ error: true, message: 'Security check failed. Please try again.' });
+    }
+
+    const emailNorm = normalizeEmail(email);
+    const { rows } = await db.query(
+      'SELECT id, name, email, password_hash, role, account_status, email_verified, email_normalized, avatar_url, has_seen_tour, totp_enabled, failed_login_attempts, locked_until FROM "User" WHERE email_normalized = $1',
+      [emailNorm]
+    );
+
+    const user = rows[0];
+
+    if (user && user.locked_until && new Date(user.locked_until) > new Date()) {
+      return res.status(403).json({ error: true, message: 'Account locked due to too many failed attempts. Try again later.' });
+    }
+
+    // Generic error for both wrong email and wrong password
+    if (!user || !user.password_hash) {
+      const meta = getRequestMeta(req);
+      await logAuditEvent({
+        action: AUDIT_ACTIONS.USER_LOGIN_FAILED,
+        ...meta,
+        metadata: { reason: 'invalid_credentials' },
+      });
+      return res.status(401).json({ error: true, message: 'Invalid email or password.' });
+    }
+
+    const passwordValid = await verifyPassword(password, user.password_hash);
+    
+    if (!passwordValid) {
+      const attempts = (user.failed_login_attempts || 0) + 1;
+      let lockedUntil = null;
+      let message = 'Invalid email or password.';
+      
+      if (attempts >= 5) {
+        lockedUntil = new Date(Date.now() + 15 * 60 * 1000).toISOString(); // 15 mins
+        message = 'Account locked due to too many failed attempts. Try again later.';
+      }
+
+      await db.query(
+        'UPDATE "User" SET failed_login_attempts = $1, locked_until = $2 WHERE id = $3',
+        [attempts, lockedUntil, user.id]
+      );
+
+      const meta = getRequestMeta(req);
+      await logAuditEvent({
+        actorId: user.id,
+        action: AUDIT_ACTIONS.USER_LOGIN_FAILED,
+        ...meta,
+        metadata: { reason: 'invalid_password', attempts, lockedUntil },
+      });
+      return res.status(401).json({ error: true, message });
+    }
+
+    // Check account status
+    if (user.account_status === ACCOUNT_STATUS.SUSPENDED) {
+      return res.status(403).json({ error: true, message: 'Account suspended. Contact support.' });
+    }
+    if (user.account_status === ACCOUNT_STATUS.DISABLED) {
+      return res.status(403).json({ error: true, message: 'Account disabled.' });
+    }
+
+    // Check email verification
+    if (!user.email_verified) {
+      return res.status(403).json({
+        error: true,
+        code: 'EMAIL_NOT_VERIFIED',
+        message: 'Please verify your email address before signing in.',
+      });
+    }
+
+    // Check for 2FA
+    const hasTotp = Number(user.totp_enabled) === 1;
+    const { rows: passkeys } = await db.query('SELECT 1 FROM "Passkey" WHERE user_id = $1 LIMIT 1', [user.id]);
+    const hasPasskeys = passkeys.length > 0;
+
+    if (hasTotp || hasPasskeys) {
+      // Create pending session
+      req.session.pendingUserId = user.id;
+      
+      const methods = [];
+      if (hasTotp) methods.push('totp');
+      if (hasPasskeys) methods.push('passkey');
+
+      return res.json({
+        success: true,
+        requires2FA: true,
+        methods
+      });
+    }
+
+    // Fully Create session
+    req.session.userId = user.id;
+    delete req.session.pendingUserId;
+
+    // Update last login and reset attempts
+    await db.query(
+      'UPDATE "User" SET last_login_at = $1, updated_at = $1, failed_login_attempts = 0, locked_until = NULL WHERE id = $2',
+      [new Date().toISOString(), user.id]
+    );
+
+    const meta = getRequestMeta(req);
+    await logAuditEvent({
+      actorId: user.id,
+      action: AUDIT_ACTIONS.USER_LOGIN,
+      ...meta,
+      metadata: { provider: AUTH_PROVIDERS.LOCAL },
+    });
+
+    return res.json({
+      success: true,
+      user: sanitizeUser(user),
+    });
+  } catch (err) {
+    console.error('[AUTH] Login error:', err.message);
+    return res.status(500).json({ error: true, message: 'Login failed. Please try again.' });
+  }
+});
+
+// ─── POST /api/auth/login/2fa ───────────────────────────────────────
+
+router.post('/login/2fa', loginRateLimiter, async (req, res) => {
+  try {
+    const { code } = req.body;
+    const pendingUserId = req.session.pendingUserId;
+
+    if (!pendingUserId) {
+      return res.status(401).json({ error: true, message: 'Session expired. Please log in again.' });
+    }
+
+    if (!code) {
+      return res.status(400).json({ error: true, message: 'Verification code is required.' });
+    }
+
+    const { rows } = await db.query(
+      'SELECT id, name, email, role, account_status, email_verified, avatar_url, has_seen_tour, totp_secret, totp_enabled FROM "User" WHERE id = $1',
+      [pendingUserId]
+    );
+
+    const user = rows[0];
+    if (!user || Number(user.totp_enabled) !== 1 || !user.totp_secret) {
+      return res.status(400).json({ error: true, message: 'Invalid 2FA setup.' });
+    }
+
+    const result = await verify({ token: code, secret: user.totp_secret });
+    const isValid = result.valid;
+
+    if (!isValid) {
+      const meta = getRequestMeta(req);
+      await logAuditEvent({
+        actorId: user.id,
+        action: AUDIT_ACTIONS.USER_LOGIN_FAILED,
+        ...meta,
+        metadata: { reason: 'invalid_totp' },
+      });
+      return res.status(401).json({ error: true, message: 'Invalid code.' });
+    }
+
+    // Upgrade session
+    req.session.userId = user.id;
+    delete req.session.pendingUserId;
+
+    await db.query(
+      'UPDATE "User" SET last_login_at = $1, updated_at = $1 WHERE id = $2',
+      [new Date().toISOString(), user.id]
+    );
+
+    const meta = getRequestMeta(req);
+    await logAuditEvent({
+      actorId: user.id,
+      action: AUDIT_ACTIONS.USER_LOGIN,
+      ...meta,
+      metadata: { provider: AUTH_PROVIDERS.LOCAL, mfa: 'totp' },
+    });
+
+    return res.json({
+      success: true,
+      user: sanitizeUser(user),
+    });
+  } catch (err) {
+    console.error('[AUTH] 2FA login error:', err.message);
+    return res.status(500).json({ error: true, message: 'Login failed.' });
+  }
+});
+
+
+// ─── POST /api/auth/logout ──────────────────────────────────────────
+
+router.post('/logout', async (req, res) => {
+  const userId = req.session?.userId;
+
+  req.session.destroy((err) => {
+    if (err) {
+      console.error('[AUTH] Session destroy error:', err.message);
+    }
+    res.clearCookie(getSessionCookieName(), getSessionCookieOptions());
+
+    if (userId) {
+      const meta = getRequestMeta(req);
+      logAuditEvent({ actorId: userId, action: AUDIT_ACTIONS.USER_LOGOUT, ...meta }).catch(() => {});
+    }
+
+    return res.json({ success: true });
+  });
+});
+
+
+// ─── GET /api/auth/me ───────────────────────────────────────────────
+
+router.get('/me', async (req, res) => {
+  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+  if (!req.session?.userId) {
+    return res.json({ user: null });
+  }
+
+  try {
+    const { rows } = await db.query(
+      'SELECT id, name, email, role, account_status, email_verified, avatar_url, created_date, last_login_at, settings FROM "User" WHERE id = $1',
+      [req.session.userId]
+    );
+
+    if (rows.length === 0) {
+      req.session.destroy(() => {});
+      return res.json({ user: null });
+    }
+
+    const user = rows[0];
+    if (user.account_status !== ACCOUNT_STATUS.ACTIVE) {
+      req.session.destroy(() => {});
+      return res.json({ user: null });
+    }
+
+    return res.json({ user: sanitizeUser(user) });
+  } catch (err) {
+    console.error('[AUTH] /me error:', err.message);
+    return res.json({ user: null });
+  }
+});
+
+
+// ─── OAuth: Google ──────────────────────────────────────────────────
+
+const handleGoogleAuth = (req, res) => {
+  const host = req.headers['x-forwarded-host'] || req.headers.host || req.get?.('host') || 'openlysts.dpdns.org';
+  const proto = req.headers['x-forwarded-proto'] || (req.secure ? 'https' : 'http');
+  const cleanHost = host.replace(':3001', ':5173');
+  const appUrl = (process.env.APP_URL || `${proto}://${cleanHost}`).replace(/\/$/, '');
+  const returnTo = req.query.redirect || (req.headers.referer?.includes('/profile') ? '/profile' : '/discover');
+
+  if (!process.env.GOOGLE_CLIENT_ID || process.env.GOOGLE_CLIENT_ID === '[SENSITIVE]') {
+    if (req.accepts('html')) {
+      return res.redirect(`${appUrl}${returnTo}?notice=oauth_not_configured&provider=Google`);
+    }
+    return res.status(501).json({ error: true, configured: false, message: 'Google OAuth is not configured in environment variables (GOOGLE_CLIENT_ID missing).' });
+  }
+
+  const state = generateOAuthState(returnTo);
+  const url = getGoogleAuthUrl(state, req);
+  return res.redirect(url);
+};
+
+router.get('/google', handleGoogleAuth);
+router.get('/oauth/google', handleGoogleAuth);
+
+router.get('/google/callback', async (req, res) => {
+  const host = req.headers['x-forwarded-host'] || req.headers.host || req.get?.('host') || 'openlysts.dpdns.org';
+  const proto = req.headers['x-forwarded-proto'] || (req.secure ? 'https' : 'http');
+  const cleanHost = host.replace(':3001', ':5173');
+  const appUrl = (process.env.APP_URL || `${proto}://${cleanHost}`).replace(/\/$/, '');
+  try {
+    const { code, state, error, error_description } = req.query;
+
+    if (error) {
+      console.error('[AUTH] Google OAuth provider error:', error, error_description);
+      return res.redirect(`${appUrl}/login?error=oauth_failed`);
+    }
+
+    const { valid, redirect } = verifyOAuthState(state);
+    if (!valid) {
+      console.error('[AUTH] Google state verification failed. Query state:', state);
+      return res.redirect(`${appUrl}/login?error=invalid_state`);
+    }
+
+    const profile = await exchangeGoogleCode(code, req);
+    if (process.env.NODE_ENV === 'development') {
+      console.log('[AUTH] Google profile exchanged successfully:', profile.email);
+    }
+
+    const { user } = await findOrCreateOAuthUser(profile, AUTH_PROVIDERS.GOOGLE);
+    if (process.env.NODE_ENV === 'development') {
+      console.log('[AUTH] Google user authenticated:', user.id, user.email, 'Role:', user.role);
+    }
+
+    if (user.account_status !== ACCOUNT_STATUS.ACTIVE) {
+      return res.redirect(`${appUrl}/login?error=account_inactive`);
+    }
+
+    req.session.userId = user.id;
+
+    const meta = getRequestMeta(req);
+    await logAuditEvent({
+      actorId: user.id,
+      action: AUDIT_ACTIONS.OAUTH_LOGIN,
+      ...meta,
+      metadata: { provider: AUTH_PROVIDERS.GOOGLE },
+    });
+
+    req.session.save((err) => {
+      if (err) console.error('[AUTH] Session save error:', err.message);
+      return res.redirect(`${appUrl}${redirect}`);
+    });
+  } catch (err) {
+    console.error('[AUTH] Google OAuth error:', err.message);
+    return res.redirect(`${appUrl}/login?error=oauth_failed`);
+  }
+});
+
+
+// ─── OAuth: GitHub ──────────────────────────────────────────────────
+
+const handleGithubAuth = (req, res) => {
+  const host = req.headers['x-forwarded-host'] || req.headers.host || req.get?.('host') || 'openlysts.dpdns.org';
+  const proto = req.headers['x-forwarded-proto'] || (req.secure ? 'https' : 'http');
+  const cleanHost = host.replace(':3001', ':5173');
+  const appUrl = (process.env.APP_URL || `${proto}://${cleanHost}`).replace(/\/$/, '');
+  const returnTo = req.query.redirect || (req.headers.referer?.includes('/profile') ? '/profile' : '/discover');
+
+  if (!process.env.GITHUB_CLIENT_ID || process.env.GITHUB_CLIENT_ID === '[SENSITIVE]') {
+    if (req.accepts('html')) {
+      return res.redirect(`${appUrl}${returnTo}?notice=oauth_not_configured&provider=GitHub`);
+    }
+    return res.status(501).json({ error: true, configured: false, message: 'GitHub OAuth is not configured in environment variables (GITHUB_CLIENT_ID missing).' });
+  }
+
+  const state = generateOAuthState(returnTo);
+  const url = getGithubAuthUrl(state, req);
+  return res.redirect(url);
+};
+
+router.get('/github', handleGithubAuth);
+router.get('/oauth/github', handleGithubAuth);
+
+router.get('/github/callback', async (req, res) => {
+  const host = req.headers['x-forwarded-host'] || req.headers.host || req.get?.('host') || 'openlysts.dpdns.org';
+  const proto = req.headers['x-forwarded-proto'] || (req.secure ? 'https' : 'http');
+  const cleanHost = host.replace(':3001', ':5173');
+  const appUrl = (process.env.APP_URL || `${proto}://${cleanHost}`).replace(/\/$/, '');
+  try {
+    const { code, state, error, error_description } = req.query;
+
+    if (error) {
+      console.error('[AUTH] GitHub OAuth provider error:', error, error_description);
+      return res.redirect(`${appUrl}/login?error=oauth_failed`);
+    }
+
+    const { valid, redirect } = verifyOAuthState(state);
+    if (!valid) {
+      console.error('[AUTH] GitHub state verification failed. Query state:', state);
+      return res.redirect(`${appUrl}/login?error=invalid_state`);
+    }
+
+    const profile = await exchangeGithubCode(code, req);
+    if (process.env.NODE_ENV === 'development') {
+      console.log('[AUTH] GitHub profile exchanged successfully:', profile.email);
+    }
+    
+    const { user } = await findOrCreateOAuthUser(profile, AUTH_PROVIDERS.GITHUB);
+    if (process.env.NODE_ENV === 'development') {
+      console.log('[AUTH] GitHub user authenticated:', user.id, user.email, 'Role:', user.role);
+    }
+
+    if (user.account_status !== ACCOUNT_STATUS.ACTIVE) {
+      return res.redirect(`${appUrl}/login?error=account_inactive`);
+    }
+
+    req.session.userId = user.id;
+
+    const meta = getRequestMeta(req);
+    await logAuditEvent({
+      actorId: user.id,
+      action: AUDIT_ACTIONS.OAUTH_LOGIN,
+      ...meta,
+      metadata: { provider: AUTH_PROVIDERS.GITHUB },
+    });
+
+    if (process.env.NODE_ENV === 'development') {
+      console.log('[AUTH] GitHub OAuth successful. Redirecting to:', `${appUrl}${redirect}`);
+    }
+    req.session.save((err) => {
+      if (err) console.error('[AUTH] Session save error:', err.message);
+      return res.redirect(`${appUrl}${redirect}`);
+    });
+  } catch (err) {
+    console.error('[AUTH] GitHub OAuth error:', err.message, err.stack);
+    return res.redirect(`${appUrl}/login?error=oauth_failed`);
+  }
+});
+
+
+// ─── Password Change (authenticated) ────────────────────────────────
+
+router.post('/password/change', requireAuth, async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ error: true, message: 'Current and new passwords are required.' });
+    }
+
+    const { valid, errors } = validatePasswordStrength(newPassword);
+    if (!valid) {
+      return res.status(400).json({ error: true, message: errors.join('. ') });
+    }
+
+    // Verify current password
+    const { rows } = await db.query('SELECT password_hash FROM "User" WHERE id = $1', [req.user.id]);
+    if (!rows[0]?.password_hash) {
+      return res.status(400).json({ error: true, message: 'This account uses social login. Set a password via the profile page.' });
+    }
+
+    const valid2 = await verifyPassword(currentPassword, rows[0].password_hash);
+    if (!valid2) {
+      return res.status(401).json({ error: true, message: 'Current password is incorrect.' });
+    }
+
+    // Update password
+    const newHash = await hashPassword(newPassword);
+    await db.query(
+      'UPDATE "User" SET password_hash = $1, updated_at = $2 WHERE id = $3',
+      [newHash, new Date().toISOString(), req.user.id]
+    );
+
+    // Invalidate all other sessions
+    const currentSid = req.sessionID;
+    await db.query(
+      `DELETE FROM "session" WHERE sid != $1 AND sess->>'userId' = $2`,
+      [currentSid, req.user.id]
+    );
+
+    const meta = getRequestMeta(req);
+    await logAuditEvent({
+      actorId: req.user.id,
+      action: AUDIT_ACTIONS.PASSWORD_CHANGED,
+      ...meta,
+    });
+
+    return res.json({ success: true, message: 'Password changed successfully.' });
+  } catch (err) {
+    console.error('[AUTH] Password change error:', err.message);
+    return res.status(500).json({ error: true, message: 'Failed to change password.' });
+  }
+});
+
+
+// ─── Password Reset Request ─────────────────────────────────────────
+
+router.post('/password/reset-request', resetRateLimiter, async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    // Always return success to prevent email enumeration
+    const genericResponse = { success: true, message: 'If an account exists with that email, a reset link has been sent.' };
+
+    if (!email) {
+      return res.json(genericResponse);
+    }
+
+    const emailNorm = normalizeEmail(email);
+    const { rows } = await db.query('SELECT id, email FROM "User" WHERE email_normalized = $1', [emailNorm]);
+
+    if (rows.length === 0) {
+      return res.json(genericResponse);
+    }
+
+    const user = rows[0];
+
+    // Invalidate previous tokens for this user
+    await db.query(
+      'UPDATE "PasswordResetToken" SET used = 1 WHERE user_id = $1 AND used = 0',
+      [user.id]
+    );
+
+    // Generate new token
+    const rawToken = crypto.randomBytes(32).toString('hex');
+    const tokenHash = crypto.createHash('sha256').update(rawToken).digest('hex');
+    const expiresAt = new Date(Date.now() + TOKEN_EXPIRY.PASSWORD_RESET).toISOString();
+
+    await db.query(
+      `INSERT INTO "PasswordResetToken" (id, user_id, token_hash, expires_at, used, created_date)
+       VALUES ($1, $2, $3, $4, $5, $6)`,
+      [crypto.randomUUID(), user.id, tokenHash, expiresAt, 0, new Date().toISOString()]
+    );
+
+    // Send email
+    const appUrl = process.env.APP_URL || `${req.protocol}://${req.get('host')}`.replace('3001', '5173');
+    const resetUrl = `${appUrl}/reset-password?token=${encodeURIComponent(rawToken)}`;
+
+    if (isSmtpConfigured()) {
+      try {
+        await sendPasswordResetEmail(user.email, rawToken, appUrl);
+      } catch (e) {
+        console.error('[AUTH] Failed to send reset email:', e.message);
+      }
+    }
+
+    const meta = getRequestMeta(req);
+    await logAuditEvent({
+      actorId: user.id,
+      action: AUDIT_ACTIONS.PASSWORD_RESET_REQUESTED,
+      ...meta,
+    });
+
+    return res.json(genericResponse);
+  } catch (err) {
+    console.error('[AUTH] Password reset request error:', err.message);
+    return res.json({ success: true, message: 'If an account exists with that email, a reset link has been sent.' });
+  }
+});
+
+
+// ─── Password Reset Execute ─────────────────────────────────────────
+
+router.post('/password/reset', passwordResetExecuteLimiter, async (req, res) => {
+  try {
+    const { token, password } = req.body;
+
+    if (!token || !password) {
+      return res.status(400).json({ error: true, message: 'Token and new password are required.' });
+    }
+
+    const { valid, errors } = validatePasswordStrength(password);
+    if (!valid) {
+      return res.status(400).json({ error: true, message: errors.join('. ') });
+    }
+
+    const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
+
+    const { rows } = await db.query(
+      `SELECT * FROM "PasswordResetToken" WHERE token_hash = $1 AND used = 0 AND expires_at > $2`,
+      [tokenHash, new Date().toISOString()]
+    );
+
+    if (rows.length === 0) {
+      return res.status(400).json({ error: true, message: 'Invalid or expired reset link. Please request a new one.' });
+    }
+
+    const resetToken = rows[0];
+    const newHash = await hashPassword(password);
+
+    // Update password + mark as verified (they proved email ownership)
+    await db.query(
+      'UPDATE "User" SET password_hash = $1, email_verified = 1, updated_at = $2 WHERE id = $3',
+      [newHash, new Date().toISOString(), resetToken.user_id]
+    );
+
+    // Mark token as used
+    await db.query('UPDATE "PasswordResetToken" SET used = 1 WHERE id = $1', [resetToken.id]);
+
+    // Invalidate all sessions
+    await db.query(
+      `DELETE FROM "session" WHERE sess->>'userId' = $1`,
+      [resetToken.user_id]
+    );
+
+    const meta = getRequestMeta(req);
+    await logAuditEvent({
+      actorId: resetToken.user_id,
+      targetUserId: resetToken.user_id,
+      action: AUDIT_ACTIONS.PASSWORD_RESET_COMPLETED,
+      ...meta,
+    });
+
+    return res.json({ success: true, message: 'Password has been reset. Please sign in with your new password.' });
+  } catch (err) {
+    console.error('[AUTH] Password reset error:', err.message);
+    return res.status(500).json({ error: true, message: 'Failed to reset password.' });
+  }
+});
+
+
+// ─── Email Verification ─────────────────────────────────────────────
+
+router.post('/verify-email', async (req, res) => {
+  try {
+    const { token } = req.body;
+
+    if (!token) {
+      return res.status(400).json({ error: true, message: 'Verification token is required.' });
+    }
+
+    const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
+
+    const { rows } = await db.query(
+      `SELECT * FROM "EmailVerificationToken" WHERE token_hash = $1`,
+      [tokenHash]
+    );
+
+    if (rows.length === 0) {
+      return res.status(400).json({ error: true, message: 'Invalid verification link.' });
+    }
+
+    const verifyToken = rows[0];
+    
+    // Check if expired
+    if (new Date(verifyToken.expires_at) < new Date() && verifyToken.used === 0) {
+      return res.status(400).json({ error: true, message: 'Verification link has expired.' });
+    }
+
+    // Check if already used
+    if (verifyToken.used === 1) {
+      return res.status(400).json({ error: true, message: 'Email is already verified or token is invalid. Please sign in.' });
+    }
+
+    // Mark email as verified
+    await db.query(
+      'UPDATE "User" SET email_verified = 1, updated_at = $1 WHERE id = $2',
+      [new Date().toISOString(), verifyToken.user_id]
+    );
+
+    // Mark token as used
+    await db.query('UPDATE "EmailVerificationToken" SET used = 1 WHERE id = $1', [verifyToken.id]);
+
+    // Auto-login: create session
+    req.session.userId = verifyToken.user_id;
+
+    const meta = getRequestMeta(req);
+    await logAuditEvent({
+      actorId: verifyToken.user_id,
+      action: AUDIT_ACTIONS.EMAIL_VERIFIED,
+      ...meta,
+    });
+
+    return res.json({ success: true, message: 'Email verified successfully.' });
+  } catch (err) {
+    console.error('[AUTH] Email verification error:', err.message);
+    return res.status(500).json({ error: true, message: 'Verification failed.' });
+  }
+});
+
+
+// ─── Resend Verification ────────────────────────────────────────────
+
+router.post('/resend-verification', resetRateLimiter, async (req, res) => {
+  try {
+    const { email } = req.body;
+    const genericResponse = { success: true, message: 'If an unverified account exists, a new verification email has been sent.' };
+
+    if (!email) return res.json(genericResponse);
+
+    const emailNorm = normalizeEmail(email);
+    const { rows } = await db.query(
+      'SELECT id, email FROM "User" WHERE email_normalized = $1 AND email_verified = 0',
+      [emailNorm]
+    );
+
+    if (rows.length === 0) return res.json(genericResponse);
+
+    const user = rows[0];
+
+    // Invalidate old tokens
+    await db.query('UPDATE "EmailVerificationToken" SET used = 1 WHERE user_id = $1 AND used = 0', [user.id]);
+
+    // Generate new token
+    const rawToken = crypto.randomBytes(32).toString('hex');
+    const tokenHash = crypto.createHash('sha256').update(rawToken).digest('hex');
+    const expiresAt = new Date(Date.now() + TOKEN_EXPIRY.EMAIL_VERIFICATION).toISOString();
+
+    await db.query(
+      `INSERT INTO "EmailVerificationToken" (id, user_id, token_hash, expires_at, used, created_date)
+       VALUES ($1, $2, $3, $4, $5, $6)`,
+      [crypto.randomUUID(), user.id, tokenHash, expiresAt, 0, new Date().toISOString()]
+    );
+
+    const appUrl = process.env.APP_URL || `${req.protocol}://${req.get('host')}`.replace('3001', '5173');
+    const verifyUrl = `${appUrl}/verify-email?token=${encodeURIComponent(rawToken)}`;
+    console.log('\n==================================================');
+    console.log(`[QA DEV] Email Verification Link for ${user.email}:`);
+    console.log(verifyUrl);
+    console.log('==================================================\n');
+
+    if (isSmtpConfigured()) {
+      try {
+        await sendVerificationEmail(user.email, rawToken, appUrl);
+      } catch (e) {
+        console.error('[AUTH] Failed to resend verification:', e.message);
+      }
+    } else {
+      console.log('\n==================================================');
+      console.log('[LOCAL DEV] SMTP is not configured.');
+      console.log(`[LOCAL DEV] Resend Verification Link for ${user.email}:`);
+      console.log(verifyUrl);
+      console.log('==================================================\n');
+    }
+
+    const meta = getRequestMeta(req);
+    await logAuditEvent({
+      actorId: user.id,
+      action: AUDIT_ACTIONS.EMAIL_VERIFICATION_SENT,
+      ...meta,
+    });
+
+    return res.json(genericResponse);
+  } catch (err) {
+    console.error('[AUTH] Resend verification error:', err.message);
+    return res.json({ success: true, message: 'If an unverified account exists, a new verification email has been sent.' });
+  }
+});
+
+
+// ─── Helpers ────────────────────────────────────────────────────────
+
+function sanitizeUser(user) {
+  const { password_hash, email_normalized, ...safe } = user;
+  // Parse settings JSON if stored as string
+  if (typeof safe.settings === 'string') {
+    try { safe.settings = JSON.parse(safe.settings); } catch (e) { safe.settings = {}; }
+  }
+  return safe;
+}
+
+
+export default router;
