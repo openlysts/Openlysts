@@ -1,0 +1,69 @@
+# Openlysts Proprietary License — All Rights Reserved
+
+Copyright (c) 2026 Openlysts (ARD). All rights reserved.
+
+The software, source code, design, documentation, and any associated
+materials in this repository (collectively, the "Software") are the
+proprietary property of Openlysts (ARD) and are protected by copyright
+law, international treaty provisions, and applicable trade-secret law.
+
+## Grant of Use — Hosted Web Application Only
+
+Openlysts grants you a limited, non-exclusive, non-transferable,
+revocable, personal license to **use the publicly hosted web
+application** available at the official Openlysts website
+(https://openlysts.dpdns.org and its official deployments) for lawful
+personal or business purposes.
+
+This license does NOT grant you any rights to the Software itself.
+
+## Prohibited (unless separately agreed in writing)
+
+You may NOT:
+
+1. **Copy, modify, or distribute** the Software, in whole or in part,
+   in source or binary form, by any means;
+2. **Run your own instance** of the Software — locally, on a server,
+   or on any cloud platform — for any purpose, personal or commercial;
+3. **Create derivative works** from the Software, including any
+   product, service, or dataset derived from its code, catalogs, or
+   data;
+4. **Reverse engineer, decompile, or disassemble** the Software, or
+   attempt to derive its source code, except to the extent explicitly
+   permitted by applicable law;
+5. **Use the Software to build a competing product** — in particular,
+   any software-repository discovery, search, comparison, curation,
+   or alternative-finder product;
+6. **Remove, alter, or obscure** any copyright, trademark, or other
+   proprietary notices contained in the Software;
+7. **Sublicense, sell, rent, lease, or loan** the Software or any
+   rights under this license.
+
+## Third-Party Components
+
+The Software may incorporate third-party components that are licensed
+under their own terms (for example, open-source libraries). Nothing in
+this license restricts your rights under those third-party licenses.
+The public repository carries a NOTICE and CREDITS file listing
+attributions.
+
+## Trademarks
+
+"Openlysts" and related marks are trademarks of Openlysts (ARD). This
+license does not grant you any right to use these marks.
+
+## No Warranty
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND
+NON-INFRINGEMENT. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+CONTRIBUTORS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM,
+OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
+
+## Contact
+
+For licensing, sponsorship, or permission inquiries:
+openlysts@gmail.com

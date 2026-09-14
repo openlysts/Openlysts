@@ -1,0 +1,38 @@
+# Environment — never commit real values
+.env
+.env.*
+!.env.example
+
+# Dependencies
+node_modules
+
+# Build output
+dist
+*.local
+.vite
+
+# Logs
+*.log
+/logs
+
+# Editor / OS
+.vscode/
+.idea
+.DS_Store
+Thumbs.db
+
+# Local database
+data/*.db*
+
+# Vercel
+.vercel
+
+# Tests & reports
+test-results/
+playwright-report/
+coverage/
+reports/
+
+# Temp
+scratch/
+.tmp/
